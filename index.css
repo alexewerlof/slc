@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Roboto&display=swap');
+
+[v-cloak] {
+    display: none;
+}
+
+body {
+    background-color: #001426;
+    color: #FFF5E6;
+    font-family: 'Roboto', sans-serif;
+}
+
+a, a:hover, a:active {
+    color: inherit;
+}
+
+input[type=range] {
+    width: 100%;
+}
+
+h1, h2, h3 {
+    font-family: 'Alata', sans-serif;
+    color: #FFBC52;
+}
+
+footer {
+    margin-top: 2em;
+    padding-top: 2em;
+    border-top: 1px solid #FFBC52;
+    text-align: center;
+    font-size: 0.8em;
+}

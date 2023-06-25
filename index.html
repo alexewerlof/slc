@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <h1>SLO: {{ sloVal }}%</h1>
+        
+        <label><h2>{{ slo.int }}</h2>
+        <input type="range" min="0" max="99" v-model="slo.int">
+        </label>
+
+        <label><h2>+ 0.{{slo.frac}}</h2>
+        <input type="range" min="0" :max="slo.fracMax" v-model="slo.frac">
+        </label>
+
+        <h2>Window</h2>
+        <p><time>{{windowSec}} sec</time></p>
+
+        <h3>Unit</h3>
+        <label v-for="windowUnit in windowUnits" :key="windowUnit.title">
+            <input type="radio" name="windowUnit" :value="windowUnit" v-model="slo.windowUnit" @click="slo.windowMult = 1">
+            {{ windowUnit.title }}
+        </label>
+
+        <label><h3>✕ {{slo.windowMult}}</h3>
+            <input type="range" min="1" :max="slo.windowUnit.max" v-model="slo.windowMult">
+        </label>
+    
+        <h3>Period</h3>
+        <p><time>{{ secondsToTimePeriod(windowSec) }}</time></p>
+
+        <h2>Error budget</h2>
+        <p><time>{{ secondsToTimePeriod(downTime) }}</time></p>
+
+        <h1>SLI</h1>
+        <label>
+            <h2>Event unit</h2>
+            <input type="text" v-model="sli.eventUnit">
+        </label>
+        <label>
+            <h2>Good {{sli.eventUnit}}</h2>
+            <input type="text" v-model="sli.good">
+        </label>
+        <label>
+            <h2>Valid {{sli.eventUnit}}</h2>
+            <input type="text" v-model="sli.valid">
+        </label>
+    
+        <div v-show="sli.good">
+            <h2>Formula</h2>
+            <code>
+                SLI = ({{sli.good}}) / ({{sli.valid}}) * 100
+            </code>
+        </div>
+
+        <h2>Example</h2>
+        <label>
+            <h3>{{sli.good}} #{{sli.eventUnit}} in {{secondsToTimePeriod(windowSec)}}</h3>
+            <input type="number" v-model="sli.goodExample">
+        </label>
+        <p>
+            To hit a slo of {{sloVal}}% for
+            {{sli.goodExample}} {{sli.good}} {{sli.eventUnit}}
+            in {{secondsToTimePeriod(windowSec)}},
+            you need to have a total of {{totalTarget}} valid {{sli.eventUnit}}.
+            <br/>
+            This allows a maximum of {{totalTarget - sli.goodExample}} invalid {{sli.eventUnit}}
+            in this period.
+        </p>
+        <label>
+            <h3>{{sli.valid}} #{{sli.eventUnit}} in {{secondsToTimePeriod(windowSec)}}</h3>
+            <input type="number" v-model="sli.validExample">
+        </label>
+        <p>
+            To hit a slo of {{sloVal}}% for
+            {{sli.validExample}} {{sli.valid}} {{sli.eventUnit}}
+            in {{secondsToTimePeriod(windowSec)}},
+            you need to have a total of {{goodTarget}} good {{sli.eventUnit}}.
+            <br/>
+            This allows a maximum of {{sli.validExample - goodTarget}} bad {{sli.eventUnit}}
+            in this period.
+        </p>
+
+        <h3>Current</h3>
+        <p>
+            The way it stands, your SLI is {{exampleTarget}}%.
+            (your target is {{sloVal}}%)
+        </p>
+
+    </div>
+
+    <footer>Copyright (C) 2023 <a href="https://alexewerlof.com">Alex Ewerlof</a></footer>
+
+    <script type="module" src="index.js"></script>
+</body>
+</html>
