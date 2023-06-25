@@ -8,6 +8,15 @@ body {
     background-color: #001426;
     color: #FFF5E6;
     font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+div#app {
+    max-width: 600px;
+    margin: 0 auto;
+    box-sizing: content-box;
+    padding: 1em;
 }
 
 a, a:hover, a:active {
@@ -23,10 +32,28 @@ h1, h2, h3 {
     color: #FFBC52;
 }
 
+header {
+    color: #001426;
+    background-color: #47A9FF;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+time {
+    font-style: italic;
+}
+
+header h1 {
+    color: inherit;
+    margin: 0;
+    padding: 0.5em;
+}
+
 footer {
     margin-top: 2em;
     padding-top: 2em;
     border-top: 1px solid #FFBC52;
     text-align: center;
     font-size: 0.8em;
+    padding-bottom: 2em;
 }

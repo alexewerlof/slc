@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
-    <title>Document</title>
+    <title>Service Level Calculator</title>
 </head>
 <body>
+    <header>
+        <h1>Service Level Calculator</h1>
+    </header>
     <div id="app" v-cloak>
         <h1>SLO: {{ sloVal }}%</h1>
         
@@ -60,29 +63,29 @@
 
         <h2>Example</h2>
         <label>
-            <h3>{{sli.good}} #{{sli.eventUnit}} in {{secondsToTimePeriod(windowSec)}}</h3>
+            <h3>{{sli.good}} #{{sli.eventUnit}} in <time>{{secondsToTimePeriod(windowSec)}}</time></h3>
             <input type="number" v-model="sli.goodExample">
         </label>
         <p>
-            To hit a slo of {{sloVal}}% for
-            {{sli.goodExample}} {{sli.good}} {{sli.eventUnit}}
-            in {{secondsToTimePeriod(windowSec)}},
-            you need to have a total of {{totalTarget}} valid {{sli.eventUnit}}.
+            To hit a slo of <em>{{sloVal}}%</em> for
+            <em>{{sli.goodExample}}</em> {{sli.eventUnit}} where <code>{{sli.good}}</code>
+            in <time>{{secondsToTimePeriod(windowSec)}}</time>,
+            you need to have a total of <em>{{totalTarget}}</em> valid {{sli.eventUnit}}.
             <br/>
-            This allows a maximum of {{totalTarget - sli.goodExample}} invalid {{sli.eventUnit}}
+            This allows a maximum of <em>{{totalTarget - sli.goodExample}}</em> invalid {{sli.eventUnit}}
             in this period.
         </p>
         <label>
-            <h3>{{sli.valid}} #{{sli.eventUnit}} in {{secondsToTimePeriod(windowSec)}}</h3>
+            <h3>{{sli.valid}} #{{sli.eventUnit}} in <time>{{secondsToTimePeriod(windowSec)}}</time></h3>
             <input type="number" v-model="sli.validExample">
         </label>
         <p>
-            To hit a slo of {{sloVal}}% for
-            {{sli.validExample}} {{sli.valid}} {{sli.eventUnit}}
-            in {{secondsToTimePeriod(windowSec)}},
-            you need to have a total of {{goodTarget}} good {{sli.eventUnit}}.
+            To hit a slo of <em>{{sloVal}}%</em> for
+            <em>{{sli.validExample}}</em> <code>{{sli.valid}}</code> {{sli.eventUnit}}
+            in <time>{{secondsToTimePeriod(windowSec)}}</time>,
+            you need to have a total of <em>{{goodTarget}}</em> good {{sli.eventUnit}}.
             <br/>
-            This allows a maximum of {{sli.validExample - goodTarget}} bad {{sli.eventUnit}}
+            This allows a maximum of <em>{{sli.validExample - goodTarget}}</em> bad {{sli.eventUnit}}
             in this period.
         </p>
 
@@ -94,7 +97,7 @@
 
     </div>
 
-    <footer>Copyright (C) 2023 <a href="https://alexewerlof.com">Alex Ewerlof</a></footer>
+    <footer>Copyright (C) 2023 <a href="https://alexewerlof.com">Alex Ewerlof</a> | <a href="https://github.com/userpixel/slo">Github</a> | <a href="https://vuejs.org/">Uses Vue</a> | <a href="https://blog.alexewerlof.com/p/why-bother-with-sli-and-slo">Why bother?</a></footer>
 
     <script type="module" src="index.js"></script>
 </body>
