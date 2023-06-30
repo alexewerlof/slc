@@ -14,12 +14,8 @@
         <h1>SLI</h1>
         <h2>Type</h2>
         <label>
-            <input type="radio" name="sliType" checked>
-            Event
-        </label>
-        <label>
-            <input type="radio" name="sliType">
-            Time
+            <input type="checkbox" v-model="sli.isTimeBased">
+            Time based
         </label>
         <label>
             <h2>Event unit</h2>
@@ -36,8 +32,11 @@
     
         <div v-show="sli.good">
             <h2>Formula</h2>
-            <code>
+            <code v-if="!sli.isTimeBased">
                 SLI = ({{sli.good}}) / ({{sli.valid}}) * 100
+            </code>
+            <code v-if="sli.isTimeBased">
+                SLI = the_time({{sli.good}}) / total_time * 100
             </code>
         </div>
 

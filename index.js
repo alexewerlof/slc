@@ -53,6 +53,7 @@ const slo = reactive({
 })
 
 const sli = reactive({
+    isTimeBased: false,
     good: 'response_time < 500ms',
     goodExample: 9_999_850,
     valid: 'total_requests',
