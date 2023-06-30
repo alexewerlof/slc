@@ -11,36 +11,16 @@
         <h1>Service Level Calculator</h1>
     </header>
     <div id="app" v-cloak>
-        <h1>SLO: {{ sloVal }}%</h1>
-        
-        <label><h2>{{ slo.int }}</h2>
-        <input type="range" min="0" max="99" v-model="slo.int">
-        </label>
-
-        <label><h2>+ 0.{{slo.frac}}</h2>
-        <input type="range" min="0" :max="slo.fracMax" v-model="slo.frac">
-        </label>
-
-        <h2>Window</h2>
-        <p><time>{{windowSec}} sec</time></p>
-
-        <h3>Unit</h3>
-        <label v-for="windowUnit in windowUnits" :key="windowUnit.title">
-            <input type="radio" name="windowUnit" :value="windowUnit" v-model="slo.windowUnit" @click="slo.windowMult = 1">
-            {{ windowUnit.title }}
-        </label>
-
-        <label><h3>✕ {{slo.windowMult}}</h3>
-            <input type="range" min="1" :max="slo.windowUnit.max" v-model="slo.windowMult">
-        </label>
-    
-        <h3>Period</h3>
-        <p><time>{{ secondsToTimePeriod(windowSec) }}</time></p>
-
-        <h2>Error budget</h2>
-        <p><time>{{ secondsToTimePeriod(downTime) }}</time></p>
-
         <h1>SLI</h1>
+        <h2>Type</h2>
+        <label>
+            <input type="radio" name="sliType" checked>
+            Event
+        </label>
+        <label>
+            <input type="radio" name="sliType">
+            Time
+        </label>
         <label>
             <h2>Event unit</h2>
             <input type="text" v-model="sli.eventUnit">
@@ -60,6 +40,32 @@
                 SLI = ({{sli.good}}) / ({{sli.valid}}) * 100
             </code>
         </div>
+
+        <h1>SLO:
+            <label for="sli-int-slider">
+                {{ slo.int }}
+            </label>.<label for="sli-frac-slider">
+                {{ slo.frac }}
+            </label>%
+        </h1>
+        
+        <input type="range" min="0" max="99" v-model="slo.int" id="sli-int-slider">
+        <input type="range" min="0" :max="slo.fracMax" v-model="slo.frac" id="sli-frac-slider">
+
+        <h2>Compliance Period: {{ secondsToTimePeriod(windowSec) }}</h2>
+        <p>
+            <time>{{windowSec}} sec</time>
+        </p>
+
+        <label v-for="windowUnit in windowUnits" :key="windowUnit.title">
+            <input type="radio" name="windowUnit" :value="windowUnit" v-model="slo.windowUnit" @click="slo.windowMult = 1">
+            {{ windowUnit.title }}
+        </label>
+
+        <input type="range" min="1" :max="slo.windowUnit.max" v-model="slo.windowMult">
+    
+        <h2>Error budget</h2>
+        <p><time>{{ secondsToTimePeriod(downTime) }}</time></p>
 
         <h2>Example</h2>
         <label>

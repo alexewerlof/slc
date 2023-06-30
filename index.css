@@ -1,12 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Alata&family=Roboto&display=swap');
 
+:root {
+    --animation-speed: 0.2s;
+    --primary-color: #FFBC52;
+    --secondary-color: #47A9FF;
+    --background-color: #041C31;
+    --background-dark: #001426;
+    --foreground-color: #FFF5E6;
+}
+
 [v-cloak] {
     display: none;
 }
 
 body {
-    background-color: #001426;
-    color: #FFF5E6;
+    background-color: var(--background-color);
+    color: var(--foreground-color);
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
@@ -24,7 +33,68 @@ a, a:hover, a:active {
 }
 
 input[type=range] {
+    -webkit-appearance: none;
     width: 100%;
+    height: 1em;
+    background-color: var(--background-dark);
+    border-radius: 0;
+    outline: none;
+    margin: 1.5em auto;
+    transition: background-color var(--animation-speed) ease-in-out;
+}
+
+input[type=range]:focus {
+    background-color: var(--foreground-color);
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 2em;
+    height: 2em;
+    background-color: var(--secondary-color);
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+input[type=text], input[type=number] {
+    padding: 1em;
+    font-size: inherit;
+    border: none;
+    background-color: var(--background-dark);
+    color: inherit;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color var(--animation-speed) ease-in-out;
+}
+
+input[type=text]:focus, input[type=number]:focus {
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+}
+
+input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--background-dark);
+    transition: background-color var(--animation-speed) ease-in-out;
+}
+  
+input[type="radio"]:checked {
+    background-color: var(--secondary-color);
+}
+
+label + label {
+    margin-left: 1em;
+}
+label {
+    cursor: pointer;
 }
 
 h1, h2, h3 {
@@ -33,8 +103,8 @@ h1, h2, h3 {
 }
 
 header {
-    color: #001426;
-    background-color: #47A9FF;
+    color: var(--background-color);
+    background-color: var(--secondary-color);
     text-align: center;
     font-size: 1.2em;
 }
@@ -52,7 +122,7 @@ header h1 {
 footer {
     margin-top: 2em;
     padding-top: 2em;
-    border-top: 1px solid #FFBC52;
+    border-top: 1px solid var(--primary-color);
     text-align: center;
     font-size: 0.8em;
     padding-bottom: 2em;

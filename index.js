@@ -8,7 +8,7 @@ const windowUnits = [
     {
         title: 'minute',
         sec: 1 * 60,
-        max: 24,
+        max: 60,
     },
     {
         title: 'hour',
