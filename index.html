@@ -23,6 +23,19 @@
 
     <main id="app" v-cloak>
         <h1 id="sli-title">SLI</h1>
+        <label>
+            <h2>Event unit</h2>
+            <input type="text" v-model="sli.eventUnit">
+        </label>
+        <label>
+            <h2>Good {{sli.eventUnit}}</h2>
+            <input type="text" v-model="sli.good">
+        </label>
+        <label>
+            <h2>Valid {{sli.eventUnit}}</h2>
+            <input type="text" v-model="sli.valid">
+        </label>
+    
         <h2>Type</h2>
         <label>
             <input type="checkbox" v-model="sli.isTimeBased">
@@ -40,26 +53,14 @@
                 <option value="3600">1 hour</option>
             </select>
         </label>
-        <label>
-            <h2>Event unit</h2>
-            <input type="text" v-model="sli.eventUnit">
-        </label>
-        <label>
-            <h2>Good {{sli.eventUnit}}</h2>
-            <input type="text" v-model="sli.good">
-        </label>
-        <label>
-            <h2>Valid {{sli.eventUnit}}</h2>
-            <input type="text" v-model="sli.valid">
-        </label>
-    
+
         <div v-show="sli.good">
             <h2>Formula</h2>
             <code v-if="!sli.isTimeBased">
-                SLI = ({{sli.good}}) / ({{sli.valid}}) * 100
+                SLI = sum({{sli.good}}) / sum({{sli.valid}}) * 100
             </code>
             <code v-if="sli.isTimeBased">
-                SLI = the_time({{sli.good}}) / total_time * 100
+                SLI = sum({{sli.good}}, {{secondsToTimePeriod(sli.aggregationPeriod)}}) / sum({{sli.valid}}, secondsToTimePeriod({{sli.aggregationPeriod}})) * 100
             </code>
         </div>
 
