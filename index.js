@@ -46,6 +46,7 @@ const windowUnits = [
 
 const sli = reactive({
     isTimeBased: false,
+    aggregationPeriod: 60,
     good: 'response_time < 500ms',
     goodExample: 9_999_850,
     valid: 'total_requests',
@@ -119,7 +120,13 @@ const app = createApp({
         })
 
         const upTime = computed(() => {
-            return windowSec.value * slo.perc / 100
+            const ret = windowSec.value * slo.perc / 100
+            if (ret < 1) {
+                return Number(ret.toFixed(3))
+            } if (ret < 10) {
+                return Number(ret.toFixed(1))
+            }
+            return Math.round(ret)
         })
 
         const downTime = computed(() => {

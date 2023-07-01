@@ -28,6 +28,18 @@
             <input type="checkbox" v-model="sli.isTimeBased">
             Time based
         </label>
+        <label v-if="sli.isTimeBased">
+            <h3>Aggregation Period</h3>
+            <select v-model="sli.aggregationPeriod">
+                <option value="60">1 minute</option>
+                <option value="180">3 minutes</option>
+                <option value="300">5 minutes</option>
+                <option value="600">10 minutes</option>
+                <option value="900">15 minutes</option>
+                <option value="1800">30 minutes</option>
+                <option value="3600">1 hour</option>
+            </select>
+        </label>
         <label>
             <h2>Event unit</h2>
             <input type="text" v-model="sli.eventUnit">
@@ -76,8 +88,22 @@
         </p>
     
         <h1 id="error-budget-title">Error budget</h1>
-        <p>{{errorBudget.perc}}%</p>
-        <p v-if="sli.isTimeBased"><time>{{ secondsToTimePeriod(downTime) }}</time></p>
+        <div v-if="sli.isTimeBased">
+            <p>
+                {{errorBudget.perc}}% of
+                <time>{{ secondsToTimePeriod(windowSec) }}</time>
+                =
+                <time>{{ secondsToTimePeriod(downTime) }}</time>
+            </p>
+            <p>
+                <time>{{downTime}}</time> sec
+            </p>
+        </div>
+        <div v-if="!sli.isTimeBased">
+            <p>
+                {{errorBudget.perc}}%
+            </p>
+        </div>
 
         <h2>Example</h2>
         <label>

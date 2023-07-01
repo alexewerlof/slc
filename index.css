@@ -78,7 +78,7 @@ input[type=range]::-webkit-slider-thumb {
     cursor: pointer;
 }
 
-input[type=text], input[type=number] {
+input[type=text], input[type=number], select {
     padding: 1em;
     font-size: inherit;
     border: none;
@@ -89,7 +89,7 @@ input[type=text], input[type=number] {
     transition: background-color var(--animation-speed) ease-in-out;
 }
 
-input[type=text]:focus, input[type=number]:focus {
+input[type=text]:focus, input[type=number]:focus, select:focus {
     background-color: var(--secondary-color);
     color: var(--background-color);
 }
