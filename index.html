@@ -64,9 +64,9 @@
         <input type="range" min="0" max="99" v-model="sloInt" id="sli-int-slider">
         <input type="range" min="0" :max="slo.fracMax" v-model="sloFrac" id="sli-frac-slider">
 
-        <h2>Compliance Period: <label>{{ secondsToTimePeriod(windowSec) }}</label></h2>
+        <h2>Compliance Period: <label for="slo-window-unit-multiplier">{{ secondsToTimePeriod(windowSec) }}</label></h2>
 
-        <input type="range" min="1" :max="slo.windowUnit.max" v-model="slo.windowMult">
+        <input type="range" min="1" :max="slo.windowUnit.max" v-model="slo.windowMult" id="slo-window-unit-multiplier">
 
         <label v-for="windowUnit in windowUnits" :key="windowUnit.title" class="spaced">
             <input type="radio" name="windowUnit" :value="windowUnit" v-model="slo.windowUnit" @click="slo.windowMult = 1">
