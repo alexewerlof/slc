@@ -44,14 +44,9 @@ const windowUnits = [
     },
 ]
 
-const sloResolution = 3
-const sloPow10 = 10 ** sloResolution
-
 const slo = reactive({
-    int: 99,
-    frac: 999,
     perc: 99.5,
-    fracMax: sloPow10 - 1,
+    precision: 3,
     windowMult: 1,
     windowUnit: windowUnits[4],
 })
@@ -60,24 +55,21 @@ const sloInt = computed({
     get() {
         return Math.floor(slo.perc)
     },
-    set(val) {
-        val = Number(val)
-        const oldInt = Math.floor(slo.perc)
-        const oldFrac = slo.perc - oldInt
-        slo.perc = val + oldFrac
+    set(newIntStr) {
+        const newInt = Number(newIntStr)
+        const sloFrac = slo.perc % 1
+        slo.perc = Number((newInt + sloFrac).toFixed(slo.precision))
     }
 })
 
 const sloFrac = computed({
     get() {
-        const sloInt = Math.floor(slo.perc)
-
-        return Math.round(slo.perc * sloPow10 - sloInt * sloPow10)
+        return (slo.perc % 1).toFixed(slo.precision)
     },
-    set(val) {
-        val = Number(val)
+    set(newFracStr) {
         const sloInt = Math.floor(slo.perc)
-        slo.perc = ((sloInt * sloPow10 ) + val) / sloPow10
+        const newFrac = Number(newFracStr)
+        slo.perc = Number((sloInt + newFrac).toFixed(slo.precision))
     }
 })
 

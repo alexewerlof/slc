@@ -51,18 +51,16 @@
             </code>
         </div>
 
-        <h1 id="slo-title">SLO:
-            <label for="sli-int-slider">
-                {{ sloInt }}
-            </label>.<label for="sli-frac-slider">
-                {{ sloFrac }}
-            </label>%
-        </h1>
-
-        {{slo.perc}}
+        <h1 id="slo-title">SLO: {{slo.perc}}%</h1>
         
-        <input type="range" min="0" max="99" v-model="sloInt" id="sli-int-slider">
-        <input type="range" min="0" :max="slo.fracMax" v-model="sloFrac" id="sli-frac-slider">
+        <label>
+            <h2>{{ sloInt }}%</h2>
+            <input type="range" min="0" max="99" v-model="sloInt">
+        </label>
+        <label>
+            <h2>+ {{ sloFrac }}%</h2>
+            <input type="range" min="0" max="0.999" step="0.001" v-model="sloFrac">
+        </label>
 
         <h2>Compliance Period: <label for="slo-window-unit-multiplier">{{ secondsToTimePeriod(windowSec) }}</label></h2>
 
