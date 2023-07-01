@@ -75,8 +75,9 @@
             <time>{{windowSec}} sec</time>
         </p>
     
-        <h2 id="error-budget-title">Error budget</h2>
-        <p><time>{{ secondsToTimePeriod(downTime) }}</time></p>
+        <h1 id="error-budget-title">Error budget</h1>
+        <p>{{errorBudget.perc}}%</p>
+        <p v-if="sli.isTimeBased"><time>{{ secondsToTimePeriod(downTime) }}</time></p>
 
         <h2>Example</h2>
         <label>

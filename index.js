@@ -44,6 +44,15 @@ const windowUnits = [
     },
 ]
 
+const sli = reactive({
+    isTimeBased: false,
+    good: 'response_time < 500ms',
+    goodExample: 9_999_850,
+    valid: 'total_requests',
+    validExample: 10_000_000,
+    eventUnit: 'requests',
+})
+
 const slo = reactive({
     perc: 99.5,
     precision: 3,
@@ -73,15 +82,6 @@ const sloFrac = computed({
     }
 })
 
-const sli = reactive({
-    isTimeBased: false,
-    good: 'response_time < 500ms',
-    goodExample: 9_999_850,
-    valid: 'total_requests',
-    validExample: 10_000_000,
-    eventUnit: 'requests',
-})
-
 function secondsToTimePeriod(seconds) {
     let result = []
 
@@ -105,6 +105,12 @@ function secondsToTimePeriod(seconds) {
 
     return result.join(', ')
 }
+
+const errorBudget = computed(() => {
+    return {
+        perc: Number((100 - slo.perc).toFixed(slo.precision)),
+    }
+})
 
 const app = createApp({
     setup() {
@@ -137,6 +143,7 @@ const app = createApp({
             slo,
             sloInt,
             sloFrac,
+            errorBudget,
             upTime,
             downTime,
             windowUnits,
