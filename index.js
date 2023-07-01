@@ -45,11 +45,11 @@ const windowUnits = [
 ]
 
 const sli = reactive({
-    isTimeBased: false,
+    isTimeBased: true,
     aggregationPeriod: 60,
     good: 'response_time < 500ms',
     goodExample: 9_999_850,
-    valid: 'total_requests',
+    valid: 'authenticated_requests',
     validExample: 10_000_000,
     eventUnit: 'requests',
 })
@@ -86,7 +86,7 @@ const sloFrac = computed({
 function secondsToTimePeriod(seconds) {
     let result = []
 
-    const addToResult = (val, title) => result.push(`${val} ${title}${val > 1 ? 's' : ''} `)
+    const addToResult = (val, title) => result.push(`${val} ${title}${val > 1 ? 's' : ''}`)
 
     for (let i = windowUnits.length - 1; i >= 0; i--) {
         const period = windowUnits[i]
