@@ -21,7 +21,27 @@ body {
     padding: 0;
 }
 
-div#app {
+#links-bar {
+    margin: 0;
+    position: sticky;
+    top: 0;
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    z-index: 1;
+    text-align: center;
+}
+
+#links-bar li {
+    display: inline-block;
+    padding: 0 1em;
+}
+
+#links-bar li + li {
+    border-left: 1px solid currentColor;
+}
+
+#app {
+    padding-top: 10em;
     max-width: 600px;
     margin: 0 auto;
     box-sizing: content-box;
@@ -90,16 +110,21 @@ input[type="radio"]:checked {
     background-color: var(--secondary-color);
 }
 
-label + label {
-    margin-left: 1em;
-}
 label {
     cursor: pointer;
+}
+
+label.spaced + label.spaced {
+    margin-left: 1em;
 }
 
 h1, h2, h3 {
     font-family: 'Alata', sans-serif;
     color: #FFBC52;
+}
+
+h1[id] {
+    scroll-margin-top: 1em;
 }
 
 header {

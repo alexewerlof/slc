@@ -10,8 +10,16 @@
     <header>
         <h1>Service Level Calculator</h1>
     </header>
-    <div id="app" v-cloak>
-        <h1>SLI</h1>
+    
+    <ul id="links-bar">
+        <li><a href="#sli-title">SLI</a></li>
+        <li><a href="#slo-title">SLO</a></li>
+        <li><a href="#error-budget-title">Error Budget</a></li>
+        <li><a href="#alert-title">Alert</a></li>
+    </ul>
+
+    <main id="app" v-cloak>
+        <h1 id="sli-title">SLI</h1>
         <h2>Type</h2>
         <label>
             <input type="checkbox" v-model="sli.isTimeBased">
@@ -40,10 +48,10 @@
             </code>
         </div>
 
-        <h1>SLO:
+        <h1 id="slo-title">SLO:
             <label for="sli-int-slider">
                 {{ slo.int }}
-            </label>.<label for="sli-frac-slider" style="margin-left: 0;">
+            </label>.<label for="sli-frac-slider">
                 {{ slo.frac }}
             </label>%
         </h1>
@@ -56,14 +64,14 @@
             <time>{{windowSec}} sec</time>
         </p>
 
-        <label v-for="windowUnit in windowUnits" :key="windowUnit.title">
+        <label v-for="windowUnit in windowUnits" :key="windowUnit.title" class="spaced">
             <input type="radio" name="windowUnit" :value="windowUnit" v-model="slo.windowUnit" @click="slo.windowMult = 1">
             {{ windowUnit.title }}
         </label>
 
         <input type="range" min="1" :max="slo.windowUnit.max" v-model="slo.windowMult">
     
-        <h2>Error budget</h2>
+        <h2 id="error-budget-title">Error budget</h2>
         <p><time>{{ secondsToTimePeriod(downTime) }}</time></p>
 
         <h2>Example</h2>
@@ -100,7 +108,10 @@
             (your target is {{sloVal}}%)
         </p>
 
-    </div>
+        <h1 id="alert-title">Alert</h1>
+        <p>Upcoming...</p>
+
+    </main>
 
     <footer>Copyright (C) 2023 <a href="https://alexewerlof.com">Alex Ewerlof</a> | <a href="https://github.com/userpixel/slo">Github</a> | <a href="https://vuejs.org/">Uses Vue</a> | <a href="https://blog.alexewerlof.com/p/why-bother-with-sli-and-slo">Why bother?</a></footer>
 
