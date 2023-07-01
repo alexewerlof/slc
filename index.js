@@ -44,12 +44,41 @@ const windowUnits = [
     },
 ]
 
+const sloResolution = 3
+const sloPow10 = 10 ** sloResolution
+
 const slo = reactive({
     int: 99,
     frac: 999,
-    fracMax: 999,
+    perc: 99.5,
+    fracMax: sloPow10 - 1,
     windowMult: 1,
     windowUnit: windowUnits[4],
+})
+
+const sloInt = computed({
+    get() {
+        return Math.floor(slo.perc)
+    },
+    set(val) {
+        val = Number(val)
+        const oldInt = Math.floor(slo.perc)
+        const oldFrac = slo.perc - oldInt
+        slo.perc = val + oldFrac
+    }
+})
+
+const sloFrac = computed({
+    get() {
+        const sloInt = Math.floor(slo.perc)
+
+        return Math.round(slo.perc * sloPow10 - sloInt * sloPow10)
+    },
+    set(val) {
+        val = Number(val)
+        const sloInt = Math.floor(slo.perc)
+        slo.perc = ((sloInt * sloPow10 ) + val) / sloPow10
+    }
 })
 
 const sli = reactive({
@@ -87,20 +116,12 @@ function secondsToTimePeriod(seconds) {
 
 const app = createApp({
     setup() {
-        const sloVal = computed(() => {
-            let ret = Number(slo.int)
-            if ( slo.int < 100) {
-                ret += slo.frac / (slo.fracMax + 1)
-            }
-            return ret
-        })
-
         const windowSec = computed(() => {
             return slo.windowUnit.sec * slo.windowMult
         })
 
         const upTime = computed(() => {
-            return windowSec.value * sloVal.value / 100
+            return windowSec.value * slo.perc / 100
         })
 
         const downTime = computed(() => {
@@ -108,11 +129,11 @@ const app = createApp({
         })
 
         const goodTarget = computed(() => {
-            return Math.ceil(sloVal.value * sli.validExample / 100)
+            return Math.ceil(slo.perc * sli.validExample / 100)
         })
         
         const totalTarget = computed(() => {
-            return Math.ceil(sli.goodExample * 100 / sloVal.value)
+            return Math.ceil(sli.goodExample * 100 / slo.perc)
         })
         
         const exampleTarget = computed(() => {
@@ -120,9 +141,10 @@ const app = createApp({
         })
 
         return {
-            slo,
             sli,
-            sloVal,
+            slo,
+            sloInt,
+            sloFrac,
             upTime,
             downTime,
             windowUnits,

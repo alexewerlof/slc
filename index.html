@@ -7,6 +7,9 @@
     <title>Service Level Calculator</title>
 </head>
 <body>
+    <noscript>
+        <p>This web application requires JavaScript to work.</p>
+    </noscript>
     <header>
         <h1>Service Level Calculator</h1>
     </header>
@@ -50,26 +53,29 @@
 
         <h1 id="slo-title">SLO:
             <label for="sli-int-slider">
-                {{ slo.int }}
+                {{ sloInt }}
             </label>.<label for="sli-frac-slider">
-                {{ slo.frac }}
+                {{ sloFrac }}
             </label>%
         </h1>
-        
-        <input type="range" min="0" max="99" v-model="slo.int" id="sli-int-slider">
-        <input type="range" min="0" :max="slo.fracMax" v-model="slo.frac" id="sli-frac-slider">
 
-        <h2>Compliance Period: {{ secondsToTimePeriod(windowSec) }}</h2>
-        <p>
-            <time>{{windowSec}} sec</time>
-        </p>
+        {{slo.perc}}
+        
+        <input type="range" min="0" max="99" v-model="sloInt" id="sli-int-slider">
+        <input type="range" min="0" :max="slo.fracMax" v-model="sloFrac" id="sli-frac-slider">
+
+        <h2>Compliance Period: <label>{{ secondsToTimePeriod(windowSec) }}</label></h2>
+
+        <input type="range" min="1" :max="slo.windowUnit.max" v-model="slo.windowMult">
 
         <label v-for="windowUnit in windowUnits" :key="windowUnit.title" class="spaced">
             <input type="radio" name="windowUnit" :value="windowUnit" v-model="slo.windowUnit" @click="slo.windowMult = 1">
             {{ windowUnit.title }}
         </label>
 
-        <input type="range" min="1" :max="slo.windowUnit.max" v-model="slo.windowMult">
+        <p>
+            <time>{{windowSec}} sec</time>
+        </p>
     
         <h2 id="error-budget-title">Error budget</h2>
         <p><time>{{ secondsToTimePeriod(downTime) }}</time></p>
@@ -80,7 +86,7 @@
             <input type="number" v-model="sli.goodExample">
         </label>
         <p>
-            To hit a slo of <em>{{sloVal}}%</em> for
+            To hit a slo of <em>{{slo.perc}}%</em> for
             <em>{{sli.goodExample}}</em> {{sli.eventUnit}} where <code>{{sli.good}}</code>
             in <time>{{secondsToTimePeriod(windowSec)}}</time>,
             you need to have a total of <em>{{totalTarget}}</em> valid {{sli.eventUnit}}.
@@ -93,7 +99,7 @@
             <input type="number" v-model="sli.validExample">
         </label>
         <p>
-            To hit a slo of <em>{{sloVal}}%</em> for
+            To hit a slo of <em>{{slo.perc}}%</em> for
             <em>{{sli.validExample}}</em> <code>{{sli.valid}}</code> {{sli.eventUnit}}
             in <time>{{secondsToTimePeriod(windowSec)}}</time>,
             you need to have a total of <em>{{goodTarget}}</em> good {{sli.eventUnit}}.
@@ -105,7 +111,7 @@
         <h3>Current</h3>
         <p>
             The way it stands, your SLI is {{exampleTarget}}%.
-            (your target is {{sloVal}}%)
+            (your target is {{slo.perc}}%)
         </p>
 
         <h1 id="alert-title">Alert</h1>
