@@ -24,21 +24,6 @@
 
     <main id="app" v-cloak>
         <h1 id="sli-title">SLI</h1>
-        <label>
-            <h2>Event unit</h2>
-            <input type="text" v-model="sli.eventUnit">
-        </label>
-        <label>
-            <h2 v-if="sli.isTimeBased">Good {{secondsToTimePeriod(sli.aggregationPeriod)}}</h2>
-            <h2 v-if="!sli.isTimeBased">Good {{sli.eventUnit}}</h2>
-            <input type="text" v-model="sli.good">
-        </label>
-        <label>
-            <h2 v-if="sli.isTimeBased">Valid {{secondsToTimePeriod(sli.aggregationPeriod)}}</h2>
-            <h2 v-if="!sli.isTimeBased">Valid {{sli.eventUnit}}</h2>
-            <input type="text" v-model="sli.valid">
-        </label>
-    
         <h2>Type</h2>
         <label>
             <input type="checkbox" v-model="sli.isTimeBased">
@@ -57,15 +42,28 @@
                 <option value="3600">1 hour</option>
             </select>
         </label>
+        <label v-else>
+            <h2>Event unit</h2>
+            <input type="text" v-model="sli.eventUnit">
+        </label>
         </Transition>
-
+        <label>
+            <h2 v-if="sli.isTimeBased">Good {{secondsToTimePeriod(sli.aggregationPeriod)}}</h2>
+            <h2 v-else>Good {{sli.eventUnit}}</h2>
+            <input type="text" v-model="sli.good">
+        </label>
+        <label v-if="!sli.isTimeBased">
+            <h2>Valid {{secondsToTimePeriod(sli.aggregationPeriod)}}</h2>
+            <input type="text" v-model="sli.valid">
+        </label>
+    
         <div v-show="sli.good">
             <h2>Formula</h2>
             <div v-if="sli.isTimeBased">
                 <p>Percentage of good {{secondsToTimePeriod(sli.aggregationPeriod)}} aggregation periods:</p>
                 <code>SLI = sum({{sli.good}}, {{secondsToTimePeriod(sli.aggregationPeriod)}}) / sum({{sli.valid}}, secondsToTimePeriod({{sli.aggregationPeriod}})) * 100</code>
             </div>
-            <div v-if="!sli.isTimeBased">
+            <div v-else>
                 <p>Percentage of good events:</p>
                 <code>SLI = sum({{sli.good}}) / sum({{sli.valid}}) * 100</code>
             </div>
@@ -117,7 +115,7 @@
                     * 100
             </code>
         </div>
-        <div v-if="!sli.isTimeBased">
+        <div v-else>
             <p>
                 {{errorBudget.perc}}%
             </p>
