@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="vue-specific.css">
     <link rel="stylesheet" href="index.css">
     <title>Service Level Calculator</title>
 </head>
@@ -28,11 +29,13 @@
             <input type="text" v-model="sli.eventUnit">
         </label>
         <label>
-            <h2>Good {{sli.eventUnit}}</h2>
+            <h2 v-if="sli.isTimeBased">Good {{secondsToTimePeriod(sli.aggregationPeriod)}}</h2>
+            <h2 v-if="!sli.isTimeBased">Good {{sli.eventUnit}}</h2>
             <input type="text" v-model="sli.good">
         </label>
         <label>
-            <h2>Valid {{sli.eventUnit}}</h2>
+            <h2 v-if="sli.isTimeBased">Valid {{secondsToTimePeriod(sli.aggregationPeriod)}}</h2>
+            <h2 v-if="!sli.isTimeBased">Valid {{sli.eventUnit}}</h2>
             <input type="text" v-model="sli.valid">
         </label>
     
@@ -41,6 +44,7 @@
             <input type="checkbox" v-model="sli.isTimeBased">
             Time based
         </label>
+        <Transition>
         <label v-if="sli.isTimeBased">
             <h3>Aggregation Period</h3>
             <select v-model="sli.aggregationPeriod">
@@ -53,15 +57,18 @@
                 <option value="3600">1 hour</option>
             </select>
         </label>
+        </Transition>
 
         <div v-show="sli.good">
             <h2>Formula</h2>
-            <code v-if="!sli.isTimeBased">
-                SLI = sum({{sli.good}}) / sum({{sli.valid}}) * 100
-            </code>
-            <code v-if="sli.isTimeBased">
-                SLI = sum({{sli.good}}, {{secondsToTimePeriod(sli.aggregationPeriod)}}) / sum({{sli.valid}}, secondsToTimePeriod({{sli.aggregationPeriod}})) * 100
-            </code>
+            <div v-if="sli.isTimeBased">
+                <p>Percentage of good {{secondsToTimePeriod(sli.aggregationPeriod)}} aggregation periods:</p>
+                <code>SLI = sum({{sli.good}}, {{secondsToTimePeriod(sli.aggregationPeriod)}}) / sum({{sli.valid}}, secondsToTimePeriod({{sli.aggregationPeriod}})) * 100</code>
+            </div>
+            <div v-if="!sli.isTimeBased">
+                <p>Percentage of good events:</p>
+                <code>SLI = sum({{sli.good}}) / sum({{sli.valid}}) * 100</code>
+            </div>
         </div>
 
         <h1 id="slo-title">SLO: {{slo.perc}}%</h1>
@@ -99,6 +106,16 @@
             <p>
                 <time>{{downTime}}</time> sec
             </p>
+            <p>
+                Percentage of bad {{secondsToTimePeriod(sli.aggregationPeriod)}} aggregation periods:
+            </p>
+            <code>
+                Error Budget =
+                    sum(not ({{sli.good}}), {{secondsToTimePeriod(sli.aggregationPeriod)}})
+                    /
+                    sum({{sli.valid}}, {{secondsToTimePeriod(sli.aggregationPeriod)}})
+                    * 100
+            </code>
         </div>
         <div v-if="!sli.isTimeBased">
             <p>

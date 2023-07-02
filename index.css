@@ -9,10 +9,6 @@
     --foreground-color: #FFF5E6;
 }
 
-[v-cloak] {
-    display: none;
-}
-
 body {
     background-color: var(--background-color);
     color: var(--foreground-color);
