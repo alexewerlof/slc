@@ -1,5 +1,16 @@
 import { createApp, ref, reactive, computed } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+import 'https://unpkg.com/js-yaml@4.1.0/dist/js-yaml.js'
 
+async function loadYAML(path) {
+    const response = await fetch(path)
+    const text = await response.text()
+    return jsyaml.load(text)
+}
+
+// load all the examples from the paths listed in the examples.yaml file
+const examples = await Promise.all((await loadYAML('examples.yaml')).map((path) => loadYAML(path)))
+
+console.log(examples)
 
 // For a given window unit, what would be the max?
 // The title should be something Intl.RelativeTimeFormat can handle
