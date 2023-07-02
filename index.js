@@ -106,7 +106,7 @@ function secondsToTimePeriod(seconds, useShortTitle = false) {
         const periodValue = Math.floor(seconds / period.sec)
 
         if (periodValue > 0) {
-            addToResult(periodValue, period.title)
+            addToResult(periodValue, period)
             seconds -= periodValue * period.sec
         }
     }
