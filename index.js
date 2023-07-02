@@ -7,38 +7,45 @@ import { createApp, ref, reactive, computed } from 'https://unpkg.com/vue@3/dist
 const windowUnits = [
     {
         title: 'minute',
+        shortTitle: 'm',
         sec: 1 * 60,
         max: 60,
     },
     {
         title: 'hour',
+        shortTitle: 'h',
         sec: 1 * 60 * 60,
         max: 24,
     },
     {
         title: 'day',
+        shortTitle: 'd',
         sec: 24 * 60 * 60,
         max: 30,
     },
     {
         title: 'week',
+        shortTitle: 'w',
         sec: 7 * 24 * 60 * 60,
         max: 4,
     },
     {
         title: 'month',
+        shortTitle: 'M',
         sec: 30 * 24 * 60 * 60,
         max: 12,
     },
     /*
     {
         title: 'quarter',
+        shortTitle: 'Q',
         sec: 90 * 24 * 60 * 60,
         max: 4,
     },
     */
     {
         title: 'year',
+        shortTitle: 'Y',
         sec: 365 * 24 * 60 * 60,
         max: 5,
     },
@@ -83,10 +90,16 @@ const sloFrac = computed({
     }
 })
 
-function secondsToTimePeriod(seconds) {
+function secondsToTimePeriod(seconds, useShortTitle = false) {
     let result = []
 
-    const addToResult = (val, title) => result.push(`${val} ${title}${val > 1 ? 's' : ''}`)
+    function addToResult(val, { title, shortTitle }) {
+        if (useShortTitle) {
+            result.push(`${val} ${shortTitle}`)
+        } else {
+            result.push(`${val} ${title}${val > 1 ? 's' : ''}`)
+        }
+    }
 
     for (let i = windowUnits.length - 1; i >= 0; i--) {
         const period = windowUnits[i]
@@ -99,9 +112,9 @@ function secondsToTimePeriod(seconds) {
     }
 
     if (seconds >= 1) {
-        addToResult(Math.round(seconds), 'second')
+        addToResult(Math.round(seconds), { title: 'second', shortTitle: 's' })
     } else if (seconds > 0) {
-        addToResult(Math.round(seconds * 1000), 'millisecond')
+        addToResult(Math.round(seconds * 1000), { title: 'millisecond', shortTitle: 'ms' })
     }
 
     return result.join(', ')
