@@ -23,6 +23,11 @@
     </ul>
 
     <main id="app" v-cloak>
+        <h1>Examples</h1>
+        <select v-model="exampleIndex">
+            <option>Custom</option>
+            <option v-for="example in examples" :value="example">{{example.name}}</option>
+        </select>
         <h1 id="sli-title">SLI</h1>
         <h2>Type</h2>
         <label>
