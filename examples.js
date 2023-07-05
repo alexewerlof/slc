@@ -1,13 +1,12 @@
 export const examples = {
     uptime: {
         description: "Endpoint Uptime using simple synthetic availability probe",
-        indicator: {
-            signal: "ping_response_code == 200",
-            signalIndicatesGood: true,
+        sli: {
+            good: "ping_response_code == 200",
             valid: "total_pings",
             unit: "pings",
         },
-        objective: {
+        slo: {
             perc: 99.5,
             window: [1, 'm'],
         }
@@ -15,13 +14,12 @@ export const examples = {
 
     reqLatency: {
         description: "Simple Request Latency",
-        indicator: {
-            signal: "response_latency < 300ms",
-            signalIndicatesGood: true,
+        sli: {
+            good: "response_latency < 300ms",
             valid: "count(authenticated_requests)",
             unit: "requests",
         },
-        objective: {
+        slo: {
             perc: 99.5,
             window: [1, 'm'],
         },
@@ -29,14 +27,13 @@ export const examples = {
 
     percentileReqLatency: {
         description: "Latency Percentile",
-        indicator: {
+        sli: {
             timeSlice: 60,
-            signal: "P75(response_latency) < 800ms",
-            signalIndicatesGood: true,
+            good: "P75(response_latency) < 800ms",
             valid: "aggregation_periods",
             unit: "aggregation_periods",
         },
-        objective: {
+        slo: {
             perc: 99.5,
             window: [1, 'm'],
         },
@@ -44,14 +41,13 @@ export const examples = {
 
     errorRate: {
         description: "Error Rate",
-        indicator: {
-            signal: "response_code >= 500",
-            signalIndicatesGood: false,
+        sli: {
+            good: "response_code < 500",
             unit: "errors",
             valid: "count(requests)",
             unit: "requests",
         },
-        objective: {
+        slo: {
             perc: 99.5,
             window: [1, 'm'],
         },

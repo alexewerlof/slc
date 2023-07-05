@@ -77,3 +77,7 @@ export function secondsToTimePeriod(seconds, useShortTitle = false) {
 
     return result.join(', ')
 }
+
+export function toFixed(x, precision = 3) {
+    return Number(x.toFixed(precision))
+}

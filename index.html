@@ -48,12 +48,12 @@
         </label>
         <label v-else>
             <h2>Event unit</h2>
-            <input type="text" v-model="sli.eventUnit">
+            <input type="text" v-model="sli.unit">
         </label>
         </Transition>
         <label>
             <h2 v-if="sli.isTimeBased">Good {{secondsToTimePeriod(sli.aggregationPeriod)}}</h2>
-            <h2 v-else>Good {{sli.eventUnit}}</h2>
+            <h2 v-else>Good {{sli.unit}}</h2>
             <input type="text" v-model="sli.good">
         </label>
         <label v-if="!sli.isTimeBased">
@@ -127,29 +127,29 @@
 
         <h2>Example</h2>
         <label>
-            <h3>{{sli.good}} #{{sli.eventUnit}} in <time>{{secondsToTimePeriod(windowSec)}}</time></h3>
+            <h3>{{sli.good}} #{{sli.unit}} in <time>{{secondsToTimePeriod(windowSec)}}</time></h3>
             <input type="number" v-model="sli.goodExample">
         </label>
         <p>
             To hit a slo of <em>{{slo.perc}}%</em> for
-            <em>{{sli.goodExample}}</em> {{sli.eventUnit}} where <code>{{sli.good}}</code>
+            <em>{{sli.goodExample}}</em> {{sli.unit}} where <code>{{sli.good}}</code>
             in <time>{{secondsToTimePeriod(windowSec)}}</time>,
-            you need to have a total of <em>{{totalTarget}}</em> valid {{sli.eventUnit}}.
+            you need to have a total of <em>{{totalTarget}}</em> valid {{sli.unit}}.
             <br/>
-            This allows a maximum of <em>{{totalTarget - sli.goodExample}}</em> invalid {{sli.eventUnit}}
+            This allows a maximum of <em>{{totalTarget - sli.goodExample}}</em> invalid {{sli.unit}}
             in this period.
         </p>
         <label>
-            <h3>{{sli.valid}} #{{sli.eventUnit}} in <time>{{secondsToTimePeriod(windowSec)}}</time></h3>
+            <h3>{{sli.valid}} #{{sli.unit}} in <time>{{secondsToTimePeriod(windowSec)}}</time></h3>
             <input type="number" v-model="sli.validExample">
         </label>
         <p>
             To hit a slo of <em>{{slo.perc}}%</em> for
-            <em>{{sli.validExample}}</em> <code>{{sli.valid}}</code> {{sli.eventUnit}}
+            <em>{{sli.validExample}}</em> <code>{{sli.valid}}</code> {{sli.unit}}
             in <time>{{secondsToTimePeriod(windowSec)}}</time>,
-            you need to have a total of <em>{{goodTarget}}</em> good {{sli.eventUnit}}.
+            you need to have a total of <em>{{goodTarget}}</em> good {{sli.unit}}.
             <br/>
-            This allows a maximum of <em>{{sli.validExample - goodTarget}}</em> bad {{sli.eventUnit}}
+            This allows a maximum of <em>{{sli.validExample - goodTarget}}</em> bad {{sli.unit}}
             in this period.
         </p>
 
@@ -160,7 +160,10 @@
         </p>
 
         <h1 id="alert-title">Alert</h1>
-        <p>Upcoming...</p>
+        <label>
+            <h2>Burn rate</h2>
+            <input type="range" min="0.1" max="20" step="0.1">
+        </label>
 
     </main>
 
