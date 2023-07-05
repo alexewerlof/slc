@@ -128,28 +128,28 @@
         <h2>Example</h2>
         <label>
             <h3>{{sli.good}} #{{sli.unit}} in <time>{{secondsToTimePeriod(windowSec)}}</time></h3>
-            <input type="number" v-model="sli.goodExample">
+            <input type="number" v-model="sliExample.good">
         </label>
         <p>
             To hit a slo of <em>{{slo.perc}}%</em> for
-            <em>{{sli.goodExample}}</em> {{sli.unit}} where <code>{{sli.good}}</code>
+            <em>{{sliExample.good}}</em> {{sli.unit}} where <code>{{sli.good}}</code>
             in <time>{{secondsToTimePeriod(windowSec)}}</time>,
             you need to have a total of <em>{{totalTarget}}</em> valid {{sli.unit}}.
             <br/>
-            This allows a maximum of <em>{{totalTarget - sli.goodExample}}</em> invalid {{sli.unit}}
+            This allows a maximum of <em>{{totalTarget - sliExample.good}}</em> invalid {{sli.unit}}
             in this period.
         </p>
         <label>
             <h3>{{sli.valid}} #{{sli.unit}} in <time>{{secondsToTimePeriod(windowSec)}}</time></h3>
-            <input type="number" v-model="sli.validExample">
+            <input type="number" v-model="sliExample.valid">
         </label>
         <p>
             To hit a slo of <em>{{slo.perc}}%</em> for
-            <em>{{sli.validExample}}</em> <code>{{sli.valid}}</code> {{sli.unit}}
+            <em>{{sliExample.valid}}</em> <code>{{sli.valid}}</code> {{sli.unit}}
             in <time>{{secondsToTimePeriod(windowSec)}}</time>,
             you need to have a total of <em>{{goodTarget}}</em> good {{sli.unit}}.
             <br/>
-            This allows a maximum of <em>{{sli.validExample - goodTarget}}</em> bad {{sli.unit}}
+            This allows a maximum of <em>{{sliExample.valid - goodTarget}}</em> bad {{sli.unit}}
             in this period.
         </p>
 

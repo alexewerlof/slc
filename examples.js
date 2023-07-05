@@ -43,7 +43,6 @@ export const examples = {
         description: "Error Rate",
         sli: {
             good: "response_code < 500",
-            unit: "errors",
             valid: "count(requests)",
             unit: "requests",
         },

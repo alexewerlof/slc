@@ -7,9 +7,7 @@ const sli = reactive({
     // aggregation period in seconds
     aggregationPeriod: 60,
     good: 'response_time < 500ms',
-    goodExample: 9_999_850,
     valid: 'authenticated_requests',
-    validExample: 10_000_000,
     unit: 'requests',
 })
 
@@ -17,6 +15,11 @@ const slo = reactive({
     perc: 99.5,
     windowMult: 1,
     windowUnit: windowUnits[4],
+})
+
+const sliExample = reactive({
+    good: 9_999_850,
+    valid: 10_000_000,
 })
 
 const sloInt = computed({
@@ -68,21 +71,22 @@ const app = createApp({
         })
 
         const goodTarget = computed(() => {
-            return Math.ceil(slo.perc * sli.validExample / 100)
+            return Math.ceil(slo.perc * sliExample.valid / 100)
         })
 
         const totalTarget = computed(() => {
-            return Math.ceil(sli.goodExample * 100 / slo.perc)
+            return Math.ceil(sliExample.good * 100 / slo.perc)
         })
 
         const exampleTarget = computed(() => {
-            return toFixed(sli.goodExample * 100 / sli.validExample, 3)
+            return toFixed(sliExample.good * 100 / sliExample.valid, 3)
         })
 
         return {
             examples,
             sli,
             slo,
+            sliExample,
             sloInt,
             sloFrac,
             errorBudget,
