@@ -4,6 +4,10 @@ export function percent(x, total) {
     return x * total / 100
 }
 
+export function percentToRatio(x) {
+    return toFixed(x / 100, 5)
+}
+
 /**
  * Calculates the percentage of a given time window in seconds
  * @param {number} perc 0-100

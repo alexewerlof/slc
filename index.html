@@ -65,7 +65,7 @@
         <h2>Formula</h2>
         <div v-if="sli.isTimeBased">
             <p>Percentage of good time:</p>
-            <code>SLI = length({{ sli.good }}) / length(total_time) * 100</code>
+            <code>SLI = time_length({{ sli.good }}) / time_length(total_time) * 100</code>
         </div>
         <div v-else>
             <p>Percentage of good events:</p>
@@ -124,42 +124,45 @@
             <input type="range" min="1" :max="alertCalc.maxFraction" v-model="alert.windowPerc">
         </label>
         <p>
-            Time to exhausting {{alert.windowPerc}}% of error budget:<br/>
+            Alert after exhausting {{alert.windowPerc}}% of error budget:<br/>
             {{ secondsToTimePeriod(alertCalc.longWindowTimeToExhaust) }}<br/>
             ({{ humanSeconds(alertCalc.longWindowTimeToExhaust) }})
         </p>
         <h2>Formula</h2>
         <h3>Long window: {{ secondsToTimePeriod(alertCalc.longWindowTimeToExhaust) }}</h3>
         <code v-if="sli.isTimeBased">
-            sum(
+            time_length(
                 {{ sli.good }},
                 {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
-            ) ≤ {{slo.perc}}%
+            ) ≤ {{ humanSeconds(percent(slo.perc, alertCalc.longWindowTimeToExhaust)) }}
         </code>
         <code v-else>
             sum(
                 100 * ({{sli.good}}) / ({{sli.valid}}),
                 {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
-            ) ≤ {{slo.perc}}%
+            ) ≤ {{ percentToRatio(slo.perc) }}
         </code>
 
-        <h3>Short window {{ secondsToTimePeriod(alertCalc.shortWindowTimeToExhaust) }}</h3>
+        <h3>Short window: {{ secondsToTimePeriod(alertCalc.shortWindowTimeToExhaust) }}</h3>
+        <p>
+            Short window is 1/12 of long window.
+        </p>
         <code v-if="sli.isTimeBased">
-            sum(
+            time_length(
                 {{ sli.good }},
                 {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
-            ) ≤ {{slo.perc}}%
+            ) ≤ {{ humanSeconds(percent(slo.perc, alertCalc.shortWindowTimeToExhaust)) }}
         </code>
         <code v-else>
             sum(
                 100 * ({{sli.good}}) / ({{sli.valid}}),
                 {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
-            ) ≤ {{slo.perc}}%
+            ) ≤ {{ percentToRatio(slo.perc) }}
         </code>
 
     </main>
 
-    <footer>Copyright (C) 2023 <a href="https://alexewerlof.com">Alex Ewerlof</a> | <a href="https://github.com/userpixel/slo">Github</a> | <a href="https://vuejs.org/">Uses Vue</a> | <a href="https://blog.alexewerlof.com/p/why-bother-with-sli-and-slo">Why bother?</a></footer>
+    <footer>Copyright (C) 2023 <a href="https://alexewerlof.com">Alex Ewerlof</a> | <a href="https://github.com/userpixel/slo">Github</a> | <a href="https://blog.alexewerlof.com/p/why-bother-with-sli-and-slo">Why bother?</a></footer>
 
     <script type="module" src="index.js"></script>
 </body>

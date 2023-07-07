@@ -1,5 +1,5 @@
 import { createApp, ref, reactive, computed, watch } from './vue@3.3.4_dist_vue.esm-browser.prod.js'
-import { errorBudgetEvents, errorBudgetPerc, errorBudgetTime, percent } from './sl-math.js'
+import { errorBudgetEvents, errorBudgetPerc, errorBudgetTime, percent, percentToRatio } from './sl-math.js'
 import { examples } from './examples.js'
 import { windowUnits, secondsToTimePeriod, humanSeconds, toFixed, findWindowUnitFromShortTitle } from './util.js'
 
@@ -119,6 +119,8 @@ const app = createApp({
             windowUnits,
             secondsToTimePeriod,
             humanSeconds,
+            percentToRatio,
+            percent,
             alert,
             alertCalc,
         }
