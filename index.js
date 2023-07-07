@@ -79,12 +79,14 @@ const alertCalc = computed(() => {
     if (alert.windowPerc > maxFraction) {
         alert.windowPerc = maxFraction
     }
-    const fractionalTimeToExhaust = percent(alert.windowPerc, timeToExhaust)
+    const longWindowTimeToExhaust = percent(alert.windowPerc, timeToExhaust)
+    const shortWindowTimeToExhaust = longWindowTimeToExhaust / 12
 
     return {
         timeToExhaust,
         maxFraction,
-        fractionalTimeToExhaust,
+        longWindowTimeToExhaust,
+        shortWindowTimeToExhaust,
     }
 })
 

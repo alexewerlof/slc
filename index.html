@@ -118,20 +118,35 @@
         </label>
         <p>
             Time to exhausting {{alert.windowPerc}}% of error budget:<br/>
-            {{ secondsToTimePeriod(alertCalc.fractionalTimeToExhaust) }}<br/>
-            ({{ humanSeconds(alertCalc.fractionalTimeToExhaust) }})
+            {{ secondsToTimePeriod(alertCalc.longWindowTimeToExhaust) }}<br/>
+            ({{ humanSeconds(alertCalc.longWindowTimeToExhaust) }})
         </p>
         <h2>Formula</h2>
+        <h3>Long window: {{ secondsToTimePeriod(alertCalc.longWindowTimeToExhaust) }}</h3>
         <code v-if="sli.isTimeBased">
             sum(
                 {{ sli.good }},
-                {{ humanSeconds(alertCalc.fractionalTimeToExhaust) }}
+                {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
             ) ≤ {{slo.perc}}%
         </code>
         <code v-else>
             sum(
                 100 * ({{sli.good}}) / ({{sli.valid}}),
-                {{ humanSeconds(alertCalc.fractionalTimeToExhaust) }}
+                {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
+            ) ≤ {{slo.perc}}%
+        </code>
+
+        <h3>Short window {{ secondsToTimePeriod(alertCalc.shortWindowTimeToExhaust) }}</h3>
+        <code v-if="sli.isTimeBased">
+            sum(
+                {{ sli.good }},
+                {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
+            ) ≤ {{slo.perc}}%
+        </code>
+        <code v-else>
+            sum(
+                100 * ({{sli.good}}) / ({{sli.valid}}),
+                {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
             ) ≤ {{slo.perc}}%
         </code>
 
