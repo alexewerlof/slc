@@ -22,7 +22,7 @@ body {
     padding: 0;
     position: sticky;
     top: 0;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     color: var(--background-color);
     z-index: 1;
     text-align: center;
@@ -127,7 +127,7 @@ h1[id] {
 
 header {
     color: var(--background-color);
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     text-align: center;
     font-size: 1.2em;
 }
