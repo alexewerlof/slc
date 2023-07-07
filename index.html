@@ -24,9 +24,15 @@
 
     <main id="app" v-cloak>
         <h1>Examples</h1>
-        <select v-model="exampleIndex">
-            <option v-for="(spec, name) in examples" :value="example" :key="name">{{name}}</option>
+        <select v-model="selectedExampleIndex">
+            <option
+                v-for="(example, index) in examples"
+                :key="example.description"
+                :value="index"
+            >{{example.description}}</option>
         </select>
+
+        <!------------------------ SLI ------------------------>
         <h1 id="sli-title">SLI</h1>
         <h2>Type</h2>
         <label>
@@ -34,45 +40,32 @@
             Time based
         </label>
         <Transition>
-        <label v-if="sli.isTimeBased">
-            <h3>Aggregation Period</h3>
-            <select v-model="sli.aggregationPeriod">
-                <option value="60">1 minute</option>
-                <option value="180">3 minutes</option>
-                <option value="300">5 minutes</option>
-                <option value="600">10 minutes</option>
-                <option value="900">15 minutes</option>
-                <option value="1800">30 minutes</option>
-                <option value="3600">1 hour</option>
-            </select>
-        </label>
-        <label v-else>
+        <label v-if="!sli.isTimeBased">
             <h2>Event unit</h2>
             <input type="text" v-model="sli.unit">
         </label>
         </Transition>
         <label>
-            <h2 v-if="sli.isTimeBased">Good {{secondsToTimePeriod(sli.aggregationPeriod)}}</h2>
+            <h2 v-if="sli.isTimeBased">Good time</h2>
             <h2 v-else>Good {{sli.unit}}</h2>
             <input type="text" v-model="sli.good">
         </label>
         <label v-if="!sli.isTimeBased">
-            <h2>Valid {{secondsToTimePeriod(sli.aggregationPeriod)}}</h2>
+            <h2>Valid {{sli.unit}}</h2>
             <input type="text" v-model="sli.valid">
         </label>
     
-        <div v-show="sli.good">
-            <h2>Formula</h2>
-            <div v-if="sli.isTimeBased">
-                <p>Percentage of good {{secondsToTimePeriod(sli.aggregationPeriod)}} aggregation periods:</p>
-                <code>SLI = sum({{sli.good}}, {{secondsToTimePeriod(sli.aggregationPeriod)}}) / sum({{sli.valid}}, secondsToTimePeriod({{sli.aggregationPeriod}})) * 100</code>
-            </div>
-            <div v-else>
-                <p>Percentage of good events:</p>
-                <code>SLI = sum({{sli.good}}) / sum({{sli.valid}}) * 100</code>
-            </div>
+        <h2>Formula</h2>
+        <div v-if="sli.isTimeBased">
+            <p>Percentage of good time:</p>
+            <code>SLI = length({{sli.good}}) / length(total_time) * 100</code>
+        </div>
+        <div v-else>
+            <p>Percentage of good events:</p>
+            <code>SLI = sum({{sli.good}}) / sum({{sli.valid}}) * 100</code>
         </div>
 
+        <!------------------------ SLO ------------------------>
         <h1 id="slo-title">SLO: {{slo.perc}}%</h1>
         
         <label>
@@ -84,7 +77,7 @@
             <input type="range" min="0" max="0.999" step="0.001" v-model="sloFrac">
         </label>
 
-        <h2>Compliance Period: <label for="slo-window-unit-multiplier">{{ secondsToTimePeriod(windowSec) }}</label></h2>
+        <h2>Compliance Period: <label for="slo-window-unit-multiplier">{{ secondsToTimePeriod(sloWindow) }}</label></h2>
 
         <input type="range" min="1" :max="slo.windowUnit.max" v-model="slo.windowMult" id="slo-window-unit-multiplier">
 
@@ -94,59 +87,38 @@
         </label>
 
         <p>
-            <time>{{windowSec}} sec</time>
+            <time>{{sloWindow}} sec</time>
         </p>
     
-        <h1 id="error-budget-title">Error budget</h1>
-        <div v-if="sli.isTimeBased">
-            <p>
-                {{errorBudget.perc}}% of
-                <time>{{ secondsToTimePeriod(windowSec) }}</time>
-                =
-                <time>{{ secondsToTimePeriod(downTime) }}</time>
-            </p>
-            <p>
-                <time>{{downTime}}</time> sec
-            </p>
-            <p>
-                Percentage of bad {{secondsToTimePeriod(sli.aggregationPeriod)}} aggregation periods:
-            </p>
-            <code>
-                Error Budget =
-                    sum(not ({{sli.good}}), {{secondsToTimePeriod(sli.aggregationPeriod)}})
-                    /
-                    sum({{sli.valid}}, {{secondsToTimePeriod(sli.aggregationPeriod)}})
-                    * 100
-            </code>
-        </div>
-        <div v-else>
-            <p>
-                {{errorBudget.perc}}%
-            </p>
-        </div>
+        <!------------------------ Error budget ------------------------>
+        <h1 id="error-budget-title">Error budget: {{ errorBudget.perc }}% </h1>
+        <p>
+            {{ errorBudget.desc }}
+        </p>
 
+        <!------------------------ Example ------------------------>
         <h2>Example</h2>
         <label>
-            <h3>{{sli.good}} #{{sli.unit}} in <time>{{secondsToTimePeriod(windowSec)}}</time></h3>
+            <h3>{{sli.good}} #{{sli.unit}} in <time>{{secondsToTimePeriod(sloWindow)}}</time></h3>
             <input type="number" v-model="sliExample.good">
         </label>
         <p>
             To hit a slo of <em>{{slo.perc}}%</em> for
             <em>{{sliExample.good}}</em> {{sli.unit}} where <code>{{sli.good}}</code>
-            in <time>{{secondsToTimePeriod(windowSec)}}</time>,
+            in <time>{{secondsToTimePeriod(sloWindow)}}</time>,
             you need to have a total of <em>{{totalTarget}}</em> valid {{sli.unit}}.
             <br/>
             This allows a maximum of <em>{{totalTarget - sliExample.good}}</em> invalid {{sli.unit}}
             in this period.
         </p>
         <label>
-            <h3>{{sli.valid}} #{{sli.unit}} in <time>{{secondsToTimePeriod(windowSec)}}</time></h3>
+            <h3>{{sli.valid}} #{{sli.unit}} in <time>{{secondsToTimePeriod(sloWindow)}}</time></h3>
             <input type="number" v-model="sliExample.valid">
         </label>
         <p>
             To hit a slo of <em>{{slo.perc}}%</em> for
             <em>{{sliExample.valid}}</em> <code>{{sli.valid}}</code> {{sli.unit}}
-            in <time>{{secondsToTimePeriod(windowSec)}}</time>,
+            in <time>{{secondsToTimePeriod(sloWindow)}}</time>,
             you need to have a total of <em>{{goodTarget}}</em> good {{sli.unit}}.
             <br/>
             This allows a maximum of <em>{{sliExample.valid - goodTarget}}</em> bad {{sli.unit}}
@@ -159,6 +131,7 @@
             (your target is {{slo.perc}}%)
         </p>
 
+        <!------------------------ Alert ------------------------>
         <h1 id="alert-title">Alert</h1>
         <label>
             <h2>Burn rate</h2>

@@ -48,6 +48,10 @@ export const windowUnits = [
     },
 ]
 
+export function findWindowUnitFromShortTitle(windowShortTitle) {
+    return windowUnits.find(({ shortTitle }) => shortTitle === windowShortTitle)
+}
+
 export function secondsToTimePeriod(seconds, useShortTitle = false) {
     let result = []
 
