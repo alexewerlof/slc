@@ -4,10 +4,6 @@ export function percent(x, total) {
     return x * total / 100
 }
 
-export function errorBudgetPerc(sloPerc) {
-    return 100 - sloPerc
-}
-
 /**
  * Calculates the percentage of a given time window in seconds
  * @param {number} perc 0-100
@@ -27,4 +23,14 @@ export function windowPerc(perc, timeWindowSec) {
 
 export function errorBudgetTime(sloPerc, sloWindowSec) {
     return windowPerc(errorBudgetPerc(sloPerc), sloWindowSec)
+}
+
+export function errorBudgetPerc(sloPerc) {
+    return 100 - sloPerc
+}
+
+export function errorBudgetEvents(sloPerc, totalEvents) {
+    const x = Math.floor(percent(errorBudgetPerc(sloPerc), totalEvents))
+    console.log('x', x, 'sloPerc', sloPerc, 'totalEvents', totalEvents)
+    return x
 }

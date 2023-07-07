@@ -1,7 +1,9 @@
 import { createApp, ref, reactive, computed, watch } from './vue@3.3.4_dist_vue.esm-browser.prod.js'
-import { errorBudgetPerc, errorBudgetTime } from './sl-math.js'
+import { errorBudgetEvents, errorBudgetPerc, errorBudgetTime } from './sl-math.js'
 import { examples } from './examples.js'
 import { windowUnits, secondsToTimePeriod, toFixed, findWindowUnitFromShortTitle } from './util.js'
+
+const selectedExampleIndex = ref(2)
 
 const sli = reactive({
     // whether the SLO is time-based or event-based
@@ -22,12 +24,6 @@ const slo = reactive({
 
 const sloWindow = computed(() => {
     return slo.windowUnit.sec * slo.windowMult
-})
-
-// Only useful for event based SLIs
-const sliExample = reactive({
-    good: 9_999_850,
-    valid: 10_000_000,
 })
 
 const sloInt = computed({
@@ -52,6 +48,8 @@ const sloFrac = computed({
     }
 })
 
+const errorBudgetValidExample = ref(1_000_000)
+
 const errorBudget = computed(() => {
     const perc = toFixed(errorBudgetPerc(slo.perc))
 
@@ -59,46 +57,20 @@ const errorBudget = computed(() => {
         const sec = errorBudgetTime(slo.perc, sloWindow.value)
         return {
             perc,
-            desc: `${secondsToTimePeriod(sec)} (${sec} sec)`,
+            sec,
         }
     }
 
+    const events = errorBudgetEvents(slo.perc, errorBudgetValidExample.value)
+    console.log('budget', events)
     return {
         perc,
-        desc: `${Math.round(errorBudgetTime(slo.perc, sloWindow.value))} ${sli.unit}`,
+        events,
     }
 })
 
 const app = createApp({
     setup() {
-        const upTime = computed(() => {
-            const ret = sloWindow.value * slo.perc / 100
-            if (ret < 1) {
-                return toFixed(ret, 3)
-            } if (ret < 10) {
-                return toFixed(ret, 1)
-            }
-            return Math.round(ret)
-        })
-
-        const ebPerc = computed(() => {
-            return toFixed(errorBudgetPerc(slo.perc))
-        })
-
-        const goodTarget = computed(() => {
-            return Math.ceil(slo.perc * sliExample.valid / 100)
-        })
-
-        const totalTarget = computed(() => {
-            return Math.ceil(sliExample.good * 100 / slo.perc)
-        })
-
-        const exampleTarget = computed(() => {
-            return toFixed(sliExample.good * 100 / sliExample.valid)
-        })
-
-        const selectedExampleIndex = ref(0)
-
         watch(selectedExampleIndex, (newVal) => {
             const example = examples[newVal]
             sli.isTimeBased = Boolean(example.sli.isTimeBased)
@@ -118,18 +90,13 @@ const app = createApp({
             selectedExampleIndex,
             sli,
             slo,
-            sliExample,
             sloInt,
             sloFrac,
-            errorBudget,
-            upTime,
-            ebPerc,
-            windowUnits,
             sloWindow,
+            errorBudget,
+            errorBudgetValidExample,
+            windowUnits,
             secondsToTimePeriod,
-            goodTarget,
-            totalTarget,
-            exampleTarget,
         }
     }
 })
