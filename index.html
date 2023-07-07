@@ -29,7 +29,7 @@
                 v-for="(example, index) in examples"
                 :key="example.description"
                 :value="index"
-            >{{example.description}}</option>
+            >{{ example.description }}</option>
         </select>
 
         <!------------------------ SLI ------------------------>
@@ -47,27 +47,27 @@
         </Transition>
         <label>
             <h2 v-if="sli.isTimeBased">Good time</h2>
-            <h2 v-else>Good {{sli.unit}}</h2>
+            <h2 v-else>Good {{ sli.unit }}</h2>
             <input type="text" v-model="sli.good">
         </label>
         <label v-if="!sli.isTimeBased">
-            <h2>Valid {{sli.unit}}</h2>
+            <h2>Valid {{ sli.unit }}</h2>
             <input type="text" v-model="sli.valid">
         </label>
     
         <h2>Formula</h2>
         <div v-if="sli.isTimeBased">
             <p>Percentage of good time:</p>
-            <code>SLI = length({{sli.good}}) / length(total_time) * 100</code>
+            <code>SLI = length({{ sli.good }}) / length(total_time) * 100</code>
         </div>
         <div v-else>
             <p>Percentage of good events:</p>
-            <code>SLI = sum({{sli.good}}) / sum({{sli.valid}}) * 100</code>
+            <code>SLI = sum({{ sli.good }}) / sum({{ sli.valid }}) * 100</code>
         </div>
 
         <!------------------------ SLO ------------------------>
         <label>
-            <h1 id="slo-title">SLO: {{slo.perc}}%</h1>
+            <h1 id="slo-title">SLO: {{ slo.perc }}%</h1>
             <input type="range" min="0" max="99" v-model="sloInt">
         </label>
         <input type="range" min="0" max="0.999" step="0.001" v-model="sloFrac">
@@ -75,7 +75,7 @@
         <label for="slo-window-unit-multiplier">
             <h2>Window:
                 {{ secondsToTimePeriod(sloWindow) }}
-                (<time>{{sloWindow}} sec</time>)
+                (<time>{{ humanSeconds(sloWindow) }}</time>)
             </h2>
         </label>
 
@@ -89,24 +89,29 @@
         <!------------------------ Error budget ------------------------>
         <h1 id="error-budget-title">Error budget: {{ errorBudget.perc }}% </h1>
         <p v-if="sli.isTimeBased">
-            {{secondsToTimePeriod(errorBudget.sec)}}
-            ({{errorBudget.sec}} sec)
+            {{ secondsToTimePeriod(errorBudget.sec) }}
+            ({{ humanSeconds(errorBudget.sec) }})
         </p>
         <p v-else>
             <h3><label for="error-budget-example">Example {{sli.valid}}</label></h3>
             <input type="number" v-model="errorBudgetValidExample" id="error-budget-example">
             <p>
-                {{errorBudget.events}} <code>{{sli.unit}}</code> are allowed to miss the
-                <code>{{sli.good}}</code> condition.
+                {{ errorBudget.events }} <code>{{ sli.unit }}</code> are allowed to miss the
+                <code>{{ sli.good }}</code> condition.
             </p>
         </p>
 
         <!------------------------ Alert ------------------------>
         <h1 id="alert-title">Alert</h1>
         <label>
-            <h2>Burn rate</h2>
-            <input type="range" min="0.1" max="20" step="0.1">
+            <h2>Burn rate: {{ alert.burnRate }}x</h2>
+            <input type="range" min="0.1" max="20" step="0.1" v-model="alert.burnRate">
         </label>
+        <p>
+            Time to exhausting error budget:<br/>
+            {{ secondsToTimePeriod(sloWindow / alert.burnRate) }}<br/>
+            ({{ humanSeconds(sloWindow / alert.burnRate)}})
+        </p>
 
     </main>
 

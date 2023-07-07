@@ -30,7 +30,5 @@ export function errorBudgetPerc(sloPerc) {
 }
 
 export function errorBudgetEvents(sloPerc, totalEvents) {
-    const x = Math.floor(percent(errorBudgetPerc(sloPerc), totalEvents))
-    console.log('x', x, 'sloPerc', sloPerc, 'totalEvents', totalEvents)
-    return x
+    return Math.floor(percent(errorBudgetPerc(sloPerc), totalEvents))
 }

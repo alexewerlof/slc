@@ -82,6 +82,19 @@ export function secondsToTimePeriod(seconds, useShortTitle = false) {
     return result.join(', ')
 }
 
+export function humanSeconds(seconds) {
+    let sec = seconds
+    if (seconds >= 10) {
+        sec = Math.round(seconds)
+    } else if (seconds >= 1) {
+        sec = toFixed(seconds, 1)
+    } else {
+        sec = toFixed(seconds, 3)
+    }
+
+    return `${sec} sec`
+}
+
 export function toFixed(x, precision = 3) {
     return Number(x.toFixed(precision))
 }
