@@ -75,10 +75,15 @@ const alert = reactive({
 
 const alertCalc = computed(() => {
     const timeToExhaust = sloWindow.value / alert.burnRate
+    const maxFraction = Math.ceil(100 / alert.burnRate)
+    if (alert.windowPerc > maxFraction) {
+        alert.windowPerc = maxFraction
+    }
     const fractionalTimeToExhaust = percent(alert.windowPerc, timeToExhaust)
 
     return {
         timeToExhaust,
+        maxFraction,
         fractionalTimeToExhaust,
     }
 })
