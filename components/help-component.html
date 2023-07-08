@@ -1,7 +1,7 @@
-<button @click="open()" v-if="!visible" class="help-component-button">Show help</button>
+<button @click="open()" v-if="!visible" class="help-component-button">Help</button>
 <div class="help-component-contents" v-else>
-    <slot></slot>
     <div class="help-component-button-bar">
         <button @click="close()" class="help-component-button">Close</button>
     </div>
+    <slot></slot>
 </div>
