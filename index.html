@@ -75,6 +75,9 @@
         </label>
     
         <h2>Formula</h2>
+        <help-component>
+            This is a test man
+        </help-component>
         <div v-if="sli.isTimeBased">
             <p>Percentage of good time:</p>
             <code>SLI = time_length({{ sli.good }}) / time_length(total_time) * 100</code>
@@ -176,6 +179,6 @@
 
     <footer>Copyright (C) 2023 <a href="https://alexewerlof.com">Alex Ewerlof</a> | <a href="https://github.com/userpixel/slo">Github</a> | <a href="https://blog.alexewerlof.com/p/why-bother-with-sli-and-slo">Why bother?</a></footer>
 
-    <script type="module" src="index.js"></script>
+    <script type="module" src="index.js" defer async></script>
 </body>
 </html>
