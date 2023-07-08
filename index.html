@@ -30,7 +30,10 @@
     </ul>
 
     <main id="app" v-cloak>
-        <h1>Examples</h1>
+        <h1>Examples <button class="help" @click="toggleHelp('example-help-contents')"></button></h1>
+        <div id="example-help-contents">
+            You can load a pre-defined example to the UI.
+        </div>
         <select v-model="selectedExampleIndex">
             <option
                 v-for="(example, index) in examples"
@@ -41,14 +44,23 @@
 
         <!------------------------ SLI ------------------------>
         <h1 id="sli-title">SLI</h1>
-        <h2>Type</h2>
+        <h2>Type <button class="help" @click="toggleHelp('sli-type-help-contents')"></button></h2>
+        <div id="sli-type-help-contents">
+            SLIs can either be <a target="_blank" href="https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#compliance-period">time-based</a> or
+            <a target="_blank" href="https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#compliance-period">event-based</a>.
+        </div>
         <label>
             <input type="checkbox" v-model="sli.isTimeBased">
             Time based
         </label>
         <Transition>
         <label v-if="!sli.isTimeBased">
-            <h2>Event unit</h2>
+            <h2>Event unit <button class="help" @click="toggleHelp('event-unit-help-contents')"></button></h2>
+            <div id="event-unit-help-contents">
+                The unit of the event that is measured by SLI.
+                This is mainly used in the UI to make it easier to understand.
+                Examples: requests, page views, logins, time window, etc.
+            </div>
             <input type="text" v-model="sli.unit">
         </label>
         </Transition>

@@ -124,6 +124,17 @@ const app = createApp({
             alert,
             alertCalc,
         }
+    },
+    methods: {
+        toggleHelp(id) {
+            console.log('toggleHelp', id)
+            const el = document.getElementById(id)
+            if (el.classList.contains('visible')) {
+                el.classList.remove('visible')
+            } else {
+                el.classList.add('visible')
+            }
+        }
     }
 })
 

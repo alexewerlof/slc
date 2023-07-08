@@ -13,6 +13,9 @@ A simple SLI/SLO calculator that allows playing with different parameters to see
 
 ## Vendor specific
 
+* Google:
+  * [Alerting on your burn rate](https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring/alerting-on-budget-burn-rate) talks about fast and slow burn rate
+  * [Request-based and window-based SLOs](https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#slo-types)
 * Datadog:
   * [Service Level Objectives](https://docs.datadoghq.com/service_management/service_level_objectives/)
   * [Track the status of all your SLOs in Datadog](https://www.datadoghq.com/blog/slo-monitoring-tracking/)
