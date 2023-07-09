@@ -7,6 +7,9 @@ export default {
             visible: false,
         }
     },
+    props: {
+        caption: String,
+    },
     methods: {
         open() {
             this.visible = true

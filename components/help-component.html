@@ -1,4 +1,4 @@
-<button @click="open()" v-if="!visible" class="help-component-button">Help</button>
+<button @click="open()" v-if="!visible" class="help-component-button">{{caption ?? "Help"}}</button>
 <div class="help-component-contents" v-else>
     <div class="help-component-button-bar">
         <button @click="close()" class="help-component-button">Close</button>
