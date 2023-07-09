@@ -4,17 +4,40 @@ import { errorBudgetEvents, errorBudgetPerc, errorBudgetTime, percent, percentTo
 import { examples } from './examples.js'
 import { windowUnits, secondsToTimePeriod, humanSeconds, toFixed, findWindowUnitFromShortTitle } from './util.js'
 
-const selectedExampleIndex = ref(2)
+const selectedExampleIndex = ref(0)
 
 const sli = reactive({
     // whether the SLO is time-based or event-based
     isTimeBased: true,
+    // whether the entire SLO window is considered as valid time (only useful when isTimeBased is true)
+    validIsWindow: true,
     // definition of good events or good time slots
     good: '',
     // definition of valid events or valid time slots
     valid: '',
     // unit of valid events (only useful when isTimeBased is false)
     unit: '',
+})
+
+const sliCalc = computed(() => {
+    let unitCaption = 'Events Unit'
+    let unit = sli.unit
+    let valid = sli.valid
+
+    if (sli.isTimeBased) {
+        unitCaption = 'Time Unit'
+        unit = sli.unit || 'time'
+
+        if (sli.validIsWindow) {
+            valid = `SLO_window`
+        }
+    }
+
+    return {
+        unitCaption,
+        unit,
+        valid,
+    }
 })
 
 const slo = reactive({
@@ -111,6 +134,7 @@ const app = createApp({
             examples,
             selectedExampleIndex,
             sli,
+            sliCalc,
             slo,
             sloInt,
             sloFrac,

@@ -1,7 +1,7 @@
 /* ref:  https://vuejs.org/guide/built-ins/transition.html#the-transition-component */
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 200ms ease;
 }
 
 .v-enter-from,

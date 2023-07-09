@@ -1,19 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Alata&family=Roboto&display=swap');
+@import url('variables.css');
 @import url('components/help-component.css');
-
-:root {
-    --animation-speed: 0.2s;
-    --primary-color: #FFBC52;
-    --secondary-color: #47A9FF;
-    --background-color: #041C31;
-    --background-dark: #001426;
-    --foreground-color: #FFF5E6;
-}
 
 body {
     background-color: var(--background-color);
     color: var(--foreground-color);
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--body-font-family);
     margin: 0;
     padding: 0;
 }
@@ -119,8 +111,8 @@ label.spaced + label.spaced {
 }
 
 h1, h2, h3 {
-    font-family: 'Alata', sans-serif;
-    color: #FFBC52;
+    font-family: var(--title-font-family);
+    color: var(--primary-color);
 }
 
 h1[id] {
@@ -151,4 +143,28 @@ footer {
     text-align: center;
     font-size: 0.8em;
     padding-bottom: 2em;
+}
+
+.formula {
+    display: flex;
+    gap: 0.5em;
+    flex-wrap: wrap;
+}
+
+.formula_chunk {
+    align-self: center;
+}
+
+.formula_fraction {
+    display: flex;
+    flex-direction: column;
+}
+
+.formula_fraction--top {
+    text-align: center;
+    border-bottom: 1px solid white;
+}
+
+.formula_fraction--bottom {
+    text-align: center;
 }

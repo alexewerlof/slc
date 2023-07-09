@@ -1,0 +1,10 @@
+:root {
+    --animation-speed: 0.2s;
+    --primary-color: #FFBC52;
+    --secondary-color: #47A9FF;
+    --background-color: #041C31;
+    --background-dark: #001426;
+    --foreground-color: #FFF5E6;
+    --title-font-family: 'Alata', sans-serif;
+    --body-font-family: 'Roboto', sans-serif;
+}

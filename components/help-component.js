@@ -11,11 +11,8 @@ export default {
         caption: String,
     },
     methods: {
-        open() {
-            this.visible = true
+        toggle() {
+            this.visible = !this.visible
         },
-        close() {
-            this.visible = false
-        }
     }
 }

@@ -4,6 +4,7 @@ export const examples = [
         sli: {
             good: 'ping_response_code == 200',
             valid: 'total_pings',
+            unit: 'minutes',
             isTimeBased: true,
         },
         slo: {

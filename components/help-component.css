@@ -1,3 +1,5 @@
+@import url('variables.css');
+
 .help-component-button {
     display: inline-block;
     font-family: inherit;
@@ -7,14 +9,16 @@
     color: currentColor;
     cursor: help;
     border-radius: 0.3em;
-    margin-bottom: 1em;
+    margin: 0 0.5em;
 }
 
 .help-component-contents {
-    padding: 1em;
-    font-size: 85%;
+    padding: 1rem;
+    font-size: 1rem;
+    font-family: var(--body-font-family);
+    font-weight: normal;
     background-color: var(--foreground-color);
     color: var(--background-color);
-    border-radius: 0.5em;
-    margin: 1em 0;
+    border-radius: 0.3rem;
+    margin: 1rem 0;
 }

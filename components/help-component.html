@@ -1,7 +1,6 @@
-<button @click="open()" v-if="!visible" class="help-component-button">{{caption ?? "Help"}}</button>
-<div class="help-component-contents" v-else>
-    <div class="help-component-button-bar">
-        <button @click="close()" class="help-component-button">Close</button>
+<button @click="toggle()" class="help-component-button">{{caption ?? "Help"}}</button>
+<transition>
+    <div v-show="visible" class="help-component-contents">
+        <slot></slot>
     </div>
-    <slot></slot>
-</div>
+</transition>
