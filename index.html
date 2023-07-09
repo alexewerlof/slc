@@ -30,11 +30,11 @@
     </ul>
 
     <main id="app" v-cloak>
-        <h1>Examples</h1>
+        <label for="select-example"><h1>Examples</h1></label>
         <help-component>
             You can load a pre-defined example to the UI.
         </help-component>
-        <select v-model="selectedExampleIndex">
+        <select v-model="selectedExampleIndex" id="select-example">
             <option
                 v-for="(example, index) in examples"
                 :key="example.description"
@@ -49,18 +49,18 @@
             Time based
         </label>
         <help-component>
-            SLIs can either be <a target="_blank" href="https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#compliance-period">time-based</a> or
-            <a target="_blank" href="https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#compliance-period">event-based</a>.
+            SLIs can either be <a target="_blank" href="https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#compliance-period" rel="noopener">time-based</a> or
+            <a target="_blank" href="https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#compliance-period" rel="noopener">event-based</a>.
         </help-component>
         <Transition>
             <div v-if="!sli.isTimeBased">
-                <h2>Event units</h2>
+                <label for="input-example-units"><h2>Event units</h2></label>
                 <help-component>
                     The unit of the event that is measured by SLI.
                     This is mainly used in the UI to make it easier to understand.
                     Examples: requests, page views, logins, time window, etc.
                 </help-component>
-                <input type="text" v-model="sli.unit">
+                <input id="input-example-units" type="text" v-model="sli.unit">
             </div>
         </Transition>
         <label>
@@ -75,10 +75,16 @@
     
         <h2>Formula</h2>
         <help-component>
-            This is a test man
+            <p v-if="sli.isTimeBased">
+                Since the SLI is time based, the formula measures the 
+                percentage of good time divided by the valid time.
+            </p>
+            <p v-else>
+                Since the SLI is event based, the formula measures the 
+                percentage of good events divided by the valid events.
+            </p>
         </help-component>
         <div v-if="sli.isTimeBased">
-            <p>Percentage of good time:</p>
             <code>SLI = time_length({{ sli.good }}) / time_length(total_time) * 100</code>
         </div>
         <div v-else>
