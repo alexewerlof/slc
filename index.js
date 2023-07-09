@@ -95,6 +95,8 @@ const errorBudget = computed(() => {
 const alert = reactive({
     burnRate: 1,
     windowPerc: 50,
+    shortWindowVisible: false,
+    shortWindowDivider: 12,
 })
 
 const alertCalc = computed(() => {
@@ -103,14 +105,16 @@ const alertCalc = computed(() => {
     if (alert.windowPerc > maxFraction) {
         alert.windowPerc = maxFraction
     }
+    const shortWindowPerc = toFixed(alert.windowPerc / alert.shortWindowDivider, 1)
     const longWindowTimeToExhaust = percent(alert.windowPerc, timeToExhaust)
-    const shortWindowTimeToExhaust = longWindowTimeToExhaust / 12
+    const shortWindowTimeToExhaust = longWindowTimeToExhaust / alert.shortWindowDivider
 
     return {
         timeToExhaust,
         maxFraction,
         longWindowTimeToExhaust,
         shortWindowTimeToExhaust,
+        shortWindowPerc,
     }
 })
 

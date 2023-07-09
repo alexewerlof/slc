@@ -172,19 +172,19 @@
         </label>
 
         <!------------------------ Error budget ------------------------>
-        <h1 id="error-budget-title">Error budget: {{ errorBudget.perc }}% </h1>
+        <h1 id="error-budget-title">Error budget: {{ errorBudget.perc }}%</h1>
         <p v-if="sli.isTimeBased">
             {{ secondsToTimePeriod(errorBudget.sec) }}
             ({{ humanSeconds(errorBudget.sec) }})
         </p>
-        <p v-else>
-            <h3><label for="error-budget-example">Example {{sli.valid}}</label></h3>
-            <input type="number" v-model="errorBudgetValidExample" id="error-budget-example">
+        <div v-if="!sli.isTimeBased">
+            <h3><label for="error-budget-example">Example {{sliCalc.valid}}</label></h3>
+            <input type="number" v-model="errorBudgetValidExample" id="error-budget-example" />
             <p>
                 {{ errorBudget.events }} <code>{{ sli.unit }}</code> are allowed to miss the
                 <code>{{ sli.good }}</code> condition.
             </p>
-        </p>
+        </div>
 
         <!------------------------ Alert ------------------------>
         <h1 id="alert-title">Alert</h1>
@@ -198,16 +198,14 @@
             ({{ humanSeconds(alertCalc.timeToExhaust) }})
         </p>
         <label>
-            <h2>Percentage of budget: {{alert.windowPerc}}%</h2>
+            <h2>Alert After Exhausting {{ alert.windowPerc }}%</h2>
             <input type="range" min="1" :max="alertCalc.maxFraction" v-model="alert.windowPerc">
         </label>
         <p>
-            Alert after exhausting {{alert.windowPerc}}% of error budget:<br/>
-            {{ secondsToTimePeriod(alertCalc.longWindowTimeToExhaust) }}<br/>
+            Alert after exhausting {{alert.windowPerc}}% of error budget.<br/>
+            Detection Time: {{ secondsToTimePeriod(alertCalc.longWindowTimeToExhaust) }}<br/>
             ({{ humanSeconds(alertCalc.longWindowTimeToExhaust) }})
         </p>
-        <h2>Formula</h2>
-        <h3>Long window: {{ secondsToTimePeriod(alertCalc.longWindowTimeToExhaust) }}</h3>
         <code v-if="sli.isTimeBased">
             time_length(
                 {{ sli.good }},
@@ -221,22 +219,40 @@
             ) ≤ {{ percentToRatio(slo.perc) }}
         </code>
 
-        <h3>Short window: {{ secondsToTimePeriod(alertCalc.shortWindowTimeToExhaust) }}</h3>
         <p>
-            Short window is 1/12 of long window.
+            <input id="show-short-window-alert" type="checkbox" v-model="alert.shortWindowVisible">
+            <label for="show-short-window-alert">Show short window alert</label>
+            <help-component>
+                Short window alert is same as the normal long window alert but with a shorter window.
+                The short window alert improves the detection time but adds complexity
+                to the alerting setup.
+            </help-component>
         </p>
-        <code v-if="sli.isTimeBased">
-            time_length(
-                {{ sli.good }},
-                {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
-            ) ≤ {{ humanSeconds(percent(slo.perc, alertCalc.shortWindowTimeToExhaust)) }}
-        </code>
-        <code v-else>
-            sum(
-                100 * ({{sli.good}}) / ({{sli.valid}}),
-                {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
-            ) ≤ {{ percentToRatio(slo.perc) }}
-        </code>
+
+        <div v-if="alert.shortWindowVisible">
+            <label>
+                <h3>Short window: 1/{{ alert.shortWindowDivider }} of long window</h3>
+                <input type="range" min="2" max="20" v-model="alert.shortWindowDivider">
+            </label>
+
+            <p>
+                Alert after exhausting {{ alertCalc.shortWindowPerc }}% of error budget.<br/>
+                Detection Time: {{ secondsToTimePeriod(alertCalc.shortWindowTimeToExhaust) }}<br/>
+                ({{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }})
+            </p>
+            <code v-if="sli.isTimeBased">
+                time_length(
+                    {{ sli.good }},
+                    {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
+                ) ≤ {{ humanSeconds(percent(slo.perc, alertCalc.shortWindowTimeToExhaust)) }}
+            </code>
+            <code v-else>
+                sum(
+                    100 * ({{sli.good}}) / ({{sli.valid}}),
+                    {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
+                ) ≤ {{ percentToRatio(slo.perc) }}
+            </code>
+        </div>
 
     </main>
 
