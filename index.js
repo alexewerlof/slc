@@ -159,7 +159,7 @@ const app = createApp({
     },
     methods: {
         changeSLO(amount) {
-            slo.perc = toFixed(clamp(slo.perc + amount, 0, 100))
+            slo.perc = toFixed(clamp(slo.perc + amount, 0, 99.999))
         }
     }
 })
