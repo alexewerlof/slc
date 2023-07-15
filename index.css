@@ -20,11 +20,10 @@ code {
 }
 
 section {
-    padding-top: 10em;
     max-width: 600px;
     margin: 0 auto;
     box-sizing: content-box;
-    padding: 1em 0 2em 0;
+    padding: 1em 1em 2em 1em;
     border-bottom: 1px solid var(--primary-color);
 }
 
