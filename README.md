@@ -7,6 +7,7 @@ A simple SLI/SLO calculator that allows playing with different parameters to see
 # Learn more
 
 * [Implementing SLOs](https://sre.google/workbook/implementing-slos/): a good guide from Google Workbook about pragmatic tips about SLIs and SLOs
+* [Request based and window based SLIs](https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#defn-sli)
 * [Time based vs event based SLIs](https://www.ibm.com/docs/en/instana-observability/current?topic=instana-service-level-objectives-slo#sli-types)
 * [OpenSLO](https://github.com/openslo/openslo) defines a DSL (domain-specific language) for SLI/SLO
 * [Alerting on SLOs](https://sre.google/workbook/alerting-on-slos/)
