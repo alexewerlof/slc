@@ -149,7 +149,7 @@
                 </p>
             </help-component>
         </h2>
-        <div v-if="sli.isTimeBased">
+        <div v-if="sli.isTimeBased" class="block">
             <label>
                 <input type="checkbox" v-model="sli.validIsWindow">
                 The entire SLO window is valid time
@@ -196,8 +196,12 @@
             <div class="formula_chunk">× 100</div>
             <div class="formula_chunk">=</div>
             <div class="formula_fraction">
-                <div class="formula_fraction--top">{{ sli.good }}</div>
-                <div class="formula_fraction--bottom">{{ sliCalc.valid }}</div>
+                <div class="formula_fraction--top">
+                    <label for="sli-good-input"><code>{{ sli.good }}</code></label>
+                </div>
+                <div class="formula_fraction--bottom">
+                    <code>{{ sliCalc.valid }}</code>
+                </div>
             </div>
             <div class="formula_chunk">× 100</div>
         </div>
@@ -417,27 +421,33 @@
             <br />
             ({{ humanSeconds(alertCalc.longWindowTimeToExhaust) }})
         </div>
-        <code v-if="sli.isTimeBased">
-            time_length(
-                {{ sli.good }},
-                {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
-            ) ≤ {{ humanSeconds(percent(slo.perc, alertCalc.longWindowTimeToExhaust)) }}
-        </code>
-        <code v-else>
-            sum(
-                100 * ({{sli.good}}) / ({{sli.valid}}),
-                {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
-            ) ≤ {{ percentToRatio(slo.perc) }}
-        </code>
+        <h3>
+            <span v-if="alert.shortWindowVisible">Long Window</span>
+            Alert Policy
+        </h3>
+        <div class="block">
+            <code v-if="sli.isTimeBased">
+                time_length(
+                    {{ sli.good }},
+                    {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
+                ) ≤ {{ humanSeconds(percent(slo.perc, alertCalc.longWindowTimeToExhaust)) }}
+            </code>
+            <code v-else>
+                sum(
+                    100 * ({{sli.good}}) / ({{sli.valid}}),
+                    {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
+                ) ≤ {{ percentToRatio(slo.perc) }}
+            </code>
+        </div>
 
-        <div>
+        <div class="block">
             <label for="show-short-window-alert">
                 <input
                     id="show-short-window-alert"
                     type="checkbox"
                     v-model="alert.shortWindowVisible"
                 >
-                Show short window alert
+                Short window alert
             </label>
             <help-component>
                 <p>
@@ -449,7 +459,7 @@
         </div>
 
         <div v-if="alert.shortWindowVisible">
-            <h3>
+            <h2>
                 <label for="alert-short-window-divider-input">
                     Short window: 1/{{ alert.shortWindowDivider }} of long window
                 </label>
@@ -464,7 +474,7 @@
                         the detection time of the alert.
                     </p>
                 </help-component>
-            </h3>
+            </h2>
             <input
                 id="alert-short-window-divider-input"
                 type="range"
@@ -477,18 +487,21 @@
                 Detection Time: {{ secondsToTimePeriod(alertCalc.shortWindowTimeToExhaust) }}<br />
                 ({{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }})
             </p>
-            <code v-if="sli.isTimeBased">
-                time_length(
-                    {{ sli.good }},
-                    {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
-                ) ≤ {{ humanSeconds(percent(slo.perc, alertCalc.shortWindowTimeToExhaust)) }}
-            </code>
-            <code v-else>
-                sum(
-                    100 * ({{sli.good}}) / ({{sli.valid}}),
-                    {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
-                ) ≤ {{ percentToRatio(slo.perc) }}
-            </code>
+            <h3>Short Window Alert Policy</h3>
+            <div class="block">
+                <code v-if="sli.isTimeBased">
+                    time_length(
+                        {{ sli.good }},
+                        {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
+                    ) ≤ {{ humanSeconds(percent(slo.perc, alertCalc.shortWindowTimeToExhaust)) }}
+                </code>
+                <code v-else>
+                    sum(
+                        100 * ({{sli.good}}) / ({{sli.valid}}),
+                        {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
+                    ) ≤ {{ percentToRatio(slo.perc) }}
+                </code>
+            </div>
         </div>
 
     </main>
