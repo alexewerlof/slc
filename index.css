@@ -19,6 +19,15 @@ code {
     margin: 1em 0;
 }
 
+section {
+    padding-top: 10em;
+    max-width: 600px;
+    margin: 0 auto;
+    box-sizing: content-box;
+    padding: 1em 0 2em 0;
+    border-bottom: 1px solid var(--primary-color);
+}
+
 #links-bar {
     margin: 0;
     padding: 0;
@@ -37,14 +46,6 @@ code {
 
 #links-bar li + li {
     border-left: 1px solid currentColor;
-}
-
-#app {
-    padding-top: 10em;
-    max-width: 600px;
-    margin: 0 auto;
-    box-sizing: content-box;
-    padding: 1em;
 }
 
 a, a:hover, a:active {
@@ -128,6 +129,18 @@ h1[id] {
     scroll-margin-top: 1em;
 }
 
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
 header {
     color: var(--background-color);
     background-color: var(--primary-color);
@@ -148,7 +161,6 @@ header h1 {
 footer {
     margin-top: 2em;
     padding-top: 2em;
-    border-top: 1px solid var(--primary-color);
     text-align: center;
     font-size: 0.8em;
     padding-bottom: 2em;
