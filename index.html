@@ -225,7 +225,16 @@
             max="99"
             v-model="sloInt"
         >
+        <label for="slo-frac-input">Fraction:</label>
+        &nbsp;
+        <button @click="changeSLO(-0.001)">-0.001</button>
+        <button @click="changeSLO(-0.01)">-0.01</button>
+        <button @click="changeSLO(-0.1)">-0.1</button>
+        <button @click="changeSLO(0.1)">+0.1</button>
+        <button @click="changeSLO(0.01)">+0.01</button>
+        <button @click="changeSLO(0.001)">+0.001</button>
         <input
+            id="slo-frac-input"
             type="range"
             min="0"
             max="0.999"

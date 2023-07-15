@@ -98,3 +98,13 @@ export function humanSeconds(seconds) {
 export function toFixed(x, precision = 3) {
     return Number(x.toFixed(precision))
 }
+
+export function clamp(x, min, max) {
+    if (x < min) {
+        return min
+    }
+    if (x > max) {
+        return max
+    }
+    return x
+}

@@ -2,7 +2,7 @@ import { createApp, ref, reactive, computed, watch } from './vendor/vue@3.3.4_di
 import HelpComponent from './components/help-component.js'
 import { errorBudgetEvents, errorBudgetPerc, errorBudgetTime, percent, percentToRatio } from './sl-math.js'
 import { examples } from './examples.js'
-import { windowUnits, secondsToTimePeriod, humanSeconds, toFixed, findWindowUnitFromShortTitle } from './util.js'
+import { windowUnits, secondsToTimePeriod, humanSeconds, toFixed, findWindowUnitFromShortTitle, clamp } from './util.js'
 
 const selectedExampleIndex = ref(0)
 
@@ -158,14 +158,8 @@ const app = createApp({
         HelpComponent,
     },
     methods: {
-        toggleHelp(id) {
-            console.log('toggleHelp', id)
-            const el = document.getElementById(id)
-            if (el.classList.contains('visible')) {
-                el.classList.remove('visible')
-            } else {
-                el.classList.add('visible')
-            }
+        changeSLO(amount) {
+            slo.perc = toFixed(clamp(slo.perc + amount, 0, 100))
         }
     }
 })

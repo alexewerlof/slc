@@ -3,12 +3,10 @@
 .help-component-button {
     display: inline-block;
     font-family: inherit;
-    border: 1px solid currentColor;
     height: 100%;
     background-color: transparent;
     color: currentColor;
     cursor: help;
-    border-radius: 0.3em;
     margin: 0 0.5em;
 }
 
