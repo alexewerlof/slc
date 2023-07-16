@@ -437,7 +437,7 @@
             </h3>
             <div class="block">
                 <code v-if="sli.isTimeBased">
-                    time_length(
+                    duration(
                         {{ sli.good }},
                         {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
                     ) ≤ {{ humanSeconds(percent(slo.perc, alertCalc.longWindowTimeToExhaust)) }}
@@ -500,7 +500,7 @@
                 <h3>Short Window Alert Policy</h3>
                 <div class="block">
                     <code v-if="sli.isTimeBased">
-                        time_length(
+                        duration(
                             {{ sli.good }},
                             {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
                         ) ≤ {{ humanSeconds(percent(slo.perc, alertCalc.shortWindowTimeToExhaust)) }}

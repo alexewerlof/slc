@@ -26,7 +26,7 @@ const sliCalc = computed(() => {
 
     if (sli.isTimeBased) {
         unitCaption = 'Time Unit'
-        unit = sli.unit || 'time'
+        unit = sli.unit || 'duration'
 
         if (sli.validIsWindow) {
             valid = `SLO_window`
