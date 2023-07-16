@@ -30,7 +30,7 @@
             <li><a href="#sli-title">SLI</a></li>
             <li><a href="#slo-title">SLO</a></li>
             <li><a href="#error-budget-title">Error Budget</a></li>
-            <li><a href="#alert-title">Alert</a></li>
+            <li><a href="#alert-title">Alerting</a></li>
         </ul>
     
         <section>
@@ -340,7 +340,7 @@
         <!------------------------ Alert ------------------------>
         <section>
             <h1 id="alert-title">
-                Alert
+                Alerting
                 <help-component>
                     <p>
                         What is the point of setting SLI/SLO if we are not going to take application
@@ -348,6 +348,7 @@
                     </p>
                     <p>
                         Alerting on error budgets enable us to be on top of the reliability of our system.
+                        When using service levels, the alert triggers on the rate of consuming the error budget.
                     </p>
                 </help-component>
             </h1>
@@ -374,11 +375,17 @@
                         to errors.
                     </p>
                     <p>
-                        Too fast and you will end up with alert fatigue.
+                        Too fast and it will lead to false positives (alerting unnecessarily)
+                        or alert fatigue (too many alerts).
                         Too slow and the error burget will be burned before you know it.
                     </p>
                 </help-component>
             </h2>
+            <p>
+                Time to exhaust error budget:<br />
+                {{ secondsToTimePeriod(alertCalc.timeToExhaust) }}<br />
+                ({{ humanSeconds(alertCalc.timeToExhaust) }})
+            </p>
             <input
                 id="burn-rate-input"
                 type="range"
@@ -387,15 +394,13 @@
                 step="0.1"
                 v-model="alert.burnRate"
             >
-            <p>
-                Time to exhaust error budget:<br />
-                {{ secondsToTimePeriod(alertCalc.timeToExhaust) }}<br />
-                ({{ humanSeconds(alertCalc.timeToExhaust) }})
-            </p>
             <h2>
+                <span v-if="alert.shortWindowVisible">Long Window</span>
+                Alert
+            </h2>
+            <h3>
                 <label for="alert-error-budget-perc">
-                    Alert After Exhausting {{ alert.windowPerc }}%
-                    <span v-if="alert.shortWindowVisible">(Long Window)</span>
+                    After Exhausting: {{ alert.windowPerc }}%
                 </label>
                 <help-component>
                     <p>
@@ -412,7 +417,7 @@
                         (or SLO compliance window): {{ secondsToTimePeriod(sloWindow) }}.
                     </p>
                 </help-component>
-            </h2>
+            </h3>
             <input
                 id="alert-error-budget-perc"
                 type="range"
@@ -421,21 +426,31 @@
                 v-model="alert.windowPerc"
             >
             <div>
-                Detection Time: {{ secondsToTimePeriod(alertCalc.longWindowTimeToExhaust) }}
-                <help-component>
-                    <p>
-                        The detection time is the time it takes for the alert to be triggered after
-                        the errors start to consume a significant portion of the error budget.
-                    </p>
-                </help-component>
-                <br />
-                ({{ humanSeconds(alertCalc.longWindowTimeToExhaust) }})
+                <h3>
+                    Detection Time
+                    <help-component>
+                        <p>
+                            The detection time is the time it takes for the alert to be triggered after
+                            the errors start to consume a significant portion of the error budget.
+                        </p>
+                    </help-component>
+                </h3>
+                <p>
+                    {{ secondsToTimePeriod(alertCalc.longWindowTimeToExhaust) }}
+                    <br />
+                    ({{ humanSeconds(alertCalc.longWindowTimeToExhaust) }})
+                </p>
             </div>
             <h3>
-                <span v-if="alert.shortWindowVisible">Long Window</span>
                 Alert Policy
+                <help-component>
+                    <p>
+                        This is a pseudo-code that help you understand what triggers the alert.
+                        You need to translate it to your alerting tool.
+                    </p>
+                </help-component>
             </h3>
-            <div class="block">
+            <div class="code block">
                 <code v-if="sli.isTimeBased">
                     <span class="func">duration</span>
                     <span class="punct">(</span>
@@ -482,7 +497,7 @@
                         type="checkbox"
                         v-model="alert.shortWindowVisible"
                     >
-                    Short window alert
+                    Short Window Alert
                 </label>
                 <help-component>
                     <p>
@@ -494,7 +509,9 @@
             </div>
 
             <div v-if="alert.shortWindowVisible">
-                <h2>
+                <h2>Short Window Alert</h2>
+
+                <h3>
                     <label for="alert-short-window-divider-input">
                         Short window: 1/{{ alert.shortWindowDivider }} of long window
                     </label>
@@ -509,7 +526,7 @@
                             the detection time of the alert.
                         </p>
                     </help-component>
-                </h2>
+                </h3>
                 <input
                     id="alert-short-window-divider-input"
                     type="range"
@@ -517,13 +534,17 @@
                     max="20"
                     v-model="alert.shortWindowDivider"
                 >
+                <p>After Exhausting: {{ alertCalc.shortWindowPerc }}%</p>
+
+                <h3>Detection Time</h3>
                 <p>
-                    Alert after exhausting {{ alertCalc.shortWindowPerc }}% of error budget.<br />
-                    Detection Time: {{ secondsToTimePeriod(alertCalc.shortWindowTimeToExhaust) }}<br />
+                    {{ secondsToTimePeriod(alertCalc.shortWindowTimeToExhaust) }}
+                    <br />
                     ({{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }})
                 </p>
-                <h3>Short Window Alert Policy</h3>
-                <div class="block">
+
+                <h3>Alert Policy</h3>
+                <div class="code block">
                     <code v-if="sli.isTimeBased">
                         <span class="func">duration</span>
                         <span class="punct">(</span>

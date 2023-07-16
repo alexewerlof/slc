@@ -4,6 +4,11 @@ code {
     font-family: 'Roboto Mono', monospace;
 }
 
+.block.code {
+    background-color: var(--background-dark);
+    padding: 1em;
+}
+
 code label {
     -webkit-user-select: auto; /* Added to support Safari and Safari on iOS */
     user-select: auto;
