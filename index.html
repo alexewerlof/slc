@@ -132,7 +132,7 @@
                 v-model="sli.good">
 
             <h2>
-                <label for="input-valid">
+                <label for="sli-valid-input">
                     Valid {{ sliCalc.unit }}
                 </label>
                 <help-component>
@@ -172,7 +172,7 @@
             </div>
 
             <input
-                id="input-valid"
+                id="sli-valid-input"
                 v-if="!sli.isTimeBased || !sli.validIsWindow"
                 type="text"
                 v-model="sli.valid"
@@ -437,16 +437,41 @@
             </h3>
             <div class="block">
                 <code v-if="sli.isTimeBased">
-                    duration(
-                        {{ sli.good }},
+                    <span class="func">duration</span>
+                    <span class="punct">(</span>
+                    <label for="sli-good-input">{{ sli.good }}</label>
+                    <span class="punct">, </span>
+                    <span class="const">
                         {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
-                    ) ≤ {{ humanSeconds(percent(slo.perc, alertCalc.longWindowTimeToExhaust)) }}
+                    </span>
+                    <span class="punct">) ≤ </span>
+                    <span class="const">
+                        {{ humanSeconds(percent(slo.perc, alertCalc.longWindowTimeToExhaust)) }}
+                    </span>
                 </code>
                 <code v-else>
-                    sum(
-                        100 * ({{sli.good}}) / ({{sli.valid}}),
+                    <span class="punct">(</span>
+                    <span class="func">count</span>
+                    <span class="punct">(</span>
+                    <label for="sli-good-input">{{sli.good}}</label>
+                    <span class="punct">, </span>
+                    <span class="const">
                         {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
-                    ) ≤ {{ percentToRatio(slo.perc) }}
+                    </span>
+                    <span class="punct">) / </span>
+                    <br/>
+                    <span class="func">count</span>
+                    <span class="punct">(</span>
+                    <label for="sli-valid-input">{{sli.valid}}</label>
+                    <span class="punct"></span>
+                    <span class="punct">, </span>
+                    <span class="const">
+                        {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
+                    </span>
+                    <span class="punct">)) ≤ </span>
+                    <span class="const">
+                        {{ percentToRatio(slo.perc) }}
+                    </span>
                 </code>
             </div>
 
@@ -500,16 +525,41 @@
                 <h3>Short Window Alert Policy</h3>
                 <div class="block">
                     <code v-if="sli.isTimeBased">
-                        duration(
-                            {{ sli.good }},
+                        <span class="func">duration</span>
+                        <span class="punct">(</span>
+                        <label for="sli-good-input">{{ sli.good }}</label>
+                        <span class="punct">, </span>
+                        <span class="const">
                             {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
-                        ) ≤ {{ humanSeconds(percent(slo.perc, alertCalc.shortWindowTimeToExhaust)) }}
+                        </span>
+                        <span class="punct">) ≤ </span>
+                        <span class="const">
+                            {{ humanSeconds(percent(slo.perc, alertCalc.shortWindowTimeToExhaust)) }}
+                        </span>
                     </code>
                     <code v-else>
-                        sum(
-                            100 * ({{sli.good}}) / ({{sli.valid}}),
+                        <span class="punct">(</span>
+                        <span class="func">count</span>
+                        <span class="punct">(</span>
+                        <label for="sli-good-input">{{sli.good}}</label>
+                        <span class="punct">, </span>
+                        <span class="const">
                             {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
-                        ) ≤ {{ percentToRatio(slo.perc) }}
+                        </span>
+                        <span class="punct">) / </span>
+                        <br/>
+                        <span class="func">count</span>
+                        <span class="punct">(</span>
+                        <label for="sli-valid-input">{{sli.valid}}</label>
+                        <span class="punct"></span>
+                        <span class="punct">, </span>
+                        <span class="const">
+                            {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
+                        </span>
+                        <span class="punct">)) ≤ </span>
+                        <span class="const">
+                            {{ percentToRatio(slo.perc) }}
+                        </span>
                     </code>
                 </div>
             </div>

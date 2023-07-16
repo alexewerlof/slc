@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Alata&family=Roboto&family=RobotoMono&display=swap');
 @import url('variables.css');
+@import url('code.css');
 @import url('components/help-component.css');
 
 body {
@@ -8,10 +9,6 @@ body {
     font-family: var(--body-font-family);
     margin: 0;
     padding: 0;
-}
-
-code {
-    font-family: 'Roboto Mono', monospace;
 }
 
 .block {

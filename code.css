@@ -1,0 +1,25 @@
+@import url('variables.css');
+
+code {
+    font-family: 'Roboto Mono', monospace;
+}
+
+code label {
+    -webkit-user-select: auto; /* Added to support Safari and Safari on iOS */
+    user-select: auto;
+}
+
+/* functions */
+code .func {
+    color: var(--brand-pink);
+}
+
+/* punctuations */
+code .punct {
+    color: var(--brand-green);
+}
+
+/* constants */
+code .const {
+    color: var(--brand-red);
+}
