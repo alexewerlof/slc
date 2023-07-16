@@ -3,13 +3,13 @@ export const examples = [
         description: 'Uptime probe',
         sli: {
             good: 'ping_response_code == 200',
-            valid: 'total_pings',
+            valid: 'SLO_window',
             unit: 'minutes',
             isTimeBased: true,
         },
         slo: {
             perc: 99.9,
-            window: [1, 'M'],
+            window: '1M',
         }
     },
     {
@@ -21,19 +21,19 @@ export const examples = [
         },
         slo: {
             perc: 99.9,
-            window: [1, 'M'],
+            window: '4w',
         }
     },
     {
-        description: 'Simple Request Latency',
+        description: 'Simple Response Latency',
         sli: {
             good: 'response_latency < 300ms',
-            valid: 'count(authenticated_requests)',
+            valid: 'authenticated_requests',
             unit: 'requests',
         },
         slo: {
             perc: 98.3,
-            window: [1, 'M'],
+            window: '1M',
         },
     },
     {
@@ -42,23 +42,22 @@ export const examples = [
             good: 'P75(response_latency, 5m) < 800ms',
             valid: 'total 5m slots',
             unit: '5m slots',
-            isTimeBased: true,
         },
         slo: {
             perc: 99.5,
-            window: [1, 'M'],
+            window: '1w',
         },
     },
     {
         description: 'Error Rate',
         sli: {
             good: 'response_code < 500',
-            valid: 'count(requests)',
+            valid: 'requests',
             unit: 'requests',
         },
         slo: {
             perc: 99.5,
-            window: [1, 'M'],
+            window: '1M',
         },
     },
     {
@@ -70,19 +69,19 @@ export const examples = [
         },
         slo: {
             perc: 98,
-            window: [1, 'M'],
+            window: '1M',
         },
     },
     {
         description: 'MTTR',
         sli: {
-            good: 'MTTR < 30m',
-            valid: 'number of incidents',
+            good: 'TTR < 30m',
+            valid: 'incidents',
             unit: 'incidents',
         },
         slo: {
             perc: 95,
-            window: [1, 'M'],
+            window: '1M',
         },
     }
 ]

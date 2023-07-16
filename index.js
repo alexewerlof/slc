@@ -2,7 +2,7 @@ import { createApp, ref, reactive, computed, watch } from './vendor/vue@3.3.4_di
 import HelpComponent from './components/help-component.js'
 import { errorBudgetEvents, errorBudgetPerc, errorBudgetTime, percent, percentToRatio } from './sl-math.js'
 import { examples } from './examples.js'
-import { windowUnits, secondsToTimePeriod, humanSeconds, toFixed, findWindowUnitFromShortTitle, clamp } from './util.js'
+import { windowUnits, secondsToTimePeriod, humanSeconds, toFixed, findWindowUnitFromShortTitle, clamp, parseWindow } from './util.js'
 
 const selectedExampleIndex = ref(0)
 
@@ -125,11 +125,9 @@ const app = createApp({
             sli.valid = example.sli.valid
             sli.unit = example.sli.unit
             slo.perc = example.slo.perc
-            if (Array.isArray(example.slo.window)) {
-                const [ windowMult, windowShortTitle] = example.slo.window
-                slo.windowMult = windowMult
-                slo.windowUnit = findWindowUnitFromShortTitle(windowShortTitle)
-            }
+            const [ windowMult, windowUnit] = parseWindow(example.slo.window)
+            slo.windowMult = windowMult
+            slo.windowUnit = windowUnit
         }, { immediate: true })
 
         return {

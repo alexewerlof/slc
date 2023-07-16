@@ -52,6 +52,25 @@ export function findWindowUnitFromShortTitle(windowShortTitle) {
     return windowUnits.find(({ shortTitle }) => shortTitle === windowShortTitle)
 }
 
+// Parses a string like '1M' to an array like [1, REF_TO_MONTH_OBJ_IN_windowUnits]
+export function parseWindow(windowStr) {
+    const match = windowStr.match(/^(\d+)([a-zA-Z]+)$/)
+
+    if (!match) {
+        throw new Error(`Could not parse '${windowStr}' as a time window.`)
+    }
+
+    const [, nStr, unitStr] = match
+
+    const windowMult = Number(nStr)
+    const windowUnit = findWindowUnitFromShortTitle(unitStr)
+    if (!windowUnit) {
+        throw new Error(`Invalid unit '${unitStr}' in '${windowStr}'`)
+    }
+
+    return [windowMult, windowUnit]
+}
+
 export function secondsToTimePeriod(seconds, useShortTitle = false) {
     let result = []
 
