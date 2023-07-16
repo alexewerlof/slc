@@ -95,19 +95,19 @@
                     </p>
                     <p v-if="sli.isTimeBased">
                         Examples:
-                        <code>minutes</code>,
-                        <code>seconds</code>,
-                        <code>hours</code>,
+                        <button @click="sli.unit = 'minutes'">minutes</button>,
+                        <button @click="sli.unit = 'seconds'">seconds</button>,
+                        <button @click="sli.unit = 'hours'">hours</button>,
                         etc.
                     </p>
                     <p v-else>
                         Examples:
-                        <code>requests</code>,
-                        <code>page views</code>,
-                        <code>logins</code>,
-                        <code>incidents</code>,
-                        <code>sessions</code>,
-                        <code>users</code>,
+                        <button @click="sli.unit = 'requests'">requests</button>,
+                        <button @click="sli.unit = 'page_views'">page_views</button>,
+                        <button @click="sli.unit = 'logins'">logins</button>,
+                        <button @click="sli.unit = 'incidents'">incidents</button>,
+                        <button @click="sli.unit = 'sessions'">sessions</button>,
+                        <button @click="sli.unit = 'users'">users</button>,
                         etc.
                     </p>
                 </help-component>
@@ -153,11 +153,19 @@
                     </p>
                 </help-component>
             </h2>
+
+            <input
+                id="sli-valid-input"
+                type="text"
+                v-model="sli.valid"
+            >
+
             <div v-if="sli.isTimeBased" class="block">
-                <label>
-                    <input type="checkbox" v-model="sli.validIsWindow">
-                    The entire SLO window is valid time
-                </label>
+                <button
+                    v-if="sli.isTimeBased"
+                    @click="sli.valid = 'SLO_window'">
+                    Entire Window
+                </button>
                 <help-component>
                     <p>
                         If the entire SLO window is considered valid {{ sliCalc.unit }},
@@ -170,13 +178,6 @@
                     </p>
                 </help-component>
             </div>
-
-            <input
-                id="sli-valid-input"
-                v-if="!sli.isTimeBased || !sli.validIsWindow"
-                type="text"
-                v-model="sli.valid"
-            >
 
             <h2>
                 Formula
@@ -191,23 +192,58 @@
                     </p>
                 </help-component>
             </h2>
-            <div class="formula">
-                <div class="formula_chunk">SLI =</div>
-                <div class="formula_fraction">
-                    <div class="formula_fraction--top">Good {{ sliCalc.unit }}</div>
-                    <div class="formula_fraction--bottom">Valid {{ sliCalc.unit }}</div>
-                </div>
-                <div class="formula_chunk">× 100</div>
-                <div class="formula_chunk">=</div>
-                <div class="formula_fraction">
-                    <div class="formula_fraction--top">
-                        <label for="sli-good-input"><code>{{ sli.good }}</code></label>
+            <div class="code block">
+                <div class="formula">
+                    <div class="formula_chunk">
+                        SLI
+                        <code>
+                            <span class="punct">=</span>
+                        </code>
                     </div>
-                    <div class="formula_fraction--bottom">
-                        <code>{{ sliCalc.valid }}</code>
+                    <div class="formula_fraction">
+                        <div class="formula_fraction--top">Good {{ sliCalc.unit }}</div>
+                        <div class="formula_fraction--bottom">Valid {{ sliCalc.unit }}</div>
+                    </div>
+                    <div class="formula_chunk">
+                        <code>
+                            <span class="punct"> × </span>
+                            <span class="const">100</span>
+                        </code>
+                    </div>
+                    <div class="formula_chunk">
+                        <code>
+                            <span class="punct">=</span>
+                        </code>
+                    </div>
+                    <div class="formula_fraction">
+                        <div class="formula_fraction--top">
+                            <label for="sli-good-input">
+                                <code>
+                                    <span class="funct">{{ sliCalc.func }}</span>
+                                    <span class="punct">(</span>
+                                    <span>{{ sli.good }}</span>
+                                    <span class="punct">)</span>
+                                </code>
+                            </label>
+                        </div>
+                        <div class="formula_fraction--bottom">
+                            <label for="sli-valid-input">
+                                <code>
+                                    <span class="funct">{{ sliCalc.func }}</span>
+                                    <span class="punct">(</span>
+                                    <span>{{ sli.valid }}</span>
+                                    <span class="punct">)</span>
+                                </code>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="formula_chunk">
+                        <code>
+                            <span class="punct"> × </span>
+                            <span class="const">100</span>
+                        </code>
                     </div>
                 </div>
-                <div class="formula_chunk">× 100</div>
             </div>
         </section>
 
@@ -452,7 +488,7 @@
             </h3>
             <div class="code block">
                 <code v-if="sli.isTimeBased">
-                    <span class="func">duration</span>
+                    <span class="funct">{{ sliCalc.func }}</span>
                     <span class="punct">(</span>
                     <label for="sli-good-input">{{ sli.good }}</label>
                     <span class="punct">, </span>
@@ -464,30 +500,43 @@
                         {{ humanSeconds(percent(slo.perc, alertCalc.longWindowTimeToExhaust)) }}
                     </span>
                 </code>
-                <code v-else>
-                    <span class="punct">(</span>
-                    <span class="func">count</span>
-                    <span class="punct">(</span>
-                    <label for="sli-good-input">{{sli.good}}</label>
-                    <span class="punct">, </span>
-                    <span class="const">
-                        {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
-                    </span>
-                    <span class="punct">) / </span>
-                    <br/>
-                    <span class="func">count</span>
-                    <span class="punct">(</span>
-                    <label for="sli-valid-input">{{sli.valid}}</label>
-                    <span class="punct"></span>
-                    <span class="punct">, </span>
-                    <span class="const">
-                        {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
-                    </span>
-                    <span class="punct">)) ≤ </span>
-                    <span class="const">
-                        {{ percentToRatio(slo.perc) }}
-                    </span>
-                </code>
+                <div class="formula" v-else>
+                    <div class="formula_fraction">
+                        <div class="formula_fraction--top">
+                            <code>
+                                <span class="funct">{{ sliCalc.func }}</span>
+                                <span class="punct">(</span>
+                                <label for="sli-good-input">{{sli.good}}</label>
+                                <span class="punct">, </span>
+                                <span class="const">
+                                    {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
+                                </span>
+                                <span class="punct">)</span>
+                            </code>
+                        </div>
+                        <div class="formula_fraction--bottom">
+                            <code>
+                                <span class="funct">{{ sliCalc.func }}</span>
+                                <span class="punct">(</span>
+                                <label for="sli-valid-input">{{sli.valid}}</label>
+                                <span class="punct"></span>
+                                <span class="punct">, </span>
+                                <span class="const">
+                                    {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
+                                </span>
+                                <span class="punct">)</span>
+                            </code>
+                        </div>
+                    </div>
+                    <div class="formula_chunk">
+                        <code>
+                            <span class="punkt"> ≤ </span>
+                            <span class="const">
+                                {{ percentToRatio(slo.perc) }}
+                            </span>
+                        </code>
+                    </div>
+                </div>
             </div>
 
             <div class="block">
@@ -525,6 +574,9 @@
                             But you can play with different dividers to see how they impact
                             the detection time of the alert.
                         </p>
+                        <p v-if="alert.shortWindowDivider !== 12">
+                            <button @click="alert.shortWindowDivider = 12">Reset to 1/12</button>
+                        </p>
                     </help-component>
                 </h3>
                 <input
@@ -546,7 +598,7 @@
                 <h3>Alert Policy</h3>
                 <div class="code block">
                     <code v-if="sli.isTimeBased">
-                        <span class="func">duration</span>
+                        <span class="funct">{{ sliCalc.func }}</span>
                         <span class="punct">(</span>
                         <label for="sli-good-input">{{ sli.good }}</label>
                         <span class="punct">, </span>
@@ -558,39 +610,55 @@
                             {{ humanSeconds(percent(slo.perc, alertCalc.shortWindowTimeToExhaust)) }}
                         </span>
                     </code>
-                    <code v-else>
-                        <span class="punct">(</span>
-                        <span class="func">count</span>
-                        <span class="punct">(</span>
-                        <label for="sli-good-input">{{sli.good}}</label>
-                        <span class="punct">, </span>
-                        <span class="const">
-                            {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
-                        </span>
-                        <span class="punct">) / </span>
-                        <br/>
-                        <span class="func">count</span>
-                        <span class="punct">(</span>
-                        <label for="sli-valid-input">{{sli.valid}}</label>
-                        <span class="punct"></span>
-                        <span class="punct">, </span>
-                        <span class="const">
-                            {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
-                        </span>
-                        <span class="punct">)) ≤ </span>
-                        <span class="const">
-                            {{ percentToRatio(slo.perc) }}
-                        </span>
-                    </code>
+                    <div class="formula" v-else>
+                        <div class="formula_fraction">
+                            <div class="formula_fraction--top">
+                                <code>
+                                    <span class="funct">{{ sliCalc.func }}</span>
+                                    <span class="punct">(</span>
+                                    <label for="sli-good-input">{{sli.good}}</label>
+                                    <span class="punct">, </span>
+                                    <span class="const">
+                                        {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
+                                    </span>
+                                    <span class="punct">)</span>
+                                </code>
+                            </div>
+                            <div class="formula_fraction--bottom">
+                                <code>
+                                    <span class="funct">{{ sliCalc.func }}</span>
+                                    <span class="punct">(</span>
+                                    <label for="sli-valid-input">{{sli.valid}}</label>
+                                    <span class="punct"></span>
+                                    <span class="punct">, </span>
+                                    <span class="const">
+                                        {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
+                                    </span>
+                                    <span class="punct">)</span>
+                                </code>
+                            </div>
+                        </div>
+                        <div class="formula_chunk">
+                            <code>
+                                <span class="punkt"> ≤ </span>
+                                <span class="const">
+                                    {{ percentToRatio(slo.perc) }}
+                                </span>
+                            </code>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <footer>Copyright (C) 2023 <a href="https://alexewerlof.com">Alex Ewerlof</a> | <a
-            href="https://github.com/userpixel/slo">Github</a> | <a
-            href="https://blog.alexewerlof.com/p/why-bother-with-sli-and-slo">Why bother?</a></footer>
+    <footer>
+        Copyright (C) 2023
+        <a href="https://alexewerlof.com">Alex Ewerlof</a> |
+        <a href="https://github.com/userpixel/slo">Github</a> |
+        <a href="https://blog.alexewerlof.com/p/why-bother-with-sli-and-slo">Why bother?</a>
+    </footer>
 
     <script type="module" src="index.js" defer async></script>
 </body>

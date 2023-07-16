@@ -9,8 +9,6 @@ const selectedExampleIndex = ref(0)
 const sli = reactive({
     // whether the SLO is time-based or event-based
     isTimeBased: true,
-    // whether the entire SLO window is considered as valid time (only useful when isTimeBased is true)
-    validIsWindow: true,
     // definition of good events or good time slots
     good: '',
     // definition of valid events or valid time slots
@@ -23,17 +21,17 @@ const sliCalc = computed(() => {
     let unitCaption = 'Events Unit'
     let unit = sli.unit
     let valid = sli.valid
+    // The function for aggregating good or valid event count or time duration
+    let func = 'count'
 
     if (sli.isTimeBased) {
+        func = 'duration'
         unitCaption = 'Time Unit'
         unit = sli.unit || 'duration'
-
-        if (sli.validIsWindow) {
-            valid = `SLO_window`
-        }
     }
 
     return {
+        func,
         unitCaption,
         unit,
         valid,
