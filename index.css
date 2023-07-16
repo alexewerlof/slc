@@ -162,34 +162,11 @@ footer {
     padding-bottom: 2em;
 }
 
-.formula {
-    display: flex;
-    gap: 0.5em;
-    flex-wrap: wrap;
-}
-
-.formula_chunk {
-    align-self: center;
-}
-
-.formula_fraction {
-    display: flex;
-    flex-direction: column;
-}
-
-.formula_fraction--top {
-    text-align: center;
-    border-bottom: 1px solid white;
-}
-
-.formula_fraction--bottom {
-    text-align: center;
-}
-
 button {
     background-color: var(--primary-color);
     color: var(--background-color);
     border: none;
     border: 1px solid currentColor;
     border-radius: 0.3em;
+    cursor: pointer;
 }

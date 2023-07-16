@@ -15,7 +15,7 @@ code label {
 }
 
 /* functions */
-code .func {
+code .funct {
     color: var(--brand-pink);
 }
 
@@ -27,4 +27,33 @@ code .punct {
 /* constants */
 code .const {
     color: var(--brand-red);
+}
+
+/* a simple container for a fractional formula in plain HTML instead of MathML */
+.formula {
+    display: flex;
+    gap: 0.5em;
+    flex-wrap: wrap;
+}
+
+/* takes the whole height */
+.formula_chunk {
+    align-self: center;
+}
+
+/* a two cell column */
+.formula_fraction {
+    display: flex;
+    flex-direction: column;
+}
+
+/* takes the top half */
+.formula_fraction--top {
+    text-align: center;
+    border-bottom: 1px solid var(--brand-green);
+}
+
+/* takes the bottom half */
+.formula_fraction--bottom {
+    text-align: center;
 }
