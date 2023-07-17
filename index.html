@@ -68,26 +68,45 @@
                     </p>
                 </help-component>
             </h1>
-            <label>
-                <input
-                    id="sli-type-input"
-                    type="checkbox"
-                    v-model="sli.isTimeBased"
-                >
-                Time based
-            </label>
-            <help-component>
-                <p>
-                    SLIs can either be either
-                    <a target="_blank"
-                        href="https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#compliance-period"
-                        rel="noopener">time-based</a> or
-                    <a target="_blank"
-                        href="https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#compliance-period"
-                        rel="noopener">event-based</a>.
-                </p>
-                This primarily affects how the "good" / "valid" is formulated.
-            </help-component>
+            <h2>
+                <label>Type</label>
+                <help-component>
+                    <p>
+                        SLIs can either be either:
+                        <ul>
+                            <li>
+                                <a target="_blank"
+                                    href="https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#compliance-period"
+                                    rel="noopener">
+                                    Time Based
+                                </a>
+                                : Concerned with the <em>duration</em> of good time in a given period.
+                            </li>
+                            <li>
+                                <a target="_blank"
+                                    href="https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#compliance-period"
+                                    rel="noopener">
+                                    Event Based
+                                </a>
+                                : Concerned with the <em>count</em> of good events per total* events in a given time period.
+                            </li>
+                        </ul>
+                        <p>
+                            * We are simplifying here a bit. There's a slight difference between "total" and "valid" which
+                            basically boils down to what part of the system input should we be held accountable for.
+                        </p>
+                    </p>
+                </help-component>
+            </h2>
+
+            <select
+                id="sli-type-input"
+                type="checkbox"
+                v-model="sli.isTimeBased">
+                <option :value="true">Time based</option>
+                <option :value="false">Event based</option>
+            </select>
+
             <h2>
                 <label for="example-units-input">{{sliCalc.unitCaption}}</label>
                 <help-component>
