@@ -24,6 +24,11 @@ code .punct {
     color: var(--brand-green);
 }
 
+/* expressions */
+code .exprt {
+    color: var(--secondary-color);
+}
+
 /* constants */
 code .const {
     color: var(--brand-red);
