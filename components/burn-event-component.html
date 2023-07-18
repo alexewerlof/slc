@@ -1,0 +1,14 @@
+<g class="event">
+    <line
+        :x1="x"
+        :x2="x"
+        :y1="y1"
+        :style="{ stroke: `var(${ color })` }"
+        :y2="y2" />
+    <text
+        :x="titleX"
+        :y="titleY"
+        :text-anchor="textAnchor"
+        :style="{ fill: `var(${ color })` }"
+        ><slot></slot></text>
+</g>

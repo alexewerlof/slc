@@ -1,3 +1,4 @@
+import burnEventComponent from './burn-event-component.js'
 const template = await (await fetch('components/burn-component.html')).text()
 
 export default {
@@ -5,12 +6,12 @@ export default {
     data() {
         return {
             width: 500,
-            height: 500,
+            height: 300,
             margin: {
-                left: 10,
-                right: 10,
+                left: 0,
+                right: 0,
                 top: 10,
-                bottom: 250,
+                bottom: 20,
             }
         }
     },
@@ -19,6 +20,9 @@ export default {
         longAlertPerc: Number,
         shortAlertDivider: Number,
         showShortAlert: Boolean,
+    },
+    components: {
+        burnEventComponent,
     },
     computed: {
         viewBox() {
@@ -56,43 +60,21 @@ export default {
 
             const W = this.width - this.margin.left - this.margin.right
             const x1 = this.margin.left
-            const ebBurnedX = W * errorBudgetRatio + this.margin.left
-            const y1 = this.margin.top
-            const y2 = this.height - this.margin.bottom
+            const eventY1 = this.margin.top
+            const eventY2 = this.height - this.margin.bottom
 
+            const ebBurnedX = W * errorBudgetRatio + this.margin.left
             const burnLine = {
                 x1,
-                y1,
+                y1: eventY1,
                 x2: ebBurnedX,
-                y2,
-            }
-
-            const ebBurned = {
-                x1: ebBurnedX,
-                x2: ebBurnedX,
-                y1,
-                y2,
+                y2: eventY2,
             }
 
             const longAlertX = W * longAlertRatio + this.margin.left
-
-            const longAlert = {
-                x1: longAlertX,
-                x2: longAlertX,
-                y1,
-                y2,
-            }
-
             const shortAlertX = W * shortAlertRatio + this.margin.left
 
-            const shortAlert = {
-                x1: shortAlertX,
-                x2: shortAlertX,
-                y1,
-                y2,
-            }
-
-            return { burnLine, ebBurned, longAlert, shortAlert }
+            return { burnLine, ebBurnedX, longAlertX, shortAlertX }
         },
     },
     methods: {

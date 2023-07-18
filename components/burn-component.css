@@ -1,16 +1,18 @@
 @import url('variables.css');
 
 .axis {
-    stroke: var(--foreground-color);
-    stroke-width: 1px;
+    stroke: var(--primary-color);
+    stroke-width: 2px;
+}
+
+.axis-title {
+    font-family: var(--title-font-family);
+    fill: var(--primary-color);
+    font-size: 1.2rem;
+    text-anchor: end;
 }
 
 .burn-line {
     stroke: var(--brand-red);
-    stroke-width: 1px;
-}
-
-.event-line {
-    stroke: var(--primary-color);
     stroke-width: 1px;
 }

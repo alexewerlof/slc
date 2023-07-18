@@ -1,54 +1,71 @@
 <svg v-bind:viewBox="viewBox" xmlns="http://www.w3.org/2000/svg">
     <!-- horizontal axis -->
-    <line
-        class="axis"
-        :x1="horizontalAxis.x1"
-        :x2="horizontalAxis.x2"
-        :y1="horizontalAxis.y1"
-        :y2="horizontalAxis.y2" />
+    <g>
+        <line
+            class="axis"
+            :x1="horizontalAxis.x1"
+            :x2="horizontalAxis.x2"
+            :y1="horizontalAxis.y1"
+            :y2="horizontalAxis.y2" />
+        <!-- horizontal axis title -->        
+        <text
+            class="axis-title"
+            :x="horizontalAxis.x2"
+            :y="horizontalAxis.y2 + 16"
+            >SLO Window</text>
+    </g>
     <!-- vertical axis -->
-    <line
-        class="axis"
-        :x1="verticalAxis.x1"
-        :x2="verticalAxis.x2"
-        :y1="verticalAxis.y1"
-        :y2="verticalAxis.y2" />
+    <g>
+        <line
+            class="axis"
+            :x1="verticalAxis.x1"
+            :x2="verticalAxis.x2"
+            :y1="verticalAxis.y1"
+            :y2="verticalAxis.y2" />
+    </g>
     <!-- end SLO window -->
-    <line
-        class="event-line"
-        :x1="sloWindowEnd.x1"
-        :x2="sloWindowEnd.x2"
-        :y1="sloWindowEnd.y1"
-        :y2="sloWindowEnd.y2" />
+    <burn-event-component
+        :width="width"
+        :height="height"
+        :x="this.width - this.margin.right"
+        :y1="margin.top"
+        :y2="height - margin.bottom"
+        color="--foreground-color"
+        offset="1">SLO Window End</burn-event-component>
     <!-- burn line -->
-    <line
-        class="burn-line"
-        :x1="d.burnLine.x1"
-        :x2="d.burnLine.x2"
-        :y1="d.burnLine.y1"
-        :y2="d.burnLine.y2" />
+    <g>
+        <line
+            class="burn-line"
+            :x1="d.burnLine.x1"
+            :x2="d.burnLine.x2"
+            :y1="d.burnLine.y1"
+            :y2="d.burnLine.y2" />
+    </g>
     <!-- error budget burned -->
-    <line
-        class="event-line"
-        :x1="d.ebBurned.x1"
-        :x2="d.ebBurned.x2"
-        :y1="d.ebBurned.y1"
-        :y2="d.ebBurned.y2" />
-
+    <burn-event-component
+        :width="width"
+        :height="height"
+        :x="d.ebBurnedX"
+        :y1="margin.top"
+        :y2="height - margin.bottom"
+        color="--brand-red"
+        offset="2">Error Budget Burned</burn-event-component>
     <!-- long window alert burned -->
-    <line
-        class="event-line"
-        :x1="d.longAlert.x1"
-        :x2="d.longAlert.x2"
-        :y1="d.longAlert.y1"
-        :y2="d.longAlert.y2" />
-
+    <burn-event-component
+        :width="width"
+        :height="height"
+        :x="d.longAlertX"
+        :y1="margin.top"
+        :y2="height - margin.bottom"
+        color="--brand-green"
+        offset="3">Long Window Alert</burn-event-component>
     <!-- short window alert burned -->
-    <line
-        v-if="showShortAlert"
-        class="event-line"
-        :x1="d.shortAlert.x1"
-        :x2="d.shortAlert.x2"
-        :y1="d.shortAlert.y1"
-        :y2="d.shortAlert.y2" />
+    <burn-event-component
+        :width="width"
+        :height="height"
+        :x="d.shortAlertX"
+        :y1="margin.top"
+        :y2="height - margin.bottom"
+        color="--brand-pink"
+        offset="4">Short Window Alert</burn-event-component>
 </svg>
