@@ -100,17 +100,12 @@ const alert = reactive({
 
 const alertCalc = computed(() => {
     const timeToExhaust = sloWindow.value / alert.burnRate
-    const maxFraction = Math.ceil(100 / alert.burnRate)
-    if (alert.windowPerc > maxFraction) {
-        alert.windowPerc = maxFraction
-    }
     const shortWindowPerc = toFixed(alert.windowPerc / alert.shortWindowDivider, 1)
     const longWindowTimeToExhaust = percent(alert.windowPerc, timeToExhaust)
     const shortWindowTimeToExhaust = longWindowTimeToExhaust / alert.shortWindowDivider
 
     return {
         timeToExhaust,
-        maxFraction,
         longWindowTimeToExhaust,
         shortWindowTimeToExhaust,
         shortWindowPerc,

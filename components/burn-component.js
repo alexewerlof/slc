@@ -6,7 +6,7 @@ export default {
     data() {
         return {
             width: 500,
-            height: 300,
+            height: 200,
             margin: {
                 left: 0,
                 right: 0,
