@@ -63,8 +63,8 @@ export const examples = [
     {
         description: 'Order flows',
         sli: {
-            good: 'number of user sessions that place an order',
-            valid: 'number of orders registered',
+            good: 'user_sessions_placing',
+            valid: 'registered',
             unit: 'orders',
         },
         slo: {
@@ -75,8 +75,8 @@ export const examples = [
     {
         description: 'MTTR',
         sli: {
-            good: 'TTR < 30m',
-            valid: 'incidents',
+            good: 'time_to_testore ≤ 30m',
+            valid: 'all_incidents',
             unit: 'incidents',
         },
         slo: {
