@@ -7,7 +7,6 @@ export default {
             return this.x < (this.width / 2)
         },
         textAnchor() {
-            console.log('---this.isTitleOnRight', this.isTitleOnRight, this.x, this.width, this.y1)
             return this.isTitleOnRight ? 'start': 'end'
         },
         titleX() {
