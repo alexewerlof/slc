@@ -1,0 +1,16 @@
+@import url('variables.css');
+
+.axis {
+    stroke: var(--foreground-color);
+    stroke-width: 1px;
+}
+
+.burn-line {
+    stroke: var(--brand-red);
+    stroke-width: 1px;
+}
+
+.event-line {
+    stroke: var(--primary-color);
+    stroke-width: 1px;
+}

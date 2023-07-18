@@ -418,6 +418,7 @@
                     </p>
                 </help-component>
             </h1>
+
             <h2>
                 <label for="burn-rate-input">
                     Burn rate: {{ alert.burnRate }}x
@@ -580,6 +581,12 @@
                     </div>
                 </div>
             </div>
+
+            <burn-component
+                :burn-rate="alert.burnRate"
+                :long-alert-perc="alert.windowPerc"
+                :short-alert-divider="alert.shortWindowDivider"
+                :show-short-alert="alert.shortWindowVisible"></burn-component>
 
             <div class="block">
                 <label for="show-short-window-alert">

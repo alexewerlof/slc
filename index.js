@@ -1,5 +1,6 @@
 import { createApp, ref, reactive, computed, watch } from './vendor/vue@3.3.4_dist_vue.esm-browser.prod.js'
 import HelpComponent from './components/help-component.js'
+import BurnComponent from './components/burn-component.js'
 import { errorBudgetEvents, errorBudgetPerc, errorBudgetTime, percent, percentToRatio } from './sl-math.js'
 import { examples } from './examples.js'
 import { windowUnits, secondsToTimePeriod, humanSeconds, toFixed, findWindowUnitFromShortTitle, clamp, parseWindow } from './util.js'
@@ -152,6 +153,7 @@ const app = createApp({
     },
     components: {
         HelpComponent,
+        BurnComponent,
     },
     methods: {
         changeSLO(amount) {
