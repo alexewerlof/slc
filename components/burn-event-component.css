@@ -1,7 +1,7 @@
 .event line {
     stroke: var(--foreground-color);
     stroke-width: 1px;
-    stroke-dasharray: 3px 3px;
+    stroke-dasharray: 3px 2px;
 }
 
 .event text {

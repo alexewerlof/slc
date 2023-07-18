@@ -15,4 +15,5 @@
 .burn-line {
     stroke: var(--brand-red);
     stroke-width: 1px;
+    stroke-dasharray: 3px 2px;
 }

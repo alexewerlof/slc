@@ -14,24 +14,24 @@
             :y="horizontalAxis.y2 + 18"
             >Time</text>
     </g>
-    <!-- vertical axis -->
-    <g>
-        <line
-            class="axis"
-            :x1="verticalAxis.x1"
-            :x2="verticalAxis.x2"
-            :y1="verticalAxis.y1"
-            :y2="verticalAxis.y2" />
-    </g>
-    <!-- end SLO window -->
+    <!-- start of SLO window -->
+    <burn-event-component
+        :width="width"
+        :height="height"
+        :x="this.margin.left"
+        :y1="margin.top"
+        :y2="height - margin.bottom"
+        color="--secondary-color"
+        offset="1">SLO Window Start</burn-event-component>
+    <!-- end of SLO window -->
     <burn-event-component
         :width="width"
         :height="height"
         :x="this.width - this.margin.right"
         :y1="margin.top"
         :y2="height - margin.bottom"
-        color="--foreground-color"
-        offset="1">SLO Window End</burn-event-component>
+        color="--secondary-color"
+        offset="5">SLO Window End</burn-event-component>
     <!-- burn line -->
     <g>
         <line
@@ -49,7 +49,7 @@
         :y1="margin.top"
         :y2="height - margin.bottom"
         color="--brand-red"
-        offset="2">Error Budget Burned</burn-event-component>
+        offset="4">Error Budget Exhausted</burn-event-component>
     <!-- long window alert burned -->
     <burn-event-component
         :width="width"
@@ -66,6 +66,6 @@
         :x="d.shortAlertX"
         :y1="margin.top"
         :y2="height - margin.bottom"
-        color="--brand-pink"
-        offset="4">Short Window Alert</burn-event-component>
+        color="--brand-purple"
+        offset="2">Short Window Alert</burn-event-component>
 </svg>

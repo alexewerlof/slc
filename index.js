@@ -92,7 +92,7 @@ const errorBudget = computed(() => {
 })
 
 const alert = reactive({
-    burnRate: 1,
+    burnRate: 1.5,
     windowPerc: 50,
     shortWindowVisible: false,
     shortWindowDivider: 12,
