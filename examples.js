@@ -3,7 +3,7 @@ export const examples = [
         description: 'Uptime probe',
         sli: {
             good: 'ping_response_code == 200',
-            valid: 'SLO_window',
+            valid: 'SLO_window - planned_downtime',
             unit: 'minutes',
             isTimeBased: true,
         },
@@ -75,7 +75,7 @@ export const examples = [
     {
         description: 'MTTR',
         sli: {
-            good: 'time_to_testore ≤ 30m',
+            good: 'time_to_restore ≤ 30m',
             valid: 'all_incidents',
             unit: 'incidents',
         },
@@ -83,5 +83,5 @@ export const examples = [
             perc: 95,
             window: '1M',
         },
-    }
+    },
 ]
