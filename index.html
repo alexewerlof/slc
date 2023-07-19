@@ -459,7 +459,7 @@
                                 <td>5 minutes</td>
                                 <td>Page</td>
                                 <td>
-                                    <button @click="alert.burnRate = 14.4, alert.windowPerc = 2, alert.shortWindowDivider = 12">
+                                    <button @click="alert.burnRate = 14.4, alert.longWindowPerc = 2, alert.shortWindowDivider = 12">
                                         Try!
                                     </button>
                                 </td>
@@ -471,7 +471,7 @@
                                 <td>30 minutes</td>
                                 <td>Page</td>
                                 <td>
-                                    <button @click="alert.burnRate = 6, alert.windowPerc = 5, alert.shortWindowDivider = 12">
+                                    <button @click="alert.burnRate = 6, alert.longWindowPerc = 5, alert.shortWindowDivider = 12">
                                         Try!
                                     </button>
                                 </td>
@@ -483,7 +483,7 @@
                                 <td>6 hours</td>
                                 <td>Ticket</td>
                                 <td>
-                                    <button @click="alert.burnRate = 1, alert.windowPerc = 10, alert.shortWindowDivider = 12">
+                                    <button @click="alert.burnRate = 1, alert.longWindowPerc = 10, alert.shortWindowDivider = 12">
                                         Try!
                                     </button>
                                 </td>
@@ -491,7 +491,7 @@
                         </tbody>
                     </table>
                     <p>
-                        Note that the values for Long-Window and Short-Window are based on a 1-month SLO window.
+                        Note: The values for Long-Window and Short-Window are based on a 1-month SLO window.
                         You can see your actual values in the comments below Long-Window and Short-Window.
                     </p>
                 </help-component>
@@ -548,7 +548,7 @@
             </h2>
             <h3>
                 <label for="alert-error-budget-perc">
-                    After Exhausting: {{ alert.windowPerc }}%
+                    After Consuming: {{ alert.longWindowPerc }}%
                 </label>
                 <help-component>
                     <p>
@@ -561,25 +561,25 @@
                     </p>
                     <p>
                         Based on your setup, the alert will trigger after we have consumed
-                        {{ alert.windowPerc }}% of the entire time allotted for the error budget
+                        {{ alert.longWindowPerc }}% of the entire time allotted for the error budget
                         (or SLO compliance window) which is
                         <time>{{ secondsToTimePeriod(sloWindow) }}</time>.
                     </p>
                 </help-component>
             </h3>
             <p>
-                Alert if {{ alert.windowPerc }}% of the error budget is consumed in:
+                Alert when {{ alert.longWindowPerc }}% of the error budget is consumed in:
                 <br />
-                {{ secondsToTimePeriod(alertCalc.longWindowTimeToExhaust) }}
+                {{ secondsToTimePeriod(alertCalc.longWindowTimeToConsume) }}
                 <br />
-                ({{ humanSeconds(alertCalc.longWindowTimeToExhaust) }})
+                ({{ humanSeconds(alertCalc.longWindowTimeToConsume) }})
             </p>
             <input
                 id="alert-error-budget-perc"
                 type="range"
                 min="1"
                 max="100"
-                v-model="alert.windowPerc"
+                v-model="alert.longWindowPerc"
             >
             <h3>
                 Alert Policy
@@ -601,11 +601,11 @@
                     </label>
                     <span class="punct">, </span>
                     <span class="const">
-                        {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
+                        {{ humanSeconds(alertCalc.longWindowTimeToConsume) }}
                     </span>
                     <span class="punct">) ≤ </span>
                     <span class="const">
-                        {{ humanSeconds(percent(slo.perc, alertCalc.longWindowTimeToExhaust)) }}
+                        {{ humanSeconds(percent(slo.perc, alertCalc.longWindowTimeToConsume)) }}
                     </span>
                 </code>
                 <div class="formula" v-else>
@@ -621,7 +621,7 @@
                                 </label>
                                 <span class="punct">, </span>
                                 <span class="const">
-                                    {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
+                                    {{ humanSeconds(alertCalc.longWindowTimeToConsume) }}
                                 </span>
                                 <span class="punct">)</span>
                             </code>
@@ -638,7 +638,7 @@
                                 <span class="punct"></span>
                                 <span class="punct">, </span>
                                 <span class="const">
-                                    {{ humanSeconds(alertCalc.longWindowTimeToExhaust) }}
+                                    {{ humanSeconds(alertCalc.longWindowTimeToConsume) }}
                                 </span>
                                 <span class="punct">)</span>
                             </code>
@@ -657,7 +657,7 @@
 
             <burn-component
                 :burn-rate="alert.burnRate"
-                :long-alert-perc="alert.windowPerc"
+                :long-alert-perc="alert.longWindowPerc"
                 :short-alert-divider="alert.shortWindowDivider"
                 :show-short-alert="alert.shortWindowVisible"></burn-component>
 
@@ -701,14 +701,14 @@
                         </p>
                         <p>
                             Your chosen Short-Window is 1/{{ alert.shortWindowDivider }} of the Long-Window.
-                            Long-Window alert triggers after consuming {{ alert.windowPerc }}%
+                            Long-Window alert triggers after consuming {{ alert.longWindowPerc }}%
                             of the total error budget.
                         </p>
                         <div class="formula">
                             <div class="formula_fraction">
                                 <div class="formula_fraction--top">
                                     <code>
-                                        <span class="const">{{ alert.windowPerc }}</span>
+                                        <span class="const">{{ alert.longWindowPerc }}</span>
                                         <span class="punct">%</span>
                                     </code>
                                 </div>
@@ -730,12 +730,12 @@
                     </help-component>
                 </h3>
                 <p>
-                    After Exhausting 1/{{ alert.shortWindowDivider }} of the Long-Window
-                    ({{ alertCalc.shortWindowPerc }}% of the error budget):
+                    After when 1/{{ alert.shortWindowDivider }} of the Long-Window
+                    ({{ alertCalc.shortWindowPerc }}% of the error budget) is consumed:
                     <br />
-                    {{ secondsToTimePeriod(alertCalc.shortWindowTimeToExhaust) }}
+                    {{ secondsToTimePeriod(alertCalc.shortWindowTimeToConsume) }}
                     <br />
-                    ({{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }})
+                    ({{ humanSeconds(alertCalc.shortWindowTimeToConsume) }})
                 </p>
                 <input
                     id="alert-short-window-divider-input"
@@ -747,7 +747,7 @@
                 <h3>Alert Policy
                     <help-component>
                         <p>
-                            Note that the purpose of the Short-Window alert is to make sure that the alert
+                            Note: The purpose of the Short-Window alert is to make sure that the alert
                             only triggers if the burn rate is still high.
                             Therefore, the query for both long alert and short alert must be combined with
                             an <em>AND</em> condition.
@@ -765,11 +765,11 @@
                         </label>
                         <span class="punct">, </span>
                         <span class="const">
-                            {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
+                            {{ humanSeconds(alertCalc.shortWindowTimeToConsume) }}
                         </span>
                         <span class="punct">) ≤ </span>
                         <span class="const">
-                            {{ humanSeconds(percent(slo.perc, alertCalc.shortWindowTimeToExhaust)) }}
+                            {{ humanSeconds(percent(slo.perc, alertCalc.shortWindowTimeToConsume)) }}
                         </span>
                     </code>
                     <div class="formula" v-else>
@@ -785,7 +785,7 @@
                                     </label>
                                     <span class="punct">, </span>
                                     <span class="const">
-                                        {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
+                                        {{ humanSeconds(alertCalc.shortWindowTimeToConsume) }}
                                     </span>
                                     <span class="punct">)</span>
                                 </code>
@@ -802,7 +802,7 @@
                                     <span class="punct"></span>
                                     <span class="punct">, </span>
                                     <span class="const">
-                                        {{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }}
+                                        {{ humanSeconds(alertCalc.shortWindowTimeToConsume) }}
                                     </span>
                                     <span class="punct">)</span>
                                 </code>
