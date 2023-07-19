@@ -3,20 +3,20 @@
     <g>
         <line
             class="axis"
-            :x1="horizontalAxis.x1"
-            :x2="horizontalAxis.x2"
-            :y1="horizontalAxis.y1"
-            :y2="horizontalAxis.y2" />
+            :x1="leftX"
+            :x2="rightX"
+            :y1="bottomY"
+            :y2="bottomY" />
         <!-- horizontal axis title -->        
         <text
             class="axis-title axis-title--horizontal"
-            :x="horizontalAxis.x2"
-            :y="horizontalAxis.y2 + 18">
+            :x="rightX"
+            :y="bottomY + 18">
             Time
         </text>
         <polygon
             class="axis-arrow"
-            :points="horizontalAxis.arrowCoordinates" />
+            :points="horizontalAxisArrowPoints" />
     </g>
     <!-- vertical axis -->
     <text
@@ -29,10 +29,10 @@
     <g>
         <line
             class="burn-line"
-            :x1="d.burnLine.x1"
-            :x2="d.burnLine.x2"
-            :y1="d.burnLine.y1"
-            :y2="d.burnLine.y2" />
+            :x1="leftX"
+            :x2="d.ebBurnedX"
+            :y1="topY"
+            :y2="bottomY" />
     </g>    
     <!-- start of SLO window -->
     <burn-event-component
@@ -42,7 +42,9 @@
         :y1="margin.top"
         :y2="height - margin.bottom"
         color="--secondary-color"
-        offset="1">SLO Window Start</burn-event-component>
+        offset="1">
+        SLO Window Start
+    </burn-event-component>
     <!-- end of SLO window -->
     <burn-event-component
         :width="width"
@@ -51,7 +53,9 @@
         :y1="margin.top"
         :y2="height - margin.bottom"
         color="--secondary-color"
-        offset="1">SLO Window End</burn-event-component>
+        offset="1">
+        SLO Window End
+    </burn-event-component>
     <!-- error budget burned -->
     <burn-event-component
         :width="width"
@@ -60,7 +64,9 @@
         :y1="margin.top"
         :y2="height - margin.bottom"
         color="--brand-red"
-        offset="4">Error Budget Exhausted</burn-event-component>
+        offset="2">
+        Error Budget Exhausted
+    </burn-event-component>
     <!-- long window alert burned -->
     <burn-event-component
         :width="width"
@@ -69,7 +75,9 @@
         :y1="margin.top"
         :y2="height - margin.bottom"
         color="--brand-green"
-        offset="3">Long Window Alert</burn-event-component>
+        offset="3">
+        Long Window Alert
+    </burn-event-component>
     <!-- short window alert burned -->
     <burn-event-component
         :width="width"
@@ -78,5 +86,7 @@
         :y1="margin.top"
         :y2="height - margin.bottom"
         color="--brand-purple"
-        offset="2">Short Window Alert</burn-event-component>
+        offset="4">
+        Short Window Alert
+    </burn-event-component>
 </svg>

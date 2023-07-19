@@ -10,7 +10,7 @@ export default {
             height: 300,
             margin: {
                 left: 20,
-                right: 0,
+                right: 5,
                 top: 10,
                 bottom: 20,
             }
@@ -29,44 +29,27 @@ export default {
         viewBox() {
             return `0 0 ${this.width} ${this.height}`
         },
-        horizontalAxis() {
-            const x1 = this.margin.left
-            const x2 = this.width - this.margin.right
-            const y = this.height - this.margin.bottom
-
-            const arrowCoordinates = arrToPolygonPoints(
-                [x2, y],
-                [x2 - 5, y - 3],
-                [x2 - 5, y + 3],
+        rightX() {
+            return this.width - this.margin.right
+        },
+        leftX() {
+            return this.margin.left
+        },
+        rangeX() {
+            return this.width - this.margin.left - this.margin.right
+        },
+        topY() {
+            return this.margin.top
+        },
+        bottomY() {
+            return this.height - this.margin.bottom
+        },
+        horizontalAxisArrowPoints() {
+            return arrToPolygonPoints(
+                [this.rightX, this.bottomY],
+                [this.rightX - 5, this.bottomY - 3],
+                [this.rightX - 5, this.bottomY + 3],
             )
-            
-            return {
-                x1,
-                x2,
-                y1: y,
-                y2: y,
-                arrowCoordinates,
-            }
-        },
-        verticalAxis() {
-            const x = this.margin.left
-            const y1 = this.margin.top
-            const y2 = this.height - this.margin.bottom
-
-            return {
-                x1: x,
-                x2: x,
-                y1,
-                y2,
-            }
-        },
-        sloWindowEnd() {
-            return {
-                x1: this.width - this.margin.right,
-                x2: this.width - this.margin.right,
-                y1: this.margin.top,
-                y2: this.height - this.margin.bottom,
-            }
         },
         d() {
             // the ratio of the error budget from the total SLO window
@@ -74,23 +57,11 @@ export default {
             const longAlertRatio = errorBudgetRatio * this.longAlertPerc / 100
             const shortAlertRatio = longAlertRatio / this.shortAlertDivider
 
-            const W = this.width - this.margin.left - this.margin.right
-            const x1 = this.margin.left
-            const eventY1 = this.margin.top
-            const eventY2 = this.height - this.margin.bottom
+            const ebBurnedX = this.rangeX * errorBudgetRatio + this.margin.left
+            const longAlertX = this.rangeX * longAlertRatio + this.margin.left
+            const shortAlertX = this.rangeX * shortAlertRatio + this.margin.left
 
-            const ebBurnedX = W * errorBudgetRatio + this.margin.left
-            const burnLine = {
-                x1,
-                y1: eventY1,
-                x2: ebBurnedX,
-                y2: eventY2,
-            }
-
-            const longAlertX = W * longAlertRatio + this.margin.left
-            const shortAlertX = W * shortAlertRatio + this.margin.left
-
-            return { burnLine, ebBurnedX, longAlertX, shortAlertX }
+            return { ebBurnedX, longAlertX, shortAlertX }
         },
     },
     methods: {

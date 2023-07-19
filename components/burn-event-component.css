@@ -1,11 +1,15 @@
 .event line {
     stroke: var(--foreground-color);
     stroke-width: 1px;
-    stroke-dasharray: 3px 2px;
 }
 
 .event text {
     font-family: var(--body-font-family);
     fill: var(--foreground-color);
     font-size: 0.8rem;
+    alignment-baseline: middle;
+}
+
+.event .burn-event-arrow {
+    fill: var(--foreground-color);
 }

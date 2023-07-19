@@ -11,4 +11,8 @@
         :text-anchor="textAnchor"
         :style="{ fill: `var(${ color })` }"
         ><slot></slot></text>
+    <polygon
+        class="burn-event-arrow"
+        :style="{ fill: `var(${ color })` }"
+        :points="arrowPoints" />
 </g>

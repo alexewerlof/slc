@@ -1,3 +1,5 @@
+import { arrToPolygonPoints } from "../util.js"
+
 const template = await (await fetch('components/burn-event-component.html')).text()
 
 export default {
@@ -10,10 +12,19 @@ export default {
             return this.isTitleOnRight ? 'start': 'end'
         },
         titleX() {
+            // 5 is an experimental value that looks good on the current graph size
             return this.x + (this.isTitleOnRight ? 5 : -5)
         },
         titleY() {
-            return this.y1 + 20 * this.offset
+            // 5 is an experimental value that looks good on the current graph size
+            return this.height - (this.height * this.offset / 5)
+        },
+        arrowPoints() {
+            return arrToPolygonPoints(
+                [this.titleX, this.titleY],
+                [this.x, this.titleY - 3],
+                [this.x, this.titleY + 3],
+            )
         },
     },
     props: {
