@@ -1,3 +1,4 @@
+import { arrToPolygonPoints } from '../util.js'
 import burnEventComponent from './burn-event-component.js'
 const template = await (await fetch('components/burn-component.html')).text()
 
@@ -6,9 +7,9 @@ export default {
     data() {
         return {
             width: 500,
-            height: 200,
+            height: 300,
             margin: {
-                left: 0,
+                left: 20,
                 right: 0,
                 top: 10,
                 bottom: 20,
@@ -29,19 +30,34 @@ export default {
             return `0 0 ${this.width} ${this.height}`
         },
         horizontalAxis() {
+            const x1 = this.margin.left
+            const x2 = this.width - this.margin.right
+            const y = this.height - this.margin.bottom
+
+            const arrowCoordinates = arrToPolygonPoints(
+                [x2, y],
+                [x2 - 5, y - 3],
+                [x2 - 5, y + 3],
+            )
+            
             return {
-                x1: this.margin.left,
-                x2: this.width - this.margin.right,
-                y1: this.height - this.margin.bottom,
-                y2: this.height - this.margin.bottom,
+                x1,
+                x2,
+                y1: y,
+                y2: y,
+                arrowCoordinates,
             }
         },
         verticalAxis() {
+            const x = this.margin.left
+            const y1 = this.margin.top
+            const y2 = this.height - this.margin.bottom
+
             return {
-                x1: this.margin.left,
-                x2: this.margin.left,
-                y1: this.margin.top,
-                y2: this.height - this.margin.bottom,
+                x1: x,
+                x2: x,
+                y1,
+                y2,
             }
         },
         sloWindowEnd() {
