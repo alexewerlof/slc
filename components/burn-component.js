@@ -20,7 +20,6 @@ export default {
         burnRate: Number,
         longAlertPerc: Number,
         shortAlertDivider: Number,
-        showShortAlert: Boolean,
     },
     components: {
         burnEventComponent,

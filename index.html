@@ -40,7 +40,7 @@
                 <help-component>
                     <p>
                         You can load a pre-defined example to the UI.
-                        You can then tweak it and play around with different parameters.
+                        You can tweak it and play around with different parameters as you wish.
                     </p>
                 </help-component>
             </h1>
@@ -61,10 +61,29 @@
                 <help-component>
                     <p>
                         Service Level Indicators in simple words are the metrics that represent how the reliability
-                        is perceived by the consumers of the service.
+                        is perceived by the consumers of the service. They are normalized to be a number between
+                        0 and 100 using this formula:
                     </p>
+                    <div class="formula">
+                        <div class="formula_chunk">
+                            SLI
+                            <code>
+                                <span class="punct">=</span>
+                            </code>
+                        </div>
+                        <div class="formula_fraction">
+                            <div class="formula_fraction--top">Good</div>
+                            <div class="formula_fraction--bottom">Valid</div>
+                        </div>
+                        <div class="formula_chunk">
+                            <code>
+                                <span class="punct"> × </span>
+                                <span class="const">100</span>
+                            </code>
+                        </div>
+                    </div>
                     <p>
-                        Common SLIs include latency, availability, yield, etc.
+                        Common SLIs include latency, availability, yield, durability, correctness, etc.
                     </p>
                 </help-component>
             </h1>
@@ -91,10 +110,6 @@
                                 : Concerned with the <em>count</em> of good events per total* events in a given time period.
                             </li>
                         </ul>
-                        <p>
-                            * We are simplifying here a bit. There's a slight difference between "total" and "valid" which
-                            basically boils down to what part of the system input should we be held accountable for.
-                        </p>
                     </p>
                 </help-component>
             </h2>
@@ -161,6 +176,11 @@
                         For simplicity, sometimes "total" is used instead of "valid".
                         But there is a difference: you want to only be responsible for valid events so that
                         if the system is being abused, you don't get penalized for it.
+                    </p>
+                    <p>
+                        There's a difference between <em>total</em> and <em>valid</em>
+                        It boils down to what part of the system behavior should we be held accountable for and
+                        explicitly separate it from the system abuse like DDoS attacks.
                     </p>
                     <p v-if="sli.isTimeBased">
                         Examples:
@@ -416,6 +436,64 @@
                         Alerting on error budgets enable us to be on top of the reliability of our system.
                         When using service levels, the alert triggers on the rate of consuming the error budget.
                     </p>
+                    <p>
+                        Goole SRE Workbook goes through 6 alerting strategies and
+                        <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener">
+                            recommends
+                        </a>:
+                    </p>
+                    <table>
+                        <thead>
+                            <th>Burn Rate</th>
+                            <th>Error Budget</th>
+                            <th>Long-Window</th>
+                            <th>Short-Window</th>
+                            <th>Action</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>14.4x</td>
+                                <td>2% Consumed</td>
+                                <td>1 hour</td>
+                                <td>5 minutes</td>
+                                <td>Page</td>
+                                <td>
+                                    <button @click="alert.burnRate = 14.4, alert.windowPerc = 2, alert.shortWindowDivider = 12">
+                                        Try!
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>6x</td>
+                                <td>5% Consumed</td>
+                                <td>6 hour</td>
+                                <td>30 minutes</td>
+                                <td>Page</td>
+                                <td>
+                                    <button @click="alert.burnRate = 6, alert.windowPerc = 5, alert.shortWindowDivider = 12">
+                                        Try!
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1x</td>
+                                <td>10% Consumed</td>
+                                <td>3 days</td>
+                                <td>6 hours</td>
+                                <td>Ticket</td>
+                                <td>
+                                    <button @click="alert.burnRate = 1, alert.windowPerc = 10, alert.shortWindowDivider = 12">
+                                        Try!
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        Note that the values for Long-Window and Short-Window are based on a 1-month SLO window.
+                        You can see your actual values in the comments below Long-Window and Short-Window.
+                    </p>
                 </help-component>
             </h1>
 
@@ -438,18 +516,22 @@
                         violated before the end of the SLO window.
                     </p>
                     <p>
-                        When deciding an alert, the burn rate decide how quickly will the alert react
+                        When setting an alert, the burn rate decides how quickly the alert reacts
                         to errors.
                     </p>
-                    <p>
-                        Too fast and it will lead to false positives (alerting unnecessarily)
-                        or alert fatigue (too many alerts).
-                        Too slow and the error burget will be burned before you know it.
-                    </p>
+                    <ul>
+                        <li>
+                            Too fast and it will lead to false positives (alerting unnecessarily)
+                            and alert fatigue (too many alerts).
+                        </li>
+                        <li>
+                            Too slow and the error burget will be burned before you know it.
+                        </li>
+                    </ul>
                 </help-component>
             </h2>
             <p>
-                Time to exhaust error budget:<br />
+                Time to exhaust the entire error budget:<br />
                 {{ secondsToTimePeriod(alertCalc.timeToExhaust) }}<br />
                 ({{ humanSeconds(alertCalc.timeToExhaust) }})
             </p>
@@ -457,13 +539,12 @@
                 id="burn-rate-input"
                 type="range"
                 min="1"
-                max="50"
+                max="20"
                 step="0.1"
                 v-model="alert.burnRate"
             >
             <h2>
-                <span v-if="alert.shortWindowVisible">Long Window</span>
-                Alert
+                Long-Window
             </h2>
             <h3>
                 <label for="alert-error-budget-perc">
@@ -481,10 +562,18 @@
                     <p>
                         Based on your setup, the alert will trigger after we have consumed
                         {{ alert.windowPerc }}% of the entire time allotted for the error budget
-                        (or SLO compliance window): {{ secondsToTimePeriod(sloWindow) }}.
+                        (or SLO compliance window) which is
+                        <time>{{ secondsToTimePeriod(sloWindow) }}</time>.
                     </p>
                 </help-component>
             </h3>
+            <p>
+                Alert if {{ alert.windowPerc }}% of the error budget is consumed in:
+                <br />
+                {{ secondsToTimePeriod(alertCalc.longWindowTimeToExhaust) }}
+                <br />
+                ({{ humanSeconds(alertCalc.longWindowTimeToExhaust) }})
+            </p>
             <input
                 id="alert-error-budget-perc"
                 type="range"
@@ -492,22 +581,6 @@
                 max="100"
                 v-model="alert.windowPerc"
             >
-            <div>
-                <h3>
-                    Detection Time
-                    <help-component>
-                        <p>
-                            The detection time is the time it takes for the alert to be triggered after
-                            the errors start to consume a significant portion of the error budget.
-                        </p>
-                    </help-component>
-                </h3>
-                <p>
-                    {{ secondsToTimePeriod(alertCalc.longWindowTimeToExhaust) }}
-                    <br />
-                    ({{ humanSeconds(alertCalc.longWindowTimeToExhaust) }})
-                </p>
-            </div>
             <h3>
                 Alert Policy
                 <help-component>
@@ -595,52 +668,40 @@
                         type="checkbox"
                         v-model="alert.shortWindowVisible"
                     >
-                    Show Short Window Alert
+                    Show Short-Window Alert Settings
                 </label>
                 <help-component>
                     <p>
-                        Short window alert is same as the normal long window alert but with a shorter window.
-                        The short window alert improves the detection time but adds complexity
+                        Short-Window alert is same as the normal Long-Window alert but with a shorter window.
+                        The Short-Window alert improves the detection time but adds complexity
                         to the alerting setup.
                     </p>
                 </help-component>
             </div>
 
             <div v-if="alert.shortWindowVisible">
-                <h2>Short Window Alert</h2>
+                <h2>Short-Window</h2>
 
                 <h3>
                     <label for="alert-short-window-divider-input">
-                        Short window: 1/{{ alert.shortWindowDivider }} of long window
+                        Short/Long ratio: 1/{{ alert.shortWindowDivider }}
                     </label>
                     <help-component>
                         <p>
-                            Short window is a window that is a fraction of the long window.
+                            Short-Window is a window that is a fraction of the Long-Window.
                             It is used to improve the detection time of the alert.
                         </p>
                         <p>
-                            The short window is usually 1/12th of the long window.
+                            The Short-Window is usually 1/12th of the Long-Window.
                             But you can play with different dividers to see how they impact
                             the detection time of the alert.
                         </p>
                         <p v-if="alert.shortWindowDivider !== 12">
                             <button @click="alert.shortWindowDivider = 12">Reset to 1/12</button>
                         </p>
-                    </help-component>
-                </h3>
-                <input
-                    id="alert-short-window-divider-input"
-                    type="range"
-                    min="2"
-                    max="20"
-                    v-model="alert.shortWindowDivider"
-                >
-                <div class="block">
-                    After Exhausting: {{ alertCalc.shortWindowPerc }}%
-                    <help-component>
                         <p>
-                            The short window alert is 1/{{ alert.shortWindowDivider }} of the long window.
-                            Long window alert triggers after consuming {{ alert.windowPerc }}%
+                            Your chosen Short-Window is 1/{{ alert.shortWindowDivider }} of the Long-Window.
+                            Long-Window alert triggers after consuming {{ alert.windowPerc }}%
                             of the total error budget.
                         </p>
                         <div class="formula">
@@ -665,17 +726,34 @@
                                 </code>
                             </div>
                         </div>
-                    </help-component>
-                </div>
 
-                <h3>Detection Time</h3>
+                    </help-component>
+                </h3>
                 <p>
+                    After Exhausting 1/{{ alert.shortWindowDivider }} of the Long-Window
+                    ({{ alertCalc.shortWindowPerc }}% of the error budget):
+                    <br />
                     {{ secondsToTimePeriod(alertCalc.shortWindowTimeToExhaust) }}
                     <br />
                     ({{ humanSeconds(alertCalc.shortWindowTimeToExhaust) }})
                 </p>
-
-                <h3>Alert Policy</h3>
+                <input
+                    id="alert-short-window-divider-input"
+                    type="range"
+                    min="2"
+                    max="20"
+                    v-model="alert.shortWindowDivider"
+                >
+                <h3>Alert Policy
+                    <help-component>
+                        <p>
+                            Note that the purpose of the Short-Window alert is to make sure that the alert
+                            only triggers if the burn rate is still high.
+                            Therefore, the query for both long alert and short alert must be combined with
+                            an <em>AND</em> condition.
+                        </p>
+                    </help-component>
+                </h3>
                 <div class="code block">
                     <code v-if="sli.isTimeBased">
                         <label for="sli-type-input">

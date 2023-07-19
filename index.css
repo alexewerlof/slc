@@ -173,3 +173,21 @@ button {
     border-radius: 0.3em;
     cursor: pointer;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    font-family: var(--title-font-family);
+}
+
+th, td {
+    text-align: left;
+    border-bottom: 1px solid currentColor;
+}
+
+td button {
+    width: 100%;
+}
