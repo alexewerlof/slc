@@ -19,7 +19,6 @@ export default {
     props: {
         burnRate: Number,
         longAlertPerc: Number,
-        shortAlertDivider: Number,
     },
     components: {
         burnEventComponent,
@@ -54,13 +53,11 @@ export default {
             // the ratio of the error budget from the total SLO window
             const errorBudgetRatio = 1 / this.burnRate
             const longAlertRatio = errorBudgetRatio * this.longAlertPerc / 100
-            const shortAlertRatio = longAlertRatio / this.shortAlertDivider
 
             const ebBurnedX = this.rangeX * errorBudgetRatio + this.margin.left
             const longAlertX = this.rangeX * longAlertRatio + this.margin.left
-            const shortAlertX = this.rangeX * shortAlertRatio + this.margin.left
 
-            return { ebBurnedX, longAlertX, shortAlertX }
+            return { ebBurnedX, longAlertX }
         },
     },
     methods: {
