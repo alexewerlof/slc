@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="vue-specific.css">
     <link rel="stylesheet" href="index.css">
-    <meta name="description" content="A simple SLO calculator that complies with Google SRE books.">
-    <meta property="og:title" content="SLO Calculator">
-    <meta property="og:description" content="A simple SLO calculator that complies with Google SRE books.">
-    <meta property="og:image" content="https://slo.alexewerlof.com/splash.png">
+    <meta name="description" content="A simple Service Level Calculator that complies with Google SRE books.">
+    <meta property="og:title" content="Service Level Calculator">
+    <meta property="og:description" content="A simple Service Level Calculator that complies with Google SRE books.">
+    <meta property="og:image" content="https://slo.alexewerlof.com/img/splash.png">
     <meta property="og:url" content="https://slo.alexewerlof.com">
     <meta property="og:type" content="website">
+    <link rel="icon" type="image/png" href="img/icon.png">
     <title>Service Level Calculator</title>
 </head>
 
@@ -23,6 +24,7 @@
 
     <main id="app" v-cloak>
         <header>
+            <img src="img/icon.png" alt="Service Level Calculator Logo" class="logo" width="120"/>
             <h1>Service Level Calculator</h1>
         </header>
     
@@ -886,6 +888,24 @@
                 <a href="https://forms.gle/CspQc8AGqTmtG2AD7" target="_blank" rel="noopener">Feedback</a>
             </li>
         </ul>
+
+        <p>
+            This application took about 50 hours of my private time to build.
+            It was fun and I hope it helps people.
+            <br />
+            If you want to support me, you can
+            <a href="https://www.paypal.com/paypalme/alexewerlof" target="_blank" rel="noopener">buy me a coffee</a>
+            or a subscription to
+            <a href="https://blog.alexewerlof.com/">my newsletter</a>.
+            <br />
+            <em>
+                Right now, you can get 20% off via
+                <a href="https://blog.alexewerlof.com/protipsdiscount" target="_blank" rel="noopener">this link</a>.
+            </em>
+        </p>
+        <a href="https://alexewerlof.com">
+            <img alt="logo" src="img/logo.png" width="150px"/>
+        </a>
     </footer>
 
     <script type="module" src="index.js" defer async></script>

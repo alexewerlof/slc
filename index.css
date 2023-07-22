@@ -25,6 +25,9 @@ section {
     padding: 1em 1em 2em 1em;
     border-bottom: 1px solid var(--primary-color);
 }
+.logo {
+    margin-top: 2em;
+}
 
 .link-list {
     margin: 0;

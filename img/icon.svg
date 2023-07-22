@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="256"
+   height="256"
+   viewBox="0 0 67.733332 67.733333"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="slc-icon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="3.5705387"
+     inkscape:cx="96.20397"
+     inkscape:cy="140.8751"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#ffbc52;fill-rule:evenodd;stroke:none;stroke-width:0.246933;stroke-linejoin:round;paint-order:stroke fill markers;fill-opacity:1"
+       id="path526"
+       cx="33.866665"
+       cy="33.866665"
+       r="29.876534" />
+    <rect
+       style="fill:#47a9ff;fill-rule:evenodd;stroke:none;stroke-width:0.223875;stroke-linejoin:round;paint-order:stroke fill markers;fill-opacity:1"
+       id="rect234"
+       width="40.777985"
+       height="10.040709"
+       x="5.2408733"
+       y="46.663773"
+       rx="5" />
+    <rect
+       style="fill:#a3a3a3;fill-rule:evenodd;stroke:none;stroke-width:0.150921;stroke-linejoin:round;paint-order:stroke fill markers;fill-opacity:1;stroke-opacity:1"
+       id="rect234-5"
+       width="18.39809"
+       height="10.113662"
+       x="43.672585"
+       y="46.592121"
+       rx="5" />
+    <text
+       xml:space="preserve"
+       style="font-size:34.6734px;font-family:Alata;-inkscape-font-specification:Alata;fill:#001426;fill-opacity:1;fill-rule:evenodd;stroke:#001426;stroke-width:2.16709;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke fill markers"
+       x="5.9249125"
+       y="38.806763"
+       id="text290"><tspan
+         sodipodi:role="line"
+         id="tspan288"
+         style="fill:#001426;fill-opacity:1;stroke:#001426;stroke-width:2.16709;stroke-opacity:1"
+         x="5.9249125"
+         y="38.806763">SLC</tspan></text>
+    <circle
+       style="fill:#47a9ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-linejoin:round;paint-order:stroke fill markers;fill-opacity:1"
+       id="path502"
+       cx="46.239525"
+       cy="51.648949"
+       r="7.4842815" />
+  </g>
+</svg>
