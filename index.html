@@ -436,7 +436,13 @@
                 <h3>
                     <label for="error-budget-example">Example number of valid {{sliUnit}}</label>
                 </h3>
-                <p>In {{ sloWindow.humanTime }}:</p>
+                <p>
+                    Expected 
+                    <label for="sli-valid-input">
+                        <code>{{ sli.valid }}</code>
+                    </label>
+                    in {{ sloWindow.humanTime }}:
+                </p>
                 <input
                     type="number"
                     v-model.number="errorBudgetValidExample"
@@ -558,11 +564,11 @@
                 </help-component>
             </h2>
             <p>
-                Time it takes to exhaust the entire error budget 
+                The time it takes to exhaust the entire error budget 
                 <span v-if="sli.isTimeBased">({{ errorBudgetWindow.humanTimeSlots }})</span>
                 at this rate:
                 <br />
-                {{ errorBudgetTimeToExhaust.humanTimeSec }}
+                <time>{{ errorBudgetTimeToExhaust.humanTimeSec }}</time>
             </p>
             <input
                 id="burn-rate-input"
@@ -601,12 +607,12 @@
             <p>
                 Alert when {{ alert.longWindowPerc }}% of the error budget is consumed in the last:
                 <br />
-                {{ alertLongWindow.humanTimeSec }}
+                <time>{{ alertLongWindow.humanTimeSec }}</time>
             </p>
             <p>
                 Time to resolve before the entire error budget is exhausted:
                 <br />
-                {{ alertTTRWindow.humanTimeSec}}
+                <time>{{ alertTTRWindow.humanTimeSec}}</time>
             </p>
             <p v-if="alertTTRWindow.rawSec < 3600">
                 Note: The time to resolve (TTR) is too short for a human to react.
@@ -773,9 +779,9 @@
                     </help-component>
                 </h3>
                 <p>
-                    Alert when {{ alertShortWindowPerc }}% of the error budget is consumed in the last:
+                    Alert if {{ alertShortWindowPerc }}% of the error budget is consumed in the last:
                     <br />
-                    {{ alertShortWindow.humanTimeSec }}
+                    <time>{{ alertShortWindow.humanTimeSec }}</time>
                 </p>
                 <div v-if="sli.isTimeBased" class="block">
                     <p>
