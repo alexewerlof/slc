@@ -29,7 +29,6 @@
         <ul id="links-bar" class="link-list">
             <li><a href="#sli-title">SLI</a></li>
             <li><a href="#slo-title">SLO</a></li>
-            <li><a href="#error-budget-title">Error Budget</a></li>
             <li><a href="#alert-title">Alerting</a></li>
             <li><a href="https://forms.gle/CspQc8AGqTmtG2AD7" target="_blank" rel="noopener">Feedback</a></li>
         </ul>
@@ -97,17 +96,20 @@
                                 <a target="_blank"
                                     href="https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#compliance-period"
                                     rel="noopener">
-                                    Time Based
+                                    Time-Based
                                 </a>
                                 : Concerned with the <em>duration</em> of good time in a given period.
+                                The duration is actually a time window where the data is aggregated for a good/bad result.
+                                In a sense the Time-Based SLI is also an Event-Based SLI where an event is an
+                                aggregation window.
                             </li>
                             <li>
                                 <a target="_blank"
                                     href="https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring#compliance-period"
                                     rel="noopener">
-                                    Event Based
+                                    Event-Based
                                 </a>
-                                : Concerned with the <em>count</em> of good events per total* events in a given time period.
+                                : Concerned with the <em>count</em> of good events per valid events in a given time period.
                             </li>
                         </ul>
                     </p>
@@ -118,47 +120,82 @@
                 id="sli-type-input"
                 type="checkbox"
                 v-model="sli.isTimeBased">
-                <option :value="true">Time based</option>
-                <option :value="false">Event based</option>
+                <option :value="true">Time-Based</option>
+                <option :value="false">Event-Based</option>
             </select>
 
+            <div v-if="sli.isTimeBased">
+                <!-- SLI Time Slot -->
+                <h2>
+                    <label for="sli-time-slot-length-input">Time Slot: {{ sli.timeSlot }} sec</label>
+                    <help-component>
+                        <p>
+                            The time slot is the time window that the metric data is aggregated to
+                            calculate a good/bad time slot.
+                        </p>
+                        <p>
+                            For example, probing an endpoint every 60 seconds to see if it is available,
+                            assumes that the endpoint is available for the entire 60 seconds.
+                        </p>
+                        <p>
+                            Another example is percentiles. When calculating the 99th percentile of the
+                            latency every 5 minutes, the aggregation window is 5 x 60 = 300 seconds.
+                        </p>
+                        <p>
+                            Here you can set this parameter to common values:
+                            <button type="button" @click="sli.timeSlot = 1">1 sec</button>
+                            <button type="button" @click="sli.timeSlot = 60">1 min</button>
+                            <button type="button" @click="sli.timeSlot = 180">3 min</button>
+                            <button type="button" @click="sli.timeSlot = 300">5 min</button>
+                            <button type="button" @click="sli.timeSlot = 600">10 min</button>
+                            <button type="button" @click="sli.timeSlot = 900">15 min</button>
+                            <button type="button" @click="sli.timeSlot = 1800">30 min</button>
+                            <button type="button" @click="sli.timeSlot = 3600">1 hour</button>
+                        </p>
+                    </help-component>
+                </h2>
+                <input
+                    id="sli-time-slot-length-input"
+                    type="range"
+                    min="1"
+                    max="3600"
+                    placeholder="60"
+                    v-model.number="sli.timeSlot">
+            </div>
+            <div v-else>
+                <!-- SLI Event Unit -->
+                <h2>
+                    <label for="sli-event-unit">Event Unit</label>
+                    <help-component>
+                        <p>
+                            The unit of the event that the SLI is measuring.
+                            This is mainly used in the UI to make it easier to understand.
+                        </p>
+                        <p>
+                            Here you can set this parameter to common values:
+                            <button type="button" @click="sli.unit = 'requests'">requests</button>
+                            <button type="button" @click="sli.unit = 'page_views'">page_views</button>
+                            <button type="button" @click="sli.unit = 'logins'">logins</button>
+                            <button type="button" @click="sli.unit = 'incidents'">incidents</button>
+                            <button type="button" @click="sli.unit = 'sessions'">sessions</button>
+                            <button type="button" @click="sli.unit = 'users'">users</button>
+                        </p>
+                    </help-component>
+                </h2>
+                <input
+                    id="sli-event-unit"
+                    type="text"
+                    v-model="sli.unit">
+            </div>
+
+            <!-- SLI: Good -->
             <h2>
-                <label for="example-units-input">{{sliCalc.unitCaption}}</label>
+                <label for="sli-good-input">Good {{ sliUnit }}</label>
                 <help-component>
                     <p>
-                        The unit of the indicator that the SLI is trying to measure.
-                        This is mainly used in the UI to make it easier to understand.
-                    </p>
-                    <p v-if="sli.isTimeBased">
-                        Examples:
-                        <button type="button" @click="sli.unit = 'minutes'">minutes</button>,
-                        <button type="button" @click="sli.unit = 'seconds'">seconds</button>,
-                        <button type="button" @click="sli.unit = 'hours'">hours</button>,
-                        etc.
-                    </p>
-                    <p v-else>
-                        Examples:
-                        <button type="button" @click="sli.unit = 'requests'">requests</button>,
-                        <button type="button" @click="sli.unit = 'page_views'">page_views</button>,
-                        <button type="button" @click="sli.unit = 'logins'">logins</button>,
-                        <button type="button" @click="sli.unit = 'incidents'">incidents</button>,
-                        <button type="button" @click="sli.unit = 'sessions'">sessions</button>,
-                        <button type="button" @click="sli.unit = 'users'">users</button>,
-                        etc.
-                    </p>
-                </help-component>
-            </h2>
-            <input
-                id="example-units-input"
-                type="text"
-                v-model="sli.unit">
-            <h2>
-                <label for="sli-good-input">Good {{ sliCalc.unit }}</label>
-                <help-component>
-                    <p>
-                        How do good {{ sliCalc.unit }} look like?
+                        How do good {{ sliUnit }} look like?
                         What is the metric that you can measure to identify the
-                        good {{ sliCalc.unit }} from all the valid {{ sliCalc.unit }}?
+                        good {{ sliUnit }} from all the valid {{ sliUnit }}?
                     </p>
                 </help-component>
             </h2>
@@ -167,60 +204,37 @@
                 type="text"
                 v-model="sli.good">
 
-            <h2>
-                <label for="sli-valid-input">
-                    Valid {{ sliCalc.unit }}
-                </label>
-                <help-component>
-                    <p>
-                        For simplicity, sometimes "total" is used instead of "valid".
-                        But there is a difference: you want to only be responsible for valid events so that
-                        if the system is being abused, you don't get penalized for it.
-                    </p>
-                    <p>
-                        There's a difference between <em>total</em> and <em>valid</em>
-                        It boils down to what part of the system behavior should we be held accountable for and
-                        explicitly separate it from the system abuse like DDoS attacks.
-                    </p>
-                    <p v-if="sli.isTimeBased">
-                        Examples:
-                        <code>total_time</code>,
-                        <code>worker_execution_time</code>,
-                        <code>user_session</code>,
-                        etc.
-                    </p>
-                    <p v-else>
-                        Examples: total_requests, total_page-views, total_login_attempts, total_incidents, etc.
-                    </p>
-                </help-component>
-            </h2>
+            <!-- SLI: Valid -->
+            <div v-if="!sli.isTimeBased">
+                <h2>
+                    <label for="sli-valid-input">
+                        Valid {{ sliUnit }}
+                    </label>
+                    <help-component>
+                        <p>
+                            For simplicity, sometimes "total" is used instead of "valid".
+                            But there is a difference: you want to only be responsible for valid events so that
+                            if the system is being abused, you don't get penalized for it.
+                        </p>
+                        <p>
+                            There's a difference between <em>total</em> and <em>valid</em>
+                            It boils down to what part of the system behavior should we be held accountable for and
+                            explicitly separate it from the system abuse like DDoS attacks.
+                        </p>
+                        <p>
+                            Examples: total_requests, total_page-views, total_login_attempts, total_incidents, etc.
+                        </p>
+                    </help-component>
+                </h2>
 
-            <input
-                id="sli-valid-input"
-                type="text"
-                v-model="sli.valid"
-            >
-
-            <div v-if="sli.isTimeBased" class="block">
-                <button
-                    type="button"
-                    v-if="sli.isTimeBased"
-                    @click="sli.valid = 'SLO_window'">
-                    Entire Window
-                </button>
-                <help-component>
-                    <p>
-                        If the entire SLO window is considered valid {{ sliCalc.unit }},
-                        then the formula is simplified.
-                        However, there are some nuances in this simplified view of the world.
-                    </p>
-                    <p>
-                        For example if you want to exclude the planned downtime from the calculations,
-                        the "valid" time is less than the "total" time.
-                    </p>
-                </help-component>
+                <input
+                    id="sli-valid-input"
+                    type="text"
+                    v-model="sli.valid"
+                >
             </div>
 
+            <!-- SLI Formula -->
             <h2>
                 Formula
                 <help-component>
@@ -243,8 +257,14 @@
                         </code>
                     </div>
                     <div class="formula_fraction">
-                        <div class="formula_fraction--top">Good {{ sliCalc.unit }}</div>
-                        <div class="formula_fraction--bottom">Valid {{ sliCalc.unit }}</div>
+                        <div class="formula_fraction--top">
+                            <span v-if="sli.isTimeBased">Good Time Slots</span>
+                            <span v-else>Good {{ sliUnit }}</span>
+                        </div>
+                        <div class="formula_fraction--bottom">
+                            <span v-if="sli.isTimeBased">All Time Slots</span>
+                            <span v-else>Valid {{ sliUnit }}</span>
+                        </div>
                     </div>
                     <div class="formula_chunk">
                         <code>
@@ -262,7 +282,7 @@
                             <label for="sli-good-input">
                                 <code>
                                     <label for="sli-type-input">
-                                        <span class="funct">{{ sliCalc.func }}</span>
+                                        <span class="funct">count</span>
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-good-input">
@@ -276,10 +296,11 @@
                             <label for="sli-valid-input">
                                 <code>
                                     <label for="sli-type-input">
-                                        <span class="funct">{{ sliCalc.func }}</span>
+                                        <span class="funct">count</span>
                                     </label>
                                     <span class="punct">(</span>
-                                    <label for="sli-valid-input">
+                                    <span v-if="sli.isTimeBased">Time Slots</span>
+                                    <label v-else for="sli-valid-input">
                                         <span class="exprt">{{ sli.valid }}</span>
                                     </label>
                                     <span class="punct">)</span>
@@ -305,7 +326,7 @@
                 </label>
                 <help-component>
                     <p>
-                        Service Level Objective (SLO) is the target percentage of good {{ sliCalc.unit }}.
+                        Service Level Objective (SLO) is the target percentage of good {{ sliUnit }}.
                     </p>
                     <p>
                         Using the two sliders below you can fine tune the SLO to your needs.
@@ -319,7 +340,7 @@
                 type="range"
                 min="0"
                 max="99"
-                v-model="sloInt"
+                v-model.number="sloInt"
             >
             <label for="slo-frac-input">Fraction:</label>
             &nbsp;
@@ -335,14 +356,14 @@
                 min="0"
                 max="0.999"
                 step="0.001"
-                v-model="sloFrac"
+                v-model.number="sloFrac"
             >
 
+            <!-- SLO Window -->
             <h2>
                 <label for="slo-window-unit-multiplier">
                     Window:
-                    {{ secondsToTimePeriod(sloWindow) }}
-                    (<time>{{ humanSeconds(sloWindow) }}</time>)
+                    {{ sloWindow.humanTime }}
                 </label>
                 <help-component>
                     <p>
@@ -354,16 +375,20 @@
                     </p>
                     <p>
                         You can play with different ranges to see how a given SLO translates to different
-                        good {{ sliCalc.unit }} and how it impacts the error budget.
+                        good {{ sliUnit }} and how it impacts the error budget.
                     </p>
                 </help-component>
             </h2>
+
+            <p v-if="sli.isTimeBased">
+                {{ sloWindow.humanTimeSlots }}
+            </p>
 
             <input
                 type="range"
                 min="1"
                 :max="slo.windowUnit.max"
-                v-model="slo.windowMult"
+                v-model.number="slo.windowMult"
                 id="slo-window-unit-multiplier"
             >
 
@@ -381,8 +406,8 @@
 
         <!------------------------ Error budget ------------------------>
         <section>
-            <h1 id="error-budget-title">
-                Error budget: {{ errorBudget.perc }}%
+            <h2>
+                Error budget: {{ errorBudgetPerc }}%
                 <help-component>
                     <p>
                         Error budget is one of the core ideas behind using SLI/SLOs to improve reliability.
@@ -398,27 +423,27 @@
                     </p>
                     <p>
                         Error budget is the opposite of SLO.
-                        It is the percentage of bad {{ sliCalc.unit }} that you can have
+                        It is the percentage of bad {{ sliUnit }} that you can have
                         before you violate the SLO.
                         It is calculated as 100% - SLO.
                     </p>
                 </help-component>
-            </h1>
+            </h2>
             <p v-if="sli.isTimeBased">
-                {{ secondsToTimePeriod(errorBudget.sec) }}
-                ({{ humanSeconds(errorBudget.sec) }})
+                {{ errorBudgetWindow }}
             </p>
             <div v-if="!sli.isTimeBased">
                 <h3>
-                    <label for="error-budget-example">Example {{sliCalc.valid}}</label>
+                    <label for="error-budget-example">Example number of valid {{sliUnit}}</label>
                 </h3>
+                <p>In {{ sloWindow.humanTime }}:</p>
                 <input
                     type="number"
-                    v-model="errorBudgetValidExample"
+                    v-model.number="errorBudgetValidExample"
                     id="error-budget-example"
                 >
                 <p>
-                    {{ errorBudget.events }} <code>{{ sli.unit }}</code> are allowed to miss the
+                    {{ errorBudgetBadExample }} <code>{{ sli.unit }}</code> are allowed to miss the
                     <code>{{ sli.good }}</code> condition.
                 </p>
             </div>
@@ -436,6 +461,41 @@
                     <p>
                         Alerting on error budgets enable us to be on top of the reliability of our system.
                         When using service levels, the alert triggers on the rate of consuming the error budget.
+                    </p>
+                    <p>
+                        When setting an alert, the burn rate decides how quickly the alert reacts
+                        to errors.
+                    </p>
+                    <ul>
+                        <li>
+                            Too fast and it will lead to false positives (alerting unnecessarily)
+                            and alert fatigue (too many alerts).
+                        </li>
+                        <li>
+                            Too slow and the error burget will be burned before you know it.
+                        </li>
+                    </ul>
+                </help-component>
+            </h1>
+
+            <!-- Error Budget Burn Rate -->
+            <h2>
+                <label for="burn-rate-input">
+                    Burn rate: {{ alert.burnRate }}x
+                </label>
+                <help-component>
+                    <p>
+                        Burn rate is the rate at which the error budget is consumed.
+                        It is the ratio of the error budget to the SLO window.
+                    </p>
+                    <p>
+                        A burn rate of 1x means that the error budget will be consumed during the
+                        SLO window (accepted).
+                    </p>
+                    <p>
+                        A burn rate of 2x means that the error budget will be consumed in half the
+                        SLO window. This is not acceptable because at this rate, the SLO will be
+                        violated before the end of the SLO window.
                     </p>
                     <p>
                         Goole SRE Workbook goes through 6 alerting strategies and
@@ -468,7 +528,7 @@
                             <tr>
                                 <td>6x</td>
                                 <td>5% Consumed</td>
-                                <td>6 hour</td>
+                                <td>6 hours</td>
                                 <td>30 minutes</td>
                                 <td>Page</td>
                                 <td>
@@ -496,45 +556,13 @@
                         You can see your actual values in the comments below Long-Window and Short-Window.
                     </p>
                 </help-component>
-            </h1>
-
-            <h2>
-                <label for="burn-rate-input">
-                    Burn rate: {{ alert.burnRate }}x
-                </label>
-                <help-component>
-                    <p>
-                        Burn rate is the rate at which the error budget is consumed.
-                        It is the ratio of the error budget to the SLO window.
-                    </p>
-                    <p>
-                        A burn rate of 1x means that the error budget will be consumed during the
-                        SLO window (accepted).
-                    </p>
-                    <p>
-                        A burn rate of 2x means that the error budget will be consumed in half the
-                        SLO window. This is not acceptable because at this rate, the SLO will be
-                        violated before the end of the SLO window.
-                    </p>
-                    <p>
-                        When setting an alert, the burn rate decides how quickly the alert reacts
-                        to errors.
-                    </p>
-                    <ul>
-                        <li>
-                            Too fast and it will lead to false positives (alerting unnecessarily)
-                            and alert fatigue (too many alerts).
-                        </li>
-                        <li>
-                            Too slow and the error burget will be burned before you know it.
-                        </li>
-                    </ul>
-                </help-component>
             </h2>
             <p>
-                Time to exhaust the entire error budget:<br />
-                {{ secondsToTimePeriod(alertCalc.timeToExhaust) }}<br />
-                ({{ humanSeconds(alertCalc.timeToExhaust) }})
+                Time it takes to exhaust the entire error budget 
+                <span v-if="sli.isTimeBased">({{ errorBudgetWindow.humanTimeSlots }})</span>
+                at this rate:
+                <br />
+                {{ errorBudgetTimeToExhaust.humanTimeSec }}
             </p>
             <input
                 id="burn-rate-input"
@@ -542,11 +570,13 @@
                 min="1"
                 max="20"
                 step="0.1"
-                v-model="alert.burnRate"
+                v-model.number="alert.burnRate"
             >
+            <!-- Long Window Alert -->
             <h2>
                 Long-Window
             </h2>
+            <!-- Alert after consuming -->
             <h3>
                 <label for="alert-error-budget-perc">
                     After Consuming: {{ alert.longWindowPerc }}%
@@ -564,24 +594,44 @@
                         Based on your setup, the alert will trigger after we have consumed
                         {{ alert.longWindowPerc }}% of the entire time allotted for the error budget
                         (or SLO compliance window) which is
-                        <time>{{ secondsToTimePeriod(sloWindow) }}</time>.
+                        <time>{{ sloWindowHumanTime }}</time>.
                     </p>
                 </help-component>
             </h3>
             <p>
-                Alert when {{ alert.longWindowPerc }}% of the error budget is consumed in:
+                Alert when {{ alert.longWindowPerc }}% of the error budget is consumed in the last:
                 <br />
-                {{ secondsToTimePeriod(alertCalc.longWindowTimeToConsume) }}
-                <br />
-                ({{ humanSeconds(alertCalc.longWindowTimeToConsume) }})
+                {{ alertLongWindow.humanTimeSec }}
             </p>
+            <p>
+                Time to resolve before the entire error budget is exhausted:
+                <br />
+                {{ alertTTRWindow.humanTimeSec}}
+            </p>
+            <p v-if="alertTTRWindow.rawSec < 3600">
+                Note: The time to resolve (TTR) is too short for a human to react.
+                It is strongly recommended to automate the response to the alert.
+            </p>
+            <div v-if="sli.isTimeBased">
+                <p>
+                    Time Slots consumed:
+                    <br />
+                    {{ alertLongWindowConsumedTimeSlots }}
+                </p>
+                <p v-if="alertLongWindowConsumedTimeSlots === 0">
+                    Note: Short Window is not usable at this burn rate ({{ alert.burnRate }}x) and 
+                    time slot length ({{ sli.timeSlot }} sec)
+                    because it will lead to division by zero error.
+                </p>
+            </div>
             <input
                 id="alert-error-budget-perc"
                 type="range"
                 min="1"
                 max="100"
-                v-model="alert.longWindowPerc"
+                v-model.number="alert.longWindowPerc"
             >
+            <!-- Long Window Alert Policy -->
             <h3>
                 Alert Policy
                 <help-component>
@@ -592,29 +642,12 @@
                 </help-component>
             </h3>
             <div class="code block">
-                <code v-if="sli.isTimeBased">
-                    <label for="sli-type-input">
-                        <span class="funct">{{ sliCalc.func }}</span>
-                    </label>
-                    <span class="punct">(</span>
-                    <label for="sli-good-input">
-                        <span class="exprt">{{ sli.good }}</span>
-                    </label>
-                    <span class="punct">, </span>
-                    <span class="const">
-                        {{ humanSeconds(alertCalc.longWindowTimeToConsume) }}
-                    </span>
-                    <span class="punct">) ≤ </span>
-                    <span class="const">
-                        {{ humanSeconds(percent(slo.perc, alertCalc.longWindowTimeToConsume)) }}
-                    </span>
-                </code>
-                <div class="formula" v-else>
+                <div class="formula">
                     <div class="formula_fraction">
                         <div class="formula_fraction--top">
                             <code>
                                 <label for="sli-type-input">
-                                    <span class="funct">{{ sliCalc.func }}</span>
+                                    <span class="funct">count</span>
                                 </label>
                                 <span class="punct">(</span>
                                 <label for="sli-good-input">
@@ -622,15 +655,18 @@
                                 </label>
                                 <span class="punct">, </span>
                                 <span class="const">
-                                    {{ humanSeconds(alertCalc.longWindowTimeToConsume) }}
+                                    {{ alertLongWindow.sec }}
                                 </span>
                                 <span class="punct">)</span>
                             </code>
                         </div>
                         <div class="formula_fraction--bottom">
-                            <code>
+                            <code v-if="sli.isTimeBased">
+                                <span class="const">{{ alertLongWindowConsumedTimeSlots }}</span>
+                            </code>
+                            <code v-else>
                                 <label for="sli-type-input">
-                                    <span class="funct">{{ sliCalc.func }}</span>
+                                    <span class="funct">count</span>
                                 </label>
                                 <span class="punct">(</span>
                                 <label for="sli-valid-input">
@@ -639,7 +675,7 @@
                                 <span class="punct"></span>
                                 <span class="punct">, </span>
                                 <span class="const">
-                                    {{ humanSeconds(alertCalc.longWindowTimeToConsume) }}
+                                    {{ alertLongWindow.sec }}
                                 </span>
                                 <span class="punct">)</span>
                             </code>
@@ -656,11 +692,10 @@
                 </div>
             </div>
 
+            <!-- Burn Chart Component -->
             <burn-component
                 :burn-rate="alert.burnRate"
-                :long-alert-perc="alert.longWindowPerc"
-                :short-alert-divider="alert.shortWindowDivider"
-                :show-short-alert="alert.shortWindowVisible"></burn-component>
+                :long-alert-perc="alert.longWindowPerc"></burn-component>
 
             <div class="block">
                 <label for="show-short-window-alert">
@@ -673,14 +708,14 @@
                 </label>
                 <help-component>
                     <p>
-                        Short-Window alert is same as the normal Long-Window alert but with a shorter window.
-                        The Short-Window alert improves the detection time but adds complexity
-                        to the alerting setup.
+                        The Short-Window alert reduces false positives
+                        but makes the alerting setup more complex.
                     </p>
                 </help-component>
             </div>
 
             <div v-if="alert.shortWindowVisible">
+                <!-- Short Window Alert -->
                 <h2>Short-Window</h2>
 
                 <h3>
@@ -690,10 +725,17 @@
                     <help-component>
                         <p>
                             Short-Window is a window that is a fraction of the Long-Window.
-                            It is used to improve the detection time of the alert.
+                            It is used to only trigger the alert if we're still actively
+                            burning through the error budget with the same burn rate.
+                            It also improves the alert reset time (the time it takes for the
+                            alert to shut up after the issue is resolved).
                         </p>
                         <p>
-                            The Short-Window is usually 1/12th of the Long-Window.
+                            The Short-Window is usually 1/12th of the Long-Window (per
+                            <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener">
+                                Google SRE Workbook
+                            </a>
+                            recommendation).
                             But you can play with different dividers to see how they impact
                             the detection time of the alert.
                         </p>
@@ -722,7 +764,7 @@
                             <div class="formula_chunk">
                                 <code>
                                     <span class="punct"> = </span>
-                                    <span class="const">{{ alertCalc.shortWindowPerc }}</span>
+                                    <span class="const">{{ alertShortWindowPerc }}</span>
                                     <span class="punct">%</span>
                                 </code>
                             </div>
@@ -731,20 +773,30 @@
                     </help-component>
                 </h3>
                 <p>
-                    After when 1/{{ alert.shortWindowDivider }} of the Long-Window
-                    ({{ alertCalc.shortWindowPerc }}% of the error budget) is consumed:
+                    Alert when {{ alertShortWindowPerc }}% of the error budget is consumed in the last:
                     <br />
-                    {{ secondsToTimePeriod(alertCalc.shortWindowTimeToConsume) }}
-                    <br />
-                    ({{ humanSeconds(alertCalc.shortWindowTimeToConsume) }})
+                    {{ alertShortWindow.humanTimeSec }}
                 </p>
+                <div v-if="sli.isTimeBased" class="block">
+                    <p>
+                        Time Slots consumed:
+                        <br />
+                        {{ alertShortWindowConsumedTimeSlots }}
+                    </p>    
+                    <p v-if="alertShortWindowConsumedTimeSlots === 0">
+                        Note: Short Window is not usable at this burn rate ({{ alert.burnRate }}x) and 
+                        time slot length ({{ sli.timeSlot }} sec)
+                        because it will lead to division by zero error.
+                    </p>
+                </div>
                 <input
                     id="alert-short-window-divider-input"
                     type="range"
                     min="2"
                     max="20"
-                    v-model="alert.shortWindowDivider"
+                    v-model.number="alert.shortWindowDivider"
                 >
+                <!-- Short Window Alert Policy -->
                 <h3>Alert Policy
                     <help-component>
                         <p>
@@ -756,29 +808,12 @@
                     </help-component>
                 </h3>
                 <div class="code block">
-                    <code v-if="sli.isTimeBased">
-                        <label for="sli-type-input">
-                            <span class="funct">{{ sliCalc.func }}</span>
-                        </label>
-                        <span class="punct">(</span>
-                        <label for="sli-good-input">
-                            <span class="exprt">{{ sli.good }}</span>
-                        </label>
-                        <span class="punct">, </span>
-                        <span class="const">
-                            {{ humanSeconds(alertCalc.shortWindowTimeToConsume) }}
-                        </span>
-                        <span class="punct">) ≤ </span>
-                        <span class="const">
-                            {{ humanSeconds(percent(slo.perc, alertCalc.shortWindowTimeToConsume)) }}
-                        </span>
-                    </code>
-                    <div class="formula" v-else>
+                    <div class="formula">
                         <div class="formula_fraction">
                             <div class="formula_fraction--top">
                                 <code>
                                     <label for="sli-type-input">
-                                        <span class="funct">{{ sliCalc.func }}</span>
+                                        <span class="funct">count</span>
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-good-input">
@@ -786,15 +821,18 @@
                                     </label>
                                     <span class="punct">, </span>
                                     <span class="const">
-                                        {{ humanSeconds(alertCalc.shortWindowTimeToConsume) }}
+                                        {{ alertShortWindow.sec }}
                                     </span>
                                     <span class="punct">)</span>
                                 </code>
                             </div>
                             <div class="formula_fraction--bottom">
-                                <code>
+                                <code v-if="sli.isTimeBased">
+                                    <span class="const">{{ alertShortWindowConsumedTimeSlots }}</span>
+                                </code>
+                                <code v-else>
                                     <label for="sli-type-input">
-                                        <span class="funct">{{ sliCalc.func }}</span>
+                                        <span class="funct">count</span>
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-valid-input">
@@ -803,7 +841,7 @@
                                     <span class="punct"></span>
                                     <span class="punct">, </span>
                                     <span class="const">
-                                        {{ humanSeconds(alertCalc.shortWindowTimeToConsume) }}
+                                        {{ alertShortWindow.sec }}
                                     </span>
                                     <span class="punct">)</span>
                                 </code>

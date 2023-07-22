@@ -3,9 +3,8 @@ export const examples = [
         description: 'Uptime probe',
         sli: {
             good: 'ping_response_code == 200',
-            valid: 'SLO_window - planned_downtime',
-            unit: 'minutes',
             isTimeBased: true,
+            timeSlot: 60,
         },
         slo: {
             perc: 99.9,
@@ -16,8 +15,8 @@ export const examples = [
         description: 'Availability (organic, time based)',
         sli: {
             good: '200 ≤ response_code < 500',
-            valid: 'total_requests',
             isTimeBased: true,
+            timeSlot: 60,
         },
         slo: {
             perc: 99.9,
@@ -40,8 +39,8 @@ export const examples = [
         description: 'Latency Percentile',
         sli: {
             good: 'P75(response_latency, 5m) < 800ms',
-            valid: 'total 5m slots',
-            unit: '5m slots',
+            isTimeBased: true,
+            timeSlot: 300,
         },
         slo: {
             perc: 99.5,

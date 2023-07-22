@@ -71,7 +71,7 @@ export function parseWindow(windowStr) {
     return [windowMult, windowUnit]
 }
 
-export function secondsToTimePeriod(seconds, useShortTitle = false) {
+export function humanTime(seconds, useShortTitle = false) {
     let result = []
 
     function addToResult(val, { title, shortTitle }) {
@@ -101,7 +101,7 @@ export function secondsToTimePeriod(seconds, useShortTitle = false) {
     return result.join(', ')
 }
 
-export function humanSeconds(seconds) {
+export function humanSec(seconds) {
     let sec = seconds
     if (seconds >= 10) {
         sec = Math.round(seconds)
