@@ -9,29 +9,41 @@ export const examples = [
         slo: {
             perc: 99.9,
             window: '1M',
-        }
+        },
     },
     {
-        description: 'Availability (organic, time based)',
+        description: 'Uptime (organic traffic)',
         sli: {
             good: '200 ≤ response_code < 500',
-            isTimeBased: true,
-            timeSlot: 60,
-        },
-        slo: {
-            perc: 99.9,
-            window: '4w',
-        }
-    },
-    {
-        description: 'Simple Response Latency',
-        sli: {
-            good: 'response_latency < 300ms',
-            valid: 'authenticated_requests',
+            valid: 'inbound',
             unit: 'requests',
         },
         slo: {
-            perc: 98.3,
+            perc: 99,
+            window: '1M',
+        },
+    },
+    {
+        description: 'Availability of purchase flow',
+        sli: {
+            good: 'orders_with_settled_payment',
+            valid: 'placed_via_website',
+            unit: 'orders',
+        },
+        slo: {
+            perc: 98.5,
+            window: '4w',
+        },
+    },
+    {
+        description: 'Response Latency',
+        sli: {
+            good: 'response_latency < 300ms',
+            valid: 'authenticated',
+            unit: 'requests',
+        },
+        slo: {
+            perc: 92,
             window: '1M',
         },
     },
@@ -43,15 +55,15 @@ export const examples = [
             timeSlot: 300,
         },
         slo: {
-            perc: 99.5,
-            window: '1w',
+            perc: 97,
+            window: '2w',
         },
     },
     {
         description: 'Error Rate',
         sli: {
             good: 'response_code < 500',
-            valid: 'requests',
+            valid: 'authenticated',
             unit: 'requests',
         },
         slo: {
@@ -60,27 +72,27 @@ export const examples = [
         },
     },
     {
-        description: 'Order flows',
-        sli: {
-            good: 'user_sessions_placing',
-            valid: 'registered',
-            unit: 'orders',
-        },
-        slo: {
-            perc: 98,
-            window: '1M',
-        },
-    },
-    {
-        description: 'MTTR',
+        description: 'Incident Handling Speed',
         sli: {
             good: 'time_to_restore ≤ 30m',
-            valid: 'all_incidents',
+            valid: 'Incident Severity == 1 || 2',
             unit: 'incidents',
         },
         slo: {
             perc: 95,
-            window: '1M',
+            window: '2M',
         },
     },
+    {
+        description: 'NOC team efficiency',
+        sli: {
+            good: 'time_to_acknowledge ≤ 5m',
+            valid: 'Incident Priority == 1',
+            unit: 'incidents',
+        },
+        slo: {
+            perc: 95,
+            window: '2M',
+        },
+    }
 ]
