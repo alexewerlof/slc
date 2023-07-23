@@ -43,8 +43,6 @@ const app = createApp({
                 shortWindowDivider: 12,
             },
             windowUnits,
-            humanTime,
-            humanSec,
             percentToRatio,
             percent,
         }
