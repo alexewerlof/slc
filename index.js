@@ -1,9 +1,9 @@
-import { createApp, ref, reactive, computed, watch, toRefs } from './vendor/vue@3.3.4_dist_vue.esm-browser.prod.js'
+import { createApp } from './vendor/vue@3.3.4_dist_vue.esm-browser.prod.js'
 import HelpComponent from './components/help-component.js'
 import BurnComponent from './components/burn-component.js'
-import { errorBudgetPerc, errorBudgetTime, percent, percentToRatio } from './sl-math.js'
-import { examples } from './examples.js'
-import { windowUnits, humanTime, humanSec, toFixed, findWindowUnitFromShortTitle, clamp, parseWindow } from './util.js'
+import { errorBudgetPerc, percent, percentToRatio } from './sl-math.js'
+import sliExamples from './sli-examples.js'
+import { windowUnits, toFixed, clamp } from './util.js'
 import { Window } from './window.js'
 
 
@@ -11,7 +11,7 @@ const app = createApp({
     data() {
         return {
             // All the examples from example.js
-            examples,
+            examples: sliExamples,
             // The index of the currently selected example
             selectedExampleIndex: 2,
             //TODO: if the sli.timeSlot is larger than alerting windows, we should show a warning
@@ -44,7 +44,6 @@ const app = createApp({
             },
             windowUnits,
             percentToRatio,
-            percent,
         }
     },
     watch: {
@@ -64,21 +63,17 @@ const app = createApp({
             this.slo.perc = toFixed(clamp(this.slo.perc + amount, 0, 99.999))
         },
         loadExample(example) {
-            this.sli.good = example.sli.good
-            this.sli.isTimeBased = Boolean(example.sli.isTimeBased)
+            this.sli.good = example.good
+            this.sli.isTimeBased = Boolean(example.isTimeBased)
             if (this.sli.isTimeBased) {
                 this.sli.unit = ''
-                this.sli.timeSlot = example.sli.timeSlot
+                this.sli.timeSlot = example.timeSlot
                 this.sli.valid = ''
             } else {
-                this.sli.unit = example.sli.unit
+                this.sli.unit = example.unit
                 this.sli.timeSlot = 60
-                this.sli.valid = example.sli.valid
+                this.sli.valid = example.valid
             }
-            this.slo.perc = example.slo.perc
-            const [windowMult, windowUnit] = parseWindow(example.slo.window)
-            this.slo.windowMult = windowMult
-            this.slo.windowUnit = windowUnit
         },
     },
     computed: {
