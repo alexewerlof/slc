@@ -1,10 +1,10 @@
 import { createApp } from './vendor/vue@3.3.4_dist_vue.esm-browser.prod.js'
 import HelpComponent from './components/help-component.js'
 import BurnComponent from './components/burn-component.js'
-import { errorBudgetPerc, percent, percentToRatio } from './sl-math.js'
+import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import sliExamples from './sli-examples.js'
-import { windowUnits, toFixed, clamp } from './util.js'
-import { Window } from './window.js'
+import { windowUnits } from './lib/time.js'
+import { Window } from './lib/window.js'
 
 
 const app = createApp({
@@ -112,7 +112,7 @@ const app = createApp({
         },
 
         errorBudgetPerc() {
-            return toFixed(errorBudgetPerc(this.slo.perc))
+            return toFixed(100 - this.slo.perc)
         },
 
         errorBudgetWindow() {

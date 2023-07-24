@@ -1,4 +1,4 @@
-import { arrToPolygonPoints } from "../util.js"
+import { arrToPolygonPoints } from "../lib/svg.js"
 
 const template = await (await fetch('components/burn-event-component.html')).text()
 
