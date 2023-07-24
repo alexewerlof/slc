@@ -624,7 +624,7 @@
                     {{ alertLongWindowConsumedTimeSlots }}
                 </p>
                 <p v-if="alertLongWindowConsumedTimeSlots === 0">
-                    Note: Short Window is not usable at this burn rate ({{ alert.burnRate }}x) and 
+                    Warning: Alert Window is not usable at this burn rate ({{ alert.burnRate }}x) and 
                     time slot length ({{ sli.timeSlot }} sec)
                     because it will lead to division by zero error.
                 </p>
@@ -789,7 +789,7 @@
                         {{ alertShortWindowConsumedTimeSlots }}
                     </p>    
                     <p v-if="alertShortWindowConsumedTimeSlots === 0">
-                        Note: Short Window is not usable at this burn rate ({{ alert.burnRate }}x) and 
+                        Warning: Alert Window is not usable at this burn rate ({{ alert.burnRate }}x) and 
                         time slot length ({{ sli.timeSlot }} sec)
                         because it will lead to division by zero error.
                     </p>
@@ -888,9 +888,9 @@
 
         <p>
             This application took about 50 hours of my private time to build.
-            It was fun and I hope it helps people.
+            It was fun and I hope it helps you.
             <br />
-            If you want to support me, you can
+            To support me, you can
             <a href="https://www.paypal.com/paypalme/alexewerlof" target="_blank" rel="noopener">buy me a coffee</a>
             or a subscription to
             <a href="https://blog.alexewerlof.com/">my newsletter</a>.
