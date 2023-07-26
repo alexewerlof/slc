@@ -604,7 +604,7 @@
                 </help-component>
             </h3>
             <p>
-                Alert when {{ alert.longWindowPerc }}% of the error budget is consumed in the last:
+                Alert when at least {{ alert.longWindowPerc }}% of the error budget is consumed in the last:
                 <br />
                 <time>{{ alertLongWindow.humanTimeSec }}</time>
             </p>
@@ -778,7 +778,7 @@
                     </help-component>
                 </h3>
                 <p>
-                    Alert if {{ alertShortWindowPerc }}% of the error budget is consumed in the last:
+                    Alert if at least {{ alertShortWindowPerc }}% of the error budget is consumed in the last:
                     <br />
                     <time>{{ alertShortWindow.humanTimeSec }}</time>
                 </p>
