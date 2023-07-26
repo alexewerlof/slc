@@ -6,7 +6,7 @@
 .event text {
     font-family: var(--body-font-family);
     fill: var(--foreground-color);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     alignment-baseline: middle;
 }
 
