@@ -434,6 +434,11 @@
             <div v-if="!sli.isTimeBased">
                 <h3>
                     <label for="error-budget-example">Example number of valid {{sliUnit}}</label>
+                    <help-component>
+                        Here you can enter the numbers for your expected load and see
+                        how many {{ sliUnit }} are allowed to fail during the SLO window
+                        while still being within the error budget.
+                    </help-component>
                 </h3>
                 <p>
                     Expected 
@@ -807,8 +812,8 @@
                         <p>
                             Note: The purpose of the Short-Window alert is to make sure that the alert
                             only triggers if the burn rate is still high.
-                            Therefore, the query for both long alert and short alert must be combined with
-                            an <em>AND</em> condition.
+                            Therefore, the query for both long-window and short-window alerts must be
+                            combined with an <em>AND</em> condition.
                         </p>
                     </help-component>
                 </h3>
