@@ -585,6 +585,11 @@
             <!-- Long Window Alert -->
             <h2>
                 Long-Window
+                <help-component>
+                    Long-window alert is the "normal" alert.
+                    The reason it is called "long" is to distinguish it from the "short-window"
+                    alert which is primarily used to reduce false positives and improve the alert reset time.
+                </help-component>
             </h2>
             <!-- Alert after consuming -->
             <h3>
@@ -604,8 +609,22 @@
                         Based on your setup, the alert will trigger after we have consumed
                         {{ alert.longWindowPerc }}% of the entire time allotted for the error budget
                         (or SLO compliance window) which is
-                        <time>{{ sloWindowHumanTime }}</time>.
+                        <time>{{ sloWindow.humanTime }}</time>.
                     </p>
+                    <code>
+                        <span class="const">
+                            {{ alert.longWindowPerc }}
+                        </span>
+                        <span class="punct">%</span>
+                        <span class="funct"> of </span>
+                        <span class="const">
+                            {{ sloWindow.humanSec }}
+                        </span>
+                        <span class="punct"> = </span>
+                        <span class="const">
+                            {{ alertLongWindow.humanSec }}
+                        </span>
+                    </code>
                 </help-component>
             </h3>
             <p>
@@ -726,20 +745,30 @@
 
             <div v-if="alert.shortWindowVisible">
                 <!-- Short Window Alert -->
-                <h2>Short-Window</h2>
+                <h2>
+                    Short-Window
+                    <help-component>
+                        <p>
+                            The purpose of the Short-Window alert is to make sure that the alert
+                            only triggers if the burn rate is still high.
+                        </p>
+                        <p>
+                            Therefore it is always shorter than the "Long-Window" alert, hence the name.
+                        </p>
+                        <p>
+                            Short-Window alert is used to only trigger the alert if we're still actively
+                            burning through the error budget with the same burn rate.
+                            It also improves the alert reset time (the time it takes for the
+                            alert to shut up after the issue is resolved).
+                        </p>
+                    </help-component>
+                </h2>
 
                 <h3>
                     <label for="alert-short-window-divider-input">
                         Short/Long ratio: 1/{{ alert.shortWindowDivider }}
                     </label>
                     <help-component>
-                        <p>
-                            Short-Window is a window that is a fraction of the Long-Window.
-                            It is used to only trigger the alert if we're still actively
-                            burning through the error budget with the same burn rate.
-                            It also improves the alert reset time (the time it takes for the
-                            alert to shut up after the issue is resolved).
-                        </p>
                         <p>
                             The Short-Window is usually 1/12th of the Long-Window (per
                             <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener">
@@ -810,9 +839,7 @@
                 <h3>Alert Policy
                     <help-component>
                         <p>
-                            Note: The purpose of the Short-Window alert is to make sure that the alert
-                            only triggers if the burn rate is still high.
-                            Therefore, the query for both long-window and short-window alerts must be
+                            Note: The query for both long-window and short-window alerts must be
                             combined with an <em>AND</em> condition.
                         </p>
                     </help-component>
