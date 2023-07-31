@@ -82,8 +82,9 @@ input[type=range]::-webkit-slider-thumb {
     cursor: pointer;
 }
 
-input[type=text], input[type=number], select {
+input[type=text], input[type=number], select, textarea {
     padding: 1em;
+    font-family: inherit;
     font-size: inherit;
     border: none;
     background-color: var(--background-dark);
@@ -93,7 +94,7 @@ input[type=text], input[type=number], select {
     transition: background-color var(--animation-speed) ease-in-out;
 }
 
-input[type=text]:focus, input[type=number]:focus, select:focus {
+input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
     background-color: var(--secondary-color);
     color: var(--background-color);
 }
@@ -113,6 +114,10 @@ input[type="radio"] {
   
 input[type="radio"]:checked {
     background-color: var(--secondary-color);
+}
+
+textarea {
+    resize: vertical;
 }
 
 label {

@@ -63,6 +63,8 @@ const app = createApp({
             this.slo.perc = toFixed(clamp(this.slo.perc + amount, 0, 99.999))
         },
         loadExample(example) {
+            this.sli.title = example.title
+            this.sli.description = example.description
             this.sli.good = example.good
             this.sli.isTimeBased = Boolean(example.isTimeBased)
             if (this.sli.isTimeBased) {
@@ -134,7 +136,7 @@ const app = createApp({
 
         // Number of bad events allowed for the given value of valid in errorBudgetValidExample
         errorBudgetBadExample() {
-            return Math.floor(percent(this.errorBudgetPerc, this.errorBudgetValidExample))
+            return Math.floor(percent(this.errorBudgetPerc, this.errorBudgetValidExample || 1))
         },
 
         alertLongWindow() {

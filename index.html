@@ -69,7 +69,7 @@
                 </help-component>
             </h1>
             <h2>
-                <label for="select-example">Examples</label>
+                <label for="select-example">Load an example</label>
                 <help-component>
                     <p>
                         You can load a predefined example to the UI.
@@ -80,11 +80,19 @@
             <select v-model="selectedExampleIndex" id="select-example">
                 <option
                     v-for="(example, index) in examples"
-                    :key="example.description"
+                    :key="example.title"
                     :value="index">
-                    {{ example.description }}
+                    {{ example.title }}
                 </option>
             </select>
+            <h2>
+                <label for="sli-description-input">Description</label>
+            </h2>
+            <textarea
+                id="sli-description-input"
+                rows="2"
+                type="text"
+                v-model="sli.description">hello</textarea>
             <h2>
                 <label>Type</label>
                 <help-component>
@@ -334,6 +342,31 @@
                     </p>
                 </help-component>
             </h1>
+            <p v-if="slo.perc > 99.9">
+                Just be mindful of the
+                <a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0f75e88d-e53b-4983-bd7d-85a1e9650d7c_500x500.png" target="_blank" rel="noopener">
+                    price tag
+                </a>
+                for this high service level <em>objective</em>!
+                <a href="https://blog.alexewerlof.com/p/why-bother-with-sli-and-slo" target="_blank" rel="noopener">
+                    Why bother with SLI and SLO?
+                </a>
+                Everyone wants the highest possible number but not everyone is willing to pay the price.
+            </p>
+            <p v-if="slo.perc < 70">
+                Note: this is an unusually low service level objective.
+                Typically service level <em>objective</em> is above 90% with some rare exceptions.
+                Please check the <a href="#error-budget-title">Error budget</a> for implications of your chosen SLO.
+            </p>
+            <p v-if="slo.perc < 50">
+                It looks like you're expecting the service level to be violated more than met!
+                It may be tempting to start from a low objective, but maybe the definition of
+                your service level <em>indicator</em> could be improved to narrow down the focus
+                of service level optimization.
+            </p>
+            <p v-if="slo.perc < 1">
+                😂 Are you joking?
+            </p>
             <input
                 id="slo-int-input"
                 type="range"
@@ -346,6 +379,7 @@
             <button type="button" @click="changeSLO(-0.001)">-0.001</button>
             <button type="button" @click="changeSLO(-0.01)">-0.01</button>
             <button type="button" @click="changeSLO(-0.1)">-0.1</button>
+            <button type="button" @click="sloFrac = 0">= 0</button>
             <button type="button" @click="changeSLO(0.1)">+0.1</button>
             <button type="button" @click="changeSLO(0.01)">+0.01</button>
             <button type="button" @click="changeSLO(0.001)">+0.001</button>
@@ -405,7 +439,7 @@
 
         <!------------------------ Error budget ------------------------>
         <section>
-            <h2>
+            <h2 id="error-budget-title">
                 Error budget: {{ errorBudgetPerc }}%
                 <help-component>
                     <p>
@@ -433,7 +467,7 @@
             </p>
             <div v-if="!sli.isTimeBased">
                 <h3>
-                    <label for="error-budget-example">Example number of valid {{sliUnit}}</label>
+                    <label for="error-budget-example-input">Example number of valid {{sliUnit}}</label>
                     <help-component>
                         Here you can enter the numbers for your expected load and see
                         how many {{ sliUnit }} are allowed to fail during the SLO window
@@ -450,8 +484,10 @@
                 <input
                     type="number"
                     v-model.number="errorBudgetValidExample"
-                    id="error-budget-example"
-                >
+                    id="error-budget-example-input"
+                    min="1"
+                    step="1"
+                    max="100000000000000">
                 <p>
                     {{ errorBudgetBadExample }} <code>{{ sli.unit }}</code> are allowed to violate the
                     <code>{{ sli.good }}</code> condition in {{ sloWindow.humanTime }}.
@@ -562,7 +598,7 @@
                         </tbody>
                     </table>
                     <p>
-                        Note: The values for Long-Window and Short-Window are based on a 1-month SLO window.
+                        Note: The above values for Long-Window and Short-Window are based on a 1-month SLO window.
                         You can see your actual values in the comments below Long-Window and Short-Window.
                     </p>
                 </help-component>
@@ -902,7 +938,7 @@
     <footer>
         <ul class="link-list">
             <li>
-                <a href="https://github.com/userpixel/slo/blob/main/LICENSE" target="_blank" rel="noopener">Copyright (C) 2023</a>
+                <a href="https://github.com/userpixel/slo/blob/main/LICENSE" target="_blank" rel="noopener">Open Source</a>
             </li>
             <li>
                 <a href="https://alexewerlof.com">Alex Ewerlof</a>
