@@ -39,4 +39,19 @@ A simple SLI/SLO calculator that allows playing with different parameters to see
 
 ---
 
+# Code
+
+Like most of my hobby projects, this repo wasn't meant to grow this big.
+It started as a single page application to compensate some shortcomings
+I faced when using [uptime.is](https://uptime.is) with these preconditions:
+
+1. No transpilation whatsoever ([because](https://medium.com/free-code-camp/you-might-not-need-to-transpile-your-javascript-4d5e0a438ca))
+2. Use the latest version of Vue (to learn it)
+3. Run tests with Deno (to learn it)
+4. Use Github Copilot assistence (to learn it)
+
+And here we are.
+
+---
+
 Made by [Alex Ewerlöf](https://www.alexewerlof.com)
