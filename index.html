@@ -224,16 +224,22 @@
                     <help-component>
                         <p>
                             For simplicity, sometimes "total" is used instead of "valid".
-                            But there is a difference: you want to only be responsible for valid events so that
-                            if the system is being abused, you don't get penalized for it.
+                            But 
+                            <a href="https://blog.alexewerlof.com/p/valid-vs-total" rel="noopener" target="_blank">
+                                there is a difference
+                            </a>.
                         </p>
                         <p>
-                            There's a difference between <em>total</em> and <em>valid</em>
-                            It boils down to what part of the system behavior should we be held accountable for and
-                            explicitly separate it from the system abuse like DDoS attacks.
-                        </p>
-                        <p>
-                            Examples: total_requests, total_page-views, total_login_attempts, total_incidents, etc.
+                            While
+                            <a>
+                                Service level indicator
+                            </a>
+                            guides the optimization,
+                            the definition of valid scopes that optimization for two reasons:
+                            <ul>
+                                <li>Focus the optimization effort</li>
+                                <li>Clarify responsibility and control</li>
+                            </ul>
                         </p>
                     </help-component>
                 </h2>
