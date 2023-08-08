@@ -58,6 +58,20 @@ export default [
         timeSlot: 60,
     },
     {
+        title: 'Freshness: New Articles',
+        description: 'The difference between “Published” timestamp in the browser and “Published” timestamp in the CMS is sufficiently small. "Sufficiently small" is defined as < 1m',
+        good: 'published_timestamp_difference ≤ 1m',
+        valid: 'all news articles',
+        unit: 'articles',
+    },
+    {
+        title: 'Freshness: Article Updates',
+        description: 'The difference between “Last Update” timestamp in the browser and “Last Update” timestamp in the CMS is sufficiently small. "Sufficiently small" is defined as < 5m',
+        good: 'last_update_timestamp_difference ≤ 5m',
+        valid: 'all entertainment articles',
+        unit: 'articles',
+    },
+    {
         title: 'Freshness: Main database table',
         description: 'The proportion of records read from the main database table that were updated recently. "Recently" is defined as within 1 minute. Uses metrics from the API and HTTP server',
         good: 'correct data_requests',
