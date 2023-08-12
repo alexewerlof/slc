@@ -1,4 +1,4 @@
-@import url('variables.css');
+@import url('../variables.css');
 
 .help-component-button {
     display: inline-block;
