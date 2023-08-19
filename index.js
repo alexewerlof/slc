@@ -9,6 +9,16 @@ import { Window } from './lib/window.js'
 
 const app = createApp({
     data() {
+        let showCookiePopup = true
+
+        try {
+            if (localStorage.getItem('showCookiePopup') === 'false') {
+                showCookiePopup = false
+            }
+        } catch (e) {
+            // ignore
+        }
+
         return {
             // All the examples from example.js
             examples: sliExamples,
@@ -44,6 +54,7 @@ const app = createApp({
             },
             windowUnits,
             percentToRatio,
+            showCookiePopup,
         }
     },
     watch: {
@@ -75,6 +86,14 @@ const app = createApp({
                 this.sli.unit = example.unit
                 this.sli.timeSlot = 60
                 this.sli.valid = example.valid
+            }
+        },
+        hideCookiePopup() {
+            this.showCookiePopup = false
+            try {
+                localStorage.setItem('showCookiePopup', 'false')
+            } catch (e) {
+                // ignore
             }
         },
     },

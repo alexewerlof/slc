@@ -25,6 +25,7 @@ section {
     padding: 1em 1em 2em 1em;
     border-bottom: 1px solid var(--primary-color);
 }
+
 .logo {
     margin-top: 2em;
     width: 167px;;
@@ -199,4 +200,28 @@ th, td {
 
 td button {
     width: 100%;
+}
+
+dialog {
+    padding: 1rem;
+    font-size: 1rem;
+    font-family: var(--body-font-family);
+    font-weight: normal;
+    background-color: var(--foreground-color);
+    color: var(--background-color);
+    border-radius: 0.5rem;
+    margin: 1rem;
+    box-shadow: 0 0 1em 0 black;
+}
+
+dialog p {
+    margin-block: 0;
+    padding: 0.5em 0;
+}
+
+#cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    max-width: 440px;
 }
