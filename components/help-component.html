@@ -1,4 +1,4 @@
-<button @click="toggle()" class="help-component-button">{{caption ?? "Help"}}</button>
+<button @click="toggle()" class="help-component-button">{{visible ? "X" : caption ?? "?" }}</button>
 <transition>
     <div v-show="visible" class="help-component-contents">
         <slot></slot>

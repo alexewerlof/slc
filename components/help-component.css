@@ -3,11 +3,14 @@
 .help-component-button {
     display: inline-block;
     font-family: inherit;
-    height: 100%;
-    background-color: transparent;
-    color: currentColor;
+    font-weight: bold;
+    background-color: var(--secondary-color);
+    color: var(--background-color);
     cursor: help;
     margin: 0 0.5em;
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
 }
 
 .help-component-contents {
