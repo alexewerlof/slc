@@ -469,6 +469,20 @@
                         before you violate the SLO.
                         It is calculated as 100% - SLO.
                     </p>
+                    <p>
+                        In this case:
+                    </p>
+                    <p>
+                        <code>
+                            <span class="exprt">error_budget</span>
+                            <span class="punct"> = </span>
+                            <span class="const">100%</span>
+                            <span class="punct"> - </span>
+                            <span class="const">{{ slo.perc }}%</span>
+                            <span class="punct"> = </span>
+                            <span class="const">{{ errorBudgetPerc }}%</span>
+                        </code>
+                    </p>
                 </help-component>
             </h2>
             <p v-if="sli.isTimeBased">
