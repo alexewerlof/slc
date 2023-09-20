@@ -25,11 +25,6 @@ section {
     padding: 1em 1em 2em 1em;
 }
 
-.logo {
-    margin-top: 2em;
-    width: 167px;;
-}
-
 .link-list {
     margin: 0;
     padding: 0;
@@ -151,21 +146,25 @@ h3 {
     font-size: 1.2em;
 }
 
+time {
+    font-style: italic;
+}
+
 header {
     color: var(--background-color);
     background-color: var(--primary-color);
     text-align: center;
-    font-size: 1.2em;
-}
-
-time {
-    font-style: italic;
 }
 
 header h1 {
     color: inherit;
     margin: 0;
     padding: 0.5em;
+}
+
+.logo {
+    height: 2em;
+    vertical-align: middle;
 }
 
 footer {
