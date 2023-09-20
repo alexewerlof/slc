@@ -421,6 +421,31 @@
                         You can play with different ranges to see how a given SLO translates to different
                         good {{ sliUnit }} and how it impacts the error budget.
                     </p>
+                    <table>
+                        <caption>Typical compliance periods</caption>
+                        <thead>
+                            <tr>
+                                <th>Window</th>
+                                <th>Length</th>
+                                <th>Advantages</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>4 weeks</td>
+                                <td>28 days</td>
+                                <td>Restarts at the beginning of a week</td>
+                                <td><button @click="setWindow('4w')">Try!</button></td>
+                            </tr>
+                            <tr>
+                                <td>A month</td>
+                                <td>30 days</td>
+                                <td>Maps to typical subscription services</td>
+                                <td><button @click="setWindow('1M')">Try!</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </help-component>
             </h2>
 

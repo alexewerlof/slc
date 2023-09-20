@@ -3,7 +3,7 @@ import HelpComponent from './components/help-component.js'
 import BurnComponent from './components/burn-component.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import sliExamples from './sli-examples.js'
-import { windowUnits } from './lib/time.js'
+import { parseWindow, windowUnits } from './lib/time.js'
 import { Window } from './lib/window.js'
 
 
@@ -72,6 +72,11 @@ const app = createApp({
     methods: {
         changeSLO(amount) {
             this.slo.perc = toFixed(clamp(this.slo.perc + amount, 0, 99.999))
+        },
+        setWindow(windowStr) {
+            const [windowMult, windowUnit] = parseWindow(windowStr)
+            this.slo.windowMult = windowMult
+            this.slo.windowUnit = windowUnit
         },
         loadExample(example) {
             this.sli.title = example.title
