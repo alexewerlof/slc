@@ -8,6 +8,7 @@
     fill: var(--foreground-color);
     font-size: 0.9rem;
     alignment-baseline: middle;
+    text-shadow: 0px 0px 3px var(--background-color);
 }
 
 .event .burn-event-arrow {
