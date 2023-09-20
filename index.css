@@ -23,7 +23,6 @@ section {
     margin: 0 auto;
     box-sizing: content-box;
     padding: 1em 1em 2em 1em;
-    border-bottom: 1px solid var(--primary-color);
 }
 
 .logo {
@@ -133,7 +132,6 @@ label.spaced + label.spaced {
 
 h1, h2, h3 {
     font-family: var(--title-font-family);
-    color: var(--primary-color);
 }
 
 h1[id] {
@@ -142,6 +140,7 @@ h1[id] {
 
 h1 {
     font-size: 2em;
+    color: var(--primary-color);
 }
 
 h2 {
