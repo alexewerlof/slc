@@ -223,3 +223,12 @@ dialog p {
     left: 0;
     max-width: 440px;
 }
+
+.error-budget-bar {
+    background-color: var(--brand-red);
+}
+
+.error-budget-bar__fill {
+    height: 3em;
+    background-color: var(--brand-green);
+}

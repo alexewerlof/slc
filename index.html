@@ -514,6 +514,9 @@
                     </p>
                 </help-component>
             </h1>
+            <div class="error-budget-bar">
+                <div class="error-budget-bar__fill" :style="{ width: slo.perc + '%'}"></div>
+            </div>
             <p v-if="sli.isTimeBased">
                 {{ errorBudgetWindow }}
             </p>
