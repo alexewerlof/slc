@@ -44,28 +44,28 @@ code .const {
 }
 
 /* takes the whole height */
-.formula_chunk {
+.formula__whole {
     align-self: center;
 }
 
-.formula_break {
+.formula__break {
     flex-basis: 100%;
     height: 0;
 }
 
 /* a two cell column */
-.formula_fraction {
+.formula__fraction {
     display: flex;
     flex-direction: column;
 }
 
 /* takes the top half */
-.formula_fraction--top {
+.formula__fraction--top {
     text-align: center;
     border-bottom: 1px solid var(--brand-green);
 }
 
 /* takes the bottom half */
-.formula_fraction--bottom {
+.formula__fraction--bottom {
     text-align: center;
 }

@@ -56,17 +56,17 @@
                         0 and 100 using this formula:
                     </p>
                     <div class="formula">
-                        <div class="formula_chunk">
+                        <div class="formula__whole">
                             SLI
                             <code>
                                 <span class="punct">=</span>
                             </code>
                         </div>
-                        <div class="formula_fraction">
-                            <div class="formula_fraction--top">Good</div>
-                            <div class="formula_fraction--bottom">Valid</div>
+                        <div class="formula__fraction">
+                            <div class="formula__fraction--top">Good</div>
+                            <div class="formula__fraction--bottom">Valid</div>
                         </div>
-                        <div class="formula_chunk">
+                        <div class="formula__whole">
                             <code>
                                 <span class="punct"> × </span>
                                 <span class="const">100</span>
@@ -271,36 +271,36 @@
             </h2>
             <div class="code block">
                 <div class="formula">
-                    <div class="formula_chunk">
+                    <div class="formula__whole">
                         SLI
                         <code>
                             <span class="punct">=</span>
                         </code>
                     </div>
-                    <div class="formula_fraction">
-                        <div class="formula_fraction--top">
+                    <div class="formula__fraction">
+                        <div class="formula__fraction--top">
                             <span v-if="sli.isTimeBased">Good Time Slots</span>
                             <span v-else>Good {{ sliUnit }}</span>
                         </div>
-                        <div class="formula_fraction--bottom">
+                        <div class="formula__fraction--bottom">
                             <span v-if="sli.isTimeBased">All Time Slots</span>
                             <span v-else>Valid {{ sliUnit }}</span>
                         </div>
                     </div>
-                    <div class="formula_chunk">
+                    <div class="formula__whole">
                         <code>
                             <span class="punct"> × </span>
                             <span class="const">100</span>
                         </code>
                     </div>
-                    <div class="formula_break"></div>
-                    <div class="formula_chunk">
+                    <div class="formula__break"></div>
+                    <div class="formula__whole">
                         <code>
                             <span class="punct">=</span>
                         </code>
                     </div>
-                    <div class="formula_fraction">
-                        <div class="formula_fraction--top">
+                    <div class="formula__fraction">
+                        <div class="formula__fraction--top">
                             <label for="sli-good-input">
                                 <code>
                                     <label for="sli-type-input">
@@ -314,7 +314,7 @@
                                 </code>
                             </label>
                         </div>
-                        <div class="formula_fraction--bottom">
+                        <div class="formula__fraction--bottom">
                             <label for="sli-valid-input">
                                 <code>
                                     <label for="sli-type-input">
@@ -330,7 +330,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="formula_chunk">
+                    <div class="formula__whole">
                         <code>
                             <span class="punct"> × </span>
                             <span class="const">100</span>
@@ -763,8 +763,8 @@
             </h3>
             <div class="code block">
                 <div class="formula">
-                    <div class="formula_fraction">
-                        <div class="formula_fraction--top">
+                    <div class="formula__fraction">
+                        <div class="formula__fraction--top">
                             <code>
                                 <label for="sli-type-input">
                                     <span class="funct">count</span>
@@ -780,7 +780,7 @@
                                 <span class="punct">)</span>
                             </code>
                         </div>
-                        <div class="formula_fraction--bottom">
+                        <div class="formula__fraction--bottom">
                             <code v-if="sli.isTimeBased">
                                 <span class="const">{{ alertLongWindowConsumedTimeSlots }}</span>
                             </code>
@@ -801,7 +801,7 @@
                             </code>
                         </div>
                     </div>
-                    <div class="formula_chunk">
+                    <div class="formula__whole">
                         <code>
                             <span class="punkt"> ≤ </span>
                             <span class="const">
@@ -878,20 +878,20 @@
                             of the total error budget.
                         </p>
                         <div class="formula">
-                            <div class="formula_fraction">
-                                <div class="formula_fraction--top">
+                            <div class="formula__fraction">
+                                <div class="formula__fraction--top">
                                     <code>
                                         <span class="const">{{ alert.longWindowPerc }}</span>
                                         <span class="punct">%</span>
                                     </code>
                                 </div>
-                                <div class="formula_fraction--bottom">
+                                <div class="formula__fraction--bottom">
                                     <code>
                                         <span class="const">{{ alert.shortWindowDivider }}</span>
                                     </code>
                                 </div>
                             </div>
-                            <div class="formula_chunk">
+                            <div class="formula__whole">
                                 <code>
                                     <span class="punct"> = </span>
                                     <span class="const">{{ alertShortWindowPerc }}</span>
@@ -937,8 +937,8 @@
                 </h3>
                 <div class="code block">
                     <div class="formula">
-                        <div class="formula_fraction">
-                            <div class="formula_fraction--top">
+                        <div class="formula__fraction">
+                            <div class="formula__fraction--top">
                                 <code>
                                     <label for="sli-type-input">
                                         <span class="funct">count</span>
@@ -954,7 +954,7 @@
                                     <span class="punct">)</span>
                                 </code>
                             </div>
-                            <div class="formula_fraction--bottom">
+                            <div class="formula__fraction--bottom">
                                 <code v-if="sli.isTimeBased">
                                     <span class="const">{{ alertShortWindowConsumedTimeSlots }}</span>
                                 </code>
@@ -975,7 +975,7 @@
                                 </code>
                             </div>
                         </div>
-                        <div class="formula_chunk">
+                        <div class="formula__whole">
                             <code>
                                 <span class="punkt"> ≤ </span>
                                 <span class="const">
