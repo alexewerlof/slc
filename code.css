@@ -63,9 +63,11 @@ code .const {
 .formula__fraction--top {
     text-align: center;
     border-bottom: 1px solid var(--brand-green);
+    padding-bottom: 0.2em;
 }
 
 /* takes the bottom half */
 .formula__fraction--bottom {
     text-align: center;
+    padding-top: 0.1em;
 }

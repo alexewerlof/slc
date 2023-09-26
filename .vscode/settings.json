@@ -1,3 +1,4 @@
 {
-    "liveServer.settings.multiRootWorkspaceName": "sla-calculator"
+    "liveServer.settings.multiRootWorkspaceName": "sla-calculator",
+    "liveServer.settings.port": 5501
 }
