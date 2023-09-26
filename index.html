@@ -41,6 +41,7 @@
         <ul id="links-bar" class="link-list">
             <li><a href="#sli-title">SLI</a></li>
             <li><a href="#slo-title">SLO</a></li>
+            <li><a href="#error-budget-title">Error Budget</a></li>
             <li><a href="#alert-title">Alerting</a></li>
         </ul>
     
@@ -476,7 +477,7 @@
             </label>
 
         <!------------------------ Error budget ------------------------>
-            <h2 id="error-budget-title">
+            <h1 id="error-budget-title">
                 Error budget: {{ errorBudgetPerc }}%
                 <help-component>
                     <p>
@@ -512,7 +513,7 @@
                         </code>
                     </p>
                 </help-component>
-            </h2>
+            </h1>
             <p v-if="sli.isTimeBased">
                 {{ errorBudgetWindow }}
             </p>
