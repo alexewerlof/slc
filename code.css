@@ -18,12 +18,12 @@ code label {
 
 /* functions */
 code .funct {
-    color: var(--brand-pink);
+    color: var(--brand-red);
 }
 
 /* punctuations */
 code .punct {
-    color: var(--brand-green);
+    color: var(--brand-pink);
 }
 
 /* expressions */
@@ -33,7 +33,7 @@ code .exprt {
 
 /* constants */
 code .const {
-    color: var(--brand-red);
+    color: var(--brand-purple);
 }
 
 /* a simple container for a fractional formula in plain HTML instead of MathML */
