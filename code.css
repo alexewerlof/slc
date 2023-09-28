@@ -7,7 +7,7 @@ code {
 }
 
 .block.code {
-    background-color: var(--background-dark);
+    background-color: var(--background-darker);
     padding: 1em;
 }
 
