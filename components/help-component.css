@@ -2,18 +2,15 @@
 
 .help-component-button {
     display: inline-block;
-    font-family: inherit;
-    font-weight: bold;
-    background-color: var(--secondary-color);
-    color: var(--background-color);
+    font-family: var(--body-font-family);
+    text-decoration: underline;
+    border: none;
+    background-color: transparent;
+    color: var(--secondary-color);
     cursor: help;
-    margin: 0 0.5em;
-    border-radius: 50%;
-    width: 2em;
-    height: 2em;
 }
 
-.help-component-contents {
+.help-component__contents {
     padding: 1rem;
     font-size: 1rem;
     font-family: var(--body-font-family);
@@ -24,7 +21,7 @@
     margin: 1rem 0;
 }
 
-.help-component-contents p {
+.help-component__contents p {
     margin-block: 0;
     padding: 0.5em 0;
 }
