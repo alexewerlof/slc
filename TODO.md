@@ -2,7 +2,7 @@
 
 - [ ] Allow load/save of the SLI via URL hash (also requires adding validation)
 - [ ] Make it responsive to use the available space on large screens
-- [ ] Bump the diagram to be right after the alert
+- [X] 2023-09-28: Bump the diagram to be right after the alert
 - [X] 2023-09-28: Change the help system to just read "Learn more"
 
 # Medium prio

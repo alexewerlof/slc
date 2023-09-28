@@ -751,6 +751,10 @@
                 max="100"
                 v-model.number="alert.longWindowPerc"
             >
+            <!-- Burn Chart Component -->
+            <burn-component
+                :burn-rate="alert.burnRate"
+                :long-alert-perc="alert.longWindowPerc"></burn-component>
             <!-- Long Window Alert Policy -->
             <h3>
                 Alert Policy
@@ -811,11 +815,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Burn Chart Component -->
-            <burn-component
-                :burn-rate="alert.burnRate"
-                :long-alert-perc="alert.longWindowPerc"></burn-component>
 
             <div class="block">
                 <label for="show-short-window-alert">
