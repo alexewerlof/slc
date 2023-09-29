@@ -25,27 +25,48 @@ section {
     padding: 1em 1em 2em 1em;
 }
 
-.link-list {
+header {
+    color: var(--primary-color);
+    text-align: center;
+    padding: 0.85em;
+}
+
+.logo {
+    height: 3em;
+    padding: 0 0.8em 0.5em 0;
+    vertical-align: middle;
+}
+
+header h1 {
+    display: inline-block;
+    color: inherit;
     margin: 0;
-    padding: 0;
+    font-weight: 400;
+    font-size: 2em;
+}
+
+.header__extra {
+    position: relative;
+    color: var(--secondary-color);
+    top: 1em;
+    left: -2em;
+}
+
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    border-top: 1px solid var(--background-lighter);
+    border-bottom: 1px solid var(--background-lighter);
+    margin: 0;
+    padding: 1em;
+    background-color: var(--background-color);
     text-align: center;
 }
 
-.link-list li {
+.top-nav li {
     display: inline-block;
     padding: 0 1em;
-}
-
-.link-list li + li {
-    border-left: 1px solid currentColor;
-}
-
-#links-bar {
-    position: sticky;
-    top: 0;
-    background-color: var(--secondary-color);
-    color: var(--background-color);
-    z-index: 1;
 }
 
 a, a:hover, a:active {
@@ -130,7 +151,7 @@ h1, h2, h3 {
 }
 
 h1[id] {
-    scroll-margin-top: 1em;
+    scroll-margin-top: 2em;
 }
 
 h1 {
@@ -148,31 +169,6 @@ h3 {
 
 time {
     font-style: italic;
-}
-
-header {
-    color: var(--background-color);
-    background-color: var(--primary-color);
-    text-align: center;
-}
-
-header h1 {
-    color: inherit;
-    margin: 0;
-    padding: 0.5em;
-}
-
-.logo {
-    height: 2em;
-    vertical-align: middle;
-}
-
-footer {
-    padding: 4em 0;
-    text-align: center;
-    font-size: 0.8em;
-    background-color: var(--background-darker);
-    color: var(--primary-color);
 }
 
 button {
@@ -200,6 +196,29 @@ th, td {
 
 td button {
     width: 100%;
+}
+
+footer {
+    padding: 4em 0;
+    text-align: center;
+    font-size: 0.8em;
+    background-color: var(--background-darker);
+    color: var(--primary-color);
+}
+
+.link-list {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.link-list li {
+    display: inline-block;
+    padding: 0 1em;
+}
+
+.link-list li + li {
+    border-left: 1px solid currentColor;
 }
 
 dialog {
