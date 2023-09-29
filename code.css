@@ -62,7 +62,7 @@ code .const {
 /* takes the top half */
 .formula__fraction--top {
     text-align: center;
-    border-bottom: 1px solid var(--brand-green);
+    border-bottom: 1px solid var(--brand-pink);
     padding-bottom: 0.2em;
 }
 
