@@ -41,9 +41,9 @@ const app = createApp({
             slo: {
                 // This percentage is also read/written by the sloInt and sloFrac computed properties
                 perc: 99,
-                // The length of the window in days
-                windowDays: 30,
             },
+            // The length of the SLO window in days
+            windowDays: 30,
             // For event based error budgets, this number holds the total valid events so we can compute the ammount of allowed failures
             errorBudgetValidExample: 1_000_000,
             alert: {
@@ -103,7 +103,7 @@ const app = createApp({
 
         sloWindow() {
             return new Window(
-                daysToSeconds(this.slo.windowDays),
+                daysToSeconds(this.windowDays),
                 this.timeSlot,
             )
         },
