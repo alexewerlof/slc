@@ -2,9 +2,10 @@ import { createApp } from './vendor/vue@3.3.4_dist_vue.esm-browser.prod.js'
 import HelpComponent from './components/help-component.js'
 import BurnComponent from './components/burn-component.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
-import sliExamples from './sli-examples.js'
+import sliExamples from './examples.js'
 import { daysToSeconds } from './lib/time.js'
 import { Window } from './lib/window.js'
+import { validateParams } from './lib/validation.js'
 
 
 const app = createApp({
@@ -26,16 +27,18 @@ const app = createApp({
             selectedExampleIndex: 2,
             //TODO: if the sli.timeSlot is larger than alerting windows, we should show a warning
             sli: {
-                // whether the SLI is time-based or event-based
-                isTimeBased: false,
-                // For time-based SLIs, this is the number of seconds in a time slot
-                timeSlot: 0,
+                // The title of the SLI
+                title: '',
+                // The description of the SLI
+                description: '',
                 // definition of good events or good time slots
                 good: '',
                 // definition of valid events or valid time slots
                 valid: '',
-                // unit of valid events (only used when isTimeBased is false)
+                // unit of SLI
                 unit: '',
+                // For time-based SLIs, this is the number of seconds in a time slot
+                timeSlot: 0,
             },
             slo: {
                 // This percentage is also read/written by the sloInt and sloFrac computed properties
@@ -51,7 +54,6 @@ const app = createApp({
                 shortWindowVisible: false,
                 shortWindowDivider: 12,
             },
-            percentToRatio,
             showCookiePopup,
         }
     },
@@ -68,23 +70,23 @@ const app = createApp({
         BurnComponent,
     },
     methods: {
+        percentToRatio(x) {
+            return percentToRatio(x)
+        },
         changeSLO(amount) {
             this.slo.perc = toFixed(clamp(this.slo.perc + amount, 0, 99.999))
         },
+        loadParams(params) {
+            const { title, description, unit, good, valid, timeSlot } = validateParams(params)
+            this.sli.title = title
+            this.sli.description = description
+            this.sli.good = good
+            this.sli.unit = unit
+            this.sli.timeSlot = timeSlot
+            this.sli.valid = valid
+        },
         loadExample(example) {
-            this.sli.title = example.title
-            this.sli.description = example.description
-            this.sli.good = example.good
-            this.sli.isTimeBased = Boolean(example.isTimeBased)
-            if (this.sli.isTimeBased) {
-                this.sli.unit = ''
-                this.sli.timeSlot = example.timeSlot
-                this.sli.valid = ''
-            } else {
-                this.sli.unit = example.unit
-                this.sli.timeSlot = 60
-                this.sli.valid = example.valid
-            }
+            this.loadParams(example)
         },
         hideCookiePopup() {
             this.showCookiePopup = false
@@ -98,14 +100,24 @@ const app = createApp({
     computed: {
         // Returns the unit of SLI for the UI to read better
         sliUnit() {
-            return this.sli.isTimeBased ? 'Time Slots' : this.sli.unit
+            return this.isTimeBased ? 'Time Slots' : this.sli.unit
         },
 
         sloWindow() {
             return new Window(
                 daysToSeconds(this.slo.windowDays),
-                this.sli.isTimeBased ? this.sli.timeSlot : 0,
+                this.sli.timeSlot,
             )
+        },
+
+        // whether the SLI is time-based or event-based
+        isTimeBased: {
+            get() {
+                return this.sli.timeSlot > 0
+            },
+            set(newVal) {
+                this.sli.timeSlot = newVal ? 60 : 0
+            }
         },
 
         sloInt: {
@@ -135,7 +147,7 @@ const app = createApp({
         },
 
         errorBudgetWindow() {
-            if (!this.sli.isTimeBased) {
+            if (!this.isTimeBased) {
                 return null
             }
 

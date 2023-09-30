@@ -127,15 +127,24 @@
                 </help-component>
             </h2>
 
-            <select
-                id="sli-type-input"
-                type="checkbox"
-                v-model="sli.isTimeBased">
-                <option :value="true">Time-Based</option>
-                <option :value="false">Event-Based</option>
-            </select>
+            <div class="block">
+                <label>
+                    <input
+                        type="radio"
+                        v-model="isTimeBased"
+                        :value="true">
+                    Time-Based
+                </label>
+                <label>
+                    <input
+                        type="radio"
+                        v-model="isTimeBased"
+                        :value="false">
+                    Event-Based
+                </label>
+            </div>
 
-            <div v-if="sli.isTimeBased">
+            <div v-if="isTimeBased">
                 <!-- SLI Time Slot -->
                 <h2>
                     <label for="sli-time-slot-length-input">Time Slot: {{ sli.timeSlot }} sec</label>
@@ -220,7 +229,7 @@
                 v-model="sli.good">
 
             <!-- SLI: Valid -->
-            <div v-if="!sli.isTimeBased">
+            <div v-if="!isTimeBased">
                 <h2>
                     <label for="sli-valid-input">
                         Valid {{ sliUnit }}
@@ -279,11 +288,11 @@
                     </div>
                     <div class="formula__fraction">
                         <div class="formula__fraction--top">
-                            <span v-if="sli.isTimeBased">Good Time Slots</span>
+                            <span v-if="isTimeBased">Good Time Slots</span>
                             <span v-else>Good {{ sliUnit }}</span>
                         </div>
                         <div class="formula__fraction--bottom">
-                            <span v-if="sli.isTimeBased">All Time Slots</span>
+                            <span v-if="isTimeBased">All Time Slots</span>
                             <span v-else>Valid {{ sliUnit }}</span>
                         </div>
                     </div>
@@ -321,7 +330,7 @@
                                         <span class="funct">count</span>
                                     </label>
                                     <span class="punct">(</span>
-                                    <span v-if="sli.isTimeBased">Time Slots</span>
+                                    <span v-if="isTimeBased">Time Slots</span>
                                     <label v-else for="sli-valid-input">
                                         <span class="exprt">{{ sli.valid }}</span>
                                     </label>
@@ -465,7 +474,7 @@
                 </help-component>
             </h2>
 
-            <p v-if="sli.isTimeBased">
+            <p v-if="isTimeBased">
                 {{ sloWindow.humanTimeSlots }}
             </p>
 
@@ -518,10 +527,10 @@
             <div class="error-budget-bar">
                 <div class="error-budget-bar__fill" :style="{ width: slo.perc + '%'}"></div>
             </div>
-            <p v-if="sli.isTimeBased">
+            <p v-if="isTimeBased">
                 {{ errorBudgetWindow }}
             </p>
-            <div v-if="!sli.isTimeBased">
+            <div v-if="!isTimeBased">
                 <h3>
                     <label for="error-budget-example-input">Example number of valid {{sliUnit}}</label>
                     <help-component>
@@ -661,7 +670,7 @@
             </h2>
             <p>
                 The time it takes to exhaust the entire error budget 
-                <span v-if="sli.isTimeBased">({{ errorBudgetWindow.humanTimeSlots }})</span>
+                <span v-if="isTimeBased">({{ errorBudgetWindow.humanTimeSlots }})</span>
                 at this rate:
                 <br />
                 <time>{{ errorBudgetTimeToExhaust.humanTimeSec }}</time>
@@ -733,7 +742,7 @@
                 Note: The time to resolve (TTR) is too short for a human to react.
                 It is strongly recommended to automate the response to the alert.
             </p>
-            <div v-if="sli.isTimeBased">
+            <div v-if="isTimeBased">
                 <p>
                     Time Slots consumed:
                     <br />
@@ -786,7 +795,7 @@
                             </code>
                         </div>
                         <div class="formula__fraction--bottom">
-                            <code v-if="sli.isTimeBased">
+                            <code v-if="isTimeBased">
                                 <span class="const">{{ alertLongWindowConsumedTimeSlots }}</span>
                             </code>
                             <code v-else>
@@ -839,7 +848,7 @@
                                 </code>
                             </div>
                             <div class="formula__fraction--bottom">
-                                <code v-if="sli.isTimeBased">
+                                <code v-if="isTimeBased">
                                     <span class="const">{{ alertShortWindowConsumedTimeSlots }}</span>
                                 </code>
                                 <code v-else>
@@ -954,7 +963,7 @@
                     <br />
                     <time>{{ alertShortWindow.humanTimeSec }}</time>
                 </p>
-                <div v-if="sli.isTimeBased" class="block">
+                <div v-if="isTimeBased" class="block">
                     <p>
                         Time Slots consumed:
                         <br />
@@ -1006,7 +1015,7 @@
         </ul>
 
         <p>
-            This application took about 50 hours of my private time to build.
+            This application took about 100 hours of my private time to build.
             It was fun and I hope it helps you.
             <br />
             To support me, you can
