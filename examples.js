@@ -7,7 +7,7 @@ Some examples are based on:
 export default [
     {
         title: 'Availability: Synthetic uptime probe',
-        description: 'The percentage of successful synthetic probes that do a HTTP GET request to the root endpoint evey minute',
+        description: 'The percentage of successful synthetic probes that do a HTTP GET request to the root endpoint evrey minute',
         unit: 'pings',
         good: 'response_code == 200',
         valid: 'all',
