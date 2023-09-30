@@ -44,12 +44,15 @@ const app = createApp({
             windowDays: 30,
             // For event based error budgets, this number holds the total valid events so we can compute the ammount of allowed failures
             errorBudgetValidExample: 1_000_000,
-            alert: {
-                burnRate: 6,
-                longWindowPerc: 5,
-                shortWindowVisible: false,
-                shortWindowDivider: 12,
-            },
+            // Alert burn rate: the rate at which the error budget is consumed
+            burnRate: 6,
+            // Long window alert: percentage of the SLO window
+            longWindowPerc: 5,
+            // Short window alert: the fraction of the long window
+            shortWindowDivider: 12,
+            // Show the short window alert
+            shortWindowVisible: false,
+            // Show the cookie popup (use localStorage to remember the user's choice)
             showCookiePopup,
         }
     },
@@ -151,7 +154,7 @@ const app = createApp({
         },
 
         errorBudgetBurnPerc() {
-            return 100 / this.alert.burnRate
+            return 100 / this.burnRate
         },
 
         // Based on the given burn rate
@@ -165,20 +168,20 @@ const app = createApp({
         },
 
         alertLongWindow() {
-            return this.errorBudgetTimeToExhaust.newFractionalWindow(this.alert.longWindowPerc)
+            return this.errorBudgetTimeToExhaust.newFractionalWindow(this.longWindowPerc)
         },
 
         alertTTRWindow() {
-            return this.errorBudgetTimeToExhaust.newFractionalWindow(100 - this.alert.longWindowPerc)
+            return this.errorBudgetTimeToExhaust.newFractionalWindow(100 - this.longWindowPerc)
         },
 
         alertLongWindowConsumedTimeSlots() {
-            return Math.floor(percent(this.alert.longWindowPerc, this.errorBudgetWindow.timeSlots))
+            return Math.floor(percent(this.longWindowPerc, this.errorBudgetWindow.timeSlots))
         },
 
         // As a percentage of the error budget
         alertShortWindowPerc() {
-            return toFixed(this.alert.longWindowPerc / this.alert.shortWindowDivider)
+            return toFixed(this.longWindowPerc / this.shortWindowDivider)
         },
 
         alertShortWindow() {

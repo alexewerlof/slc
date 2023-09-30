@@ -592,7 +592,7 @@
             <!-- Error Budget Burn Rate -->
             <h2>
                 <label for="burn-rate-input">
-                    Burn rate: {{ alert.burnRate }}x
+                    Burn rate: {{ burnRate }}x
                 </label>
                 <help-component>
                     <p>
@@ -631,7 +631,7 @@
                                 <td>5 minutes</td>
                                 <td>Page</td>
                                 <td>
-                                    <button type="button" @click="alert.burnRate = 14.4, alert.longWindowPerc = 2, alert.shortWindowDivider = 12">
+                                    <button type="button" @click="burnRate = 14.4, longWindowPerc = 2, shortWindowDivider = 12">
                                         Try!
                                     </button>
                                 </td>
@@ -643,7 +643,7 @@
                                 <td>30 minutes</td>
                                 <td>Page</td>
                                 <td>
-                                    <button type="button" @click="alert.burnRate = 6, alert.longWindowPerc = 5, alert.shortWindowDivider = 12">
+                                    <button type="button" @click="burnRate = 6, longWindowPerc = 5, shortWindowDivider = 12">
                                         Try!
                                     </button>
                                 </td>
@@ -655,7 +655,7 @@
                                 <td>6 hours</td>
                                 <td>Ticket</td>
                                 <td>
-                                    <button type="button" @click="alert.burnRate = 1, alert.longWindowPerc = 10, alert.shortWindowDivider = 12">
+                                    <button type="button" @click="burnRate = 1, longWindowPerc = 10, shortWindowDivider = 12">
                                         Try!
                                     </button>
                                 </td>
@@ -681,7 +681,7 @@
                 min="1"
                 max="20"
                 step="0.1"
-                v-model.number="alert.burnRate"
+                v-model.number="burnRate"
             >
             <!-- Long Window Alert -->
             <h2>
@@ -695,7 +695,7 @@
             <!-- Alert after consuming -->
             <h3>
                 <label for="alert-error-budget-perc">
-                    After Consuming: {{ alert.longWindowPerc }}%
+                    After Consuming: {{ longWindowPerc }}%
                 </label>
                 <help-component>
                     <p>
@@ -708,13 +708,13 @@
                     </p>
                     <p>
                         Based on your setup, the alert will trigger after we have consumed
-                        {{ alert.longWindowPerc }}% of the entire time allotted for the error budget
+                        {{ longWindowPerc }}% of the entire time allotted for the error budget
                         (or SLO compliance window) which is
                         <time>{{ sloWindow.humanTime }}</time>.
                     </p>
                     <code>
                         <span class="const">
-                            {{ alert.longWindowPerc }}
+                            {{ longWindowPerc }}
                         </span>
                         <span class="punct">%</span>
                         <span class="funct"> × </span>
@@ -729,7 +729,7 @@
                 </help-component>
             </h3>
             <p>
-                Alert when at least {{ alert.longWindowPerc }}% of the error budget is consumed in the last:
+                Alert when at least {{ longWindowPerc }}% of the error budget is consumed in the last:
                 <br />
                 <time>{{ alertLongWindow.humanTimeSec }}</time>
             </p>
@@ -749,7 +749,7 @@
                     {{ alertLongWindowConsumedTimeSlots }}
                 </p>
                 <p v-if="alertLongWindowConsumedTimeSlots === 0">
-                    Warning: Alert Window is not usable at this burn rate ({{ alert.burnRate }}x) and 
+                    Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
                     time slot length ({{ timeSlot }} sec)
                     because it will lead to division by zero error.
                 </p>
@@ -759,12 +759,12 @@
                 type="range"
                 min="1"
                 max="100"
-                v-model.number="alert.longWindowPerc"
+                v-model.number="longWindowPerc"
             >
             <!-- Burn Chart Component -->
             <burn-component
-                :burn-rate="alert.burnRate"
-                :long-alert-perc="alert.longWindowPerc"></burn-component>
+                :burn-rate="burnRate"
+                :long-alert-perc="longWindowPerc"></burn-component>
             <!-- Long Window Alert Policy -->
             <h3>
                 Alert Policy
@@ -824,12 +824,12 @@
                         </code>
                     </div>
 
-                    <div v-if="alert.shortWindowVisible" class="formula__break"></div>
-                    <code v-if="alert.shortWindowVisible">
+                    <div v-if="shortWindowVisible" class="formula__break"></div>
+                    <code v-if="shortWindowVisible">
                         <span class="exprt"> AND </span>
                     </code>
-                    <div v-if="alert.shortWindowVisible" class="formula__break"></div>
-                    <div v-if="alert.shortWindowVisible" class="formula">
+                    <div v-if="shortWindowVisible" class="formula__break"></div>
+                    <div v-if="shortWindowVisible" class="formula">
                         <div class="formula__fraction">
                             <div class="formula__fraction--top">
                                 <code>
@@ -886,7 +886,7 @@
                     <input
                         id="show-short-window-alert"
                         type="checkbox"
-                        v-model="alert.shortWindowVisible"
+                        v-model="shortWindowVisible"
                     >
                     Show Short-Window Alert Settings
                 </label>
@@ -906,11 +906,11 @@
                 </help-component>
             </div>
 
-            <div v-if="alert.shortWindowVisible">
+            <div v-if="shortWindowVisible">
                 <!-- Short Window Alert -->
                 <h3>
                     <label for="alert-short-window-divider-input">
-                        Short/Long ratio: 1/{{ alert.shortWindowDivider }}
+                        Short/Long ratio: 1/{{ shortWindowDivider }}
                     </label>
                     <help-component>
                         <p>
@@ -922,12 +922,12 @@
                             But you can play with different dividers to see how they impact
                             the detection time of the alert.
                         </p>
-                        <p v-if="alert.shortWindowDivider !== 12">
-                            <button type="button" @click="alert.shortWindowDivider = 12">Reset to 1/12</button>
+                        <p v-if="shortWindowDivider !== 12">
+                            <button type="button" @click="shortWindowDivider = 12">Reset to 1/12</button>
                         </p>
                         <p>
-                            Your chosen Short-Window is 1/{{ alert.shortWindowDivider }} of the Long-Window.
-                            Long-Window alert triggers after consuming {{ alert.longWindowPerc }}%
+                            Your chosen Short-Window is 1/{{ shortWindowDivider }} of the Long-Window.
+                            Long-Window alert triggers after consuming {{ longWindowPerc }}%
                             of the total error budget.
                         </p>
                         <p>
@@ -937,13 +937,13 @@
                             <div class="formula__fraction">
                                 <div class="formula__fraction--top">
                                     <code>
-                                        <span class="const">{{ alert.longWindowPerc }}</span>
+                                        <span class="const">{{ longWindowPerc }}</span>
                                         <span class="punct">%</span>
                                     </code>
                                 </div>
                                 <div class="formula__fraction--bottom">
                                     <code>
-                                        <span class="const">{{ alert.shortWindowDivider }}</span>
+                                        <span class="const">{{ shortWindowDivider }}</span>
                                     </code>
                                 </div>
                             </div>
@@ -970,7 +970,7 @@
                         {{ alertShortWindowConsumedTimeSlots }}
                     </p>    
                     <p v-if="alertShortWindowConsumedTimeSlots === 0">
-                        Warning: Alert Window is not usable at this burn rate ({{ alert.burnRate }}x) and 
+                        Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
                         time slot length ({{ timeSlot }} sec)
                         because it will lead to division by zero error.
                     </p>
@@ -980,7 +980,7 @@
                     type="range"
                     min="2"
                     max="20"
-                    v-model.number="alert.shortWindowDivider"
+                    v-model.number="shortWindowDivider"
                 >
             </div>
         </section>
