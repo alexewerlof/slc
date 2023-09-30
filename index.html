@@ -807,12 +807,67 @@
                     </div>
                     <div class="formula__whole">
                         <code>
-                            <span class="punkt"> ≤ </span>
+                            <span class="punct"> ≤ </span>
                             <span class="const">
                                 {{ percentToRatio(slo.perc) }}
                             </span>
                         </code>
                     </div>
+
+                    <div v-if="alert.shortWindowVisible" class="formula__break"></div>
+                    <code v-if="alert.shortWindowVisible">
+                        <span class="exprt"> AND </span>
+                    </code>
+                    <div v-if="alert.shortWindowVisible" class="formula__break"></div>
+                    <div v-if="alert.shortWindowVisible" class="formula">
+                        <div class="formula__fraction">
+                            <div class="formula__fraction--top">
+                                <code>
+                                    <label for="sli-type-input">
+                                        <span class="funct">count</span>
+                                    </label>
+                                    <span class="punct">(</span>
+                                    <label for="sli-good-input">
+                                        <span class="exprt">{{ sli.good }}</span>
+                                    </label>
+                                    <span class="punct">, </span>
+                                    <span class="const">
+                                        {{ alertShortWindow.humanSec }}
+                                    </span>
+                                    <span class="punct">)</span>
+                                </code>
+                            </div>
+                            <div class="formula__fraction--bottom">
+                                <code v-if="sli.isTimeBased">
+                                    <span class="const">{{ alertShortWindowConsumedTimeSlots }}</span>
+                                </code>
+                                <code v-else>
+                                    <label for="sli-type-input">
+                                        <span class="funct">count</span>
+                                    </label>
+                                    <span class="punct">(</span>
+                                    <label for="sli-valid-input">
+                                        <span class="exprt">{{ sli.valid }}</span>
+                                    </label>
+                                    <span class="punct"></span>
+                                    <span class="punct">, </span>
+                                    <span class="const">
+                                        {{ alertShortWindow.humanSec }}
+                                    </span>
+                                    <span class="punct">)</span>
+                                </code>
+                            </div>
+                        </div>
+                        <div class="formula__whole">
+                            <code>
+                                <span class="punct"> ≤ </span>
+                                <span class="const">
+                                    {{ percentToRatio(slo.perc) }}
+                                </span>
+                            </code>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -827,33 +882,22 @@
                 </label>
                 <help-component>
                     <p>
+                        The purpose of the short-window alert is to reduce false alerts.
+                    </p>
+                    <p>
+                        It checks a shorter look-back window (hence the name) to make sure that
+                        the burn rate is still high before triggering the alert.
+                        This reduces false positives where an alert is triggered for a temporary high burn rate.
+                    </p>
+                    <p>
                         The Short-Window alert reduces false positives
-                        but makes the alerting setup more complex.
+                        at the expence of making the alerting setup more complex.
                     </p>
                 </help-component>
             </div>
 
             <div v-if="alert.shortWindowVisible">
                 <!-- Short Window Alert -->
-                <h2>
-                    Short-Window
-                    <help-component>
-                        <p>
-                            The purpose of the Short-Window alert is to make sure that the alert
-                            only triggers if the burn rate is still high.
-                        </p>
-                        <p>
-                            Therefore it is always shorter than the "Long-Window" alert, hence the name.
-                        </p>
-                        <p>
-                            Short-Window alert is used to only trigger the alert if we're still actively
-                            burning through the error budget with the same burn rate.
-                            It also improves the alert reset time (the time it takes for the
-                            alert to shut up after the issue is resolved).
-                        </p>
-                    </help-component>
-                </h2>
-
                 <h3>
                     <label for="alert-short-window-divider-input">
                         Short/Long ratio: 1/{{ alert.shortWindowDivider }}
@@ -875,6 +919,9 @@
                             Your chosen Short-Window is 1/{{ alert.shortWindowDivider }} of the Long-Window.
                             Long-Window alert triggers after consuming {{ alert.longWindowPerc }}%
                             of the total error budget.
+                        </p>
+                        <p>
+                            Therefore, the Short-Window alert triggers after consuming:
                         </p>
                         <div class="formula">
                             <div class="formula__fraction">
@@ -925,65 +972,6 @@
                     max="20"
                     v-model.number="alert.shortWindowDivider"
                 >
-                <!-- Short Window Alert Policy -->
-                <h3>Alert Policy
-                    <help-component>
-                        <p>
-                            Note: The query for both long-window and short-window alerts must be
-                            combined with an <em>AND</em> condition.
-                        </p>
-                    </help-component>
-                </h3>
-                <div class="code block">
-                    <div class="formula">
-                        <div class="formula__fraction">
-                            <div class="formula__fraction--top">
-                                <code>
-                                    <label for="sli-type-input">
-                                        <span class="funct">count</span>
-                                    </label>
-                                    <span class="punct">(</span>
-                                    <label for="sli-good-input">
-                                        <span class="exprt">{{ sli.good }}</span>
-                                    </label>
-                                    <span class="punct">, </span>
-                                    <span class="const">
-                                        {{ alertShortWindow.humanSec }}
-                                    </span>
-                                    <span class="punct">)</span>
-                                </code>
-                            </div>
-                            <div class="formula__fraction--bottom">
-                                <code v-if="sli.isTimeBased">
-                                    <span class="const">{{ alertShortWindowConsumedTimeSlots }}</span>
-                                </code>
-                                <code v-else>
-                                    <label for="sli-type-input">
-                                        <span class="funct">count</span>
-                                    </label>
-                                    <span class="punct">(</span>
-                                    <label for="sli-valid-input">
-                                        <span class="exprt">{{ sli.valid }}</span>
-                                    </label>
-                                    <span class="punct"></span>
-                                    <span class="punct">, </span>
-                                    <span class="const">
-                                        {{ alertShortWindow.humanSec }}
-                                    </span>
-                                    <span class="punct">)</span>
-                                </code>
-                            </div>
-                        </div>
-                        <div class="formula__whole">
-                            <code>
-                                <span class="punkt"> ≤ </span>
-                                <span class="const">
-                                    {{ percentToRatio(slo.perc) }}
-                                </span>
-                            </code>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
