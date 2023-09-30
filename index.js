@@ -5,8 +5,7 @@ import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import sliExamples from './examples.js'
 import { daysToSeconds } from './lib/time.js'
 import { Window } from './lib/window.js'
-import { validateParams } from './lib/validation.js'
-
+import { paramToUrl, paramsFromUrl, validateParams } from './lib/validation.js'
 
 const app = createApp({
     data() {
@@ -55,6 +54,9 @@ const app = createApp({
             // Show the cookie popup (use localStorage to remember the user's choice)
             showCookiePopup,
         }
+    },
+    created() {
+        this.loadParams(paramsFromUrl(window.location.href))
     },
     watch: {
         selectedExampleIndex: {
@@ -190,6 +192,17 @@ const app = createApp({
 
         alertShortWindowConsumedTimeSlots() {
             return Math.floor(percent(this.alertShortWindowPerc, this.errorBudgetWindow.timeSlots))
+        },
+
+        shareUrl() {
+            return paramToUrl(window.location.href, {
+                title: this.title,
+                description: this.description,
+                unit: this.unit,
+                good: this.good,
+                valid: this.valid,
+                timeSlot: this.timeSlot,
+            })
         },
     }
 })
