@@ -353,7 +353,7 @@
         <section>
             <h1 id="slo-title">
                 <label for="slo-int-input">
-                    SLO: {{ slo.perc }}%
+                    SLO: {{ slo }}%
                 </label>
                 <help-component>
                     <p>
@@ -366,7 +366,7 @@
                     </p>
                 </help-component>
             </h1>
-            <p v-if="slo.perc > 99.9">
+            <p v-if="slo > 99.9">
                 Just be mindful of the
                 <a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0f75e88d-e53b-4983-bd7d-85a1e9650d7c_500x500.png" target="_blank" rel="noopener">
                     price tag
@@ -377,18 +377,18 @@
                 </a>
                 Everyone wants the highest possible number but not everyone is willing to pay the price.
             </p>
-            <p v-if="slo.perc < 70">
+            <p v-if="slo < 70">
                 Note: this is an unusually low service level objective.
                 Typically service level <em>objective</em> is above 90% with some rare exceptions.
                 Please check the <a href="#error-budget-title">Error budget</a> for implications of your chosen SLO.
             </p>
-            <p v-if="slo.perc < 50">
+            <p v-if="slo < 50">
                 It looks like you're expecting the service level to be violated more than met!
                 It may be tempting to start from a low objective, but maybe the definition of
                 your service level <em>indicator</em> could be improved to narrow down the focus
                 of service level optimization.
             </p>
-            <p v-if="slo.perc < 1">
+            <p v-if="slo < 1">
                 😂 Are you joking?
             </p>
             <input
@@ -517,7 +517,7 @@
                             <span class="punct"> = </span>
                             <span class="const">100%</span>
                             <span class="punct"> - </span>
-                            <span class="const">{{ slo.perc }}%</span>
+                            <span class="const">{{ slo }}%</span>
                             <span class="punct"> = </span>
                             <span class="const">{{ errorBudgetPerc }}%</span>
                         </code>
@@ -525,7 +525,7 @@
                 </help-component>
             </h1>
             <div class="error-budget-bar">
-                <div class="error-budget-bar__fill" :style="{ width: slo.perc + '%'}"></div>
+                <div class="error-budget-bar__fill" :style="{ width: slo + '%'}"></div>
             </div>
             <p v-if="isTimeBased">
                 {{ errorBudgetWindow }}
@@ -819,7 +819,7 @@
                         <code>
                             <span class="punct"> ≤ </span>
                             <span class="const">
-                                {{ percentToRatio(slo.perc) }}
+                                {{ percentToRatio(slo) }}
                             </span>
                         </code>
                     </div>
@@ -872,7 +872,7 @@
                             <code>
                                 <span class="punct"> ≤ </span>
                                 <span class="const">
-                                    {{ percentToRatio(slo.perc) }}
+                                    {{ percentToRatio(slo) }}
                                 </span>
                             </code>
                         </div>

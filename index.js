@@ -38,10 +38,8 @@ const app = createApp({
             unit: '',
             // For time-based SLIs, this is the number of seconds in a time slot
             timeSlot: 0,
-            slo: {
-                // This percentage is also read/written by the sloInt and sloFrac computed properties
-                perc: 99,
-            },
+            // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
+            slo: 99,
             // The length of the SLO window in days
             windowDays: 30,
             // For event based error budgets, this number holds the total valid events so we can compute the ammount of allowed failures
@@ -72,7 +70,7 @@ const app = createApp({
             return percentToRatio(x)
         },
         changeSLO(amount) {
-            this.slo.perc = toFixed(clamp(this.slo.perc + amount, 0, 99.999))
+            this.slo = toFixed(clamp(this.slo + amount, 0, 99.999))
         },
         loadParams(params) {
             const { title, description, unit, good, valid, timeSlot } = validateParams(params)
@@ -120,28 +118,28 @@ const app = createApp({
 
         sloInt: {
             get() {
-                return Math.floor(this.slo.perc)
+                return Math.floor(this.slo)
             },
             set(newIntStr) {
                 const newInt = Number(newIntStr)
-                const sloFrac = this.slo.perc % 1
-                this.slo.perc = toFixed(newInt + sloFrac)
+                const sloFrac = this.slo % 1
+                this.slo = toFixed(newInt + sloFrac)
             }
         },
 
         sloFrac: {
             get() {
-                return toFixed(this.slo.perc % 1)
+                return toFixed(this.slo % 1)
             },
             set(newFracStr) {
                 const newFrac = Number(newFracStr)
-                const sloInt = Math.floor(this.slo.perc)
-                this.slo.perc = toFixed(sloInt + newFrac)
+                const sloInt = Math.floor(this.slo)
+                this.slo = toFixed(sloInt + newFrac)
             }
         },
 
         errorBudgetPerc() {
-            return toFixed(100 - this.slo.perc)
+            return toFixed(100 - this.slo)
         },
 
         errorBudgetWindow() {
