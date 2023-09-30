@@ -3,7 +3,7 @@ import HelpComponent from './components/help-component.js'
 import BurnComponent from './components/burn-component.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import sliExamples from './sli-examples.js'
-import { parseWindow, windowUnits } from './lib/time.js'
+import { daysToSeconds } from './lib/time.js'
 import { Window } from './lib/window.js'
 
 
@@ -40,9 +40,8 @@ const app = createApp({
             slo: {
                 // This percentage is also read/written by the sloInt and sloFrac computed properties
                 perc: 99,
-                // The window multiplier. The window length as given by sloWindow is the result of windowMult * windowUnit.sec
-                windowMult: 1,
-                windowUnit: windowUnits[4],
+                // The length of the window in days
+                windowDays: 30,
             },
             // For event based error budgets, this number holds the total valid events so we can compute the ammount of allowed failures
             errorBudgetValidExample: 1_000_000,
@@ -52,7 +51,6 @@ const app = createApp({
                 shortWindowVisible: false,
                 shortWindowDivider: 12,
             },
-            windowUnits,
             percentToRatio,
             showCookiePopup,
         }
@@ -72,11 +70,6 @@ const app = createApp({
     methods: {
         changeSLO(amount) {
             this.slo.perc = toFixed(clamp(this.slo.perc + amount, 0, 99.999))
-        },
-        setWindow(windowStr) {
-            const [windowMult, windowUnit] = parseWindow(windowStr)
-            this.slo.windowMult = windowMult
-            this.slo.windowUnit = windowUnit
         },
         loadExample(example) {
             this.sli.title = example.title
@@ -110,7 +103,7 @@ const app = createApp({
 
         sloWindow() {
             return new Window(
-                this.slo.windowMult * this.slo.windowUnit.sec,
+                daysToSeconds(this.slo.windowDays),
                 this.sli.isTimeBased ? this.sli.timeSlot : 0,
             )
         },

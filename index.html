@@ -411,7 +411,7 @@
             <h2>
                 <label for="slo-window-unit-multiplier">
                     Window:
-                    {{ sloWindow.humanTime }}
+                    {{ slo.windowDays }} days
                 </label>
                 <help-component>
                     <p>
@@ -431,22 +431,34 @@
                             <tr>
                                 <th>Window</th>
                                 <th>Length</th>
-                                <th>Advantages</th>
+                                <th>Advantage</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
+                                <td>1 week</td>
+                                <td>7 days</td>
+                                <td>Forgives any breach after a week</td>
+                                <td><button @click="slo.windowDays=7">Try!</button></td>
+                            </tr>
+                            <tr>
                                 <td>4 weeks</td>
                                 <td>28 days</td>
-                                <td>Restarts at the beginning of a week</td>
-                                <td><button @click="setWindow('4w')">Try!</button></td>
+                                <td>Maps well to 2 typical "sprints"</td>
+                                <td><button @click="slo.windowDays=28">Try!</button></td>
                             </tr>
                             <tr>
                                 <td>A month</td>
                                 <td>30 days</td>
                                 <td>Maps to typical subscription services</td>
-                                <td><button @click="setWindow('1M')">Try!</button></td>
+                                <td><button @click="slo.windowDays=30">Try!</button></td>
+                            </tr>
+                            <tr>
+                                <td>A quarter</td>
+                                <td>90 days</td>
+                                <td>Rather unforgiving to breaches in the past</td>
+                                <td><button @click="slo.windowDays=90">Try!</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -460,21 +472,10 @@
             <input
                 type="range"
                 min="1"
-                :max="slo.windowUnit.max"
-                v-model.number="slo.windowMult"
+                :max="90"
+                v-model.number="slo.windowDays"
                 id="slo-window-unit-multiplier"
             >
-
-            <label v-for="windowUnit in windowUnits" :key="windowUnit.title" class="spaced">
-                <input
-                    type="radio"
-                    name="windowUnit"
-                    :value="windowUnit"
-                    v-model="slo.windowUnit"
-                    @click="slo.windowMult = 1"
-                >
-                {{ windowUnit.title }}
-            </label>
 
         <!------------------------ Error budget ------------------------>
             <h1 id="error-budget-title">
