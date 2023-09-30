@@ -25,21 +25,19 @@ const app = createApp({
             examples: sliExamples,
             // The index of the currently selected example
             selectedExampleIndex: 2,
-            //TODO: if the sli.timeSlot is larger than alerting windows, we should show a warning
-            sli: {
-                // The title of the SLI
-                title: '',
-                // The description of the SLI
-                description: '',
-                // definition of good events or good time slots
-                good: '',
-                // definition of valid events or valid time slots
-                valid: '',
-                // unit of SLI
-                unit: '',
-                // For time-based SLIs, this is the number of seconds in a time slot
-                timeSlot: 0,
-            },
+            //TODO: if the timeSlot is larger than alerting windows, we should show a warning
+            // The title of the SLI
+            title: '',
+            // The description of the SLI
+            description: '',
+            // definition of good events or good time slots
+            good: '',
+            // definition of valid events or valid time slots
+            valid: '',
+            // unit of SLI
+            unit: '',
+            // For time-based SLIs, this is the number of seconds in a time slot
+            timeSlot: 0,
             slo: {
                 // This percentage is also read/written by the sloInt and sloFrac computed properties
                 perc: 99,
@@ -78,12 +76,12 @@ const app = createApp({
         },
         loadParams(params) {
             const { title, description, unit, good, valid, timeSlot } = validateParams(params)
-            this.sli.title = title
-            this.sli.description = description
-            this.sli.good = good
-            this.sli.unit = unit
-            this.sli.timeSlot = timeSlot
-            this.sli.valid = valid
+            this.title = title
+            this.description = description
+            this.good = good
+            this.unit = unit
+            this.timeSlot = timeSlot
+            this.valid = valid
         },
         loadExample(example) {
             this.loadParams(example)
@@ -100,23 +98,23 @@ const app = createApp({
     computed: {
         // Returns the unit of SLI for the UI to read better
         sliUnit() {
-            return this.isTimeBased ? 'Time Slots' : this.sli.unit
+            return this.isTimeBased ? 'Time Slots' : this.unit
         },
 
         sloWindow() {
             return new Window(
                 daysToSeconds(this.slo.windowDays),
-                this.sli.timeSlot,
+                this.timeSlot,
             )
         },
 
         // whether the SLI is time-based or event-based
         isTimeBased: {
             get() {
-                return this.sli.timeSlot > 0
+                return this.timeSlot > 0
             },
             set(newVal) {
-                this.sli.timeSlot = newVal ? 60 : 0
+                this.timeSlot = newVal ? 60 : 0
             }
         },
 

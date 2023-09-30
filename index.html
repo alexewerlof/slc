@@ -102,7 +102,7 @@
                 id="sli-description-input"
                 rows="2"
                 type="text"
-                v-model="sli.description"></textarea>
+                v-model="description"></textarea>
             <h2>
                 <label>Type</label>
                 <help-component>
@@ -147,7 +147,7 @@
             <div v-if="isTimeBased">
                 <!-- SLI Time Slot -->
                 <h2>
-                    <label for="sli-time-slot-length-input">Time Slot: {{ sli.timeSlot }} sec</label>
+                    <label for="sli-time-slot-length-input">Time Slot: {{ timeSlot }} sec</label>
                     <help-component>
                         <p>
                             The time slot is the time window that the metric data is aggregated to
@@ -163,14 +163,14 @@
                         </p>
                         <p>
                             Here you can set this parameter to common values:
-                            <button type="button" @click="sli.timeSlot = 1">1 sec</button>
-                            <button type="button" @click="sli.timeSlot = 60">1 min</button>
-                            <button type="button" @click="sli.timeSlot = 180">3 min</button>
-                            <button type="button" @click="sli.timeSlot = 300">5 min</button>
-                            <button type="button" @click="sli.timeSlot = 600">10 min</button>
-                            <button type="button" @click="sli.timeSlot = 900">15 min</button>
-                            <button type="button" @click="sli.timeSlot = 1800">30 min</button>
-                            <button type="button" @click="sli.timeSlot = 3600">1 hour</button>
+                            <button type="button" @click="timeSlot = 1">1 sec</button>
+                            <button type="button" @click="timeSlot = 60">1 min</button>
+                            <button type="button" @click="timeSlot = 180">3 min</button>
+                            <button type="button" @click="timeSlot = 300">5 min</button>
+                            <button type="button" @click="timeSlot = 600">10 min</button>
+                            <button type="button" @click="timeSlot = 900">15 min</button>
+                            <button type="button" @click="timeSlot = 1800">30 min</button>
+                            <button type="button" @click="timeSlot = 3600">1 hour</button>
                         </p>
                     </help-component>
                 </h2>
@@ -180,7 +180,7 @@
                     min="1"
                     max="3600"
                     placeholder="60"
-                    v-model.number="sli.timeSlot">
+                    v-model.number="timeSlot">
             </div>
             <div v-else>
                 <!-- SLI Event Unit -->
@@ -193,19 +193,19 @@
                         </p>
                         <p>
                             Here you can set this parameter to common values:
-                            <button type="button" @click="sli.unit = 'requests'">requests</button>
-                            <button type="button" @click="sli.unit = 'page_views'">page_views</button>
-                            <button type="button" @click="sli.unit = 'logins'">logins</button>
-                            <button type="button" @click="sli.unit = 'incidents'">incidents</button>
-                            <button type="button" @click="sli.unit = 'sessions'">sessions</button>
-                            <button type="button" @click="sli.unit = 'users'">users</button>
+                            <button type="button" @click="unit = 'requests'">requests</button>
+                            <button type="button" @click="unit = 'page_views'">page_views</button>
+                            <button type="button" @click="unit = 'logins'">logins</button>
+                            <button type="button" @click="unit = 'incidents'">incidents</button>
+                            <button type="button" @click="unit = 'sessions'">sessions</button>
+                            <button type="button" @click="unit = 'users'">users</button>
                         </p>
                     </help-component>
                 </h2>
                 <input
                     id="sli-event-unit"
                     type="text"
-                    v-model="sli.unit">
+                    v-model="unit">
             </div>
 
             <!-- SLI: Good -->
@@ -226,7 +226,7 @@
             <input
                 id="sli-good-input"
                 type="text"
-                v-model="sli.good">
+                v-model="good">
 
             <!-- SLI: Valid -->
             <div v-if="!isTimeBased">
@@ -260,7 +260,7 @@
                 <input
                     id="sli-valid-input"
                     type="text"
-                    v-model="sli.valid"
+                    v-model="valid"
                 >
             </div>
 
@@ -317,7 +317,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-good-input">
-                                        <span class="exprt">{{ sli.good }}</span>
+                                        <span class="exprt">{{ good }}</span>
                                     </label>
                                     <span class="punct">)</span>
                                 </code>
@@ -332,7 +332,7 @@
                                     <span class="punct">(</span>
                                     <span v-if="isTimeBased">Time Slots</span>
                                     <label v-else for="sli-valid-input">
-                                        <span class="exprt">{{ sli.valid }}</span>
+                                        <span class="exprt">{{ valid }}</span>
                                     </label>
                                     <span class="punct">)</span>
                                 </code>
@@ -542,7 +542,7 @@
                 <p>
                     Expected 
                     <label for="sli-valid-input">
-                        <code>{{ sli.valid }}</code>
+                        <code>{{ valid }}</code>
                     </label>
                     in {{ sloWindow.humanTime }}:
                 </p>
@@ -554,8 +554,8 @@
                     step="1"
                     max="100000000000000">
                 <p>
-                    {{ errorBudgetBadExample }} <code>{{ sli.unit }}</code> are allowed to violate the
-                    <code>{{ sli.good }}</code> condition in {{ sloWindow.humanTime }}.
+                    {{ errorBudgetBadExample }} <code>{{ unit }}</code> are allowed to violate the
+                    <code>{{ good }}</code> condition in {{ sloWindow.humanTime }}.
                 </p>
             </div>
         </section>
@@ -750,7 +750,7 @@
                 </p>
                 <p v-if="alertLongWindowConsumedTimeSlots === 0">
                     Warning: Alert Window is not usable at this burn rate ({{ alert.burnRate }}x) and 
-                    time slot length ({{ sli.timeSlot }} sec)
+                    time slot length ({{ timeSlot }} sec)
                     because it will lead to division by zero error.
                 </p>
             </div>
@@ -785,7 +785,7 @@
                                 </label>
                                 <span class="punct">(</span>
                                 <label for="sli-good-input">
-                                    <span class="exprt">{{ sli.good }}</span>
+                                    <span class="exprt">{{ good }}</span>
                                 </label>
                                 <span class="punct">, </span>
                                 <span class="const">
@@ -804,7 +804,7 @@
                                 </label>
                                 <span class="punct">(</span>
                                 <label for="sli-valid-input">
-                                    <span class="exprt">{{ sli.valid }}</span>
+                                    <span class="exprt">{{ valid }}</span>
                                 </label>
                                 <span class="punct"></span>
                                 <span class="punct">, </span>
@@ -838,7 +838,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-good-input">
-                                        <span class="exprt">{{ sli.good }}</span>
+                                        <span class="exprt">{{ good }}</span>
                                     </label>
                                     <span class="punct">, </span>
                                     <span class="const">
@@ -857,7 +857,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-valid-input">
-                                        <span class="exprt">{{ sli.valid }}</span>
+                                        <span class="exprt">{{ valid }}</span>
                                     </label>
                                     <span class="punct"></span>
                                     <span class="punct">, </span>
@@ -971,7 +971,7 @@
                     </p>    
                     <p v-if="alertShortWindowConsumedTimeSlots === 0">
                         Warning: Alert Window is not usable at this burn rate ({{ alert.burnRate }}x) and 
-                        time slot length ({{ sli.timeSlot }} sec)
+                        time slot length ({{ timeSlot }} sec)
                         because it will lead to division by zero error.
                     </p>
                 </div>
