@@ -57,7 +57,12 @@ const app = createApp({
         }
     },
     created() {
-        this.loadParams(paramsFromUrl(window.location.href))
+        try {
+            this.loadParams(paramsFromUrl(window.location.href))
+        } catch (e) {
+            // silently fail if the params cannot be loaded from the URL
+            this.loadExample(this.examples[this.selectedExampleIndex])
+        }
     },
     watch: {
         selectedExampleIndex: {
