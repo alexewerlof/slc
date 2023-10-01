@@ -144,15 +144,9 @@
                 </label>
             </div>
 
-            <div class="block">
-                <p>isTimeBased: {{isTimeBased}}</p>
-                <p>timeSlot: {{timeSlot}}</p>
-                <p style="word-break: break-all;">shareUrl: {{shareUrl}}</p>
-            </div>
-
             <div v-if="isTimeBased">
                 <!-- SLI Time Slot -->
-                <h2>
+                <h3>
                     <label for="sli-time-slot-length-input">Time Slot: {{ timeSlot }} sec</label>
                     <help-component>
                         <p>
@@ -179,7 +173,7 @@
                             <button type="button" @click="timeSlot = 3600">1 hour</button>
                         </p>
                     </help-component>
-                </h2>
+                </h3>
                 <input
                     id="sli-time-slot-length-input"
                     type="range"
@@ -190,7 +184,7 @@
             </div>
             <div v-else>
                 <!-- SLI Event Unit -->
-                <h2>
+                <h3>
                     <label for="sli-event-unit">Event Unit</label>
                     <help-component>
                         <p>
@@ -207,7 +201,7 @@
                             <button type="button" @click="unit = 'users'">users</button>
                         </p>
                     </help-component>
-                </h2>
+                </h3>
                 <input
                     id="sli-event-unit"
                     type="text"
