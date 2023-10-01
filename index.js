@@ -74,9 +74,11 @@ const app = createApp({
         percentToRatio(x) {
             return percentToRatio(x)
         },
+        
         changeSLO(amount) {
             this.slo = toFixed(clamp(this.slo + amount, 0, 99.999))
         },
+        
         loadParams(params) {
             const { title, description, unit, good, valid, timeSlot } = validateParams(params)
             this.title = title
@@ -86,9 +88,11 @@ const app = createApp({
             this.timeSlot = timeSlot
             this.valid = valid
         },
+        
         loadExample(example) {
             this.loadParams(example)
         },
+        
         hideCookiePopup() {
             this.showCookiePopup = false
             try {
