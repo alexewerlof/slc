@@ -361,7 +361,7 @@
         <section>
             <h1 id="slo-title">
                 <label for="slo-int-input">
-                    SLO: {{ slo }}%
+                    SLO: {{ percL10n(slo) }}
                 </label>
                 <help-component>
                     <p>
@@ -387,7 +387,7 @@
             </p>
             <p v-if="slo < 70">
                 Note: this is an unusually low service level objective.
-                Typically service level <em>objective</em> is above 90% with some rare exceptions.
+                Typically service level <em>objective</em> is above {{ percL10n(90) }} with some rare exceptions.
                 Please check the <a href="#error-budget-title">Error budget</a> for implications of your chosen SLO.
             </p>
             <p v-if="slo < 50">
@@ -496,7 +496,7 @@
 
         <!------------------------ Error budget ------------------------>
             <h1 id="error-budget-title">
-                Error budget: {{ errorBudgetPerc }}%
+                Error budget: {{ percL10n(errorBudgetPerc) }}
                 <help-component>
                     <p>
                         Error budget is one of the core ideas behind using SLI/SLOs to improve reliability.
@@ -514,7 +514,7 @@
                         Error budget is the opposite of SLO.
                         It is the percentage of bad {{ sliUnit }} that you can have
                         before you violate the SLO.
-                        It is calculated as 100% - SLO.
+                        It is calculated as {{ percL10n(100) }} - SLO.
                     </p>
                     <p>
                         In this case:
@@ -523,11 +523,11 @@
                         <code>
                             <span class="exprt">error_budget</span>
                             <span class="punct"> = </span>
-                            <span class="const">100%</span>
+                            <span class="const">percL10n(100)</span>
                             <span class="punct"> - </span>
-                            <span class="const">{{ slo }}%</span>
+                            <span class="const">{{ percL10n(slo) }}</span>
                             <span class="punct"> = </span>
-                            <span class="const">{{ errorBudgetPerc }}%</span>
+                            <span class="const">{{ percL10n(errorBudgetPerc) }}</span>
                         </code>
                     </p>
                 </help-component>
@@ -644,7 +644,7 @@
                         <tbody>
                             <tr>
                                 <td>14.4x</td>
-                                <td>2% Consumed</td>
+                                <td>{{ percL10n(2) }} Consumed</td>
                                 <td>1 hour</td>
                                 <td>5 minutes</td>
                                 <td>Page</td>
@@ -656,7 +656,7 @@
                             </tr>
                             <tr>
                                 <td>6x</td>
-                                <td>5% Consumed</td>
+                                <td>{{ percL10n(5) }} Consumed</td>
                                 <td>6 hours</td>
                                 <td>30 minutes</td>
                                 <td>Page</td>
@@ -668,7 +668,7 @@
                             </tr>
                             <tr>
                                 <td>1x</td>
-                                <td>10% Consumed</td>
+                                <td>{{ percL10n(10) }} Consumed</td>
                                 <td>3 days</td>
                                 <td>6 hours</td>
                                 <td>Ticket</td>
@@ -713,7 +713,7 @@
             <!-- Alert after consuming -->
             <h3>
                 <label for="alert-error-budget-perc">
-                    After Consuming: {{ longWindowPerc }}%
+                    After Consuming: {{ percL10n(longWindowPerc) }}
                 </label>
                 <help-component>
                     <p>
@@ -726,15 +726,14 @@
                     </p>
                     <p>
                         Based on your setup, the alert will trigger after we have consumed
-                        {{ longWindowPerc }}% of the entire time allotted for the error budget
+                        {{ percL10n(longWindowPerc) }} of the entire time allotted for the error budget
                         (or SLO compliance window) which is
                         <time>{{ sloWindow.humanTime }}</time>.
                     </p>
                     <code>
                         <span class="const">
-                            {{ longWindowPerc }}
+                            {{ percL10n(longWindowPerc) }}
                         </span>
-                        <span class="punct">%</span>
                         <span class="funct"> × </span>
                         <span class="const">
                             {{ sloWindow.humanSec }}
@@ -747,7 +746,7 @@
                 </help-component>
             </h3>
             <p>
-                Alert when at least {{ longWindowPerc }}% of the error budget is consumed in the last:
+                Alert when at least {{ percL10n(longWindowPerc) }} of the error budget is consumed in the last:
                 <br />
                 <time>{{ alertLongWindow.humanTimeSec }}</time>
             </p>
@@ -971,8 +970,7 @@
                             <div class="formula__fraction">
                                 <div class="formula__fraction--top">
                                     <code>
-                                        <span class="const">{{ longWindowPerc }}</span>
-                                        <span class="punct">%</span>
+                                        <span class="const">{{ percL10n(longWindowPerc) }}</span>
                                     </code>
                                 </div>
                                 <div class="formula__fraction--bottom">
@@ -984,8 +982,7 @@
                             <div class="formula__whole">
                                 <code>
                                     <span class="punct"> = </span>
-                                    <span class="const">{{ alertShortWindowPerc }}</span>
-                                    <span class="punct">%</span>
+                                    <span class="const">{{ percL10n(alertShortWindowPerc) }}</span>
                                 </code>
                             </div>
                         </div>
@@ -993,7 +990,7 @@
                     </help-component>
                 </h3>
                 <p>
-                    Alert if at least {{ alertShortWindowPerc }}% of the error budget is consumed in the last:
+                    Alert if at least {{ percL10n(alertShortWindowPerc) }} of the error budget is consumed in the last:
                     <br />
                     <time>{{ alertShortWindow.humanTimeSec }}</time>
                 </p>
