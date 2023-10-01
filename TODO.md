@@ -6,6 +6,7 @@
 
 # Medium prio
 
+- [ ] Validate that the numerical parameters (from examples, localStorage, or URL params) are within range (store the non-strict ranges in a config to use for tests as well)
 - [ ] Update the logo in the splash screen and feedback form
 - [ ] Add more examples from SLD
 - [ ] Put the W logo in the background to make it a bit more vibrant
