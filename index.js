@@ -81,6 +81,10 @@ const app = createApp({
             return percentToRatio(x)
         },
 
+        numL10n(x) {
+            return numL10n(x)
+        },
+
         percL10n(x) {
             return percL10n(x)
         },

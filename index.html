@@ -369,8 +369,8 @@
                     </p>
                     <p>
                         Using the two sliders below you can fine tune the SLO to your needs.
-                        The first slider is for the integer part of the percentage ({{ sloInt }}).
-                        The second slider is for the fractional part of the percentage ({{ sloFrac }}).
+                        The first slider is for the integer part of the percentage ({{ percL10n(sloInt) }}).
+                        The second slider is for the fractional part of the percentage ({{ percL10n(sloFrac) }}).
                     </p>
                 </help-component>
             </h1>
@@ -408,13 +408,13 @@
             >
             <label for="slo-frac-input">Fraction:</label>
             &nbsp;
-            <button type="button" @click="changeSLO(-0.001)">-0.001</button>
-            <button type="button" @click="changeSLO(-0.01)">-0.01</button>
-            <button type="button" @click="changeSLO(-0.1)">-0.1</button>
-            <button type="button" @click="sloFrac = 0">= 0</button>
-            <button type="button" @click="changeSLO(0.1)">+0.1</button>
-            <button type="button" @click="changeSLO(0.01)">+0.01</button>
-            <button type="button" @click="changeSLO(0.001)">+0.001</button>
+            <button type="button" @click="sloFrac = 0">reset</button>
+            <button type="button" @click="changeSLO(-0.1)">{{ percL10n(-0.1) }}</button>
+            <button type="button" @click="changeSLO(0.1)">{{ percL10n(+0.1) }}</button>
+            <button type="button" @click="changeSLO(-0.01)">{{ percL10n(-0.01) }}</button>
+            <button type="button" @click="changeSLO(0.01)">{{ percL10n(+0.01) }}</button>
+            <button type="button" @click="changeSLO(-0.001)">{{ percL10n(-0.001) }}</button>
+            <button type="button" @click="changeSLO(0.001)">{{ percL10n(+0.001) }}</button>
             <input
                 id="slo-frac-input"
                 type="range"
@@ -483,7 +483,7 @@
             </h2>
 
             <p v-if="isTimeBased">
-                {{ sloWindow.humanTimeSlots }}
+                {{ sloWindow }}
             </p>
 
             <input
@@ -523,7 +523,7 @@
                         <code>
                             <span class="exprt">error_budget</span>
                             <span class="punct"> = </span>
-                            <span class="const">percL10n(100)</span>
+                            <span class="const">{{ percL10n(100) }}</span>
                             <span class="punct"> - </span>
                             <span class="const">{{ percL10n(slo) }}</span>
                             <span class="punct"> = </span>
@@ -688,10 +688,10 @@
             </h2>
             <p>
                 The time it takes to exhaust the entire error budget 
-                <span v-if="isTimeBased">({{ errorBudgetWindow.humanTimeSlots }})</span>
+                <span v-if="isTimeBased">{{ errorBudgetWindow }},</span>
                 at this rate:
                 <br />
-                <time>{{ errorBudgetTimeToExhaust.humanTimeSec }}</time>
+                <time>{{ errorBudgetTimeToExhaust }}</time>
             </p>
             <input
                 id="burn-rate-input"
@@ -844,7 +844,7 @@
                         <code>
                             <span class="punct"> ≤ </span>
                             <span class="const">
-                                {{ percentToRatio(slo) }}
+                                {{ numL10n(percentToRatio(slo)) }}
                             </span>
                         </code>
                     </div>
@@ -905,7 +905,7 @@
                             <code>
                                 <span class="punct"> ≤ </span>
                                 <span class="const">
-                                    {{ percentToRatio(slo) }}
+                                    {{ numL10n(percentToRatio(slo)) }}
                                 </span>
                             </code>
                         </div>
