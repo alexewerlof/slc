@@ -6,7 +6,7 @@ import sliExamples from './examples.js'
 import { daysToSeconds } from './lib/time.js'
 import { Window } from './lib/window.js'
 import { paramToUrl, paramsFromUrl, validateParams } from './lib/validation.js'
-import { numberSep, percL18n } from './lib/fmt.js'
+import { numberSep, percL10n } from './lib/fmt.js'
 
 const app = createApp({
     data() {
@@ -81,8 +81,8 @@ const app = createApp({
             return percentToRatio(x)
         },
 
-        percL18n(x) {
-            return percL18n(x)
+        percL10n(x) {
+            return percL10n(x)
         },
         
         changeSLO(amount) {
