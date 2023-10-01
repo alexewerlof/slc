@@ -2,6 +2,7 @@
 
 - [ ] Make it responsive to use the available space on large screens
 - [ ] Add the short window line as well
+- [ ] Allow assigning a value to the error budget to convert it to money
 - [ ] Allow load/save of the other important states via URL query
 
 # Medium prio
