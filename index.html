@@ -316,6 +316,10 @@
                                         <span class="funct">count</span>
                                     </label>
                                     <span class="punct">(</span>
+                                    <label for="sli-event-unit">
+                                        <span class="exprt">{{ unit }}</span>
+                                    </label>
+                                    <span class="punct">, </span>
                                     <label for="sli-good-input">
                                         <span class="exprt">{{ good }}</span>
                                     </label>
@@ -330,6 +334,10 @@
                                         <span class="funct">count</span>
                                     </label>
                                     <span class="punct">(</span>
+                                    <label for="sli-event-unit">
+                                        <span class="exprt">{{ unit }}</span>
+                                    </label>
+                                    <span class="punct">, </span>
                                     <span v-if="isTimeBased">Time Slots</span>
                                     <label v-else for="sli-valid-input">
                                         <span class="exprt">{{ valid }}</span>
@@ -554,8 +562,18 @@
                     step="1"
                     max="100000000000000">
                 <p>
-                    {{ errorBudgetBadExample }} <code>{{ unit }}</code> are allowed to violate the
-                    <code>{{ good }}</code> condition in {{ sloWindow.humanTime }}.
+                    {{ errorBudgetBadExample }}
+                    <label for="sli-event-unit">
+                        <code>{{ unit }}</code>
+                    </label>
+                    are allowed to violate the
+                    <label for="sli-good-input">
+                        <code>{{ good }}</code>
+                    </label>
+                    condition in
+                    <label for="slo-window-unit-multiplier">
+                        <code>{{ sloWindow.humanTime }}</code>
+                    </label>
                 </p>
             </div>
         </section>
@@ -784,6 +802,10 @@
                                     <span class="funct">count</span>
                                 </label>
                                 <span class="punct">(</span>
+                                <label for="sli-event-unit">
+                                    <span class="exprt">{{ unit }}</span>
+                                </label>
+                                <span class="punct">, </span>
                                 <label for="sli-good-input">
                                     <span class="exprt">{{ good }}</span>
                                 </label>
@@ -803,6 +825,10 @@
                                     <span class="funct">count</span>
                                 </label>
                                 <span class="punct">(</span>
+                                <label for="sli-event-unit">
+                                    <span class="exprt">{{ unit }}</span>
+                                </label>
+                                <span class="punct">, </span>
                                 <label for="sli-valid-input">
                                     <span class="exprt">{{ valid }}</span>
                                 </label>
@@ -826,7 +852,7 @@
 
                     <div v-if="shortWindowVisible" class="formula__break"></div>
                     <code v-if="shortWindowVisible">
-                        <span class="exprt"> AND </span>
+                        <span class="punct">&&</span>
                     </code>
                     <div v-if="shortWindowVisible" class="formula__break"></div>
                     <div v-if="shortWindowVisible" class="formula">
@@ -837,6 +863,10 @@
                                         <span class="funct">count</span>
                                     </label>
                                     <span class="punct">(</span>
+                                    <label for="sli-event-unit">
+                                        <span class="exprt">{{ unit }}</span>
+                                    </label>
+                                    <span class="punct">, </span>
                                     <label for="sli-good-input">
                                         <span class="exprt">{{ good }}</span>
                                     </label>
@@ -856,6 +886,10 @@
                                         <span class="funct">count</span>
                                     </label>
                                     <span class="punct">(</span>
+                                    <label for="sli-event-unit">
+                                        <span class="exprt">{{ unit }}</span>
+                                    </label>
+                                    <span class="punct">, </span>
                                     <label for="sli-valid-input">
                                         <span class="exprt">{{ valid }}</span>
                                     </label>
