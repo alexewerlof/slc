@@ -1,8 +1,9 @@
 # High prio
 
-- [ ] Allow load/save of the SLI via URL hash (also requires adding validation)
 - [ ] Make it responsive to use the available space on large screens
 - [ ] Add the short window line as well
+- [ ] Allow load/save of the other important states via URL query
+- [X] Allow load/save of the SLI via URL query (also requires adding validation)
 - [X] Improve the header layout to match the site and newsletter
 - [X] 2023-09-28: Fix the background color to match branding
 - [X] 2023-09-28: Bump the diagram to be right after the alert
