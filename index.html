@@ -540,7 +540,7 @@
             </p>
             <div v-if="!isTimeBased">
                 <h3>
-                    <label for="error-budget-example-input">Example number of valid {{sliUnit}}</label>
+                    <label for="error-budget-example-input">Example number of valid {{ sliUnit }}</label>
                     <help-component>
                         Here you can enter the numbers for your expected load and see
                         how many {{ sliUnit }} are allowed to fail during the SLO window
@@ -551,6 +551,10 @@
                     Expected 
                     <label for="sli-valid-input">
                         <code>{{ valid }}</code>
+                    </label>
+                    &nbsp;
+                    <label for="sli-event-unit">
+                        <code>{{ sliUnit }}</code>
                     </label>
                     in {{ sloWindow.humanTime }}:
                 </p>
