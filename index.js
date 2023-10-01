@@ -6,7 +6,7 @@ import sliExamples from './examples.js'
 import { daysToSeconds } from './lib/time.js'
 import { Window } from './lib/window.js'
 import { paramToUrl, paramsFromUrl, validateParams } from './lib/validation.js'
-import { numberSep, percL10n } from './lib/fmt.js'
+import { numL10n, percL10n } from './lib/fmt.js'
 
 const app = createApp({
     data() {
@@ -180,7 +180,7 @@ const app = createApp({
 
         // Number of bad events allowed for the given value of valid in errorBudgetValidExample
         errorBudgetBadExample() {
-            return numberSep(Math.floor(percent(this.errorBudgetPerc, this.errorBudgetValidExample || 1)))
+            return numL10n(Math.floor(percent(this.errorBudgetPerc, this.errorBudgetValidExample || 1)))
         },
 
         alertLongWindow() {
