@@ -144,6 +144,12 @@
                 </label>
             </div>
 
+            <div class="block">
+                <p>isTimeBased: {{isTimeBased}}</p>
+                <p>timeSlot: {{timeSlot}}</p>
+                <p style="word-break: break-all;">shareUrl: {{shareUrl}}</p>
+            </div>
+
             <div v-if="isTimeBased">
                 <!-- SLI Time Slot -->
                 <h2>
@@ -987,7 +993,7 @@
 
         <section>
             <h2>Share</h2>
-            <a :href="shareUrl" style="overflow-wrap: break-word;" target="_blank">{{ shareUrl }}</a>
+            <a :href="shareUrl" style="overflow-wrap: break-word;" rel="noopener" target="_blank">{{ shareUrl }}</a>
         </section>
 
         <!-- Cookie popup -->

@@ -195,7 +195,7 @@ const app = createApp({
         },
 
         shareUrl() {
-            return paramToUrl(window.location.href, {
+            return paramToUrl(window.location.origin, {
                 title: this.title,
                 description: this.description,
                 unit: this.unit,
