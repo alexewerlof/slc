@@ -340,8 +340,8 @@
                                     <label for="sli-event-unit">
                                         <span class="exprt">{{ sliUnit }}</span>
                                     </label>
-                                    <span class="punct">, </span>
-                                    <label for="sli-valid-input">
+                                    <span v-if="valid" class="punct">, </span>
+                                    <label v-if="valid" for="sli-valid-input">
                                         <span class="exprt">{{ valid }}</span>
                                     </label>
                                     <span class="punct">)</span>
