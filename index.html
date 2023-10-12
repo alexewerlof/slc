@@ -317,7 +317,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprt">{{ unit }}</span>
+                                        <span class="exprt">{{ sliUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
                                     <label for="sli-good-input">
@@ -329,17 +329,19 @@
                         </div>
                         <div class="formula__fraction--bottom">
                             <label for="sli-valid-input">
-                                <code>
+                                <code v-if="isTimeBased">
+                                    {{ sloWindow.timeSlots }}
+                                </code>
+                                <code v-else>
                                     <label for="sli-type-input">
                                         <span class="funct">count</span>
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprt">{{ unit }}</span>
+                                        <span class="exprt">{{ sliUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
-                                    <span v-if="isTimeBased">Time Slots</span>
-                                    <label v-else for="sli-valid-input">
+                                    <label for="sli-valid-input">
                                         <span class="exprt">{{ valid }}</span>
                                     </label>
                                     <span class="punct">)</span>
@@ -838,7 +840,7 @@
                                 </label>
                                 <span class="punct">(</span>
                                 <label for="sli-event-unit">
-                                    <span class="exprt">{{ unit }}</span>
+                                    <span class="exprt">{{ sliUnit }}</span>
                                 </label>
                                 <span class="punct">, </span>
                                 <label for="sli-good-input">
@@ -861,7 +863,7 @@
                                 </label>
                                 <span class="punct">(</span>
                                 <label for="sli-event-unit">
-                                    <span class="exprt">{{ unit }}</span>
+                                    <span class="exprt">{{ sliUnit }}</span>
                                 </label>
                                 <span class="punct">, </span>
                                 <label for="sli-valid-input">
@@ -899,7 +901,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprt">{{ unit }}</span>
+                                        <span class="exprt">{{ sliUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
                                     <label for="sli-good-input">
@@ -922,7 +924,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprt">{{ unit }}</span>
+                                        <span class="exprt">{{ sliUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
                                     <label for="sli-valid-input">
