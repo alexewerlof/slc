@@ -372,33 +372,65 @@
                         The first slider is for the integer part of the percentage ({{ percL10n(sloInt) }}).
                         The second slider is for the fractional part of the percentage ({{ percL10n(sloFrac) }}).
                     </p>
+                    <table>
+                        <caption>Typical SLO values</caption>
+                        <thead>
+                            <tr>
+                                <th>Short Name</th>
+                                <th>SLO Value</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2-nines</td>
+                                <td>{{percL10n(99)}}</td>
+                                <td><button @click="slo=99">Try!</button></td>
+                            </tr>
+                            <tr>
+                                <td>3-nines</td>
+                                <td>{{percL10n(99.9)}}</td>
+                                <td><button @click="slo=99.9">Try!</button></td>
+                            </tr>
+                            <tr>
+                                <td>4-nines</td>
+                                <td>{{percL10n(99.99)}}</td>
+                                <td><button @click="slo=99.99">Try!</button></td>
+                            </tr>
+                            <tr>
+                                <td>5-nines</td>
+                                <td>{{percL10n(99.999)}}</td>
+                                <td><button @click="slo=99.999">Try!</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p v-if="slo > 99.9">
+                        Just be mindful of the
+                        <a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0f75e88d-e53b-4983-bd7d-85a1e9650d7c_500x500.png" target="_blank" rel="noopener">
+                            price tag
+                        </a>
+                        for this high service level <em>objective</em>!
+                        <a href="https://blog.alexewerlof.com/p/why-bother-with-sli-and-slo" target="_blank" rel="noopener">
+                            Why bother with SLI and SLO?
+                        </a>
+                        Everyone wants the highest possible number but not everyone is willing to pay the price.
+                    </p>
+                    <p v-if="slo < 70">
+                        Note: this is an unusually low service level objective.
+                        Typically service level <em>objective</em> is above {{ percL10n(90) }} with some rare exceptions.
+                        Please check the <a href="#error-budget-title">Error budget</a> for implications of your chosen SLO.
+                    </p>
+                    <p v-if="slo < 50">
+                        It looks like you're expecting the service level to be violated more than met!
+                        It may be tempting to start from a low objective, but maybe the definition of
+                        your service level <em>indicator</em> could be improved to narrow down the focus
+                        of service level optimization.
+                    </p>
+                    <p v-if="slo < 1">
+                        😂 Are you joking?
+                    </p>
                 </help-component>
             </h1>
-            <p v-if="slo > 99.9">
-                Just be mindful of the
-                <a href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0f75e88d-e53b-4983-bd7d-85a1e9650d7c_500x500.png" target="_blank" rel="noopener">
-                    price tag
-                </a>
-                for this high service level <em>objective</em>!
-                <a href="https://blog.alexewerlof.com/p/why-bother-with-sli-and-slo" target="_blank" rel="noopener">
-                    Why bother with SLI and SLO?
-                </a>
-                Everyone wants the highest possible number but not everyone is willing to pay the price.
-            </p>
-            <p v-if="slo < 70">
-                Note: this is an unusually low service level objective.
-                Typically service level <em>objective</em> is above {{ percL10n(90) }} with some rare exceptions.
-                Please check the <a href="#error-budget-title">Error budget</a> for implications of your chosen SLO.
-            </p>
-            <p v-if="slo < 50">
-                It looks like you're expecting the service level to be violated more than met!
-                It may be tempting to start from a low objective, but maybe the definition of
-                your service level <em>indicator</em> could be improved to narrow down the focus
-                of service level optimization.
-            </p>
-            <p v-if="slo < 1">
-                😂 Are you joking?
-            </p>
             <input
                 id="slo-int-input"
                 type="range"

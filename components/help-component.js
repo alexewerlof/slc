@@ -4,15 +4,19 @@ export default {
     template,
     data() {
         return {
-            visible: false,
+            isVisible: this.visible,
         }
     },
     props: {
-        caption: String,
+        caption: {
+            type: String,
+            default: 'learn more',
+        },
+        visible: Boolean,
     },
     methods: {
         toggle() {
-            this.visible = !this.visible
+            this.isVisible = !this.isVisible
         },
-    }
+    },
 }
