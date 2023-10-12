@@ -317,11 +317,11 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprt">{{ sliUnit }}</span>
+                                        <span class="exprs">{{ sliUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
                                     <label for="sli-good-input">
-                                        <span class="exprt">{{ good }}</span>
+                                        <span class="exprs">{{ good }}</span>
                                     </label>
                                     <span class="punct">)</span>
                                 </code>
@@ -330,7 +330,7 @@
                         <div class="formula__fraction--bottom">
                             <label for="sli-valid-input">
                                 <code v-if="isTimeBased">
-                                    {{ sloWindow.timeSlots }}
+                                    <span class="const">{{ sloWindow.timeSlots }}</span>
                                 </code>
                                 <code v-else>
                                     <label for="sli-type-input">
@@ -338,11 +338,11 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprt">{{ sliUnit }}</span>
+                                        <span class="exprs">{{ sliUnit }}</span>
                                     </label>
                                     <span v-if="valid" class="punct">, </span>
                                     <label v-if="valid" for="sli-valid-input">
-                                        <span class="exprt">{{ valid }}</span>
+                                        <span class="exprs">{{ valid }}</span>
                                     </label>
                                     <span class="punct">)</span>
                                 </code>
@@ -555,7 +555,7 @@
                     </p>
                     <p>
                         <code>
-                            <span class="exprt">error_budget</span>
+                            <span class="exprs">error_budget</span>
                             <span class="punct"> = </span>
                             <span class="const">{{ percL10n(100) }}</span>
                             <span class="punct"> - </span>
@@ -840,11 +840,11 @@
                                 </label>
                                 <span class="punct">(</span>
                                 <label for="sli-event-unit">
-                                    <span class="exprt">{{ sliUnit }}</span>
+                                    <span class="exprs">{{ sliUnit }}</span>
                                 </label>
                                 <span class="punct">, </span>
                                 <label for="sli-good-input">
-                                    <span class="exprt">{{ good }}</span>
+                                    <span class="exprs">{{ good }}</span>
                                 </label>
                                 <span class="punct">, </span>
                                 <span class="const">
@@ -863,11 +863,11 @@
                                 </label>
                                 <span class="punct">(</span>
                                 <label for="sli-event-unit">
-                                    <span class="exprt">{{ sliUnit }}</span>
+                                    <span class="exprs">{{ sliUnit }}</span>
                                 </label>
                                 <span class="punct">, </span>
                                 <label for="sli-valid-input">
-                                    <span class="exprt">{{ valid }}</span>
+                                    <span class="exprs">{{ valid }}</span>
                                 </label>
                                 <span class="punct"></span>
                                 <span class="punct">, </span>
@@ -901,11 +901,11 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprt">{{ sliUnit }}</span>
+                                        <span class="exprs">{{ sliUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
                                     <label for="sli-good-input">
-                                        <span class="exprt">{{ good }}</span>
+                                        <span class="exprs">{{ good }}</span>
                                     </label>
                                     <span class="punct">, </span>
                                     <span class="const">
@@ -924,11 +924,11 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprt">{{ sliUnit }}</span>
+                                        <span class="exprs">{{ sliUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
                                     <label for="sli-valid-input">
-                                        <span class="exprt">{{ valid }}</span>
+                                        <span class="exprs">{{ valid }}</span>
                                     </label>
                                     <span class="punct"></span>
                                     <span class="punct">, </span>

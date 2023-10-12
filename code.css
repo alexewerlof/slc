@@ -27,7 +27,7 @@ code .punct {
 }
 
 /* expressions */
-code .exprt {
+code .exprs {
     color: var(--secondary-color);
 }
 
