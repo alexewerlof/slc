@@ -6,7 +6,7 @@ import sliExamples from './examples.js'
 import { daysToSeconds } from './lib/time.js'
 import { Window } from './lib/window.js'
 import { paramToUrl, paramsFromUrl, validateParams } from './lib/validation.js'
-import { numL10n, percL10n } from './lib/fmt.js'
+import { numL10n, percL10n, strFallback } from './lib/fmt.js'
 
 const app = createApp({
     data() {
@@ -119,7 +119,7 @@ const app = createApp({
     computed: {
         // Returns the unit of SLI for the UI to read better
         sliUnit() {
-            return this.isTimeBased ? 'Time Slots' : this.unit
+            return this.isTimeBased ? 'Time Slots' : strFallback(this.unit, 'events')
         },
 
         sloWindow() {
