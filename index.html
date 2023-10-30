@@ -43,6 +43,7 @@
             <li><a href="#slo-title">SLO</a></li>
             <li><a href="#error-budget-title">Error Budget</a></li>
             <li><a href="#alert-title">Alerting</a></li>
+            <li><a href="#share-title">Share</a></li>
         </ul>
     
         <!------------------------ SLI ------------------------>
@@ -1156,8 +1157,11 @@
         </section>
 
         <section>
-            <h2>Share</h2>
-            <a :href="shareUrl" style="overflow-wrap: break-word;" rel="noopener" target="_blank">{{ shareUrl }}</a>
+            <h2 id="share-title">Share</h2>
+            <p>
+                <a id="share-url" :href="shareUrl" style="overflow-wrap: break-word;" rel="noopener" target="_blank">{{ shareUrl }}</a>
+            </p>
+            <button type="button" @click="copy('share-url')">Share Config</button>
         </section>
 
         <!-- Toast Notification -->

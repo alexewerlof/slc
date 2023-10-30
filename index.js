@@ -230,14 +230,18 @@ const app = createApp({
         },
 
         shareUrl() {
-            return paramToUrl(window.location.origin, {
-                title: this.title,
-                description: this.description,
-                unit: this.unit,
-                good: this.good,
-                valid: this.valid,
-                timeSlot: this.timeSlot,
-            })
+            try {
+                return paramToUrl(window.location.origin, {
+                    title: this.title,
+                    description: this.description,
+                    unit: this.unit,
+                    good: this.good,
+                    valid: this.valid,
+                    timeSlot: this.timeSlot,
+                })
+            } catch (e) {
+                return window.location.origin
+            }
         },
     }
 })

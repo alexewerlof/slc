@@ -1,6 +1,5 @@
 # High prio
 
-- [ ] Fix a bug when editing "good" to be empty crashes the app (it's because generating share link validates the state)
 - [ ] Allow sharing SLO and alerting params as well as the example values when available
 - [ ] Make it responsive to use the available space on large screens
 - [ ] Add the short alert window line as well
@@ -24,6 +23,7 @@
 
 # Shipped
 
+- [X] 2023-10-30: Fix a bug when editing "good" to be empty crashes the app (it's because generating share link validates the state)
 - [X] 2023-10-30: Allow copying the formulas
 - [X] 2023-10-30: Table for time slot values and event unit
 - [X] 2023-10-30: Add invisible characters so when the formula is copied to a text editor, it reads better.
