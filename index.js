@@ -55,7 +55,7 @@ const app = createApp({
             // Show the cookie popup (use localStorage to remember the user's choice)
             showCookiePopup,
             // The text shown in the toast notification
-            toastCaption: 'loaded!',
+            toastCaption: '',
         }
     },
     created() {
@@ -103,6 +103,7 @@ const app = createApp({
             this.unit = unit
             this.timeSlot = timeSlot
             this.valid = valid
+            this.toastCaption = 'Loaded!'
         },
         
         loadExample(example) {
