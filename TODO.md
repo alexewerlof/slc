@@ -14,6 +14,7 @@
 - [ ] Update the logo in the splash screen and feedback form
 - [ ] Add more examples from SLDs and workshops
 - [ ] Put the W logo in the background to make it a bit more vibrant
+- [ ] Break down the error budget for common windows regardless of the chosen window
 - [ ] Write the remaining help posts
   - [ ] Compliance period
   - [ ] Error budget
