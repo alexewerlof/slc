@@ -36,7 +36,7 @@
             <h1>
                 Service Level Calculator
             </h1>
-    </header>
+        </header>
     
         <ul class="top-nav">
             <li><a href="#sli-title">SLI</a></li>
@@ -1159,6 +1159,11 @@
             <h2>Share</h2>
             <a :href="shareUrl" style="overflow-wrap: break-word;" rel="noopener" target="_blank">{{ shareUrl }}</a>
         </section>
+
+        <!-- Toast Notification -->
+        <Transition>
+            <div v-if="toastCaption" class="toast" @animationend="toastAnimationEnded">{{ toastCaption }}</div>
+        </Transition>
 
         <!-- Cookie popup -->
         <dialog id="cookie-banner" class="popup" :open="showCookiePopup">

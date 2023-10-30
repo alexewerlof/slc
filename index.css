@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Alata&family=Roboto&family=RobotoMono&display=swap');
 @import url('variables.css');
 @import url('code.css');
+@import url('toast.css');
 @import url('components/help-component.css');
 @import url('components/burn-component.css');
 @import url('components/burn-event-component.css');

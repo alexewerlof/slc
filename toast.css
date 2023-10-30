@@ -1,0 +1,33 @@
+@import url('../variables.css');
+
+
+.toast {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    padding: 10px;
+    border-radius: 20px;
+    animation: slideUpThenDisappear 2s forwards;
+}
+
+@keyframes slideUpThenDisappear {
+    0% {
+        bottom: -50vh;
+        opacity: 1;
+    }
+    20% {
+        bottom: 10vh;
+        opacity: 1;
+    }
+    90% {
+        bottom: 10vh;
+        opacity: 1;
+    }
+    100% {
+        bottom: 5vh;
+        opacity: 0;
+    }
+}

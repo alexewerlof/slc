@@ -54,6 +54,8 @@ const app = createApp({
             shortWindowVisible: false,
             // Show the cookie popup (use localStorage to remember the user's choice)
             showCookiePopup,
+            // The text shown in the toast notification
+            toastCaption: 'loaded!',
         }
     },
     created() {
@@ -116,13 +118,19 @@ const app = createApp({
             }
         },
 
+        toastAnimationEnded() {
+            this.toastCaption = ''
+            console.log('animation end')
+        },
+
         async copy(elementId) {
             try {
                 var copyText = document.getElementById(elementId).innerText
                 await navigator.clipboard.writeText(copyText)
+                this.toastCaption = 'copied!'
             } catch(err) {
             }
-        }
+        },
     },
     computed: {
         // Returns the unit of SLI for the UI to read better
