@@ -10,7 +10,6 @@
 # Medium prio
 
 - [ ] Validate that the numerical parameters (from examples, localStorage, or URL params) are within range (store the non-strict ranges in a config to use for tests as well)
-- [ ] Update the logo in the splash screen and feedback form
 - [ ] Add more examples from SLDs and workshops
 - [ ] Put the W logo in the background to make it a bit more vibrant
 - [ ] Break down the error budget for common windows regardless of the chosen window
@@ -23,6 +22,7 @@
 
 # Shipped
 
+- [X] 2023-10-30: Update the logo in the splash screen and feedback form
 - [X] 2023-10-30: Fix a bug when editing "good" to be empty crashes the app (it's because generating share link validates the state)
 - [X] 2023-10-30: Allow copying the formulas
 - [X] 2023-10-30: Table for time slot values and event unit
