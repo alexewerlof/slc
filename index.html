@@ -367,37 +367,39 @@
                         Depending on whether the SLI is time-based or event-based,
                         the formula calculates the percentage of bad time or bad events.
                     </p>
+                    <div class="formula">
+                        <div class="formula__whole">
+                            SLI
+                            <code>
+                                <span class="punct">=</span>
+                            </code>
+                        </div>
+                        <div class="formula__fraction">
+                            <div class="formula__fraction--top">
+                                <span class="invis">(</span>
+                                <span v-if="isTimeBased">Good Time Slots</span>
+                                <span v-else>Good {{ sliUnit }}</span>
+                                <span class="invis"> /</span>
+                            </div>
+                            <div class="formula__fraction--bottom">
+                                <span v-if="isTimeBased">All Time Slots</span>
+                                <span v-else>Valid {{ sliUnit }}</span>
+                                <span class="invis">)</span>
+                            </div>
+                        </div>
+                        <div class="formula__whole">
+                            <code>
+                                <span class="punct"> × </span>
+                                <span class="const">100</span>
+                            </code>
+                        </div>
+                    </div>    
                 </help-component>
             </h2>
             <div class="code block">
-                <div class="formula">
+                <div class="formula" id="sli-formula-code">
                     <div class="formula__whole">
                         SLI
-                        <code>
-                            <span class="punct">=</span>
-                        </code>
-                    </div>
-                    <div class="formula__fraction">
-                        <div class="formula__fraction--top">
-                            <span class="invis">(</span>
-                            <span v-if="isTimeBased">Good Time Slots</span>
-                            <span v-else>Good {{ sliUnit }}</span>
-                            <span class="invis"> /</span>
-                        </div>
-                        <div class="formula__fraction--bottom">
-                            <span v-if="isTimeBased">All Time Slots</span>
-                            <span v-else>Valid {{ sliUnit }}</span>
-                            <span class="invis">)</span>
-                        </div>
-                    </div>
-                    <div class="formula__whole">
-                        <code>
-                            <span class="punct"> × </span>
-                            <span class="const">100</span>
-                        </code>
-                    </div>
-                    <div class="formula__break"></div>
-                    <div class="formula__whole">
                         <code>
                             <span class="punct">=</span>
                         </code>
@@ -451,6 +453,7 @@
                         </code>
                     </div>
                 </div>
+                <button type="button" @click="copy('sli-formula-code')">Copy</button>
             </div>
         </section>
 
@@ -926,7 +929,7 @@
                 </help-component>
             </h3>
             <div class="code block">
-                <div class="formula">
+                <div class="formula" id="alert-formula-code">
                     <div class="formula__fraction">
                         <div class="formula__fraction--top">
                             <code>
@@ -1009,7 +1012,7 @@
                                     </span>
                                     <span class="punct">)</span>
                                 </code>
-                                <span class="invis">/</span>
+                                <span class="invis"> /</span>
                             </div>
                             <div class="formula__fraction--bottom">
                                 <code v-if="isTimeBased">
@@ -1047,6 +1050,7 @@
                     </div>
 
                 </div>
+                <button type="button" @click="copy('alert-formula-code')">Copy</button>
             </div>
 
             <div class="block">

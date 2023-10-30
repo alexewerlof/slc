@@ -115,6 +115,14 @@ const app = createApp({
                 // ignore
             }
         },
+
+        async copy(elementId) {
+            try {
+                var copyText = document.getElementById(elementId).innerText
+                await navigator.clipboard.writeText(copyText)
+            } catch(err) {
+            }
+        }
     },
     computed: {
         // Returns the unit of SLI for the UI to read better

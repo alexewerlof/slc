@@ -24,6 +24,7 @@
 
 # Shipped
 
+- [X] 2023-10-30: Allow copying the formulas
 - [X] 2023-10-30: Table for time slot values and event unit
 - [X] 2023-10-30: Add invisible characters so when the formula is copied to a text editor, it reads better.
 - [X] 2023-10-??: Format the numbers with location-specific separators to make it easier to read
