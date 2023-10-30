@@ -22,10 +22,10 @@
 
 # Shipped
 
-- [X] Add invisible characters so when the formula is copied to a text editor, it reads better.
-- [X] Format the numbers with location-specific separators to make it easier to read
-- [X] Allow load/save of the SLI via URL query (also requires adding validation)
-- [X] Improve the header layout to match the site and newsletter
+- [X] 2023-10-30: Add invisible characters so when the formula is copied to a text editor, it reads better.
+- [X] 2023-10-??: Format the numbers with location-specific separators to make it easier to read
+- [X] 2023-10-??: Allow load/save of the SLI via URL query (also requires adding validation)
+- [X] 2023-10-??: Improve the header layout to match the site and newsletter
 - [X] 2023-09-28: Fix the background color to match branding
 - [X] 2023-09-28: Bump the diagram to be right after the alert
 - [X] 2023-09-28: Change the help system to just read "Learn more"
