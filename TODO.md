@@ -3,15 +3,16 @@
 - [ ] Fix a bug when editing "good" to be empty crashes the app (it's because generating share link validates the state)
 - [ ] Allow sharing SLO and alerting params as well as the example values when available
 - [ ] Make it responsive to use the available space on large screens
-- [ ] Add the short window line as well
+- [ ] Add the short alert window line as well
 - [ ] Allow assigning a value to the error budget to convert it to money
-- [ ] Allow load/save of the other important states via URL query
+- [ ] Allow subsetting the valid time slot
+- [ ] Take advantage of the entire desktop screen real estate instead of prioritizing mobile screens (still have responsive design)
 
 # Medium prio
 
 - [ ] Validate that the numerical parameters (from examples, localStorage, or URL params) are within range (store the non-strict ranges in a config to use for tests as well)
 - [ ] Update the logo in the splash screen and feedback form
-- [ ] Add more examples from SLD
+- [ ] Add more examples from SLDs and workshops
 - [ ] Put the W logo in the background to make it a bit more vibrant
 - [ ] Write the remaining help posts
   - [ ] Compliance period
@@ -22,6 +23,7 @@
 
 # Shipped
 
+- [X] 2023-10-30: Table for time slot values and event unit
 - [X] 2023-10-30: Add invisible characters so when the formula is copied to a text editor, it reads better.
 - [X] 2023-10-??: Format the numbers with location-specific separators to make it easier to read
 - [X] 2023-10-??: Allow load/save of the SLI via URL query (also requires adding validation)

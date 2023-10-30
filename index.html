@@ -161,17 +161,58 @@
                             Another example is percentiles. When calculating the 99th percentile of the
                             latency every 5 minutes, the aggregation window is 5 x 60 = 300 seconds.
                         </p>
-                        <p>
-                            Here you can set this parameter to common values:
-                            <button type="button" @click="timeSlot = 1">1 sec</button>
-                            <button type="button" @click="timeSlot = 60">1 min</button>
-                            <button type="button" @click="timeSlot = 180">3 min</button>
-                            <button type="button" @click="timeSlot = 300">5 min</button>
-                            <button type="button" @click="timeSlot = 600">10 min</button>
-                            <button type="button" @click="timeSlot = 900">15 min</button>
-                            <button type="button" @click="timeSlot = 1800">30 min</button>
-                            <button type="button" @click="timeSlot = 3600">1 hour</button>
-                        </p>
+                        <table>
+                            <caption>Typical time slot lengths</caption>
+                            <thead>
+                                <tr>
+                                    <th>Time Slot</th>
+                                    <th>Seconds</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1 sec</td>
+                                    <td>1</td>
+                                    <td><button type="button" @click="timeSlot = 1">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>1 min</td>
+                                    <td>60</td>
+                                    <td><button type="button" @click="timeSlot = 60">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>3 min</td>
+                                    <td>180</td>
+                                    <td><button type="button" @click="timeSlot = 180">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>5 min</td>
+                                    <td>300</td>
+                                    <td><button type="button" @click="timeSlot = 300">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>10 min</td>
+                                    <td>600</td>
+                                    <td><button type="button" @click="timeSlot = 600">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>15 min</td>
+                                    <td>900</td>
+                                    <td><button type="button" @click="timeSlot = 900">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>30 min</td>
+                                    <td>1800</td>
+                                    <td><button type="button" @click="timeSlot = 1800">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>1 hour</td>
+                                    <td>3600</td>
+                                    <td><button type="button" @click="timeSlot = 3600">Try!</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </help-component>
                 </h3>
                 <input
@@ -191,15 +232,61 @@
                             The unit of the event that the SLI is measuring.
                             This is mainly used in the UI to make it easier to understand.
                         </p>
-                        <p>
-                            Here you can set this parameter to common values:
-                            <button type="button" @click="unit = 'requests'">requests</button>
-                            <button type="button" @click="unit = 'page_views'">page_views</button>
-                            <button type="button" @click="unit = 'logins'">logins</button>
-                            <button type="button" @click="unit = 'incidents'">incidents</button>
-                            <button type="button" @click="unit = 'sessions'">sessions</button>
-                            <button type="button" @click="unit = 'users'">users</button>
-                        </p>
+                        <table>
+                            <caption>Common event units</caption>
+                            <thead>
+                                <th>Event Unit</th>
+                                <th>Use case</th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>requests</td>
+                                    <td>REST/GraphQL servers, serverless functions, ...</td>
+                                    <td><button type="button" @click="unit = 'requests'">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>queries</td>
+                                    <td>Databases, LLM models, log servers, ...</td>
+                                    <td><button type="button" @click="unit = 'queries'">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>entries</td>
+                                    <td>Storage systems, data processors, ...</td>
+                                    <td><button type="button" @click="unit = 'entries'">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>messages</td>
+                                    <td>Queue systems, data pipelines, ...</td>
+                                    <td><button type="button" @click="unit = 'messages'">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>page_views</td>
+                                    <td>Web Servers, Document Servers, ...</td>
+                                    <td><button type="button" @click="unit = 'page_views'">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>logins</td>
+                                    <td>Authentication providers, session servers, ...</td>
+                                    <td><button type="button" @click="unit = 'logins'">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>incidents</td>
+                                    <td>Operational teams, ...</td>
+                                    <td><button type="button" @click="unit = 'incidents'">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>sessions</td>
+                                    <td>UIs supporting user flows, mobile apps, web apps, ...</td>
+                                    <td><button type="button" @click="unit = 'sessions'">Try!</button></td>
+                                </tr>
+                                <tr>
+                                    <td>transactions</td>
+                                    <td>Transaction services, data pipelines</td>
+                                    <td><button type="button" @click="unit = 'transactions'">Try!</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </help-component>
                 </h3>
                 <input
