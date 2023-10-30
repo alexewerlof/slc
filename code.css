@@ -36,6 +36,12 @@ code .const {
     color: var(--brand-purple);
 }
 
+/* invisible text that is used to annotate the code for when it is copied*/
+.invis {
+    color: transparent;
+    font-size: xx-small;
+}
+
 /* a simple container for a fractional formula in plain HTML instead of MathML */
 .formula {
     display: flex;

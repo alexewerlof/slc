@@ -1,5 +1,7 @@
 # High prio
 
+- [ ] Fix a bug when editing "good" to be empty crashes the app (it's because generating share link validates the state)
+- [ ] Allow sharing SLO and alerting params as well as the example values when available
 - [ ] Make it responsive to use the available space on large screens
 - [ ] Add the short window line as well
 - [ ] Allow assigning a value to the error budget to convert it to money
@@ -20,6 +22,7 @@
 
 # Shipped
 
+- [X] Add invisible characters so when the formula is copied to a text editor, it reads better.
 - [X] Format the numbers with location-specific separators to make it easier to read
 - [X] Allow load/save of the SLI via URL query (also requires adding validation)
 - [X] Improve the header layout to match the site and newsletter

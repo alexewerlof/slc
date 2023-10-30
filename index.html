@@ -288,12 +288,15 @@
                     </div>
                     <div class="formula__fraction">
                         <div class="formula__fraction--top">
+                            <span class="invis">(</span>
                             <span v-if="isTimeBased">Good Time Slots</span>
                             <span v-else>Good {{ sliUnit }}</span>
+                            <span class="invis"> /</span>
                         </div>
                         <div class="formula__fraction--bottom">
                             <span v-if="isTimeBased">All Time Slots</span>
                             <span v-else>Valid {{ sliUnit }}</span>
+                            <span class="invis">)</span>
                         </div>
                     </div>
                     <div class="formula__whole">
@@ -326,6 +329,7 @@
                                     <span class="punct">)</span>
                                 </code>
                             </label>
+                            <span class="invis"> /</span>
                         </div>
                         <div class="formula__fraction--bottom">
                             <label for="sli-valid-input">
@@ -852,6 +856,7 @@
                                 </span>
                                 <span class="punct">)</span>
                             </code>
+                            <span class="invis"> /</span>
                         </div>
                         <div class="formula__fraction--bottom">
                             <code v-if="isTimeBased">
@@ -913,6 +918,7 @@
                                     </span>
                                     <span class="punct">)</span>
                                 </code>
+                                <span class="invis">/</span>
                             </div>
                             <div class="formula__fraction--bottom">
                                 <code v-if="isTimeBased">
