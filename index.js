@@ -128,7 +128,7 @@ const app = createApp({
             try {
                 var copyText = document.getElementById(elementId).innerText
                 await navigator.clipboard.writeText(copyText)
-                this.toastCaption = 'copied!'
+                this.toastCaption = 'Copied to clipboard!'
             } catch(err) {
             }
         },
