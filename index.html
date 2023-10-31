@@ -382,13 +382,11 @@
                         <div class="formula__fraction">
                             <div class="formula__fraction--top">
                                 <span class="invis">(</span>
-                                <span v-if="isTimeBased">Good Time Slots</span>
-                                <span v-else>Good {{ normalizedUnit }}</span>
+                                <span>Good {{ normalizedUnit }}</span>
                                 <span class="invis"> /</span>
                             </div>
                             <div class="formula__fraction--bottom">
-                                <span v-if="isTimeBased">All Time Slots</span>
-                                <span v-else>Valid {{ normalizedUnit }}</span>
+                                <span>Valid {{ normalizedUnit }}</span>
                                 <span class="invis">)</span>
                             </div>
                         </div>
