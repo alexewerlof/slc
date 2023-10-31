@@ -306,16 +306,16 @@
 
             <!-- SLI: Good -->
             <h2>
-                <label for="sli-good-input">Good {{ sliUnit }}</label>
+                <label for="sli-good-input">Good {{ normalizedUnit }}</label>
                 <help-component>
                     <p>
                         <a href="https://blog.alexewerlof.com/p/sli-good" rel="noopener" target="_blank">
-                            What is a good {{ sliUnit }}?
+                            What is a good {{ normalizedUnit }}?
                         </a>
-                        How do good {{ sliUnit }} look like?
+                        How do good {{ normalizedUnit }} look like?
                         
                         What is the metric that you can measure to identify the
-                        good {{ sliUnit }} from all the valid {{ sliUnit }}?
+                        good {{ normalizedUnit }} from all the valid {{ normalizedUnit }}?
                     </p>
                 </help-component>
             </h2>
@@ -328,7 +328,7 @@
             <div v-if="!isTimeBased">
                 <h2>
                     <label for="sli-valid-input">
-                        Valid {{ sliUnit }}
+                        Valid {{ normalizedUnit }}
                     </label>
                     <help-component>
                         <p>
@@ -383,12 +383,12 @@
                             <div class="formula__fraction--top">
                                 <span class="invis">(</span>
                                 <span v-if="isTimeBased">Good Time Slots</span>
-                                <span v-else>Good {{ sliUnit }}</span>
+                                <span v-else>Good {{ normalizedUnit }}</span>
                                 <span class="invis"> /</span>
                             </div>
                             <div class="formula__fraction--bottom">
                                 <span v-if="isTimeBased">All Time Slots</span>
-                                <span v-else>Valid {{ sliUnit }}</span>
+                                <span v-else>Valid {{ normalizedUnit }}</span>
                                 <span class="invis">)</span>
                             </div>
                         </div>
@@ -412,7 +412,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprs">{{ sliUnit }}</span>
+                                        <span class="exprs">{{ normalizedUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
                                     <label for="sli-good-input">
@@ -434,7 +434,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprs">{{ sliUnit }}</span>
+                                        <span class="exprs">{{ normalizedUnit }}</span>
                                     </label>
                                     <span v-if="valid" class="punct">, </span>
                                     <label v-if="valid" for="sli-valid-input">
@@ -464,7 +464,7 @@
                 </label>
                 <help-component>
                     <p>
-                        Service Level Objective (SLO) is the target percentage of good {{ sliUnit }}.
+                        Service Level Objective (SLO) is the target percentage of good {{ normalizedUnit }}.
                     </p>
                     <p>
                         Using the two sliders below you can fine tune the SLO to your needs.
@@ -571,7 +571,7 @@
                     </p>
                     <p>
                         You can play with different ranges to see how a given SLO translates to different
-                        good {{ sliUnit }} and how it impacts the error budget.
+                        good {{ normalizedUnit }} and how it impacts the error budget.
                     </p>
                     <table>
                         <caption>Typical compliance periods</caption>
@@ -643,7 +643,7 @@
                     </p>
                     <p>
                         Error budget is the opposite of SLO.
-                        It is the percentage of bad {{ sliUnit }} that you can have
+                        It is the percentage of bad {{ normalizedUnit }} that you can have
                         before you violate the SLO.
                         It is calculated as {{ percL10n(100) }} - SLO.
                     </p>
@@ -671,10 +671,10 @@
             </p>
             <div v-if="!isTimeBased">
                 <h3>
-                    <label for="error-budget-example-input">Example number of valid {{ sliUnit }}</label>
+                    <label for="error-budget-example-input">Example number of valid {{ normalizedUnit }}</label>
                     <help-component>
                         Here you can enter the numbers for your expected load and see
-                        how many {{ sliUnit }} are allowed to fail during the SLO window
+                        how many {{ normalizedUnit }} are allowed to fail during the SLO window
                         while still being within the error budget.
                     </help-component>
                 </h3>
@@ -685,7 +685,7 @@
                     </label>
                     &nbsp;
                     <label for="sli-event-unit">
-                        <code>{{ sliUnit }}</code>
+                        <code>{{ normalizedUnit }}</code>
                     </label>
                     in {{ sloWindow.humanTime }}:
                 </p>
@@ -937,7 +937,7 @@
                                 </label>
                                 <span class="punct">(</span>
                                 <label for="sli-event-unit">
-                                    <span class="exprs">{{ sliUnit }}</span>
+                                    <span class="exprs">{{ normalizedUnit }}</span>
                                 </label>
                                 <span class="punct">, </span>
                                 <label for="sli-good-input">
@@ -961,7 +961,7 @@
                                 </label>
                                 <span class="punct">(</span>
                                 <label for="sli-event-unit">
-                                    <span class="exprs">{{ sliUnit }}</span>
+                                    <span class="exprs">{{ normalizedUnit }}</span>
                                 </label>
                                 <span class="punct">, </span>
                                 <label for="sli-valid-input">
@@ -999,7 +999,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprs">{{ sliUnit }}</span>
+                                        <span class="exprs">{{ normalizedUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
                                     <label for="sli-good-input">
@@ -1023,7 +1023,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprs">{{ sliUnit }}</span>
+                                        <span class="exprs">{{ normalizedUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
                                     <label for="sli-valid-input">

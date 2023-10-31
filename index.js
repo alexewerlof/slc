@@ -134,8 +134,8 @@ const app = createApp({
         },
     },
     computed: {
-        // Returns the unit of SLI for the UI to read better
-        sliUnit() {
+        // Returns the normalized unit of SLI for the UI to read better
+        normalizedUnit() {
             return this.isTimeBased ? 'Time Slots' : strFallback(this.unit, 'events')
         },
 
