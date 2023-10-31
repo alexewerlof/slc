@@ -2,13 +2,13 @@
 
 - [ ] Allow sharing SLO and alerting params as well as the example values when available
 - [ ] Make it responsive to use the available space on large screens
-- [ ] Add the short alert window line as well
 - [ ] Allow assigning a value to the error budget to convert it to money
 - [ ] Allow subsetting the valid time slot
 - [ ] Take advantage of the entire desktop screen real estate instead of prioritizing mobile screens (still have responsive design)
 
 # Medium prio
 
+- [ ] Add the short alert window line as well
 - [ ] Validate that the numerical parameters (from examples, localStorage, or URL params) are within range (store the non-strict ranges in a config to use for tests as well)
 - [ ] Add more examples from SLDs and workshops
 - [ ] Put the W logo in the background to make it a bit more vibrant
