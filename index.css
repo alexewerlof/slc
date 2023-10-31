@@ -109,7 +109,7 @@ input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
     color: var(--background-color);
 }
 
-input[type="radio"] {
+input[type=radio] {
     --webkit-appearance: none;
     --moz-appearance: none;
     appearance: none;
@@ -117,12 +117,12 @@ input[type="radio"] {
     width: 1em;
     height: 1em;
     border-radius: 50%;
-    border: none;
+    border: 1px solid var(--secondary-color);
     background-color: var(--background-lighter);
     transition: background-color var(--animation-speed) ease-in-out;
 }
   
-input[type="radio"]:checked {
+input[type=radio]:checked {
     background-color: var(--secondary-color);
 }
 

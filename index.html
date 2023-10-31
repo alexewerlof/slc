@@ -133,20 +133,24 @@
             </h2>
 
             <div class="block">
-                <label>
-                    <input
-                        type="radio"
-                        v-model="isTimeBased"
-                        :value="true">
-                    Time-Based
-                </label>
-                <label>
-                    <input
-                        type="radio"
-                        v-model="isTimeBased"
-                        :value="false">
-                    Event-Based
-                </label>
+                <p>
+                    <label>
+                        <input
+                            type="radio"
+                            v-model="isTimeBased"
+                            :value="true">
+                        Time-Based
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input
+                            type="radio"
+                            v-model="isTimeBased"
+                            :value="false">
+                        Event-Based
+                    </label>
+                </p>
             </div>
 
             <div v-if="isTimeBased">
