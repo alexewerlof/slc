@@ -325,7 +325,7 @@
                 v-model="good">
 
             <!-- SLI: Valid -->
-            <div v-if="!isTimeBased">
+            <div class="block">
                 <h2>
                     <label for="sli-valid-input">
                         Valid {{ normalizedUnit }}
@@ -349,6 +349,9 @@
                                 <li>Focus the optimization effort</li>
                                 <li>Clarify responsibility and control</li>
                             </ul>
+                        </p>
+                        <p>
+                            Leave this field empty to use "total" instead.
                         </p>
                     </help-component>
                 </h2>
@@ -423,10 +426,7 @@
                         </div>
                         <div class="formula__fraction--bottom">
                             <label for="sli-valid-input">
-                                <code v-if="isTimeBased">
-                                    <span class="const">{{ sloWindow.timeSlots }}</span>
-                                </code>
-                                <code v-else>
+                                <code>
                                     <label for="sli-type-input">
                                         <span class="funct">count</span>
                                     </label>
