@@ -2,7 +2,7 @@
 
 - [ ] Allow sharing SLO and alerting params as well as the example values when available
 - [ ] Make it responsive to use the available space on large screens
-- [ ] Allow assigning a value to the error budget to convert it to money
+- [ ] Allow assigning a currency value to the error budget to convert it to money
 - [ ] Allow subsetting the valid time slot
 - [ ] Take advantage of the entire desktop screen real estate instead of prioritizing mobile screens (still have responsive design)
 
@@ -22,6 +22,7 @@
 # Shipped
 
 - [X] 2023-10-31: Put the W logo in the background to make it a bit more vibrant
+- [X] 2023-10-31: Fix the "valid" description not showing in the formula
 - [X] 2023-10-30: Update the logo in the splash screen and feedback form
 - [X] 2023-10-30: Fix a bug when editing "good" to be empty crashes the app (it's because generating share link validates the state)
 - [X] 2023-10-30: Allow copying the formulas
