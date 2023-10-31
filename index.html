@@ -642,11 +642,41 @@
                         the consumers happy enough.
                     </p>
                     <p>
-                        Error budget is the opposite of SLO.
+                        Error budget is the complement of SLO.
                         It is the percentage of bad {{ normalizedUnit }} that you can have
                         before you violate the SLO.
-                        It is calculated as {{ percL10n(100) }} - SLO.
                     </p>
+                    <div class="formula">
+                        <div class="formula__whole">
+                            Error Budget
+                            <code>
+                                <span class="punct">= </span>
+                                <span class="const">{{ percL10n(100) }}</span>
+                                <span class="punct"> - </span>
+                                <span class="exprs">SLO</span>
+                                <span class="punct"> =</span>
+                            </code>
+                        </div>
+
+                        <div class="formula__fraction">
+                            <div class="formula__fraction--top">
+                                <a href="https://blog.alexewerlof.com/p/valid-vs-total" target="_blank" rel="noopener">Valid</a>
+                                <code>
+                                    <span class="punct"> - </span>
+                                </code>
+                                <a href="https://blog.alexewerlof.com/p/sli-good" target="_blank" rel="noopener">Good</a>
+                            </div>
+                            <div class="formula__fraction--bottom">
+                                <a href="https://blog.alexewerlof.com/p/valid-vs-total" target="_blank" rel="noopener">Valid</a>
+                            </div>
+                        </div>
+                        <div class="formula__whole">
+                            <code>
+                                <span class="punct"> × </span>
+                                <span class="const">100</span>
+                            </code>
+                        </div>
+                    </div>
                     <p>
                         In this case:
                     </p>
