@@ -217,50 +217,10 @@
                                 <th></th>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>requests</td>
-                                    <td>REST/GraphQL servers, serverless functions, ...</td>
-                                    <td><button type="button" @click="unit = 'requests'">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>queries</td>
-                                    <td>Databases, LLM models, log servers, ...</td>
-                                    <td><button type="button" @click="unit = 'queries'">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>entries</td>
-                                    <td>Storage systems, data processors, ...</td>
-                                    <td><button type="button" @click="unit = 'entries'">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>messages</td>
-                                    <td>Queue systems, data pipelines, ...</td>
-                                    <td><button type="button" @click="unit = 'messages'">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>page_views</td>
-                                    <td>Web Servers, Document Servers, ...</td>
-                                    <td><button type="button" @click="unit = 'page_views'">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>logins</td>
-                                    <td>Authentication providers, session servers, ...</td>
-                                    <td><button type="button" @click="unit = 'logins'">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>incidents</td>
-                                    <td>Operational teams, ...</td>
-                                    <td><button type="button" @click="unit = 'incidents'">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>sessions</td>
-                                    <td>UIs supporting user flows, mobile apps, web apps, ...</td>
-                                    <td><button type="button" @click="unit = 'sessions'">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>transactions</td>
-                                    <td>Transaction services, data pipelines</td>
-                                    <td><button type="button" @click="unit = 'transactions'">Try!</button></td>
+                                <tr v-for="p of config.unit.presets">
+                                    <td>{{ p.unit }}</td>
+                                    <td>{{ p.useCase }}</td>
+                                    <td><button type="button" @click="unit = p.unit">Try!</button></td>
                                 </tr>
                             </tbody>
                         </table>

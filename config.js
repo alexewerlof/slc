@@ -43,6 +43,46 @@ export const config = fz({
             },
         ]
     }),
+    unit: fz({
+        presets: [
+            {
+                unit: 'requests',
+                useCase: 'REST/GraphQL servers, serverless functions, ...',
+            },
+            {
+                unit: 'queries',
+                useCase: 'Databases, LLM models, log servers, ...',
+            },
+            {
+                unit: 'entries',
+                useCase: 'Storage systems, data processors, ...',
+            },
+            {
+                unit: 'messages',
+                useCase: 'Queue systems, data pipelines, ...',
+            },
+            {
+                unit: 'page_views',
+                useCase: 'Web Servers, Document Servers, ...',
+            },
+            {
+                unit: 'logins',
+                useCase: 'Authentication providers, session servers, ...',
+            },
+            {
+                unit: 'incidents',
+                useCase: 'Operational teams, ...',
+            },
+            {
+                unit: 'sessions',
+                useCase: 'UIs supporting user flows, mobile apps, web apps, ...',
+            },
+            {
+                unit: 'transactions',
+                useCase: 'Transaction services, data pipelines',
+            },
+        ]
+    }),
     slo: fz({
         min: 0,
         max: 99.999,
