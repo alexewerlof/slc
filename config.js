@@ -8,7 +8,7 @@ export const config = fz({
         min: 1,
         max: 3600,
         step: 1,
-        presets: [
+        presets: fz([
             {
                 title: '1 second',
                 seconds: 1,
@@ -41,10 +41,10 @@ export const config = fz({
                 title: '1 hour',
                 seconds: 3600,
             },
-        ]
+        ]),
     }),
     unit: fz({
-        presets: [
+        presets: fz([
             {
                 unit: 'requests',
                 useCase: 'REST/GraphQL servers, serverless functions, ...',
@@ -81,7 +81,7 @@ export const config = fz({
                 unit: 'transactions',
                 useCase: 'Transaction services, data pipelines',
             },
-        ]
+        ]),
     }),
     slo: fz({
         min: 0,
