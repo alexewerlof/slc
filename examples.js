@@ -8,10 +8,9 @@ export default [
     {
         title: 'Availability: Synthetic uptime probe',
         description: 'The percentage of successful synthetic probes that do a HTTP GET request to the root endpoint evrey minute',
-        unit: 'pings',
+        timeSlot: 60,
         good: 'response_code == 200',
         valid: 'all',
-        timeSlot: 60,
     },
     {
         title: 'Availability: Organic traffic uptime',
@@ -51,17 +50,16 @@ export default [
     {
         title: 'Latency: Response 75th Percentile',
         description: 'The percentage of requests where the P75 percentile over 5 minutes was sufficiently fast. "Sufficiently fast" is defined as ≤ 800 ms',
+        timeSlot: 300,
         good: 'P75(response_latency, 5m) ≤ 800ms',
         valid: 'all',
-        timeSlot: 300,
     },
     {
         title: 'Throughput: Worker Efficiency',
         description: 'The number of minutes where an expensive wroker processed enough requests to justify the cost of keeping it alive',
-        unit: 'rpm',
+        timeSlot: 60,
         good: 'processed',
         valid: 'all',
-        timeSlot: 60,
     },
     {
         title: 'Throughput: Cache hit rate',
@@ -171,16 +169,15 @@ export default [
     {
         title: 'MTBF (beta)',
         description: 'The mean time between failures is larger than 7 days',
-        unit: '?',
+        timeSlot: 60,
         good: 'P50(time_between_failures, 30d) ≥ 7 days',
         valid: 'all',
-        timeSlot: 60,
     },
     {
         title: 'MTTR (beta)',
         description: 'The mean time to restore a service after an incident is less than 30 minutes',
+        timeSlot: 60,
         good: 'P50(time_to_resolution, 30d) ≤ 30m',
         valid: 'all',
-        timeSlot: 60,
     },
 ]
