@@ -8,6 +8,40 @@ export const config = fz({
         min: 1,
         max: 3600,
         step: 1,
+        presets: [
+            {
+                title: '1 second',
+                seconds: 1,
+            },
+            {
+                title: '1 minute',
+                seconds: 60,
+            },
+            {
+                title: '3 minutes',
+                seconds: 180,
+            },
+            {
+                title: '5 minutes',
+                seconds: 300,
+            },
+            {
+                title: '10 minutes',
+                seconds: 600,
+            },
+            {
+                title: '15 minutes',
+                seconds: 900,
+            },
+            {
+                title: '30 minutes',
+                seconds: 1800,
+            },
+            {
+                title: '1 hour',
+                seconds: 3600,
+            },
+        ]
     }),
     slo: fz({
         min: 0,

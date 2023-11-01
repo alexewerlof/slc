@@ -182,45 +182,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1 sec</td>
-                                    <td>1</td>
-                                    <td><button type="button" @click="timeSlot = 1">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>1 min</td>
-                                    <td>60</td>
-                                    <td><button type="button" @click="timeSlot = 60">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>3 min</td>
-                                    <td>180</td>
-                                    <td><button type="button" @click="timeSlot = 180">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>5 min</td>
-                                    <td>300</td>
-                                    <td><button type="button" @click="timeSlot = 300">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>10 min</td>
-                                    <td>600</td>
-                                    <td><button type="button" @click="timeSlot = 600">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>15 min</td>
-                                    <td>900</td>
-                                    <td><button type="button" @click="timeSlot = 900">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>30 min</td>
-                                    <td>1800</td>
-                                    <td><button type="button" @click="timeSlot = 1800">Try!</button></td>
-                                </tr>
-                                <tr>
-                                    <td>1 hour</td>
-                                    <td>3600</td>
-                                    <td><button type="button" @click="timeSlot = 3600">Try!</button></td>
+                                <tr v-for="p in config.timeSlot.presets">
+                                    <td>{{ p.title }}</td>
+                                    <td>{{ p.seconds }}</td>
+                                    <td><button type="button" @click="timeSlot = p.seconds">Try!</button></td>
                                 </tr>
                             </tbody>
                         </table>
