@@ -7,6 +7,7 @@
 
 # Medium prio
 
+- [ ] Save the current state in localStorage so refreshing the page doesn't destroy everything (catch: we need a reset functionality)
 - [ ] Refuse to load state from older versions of the app which may not be compatible
 - [ ] Shorten the index.html by putting repetitive parts in config
 - [ ] Add the short alert window line as well
