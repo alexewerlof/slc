@@ -1,6 +1,5 @@
 # High prio
 
-- [ ] Allow sharing SLO and alerting params as well as the example values when available
 - [ ] Make it responsive to use the available space on large screens
 - [ ] Allow assigning a currency value to the error budget to convert it to money
 - [ ] Allow subsetting the valid time slot
@@ -8,8 +7,9 @@
 
 # Medium prio
 
+- [ ] Refuse to load state from older versions of the app which may not be compatible
+- [ ] Shorten the index.html by putting repetitive parts in config
 - [ ] Add the short alert window line as well
-- [ ] Validate that the numerical parameters (from examples, localStorage, or URL params) are within range (store the non-strict ranges in a config to use for tests as well)
 - [ ] Add more examples from SLDs and workshops
 - [ ] Break down the error budget for common windows regardless of the chosen window
 - [ ] Write the remaining help posts
@@ -20,7 +20,8 @@
   - [ ] SHOW HN: Post (also serve as intro to the app)
 
 # Shipped
-
+- [X] 2023-11-01: Allow sharing SLO and alerting params as well as the example values when available
+- [X] 2023-11-01: Validate that the numerical parameters (from examples, localStorage, or URL params) are within range (store the non-strict ranges in a config to use for tests as well)
 - [X] 2023-10-31: Put the W logo in the background to make it a bit more vibrant
 - [X] 2023-10-31: Fix the "valid" description not showing in the formula
 - [X] 2023-10-30: Update the logo in the splash screen and feedback form

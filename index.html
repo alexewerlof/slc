@@ -229,8 +229,9 @@
                 <input
                     id="sli-time-slot-length-input"
                     type="range"
-                    min="1"
-                    max="3600"
+                    :min="config.timeSlot.min"
+                    :max="config.timeSlot.max"
+                    :step="config.timeSlot.step"
                     placeholder="60"
                     v-model.number="timeSlot">
             </div>
@@ -619,8 +620,9 @@
 
             <input
                 type="range"
-                min="1"
-                :max="90"
+                :min="config.windowDays.min"
+                :max="config.windowDays.max"
+                :step="config.windowDays.step"
                 v-model.number="windowDays"
                 id="slo-window-unit-multiplier"
             >
@@ -861,9 +863,9 @@
             <input
                 id="burn-rate-input"
                 type="range"
-                min="1"
-                max="20"
-                step="0.1"
+                :min="config.burnRate.min"
+                :max="config.burnRate.max"
+                :step="config.burnRate.step"
                 v-model.number="burnRate"
             >
             <!-- Long Window Alert -->
@@ -939,8 +941,9 @@
             <input
                 id="alert-error-budget-perc"
                 type="range"
-                min="1"
-                max="100"
+                :min="config.longWindowPerc.min"
+                :max="config.longWindowPerc.max"
+                :step="config.longWindowPerc.step"
                 v-model.number="longWindowPerc"
             >
             <!-- Burn Chart Component -->
@@ -1177,15 +1180,16 @@
                 <input
                     id="alert-short-window-divider-input"
                     type="range"
-                    min="2"
-                    max="20"
+                    :min="config.shortWindowDivider.min"
+                    :max="config.shortWindowDivider.max"
+                    :step="config.shortWindowDivider.step"
                     v-model.number="shortWindowDivider"
                 >
             </div>
         </section>
 
-        <section>
-            <h2 id="share-title">Share</h2>
+        <section v-if="shareUrl">
+            <h1 id="share-title">Share</h1>
             <p>
                 <a id="share-url" :href="shareUrl" style="overflow-wrap: break-word;" rel="noopener" target="_blank">{{ shareUrl }}</a>
             </p>
