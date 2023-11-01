@@ -102,6 +102,7 @@ input[type=text], input[type=number], select, textarea {
     font-family: inherit;
     font-size: inherit;
     border: none;
+    border-left: 1px solid var(--secondary-color);
     background-color: var(--background-lighter);
     color: inherit;
     width: 100%;
@@ -112,6 +113,11 @@ input[type=text], input[type=number], select, textarea {
 input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
     background-color: var(--secondary-color);
     color: var(--background-color);
+}
+
+input[type=text]:focus-visible, input[type=number]:focus-visible, select:focus-visible, textarea:focus-visible {
+    border: none;
+    outline: none;
 }
 
 input[type=radio] {
