@@ -79,7 +79,7 @@ input[type=range] {
     background-color: var(--background-lighter);
     border-radius: 0;
     outline: none;
-    margin: 1.5em auto;
+    margin: 1.4em auto;
     transition: background-color var(--animation-speed) ease-in-out;
 }
 
