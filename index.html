@@ -504,35 +504,17 @@
                         <thead>
                             <tr>
                                 <th>Window</th>
-                                <th>Length</th>
+                                <th>Days</th>
                                 <th>Advantage</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1 week</td>
-                                <td>7 days</td>
-                                <td>Forgives any breach after a week</td>
-                                <td><button @click="windowDays=7">Try!</button></td>
-                            </tr>
-                            <tr>
-                                <td>4 weeks</td>
-                                <td>28 days</td>
-                                <td>Maps well to 2 typical "sprints"</td>
-                                <td><button @click="windowDays=28">Try!</button></td>
-                            </tr>
-                            <tr>
-                                <td>A month</td>
-                                <td>30 days</td>
-                                <td>Maps to typical subscription services</td>
-                                <td><button @click="windowDays=30">Try!</button></td>
-                            </tr>
-                            <tr>
-                                <td>A quarter</td>
-                                <td>90 days</td>
-                                <td>Rather unforgiving to breaches in the past</td>
-                                <td><button @click="windowDays=90">Try!</button></td>
+                            <tr v-for="p of config.windowDays.presets">
+                                <td>{{ p.title }}</td>
+                                <td>{{ p.days }}</td>
+                                <td>{{ p.useCase }}</td>
+                                <td><button @click="windowDays=p.days">Try!</button></td>
                             </tr>
                         </tbody>
                     </table>

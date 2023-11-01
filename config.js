@@ -91,6 +91,28 @@ export const config = fz({
         min: 1,
         max: 90,
         step: 1,
+        presets: fz([
+            {
+                title: '1 week',
+                days: 7,
+                useCase: 'Forgives any breach after a week',
+            },
+            {
+                title: '4 weeks',
+                days: 28,
+                useCase: 'Maps well to 2 typical "sprints"',
+            },
+            {
+                title: 'A month',
+                days: 30,
+                useCase: 'Maps to typical subscription services',
+            },
+            {
+                title: 'A quarter',
+                days: 90,
+                useCase: 'Rather unforgiving to breaches in the past',
+            },
+        ]),
     }),
     errorBudgetValidExample: fz({
         min: 1,
