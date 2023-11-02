@@ -48,6 +48,30 @@
             <li><a href="#share-title">Share</a></li>
         </ul>
     
+        <!------------------------ Examples ------------------------>
+        <section>
+            <h2>
+                <label for="select-example">Examples</label>
+                <help-component>
+                    <p>
+                        You can load a predefined example to the UI.
+                        You can tweak it and play around with different parameters as you wish.
+                    </p>
+                </help-component>
+            </h2>
+            <select v-model="selectedExampleIndex" id="select-example">
+                <option
+                    v-for="(example, index) in examples"
+                    :key="example.title"
+                    :value="index">
+                    {{ example.title }}
+                </option>
+            </select>
+            <div class="block">
+                <button @click="loadSelectedExample" type="button">Load</button>
+            </div>
+        </section>
+
         <!------------------------ SLI ------------------------>
         <section>
             <h1 id="sli-title">
@@ -85,23 +109,11 @@
                     </p>
                 </help-component>
             </h1>
-            <h2>
-                <label for="select-example">Load an example</label>
-                <help-component>
-                    <p>
-                        You can load a predefined example to the UI.
-                        You can tweak it and play around with different parameters as you wish.
-                    </p>
-                </help-component>
-            </h2>
-            <select v-model="selectedExampleIndex" id="select-example">
-                <option
-                    v-for="(example, index) in examples"
-                    :key="example.title"
-                    :value="index">
-                    {{ example.title }}
-                </option>
-            </select>
+            <h3>
+                <label for="sli-title-input">Title</label>
+            </h3>
+            <input id="sli-title-input" type="text" v-model="title">
+
             <h3>
                 <label for="sli-description-input">Description</label>
             </h3>
@@ -110,6 +122,7 @@
                 rows="2"
                 type="text"
                 v-model="description"></textarea>
+            
             <h2>
                 <label>Type</label>
                 <help-component>
@@ -459,7 +472,7 @@
             <input
                 id="slo-int-input"
                 type="range"
-                min="0"
+                :min="config.slo.min"
                 max="99"
                 v-model.number="sloInt"
             >
@@ -632,9 +645,9 @@
                     type="number"
                     v-model.number="errorBudgetValidExample"
                     id="error-budget-example-input"
-                    min="1"
-                    step="1"
-                    max="100000000000000">
+                    :min="config.errorBudgetValidExample.min"
+                    :max="config.errorBudgetValidExample.max"
+                    :step="config.errorBudgetValidExample.step">
                 <p>
                     {{ errorBudgetBadExample }}
                     <label for="sli-event-unit">

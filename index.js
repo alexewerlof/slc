@@ -3,11 +3,10 @@ import { config } from './config.js'
 import HelpComponent from './components/help-component.js'
 import BurnComponent from './components/burn-component.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
-import sliExamples from './examples.js'
+import examples from './examples.js'
 import { daysToSeconds } from './lib/time.js'
 import { Window } from './lib/window.js'
-import { isBetween, isStr } from './lib/validation.js'
-import { decodeState, encodeState } from './lib/sharing.js'
+import { defaultState, decodeState, encodeState, sanitizeState } from './lib/sharing.js'
 import { numL10n, percL10n, strFallback } from './lib/fmt.js'
 
 const app = createApp({
@@ -22,11 +21,26 @@ const app = createApp({
             // ignore
         }
 
+        let initialState = defaultState()
+        try {
+            const url = new URL(window.location.href)
+            if (url.searchParams.has('state')) {
+                initialState = sanitizeState(decodeState(url.searchParams.get('state')))
+                this.toastCaption = 'Loaded state from URL'
+            } else if (localStorage.getItem('state')) {
+                initialState = sanitizeState(JSON.parse(localStorage.getItem('state')))
+                this.toastCaption = 'Loaded state from local storage'
+            }
+        } catch (e) {
+            // silently fail if the params cannot be loaded from the URL
+            this.toastCaption = `${e}`
+        }
+
         return {
             // Expose the config to the UI
             config,
             // All the examples from example.js
-            examples: sliExamples,
+            examples,
             // The index of the currently selected example
             selectedExampleIndex: 2,
             // Show the short window alert
@@ -36,30 +50,7 @@ const app = createApp({
             // The text shown in the toast notification
             toastCaption: '',
             //TODO: if the timeSlot is larger than alerting windows, we should show a warning
-            // The title of the SLI
-            title: '',
-            // The description of the SLI
-            description: '',
-            // unit of SLI
-            unit: '',
-            // For time-based SLIs, this is the number of seconds in a time slot
-            timeSlot: 0,
-            // definition of good events or good time slots
-            good: '',
-            // definition of valid events or valid time slots
-            valid: '',
-            // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
-            slo: 99,
-            // The length of the SLO window in days
-            windowDays: 30,
-            // For event based error budgets, this number holds the total valid events so we can compute the ammount of allowed failures
-            errorBudgetValidExample: 1_000_000,
-            // Alert burn rate: the rate at which the error budget is consumed
-            burnRate: 6,
-            // Long window alert: percentage of the SLO window
-            longWindowPerc: 5,
-            // Short window alert: the fraction of the long window
-            shortWindowDivider: 12,
+            ...initialState,
         }
     },
     created() {
@@ -71,16 +62,8 @@ const app = createApp({
             }
         } catch (e) {
             // silently fail if the params cannot be loaded from the URL
-            this.loadExample(this.examples[this.selectedExampleIndex])
+            this.toastCaption = `Failed to load state from URL ${e}`
         }
-    },
-    watch: {
-        selectedExampleIndex: {
-            handler(newVal) {
-                this.loadExample(this.examples[newVal])
-            },
-            immediate: true
-        },
     },
     components: {
         HelpComponent,
@@ -104,65 +87,23 @@ const app = createApp({
         },
         
         loadState(state) {
-            if (isStr(state.title)) {
-                this.title = state.title
-            }
-            if (isStr(state.description)) {
-                this.description = state.description
-            }
-            if (isStr(state.unit)) {
-                this.unit = state.unit
-            }
-            // TODO: read the 3600 from a config and use it in index.html as well
-            if (Number.isInteger(state.timeSlot) && isBetween(state.timeSlot, config.timeSlot.min, state.timeSlot <= config.timeSlot.max)) {
-                this.timeSlot = state.timeSlot
-            }
-            if (isStr(state.good)) {
-                this.good = state.good
-            }
-            if (isStr(state.valid)) {
-                this.valid = state.valid
-            }
-            if (isBetween(state.slo, config.slo.min, config.slo.max)) {
-                this.slo = state.slo
-            }
-            if (Number.isInteger(state.windowDays) && isBetween(state.windowDays, config.windowDays.min, config.windowDays.max)) {
-                this.windowDays = state.windowDays
-            }
-            if (Number.isInteger(state.errorBudgetValidExample) && isBetween(state.errorBudgetValidExample, config.errorBudgetValidExample.min, config.errorBudgetValidExample.max)) {
-                this.errorBudgetValidExample = state.errorBudgetValidExample
-            }
-            if (isBetween(state.burnRate, config.burnRate.min, config.burnRate.max)) {
-                this.burnRate = state.burnRate
-            }
-            if (isBetween(state.longWindowPerc, config.longWindowPerc.min, config.longWindowPerc.max)) {
-                this.longWindowPerc = state.longWindowPerc
-            }
-            if (isBetween(state.shortWindowDivider, config.shortWindowDivider.min, config.shortWindowDivider.max)) {
-                this.shortWindowDivider = state.shortWindowDivider
-            }
-        },
-
-        saveState() {
-            return {
-                title: this.title,
-                description: this.description,
-                unit: this.unit,
-                timeSlot: this.timeSlot,
-                good: this.good,
-                valid: this.valid,
-                slo: this.slo,
-                windowDays: this.windowDays,
-                errorBudgetValidExample: this.errorBudgetValidExample,
-                burnRate: this.burnRate,
-                longWindowPerc: this.longWindowPerc,
-                shortWindowDivider: this.shortWindowDivider,
-
-            }
+            const newState = sanitizeState(state)
+            this.title = newState.title
+            this.description = newState.description
+            this.unit = newState.unit
+            this.timeSlot = newState.timeSlot
+            this.good = newState.good
+            this.valid = newState.valid
+            this.slo = newState.slo
+            this.windowDays = newState.windowDays
+            this.errorBudgetValidExample = newState.errorBudgetValidExample
+            this.burnRate = newState.burnRate
+            this.longWindowPerc = newState.longWindowPerc
+            this.shortWindowDivider = newState.shortWindowDivider
         },
         
-        loadExample(example) {
-            this.loadState(example)
+        loadSelectedExample() {
+            this.loadState(this.examples[this.selectedExampleIndex])
         },
         
         hideCookiePopup() {
@@ -175,6 +116,7 @@ const app = createApp({
         },
 
         toastAnimationEnded() {
+            // TODO: remove this method
             this.toastCaption = ''
             console.log('animation end')
         },
@@ -188,7 +130,36 @@ const app = createApp({
             }
         },
     },
+    watch: {
+        stateObject: {
+            handler(newState) {
+                try {
+                    localStorage.setItem('state', JSON.stringify(newState))
+                } catch (e) {
+                    // ignore
+                }
+            },
+            deep: true,
+        },
+    },
     computed: {
+        stateObject() {
+            return {
+                title: this.title,
+                description: this.description,
+                unit: this.unit,
+                timeSlot: this.timeSlot,
+                good: this.good,
+                valid: this.valid,
+                slo: this.slo,
+                windowDays: this.windowDays,
+                errorBudgetValidExample: this.errorBudgetValidExample,
+                burnRate: this.burnRate,
+                longWindowPerc: this.longWindowPerc,
+                shortWindowDivider: this.shortWindowDivider,
+            }
+        },
+
         // Returns the normalized unit of SLI for the UI to read better
         normalizedUnit() {
             return this.isTimeBased ? 'Time Slots' : strFallback(this.unit, 'events')
@@ -287,7 +258,7 @@ const app = createApp({
         shareUrl() {
             try {
                 const url = new URL(origin)
-                url.searchParams.set('state', encodeState(this.saveState()))
+                url.searchParams.set('state', encodeState(this.stateObject()))
                 return url.toString()
             } catch (e) {
                 return null
