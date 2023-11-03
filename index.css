@@ -13,10 +13,10 @@ body {
     margin: 0;
     padding: 0;
     background-image: url('img/bg.svg');
-    background-position: 50% 100%;
+    background-position: 50% 50%;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: 50% auto;
+    background-size: auto 50vh;
 }
 
 .block {
