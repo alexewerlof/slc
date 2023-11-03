@@ -842,7 +842,7 @@
                 <br />
                 <time>{{ alertTTRWindow.humanTimeSec}}</time>
             </p>
-            <p v-if="alertTTRWindow.rawSec < 3600">
+            <p v-if="alertTTRWindow.sec < 3600">
                 Note: The time to resolve (TTR) is too short for a human to react.
                 It is strongly recommended to automate the response to the alert.
             </p>
