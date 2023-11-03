@@ -251,7 +251,7 @@ const app = createApp({
         shareUrl() {
             try {
                 const url = new URL(origin)
-                url.searchParams.set('state', encodeState(this.stateObject()))
+                url.searchParams.set('state', encodeState(this.stateObject))
                 return url.toString()
             } catch (e) {
                 return null

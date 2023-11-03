@@ -1110,9 +1110,9 @@
 
         <section v-if="shareUrl">
             <h1 id="share-title">Share</h1>
-            <p>
-                <a id="share-url" :href="shareUrl" style="overflow-wrap: break-word;" rel="noopener" target="_blank">{{ shareUrl }}</a>
-            </p>
+            <div class="code block">
+                <code><a id="share-url" :href="shareUrl" style="overflow-wrap: break-word;" rel="noopener" target="_blank">{{ shareUrl }}</a></code>
+            </div>
             <button type="button" @click="copy('share-url')">Share Config</button>
         </section>
 
@@ -1128,7 +1128,7 @@
             <a href="https://policies.google.com/technologies/cookies" rel="noopener" target="_blank">
                 Learn More</a>
             &nbsp;
-            <button @click="hideCookiePopup">Got it</button>
+            <button type="button" @click="hideCookiePopup">Got it</button>
         </dialog>    
     </main>
 
