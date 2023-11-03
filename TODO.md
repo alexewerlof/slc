@@ -7,7 +7,6 @@
 
 # Medium prio
 
-- [ ] Refuse to load state from older versions of the app which may not be compatible
 - [ ] Add the short alert window line as well
 - [ ] Add more examples from SLDs and workshops
 - [ ] Break down the error budget for common windows regardless of the chosen window
@@ -22,7 +21,6 @@
 # Shipped
 
 - [x] 2023-11-03: the state unit now works for both time slots and event names
-- [X] 2023-11-02: Save the current state in localStorage so refreshing the page doesn't destroy everything (catch: we need a reset functionality)
 - [X] 2023-11-01: Shorten the index.html by putting repetitive parts in config
 - [X] 2023-11-01: Allow sharing SLO and alerting params as well as the example values when available
 - [X] 2023-11-01: Validate that the numerical parameters (from examples, localStorage, or URL params) are within range (store the non-strict ranges in a config to use for tests as well)

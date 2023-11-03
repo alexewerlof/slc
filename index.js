@@ -28,13 +28,10 @@ const app = createApp({
             if (url.searchParams.has('state')) {
                 initialState = sanitizeState(decodeState(url.searchParams.get('state')))
                 this.toastCaption = 'Loaded state from URL'
-            } else if (localStorage.getItem('state')) {
-                initialState = sanitizeState(JSON.parse(localStorage.getItem('state')))
-                this.toastCaption = 'Loaded state from local storage'
             }
         } catch (e) {
             // silently fail if the params cannot be loaded from the URL
-            this.toastCaption = `${e}`
+            this.toastCaption = `Failed loading state from URL: ${e}`
             console.error(e)
         }
 
@@ -135,19 +132,8 @@ const app = createApp({
                 await navigator.clipboard.writeText(copyText)
                 this.toastCaption = 'Copied to clipboard!'
             } catch(err) {
+                // ignore
             }
-        },
-    },
-    watch: {
-        stateObject: {
-            handler(newState) {
-                try {
-                    localStorage.setItem('state', JSON.stringify(newState))
-                } catch (e) {
-                    // ignore
-                }
-            },
-            deep: true,
         },
     },
     computed: {
