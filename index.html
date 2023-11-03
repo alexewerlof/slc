@@ -175,7 +175,7 @@
                     <help-component>
                         <p>
                             The time slot is the time window that the metric data is aggregated to
-                            calculate a good/bad time slot.
+                            calculate a good/bad time period.
                         </p>
                         <p>
                             For example, probing an endpoint every 60 seconds to see if it is available,
@@ -191,7 +191,7 @@
                                 <tr>
                                     <th>Time Slot</th>
                                     <th>Seconds</th>
-                                    <th></th>
+                                    <th aria-label="try button"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -227,7 +227,7 @@
                             <thead>
                                 <th>Event Unit</th>
                                 <th>Use case</th>
-                                <th></th>
+                                <th aria-label="try button"></th>
                             </thead>
                             <tbody>
                                 <tr v-for="p of config.unit.presets">
@@ -416,29 +416,29 @@
                             <tr>
                                 <th>Short Name</th>
                                 <th>SLO Value</th>
-                                <th></th>
+                                <th aria-label="try button"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>2-nines</td>
                                 <td>{{percL10n(99)}}</td>
-                                <td><button @click="slo=99">Try!</button></td>
+                                <td><button type="button" @click="slo=99">Try!</button></td>
                             </tr>
                             <tr>
                                 <td>3-nines</td>
                                 <td>{{percL10n(99.9)}}</td>
-                                <td><button @click="slo=99.9">Try!</button></td>
+                                <td><button type="button" @click="slo=99.9">Try!</button></td>
                             </tr>
                             <tr>
                                 <td>4-nines</td>
                                 <td>{{percL10n(99.99)}}</td>
-                                <td><button @click="slo=99.99">Try!</button></td>
+                                <td><button type="button" @click="slo=99.99">Try!</button></td>
                             </tr>
                             <tr>
                                 <td>5-nines</td>
                                 <td>{{percL10n(99.999)}}</td>
-                                <td><button @click="slo=99.999">Try!</button></td>
+                                <td><button type="button" @click="slo=99.999">Try!</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -519,7 +519,7 @@
                                 <th>Window</th>
                                 <th>Days</th>
                                 <th>Advantage</th>
-                                <th></th>
+                                <th aria-label="try button"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -527,7 +527,7 @@
                                 <td>{{ p.title }}</td>
                                 <td>{{ p.days }}</td>
                                 <td>{{ p.useCase }}</td>
-                                <td><button @click="windowDays=p.days">Try!</button></td>
+                                <td><button type="button" @click="windowDays=p.days">Try!</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -726,7 +726,7 @@
                             <th>Long-Window</th>
                             <th>Short-Window</th>
                             <th>Action</th>
-                            <th></th>
+                            <th aria-label="try button"></th>
                         </thead>
                         <tbody>
                             <tr>
