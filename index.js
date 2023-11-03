@@ -4,10 +4,11 @@ import HelpComponent from './components/help-component.js'
 import BurnComponent from './components/burn-component.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import examples from './examples.js'
-import { daysToSeconds } from './lib/time.js'
+import { daysToSeconds, normalizeUnit } from './lib/time.js'
 import { Window } from './lib/window.js'
 import { defaultState, decodeState, encodeState, sanitizeState } from './lib/sharing.js'
 import { numL10n, percL10n, strFallback } from './lib/fmt.js'
+import { isNum } from './lib/validation.js'
 
 const app = createApp({
     data() {
@@ -34,6 +35,7 @@ const app = createApp({
         } catch (e) {
             // silently fail if the params cannot be loaded from the URL
             this.toastCaption = `${e}`
+            console.error(e)
         }
 
         return {
@@ -49,7 +51,7 @@ const app = createApp({
             showCookiePopup,
             // The text shown in the toast notification
             toastCaption: '',
-            //TODO: if the timeSlot is larger than alerting windows, we should show a warning
+            // The part of the state which can be saved/loaded
             ...initialState,
         }
     },
@@ -63,6 +65,7 @@ const app = createApp({
         } catch (e) {
             // silently fail if the params cannot be loaded from the URL
             this.toastCaption = `Failed to load state from URL ${e}`
+            console.error(e)
         }
     },
     components: {
@@ -87,19 +90,24 @@ const app = createApp({
         },
         
         loadState(state) {
-            const newState = sanitizeState(state)
-            this.title = newState.title
-            this.description = newState.description
-            this.unit = newState.unit
-            this.timeSlot = newState.timeSlot
-            this.good = newState.good
-            this.valid = newState.valid
-            this.slo = newState.slo
-            this.windowDays = newState.windowDays
-            this.errorBudgetValidExample = newState.errorBudgetValidExample
-            this.burnRate = newState.burnRate
-            this.longWindowPerc = newState.longWindowPerc
-            this.shortWindowDivider = newState.shortWindowDivider
+            try {
+                const newState = sanitizeState(state)
+                this.title = newState.title
+                this.description = newState.description
+                this.unit = newState.unit
+                this.good = newState.good
+                this.valid = newState.valid
+                this.slo = newState.slo
+                this.windowDays = newState.windowDays
+                // TODO: Rename this variable to something shorter and more sensible
+                this.errorBudgetValidExample = newState.errorBudgetValidExample
+                this.burnRate = newState.burnRate
+                this.longWindowPerc = newState.longWindowPerc
+                this.shortWindowDivider = newState.shortWindowDivider
+            } catch (e) {
+                this.toastCaption = `Failed to load state ${e}`
+                console.error(e)
+            }
         },
         
         loadSelectedExample() {
@@ -148,7 +156,6 @@ const app = createApp({
                 title: this.title,
                 description: this.description,
                 unit: this.unit,
-                timeSlot: this.timeSlot,
                 good: this.good,
                 valid: this.valid,
                 slo: this.slo,
@@ -162,23 +169,23 @@ const app = createApp({
 
         // Returns the normalized unit of SLI for the UI to read better
         normalizedUnit() {
-            return this.isTimeBased ? 'Time Slots' : strFallback(this.unit, 'events')
+            return normalizeUnit(this.unit)
         },
 
         sloWindow() {
             return new Window(
                 daysToSeconds(this.windowDays),
-                this.timeSlot,
+                this.unit,
             )
         },
 
         // whether the SLI is time-based or event-based
         isTimeBased: {
             get() {
-                return this.timeSlot > 0
+                return isNum(this.unit)
             },
             set(newVal) {
-                this.timeSlot = newVal ? 60 : 0
+                this.unit = newVal ? 60 : 'events'
             }
         },
 
@@ -239,7 +246,7 @@ const app = createApp({
         },
 
         alertLongWindowConsumedTimeSlots() {
-            return Math.floor(percent(this.longWindowPerc, this.errorBudgetWindow.timeSlots))
+            return this.errorBudgetWindow.newFractionalWindow(this.longWindowPerc).timeSlotsFloor
         },
 
         // As a percentage of the error budget
@@ -252,7 +259,7 @@ const app = createApp({
         },
 
         alertShortWindowConsumedTimeSlots() {
-            return Math.floor(percent(this.alertShortWindowPerc, this.errorBudgetWindow.timeSlots))
+            return this.errorBudgetWindow.newFractionalWindow(this.alertShortWindowPerc).timeSlotsFloor
         },
 
         shareUrl() {

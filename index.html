@@ -171,7 +171,7 @@
             <div v-if="isTimeBased">
                 <!-- SLI Time Slot -->
                 <h3>
-                    <label for="sli-time-slot-length-input">Time Slot: {{ timeSlot }} sec</label>
+                    <label for="sli-time-slot-length-input">Time Slot: {{ unit }} sec</label>
                     <help-component>
                         <p>
                             The time slot is the time window that the metric data is aggregated to
@@ -198,7 +198,7 @@
                                 <tr v-for="p in config.timeSlot.presets">
                                     <td>{{ p.title }}</td>
                                     <td>{{ p.seconds }}</td>
-                                    <td><button type="button" @click="timeSlot = p.seconds">Try!</button></td>
+                                    <td><button type="button" @click="unit = p.seconds">Try!</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -211,7 +211,7 @@
                     :max="config.timeSlot.max"
                     :step="config.timeSlot.step"
                     placeholder="60"
-                    v-model.number="timeSlot">
+                    v-model.number="unit">
             </div>
             <div v-else>
                 <!-- SLI Event Unit -->
@@ -854,7 +854,7 @@
                 </p>
                 <p v-if="alertLongWindowConsumedTimeSlots === 0">
                     Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
-                    time slot length ({{ timeSlot }} sec)
+                    time slot length ({{ unit }} sec)
                     because it will lead to division by zero error.
                 </p>
             </div>
@@ -1093,7 +1093,7 @@
                     </p>    
                     <p v-if="alertShortWindowConsumedTimeSlots === 0">
                         Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
-                        time slot length ({{ timeSlot }} sec)
+                        time slot length ({{ unit }} sec)
                         because it will lead to division by zero error.
                     </p>
                 </div>
