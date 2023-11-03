@@ -7,7 +7,7 @@ import examples from './examples.js'
 import { daysToSeconds, normalizeUnit } from './lib/time.js'
 import { Window } from './lib/window.js'
 import { defaultState, decodeState, encodeState, sanitizeState } from './lib/sharing.js'
-import { numL10n, percL10n, strFallback } from './lib/fmt.js'
+import { numL10n, percL10n } from './lib/fmt.js'
 import { isNum } from './lib/validation.js'
 
 const app = createApp({
