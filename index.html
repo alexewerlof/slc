@@ -1117,7 +1117,7 @@
         </section>
 
         <!-- Toast Notification -->
-        <div v-if="toastCaption" class="toast" @animationend="toastAnimationEnded">{{ toastCaption }}</div>
+        <div v-if="toastCaption" class="toast" @animationend="this.toastCaption = ''">{{ toastCaption }}</div>
 
         <!-- Cookie popup -->
         <dialog id="cookie-banner" class="popup" :open="showCookiePopup">

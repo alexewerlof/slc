@@ -109,6 +109,7 @@ const app = createApp({
         
         loadSelectedExample() {
             this.loadState(this.examples[this.selectedExampleIndex])
+            this.toastCaption = `Loaded example`
         },
         
         hideCookiePopup() {
@@ -118,12 +119,6 @@ const app = createApp({
             } catch (e) {
                 // ignore
             }
-        },
-
-        toastAnimationEnded() {
-            // TODO: remove this method
-            this.toastCaption = ''
-            console.log('animation end')
         },
 
         async copy(elementId) {
