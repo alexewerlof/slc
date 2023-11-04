@@ -68,7 +68,7 @@
                 </option>
             </select>
             <div class="block">
-                <button @click="loadSelectedExample" type="button">Load</button>
+                <button @click="loadSelectedExample" type="button" class="large">Load</button>
             </div>
         </section>
 
@@ -392,7 +392,7 @@
                     </div>
                 </div>
             </div>
-            <button type="button" @click="copy('sli-formula-code')">Copy</button>
+            <button @click="copy('sli-formula-code')" type="button" class="large">Copy</button>
         </section>
 
         <!------------------------ SLO ------------------------>
@@ -1003,7 +1003,7 @@
 
                 </div>
             </div>
-            <button type="button" @click="copy('alert-formula-code')">Copy</button>
+            <button @click="copy('alert-formula-code')" type="button" class="large">Copy</button>
 
             <div class="block">
                 <label for="show-short-window-alert">
@@ -1113,7 +1113,7 @@
             <div class="code block">
                 <code><a id="share-url" :href="shareUrl" style="overflow-wrap: break-word;" rel="noopener" target="_blank">{{ shareUrl }}</a></code>
             </div>
-            <button type="button" @click="copy('share-url')">Share Config</button>
+            <button @click="copy('share-url')" type="button" class="large">Share Config</button>
         </section>
 
         <!-- Toast Notification -->

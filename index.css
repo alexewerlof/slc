@@ -179,10 +179,13 @@ time {
 button {
     background-color: var(--primary-color);
     color: var(--background-color);
-    border: none;
     border: 1px solid currentColor;
     border-radius: 0.3em;
     cursor: pointer;
+}
+
+button.large {
+    padding: 0.7em 1.4em;
 }
 
 table {
