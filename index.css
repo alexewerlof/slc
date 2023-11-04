@@ -184,6 +184,10 @@ button {
     cursor: pointer;
 }
 
+button:hover {
+    background-color: var(--primary-lighter);
+}
+
 button.large {
     padding: 0.7em 1.4em;
 }

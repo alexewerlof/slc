@@ -1,6 +1,7 @@
 :root {
     --animation-speed: 0.2s;
     --primary-color: #FFBC52;
+    --primary-lighter: #FFD699;
     --secondary-color: #47A9FF;
     --background-color: #001426;
     --background-darker: #000C17;
