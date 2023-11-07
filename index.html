@@ -830,17 +830,26 @@
                             {{ alertLongWindow.humanSec }}
                         </span>
                     </code>
+                    <p>
+                        Time to respond before the entire error budget is exhausted:
+                        <br />
+                        <time>{{ alertTTRWindow.humanTimeSec}}</time>
+                    </p>
+                    <code>
+                        <span class="exprs">TTRespond</span>
+                        <span class="punct"> = </span>
+                        <span class="const">{{ errorBudgetTimeToExhaust.humanSec }}</span>
+                        <span class="punct"> - </span>
+                        <span class="const">{{ alertLongWindow.humanSec }}</span>
+                        <span class="punct"> = </span>
+                        <span class="const">{{ alertTTRWindow.humanSec }}</span>
+                    </code>
                 </help-component>
             </h3>
             <p>
                 Alert when at least {{ percL10n(longWindowPerc) }} of the error budget is consumed in the last:
                 <br />
                 <time>{{ alertLongWindow.humanTimeSec }}</time>
-            </p>
-            <p>
-                Time to resolve before the entire error budget is exhausted:
-                <br />
-                <time>{{ alertTTRWindow.humanTimeSec}}</time>
             </p>
             <p v-if="alertTTRWindow.sec < 3600">
                 Note: The time to resolve (TTR) is too short for a human to react.
