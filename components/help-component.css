@@ -10,6 +10,10 @@
     cursor: help;
 }
 
+.help-component-button:hover {
+    background-color: transparent;
+}
+
 .help-component__contents {
     padding: 1rem;
     font-size: 1rem;
