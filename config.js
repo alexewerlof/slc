@@ -116,9 +116,14 @@ export const config = fz({
                 useCase: 'Forgives any breach after a week',
             },
             {
+                title: '2 weeks',
+                days: 14,
+                useCase: 'Maps well to a typical "sprint"',
+            },
+            {
                 title: '4 weeks',
                 days: 28,
-                useCase: 'Maps well to 2 typical "sprints"',
+                useCase: 'Always start on the same day of the week',
             },
             {
                 title: 'A month',

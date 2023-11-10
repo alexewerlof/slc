@@ -507,6 +507,18 @@
                         for which the SLO is calculated.
                     </p>
                     <p>
+                        Essentially this adjusts the <em>forgiveness</em> of the SLO.
+                        For example if the window is 30 days, we are not concerned with any incidents
+                        and breaches of SLO that happened before that.
+                    </p>
+                    <p>
+                        Smaller windows also help prevent the error budget from accumulating too much.
+                        For example, if the SLO is 99% for a time-based Availability SLI (uptime),
+                        the error budget allows 432 minutes of downtime per month.
+                        This amount can be consumed in multiple down times during the month or one chunk of long downtime.
+                        But the same SLO allows only 100 minutes of downtime per week.
+                    </p>
+                    <p>
                         It is usually 30 days or 4 weeks.
                     </p>
                     <p>
