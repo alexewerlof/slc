@@ -870,9 +870,11 @@
             </p>
             <div v-if="isTimeBased">
                 <p>
-                    Time Slots consumed:
+                    Time slots consumed from the error budget:
                     <br />
                     {{ alertLongWindowConsumedTimeSlots }}
+                    out of
+                    {{ errorBudgetWindow.timeSlotsFloor }}
                 </p>
                 <p v-if="alertLongWindowConsumedTimeSlots === 0">
                     Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
