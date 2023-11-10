@@ -112,7 +112,7 @@
             <h3>
                 <label for="sli-title-input">Title</label>
             </h3>
-            <input id="sli-title-input" type="text" v-model="title">
+            <input id="sli-title-input" type="text" v-model="title" :placeholder="config.title.placeholder">
 
             <h3>
                 <label for="sli-description-input">Description</label>
@@ -121,7 +121,8 @@
                 id="sli-description-input"
                 rows="2"
                 type="text"
-                v-model="description"></textarea>
+                v-model="description"
+                :placeholder="config.description.placeholder"></textarea>
             
             <h2>
                 <label>Type</label>

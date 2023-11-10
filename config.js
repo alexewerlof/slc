@@ -5,10 +5,12 @@ function fz(obj) {
 // The config is immutable at runtime and any effort to change it will have no effect
 export const config = fz({
     title: fz({
-        default: 'My SLO',
+        default: '',
+        placeholder: 'My SLI',
     }),
     description: fz({
-        default: 'My SLO description',
+        default: '',
+        placeholder: 'Description for my SLI',
     }),
     unit: fz({
         default: 'event',
