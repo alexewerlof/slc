@@ -6,6 +6,20 @@ Some examples are based on:
 */
 export default [
     {
+        title: 'Empty Time-Based SLI',
+        description: '',
+        unit: 60,
+        good: '',
+        valid: '',
+    },
+    {
+        title: 'Empty Event-Based SLI',
+        description: '',
+        unit: 'events',
+        good: '',
+        valid: '',
+    },
+    {
         title: 'Availability: Synthetic uptime probe',
         description: 'The percentage of successful synthetic probes that do a HTTP GET request to the root endpoint evrey minute',
         unit: 60,
