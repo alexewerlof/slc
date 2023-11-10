@@ -13,7 +13,7 @@ export const config = fz({
         placeholder: 'Description for my SLI',
     }),
     unit: fz({
-        default: 'event',
+        default: 'events',
         presets: fz([
             {
                 unit: 'requests',
