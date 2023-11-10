@@ -126,6 +126,11 @@ const app = createApp({
                 var copyText = document.getElementById(elementId).innerText
                 await navigator.clipboard.writeText(copyText)
                 this.toastCaption = 'Copied to clipboard!'
+                gtag('event', 'click', {
+                    'event_category': 'button',
+                    'event_label': 'copy',
+                    'value': 1
+                })
             } catch(err) {
                 // ignore
             }
