@@ -20,6 +20,7 @@
 
 # Shipped
 
+- [x] 2023-11-10: Enable smooth scrolling
 - [x] 2023-11-03: the state unit now works for both time slots and event names
 - [X] 2023-11-01: Shorten the index.html by putting repetitive parts in config
 - [X] 2023-11-01: Allow sharing SLO and alerting params as well as the example values when available

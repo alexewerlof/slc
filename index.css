@@ -6,6 +6,10 @@
 @import url('components/burn-component.css');
 @import url('components/burn-event-component.css');
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: var(--background-color);
     color: var(--foreground-color);
