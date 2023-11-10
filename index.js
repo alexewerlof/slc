@@ -41,7 +41,7 @@ const app = createApp({
             // All the examples from example.js
             examples,
             // The index of the currently selected example
-            selectedExampleIndex: 2,
+            selectedExampleIndex: 0,
             // Show the short window alert
             shortWindowVisible: false,
             // Show the cookie popup (use localStorage to remember the user's choice)
