@@ -482,15 +482,46 @@
                 max="99"
                 v-model.number="sloInt"
             >
-            <label for="slo-frac-input">Fraction:</label>
-            &nbsp;
-            <button type="button" @click="sloFrac = 0">reset</button>
-            <button type="button" @click="changeSLO(-0.1)">{{ percL10n(-0.1) }}</button>
-            <button type="button" @click="changeSLO(0.1)">{{ percL10n(+0.1) }}</button>
-            <button type="button" @click="changeSLO(-0.01)">{{ percL10n(-0.01) }}</button>
-            <button type="button" @click="changeSLO(0.01)">{{ percL10n(+0.01) }}</button>
-            <button type="button" @click="changeSLO(-0.001)">{{ percL10n(-0.001) }}</button>
-            <button type="button" @click="changeSLO(0.001)">{{ percL10n(+0.001) }}</button>
+            <h3>
+                <label for="slo-frac-input">Fraction: {{ percL10n(sloFrac) }}</label>
+                <help-component>
+                    <p>
+                        This slider allows fine tuning the SLO.
+                        It is mostly for convenience when deciding a reasonable error budget
+                        while keeping an eye on it.
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>{{ sloInt }}.XYZ</th>
+                                <th>Subtract</th>
+                                <th>Add</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>X</th>
+                                <td><button type="button" @click="changeSLO(-0.1)">{{ percL10n(-0.1) }}</button></td>
+                                <td><button type="button" @click="changeSLO(0.1)">{{ percL10n(+0.1) }}</button></td>
+                            </tr>
+                            <tr>
+                                <th>Y</th>
+                                <td><button type="button" @click="changeSLO(-0.01)">{{ percL10n(-0.01) }}</button></td>
+                                <td><button type="button" @click="changeSLO(0.01)">{{ percL10n(+0.01) }}</button></td>
+                            </tr>
+                            <tr>
+                                <th>Z</th>
+                                <td><button type="button" @click="changeSLO(-0.001)">{{ percL10n(-0.001) }}</button></td>
+                                <td><button type="button" @click="changeSLO(0.001)">{{ percL10n(+0.001) }}</button></td>
+                            </tr>
+                            <tr>
+                                <th>XYZ</th>
+                                <td colspan="2"><button type="button" @click="sloFrac = 0">reset</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </help-component>
+            </h3>
             <input
                 id="slo-frac-input"
                 type="range"
