@@ -2,27 +2,39 @@
 
 input[type=range] {
     --webkit-appearance: none;
+    appearance: none;
     width: 100%;
     height: 1em;
-    background-color: var(--background-lighter);
-    border-radius: 0;
     outline: none;
-    margin: 1.4em auto;
-    transition: background-color var(--animation-speed) ease-in-out;
+    margin: 1.42em auto;
+    cursor: ew-resize;
 }
 
-input[type=range]:focus {
-    background-color: var(--foreground-color);
+input[type=range]::-webkit-slider-runnable-track {
+    border: 1px solid transparent;
+    transition: border-color var(--animation-speed) ease-in-out;
+    background-color: var(--background-lighter);
+    height: 100%;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+    border-color: var(--secondary-color);
 }
 
 input[type=range]::-webkit-slider-thumb {
     --webkit-appearance: none;
     appearance: none;
-    width: 2em;
-    height: 2em;
+    width: 0.2em;
+    height: 100%;
     background-color: var(--secondary-color);
-    border-radius: 1em;
-    cursor: pointer;
+    transition: width var(--animation-speed) ease-in-out
+}
+
+input[type=range]:hover::-webkit-slider-thumb,
+input[type=range]:focus::-webkit-slider-thumb {
+    margin-top: -0.5em;
+    height: 200%;
+    width: 0.5em;
 }
 
 input[type=text], input[type=number], select, textarea {
@@ -60,7 +72,7 @@ input[type=radio] {
     background-color: var(--background-lighter);
     transition: background-color var(--animation-speed) ease-in-out;
 }
-  
+
 input[type=radio]:checked {
     background-color: var(--secondary-color);
 }
