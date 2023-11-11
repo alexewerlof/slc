@@ -759,7 +759,7 @@
                             <th>Burn Rate</th>
                             <th>Error Budget</th>
                             <th>Long-Window</th>
-                            <th>Short-Window</th>
+                            <th v-if="shortWindowVisible">Short-Window</th>
                             <th>Action</th>
                             <th aria-label="try button"></th>
                         </thead>
@@ -768,7 +768,7 @@
                                 <td>14.4x</td>
                                 <td>{{ percL10n(2) }} Consumed</td>
                                 <td>1 hour</td>
-                                <td>5 minutes</td>
+                                <td v-if="shortWindowVisible">5 minutes</td>
                                 <td>Page</td>
                                 <td>
                                     <button type="button" @click="burnRate = 14.4, longWindowPerc = 2, shortWindowDivider = 12">
@@ -780,7 +780,7 @@
                                 <td>6x</td>
                                 <td>{{ percL10n(5) }} Consumed</td>
                                 <td>6 hours</td>
-                                <td>30 minutes</td>
+                                <td v-if="shortWindowVisible">30 minutes</td>
                                 <td>Page</td>
                                 <td>
                                     <button type="button" @click="burnRate = 6, longWindowPerc = 5, shortWindowDivider = 12">
@@ -792,7 +792,7 @@
                                 <td>1x</td>
                                 <td>{{ percL10n(10) }} Consumed</td>
                                 <td>3 days</td>
-                                <td>6 hours</td>
+                                <td v-if="shortWindowVisible">6 hours</td>
                                 <td>Ticket</td>
                                 <td>
                                     <button type="button" @click="burnRate = 1, longWindowPerc = 10, shortWindowDivider = 12">
