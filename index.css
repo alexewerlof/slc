@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Alata&family=Roboto&family=RobotoMono&display=swap');
 @import url('variables.css');
+@import url('inputs.css');
 @import url('code.css');
 @import url('toast.css');
 @import url('components/help-component.css');
@@ -72,89 +73,6 @@ header h1 {
     padding: 0 1em;
 }
 
-a, a:hover, a:active {
-    color: inherit;
-}
-
-input[type=range] {
-    --webkit-appearance: none;
-    width: 100%;
-    height: 1em;
-    background-color: var(--background-lighter);
-    border-radius: 0;
-    outline: none;
-    margin: 1.4em auto;
-    transition: background-color var(--animation-speed) ease-in-out;
-}
-
-input[type=range]:focus {
-    background-color: var(--foreground-color);
-}
-
-input[type=range]::-webkit-slider-thumb {
-    --webkit-appearance: none;
-    appearance: none;
-    width: 2em;
-    height: 2em;
-    background-color: var(--secondary-color);
-    border-radius: 1em;
-    cursor: pointer;
-}
-
-input[type=text], input[type=number], select, textarea {
-    padding: 1em;
-    font-family: inherit;
-    font-size: inherit;
-    border: none;
-    border-left: 1px solid var(--secondary-color);
-    background-color: var(--background-lighter);
-    color: inherit;
-    width: 100%;
-    box-sizing: border-box;
-    transition: background-color var(--animation-speed) ease-in-out;
-}
-
-input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
-    background-color: var(--secondary-color);
-    color: var(--background-color);
-}
-
-input[type=text]:focus-visible, input[type=number]:focus-visible, select:focus-visible, textarea:focus-visible {
-    border: none;
-    outline: none;
-}
-
-input[type=radio] {
-    --webkit-appearance: none;
-    --moz-appearance: none;
-    appearance: none;
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    border-radius: 50%;
-    border: 1px solid var(--secondary-color);
-    background-color: var(--background-lighter);
-    transition: background-color var(--animation-speed) ease-in-out;
-}
-  
-input[type=radio]:checked {
-    background-color: var(--secondary-color);
-}
-
-textarea {
-    resize: vertical;
-}
-
-label {
-    -webkit-user-select: none; /* Added to support Safari and Safari on iOS */
-    user-select: none;
-    cursor: pointer;
-}
-
-label.spaced + label.spaced {
-    margin-left: 1em;
-}
-
 h1, h2, h3 {
     font-family: var(--title-font-family);
 }
@@ -178,22 +96,6 @@ h3 {
 
 time {
     font-style: italic;
-}
-
-button {
-    background-color: var(--primary-color);
-    color: var(--background-color);
-    border: 1px solid currentColor;
-    border-radius: 0.3em;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: var(--primary-lighter);
-}
-
-button.large {
-    padding: 0.7em 1.4em;
 }
 
 table {
