@@ -628,8 +628,25 @@
                     </p>
                 </help-component>
             </h1>
-            <div class="error-budget-bar">
-                <div class="error-budget-bar__fill" :style="{ width: errorBudgetPerc + '%'}"></div>
+            <div class="error-budget-diagram">
+                <div class="error-budget-diagram__error-caption">
+                    <label for="sli-event-unit"><code>{{ normalizedUnit }}</code></label>
+                    allowed to violate
+                    <label for="sli-good-input"><code>{{ good }}</code></label>
+                </div>
+                <div class="error-budget-diagram__fill">
+                    <div class="error-budget-diagram__error-fill" :style="{ width: errorBudgetPerc + '%'}"></div>
+                </div>
+                <div class="error-budget-diagram__good-caption">
+                    <label for="sli-good-input"><code>{{ good }}</code></label>
+                    &nbsp;
+                    <label for="sli-event-unit"><code>{{ normalizedUnit }}</code></label>
+                </div>
+                <div class="error-budget-diagram__valid-caption">
+                    <label for="sli-good-input"><code>{{ valid }}</code></label>
+                    &nbsp;
+                    <label for="sli-event-unit"><code>{{ normalizedUnit }}</code></label>
+                </div>
             </div>
             <p v-if="isTimeBased">
                 {{ errorBudgetWindow }}
