@@ -16,6 +16,10 @@ export const config = fz({
         default: 'events',
         presets: fz([
             {
+                unit: 'events',
+                useCase: 'When the unit of Good and Bad events are different (default)',
+            },
+            {
                 unit: 'requests',
                 useCase: 'REST/GraphQL servers, serverless functions, ...',
             },
