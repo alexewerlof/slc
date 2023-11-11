@@ -217,7 +217,7 @@
             <div v-else>
                 <!-- SLI Event Unit -->
                 <h3>
-                    <label for="sli-event-unit">Event Unit</label>
+                    <label for="sli-event-unit">Events Unit</label>
                     <help-component>
                         <p>
                             The unit of the event that the SLI is measuring.
@@ -648,7 +648,7 @@
                     <label for="sli-event-unit"><code>{{ normalizedUnit }}</code></label>
                 </div>
                 <div class="error-budget-diagram__valid-caption">
-                    <label for="sli-good-input"><code>{{ valid }}</code></label>
+                    <label for="sli-valid-input"><code>{{ valid }}</code></label>
                     &nbsp;
                     <label for="sli-event-unit"><code>{{ normalizedUnit }}</code></label>
                 </div>
@@ -964,10 +964,12 @@
                                 <label for="sli-event-unit">
                                     <span class="exprs">{{ normalizedUnit }}</span>
                                 </label>
-                                <span class="punct">, </span>
-                                <label for="sli-valid-input">
-                                    <span class="exprs">{{ valid }}</span>
-                                </label>
+                                <span v-if="valid">
+                                    <span class="punct">, </span>
+                                    <label for="sli-valid-input">
+                                        <span class="exprs">{{ valid }}</span>
+                                    </label>
+                                </span>
                                 <span class="punct"></span>
                                 <span class="punct">, </span>
                                 <label for="alert-error-budget-perc">
@@ -1030,10 +1032,12 @@
                                     <label for="sli-event-unit">
                                         <span class="exprs">{{ normalizedUnit }}</span>
                                     </label>
-                                    <span class="punct">, </span>
-                                    <label for="sli-valid-input">
-                                        <span class="exprs">{{ valid }}</span>
-                                    </label>
+                                    <span v-if="valid">
+                                        <span class="punct">, </span>
+                                        <label for="sli-valid-input">
+                                            <span class="exprs">{{ valid }}</span>
+                                        </label>
+                                    </span>
                                     <span class="punct">, </span>
                                     <label for="alert-short-window-divider-input">
                                         <span class="const">
