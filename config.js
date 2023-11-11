@@ -154,9 +154,9 @@ export const config = fz({
         default: 6,
     }),
     longWindowPerc: fz({
-        min: 1,
-        max: 100,
-        step: 1,
+        min: 0.1,
+        max: 50,
+        step: 0.1,
         default: 5,
     }),
     shortWindowDivider: fz({
