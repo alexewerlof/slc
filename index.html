@@ -943,9 +943,11 @@
                                     <span class="exprs">{{ good }}</span>
                                 </label>
                                 <span class="punct">, </span>
-                                <span class="const">
-                                    {{ alertLongWindow.humanSec }}
-                                </span>
+                                <label for="alert-error-budget-perc">
+                                    <span class="const">
+                                        {{ alertLongWindow.humanSec }}
+                                    </span>
+                                </label>
                                 <span class="punct">)</span>
                             </code>
                             <span class="invis"> /</span>
@@ -968,9 +970,11 @@
                                 </label>
                                 <span class="punct"></span>
                                 <span class="punct">, </span>
-                                <span class="const">
-                                    {{ alertLongWindow.humanSec }}
-                                </span>
+                                <label for="alert-error-budget-perc">
+                                    <span class="const">
+                                        {{ alertLongWindow.humanSec }}
+                                    </span>
+                                </label>
                                 <span class="punct">)</span>
                             </code>
                         </div>
@@ -1005,9 +1009,11 @@
                                         <span class="exprs">{{ good }}</span>
                                     </label>
                                     <span class="punct">, </span>
-                                    <span class="const">
-                                        {{ alertShortWindow.humanSec }}
-                                    </span>
+                                    <label for="alert-short-window-divider-input">
+                                        <span class="const">
+                                            {{ alertShortWindow.humanSec }}
+                                        </span>
+                                    </label>
                                     <span class="punct">)</span>
                                 </code>
                                 <span class="invis"> /</span>
@@ -1028,11 +1034,12 @@
                                     <label for="sli-valid-input">
                                         <span class="exprs">{{ valid }}</span>
                                     </label>
-                                    <span class="punct"></span>
                                     <span class="punct">, </span>
-                                    <span class="const">
-                                        {{ alertShortWindow.humanSec }}
-                                    </span>
+                                    <label for="alert-short-window-divider-input">
+                                        <span class="const">
+                                            {{ alertShortWindow.humanSec }}
+                                        </span>
+                                    </label>
                                     <span class="punct">)</span>
                                 </code>
                             </div>
