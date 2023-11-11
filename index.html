@@ -629,7 +629,7 @@
                 </help-component>
             </h1>
             <div class="error-budget-bar">
-                <div class="error-budget-bar__fill" :style="{ width: slo + '%'}"></div>
+                <div class="error-budget-bar__fill" :style="{ width: errorBudgetPerc + '%'}"></div>
             </div>
             <p v-if="isTimeBased">
                 {{ errorBudgetWindow }}

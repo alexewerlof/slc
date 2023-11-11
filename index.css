@@ -164,10 +164,10 @@ dialog p {
 }
 
 .error-budget-bar {
-    background-color: var(--brand-red);
+    background-color: var(--brand-green);
 }
 
 .error-budget-bar__fill {
     height: 3em;
-    background-color: var(--brand-green);
+    background-color: var(--brand-red);
 }
