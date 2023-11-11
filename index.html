@@ -398,7 +398,7 @@
                     </div>
                 </div>
             </div>
-            <button @click="copy('sli-formula-code')" type="button" class="large">Copy</button>
+            <button @click="copy('sli-formula-code', 'sli-formula')" type="button" class="large">Copy</button>
         </section>
 
         <!------------------------ SLO ------------------------>
@@ -1056,7 +1056,7 @@
 
                 </div>
             </div>
-            <button @click="copy('alert-formula-code')" type="button" class="large">Copy</button>
+            <button @click="copy('alert-formula-code', 'alert-formula')" type="button" class="large">Copy</button>
 
             <div class="block">
                 <label for="show-short-window-alert">
@@ -1166,7 +1166,7 @@
             <div class="code block">
                 <code><a id="share-url" :href="shareUrl" style="overflow-wrap: break-word;" rel="noopener" target="_blank">{{ shareUrl }}</a></code>
             </div>
-            <button @click="copy('share-url')" type="button" class="large">Share Config</button>
+            <button @click="copy('share-url', 'share-url')" type="button" class="large">Share Config</button>
         </section>
 
         <!-- Toast Notification -->

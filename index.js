@@ -9,6 +9,7 @@ import { Window } from './lib/window.js'
 import { defaultState, decodeState, encodeState, sanitizeState } from './lib/state.js'
 import { numL10n, percL10n } from './lib/fmt.js'
 import { isNum } from './lib/validation.js'
+import { trackEvent } from './lib/analytics.js'
 
 const app = createApp({
     data() {
@@ -121,16 +122,12 @@ const app = createApp({
             }
         },
 
-        async copy(elementId) {
+        async copy(elementId, label) {
             try {
                 var copyText = document.getElementById(elementId).innerText
                 await navigator.clipboard.writeText(copyText)
                 this.toastCaption = 'Copied to clipboard!'
-                gtag('event', 'click', {
-                    'event_category': 'button',
-                    'event_label': 'copy',
-                    'value': 1
-                })
+                trackEvent('copy', 'button', label)
             } catch(err) {
                 // ignore
             }
