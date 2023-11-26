@@ -6,10 +6,11 @@ import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import examples from './examples.js'
 import { daysToSeconds, normalizeUnit } from './lib/time.js'
 import { Window } from './lib/window.js'
-import { defaultState, decodeState, encodeState, sanitizeState } from './lib/state.js'
+import { defaultState, sanitizeState } from './lib/state.js'
 import { numL10n, percL10n } from './lib/fmt.js'
 import { isNum } from './lib/validation.js'
 import { trackEvent } from './lib/analytics.js'
+import { stateToUrl, urlToState } from './lib/share.js'
 
 const app = createApp({
     data() {
@@ -25,15 +26,12 @@ const app = createApp({
 
         let initialState = defaultState()
         try {
-            const url = new URL(window.location.href)
-            if (url.searchParams.has('state')) {
-                initialState = sanitizeState(decodeState(url.searchParams.get('state')))
-                this.toastCaption = 'Loaded state from URL'
-            }
+            initialState = sanitizeState(urlToState(window.location.href))
+            this.toastCaption = 'Loaded state from URL'
         } catch (e) {
             // silently fail if the params cannot be loaded from the URL
             this.toastCaption = `Failed loading state from URL: ${e}`
-            console.error(e)
+            console.error('Failed loading state from URL:', e)
         }
 
         return {
@@ -247,10 +245,9 @@ const app = createApp({
 
         shareUrl() {
             try {
-                const url = new URL(origin)
-                url.searchParams.set('state', encodeState(this.stateObject))
-                return url.toString()
+                return stateToUrl(window.location.origin, this.stateObject)
             } catch (e) {
+                console.error(e)
                 return null
             }
         },

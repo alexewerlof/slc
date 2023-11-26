@@ -36,9 +36,8 @@ export default [
     {
         title: 'Availability: Organic purchase flow',
         description: 'The percentage of settled payments out of all orders placed via the website',
-        unit: 'orders',
         good: 'payment settled',
-        valid: 'placed via website',
+        valid: 'orders placed via website',
     },
     {
         title: 'Availability: Error Rate',
@@ -62,11 +61,16 @@ export default [
         valid: 'all to the customers table',
     },
     {
-        title: 'Latency: Response 75th Percentile',
+        title: 'Latency: P99 response time',
         description: 'The percentage of requests where the P75 percentile over 5 minutes was sufficiently fast. "Sufficiently fast" is defined as ≤ 800 ms',
         unit: 300,
-        good: 'P75(response_latency, 5m) ≤ 800ms',
-        valid: 'all',
+        good: 'P75(response_latency) ≤ 800ms',
+    },
+    {
+        title: 'Latency: P99 of all requests',
+        description: 'The P99 of all requests will successfully complete within 4,000 ms 99.9% of the time.',
+        unit: 60,
+        good: 'P99(response_latency) ≤ 4000ms',
     },
     {
         title: 'Throughput: Worker Efficiency',
