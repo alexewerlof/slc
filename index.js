@@ -7,7 +7,7 @@ import examples from './examples.js'
 import { daysToSeconds, normalizeUnit } from './lib/time.js'
 import { Window } from './lib/window.js'
 import { defaultState, sanitizeState } from './lib/state.js'
-import { numL10n, percL10n } from './lib/fmt.js'
+import { currL10n, numL10n, percL10n } from './lib/fmt.js'
 import { isNum } from './lib/validation.js'
 import { trackEvent } from './lib/analytics.js'
 import { stateToUrl, urlToState } from './lib/share.js'
@@ -215,7 +215,21 @@ const app = createApp({
 
         // Number of bad events allowed for the given value of valid in errorBudgetValidExample
         errorBudgetBadExample() {
-            return numL10n(Math.floor(percent(this.errorBudgetPerc, this.errorBudgetValidExample || 1)))
+            return numL10n(this.errorBudgetBadEventsCount)
+        },
+
+        errorBudgetBadEventsCount() {
+            return Math.floor(percent(this.errorBudgetPerc, this.errorBudgetValidExample || 1))
+        },
+
+        errorBudgetCost() {
+            const cost = this.errorBudgetBadEventsCount * this.badEventCost
+            try {
+                return currL10n(cost, this.badEventCurrency)
+            } catch (e) {
+                console.warn(`Could not format currency: ${this.badEventCurrency}`, e)
+                return `${cost} ${this.badEventCurrency}`
+            }
         },
 
         alertLongWindow() {

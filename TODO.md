@@ -1,7 +1,6 @@
 # High prio
 
 - [ ] Make it responsive to use the available space on large screens
-- [ ] Allow assigning a currency value to the error budget to convert it to money
 - [ ] Allow subsetting the valid time slot
 - [ ] Take advantage of the entire desktop screen real estate instead of prioritizing mobile screens (still have responsive design)
 
@@ -20,6 +19,7 @@
 
 # Shipped
 
+- [x] 2023-11-26: Allow assigning a currency value to the error budget to convert it to money
 - [x] 2023-11-26: Fixed a bug with URL serialization and simplified the code
 - [x] 2023-11-10: Enable smooth scrolling
 - [x] 2023-11-03: the state unit now works for both time slots and event names

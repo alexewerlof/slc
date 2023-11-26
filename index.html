@@ -743,6 +743,78 @@
                     </label>
                 </p>
             </div>
+
+            <h3>
+                Cost of one bad event
+                <help-component>
+                    <p>
+                        When one of the
+                        <label for="sli-event-unit">
+                            <code>{{ normalizedUnit }}</code>
+                        </label>
+                        violates the
+                        <label for="sli-good-input">
+                            <code>{{ good }}</code>
+                        </label>
+                        condition,
+                        how much does it cost you?
+                    </p>
+                    <p>
+                        This cost will be used to put a tangible number on various windows and events.
+                    </p>
+                </help-component>
+            </h3>
+            <input type="number"
+                v-model.number="badEventCost"
+                :min="config.badEventCost.min"
+                :max="config.badEventCost.max"
+                :step="config.badEventCost.step">
+
+            <h4>
+                Currency
+                <help-component>
+                    <p>
+                        You can set the currency to see how much it costs you to violate the SLO.
+                    </p>
+                    <table>
+                        <caption>Typical Currencies</caption>
+                        <tr>
+                            <th>Abbreviation</th>
+                            <th>Description</th>
+                            <th></th>
+                        </tr>
+                        <tr v-for="p of config.badEventCurrency.presets">
+                            <td>{{ p.currency }}</td>
+                            <td>{{ p.description }}</td>
+                            <td><button type="button" @click="badEventCurrency = p.currency">Try!</button></td>
+                    </table>
+                </help-component>
+            </h4>
+            <input type="text" v-model="badEventCurrency">
+            <h4>
+                Error budget cost
+                <help-component>
+                    <p>
+                        If this number doesn't look good, it might be tempting to reduce the error budget and force a higher SLO.
+                    </p>
+                    <p>
+                        But there are other ways to make the errors cheap.
+                        In a future article, we will discuss all parents of reliability and how to make errors cheap.
+                        In the mean time check out the following techniques:
+                        <ul>
+                            <li>
+                                <a href="https://blog.alexewerlof.com/p/fallback" target="_blank" rel="noopener">Fallback</a>
+                            </li>
+                            <li>
+                                <a href="https://blog.alexewerlof.com/p/failover" target="_blank" rel="noopener">Failover</a>
+                            </li>
+                        </ul>
+                    </p>
+                </help-component>
+            </h4>
+            <p>
+                A maximum of {{ errorBudgetCost }} is allowed to be spent on the error budget in {{ sloWindow.humanTime }}
+            </p>
         </section>
 
         <!------------------------ Alert ------------------------>
