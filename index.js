@@ -224,12 +224,7 @@ const app = createApp({
 
         errorBudgetCost() {
             const cost = this.errorBudgetBadEventsCount * this.badEventCost
-            try {
-                return currL10n(cost, this.badEventCurrency)
-            } catch (e) {
-                console.warn(`Could not format currency: ${this.badEventCurrency}`, e)
-                return `${cost} ${this.badEventCurrency}`
-            }
+            return currL10n(cost, this.badEventCurrency)
         },
 
         alertLongWindow() {
