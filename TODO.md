@@ -3,6 +3,7 @@
 - [ ] Make it responsive to use the available space on large screens
 - [ ] Allow subsetting the valid time slot
 - [ ] Take advantage of the entire desktop screen real estate instead of prioritizing mobile screens (still have responsive design)
+- [ ] Support multi-layered SLOs
 
 # Medium prio
 
