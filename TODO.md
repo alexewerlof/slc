@@ -20,6 +20,7 @@
 
 # Shipped
 
+- [x] 2023-11-27: Let the page scroll where the URL hash points to
 - [x] 2023-11-26: Allow assigning a currency value to the error budget to convert it to money
 - [x] 2023-11-26: Fixed a bug with URL serialization and simplified the code
 - [x] 2023-11-10: Enable smooth scrolling
