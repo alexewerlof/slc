@@ -305,7 +305,7 @@ const app = createApp({
             
                 return url.toString()
             } catch (e) {
-                console.error(e)
+                console.error('Could not create shareurl', e)
                 return null
             }
         },
