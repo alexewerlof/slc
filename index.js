@@ -10,7 +10,7 @@ import { defaultState, sanitizeState } from './lib/state.js'
 import { currL10n, numL10n, percL10n } from './lib/fmt.js'
 import { isNum } from './lib/validation.js'
 import { trackEvent } from './lib/analytics.js'
-import { stateToUrl, urlToState } from './lib/share.js'
+import { urlToState } from './lib/share.js'
 
 const app = createApp({
     data() {
@@ -85,23 +85,60 @@ const app = createApp({
             this.slo = toFixed(clamp(this.slo + amount, 0, config.slo.max))
         },
         
-        loadState(state) {
+        loadState(newState) {
             try {
-                const newState = sanitizeState(state)
-                this.title = newState.title
-                this.description = newState.description
-                this.unit = newState.unit
-                this.good = newState.good
-                this.valid = newState.valid
-                this.slo = newState.slo
-                this.windowDays = newState.windowDays
-                // TODO: Rename this variable to something shorter and more sensible
-                this.errorBudgetValidExample = newState.errorBudgetValidExample
-                this.badEventCost = newState.badEventCost
-                this.badEventCurrency = newState.badEventCurrency
-                this.burnRate = newState.burnRate
-                this.longWindowPerc = newState.longWindowPerc
-                this.shortWindowDivider = newState.shortWindowDivider
+                if (isStr(newState.title)) {
+                    this.title = newState.title
+                }
+            
+                if (isStr(newState.description)) {
+                    this.description = newState.description
+                }
+            
+                // Unit is a bit special. It can be the event name or a time slot length in seconds
+                if (isStr(newState.unit) || inRangePosInt(newState.unit, config.timeSlot.min, config.timeSlot.max)) {
+                    this.unit = newState.unit
+                }
+            
+                if (isStr(newState.good)) {
+                    this.good = newState.good
+                }
+            
+                if (isStr(newState.valid)) {
+                    this.valid = newState.valid
+                }
+            
+                if (inRange(newState.slo, config.slo.min, config.slo.max)) {
+                    this.slo = newState.slo
+                }
+            
+                if (inRangePosInt(newState.windowDays, config.windowDays.min, config.windowDays.max)) {
+                    this.windowDays = newState.windowDays
+                }
+            
+                if (inRangePosInt(newState.errorBudgetValidExample, config.errorBudgetValidExample.min, config.errorBudgetValidExample.max)) {
+                    this.errorBudgetValidExample = newState.errorBudgetValidExample
+                }
+            
+                if (inRange(newState.badEventCost, config.badEventCost.min, config.badEventCost.max)) {
+                    this.badEventCost = newState.badEventCost
+                }
+            
+                if (isStr(newState.badEventCurrency)) {
+                    this.badEventCurrency = newState.badEventCurrency
+                }
+            
+                if (inRange(newState.burnRate, config.burnRate.min, config.burnRate.max)) {
+                    this.burnRate = newState.burnRate
+                }
+            
+                if (inRange(newState.longWindowPerc, config.longWindowPerc.min, config.longWindowPerc.max)) {
+                    this.longWindowPerc = newState.longWindowPerc
+                }
+            
+                if (inRange(newState.shortWindowDivider, config.shortWindowDivider.min, config.shortWindowDivider.max)) {
+                    this.shortWindowDivider = newState.shortWindowDivider
+                }
             } catch (e) {
                 this.toastCaption = `Failed to load state ${e}`
                 console.error(e)
