@@ -107,6 +107,44 @@ export const config = fz({
         min: 0,
         max: 99.999,
         default: 99,
+        presets: fz([
+            {
+                title: 'One nine',
+                slo: 90,
+            },
+            {
+                title: 'One and a half nines',
+                slo: 95,
+            },
+            {
+                title: 'Two nines',
+                slo: 99,
+            },
+            {
+                title: 'Two and a half nines',
+                slo: 99.5,
+            },
+            {
+                title: 'Three nines',
+                slo: 99.9,
+            },
+            {
+                title: 'Three and a half nines',
+                slo: 99.95,
+            },
+            {
+                title: 'Four nines',
+                slo: 99.99,
+            },
+            {
+                title: 'Four and a half nines',
+                slo: 99.995,
+            },
+            {
+                title: 'Five nines',
+                slo: 99.999
+            },
+        ]),
     }),
     windowDays: fz({
         min: 1,
