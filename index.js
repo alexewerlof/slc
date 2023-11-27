@@ -134,24 +134,6 @@ const app = createApp({
         },
     },
     computed: {
-        stateObject() {
-            return {
-                title: this.title,
-                description: this.description,
-                unit: this.unit,
-                good: this.good,
-                valid: this.valid,
-                slo: this.slo,
-                windowDays: this.windowDays,
-                errorBudgetValidExample: this.errorBudgetValidExample,
-                badEventCost: this.badEventCost,
-                badEventCurrency: this.badEventCurrency,
-                burnRate: this.burnRate,
-                longWindowPerc: this.longWindowPerc,
-                shortWindowDivider: this.shortWindowDivider,
-            }
-        },
-
         // Returns the normalized unit of SLI for the UI to read better
         normalizedUnit() {
             return normalizeUnit(this.unit)
@@ -258,7 +240,30 @@ const app = createApp({
 
         shareUrl() {
             try {
-                return stateToUrl(window.location.origin, this.stateObject)
+                const url = new URL(window.location.origin)
+
+                // A few fields may be empty strings, so let's keep the URL short
+                if (this.title) {
+                    url.searchParams.set('title', this.title)
+                }
+                if (this.description) {
+                    url.searchParams.set('description', this.description)
+                }
+                url.searchParams.set('unit', this.unit)
+                url.searchParams.set('good', this.good)
+                if (this.valid) {
+                    url.searchParams.set('valid', this.valid)
+                }
+                url.searchParams.set('slo', this.slo)
+                url.searchParams.set('windowDays', this.windowDays)
+                url.searchParams.set('errorBudgetValidExample', this.errorBudgetValidExample)
+                url.searchParams.set('badEventCost', this.badEventCost)
+                url.searchParams.set('badEventCurrency', this.badEventCurrency)
+                url.searchParams.set('burnRate', this.burnRate)
+                url.searchParams.set('longWindowPerc', this.longWindowPerc)
+                url.searchParams.set('shortWindowDivider', this.shortWindowDivider)
+            
+                return url.toString()
             } catch (e) {
                 console.error(e)
                 return null
