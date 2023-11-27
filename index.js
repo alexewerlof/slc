@@ -6,9 +6,8 @@ import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import examples from './examples.js'
 import { daysToSeconds, normalizeUnit } from './lib/time.js'
 import { Window } from './lib/window.js'
-import { defaultState, sanitizeState } from './lib/state.js'
 import { currL10n, numL10n, percL10n } from './lib/fmt.js'
-import { isNum } from './lib/validation.js'
+import { inRange, inRangePosInt, isNum, isStr } from './lib/validation.js'
 import { trackEvent } from './lib/analytics.js'
 import { urlToState } from './lib/share.js'
 
@@ -24,16 +23,6 @@ const app = createApp({
             // ignore
         }
 
-        let initialState = defaultState()
-        try {
-            initialState = sanitizeState(urlToState(window.location.href))
-            this.toastCaption = 'Loaded state from URL'
-        } catch (e) {
-            // silently fail if the params cannot be loaded from the URL
-            this.toastCaption = `Failed loading state from URL: ${e}`
-            console.error('Failed loading state from URL:', e)
-        }
-
         return {
             // Expose the config to the UI
             config,
@@ -47,22 +36,36 @@ const app = createApp({
             showCookiePopup,
             // The text shown in the toast notification
             toastCaption: '',
-            // The part of the state which can be saved/loaded
-            ...initialState,
+            // The title of the SLI
+            title: config.title.default,
+            // The description of the SLI
+            description: config.description.default,
+            // unit of SLI or number of seconds in a time slot
+            unit: config.unit.default,
+            // definition of good events or good time slots
+            good: config.good.default,
+            // definition of valid events or valid time slots
+            valid: config.valid.default,
+            // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
+            slo: config.slo.default,
+            // The length of the SLO window in days
+            windowDays: config.windowDays.default,
+            // For event based error budgets, this number holds the total valid events so we can compute the ammount of allowed failures
+            errorBudgetValidExample: config.errorBudgetValidExample.default,
+            // The cost of a bad event
+            badEventCost: config.badEventCost.default,
+            // The unit of the bad event cost
+            badEventCurrency: config.badEventCurrency.default,
+            // Alert burn rate: the rate at which the error budget is consumed
+            burnRate: config.burnRate.default,
+            // Long window alert: percentage of the SLO window
+            longWindowPerc: config.longWindowPerc.default,
+            // Short window alert: the fraction of the long window
+            shortWindowDivider: config.shortWindowDivider.default,
         }
     },
-    created() {
-        try {
-            const url = new URL(window.location.href)
-            if (url.searchParams.has('state')) {
-                this.loadState(decodeState(url.searchParams.get('state')))
-                this.toastCaption = 'Loaded state from URL'
-            }
-        } catch (e) {
-            // silently fail if the params cannot be loaded from the URL
-            this.toastCaption = `Failed to load state from URL ${e}`
-            console.error(e)
-        }
+    mounted() {
+        this.loadState(urlToState(window.location.href))
     },
     components: {
         HelpComponent,
