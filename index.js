@@ -97,6 +97,8 @@ const app = createApp({
                 this.windowDays = newState.windowDays
                 // TODO: Rename this variable to something shorter and more sensible
                 this.errorBudgetValidExample = newState.errorBudgetValidExample
+                this.badEventCost = newState.badEventCost
+                this.badEventCurrency = newState.badEventCurrency
                 this.burnRate = newState.burnRate
                 this.longWindowPerc = newState.longWindowPerc
                 this.shortWindowDivider = newState.shortWindowDivider
@@ -142,6 +144,8 @@ const app = createApp({
                 slo: this.slo,
                 windowDays: this.windowDays,
                 errorBudgetValidExample: this.errorBudgetValidExample,
+                badEventCost: this.badEventCost,
+                badEventCurrency: this.badEventCurrency,
                 burnRate: this.burnRate,
                 longWindowPerc: this.longWindowPerc,
                 shortWindowDivider: this.shortWindowDivider,
