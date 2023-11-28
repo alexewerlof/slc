@@ -266,16 +266,16 @@
 
             <!-- SLI: Good -->
             <h2>
-                <label for="sli-good-input">Good {{ normalizedUnit }}</label>
+                <label for="sli-good-input">Good {{ sloWindow.normUnit }}</label>
                 <help-component>
                     <p>
                         <a href="https://blog.alexewerlof.com/p/sli-good" rel="noopener" target="_blank">
-                            What is a good {{ normalizedUnit }}?
+                            What is a good {{ sloWindow.normUnit }}?
                         </a>
-                        How do good {{ normalizedUnit }} look like?
+                        How do good {{ sloWindow.normUnit }} look like?
                         
                         What is the metric that you can measure to identify the
-                        good {{ normalizedUnit }} from all the valid {{ normalizedUnit }}?
+                        good {{ sloWindow.normUnit }} from all the valid {{ sloWindow.normUnit }}?
                     </p>
                 </help-component>
             </h2>
@@ -288,7 +288,7 @@
             <div class="block">
                 <h2>
                     <label for="sli-valid-input">
-                        Valid {{ normalizedUnit }}
+                        Valid {{ sloWindow.normUnit }}
                     </label>
                     <help-component>
                         <p>
@@ -345,11 +345,11 @@
                         <div class="formula__fraction">
                             <div class="formula__fraction--top">
                                 <span class="invis">(</span>
-                                <span>Good {{ normalizedUnit }}</span>
+                                <span>Good {{ sloWindow.normUnit }}</span>
                                 <span class="invis"> /</span>
                             </div>
                             <div class="formula__fraction--bottom">
-                                <span>Valid {{ normalizedUnit }}</span>
+                                <span>Valid {{ sloWindow.normUnit }}</span>
                                 <span class="invis">)</span>
                             </div>
                         </div>
@@ -373,7 +373,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprs">{{ normalizedUnit }}</span>
+                                        <span class="exprs">{{ sloWindow.normUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
                                     <label for="sli-good-input">
@@ -392,7 +392,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprs">{{ normalizedUnit }}</span>
+                                        <span class="exprs">{{ sloWindow.normUnit }}</span>
                                     </label>
                                     <span v-if="valid" class="punct">, </span>
                                     <label v-if="valid" for="sli-valid-input">
@@ -422,7 +422,7 @@
                 </label>
                 <help-component>
                     <p>
-                        Service Level Objective (SLO) is the target percentage of good {{ normalizedUnit }}.
+                        Service Level Objective (SLO) is the target percentage of good {{ sloWindow.normUnit }}.
                     </p>
                     <p>
                         Using the two sliders below you can fine tune the SLO to your needs.
@@ -554,7 +554,7 @@
                     </p>
                     <p>
                         You can play with different ranges to see how a given SLO translates to different
-                        good {{ normalizedUnit }} and how it impacts the error budget.
+                        good {{ sloWindow.normUnit }} and how it impacts the error budget.
                     </p>
                     <table>
                         <caption>Typical compliance periods</caption>
@@ -609,7 +609,7 @@
                     </p>
                     <p>
                         Error budget is the complement of SLO.
-                        It is the percentage of bad {{ normalizedUnit }} that you can have
+                        It is the percentage of bad {{ sloWindow.normUnit }} that you can have
                         before you violate the SLO.
                     </p>
                     <div class="formula">
@@ -659,9 +659,18 @@
                     </p>
                 </help-component>
             </h1>
+            <div class="code block">
+                {{eventCount}}
+                <br>
+                {{badEventCost}}
+                <br>
+                {{errorBudget.eventCountL10n}}
+                <br>
+                {{errorBudget.costL10n}}
+            </div>
             <div class="error-budget-diagram">
                 <div class="error-budget-diagram__error-caption">
-                    <label for="sli-event-unit"><code>{{ normalizedUnit }}</code></label>
+                    <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
                     allowed to violate
                     <label for="sli-good-input"><code>{{ good }}</code></label>
                 </div>
@@ -671,12 +680,12 @@
                 <div class="error-budget-diagram__good-caption">
                     <label for="sli-good-input"><code>{{ good }}</code></label>
                     &nbsp;
-                    <label for="sli-event-unit"><code>{{ normalizedUnit }}</code></label>
+                    <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
                 </div>
                 <div class="error-budget-diagram__valid-caption">
                     <label for="sli-valid-input"><code>{{ valid }}</code></label>
                     &nbsp;
-                    <label for="sli-event-unit"><code>{{ normalizedUnit }}</code></label>
+                    <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
                     in
                     <label for="slo-window-unit-multiplier"><code>{{ sloWindow.humanTime }}</code></label>
                 </div>
@@ -686,10 +695,10 @@
             </p>
             <div v-if="!isTimeBased">
                 <h3>
-                    <label for="error-budget-example-input">Example number of valid {{ normalizedUnit }}</label>
+                    <label for="error-budget-example-input">Example number of valid {{ sloWindow.normUnit }}</label>
                     <help-component>
                         Here you can enter the numbers for your expected load and see
-                        how many {{ normalizedUnit }} are allowed to fail during the SLO window
+                        how many {{ sloWindow.normUnit }} are allowed to fail during the SLO window
                         while still being within the error budget.
                     </help-component>
                 </h3>
@@ -700,7 +709,7 @@
                     </label>
                     &nbsp;
                     <label for="sli-event-unit">
-                        <code>{{ normalizedUnit }}</code>
+                        <code>{{ sloWindow.normUnit }}</code>
                     </label>
                     in {{ sloWindow.humanTime }}:
                 </p>
@@ -712,7 +721,7 @@
                     :max="config.errorBudgetValidExample.max"
                     :step="config.errorBudgetValidExample.step">
                 <p>
-                    {{ errorBudgetBadExample }}
+                    {{ errorBudget.eventCountL10n }}
                     <label for="sli-event-unit">
                         <code>{{ unit }}</code>
                     </label>
@@ -728,12 +737,12 @@
             </div>
 
             <h3>
-                Unit cost of bad <label for="sli-event-unit"><code>{{ normalizedUnit }}</code></label>
+                Unit cost of bad <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
                 <help-component>
                     <p>
                         When one of the
                         <label for="sli-event-unit">
-                            <code>{{ normalizedUnit }}</code>
+                            <code>{{ sloWindow.normUnit }}</code>
                         </label>
                         violates the
                         <label for="sli-good-input">
@@ -796,7 +805,7 @@
                 </help-component>
             </h4>
             <p>
-                A maximum of {{ errorBudgetCost }} is allowed to be spent on the error budget in {{ sloWindow.humanTime }}
+                A maximum of {{ errorBudget.costL10n }} is allowed to be spent on the error budget in {{ sloWindow.humanTime }}.
             </p>
         </section>
 
@@ -909,11 +918,11 @@
                 </help-component>
             </h2>
             <p>
-                The time it takes to exhaust the entire error budget 
-                <span v-if="isTimeBased">{{ errorBudgetWindow }},</span>
+                The time it takes to exhaust the entire error budget
+                ({{ errorBudget }})
                 at this rate:
                 <br />
-                <time>{{ errorBudgetTimeToExhaust }}</time>
+                <time>{{ errorBudgetTTBWindow }}</time>
             </p>
             <input
                 id="burn-rate-input"
@@ -973,7 +982,7 @@
                     <code>
                         <span class="exprs">TTRespond</span>
                         <span class="punct"> = </span>
-                        <span class="const">{{ errorBudgetTimeToExhaust.humanSec }}</span>
+                        <span class="const">{{ errorBudgetTTBWindow.humanSec }}</span>
                         <span class="punct"> - </span>
                         <span class="const">{{ alertLongWindow.humanSec }}</span>
                         <span class="punct"> = </span>
@@ -990,15 +999,13 @@
                 Note: The time to resolve (TTR) is too short for a human to react.
                 It is strongly recommended to automate the response to the alert.
             </p>
-            <div v-if="isTimeBased">
+            <div>
                 <p>
-                    Time slots consumed from the error budget:
+                    Alert budget:
                     <br />
-                    {{ alertLongWindowConsumedTimeSlots }}
-                    out of
-                    {{ errorBudgetWindow.timeSlotsFloor }}
+                    {{ alertLongWindowBudget }}
                 </p>
-                <p v-if="alertLongWindowConsumedTimeSlots === 0">
+                <p v-if="alertLongWindowBudget.eventCountL10n === 0">
                     Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
                     time slot length ({{ unit }} sec)
                     because it will lead to division by zero error.
@@ -1036,7 +1043,7 @@
                                 </label>
                                 <span class="punct">(</span>
                                 <label for="sli-event-unit">
-                                    <span class="exprs">{{ normalizedUnit }}</span>
+                                    <span class="exprs">{{ sloWindow.normUnit }}</span>
                                 </label>
                                 <span class="punct">, </span>
                                 <label for="sli-good-input">
@@ -1054,7 +1061,7 @@
                         </div>
                         <div class="formula__fraction--bottom">
                             <code v-if="isTimeBased">
-                                <span class="const">{{ alertLongWindowConsumedTimeSlots }}</span>
+                                <span class="const">{{ alertLongWindowBudget.eventCountL10n }}</span>
                             </code>
                             <code v-else>
                                 <label for="sli-type-input">
@@ -1062,7 +1069,7 @@
                                 </label>
                                 <span class="punct">(</span>
                                 <label for="sli-event-unit">
-                                    <span class="exprs">{{ normalizedUnit }}</span>
+                                    <span class="exprs">{{ sloWindow.normUnit }}</span>
                                 </label>
                                 <span v-if="valid">
                                     <span class="punct">, </span>
@@ -1104,7 +1111,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprs">{{ normalizedUnit }}</span>
+                                        <span class="exprs">{{ sloWindow.normUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
                                     <label for="sli-good-input">
@@ -1122,7 +1129,7 @@
                             </div>
                             <div class="formula__fraction--bottom">
                                 <code v-if="isTimeBased">
-                                    <span class="const">{{ alertShortWindowConsumedTimeSlots }}</span>
+                                    <span class="const">{{ alertShortWindowBudget.eventCountL10n }}</span>
                                 </code>
                                 <code v-else>
                                     <label for="sli-type-input">
@@ -1130,7 +1137,7 @@
                                     </label>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
-                                        <span class="exprs">{{ normalizedUnit }}</span>
+                                        <span class="exprs">{{ sloWindow.normUnit }}</span>
                                     </label>
                                     <span v-if="valid">
                                         <span class="punct">, </span>
@@ -1242,13 +1249,13 @@
                     <br />
                     <time>{{ alertShortWindow.humanTimeSec }}</time>
                 </p>
-                <div v-if="isTimeBased" class="block">
+                <div class="block">
                     <p>
-                        Time Slots consumed:
+                        Alert Budget:
                         <br />
-                        {{ alertShortWindowConsumedTimeSlots }}
+                        {{ alertShortWindowBudget }}
                     </p>    
-                    <p v-if="alertShortWindowConsumedTimeSlots === 0">
+                    <p v-if="alertShortWindowBudget.eventCountL10n === 0">
                         Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
                         time slot length ({{ unit }} sec)
                         because it will lead to division by zero error.

@@ -10,6 +10,7 @@ import { currL10n, numL10n, percL10n } from './lib/fmt.js'
 import { inRange, inRangePosInt, isNum, isStr } from './lib/validation.js'
 import { trackEvent } from './lib/analytics.js'
 import { urlToState } from './lib/share.js'
+import { Budget } from './lib/budget.js'
 
 const app = createApp({
     data() {
@@ -181,11 +182,6 @@ const app = createApp({
         },
     },
     computed: {
-        // Returns the normalized unit of SLI for the UI to read better
-        normalizedUnit() {
-            return normalizeUnit(this.unit)
-        },
-
         sloWindow() {
             return new Window(
                 daysToSeconds(this.windowDays),
@@ -229,6 +225,19 @@ const app = createApp({
             return toFixed(100 - this.slo)
         },
 
+        eventCount() {
+            if (this.isTimeBased) {
+                return this.sloWindow.timeSlotsFloor
+            } else {
+                return this.errorBudgetValidExample
+            }
+        },
+
+        errorBudget() {
+            const badEventCount = Math.floor(percent(this.errorBudgetPerc, this.eventCount))
+            return new Budget(badEventCount, this.sloWindow.normUnit, this.badEventCost || 0, this.badEventCurrency)
+        },
+
         errorBudgetWindow() {
             if (!this.isTimeBased) {
                 return null
@@ -237,39 +246,22 @@ const app = createApp({
             return this.sloWindow.newFractionalWindow(this.errorBudgetPerc)
         },
 
-        errorBudgetBurnPerc() {
-            return 100 / this.burnRate
-        },
-
-        // Based on the given burn rate
-        errorBudgetTimeToExhaust() {
-            return this.sloWindow.newFractionalWindow(this.errorBudgetBurnPerc)
-        },
-
-        // Number of bad events allowed for the given value of valid in errorBudgetValidExample
-        errorBudgetBadExample() {
-            return numL10n(this.errorBudgetBadEventsCount)
-        },
-
-        errorBudgetBadEventsCount() {
-            return Math.floor(percent(this.errorBudgetPerc, this.errorBudgetValidExample || 1))
-        },
-
-        errorBudgetCost() {
-            const cost = this.errorBudgetBadEventsCount * this.badEventCost
-            return currL10n(cost, this.badEventCurrency)
+        // Time to burn the entire error budget at the given burnRate
+        errorBudgetTTBWindow() {
+            const errorBudgetBurnPerc = 100 / this.burnRate
+            return this.sloWindow.newFractionalWindow(errorBudgetBurnPerc)
         },
 
         alertLongWindow() {
-            return this.errorBudgetTimeToExhaust.newFractionalWindow(this.longWindowPerc)
+            return this.errorBudgetTTBWindow.newFractionalWindow(this.longWindowPerc)
         },
 
         alertTTRWindow() {
-            return this.errorBudgetTimeToExhaust.newFractionalWindow(100 - this.longWindowPerc)
+            return this.errorBudgetTTBWindow.newFractionalWindow(100 - this.longWindowPerc)
         },
 
-        alertLongWindowConsumedTimeSlots() {
-            return this.errorBudgetWindow.newFractionalWindow(this.longWindowPerc).timeSlotsFloor
+        alertLongWindowBudget() {
+            return this.errorBudget.newFractionalBudget(this.longWindowPerc)
         },
 
         // As a percentage of the error budget
@@ -278,11 +270,11 @@ const app = createApp({
         },
 
         alertShortWindow() {
-            return this.errorBudgetTimeToExhaust.newFractionalWindow(this.alertShortWindowPerc)
+            return this.errorBudgetTTBWindow.newFractionalWindow(this.alertShortWindowPerc)
         },
 
-        alertShortWindowConsumedTimeSlots() {
-            return this.errorBudgetWindow.newFractionalWindow(this.alertShortWindowPerc).timeSlotsFloor
+        alertShortWindowBudget() {
+            return this.errorBudget.newFractionalBudget(this.alertShortWindowPerc)
         },
 
         shareUrl() {
