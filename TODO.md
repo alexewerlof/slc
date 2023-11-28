@@ -1,6 +1,5 @@
 # High prio
 
-- [ ] Bug: if the SLO is something like 99.461, the alerting number is 0.995 instead of 0.99461
 - [ ] Make it responsive to use the available space on large screens
 - [ ] Allow subsetting the valid time slot
 - [ ] Take advantage of the entire desktop screen real estate instead of prioritizing mobile screens (still have responsive design)
@@ -21,6 +20,7 @@
 
 # Shipped
 
+- [x] 2023-11-28: Fixed a Bug: if the SLO was something like 99.461, the alerting number would be like 0.995 instead of 0.99461
 - [x] 2023-11-27: Let the page scroll where the URL hash points to
 - [x] 2023-11-26: Allow assigning a currency value to the error budget to convert it to money
 - [x] 2023-11-26: Fixed a bug with URL serialization and simplified the code
