@@ -659,15 +659,6 @@
                     </p>
                 </help-component>
             </h1>
-            <div class="code block">
-                {{eventCount}}
-                <br>
-                {{badEventCost}}
-                <br>
-                {{errorBudget.eventCountL10n}}
-                <br>
-                {{errorBudget.costL10n}}
-            </div>
             <div class="error-budget-diagram">
                 <div class="error-budget-diagram__error-caption">
                     <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
@@ -690,9 +681,6 @@
                     <label for="slo-window-unit-multiplier"><code>{{ sloWindow.humanTime }}</code></label>
                 </div>
             </div>
-            <p v-if="isTimeBased">
-                {{ errorBudgetWindow }}
-            </p>
             <div v-if="!isTimeBased">
                 <h3>
                     <label for="error-budget-example-input">Example number of valid {{ sloWindow.normUnit }}</label>
@@ -720,24 +708,10 @@
                     :min="config.errorBudgetValidExample.min"
                     :max="config.errorBudgetValidExample.max"
                     :step="config.errorBudgetValidExample.step">
-                <p>
-                    {{ errorBudget.eventCountL10n }}
-                    <label for="sli-event-unit">
-                        <code>{{ unit }}</code>
-                    </label>
-                    are allowed to violate the
-                    <label for="sli-good-input">
-                        <code>{{ good }}</code>
-                    </label>
-                    condition in
-                    <label for="slo-window-unit-multiplier">
-                        <code>{{ sloWindow.humanTime }}</code>
-                    </label>
-                </p>
             </div>
 
             <h3>
-                Unit cost of bad <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
+                Average cost of bad <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
                 <help-component>
                     <p>
                         When one of the
@@ -783,8 +757,8 @@
                 </help-component>
             </h4>
             <input type="text" v-model="badEventCurrency">
-            <h4>
-                Error budget cost
+            <h3>
+                Error Budget Cost
                 <help-component>
                     <p>
                         If this number doesn't look good, it might be tempting to reduce the error budget and force a higher SLO.
@@ -803,9 +777,9 @@
                         </ul>
                     </p>
                 </help-component>
-            </h4>
+            </h3>
             <p>
-                A maximum of {{ errorBudget.costL10n }} is allowed to be spent on the error budget in {{ sloWindow.humanTime }}.
+                {{ errorBudget }}
             </p>
         </section>
 
@@ -917,13 +891,6 @@
                     </p>
                 </help-component>
             </h2>
-            <p>
-                The time it takes to exhaust the entire error budget
-                ({{ errorBudget }})
-                at this rate:
-                <br />
-                <time>{{ errorBudgetTTBWindow }}</time>
-            </p>
             <input
                 id="burn-rate-input"
                 type="range"
@@ -932,6 +899,10 @@
                 :step="config.burnRate.step"
                 v-model.number="burnRate"
             >
+            <h4>Time to exhaust the entire error budget</h4>
+            <p>
+                <time>{{ errorBudgetBurn }}</time>
+            </p>
             <!-- Long Window Alert -->
             <h2>
                 Long-Window
@@ -982,7 +953,7 @@
                     <code>
                         <span class="exprs">TTRespond</span>
                         <span class="punct"> = </span>
-                        <span class="const">{{ errorBudgetTTBWindow.humanSec }}</span>
+                        <span class="const">{{ errorBudgetBurn.humanSec }}</span>
                         <span class="punct"> - </span>
                         <span class="const">{{ alertLongWindow.humanSec }}</span>
                         <span class="punct"> = </span>
@@ -999,18 +970,6 @@
                 Note: The time to resolve (TTR) is too short for a human to react.
                 It is strongly recommended to automate the response to the alert.
             </p>
-            <div>
-                <p>
-                    Alert budget:
-                    <br />
-                    {{ alertLongWindowBudget }}
-                </p>
-                <p v-if="alertLongWindowBudget.eventCountL10n === 0">
-                    Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
-                    time slot length ({{ unit }} sec)
-                    because it will lead to division by zero error.
-                </p>
-            </div>
             <input
                 id="alert-error-budget-perc"
                 type="range"
@@ -1019,6 +978,17 @@
                 :step="config.longWindowPerc.step"
                 v-model.number="longWindowPerc"
             >
+            <div>
+                <h4>Alert budget</h4>
+                <p>
+                    {{ alertLongWindow }}
+                </p>
+                <p v-if="alertLongWindow.eventCountL10n === 0">
+                    Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
+                    time slot length ({{ unit }} sec)
+                    because it will lead to division by zero error.
+                </p>
+            </div>
             <!-- Burn Chart Component -->
             <burn-component
                 :burn-rate="burnRate"
@@ -1061,7 +1031,7 @@
                         </div>
                         <div class="formula__fraction--bottom">
                             <code v-if="isTimeBased">
-                                <span class="const">{{ alertLongWindowBudget.eventCountL10n }}</span>
+                                <span class="const">{{ alertLongWindow.eventCountL10n }}</span>
                             </code>
                             <code v-else>
                                 <label for="sli-type-input">
@@ -1129,7 +1099,7 @@
                             </div>
                             <div class="formula__fraction--bottom">
                                 <code v-if="isTimeBased">
-                                    <span class="const">{{ alertShortWindowBudget.eventCountL10n }}</span>
+                                    <span class="const">{{ alertShortWindow.eventCountL10n }}</span>
                                 </code>
                                 <code v-else>
                                     <label for="sli-type-input">
@@ -1249,18 +1219,6 @@
                     <br />
                     <time>{{ alertShortWindow.humanTimeSec }}</time>
                 </p>
-                <div class="block">
-                    <p>
-                        Alert Budget:
-                        <br />
-                        {{ alertShortWindowBudget }}
-                    </p>    
-                    <p v-if="alertShortWindowBudget.eventCountL10n === 0">
-                        Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
-                        time slot length ({{ unit }} sec)
-                        because it will lead to division by zero error.
-                    </p>
-                </div>
                 <input
                     id="alert-short-window-divider-input"
                     type="range"
@@ -1269,6 +1227,17 @@
                     :step="config.shortWindowDivider.step"
                     v-model.number="shortWindowDivider"
                 >
+                <div class="block">
+                    <h4>Alert Budget</h4>
+                    <p>
+                        {{ alertShortWindow }}
+                    </p>    
+                    <p v-if="alertShortWindow.eventCountL10n === 0">
+                        Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
+                        time slot length ({{ unit }} sec)
+                        because it will lead to division by zero error.
+                    </p>
+                </div>
             </div>
         </section>
 

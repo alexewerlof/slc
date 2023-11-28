@@ -227,41 +227,30 @@ const app = createApp({
 
         eventCount() {
             if (this.isTimeBased) {
-                return this.sloWindow.timeSlotsFloor
+                return this.sloWindow.timeSlotCount
             } else {
                 return this.errorBudgetValidExample
             }
         },
 
         errorBudget() {
-            const badEventCount = Math.floor(percent(this.errorBudgetPerc, this.eventCount))
-            return new Budget(badEventCount, this.sloWindow.normUnit, this.badEventCost || 0, this.badEventCurrency)
-        },
-
-        errorBudgetWindow() {
-            if (!this.isTimeBased) {
-                return null
-            }
-
-            return this.sloWindow.newFractionalWindow(this.errorBudgetPerc)
+            const { sec, unit } = this.sloWindow
+            const eventCount = Math.floor(percent(this.errorBudgetPerc, this.eventCount))
+            const eventCost = this.badEventCost || 0
+            return new Budget(sec, unit, eventCount, eventCost, this.badEventCurrency)
         },
 
         // Time to burn the entire error budget at the given burnRate
-        errorBudgetTTBWindow() {
-            const errorBudgetBurnPerc = 100 / this.burnRate
-            return this.sloWindow.newFractionalWindow(errorBudgetBurnPerc)
+        errorBudgetBurn() {
+            return this.errorBudget.shrinkWindow(100 / this.burnRate)
         },
 
         alertLongWindow() {
-            return this.errorBudgetTTBWindow.newFractionalWindow(this.longWindowPerc)
+            return this.errorBudgetBurn.shrink(this.longWindowPerc)
         },
 
         alertTTRWindow() {
-            return this.errorBudgetTTBWindow.newFractionalWindow(100 - this.longWindowPerc)
-        },
-
-        alertLongWindowBudget() {
-            return this.errorBudget.newFractionalBudget(this.longWindowPerc)
+            return this.errorBudgetBurn.shrink(100 - this.longWindowPerc)
         },
 
         // As a percentage of the error budget
@@ -270,11 +259,7 @@ const app = createApp({
         },
 
         alertShortWindow() {
-            return this.errorBudgetTTBWindow.newFractionalWindow(this.alertShortWindowPerc)
-        },
-
-        alertShortWindowBudget() {
-            return this.errorBudget.newFractionalBudget(this.alertShortWindowPerc)
+            return this.errorBudgetBurn.shrink(this.alertShortWindowPerc)
         },
 
         shareUrl() {
