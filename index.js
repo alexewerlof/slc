@@ -8,7 +8,7 @@ import { daysToSeconds, normalizeUnit } from './lib/time.js'
 import { Window } from './lib/window.js'
 import { currL10n, numL10n, percL10n } from './lib/fmt.js'
 import { inRange, inRangePosInt, isNum, isStr } from './lib/validation.js'
-import { trackEvent } from './lib/analytics.js'
+import { trackEvent } from './lib/ga-utils.js'
 import { urlToState } from './lib/share.js'
 import { Budget } from './lib/budget.js'
 
