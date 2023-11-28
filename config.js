@@ -186,7 +186,7 @@ export const config = fz({
         default: 1_000_000,
     }),
     badEventCost: fz({
-        min: 0.000_000_001,
+        min: 0,
         max: 1000_000_000,
         step: 0.01,
         default: 0.01,
