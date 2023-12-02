@@ -34,7 +34,7 @@
         <header>
             <transition>
                 <div class="announcement" v-if="showAnnouncement">
-                    <a href="https://chat.openai.com/g/g-C2C2tThtS-slc-advisor" target="_blank" rel="noopener">SLC Advisor</a> is a GPTs that is fed with parts of my book <a href="https://blog.alexewerlof.com/p/book-intro-reliability-engineering" target="_blank" rel="noopener">Reliability Engineering Mindset (REM)</a>.
+                    <ext-link href="https://chat.openai.com/g/g-C2C2tThtS-slc-advisor">SLC Advisor</ext-link> is a GPTs that is fed with parts of my book <ext-link href="https://blog.alexewerlof.com/p/book-intro-reliability-engineering">Reliability Engineering Mindset (REM)</ext-link>.
                     <button @click="showAnnouncement = false" type="button">Dismiss</button>
                 </div>
             </transition>
@@ -84,8 +84,8 @@
                     SLI
                     <help-component>
                         <p>
-                            In simple words <a href="https://blog.alexewerlof.com/p/sli" target="_blank" rel="noopener">Service Level Indicators
-                            </a> are the metrics that represent how the reliability
+                            In simple words <ext-link href="https://blog.alexewerlof.com/p/sli">Service Level Indicators
+                            </ext-link> are the metrics that represent how the reliability
                             is perceived by the consumers of the service. They are normalized to be a number between
                             0 and 100 using this formula:
                         </p>
@@ -98,10 +98,10 @@
                             </div>
                             <div class="formula__fraction">
                                 <div class="formula__fraction--top">
-                                    <a href="https://blog.alexewerlof.com/p/sli-good" target="_blank" rel="noopener">Good</a>
+                                    <ext-link href="https://blog.alexewerlof.com/p/sli-good">Good</ext-link>
                                 </div>
                                 <div class="formula__fraction--bottom">
-                                    <a href="https://blog.alexewerlof.com/p/valid-vs-total" target="_blank" rel="noopener">Valid</a>
+                                    <ext-link href="https://blog.alexewerlof.com/p/valid-vs-total">Valid</ext-link>
                                 </div>
                             </div>
                             <div class="formula__whole">
@@ -148,9 +148,9 @@
                                 </li>
                             </ul>
                             Learn more
-                            <a href="https://blog.alexewerlof.com/p/time-based-vs-event-based" rel="noopener" target="_blank">
+                            <ext-link href="https://blog.alexewerlof.com/p/time-based-vs-event-based">
                                 here
-                            </a>.
+                            </ext-link>.
                         </p>
                     </help-component>
                 </h2>
@@ -263,9 +263,9 @@
                     <label for="sli-good-input">Good {{ sloWindow.normUnit }}</label>
                     <help-component>
                         <p>
-                            <a href="https://blog.alexewerlof.com/p/sli-good" rel="noopener" target="_blank">
+                            <ext-link href="https://blog.alexewerlof.com/p/sli-good">
                                 What is a good {{ sloWindow.normUnit }}?
-                            </a>
+                            </ext-link>
                             How do good {{ sloWindow.normUnit }} look like?
                             
                             What is the metric that you can measure to identify the
@@ -288,15 +288,15 @@
                             <p>
                                 For simplicity, sometimes "total" is used instead of "valid".
                                 But 
-                                <a href="https://blog.alexewerlof.com/p/valid-vs-total" rel="noopener" target="_blank">
+                                <ext-link href="https://blog.alexewerlof.com/p/valid-vs-total">
                                     there is a difference
-                                </a>.
+                                </ext-link>.
                             </p>
                             <p>
                                 While
-                                <a>
+                                <ext-link href="https://blog.alexewerlof.com/p/sli">
                                     Service level indicator
-                                </a>
+                                </ext-link>
                                 guides the optimization,
                                 the definition of valid scopes that optimization for two reasons:
                                 <ul>
@@ -444,9 +444,9 @@
                             Just be mindful of the price tag for this high service level <em>objective</em>!
 
                             Everyone wants the highest possible number but
-                            <a href="https://blog.alexewerlof.com/p/Rule of 10x per 9" target="_blank" rel="noopener">
+                            <ext-link href="https://blog.alexewerlof.com/p/Rule of 10x per 9">
                                 not everyone is willing to pay the price.
-                            </a>
+                            </ext-link>
                         </p>
                         <p v-if="slo < 70">
                             Note: this is an unusually low service level objective.
@@ -620,14 +620,14 @@
 
                             <div class="formula__fraction">
                                 <div class="formula__fraction--top">
-                                    <a href="https://blog.alexewerlof.com/p/valid-vs-total" target="_blank" rel="noopener">Valid</a>
+                                    <ext-link href="https://blog.alexewerlof.com/p/valid-vs-total">Valid</ext-link>
                                     <code>
                                         <span class="punct"> - </span>
                                     </code>
-                                    <a href="https://blog.alexewerlof.com/p/sli-good" target="_blank" rel="noopener">Good</a>
+                                    <ext-link href="https://blog.alexewerlof.com/p/sli-good">Good</ext-link>
                                 </div>
                                 <div class="formula__fraction--bottom">
-                                    <a href="https://blog.alexewerlof.com/p/valid-vs-total" target="_blank" rel="noopener">Valid</a>
+                                    <ext-link href="https://blog.alexewerlof.com/p/valid-vs-total">Valid</ext-link>
                                 </div>
                             </div>
                             <div class="formula__whole">
@@ -763,10 +763,10 @@
                             In the mean time check out the following techniques:
                             <ul>
                                 <li>
-                                    <a href="https://blog.alexewerlof.com/p/fallback" target="_blank" rel="noopener">Fallback</a>
+                                    <ext-link href="https://blog.alexewerlof.com/p/fallback">Fallback</ext-link>
                                 </li>
                                 <li>
-                                    <a href="https://blog.alexewerlof.com/p/failover" target="_blank" rel="noopener">Failover</a>
+                                    <ext-link href="https://blog.alexewerlof.com/p/failover">Failover</ext-link>
                                 </li>
                             </ul>
                         </p>
@@ -827,9 +827,9 @@
                         </p>
                         <p>
                             Goole SRE Workbook goes through 6 alerting strategies and
-                            <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener">
+                            <ext-link href="https://sre.google/workbook/alerting-on-slos/">
                                 recommends
-                            </a>:
+                            </ext-link>:
                         </p>
                         <table>
                             <thead>
@@ -1167,9 +1167,9 @@
                         <help-component>
                             <p>
                                 The Short-Window is usually 1/12th of the Long-Window (per
-                                <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener">
+                                <ext-link href="https://sre.google/workbook/alerting-on-slos/">
                                     Google SRE Workbook
-                                </a>
+                                </ext-link>
                                 recommendation).
                                 But you can play with different dividers to see how they impact
                                 the detection time of the alert.
@@ -1239,7 +1239,7 @@
         <section v-if="shareUrl">
             <h1 id="share-title">Share</h1>
             <div class="code block">
-                <code><a id="share-url" :href="shareUrl" style="overflow-wrap: break-word;" rel="noopener" target="_blank">{{ shareUrl }}</a></code>
+                <code><a id="share-url" :href="shareUrl" style="overflow-wrap: break-word;">{{ shareUrl }}</a></code>
             </div>
             <button @click="copy('share-url', 'share-url')" type="button" class="large">Share Config</button>
         </section>
@@ -1256,11 +1256,11 @@
             <p>
                 Tip:
                 If you want to disable Google Analytics <em>on all sites</em>, you can use 
-                <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener" target="_blank">
-                    Google's official workaround</a>.
+                <ext-link href="https://tools.google.com/dlpage/gaoptout">
+                    Google's official workaround</ext-link>.
             </p>
-            <a href="https://policies.google.com/technologies/cookies" rel="noopener" target="_blank">
-                Learn More</a>
+            <ext-link href="https://policies.google.com/technologies/cookies">
+                Learn More</ext-link>
             &nbsp;
             <button type="button" @click="hideCookiePopup">Got it</button>
         </dialog>    
@@ -1269,16 +1269,16 @@
     <footer>
         <ul class="link-list">
             <li>
-                <a href="https://github.com/userpixel/slo/issues" target="_blank" rel="noopener">Report issues</a>
+                <ext-link href="https://github.com/userpixel/slo/issues">Report issues</ext-link>
             </li>
             <li>
-                <a href="https://alexewerlof.com">Alex Ewerlöf</a>
+                <ext-link href="https://alexewerlof.com">Alex Ewerlöf</ext-link>
             </li>
             <li>
-                <a href="https://blog.alexewerlof.com/p/why-bother-with-sli-and-slo">Why bother?</a>
+                <ext-link href="https://blog.alexewerlof.com/p/why-bother-with-sli-and-slo">Why bother?</ext-link>
             </li>
             <li>
-                <a href="https://forms.gle/CspQc8AGqTmtG2AD7" target="_blank" rel="noopener">Feedback</a>
+                <ext-link href="https://forms.gle/CspQc8AGqTmtG2AD7">Feedback</ext-link>
             </li>
         </ul>
 
@@ -1288,22 +1288,22 @@
         </p>
         <p>
             To support me, you can
-            <a href="https://www.paypal.com/paypalme/alexewerlof" target="_blank" rel="noopener">buy me a coffee</a>
+            <ext-link href="https://www.paypal.com/paypalme/alexewerlof">buy me a coffee</ext-link>
             or a subscription to
-            <a href="https://blog.alexewerlof.com/" target="_blank" rel="noopener">my newsletter</a>.
+            <ext-link href="https://blog.alexewerlof.com/">my newsletter</ext-link>.
         </p>
         <p>
             This also gives you full access to my online book on this topic:
-            <a href="https://blog.alexewerlof.com/p/book-intro-reliability-engineering" target="_blank" rel="noopener">Reliability Engineering Mindset</a>.
+            <ext-link href="https://blog.alexewerlof.com/p/book-intro-reliability-engineering">Reliability Engineering Mindset</ext-link>.
         </p>
             <em>
                 Right now, you can get 20% off via
-                <a href="https://blog.alexewerlof.com/protipsdiscount" target="_blank" rel="noopener">this link</a>.
+                <ext-link href="https://blog.alexewerlof.com/protipsdiscount">this link</ext-link>.
             </em>
         </p>
-        <a href="https://alexewerlof.com" target="_blank" rel="noopener">
+        <ext-link href="https://alexewerlof.com">
             <img alt="logo" src="img/logo.png" width="150px"/>
-        </a>
+        </ext-link>
     </footer>
 
     <script type="module" src="index.js" defer async></script>

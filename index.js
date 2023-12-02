@@ -2,6 +2,7 @@ import { createApp } from './vendor/vue@3.3.4_dist_vue.esm-browser.prod.js'
 import { config } from './config.js'
 import HelpComponent from './components/help-component.js'
 import BurnComponent from './components/burn-component.js'
+import ExtLink from './components/ext-link.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import examples from './examples.js'
 import { daysToSeconds, normalizeUnit } from './lib/time.js'
@@ -80,6 +81,7 @@ const app = createApp({
     components: {
         HelpComponent,
         BurnComponent,
+        ExtLink,
     },
     methods: {
         percentToRatio(x) {
