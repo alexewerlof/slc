@@ -189,7 +189,7 @@ export const config = fz({
         min: 0,
         max: 1000_000_000,
         step: 0.01,
-        default: 0.01,
+        default: 0,
     }),
     badEventCurrency: fz({
         default: 'USD',
