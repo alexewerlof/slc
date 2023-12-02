@@ -1174,8 +1174,8 @@
                                 But you can play with different dividers to see how they impact
                                 the detection time of the alert.
                             </p>
-                            <p v-if="shortWindowDivider !== 12">
-                                <button type="button" @click="shortWindowDivider = 12">Reset to 1/12</button>
+                            <p v-if="shortWindowDivider !== config.shortWindowDivider.default">
+                                <button type="button" @click="shortWindowDivider = config.shortWindowDivider.default">Reset to 1/{{ config.shortWindowDivider.default }}</button>
                             </p>
                             <p>
                                 Your chosen Short-Window is 1/{{ shortWindowDivider }} of the Long-Window.
