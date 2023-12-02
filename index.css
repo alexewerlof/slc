@@ -29,17 +29,35 @@ body {
     margin: 1em 0;
 }
 
+@media screen and (min-width: 1000px) {
+    article {
+        display: flex;
+        justify-content: center;
+    }
+
+    article section {
+        flex: 1;
+    }
+
+    .only-mobile {
+        display: none;
+    }
+}
+
 section {
-    max-width: 600px;
-    margin: 0 auto;
     box-sizing: content-box;
-    padding: 1em 1em 2em 1em;
+    padding: 1em;
 }
 
 header {
     color: var(--primary-color);
     text-align: center;
-    padding: 0.85em;
+}
+
+header .announcement {
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    padding: 0.5em;
 }
 
 .logo {

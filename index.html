@@ -32,35 +32,28 @@
 
     <main id="app" v-cloak>
         <header>
-            <a href="">
+            <transition>
+                <div class="announcement" v-if="showAnnouncement">
+                    <a href="https://chat.openai.com/g/g-C2C2tThtS-slc-advisor" target="_blank" rel="noopener">SLC Advisor</a> is a GPTs that is fed with parts of my book <a href="https://blog.alexewerlof.com/p/book-intro-reliability-engineering" target="_blank" rel="noopener">Reliability Engineering Mindset (REM)</a>.
+                    <button @click="showAnnouncement = false" type="button">Dismiss</button>
+                </div>
+            </transition>
+            <a href="/">
                 <img src="img/icon.svg" alt="Service Level Calculator Logo" class="logo" />
                 <h1>
                     Service Level Calculator
                 </h1>
             </a>
+            <ul class="top-nav only-mobile">
+                <li><a href="#sli-title">SLI</a></li>
+                <li><a href="#slo-title">SLO</a></li>
+                <li><a href="#error-budget-title">Error Budget</a></li>
+                <li><a href="#alert-title">Alerting</a></li>
+                <li><a href="#share-title">Share</a></li>
+            </ul>
         </header>
     
-        <ul class="top-nav">
-            <li><a href="#sli-title">SLI</a></li>
-            <li><a href="#slo-title">SLO</a></li>
-            <li><a href="#error-budget-title">Error Budget</a></li>
-            <li><a href="#alert-title">Alerting</a></li>
-            <li><a href="#share-title">Share</a></li>
-        </ul>
-    
         <!------------------------ Examples ------------------------>
-        <section>
-            <h1>GPT</h1>
-            <p>
-                Introducing <a href="https://chat.openai.com/g/g-C2C2tThtS-slc-advisor" target="_blank" rel="noopener">SLC Advisor</a> (<em>beta</em>).
-            </p>
-            <p>
-                This GPT is fed with parts of my book <a href="https://blog.alexewerlof.com/p/book-intro-reliability-engineering" target="_blank" rel="noopener">Reliability Engineering Mindset (REM)</a>
-                and is trained to answer questions about SLIs and SLOs.
-                It is primarily intended for engineers and product managers to set impactful SLIs and reasonable SLOs.
-            </p>
-        </section>
-
         <section>
             <h2>
                 <label for="select-example">Examples</label>
@@ -84,556 +77,324 @@
             </div>
         </section>
 
-        <!------------------------ SLI ------------------------>
-        <section>
-            <h1 id="sli-title">
-                SLI
-                <help-component>
-                    <p>
-                        In simple words <a href="https://blog.alexewerlof.com/p/sli" target="_blank" rel="noopener">Service Level Indicators
-                        </a> are the metrics that represent how the reliability
-                        is perceived by the consumers of the service. They are normalized to be a number between
-                        0 and 100 using this formula:
-                    </p>
-                    <div class="formula">
-                        <div class="formula__whole">
-                            SLI
-                            <code>
-                                <span class="punct">=</span>
-                            </code>
-                        </div>
-                        <div class="formula__fraction">
-                            <div class="formula__fraction--top">
-                                <a href="https://blog.alexewerlof.com/p/sli-good" target="_blank" rel="noopener">Good</a>
-                            </div>
-                            <div class="formula__fraction--bottom">
-                                <a href="https://blog.alexewerlof.com/p/valid-vs-total" target="_blank" rel="noopener">Valid</a>
-                            </div>
-                        </div>
-                        <div class="formula__whole">
-                            <code>
-                                <span class="punct"> × </span>
-                                <span class="const">100</span>
-                            </code>
-                        </div>
-                    </div>
-                    <p>
-                        Common SLIs include latency, availability, yield, durability, correctness, etc.
-                    </p>
-                </help-component>
-            </h1>
-            <h3>
-                <label for="sli-title-input">Title</label>
-            </h3>
-            <input id="sli-title-input" type="text" v-model="title" :placeholder="config.title.placeholder">
-
-            <h3>
-                <label for="sli-description-input">Description</label>
-            </h3>
-            <textarea
-                id="sli-description-input"
-                rows="2"
-                type="text"
-                v-model="description"
-                :placeholder="config.description.placeholder"></textarea>
-            
-            <h2>
-                <label>Type</label>
-                <help-component>
-                    <p>
-                        SLIs can either be either:
-                        <ul>
-                            <li>
-                                <em>Time-Based</em>: Concerned with the <em>duration</em> of good time in a given period.
-                                The duration is actually a time window where the data is aggregated for a good/bad result.
-                                In a sense the Time-Based SLI is also an Event-Based SLI where an event is an
-                                aggregation window.
-                            </li>
-                            <li>
-                                <em>Event-Based</em>: Concerned with the <em>count</em> of good events in a set of valid events in a given time period.
-                            </li>
-                        </ul>
-                        Learn more
-                        <a href="https://blog.alexewerlof.com/p/time-based-vs-event-based" rel="noopener" target="_blank">
-                            here
-                        </a>.
-                    </p>
-                </help-component>
-            </h2>
-
-            <div class="block">
-                <p>
-                    <label>
-                        <input
-                            type="radio"
-                            v-model="isTimeBased"
-                            :value="true">
-                        Time-Based
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input
-                            type="radio"
-                            v-model="isTimeBased"
-                            :value="false">
-                        Event-Based
-                    </label>
-                </p>
-            </div>
-
-            <div v-if="isTimeBased">
-                <!-- SLI Time Slot -->
-                <h3>
-                    <label for="sli-time-slot-length-input">Time Slot: {{ unit }} sec</label>
+        <article>
+            <!------------------------ SLI ------------------------>
+            <section>
+                <h1 id="sli-title">
+                    SLI
                     <help-component>
                         <p>
-                            The time slot is the time window that the metric data is aggregated to
-                            calculate a good/bad time period.
+                            In simple words <a href="https://blog.alexewerlof.com/p/sli" target="_blank" rel="noopener">Service Level Indicators
+                            </a> are the metrics that represent how the reliability
+                            is perceived by the consumers of the service. They are normalized to be a number between
+                            0 and 100 using this formula:
                         </p>
+                        <div class="formula">
+                            <div class="formula__whole">
+                                SLI
+                                <code>
+                                    <span class="punct">=</span>
+                                </code>
+                            </div>
+                            <div class="formula__fraction">
+                                <div class="formula__fraction--top">
+                                    <a href="https://blog.alexewerlof.com/p/sli-good" target="_blank" rel="noopener">Good</a>
+                                </div>
+                                <div class="formula__fraction--bottom">
+                                    <a href="https://blog.alexewerlof.com/p/valid-vs-total" target="_blank" rel="noopener">Valid</a>
+                                </div>
+                            </div>
+                            <div class="formula__whole">
+                                <code>
+                                    <span class="punct"> × </span>
+                                    <span class="const">100</span>
+                                </code>
+                            </div>
+                        </div>
                         <p>
-                            For example, probing an endpoint every 60 seconds to see if it is available,
-                            assumes that the endpoint is available for the entire 60 seconds.
+                            Common SLIs include latency, availability, yield, durability, correctness, etc.
                         </p>
-                        <p>
-                            Another example is percentiles. When calculating the 99th percentile of the
-                            latency every 5 minutes, the aggregation window is 5 x 60 = 300 seconds.
-                        </p>
-                        <table>
-                            <caption>Typical time slot lengths</caption>
-                            <thead>
-                                <tr>
-                                    <th>Time Slot</th>
-                                    <th>Seconds</th>
-                                    <th aria-label="try button"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="p in config.timeSlot.presets">
-                                    <td>{{ p.title }}</td>
-                                    <td>{{ p.seconds }}</td>
-                                    <td><button type="button" @click="unit = p.seconds">Try!</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </help-component>
-                </h3>
-                <input
-                    id="sli-time-slot-length-input"
-                    type="range"
-                    :min="config.timeSlot.min"
-                    :max="config.timeSlot.max"
-                    :step="config.timeSlot.step"
-                    placeholder="60"
-                    v-model.number="unit">
-            </div>
-            <div v-else>
-                <!-- SLI Event Unit -->
+                </h1>
                 <h3>
-                    <label for="sli-event-unit">Events Unit</label>
-                    <help-component>
-                        <p>
-                            The unit of the event that the SLI is measuring.
-                            This is mainly used in the UI to make it easier to understand.
-                        </p>
-                        <p>
-                            If the Good and Valid events are the same type, you can use a
-                            custom event name. Otherwise, you can just use the default
-                            and generic "event".
-                        </p>
-                        <table>
-                            <caption>Common event units</caption>
-                            <thead>
-                                <th>Event Unit</th>
-                                <th>Use case</th>
-                                <th aria-label="try button"></th>
-                            </thead>
-                            <tbody>
-                                <tr v-for="p of config.unit.presets">
-                                    <td>{{ p.unit }}</td>
-                                    <td>{{ p.useCase }}</td>
-                                    <td><button type="button" @click="unit = p.unit">Try!</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </help-component>
+                    <label for="sli-title-input">Title</label>
                 </h3>
-                <input
-                    id="sli-event-unit"
+                <input id="sli-title-input" type="text" v-model="title" :placeholder="config.title.placeholder">
+
+                <h3>
+                    <label for="sli-description-input">Description</label>
+                </h3>
+                <textarea
+                    id="sli-description-input"
+                    rows="2"
                     type="text"
-                    v-model="unit">
-            </div>
-
-            <!-- SLI: Good -->
-            <h2>
-                <label for="sli-good-input">Good {{ sloWindow.normUnit }}</label>
-                <help-component>
-                    <p>
-                        <a href="https://blog.alexewerlof.com/p/sli-good" rel="noopener" target="_blank">
-                            What is a good {{ sloWindow.normUnit }}?
-                        </a>
-                        How do good {{ sloWindow.normUnit }} look like?
-                        
-                        What is the metric that you can measure to identify the
-                        good {{ sloWindow.normUnit }} from all the valid {{ sloWindow.normUnit }}?
-                    </p>
-                </help-component>
-            </h2>
-            <input
-                id="sli-good-input"
-                type="text"
-                v-model="good">
-
-            <!-- SLI: Valid -->
-            <div class="block">
+                    v-model="description"
+                    :placeholder="config.description.placeholder"></textarea>
+                
                 <h2>
-                    <label for="sli-valid-input">
-                        Valid {{ sloWindow.normUnit }}
-                    </label>
+                    <label>Type</label>
                     <help-component>
                         <p>
-                            For simplicity, sometimes "total" is used instead of "valid".
-                            But 
-                            <a href="https://blog.alexewerlof.com/p/valid-vs-total" rel="noopener" target="_blank">
-                                there is a difference
-                            </a>.
-                        </p>
-                        <p>
-                            While
-                            <a>
-                                Service level indicator
-                            </a>
-                            guides the optimization,
-                            the definition of valid scopes that optimization for two reasons:
+                            SLIs can either be either:
                             <ul>
-                                <li>Focus the optimization effort</li>
-                                <li>Clarify responsibility and control</li>
+                                <li>
+                                    <em>Time-Based</em>: Concerned with the <em>duration</em> of good time in a given period.
+                                    The duration is actually a time window where the data is aggregated for a good/bad result.
+                                    In a sense the Time-Based SLI is also an Event-Based SLI where an event is an
+                                    aggregation window.
+                                </li>
+                                <li>
+                                    <em>Event-Based</em>: Concerned with the <em>count</em> of good events in a set of valid events in a given time period.
+                                </li>
                             </ul>
-                        </p>
-                        <p>
-                            Leave this field empty to use "total" instead.
+                            Learn more
+                            <a href="https://blog.alexewerlof.com/p/time-based-vs-event-based" rel="noopener" target="_blank">
+                                here
+                            </a>.
                         </p>
                     </help-component>
                 </h2>
 
-                <input
-                    id="sli-valid-input"
-                    type="text"
-                    v-model="valid"
-                >
-            </div>
+                <div class="block">
+                    <p>
+                        <label>
+                            <input
+                                type="radio"
+                                v-model="isTimeBased"
+                                :value="true">
+                            Time-Based
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input
+                                type="radio"
+                                v-model="isTimeBased"
+                                :value="false">
+                            Event-Based
+                        </label>
+                    </p>
+                </div>
 
-            <!-- SLI Formula -->
-            <h2>
-                SLI Formula
-                <help-component>
-                    <p>
-                        The formula for calculating SLI for the given SLO window is
-                        the percentage of good per valid.
-                    </p>
-                    <p>
-                        Depending on whether the SLI is time-based or event-based,
-                        the formula calculates the percentage of bad time or bad events.
-                    </p>
-                    <div class="formula">
-                        <div class="formula__whole">
-                            SLI
-                            <code>
-                                <span class="punct">=</span>
-                            </code>
-                        </div>
+                <div v-if="isTimeBased">
+                    <!-- SLI Time Slot -->
+                    <h3>
+                        <label for="sli-time-slot-length-input">Time Slot: {{ unit }} sec</label>
+                        <help-component>
+                            <p>
+                                The time slot is the time window that the metric data is aggregated to
+                                calculate a good/bad time period.
+                            </p>
+                            <p>
+                                For example, probing an endpoint every 60 seconds to see if it is available,
+                                assumes that the endpoint is available for the entire 60 seconds.
+                            </p>
+                            <p>
+                                Another example is percentiles. When calculating the 99th percentile of the
+                                latency every 5 minutes, the aggregation window is 5 x 60 = 300 seconds.
+                            </p>
+                            <table>
+                                <caption>Typical time slot lengths</caption>
+                                <thead>
+                                    <tr>
+                                        <th>Time Slot</th>
+                                        <th>Seconds</th>
+                                        <th aria-label="try button"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="p in config.timeSlot.presets">
+                                        <td>{{ p.title }}</td>
+                                        <td>{{ p.seconds }}</td>
+                                        <td><button type="button" @click="unit = p.seconds">Try!</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </help-component>
+                    </h3>
+                    <input
+                        id="sli-time-slot-length-input"
+                        type="range"
+                        :min="config.timeSlot.min"
+                        :max="config.timeSlot.max"
+                        :step="config.timeSlot.step"
+                        placeholder="60"
+                        v-model.number="unit">
+                </div>
+                <div v-else>
+                    <!-- SLI Event Unit -->
+                    <h3>
+                        <label for="sli-event-unit">Events Unit</label>
+                        <help-component>
+                            <p>
+                                The unit of the event that the SLI is measuring.
+                                This is mainly used in the UI to make it easier to understand.
+                            </p>
+                            <p>
+                                If the Good and Valid events are the same type, you can use a
+                                custom event name. Otherwise, you can just use the default
+                                and generic "event".
+                            </p>
+                            <table>
+                                <caption>Common event units</caption>
+                                <thead>
+                                    <th>Event Unit</th>
+                                    <th>Use case</th>
+                                    <th aria-label="try button"></th>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="p of config.unit.presets">
+                                        <td>{{ p.unit }}</td>
+                                        <td>{{ p.useCase }}</td>
+                                        <td><button type="button" @click="unit = p.unit">Try!</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </help-component>
+                    </h3>
+                    <input
+                        id="sli-event-unit"
+                        type="text"
+                        v-model="unit">
+                </div>
+
+                <!-- SLI: Good -->
+                <h2>
+                    <label for="sli-good-input">Good {{ sloWindow.normUnit }}</label>
+                    <help-component>
+                        <p>
+                            <a href="https://blog.alexewerlof.com/p/sli-good" rel="noopener" target="_blank">
+                                What is a good {{ sloWindow.normUnit }}?
+                            </a>
+                            How do good {{ sloWindow.normUnit }} look like?
+                            
+                            What is the metric that you can measure to identify the
+                            good {{ sloWindow.normUnit }} from all the valid {{ sloWindow.normUnit }}?
+                        </p>
+                    </help-component>
+                </h2>
+                <input
+                    id="sli-good-input"
+                    type="text"
+                    v-model="good">
+
+                <!-- SLI: Valid -->
+                <div class="block">
+                    <h2>
+                        <label for="sli-valid-input">
+                            Valid {{ sloWindow.normUnit }}
+                        </label>
+                        <help-component>
+                            <p>
+                                For simplicity, sometimes "total" is used instead of "valid".
+                                But 
+                                <a href="https://blog.alexewerlof.com/p/valid-vs-total" rel="noopener" target="_blank">
+                                    there is a difference
+                                </a>.
+                            </p>
+                            <p>
+                                While
+                                <a>
+                                    Service level indicator
+                                </a>
+                                guides the optimization,
+                                the definition of valid scopes that optimization for two reasons:
+                                <ul>
+                                    <li>Focus the optimization effort</li>
+                                    <li>Clarify responsibility and control</li>
+                                </ul>
+                            </p>
+                            <p>
+                                Leave this field empty to use "total" instead.
+                            </p>
+                        </help-component>
+                    </h2>
+
+                    <input
+                        id="sli-valid-input"
+                        type="text"
+                        v-model="valid"
+                    >
+                </div>
+
+                <!-- SLI Formula -->
+                <h2>
+                    SLI Formula
+                    <help-component>
+                        <p>
+                            The formula for calculating SLI for the given SLO window is
+                            the percentage of good per valid.
+                        </p>
+                        <p>
+                            Depending on whether the SLI is time-based or event-based,
+                            the formula calculates the percentage of bad time or bad events.
+                        </p>
+                        <div class="formula">
+                            <div class="formula__whole">
+                                SLI
+                                <code>
+                                    <span class="punct">=</span>
+                                </code>
+                            </div>
+                            <div class="formula__fraction">
+                                <div class="formula__fraction--top">
+                                    <span class="invis">(</span>
+                                    <span>Good {{ sloWindow.normUnit }}</span>
+                                    <span class="invis"> /</span>
+                                </div>
+                                <div class="formula__fraction--bottom">
+                                    <span>Valid {{ sloWindow.normUnit }}</span>
+                                    <span class="invis">)</span>
+                                </div>
+                            </div>
+                            <div class="formula__whole">
+                                <code>
+                                    <span class="punct"> × </span>
+                                    <span class="const">100</span>
+                                </code>
+                            </div>
+                        </div>    
+                    </help-component>
+                </h2>
+                <div class="code block">
+                    <div class="formula" id="sli-formula-code">
                         <div class="formula__fraction">
                             <div class="formula__fraction--top">
-                                <span class="invis">(</span>
-                                <span>Good {{ sloWindow.normUnit }}</span>
+                                <label for="sli-good-input">
+                                    <code>
+                                        <label for="sli-type-input">
+                                            <span class="funct">count</span>
+                                        </label>
+                                        <span class="punct">(</span>
+                                        <label for="sli-event-unit">
+                                            <span class="exprs">{{ sloWindow.normUnit }}</span>
+                                        </label>
+                                        <span class="punct">, </span>
+                                        <label for="sli-good-input">
+                                            <span class="exprs">{{ good }}</span>
+                                        </label>
+                                        <span class="punct">)</span>
+                                    </code>
+                                </label>
                                 <span class="invis"> /</span>
                             </div>
                             <div class="formula__fraction--bottom">
-                                <span>Valid {{ sloWindow.normUnit }}</span>
-                                <span class="invis">)</span>
-                            </div>
-                        </div>
-                        <div class="formula__whole">
-                            <code>
-                                <span class="punct"> × </span>
-                                <span class="const">100</span>
-                            </code>
-                        </div>
-                    </div>    
-                </help-component>
-            </h2>
-            <div class="code block">
-                <div class="formula" id="sli-formula-code">
-                    <div class="formula__fraction">
-                        <div class="formula__fraction--top">
-                            <label for="sli-good-input">
-                                <code>
-                                    <label for="sli-type-input">
-                                        <span class="funct">count</span>
-                                    </label>
-                                    <span class="punct">(</span>
-                                    <label for="sli-event-unit">
-                                        <span class="exprs">{{ sloWindow.normUnit }}</span>
-                                    </label>
-                                    <span class="punct">, </span>
-                                    <label for="sli-good-input">
-                                        <span class="exprs">{{ good }}</span>
-                                    </label>
-                                    <span class="punct">)</span>
-                                </code>
-                            </label>
-                            <span class="invis"> /</span>
-                        </div>
-                        <div class="formula__fraction--bottom">
-                            <label for="sli-valid-input">
-                                <code>
-                                    <label for="sli-type-input">
-                                        <span class="funct">count</span>
-                                    </label>
-                                    <span class="punct">(</span>
-                                    <label for="sli-event-unit">
-                                        <span class="exprs">{{ sloWindow.normUnit }}</span>
-                                    </label>
-                                    <span v-if="valid" class="punct">, </span>
-                                    <label v-if="valid" for="sli-valid-input">
-                                        <span class="exprs">{{ valid }}</span>
-                                    </label>
-                                    <span class="punct">)</span>
-                                </code>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="formula__whole">
-                        <code>
-                            <span class="punct"> × </span>
-                            <span class="const">100</span>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <button @click="copy('sli-formula-code', 'sli-formula')" type="button" class="large">Copy</button>
-        </section>
-
-        <!------------------------ SLO ------------------------>
-        <section>
-            <h1 id="slo-title">
-                <label for="slo-int-input">
-                    SLO: {{ percL10n(slo) }}
-                </label>
-                <help-component>
-                    <p>
-                        Service Level Objective (SLO) is the target percentage of good {{ sloWindow.normUnit }}.
-                    </p>
-                    <p>
-                        Using the two sliders below you can fine tune the SLO to your needs.
-                        The first slider is for the integer part of the percentage ({{ percL10n(sloInt) }}).
-                        The second slider is for the fractional part of the percentage ({{ percL10n(sloFrac) }}).
-                    </p>
-                    <table>
-                        <caption>Typical SLO values</caption>
-                        <thead>
-                            <tr>
-                                <th>Informal Name</th>
-                                <th>SLO Value</th>
-                                <th aria-label="try button"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="p in config.slo.presets">
-                                <td>{{ p.title }}</td>
-                                <td>{{percL10n(p.slo)}}</td>
-                                <td><button type="button" @click="slo = p.slo">Try!</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p v-if="slo > 99.9">
-                        Just be mindful of the price tag for this high service level <em>objective</em>!
-
-                        Everyone wants the highest possible number but
-                        <a href="https://blog.alexewerlof.com/p/Rule of 10x per 9" target="_blank" rel="noopener">
-                            not everyone is willing to pay the price.
-                        </a>
-                    </p>
-                    <p v-if="slo < 70">
-                        Note: this is an unusually low service level objective.
-                        Typically service level <em>objective</em> is above {{ percL10n(90) }} with some rare exceptions.
-                        Please check the <a href="#error-budget-title">Error budget</a> for implications of your chosen SLO.
-                    </p>
-                    <p v-if="slo < 50">
-                        It looks like you're expecting the service level to be violated more than met!
-                        It may be tempting to start from a low objective, but maybe the definition of
-                        your service level <em>indicator</em> could be improved to narrow down the focus
-                        of service level optimization.
-                    </p>
-                    <p v-if="slo < 1">
-                        😂 Are you joking?
-                    </p>
-                </help-component>
-            </h1>
-            <input
-                id="slo-int-input"
-                type="range"
-                :min="config.slo.min"
-                max="99"
-                v-model.number="sloInt"
-            >
-            <h3>
-                <label for="slo-frac-input">Fraction: {{ percL10n(sloFrac) }}</label>
-                <help-component>
-                    <p>
-                        This slider allows fine tuning the SLO.
-                        It is mostly for convenience when deciding a reasonable error budget
-                        while keeping an eye on it.
-                    </p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>{{ sloInt }}.XYZ</th>
-                                <th>Subtract</th>
-                                <th>Add</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>X</th>
-                                <td><button type="button" @click="changeSLO(-0.1)">{{ percL10n(-0.1) }}</button></td>
-                                <td><button type="button" @click="changeSLO(0.1)">{{ percL10n(+0.1) }}</button></td>
-                            </tr>
-                            <tr>
-                                <th>Y</th>
-                                <td><button type="button" @click="changeSLO(-0.01)">{{ percL10n(-0.01) }}</button></td>
-                                <td><button type="button" @click="changeSLO(0.01)">{{ percL10n(+0.01) }}</button></td>
-                            </tr>
-                            <tr>
-                                <th>Z</th>
-                                <td><button type="button" @click="changeSLO(-0.001)">{{ percL10n(-0.001) }}</button></td>
-                                <td><button type="button" @click="changeSLO(0.001)">{{ percL10n(+0.001) }}</button></td>
-                            </tr>
-                            <tr>
-                                <th>XYZ</th>
-                                <td colspan="2"><button type="button" @click="sloFrac = 0">reset</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </help-component>
-            </h3>
-            <input
-                id="slo-frac-input"
-                type="range"
-                min="0"
-                max="0.999"
-                step="0.001"
-                v-model.number="sloFrac"
-            >
-
-            <!-- SLO Window -->
-            <h2>
-                <label for="slo-window-unit-multiplier">
-                    Window:
-                    {{ windowDays }} days
-                </label>
-                <help-component>
-                    <p>
-                        The SLO window (also known as the compliance period) is the time period
-                        for which the SLO is calculated.
-                    </p>
-                    <p>
-                        Essentially this adjusts the <em>forgiveness</em> of the SLO.
-                        For example if the window is 30 days, we are not concerned with any incidents
-                        and breaches of SLO that happened before that.
-                    </p>
-                    <p>
-                        Smaller windows also help prevent the error budget from accumulating too much.
-                        For example, if the SLO is 99% for a time-based Availability SLI (uptime),
-                        the error budget allows 432 minutes of downtime per month.
-                        This amount can be consumed in multiple down times during the month or one chunk of long downtime.
-                        But the same SLO allows only 100 minutes of downtime per week.
-                    </p>
-                    <p>
-                        It is usually 30 days or 4 weeks.
-                    </p>
-                    <p>
-                        You can play with different ranges to see how a given SLO translates to different
-                        good {{ sloWindow.normUnit }} and how it impacts the error budget.
-                    </p>
-                    <table>
-                        <caption>Typical compliance periods</caption>
-                        <thead>
-                            <tr>
-                                <th>Window</th>
-                                <th>Days</th>
-                                <th>Advantage</th>
-                                <th aria-label="try button"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="p of config.windowDays.presets">
-                                <td>{{ p.title }}</td>
-                                <td>{{ p.days }}</td>
-                                <td>{{ p.useCase }}</td>
-                                <td><button type="button" @click="windowDays=p.days">Try!</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </help-component>
-            </h2>
-
-            <p v-if="isTimeBased">
-                {{ sloWindow }}
-            </p>
-
-            <input
-                type="range"
-                :min="config.windowDays.min"
-                :max="config.windowDays.max"
-                :step="config.windowDays.step"
-                v-model.number="windowDays"
-                id="slo-window-unit-multiplier"
-            >
-
-        <!------------------------ Error budget ------------------------>
-            <h1 id="error-budget-title">
-                Error budget: {{ percL10n(errorBudgetPerc) }}
-                <help-component>
-                    <p>
-                        Error budget is one of the core ideas behind using SLI/SLOs to improve reliability.
-                        Instead of denying or forbidding errors, error budget allows the system to fail
-                        within a pre-defined limit.
-                    </p>
-                    <p>
-                        The number one enemy of reliability is change.
-                        But we need change to be able to improve the system.
-                        Error budgets do exactly that.
-                        They provide a budget of error for the team to improve the system while keeping
-                        the consumers happy enough.
-                    </p>
-                    <p>
-                        Error budget is the complement of SLO.
-                        It is the percentage of bad {{ sloWindow.normUnit }} that you can have
-                        before you violate the SLO.
-                    </p>
-                    <div class="formula">
-                        <div class="formula__whole">
-                            Error Budget
-                            <code>
-                                <span class="punct">= </span>
-                                <span class="const">{{ percL10n(100) }}</span>
-                                <span class="punct"> - </span>
-                                <span class="exprs">SLO</span>
-                                <span class="punct"> =</span>
-                            </code>
-                        </div>
-
-                        <div class="formula__fraction">
-                            <div class="formula__fraction--top">
-                                <a href="https://blog.alexewerlof.com/p/valid-vs-total" target="_blank" rel="noopener">Valid</a>
-                                <code>
-                                    <span class="punct"> - </span>
-                                </code>
-                                <a href="https://blog.alexewerlof.com/p/sli-good" target="_blank" rel="noopener">Good</a>
-                            </div>
-                            <div class="formula__fraction--bottom">
-                                <a href="https://blog.alexewerlof.com/p/valid-vs-total" target="_blank" rel="noopener">Valid</a>
+                                <label for="sli-valid-input">
+                                    <code>
+                                        <label for="sli-type-input">
+                                            <span class="funct">count</span>
+                                        </label>
+                                        <span class="punct">(</span>
+                                        <label for="sli-event-unit">
+                                            <span class="exprs">{{ sloWindow.normUnit }}</span>
+                                        </label>
+                                        <span v-if="valid" class="punct">, </span>
+                                        <label v-if="valid" for="sli-valid-input">
+                                            <span class="exprs">{{ valid }}</span>
+                                        </label>
+                                        <span class="punct">)</span>
+                                    </code>
+                                </label>
                             </div>
                         </div>
                         <div class="formula__whole">
@@ -643,436 +404,601 @@
                             </code>
                         </div>
                     </div>
-                    <p>
-                        In this case:
-                    </p>
-                    <p>
-                        <code>
-                            <span class="exprs">error_budget</span>
-                            <span class="punct"> = </span>
-                            <span class="const">{{ percL10n(100) }}</span>
-                            <span class="punct"> - </span>
-                            <span class="const">{{ percL10n(slo) }}</span>
-                            <span class="punct"> = </span>
-                            <span class="const">{{ percL10n(errorBudgetPerc) }}</span>
-                        </code>
-                    </p>
-                </help-component>
-            </h1>
-            <div class="error-budget-diagram">
-                <div class="error-budget-diagram__error-caption">
-                    <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
-                    allowed to violate
-                    <label for="sli-good-input"><code>{{ good }}</code></label>
                 </div>
-                <div class="error-budget-diagram__fill">
-                    <div class="error-budget-diagram__error-fill" :style="{ width: errorBudgetPerc + '%'}"></div>
-                </div>
-                <div class="error-budget-diagram__good-caption">
-                    <label for="sli-good-input"><code>{{ good }}</code></label>
-                    &nbsp;
-                    <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
-                </div>
-                <div class="error-budget-diagram__valid-caption">
-                    <label for="sli-valid-input"><code>{{ valid }}</code></label>
-                    &nbsp;
-                    <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
-                    in
-                    <label for="slo-window-unit-multiplier"><code>{{ sloWindow.humanTime }}</code></label>
-                </div>
-            </div>
-            <div v-if="!isTimeBased">
-                <h3>
-                    <label for="error-budget-example-input">Example number of valid {{ sloWindow.normUnit }}</label>
+                <button @click="copy('sli-formula-code', 'sli-formula')" type="button" class="large">Copy</button>
+            </section>
+
+            <!------------------------ SLO ------------------------>
+            <section>
+                <h1 id="slo-title">
+                    <label for="slo-int-input">
+                        SLO: {{ percL10n(slo) }}
+                    </label>
                     <help-component>
-                        Here you can enter the numbers for your expected load and see
-                        how many {{ sloWindow.normUnit }} are allowed to fail during the SLO window
-                        while still being within the error budget.
+                        <p>
+                            Service Level Objective (SLO) is the target percentage of good {{ sloWindow.normUnit }}.
+                        </p>
+                        <p>
+                            Using the two sliders below you can fine tune the SLO to your needs.
+                            The first slider is for the integer part of the percentage ({{ percL10n(sloInt) }}).
+                            The second slider is for the fractional part of the percentage ({{ percL10n(sloFrac) }}).
+                        </p>
+                        <table>
+                            <caption>Typical SLO values</caption>
+                            <thead>
+                                <tr>
+                                    <th>Informal Name</th>
+                                    <th>SLO Value</th>
+                                    <th aria-label="try button"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="p in config.slo.presets">
+                                    <td>{{ p.title }}</td>
+                                    <td>{{percL10n(p.slo)}}</td>
+                                    <td><button type="button" @click="slo = p.slo">Try!</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p v-if="slo > 99.9">
+                            Just be mindful of the price tag for this high service level <em>objective</em>!
+
+                            Everyone wants the highest possible number but
+                            <a href="https://blog.alexewerlof.com/p/Rule of 10x per 9" target="_blank" rel="noopener">
+                                not everyone is willing to pay the price.
+                            </a>
+                        </p>
+                        <p v-if="slo < 70">
+                            Note: this is an unusually low service level objective.
+                            Typically service level <em>objective</em> is above {{ percL10n(90) }} with some rare exceptions.
+                            Please check the <a href="#error-budget-title">Error budget</a> for implications of your chosen SLO.
+                        </p>
+                        <p v-if="slo < 50">
+                            It looks like you're expecting the service level to be violated more than met!
+                            It may be tempting to start from a low objective, but maybe the definition of
+                            your service level <em>indicator</em> could be improved to narrow down the focus
+                            of service level optimization.
+                        </p>
+                        <p v-if="slo < 1">
+                            😂 Are you joking?
+                        </p>
+                    </help-component>
+                </h1>
+                <input
+                    id="slo-int-input"
+                    type="range"
+                    :min="config.slo.min"
+                    max="99"
+                    v-model.number="sloInt"
+                >
+                <h3>
+                    <label for="slo-frac-input">Fraction: {{ percL10n(sloFrac) }}</label>
+                    <help-component>
+                        <p>
+                            This slider allows fine tuning the SLO.
+                            It is mostly for convenience when deciding a reasonable error budget
+                            while keeping an eye on it.
+                        </p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>{{ sloInt }}.XYZ</th>
+                                    <th>Subtract</th>
+                                    <th>Add</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>X</th>
+                                    <td><button type="button" @click="changeSLO(-0.1)">{{ percL10n(-0.1) }}</button></td>
+                                    <td><button type="button" @click="changeSLO(0.1)">{{ percL10n(+0.1) }}</button></td>
+                                </tr>
+                                <tr>
+                                    <th>Y</th>
+                                    <td><button type="button" @click="changeSLO(-0.01)">{{ percL10n(-0.01) }}</button></td>
+                                    <td><button type="button" @click="changeSLO(0.01)">{{ percL10n(+0.01) }}</button></td>
+                                </tr>
+                                <tr>
+                                    <th>Z</th>
+                                    <td><button type="button" @click="changeSLO(-0.001)">{{ percL10n(-0.001) }}</button></td>
+                                    <td><button type="button" @click="changeSLO(0.001)">{{ percL10n(+0.001) }}</button></td>
+                                </tr>
+                                <tr>
+                                    <th>XYZ</th>
+                                    <td colspan="2"><button type="button" @click="sloFrac = 0">reset</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </help-component>
                 </h3>
-                <p>
-                    Expected 
-                    <label for="sli-valid-input">
-                        <code>{{ valid }}</code>
-                    </label>
-                    &nbsp;
-                    <label for="sli-event-unit">
-                        <code>{{ sloWindow.normUnit }}</code>
-                    </label>
-                    in {{ sloWindow.humanTime }}:
-                </p>
                 <input
-                    type="number"
-                    v-model.number="errorBudgetValidExample"
-                    id="error-budget-example-input"
-                    :min="config.errorBudgetValidExample.min"
-                    :max="config.errorBudgetValidExample.max"
-                    :step="config.errorBudgetValidExample.step">
-            </div>
+                    id="slo-frac-input"
+                    type="range"
+                    min="0"
+                    max="0.999"
+                    step="0.001"
+                    v-model.number="sloFrac"
+                >
 
-            <h3>
-                Average cost of bad <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
-                <help-component>
+                <!-- SLO Window -->
+                <h2>
+                    <label for="slo-window-unit-multiplier">
+                        Window:
+                        {{ windowDays }} days
+                    </label>
+                    <help-component>
+                        <p>
+                            The SLO window (also known as the compliance period) is the time period
+                            for which the SLO is calculated.
+                        </p>
+                        <p>
+                            Essentially this adjusts the <em>forgiveness</em> of the SLO.
+                            For example if the window is 30 days, we are not concerned with any incidents
+                            and breaches of SLO that happened before that.
+                        </p>
+                        <p>
+                            Smaller windows also help prevent the error budget from accumulating too much.
+                            For example, if the SLO is 99% for a time-based Availability SLI (uptime),
+                            the error budget allows 432 minutes of downtime per month.
+                            This amount can be consumed in multiple down times during the month or one chunk of long downtime.
+                            But the same SLO allows only 100 minutes of downtime per week.
+                        </p>
+                        <p>
+                            It is usually 30 days or 4 weeks.
+                        </p>
+                        <p>
+                            You can play with different ranges to see how a given SLO translates to different
+                            good {{ sloWindow.normUnit }} and how it impacts the error budget.
+                        </p>
+                        <table>
+                            <caption>Typical compliance periods</caption>
+                            <thead>
+                                <tr>
+                                    <th>Window</th>
+                                    <th>Days</th>
+                                    <th>Advantage</th>
+                                    <th aria-label="try button"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="p of config.windowDays.presets">
+                                    <td>{{ p.title }}</td>
+                                    <td>{{ p.days }}</td>
+                                    <td>{{ p.useCase }}</td>
+                                    <td><button type="button" @click="windowDays=p.days">Try!</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </help-component>
+                </h2>
+
+                <p v-if="isTimeBased">
+                    {{ sloWindow }}
+                </p>
+
+                <input
+                    type="range"
+                    :min="config.windowDays.min"
+                    :max="config.windowDays.max"
+                    :step="config.windowDays.step"
+                    v-model.number="windowDays"
+                    id="slo-window-unit-multiplier"
+                >
+
+            <!------------------------ Error budget ------------------------>
+                <h1 id="error-budget-title">
+                    Error budget: {{ percL10n(errorBudgetPerc) }}
+                    <help-component>
+                        <p>
+                            Error budget is one of the core ideas behind using SLI/SLOs to improve reliability.
+                            Instead of denying or forbidding errors, error budget allows the system to fail
+                            within a pre-defined limit.
+                        </p>
+                        <p>
+                            The number one enemy of reliability is change.
+                            But we need change to be able to improve the system.
+                            Error budgets do exactly that.
+                            They provide a budget of error for the team to improve the system while keeping
+                            the consumers happy enough.
+                        </p>
+                        <p>
+                            Error budget is the complement of SLO.
+                            It is the percentage of bad {{ sloWindow.normUnit }} that you can have
+                            before you violate the SLO.
+                        </p>
+                        <div class="formula">
+                            <div class="formula__whole">
+                                Error Budget
+                                <code>
+                                    <span class="punct">= </span>
+                                    <span class="const">{{ percL10n(100) }}</span>
+                                    <span class="punct"> - </span>
+                                    <span class="exprs">SLO</span>
+                                    <span class="punct"> =</span>
+                                </code>
+                            </div>
+
+                            <div class="formula__fraction">
+                                <div class="formula__fraction--top">
+                                    <a href="https://blog.alexewerlof.com/p/valid-vs-total" target="_blank" rel="noopener">Valid</a>
+                                    <code>
+                                        <span class="punct"> - </span>
+                                    </code>
+                                    <a href="https://blog.alexewerlof.com/p/sli-good" target="_blank" rel="noopener">Good</a>
+                                </div>
+                                <div class="formula__fraction--bottom">
+                                    <a href="https://blog.alexewerlof.com/p/valid-vs-total" target="_blank" rel="noopener">Valid</a>
+                                </div>
+                            </div>
+                            <div class="formula__whole">
+                                <code>
+                                    <span class="punct"> × </span>
+                                    <span class="const">100</span>
+                                </code>
+                            </div>
+                        </div>
+                        <p>
+                            In this case:
+                        </p>
+                        <p>
+                            <code>
+                                <span class="exprs">error_budget</span>
+                                <span class="punct"> = </span>
+                                <span class="const">{{ percL10n(100) }}</span>
+                                <span class="punct"> - </span>
+                                <span class="const">{{ percL10n(slo) }}</span>
+                                <span class="punct"> = </span>
+                                <span class="const">{{ percL10n(errorBudgetPerc) }}</span>
+                            </code>
+                        </p>
+                    </help-component>
+                </h1>
+                <div class="error-budget-diagram">
+                    <div class="error-budget-diagram__error-caption">
+                        <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
+                        allowed to violate
+                        <label for="sli-good-input"><code>{{ good }}</code></label>
+                    </div>
+                    <div class="error-budget-diagram__fill">
+                        <div class="error-budget-diagram__error-fill" :style="{ width: errorBudgetPerc + '%'}"></div>
+                    </div>
+                    <div class="error-budget-diagram__good-caption">
+                        <label for="sli-good-input"><code>{{ good }}</code></label>
+                        &nbsp;
+                        <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
+                    </div>
+                    <div class="error-budget-diagram__valid-caption">
+                        <label for="sli-valid-input"><code>{{ valid }}</code></label>
+                        &nbsp;
+                        <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
+                        in
+                        <label for="slo-window-unit-multiplier"><code>{{ sloWindow.humanTime }}</code></label>
+                    </div>
+                </div>
+                <div v-if="!isTimeBased">
+                    <h3>
+                        <label for="error-budget-example-input">Example number of valid {{ sloWindow.normUnit }}</label>
+                        <help-component>
+                            Here you can enter the numbers for your expected load and see
+                            how many {{ sloWindow.normUnit }} are allowed to fail during the SLO window
+                            while still being within the error budget.
+                        </help-component>
+                    </h3>
                     <p>
-                        When one of the
+                        Expected 
+                        <label for="sli-valid-input">
+                            <code>{{ valid }}</code>
+                        </label>
+                        &nbsp;
                         <label for="sli-event-unit">
                             <code>{{ sloWindow.normUnit }}</code>
                         </label>
-                        violates the
-                        <label for="sli-good-input">
-                            <code>{{ good }}</code>
-                        </label>
-                        condition,
-                        how much does it cost the business?
+                        in {{ sloWindow.humanTime }}:
                     </p>
-                    <p>
-                        This cost will be used to put a tangible number on various windows and events.
-                    </p>
-                </help-component>
-            </h3>
-            <input type="number"
-                v-model.number="badEventCost"
-                :min="config.badEventCost.min"
-                :max="config.badEventCost.max"
-                :step="config.badEventCost.step">
+                    <input
+                        type="number"
+                        v-model.number="errorBudgetValidExample"
+                        id="error-budget-example-input"
+                        :min="config.errorBudgetValidExample.min"
+                        :max="config.errorBudgetValidExample.max"
+                        :step="config.errorBudgetValidExample.step">
+                </div>
 
-            <h4>
-                Currency
-                <help-component>
-                    <p>
-                        You can set the currency to see how much it costs you to violate the SLO.
-                    </p>
-                    <table>
-                        <caption>Typical Currencies</caption>
-                        <tr>
-                            <th>Abbreviation</th>
-                            <th>Description</th>
-                            <th></th>
-                        </tr>
-                        <tr v-for="p of config.badEventCurrency.presets">
-                            <td>{{ p.currency }}</td>
-                            <td>{{ p.description }}</td>
-                            <td><button type="button" @click="badEventCurrency = p.currency">Try!</button></td>
-                    </table>
-                </help-component>
-            </h4>
-            <input type="text" v-model="badEventCurrency">
-            <h3>
-                Error Budget Cost
-                <help-component>
-                    <p>
-                        If this number doesn't look good, it might be tempting to reduce the error budget and force a higher SLO.
-                    </p>
-                    <p>
-                        But there are other ways to make the errors cheap.
-                        In a future article, we will discuss all parents of reliability and how to make errors cheap.
-                        In the mean time check out the following techniques:
+                <h3>
+                    Average cost of bad <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
+                    <help-component>
+                        <p>
+                            When one of the
+                            <label for="sli-event-unit">
+                                <code>{{ sloWindow.normUnit }}</code>
+                            </label>
+                            violates the
+                            <label for="sli-good-input">
+                                <code>{{ good }}</code>
+                            </label>
+                            condition,
+                            how much does it cost the business?
+                        </p>
+                        <p>
+                            This cost will be used to put a tangible number on various windows and events.
+                        </p>
+                    </help-component>
+                </h3>
+                <input type="number"
+                    v-model.number="badEventCost"
+                    :min="config.badEventCost.min"
+                    :max="config.badEventCost.max"
+                    :step="config.badEventCost.step">
+
+                <h4>
+                    Currency
+                    <help-component>
+                        <p>
+                            You can set the currency to see how much it costs you to violate the SLO.
+                        </p>
+                        <table>
+                            <caption>Typical Currencies</caption>
+                            <tr>
+                                <th>Abbreviation</th>
+                                <th>Description</th>
+                                <th></th>
+                            </tr>
+                            <tr v-for="p of config.badEventCurrency.presets">
+                                <td>{{ p.currency }}</td>
+                                <td>{{ p.description }}</td>
+                                <td><button type="button" @click="badEventCurrency = p.currency">Try!</button></td>
+                        </table>
+                    </help-component>
+                </h4>
+                <input type="text" v-model="badEventCurrency">
+                <h3>
+                    Error Budget Cost
+                    <help-component>
+                        <p>
+                            If this number doesn't look good, it might be tempting to reduce the error budget and force a higher SLO.
+                        </p>
+                        <p>
+                            But there are other ways to make the errors cheap.
+                            In a future article, we will discuss all parents of reliability and how to make errors cheap.
+                            In the mean time check out the following techniques:
+                            <ul>
+                                <li>
+                                    <a href="https://blog.alexewerlof.com/p/fallback" target="_blank" rel="noopener">Fallback</a>
+                                </li>
+                                <li>
+                                    <a href="https://blog.alexewerlof.com/p/failover" target="_blank" rel="noopener">Failover</a>
+                                </li>
+                            </ul>
+                        </p>
+                    </help-component>
+                </h3>
+                <p>
+                    {{ errorBudget }}
+                </p>
+            </section>
+
+            <!------------------------ Alert ------------------------>
+            <section>
+                <h1 id="alert-title">
+                    Alerting
+                    <help-component>
+                        <p>
+                            What is the point of setting SLI/SLO if we are not going to take application
+                            when the SLO is violated?
+                        </p>
+                        <p>
+                            Alerting on error budgets enable us to be on top of the reliability of our system.
+                            When using service levels, the alert triggers on the rate of consuming the error budget.
+                        </p>
+                        <p>
+                            When setting an alert, the burn rate decides how quickly the alert reacts
+                            to errors.
+                        </p>
                         <ul>
                             <li>
-                                <a href="https://blog.alexewerlof.com/p/fallback" target="_blank" rel="noopener">Fallback</a>
+                                Too fast and it will lead to false positives (alerting unnecessarily)
+                                and alert fatigue (too many alerts).
                             </li>
                             <li>
-                                <a href="https://blog.alexewerlof.com/p/failover" target="_blank" rel="noopener">Failover</a>
+                                Too slow and the error burget will be burned before you know it.
                             </li>
                         </ul>
-                    </p>
-                </help-component>
-            </h3>
-            <p>
-                {{ errorBudget }}
-            </p>
-        </section>
+                    </help-component>
+                </h1>
 
-        <!------------------------ Alert ------------------------>
-        <section>
-            <h1 id="alert-title">
-                Alerting
-                <help-component>
-                    <p>
-                        What is the point of setting SLI/SLO if we are not going to take application
-                        when the SLO is violated?
-                    </p>
-                    <p>
-                        Alerting on error budgets enable us to be on top of the reliability of our system.
-                        When using service levels, the alert triggers on the rate of consuming the error budget.
-                    </p>
-                    <p>
-                        When setting an alert, the burn rate decides how quickly the alert reacts
-                        to errors.
-                    </p>
-                    <ul>
-                        <li>
-                            Too fast and it will lead to false positives (alerting unnecessarily)
-                            and alert fatigue (too many alerts).
-                        </li>
-                        <li>
-                            Too slow and the error burget will be burned before you know it.
-                        </li>
-                    </ul>
-                </help-component>
-            </h1>
-
-            <!-- Error Budget Burn Rate -->
-            <h2>
-                <label for="burn-rate-input">
-                    Burn rate: {{ burnRate }}x
-                </label>
-                <help-component>
-                    <p>
-                        Burn rate is the rate at which the error budget is consumed.
-                        It is the ratio of the error budget to the SLO window.
-                    </p>
-                    <p>
-                        A burn rate of 1x means that the error budget will be consumed during the
-                        SLO window (accepted).
-                    </p>
-                    <p>
-                        A burn rate of 2x means that the error budget will be consumed in half the
-                        SLO window. This is not acceptable because at this rate, the SLO will be
-                        violated before the end of the SLO window.
-                    </p>
-                    <p>
-                        Goole SRE Workbook goes through 6 alerting strategies and
-                        <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener">
-                            recommends
-                        </a>:
-                    </p>
-                    <table>
-                        <thead>
-                            <th>Burn Rate</th>
-                            <th>Error Budget</th>
-                            <th>Long-Window</th>
-                            <th v-if="shortWindowVisible">Short-Window</th>
-                            <th>Action</th>
-                            <th aria-label="try button"></th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>14.4x</td>
-                                <td>{{ percL10n(2) }} Consumed</td>
-                                <td>1 hour</td>
-                                <td v-if="shortWindowVisible">5 minutes</td>
-                                <td>Page</td>
-                                <td>
-                                    <button type="button" @click="burnRate = 14.4, longWindowPerc = 2, shortWindowDivider = 12">
-                                        Try!
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>6x</td>
-                                <td>{{ percL10n(5) }} Consumed</td>
-                                <td>6 hours</td>
-                                <td v-if="shortWindowVisible">30 minutes</td>
-                                <td>Page</td>
-                                <td>
-                                    <button type="button" @click="burnRate = 6, longWindowPerc = 5, shortWindowDivider = 12">
-                                        Try!
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1x</td>
-                                <td>{{ percL10n(10) }} Consumed</td>
-                                <td>3 days</td>
-                                <td v-if="shortWindowVisible">6 hours</td>
-                                <td>Ticket</td>
-                                <td>
-                                    <button type="button" @click="burnRate = 1, longWindowPerc = 10, shortWindowDivider = 12">
-                                        Try!
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p>
-                        Note: The above values for Long-Window and Short-Window are based on a 1-month SLO window.
-                        You can see your actual values in the comments below Long-Window and Short-Window.
-                    </p>
-                </help-component>
-            </h2>
-            <input
-                id="burn-rate-input"
-                type="range"
-                :min="config.burnRate.min"
-                :max="config.burnRate.max"
-                :step="config.burnRate.step"
-                v-model.number="burnRate"
-            >
-            <h4>Time to exhaust the entire error budget</h4>
-            <p>
-                <time>{{ errorBudgetBurn }}</time>
-            </p>
-            <!-- Long Window Alert -->
-            <h2>
-                Long-Window
-                <help-component>
-                    Long-window alert is the "normal" alert.
-                    The reason it is called "long" is to distinguish it from the "short-window"
-                    alert which is primarily used to reduce false positives and improve the alert reset time.
-                </help-component>
-            </h2>
-            <!-- Alert after consuming -->
-            <h3>
-                <label for="alert-error-budget-perc">
-                    After Consuming: {{ percL10n(longWindowPerc) }}
-                </label>
-                <help-component>
-                    <p>
-                        We don't want to wait for the entire error budget to be consumed before
-                        alerting! It will be too late to take action.
-                    </p>
-                    <p>
-                        Therefore the alert should trigger before a significant portion of the
-                        error budget is consumed.
-                    </p>
-                    <p>
-                        Based on your setup, the alert will trigger after we have consumed
-                        {{ percL10n(longWindowPerc) }} of the entire time allotted for the error budget
-                        (or SLO compliance window) which is
-                        <time>{{ sloWindow.humanTime }}</time>.
-                    </p>
-                    <code>
-                        <span class="const">
-                            {{ percL10n(longWindowPerc) }}
-                        </span>
-                        <span class="funct"> × </span>
-                        <span class="const">
-                            {{ sloWindow.humanSec }}
-                        </span>
-                        <span class="punct"> = </span>
-                        <span class="const">
-                            {{ alertLongWindow.humanSec }}
-                        </span>
-                    </code>
-                    <p>
-                        Time to respond before the entire error budget is exhausted:
-                        <br />
-                        <time>{{ alertTTRWindow.humanTimeSec}}</time>
-                    </p>
-                    <code>
-                        <span class="exprs">TTRespond</span>
-                        <span class="punct"> = </span>
-                        <span class="const">{{ errorBudgetBurn.humanSec }}</span>
-                        <span class="punct"> - </span>
-                        <span class="const">{{ alertLongWindow.humanSec }}</span>
-                        <span class="punct"> = </span>
-                        <span class="const">{{ alertTTRWindow.humanSec }}</span>
-                    </code>
-                </help-component>
-            </h3>
-            <p>
-                Alert when at least {{ percL10n(longWindowPerc) }} of the error budget is consumed in the last:
-                <br />
-                <time>{{ alertLongWindow.humanTimeSec }}</time>
-            </p>
-            <p v-if="alertTTRWindow.sec < 3600">
-                Note: The time to resolve (TTR) is too short for a human to react.
-                It is strongly recommended to automate the response to the alert.
-            </p>
-            <input
-                id="alert-error-budget-perc"
-                type="range"
-                :min="config.longWindowPerc.min"
-                :max="config.longWindowPerc.max"
-                :step="config.longWindowPerc.step"
-                v-model.number="longWindowPerc"
-            >
-            <div>
-                <h4>Alert budget</h4>
+                <!-- Error Budget Burn Rate -->
+                <h2>
+                    <label for="burn-rate-input">
+                        Burn rate: {{ burnRate }}x
+                    </label>
+                    <help-component>
+                        <p>
+                            Burn rate is the rate at which the error budget is consumed.
+                            It is the ratio of the error budget to the SLO window.
+                        </p>
+                        <p>
+                            A burn rate of 1x means that the error budget will be consumed during the
+                            SLO window (accepted).
+                        </p>
+                        <p>
+                            A burn rate of 2x means that the error budget will be consumed in half the
+                            SLO window. This is not acceptable because at this rate, the SLO will be
+                            violated before the end of the SLO window.
+                        </p>
+                        <p>
+                            Goole SRE Workbook goes through 6 alerting strategies and
+                            <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener">
+                                recommends
+                            </a>:
+                        </p>
+                        <table>
+                            <thead>
+                                <th>Burn Rate</th>
+                                <th>Error Budget</th>
+                                <th>Long-Window</th>
+                                <th v-if="shortWindowVisible">Short-Window</th>
+                                <th>Action</th>
+                                <th aria-label="try button"></th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>14.4x</td>
+                                    <td>{{ percL10n(2) }} Consumed</td>
+                                    <td>1 hour</td>
+                                    <td v-if="shortWindowVisible">5 minutes</td>
+                                    <td>Page</td>
+                                    <td>
+                                        <button type="button" @click="burnRate = 14.4, longWindowPerc = 2, shortWindowDivider = 12">
+                                            Try!
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>6x</td>
+                                    <td>{{ percL10n(5) }} Consumed</td>
+                                    <td>6 hours</td>
+                                    <td v-if="shortWindowVisible">30 minutes</td>
+                                    <td>Page</td>
+                                    <td>
+                                        <button type="button" @click="burnRate = 6, longWindowPerc = 5, shortWindowDivider = 12">
+                                            Try!
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1x</td>
+                                    <td>{{ percL10n(10) }} Consumed</td>
+                                    <td>3 days</td>
+                                    <td v-if="shortWindowVisible">6 hours</td>
+                                    <td>Ticket</td>
+                                    <td>
+                                        <button type="button" @click="burnRate = 1, longWindowPerc = 10, shortWindowDivider = 12">
+                                            Try!
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            Note: The above values for Long-Window and Short-Window are based on a 1-month SLO window.
+                            You can see your actual values in the comments below Long-Window and Short-Window.
+                        </p>
+                    </help-component>
+                </h2>
+                <input
+                    id="burn-rate-input"
+                    type="range"
+                    :min="config.burnRate.min"
+                    :max="config.burnRate.max"
+                    :step="config.burnRate.step"
+                    v-model.number="burnRate"
+                >
+                <h4>Time to exhaust the entire error budget</h4>
                 <p>
-                    {{ alertLongWindow }}
+                    <time>{{ errorBudgetBurn }}</time>
                 </p>
-                <p v-if="alertLongWindow.eventCountL10n === 0">
-                    Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
-                    time slot length ({{ unit }} sec)
-                    because it will lead to division by zero error.
-                </p>
-            </div>
-            <!-- Burn Chart Component -->
-            <burn-component
-                :burn-rate="burnRate"
-                :long-alert-perc="longWindowPerc"></burn-component>
-            <!-- Long Window Alert Policy -->
-            <h3>
-                Alert Policy
-                <help-component>
-                    <p>
-                        This is a pseudo-code that help you understand what triggers the alert.
-                        You need to translate it to your alerting tool.
-                    </p>
-                </help-component>
-            </h3>
-            <div class="code block">
-                <div class="formula" id="alert-formula-code">
-                    <div class="formula__fraction">
-                        <div class="formula__fraction--top">
-                            <code>
-                                <label for="sli-type-input">
-                                    <span class="funct">count</span>
-                                </label>
-                                <span class="punct">(</span>
-                                <label for="sli-event-unit">
-                                    <span class="exprs">{{ sloWindow.normUnit }}</span>
-                                </label>
-                                <span class="punct">, </span>
-                                <label for="sli-good-input">
-                                    <span class="exprs">{{ good }}</span>
-                                </label>
-                                <span class="punct">, </span>
-                                <label for="alert-error-budget-perc">
-                                    <span class="const">
-                                        {{ alertLongWindow.humanSec }}
-                                    </span>
-                                </label>
-                                <span class="punct">)</span>
-                            </code>
-                            <span class="invis"> /</span>
-                        </div>
-                        <div class="formula__fraction--bottom">
-                            <code v-if="isTimeBased">
-                                <span class="const">{{ alertLongWindow.eventCountL10n }}</span>
-                            </code>
-                            <code v-else>
-                                <label for="sli-type-input">
-                                    <span class="funct">count</span>
-                                </label>
-                                <span class="punct">(</span>
-                                <label for="sli-event-unit">
-                                    <span class="exprs">{{ sloWindow.normUnit }}</span>
-                                </label>
-                                <span v-if="valid">
-                                    <span class="punct">, </span>
-                                    <label for="sli-valid-input">
-                                        <span class="exprs">{{ valid }}</span>
-                                    </label>
-                                </span>
-                                <span class="punct"></span>
-                                <span class="punct">, </span>
-                                <label for="alert-error-budget-perc">
-                                    <span class="const">
-                                        {{ alertLongWindow.humanSec }}
-                                    </span>
-                                </label>
-                                <span class="punct">)</span>
-                            </code>
-                        </div>
-                    </div>
-                    <div class="formula__whole">
+                <!-- Long Window Alert -->
+                <h2>
+                    Long-Window
+                    <help-component>
+                        Long-window alert is the "normal" alert.
+                        The reason it is called "long" is to distinguish it from the "short-window"
+                        alert which is primarily used to reduce false positives and improve the alert reset time.
+                    </help-component>
+                </h2>
+                <!-- Alert after consuming -->
+                <h3>
+                    <label for="alert-error-budget-perc">
+                        After Consuming: {{ percL10n(longWindowPerc) }}
+                    </label>
+                    <help-component>
+                        <p>
+                            We don't want to wait for the entire error budget to be consumed before
+                            alerting! It will be too late to take action.
+                        </p>
+                        <p>
+                            Therefore the alert should trigger before a significant portion of the
+                            error budget is consumed.
+                        </p>
+                        <p>
+                            Based on your setup, the alert will trigger after we have consumed
+                            {{ percL10n(longWindowPerc) }} of the entire time allotted for the error budget
+                            (or SLO compliance window) which is
+                            <time>{{ sloWindow.humanTime }}</time>.
+                        </p>
                         <code>
-                            <span class="punct"> ≤ </span>
                             <span class="const">
-                                {{ numL10n(percentToRatio(slo)) }}
+                                {{ percL10n(longWindowPerc) }}
+                            </span>
+                            <span class="funct"> × </span>
+                            <span class="const">
+                                {{ sloWindow.humanSec }}
+                            </span>
+                            <span class="punct"> = </span>
+                            <span class="const">
+                                {{ alertLongWindow.humanSec }}
                             </span>
                         </code>
-                    </div>
-
-                    <div v-if="shortWindowVisible" class="formula__break"></div>
-                    <code v-if="shortWindowVisible">
-                        <span class="punct">&&</span>
-                    </code>
-                    <div v-if="shortWindowVisible" class="formula__break"></div>
-                    <div v-if="shortWindowVisible" class="formula">
+                        <p>
+                            Time to respond before the entire error budget is exhausted:
+                            <br />
+                            <time>{{ alertTTRWindow.humanTimeSec}}</time>
+                        </p>
+                        <code>
+                            <span class="exprs">TTRespond</span>
+                            <span class="punct"> = </span>
+                            <span class="const">{{ errorBudgetBurn.humanSec }}</span>
+                            <span class="punct"> - </span>
+                            <span class="const">{{ alertLongWindow.humanSec }}</span>
+                            <span class="punct"> = </span>
+                            <span class="const">{{ alertTTRWindow.humanSec }}</span>
+                        </code>
+                    </help-component>
+                </h3>
+                <p>
+                    Alert when at least {{ percL10n(longWindowPerc) }} of the error budget is consumed in the last:
+                    <br />
+                    <time>{{ alertLongWindow.humanTimeSec }}</time>
+                </p>
+                <p v-if="alertTTRWindow.sec < 3600">
+                    Note: The time to resolve (TTR) is too short for a human to react.
+                    It is strongly recommended to automate the response to the alert.
+                </p>
+                <input
+                    id="alert-error-budget-perc"
+                    type="range"
+                    :min="config.longWindowPerc.min"
+                    :max="config.longWindowPerc.max"
+                    :step="config.longWindowPerc.step"
+                    v-model.number="longWindowPerc"
+                >
+                <div>
+                    <h4>Alert budget</h4>
+                    <p>
+                        {{ alertLongWindow }}
+                    </p>
+                    <p v-if="alertLongWindow.eventCountL10n === 0">
+                        Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
+                        time slot length ({{ unit }} sec)
+                        because it will lead to division by zero error.
+                    </p>
+                </div>
+                <!-- Burn Chart Component -->
+                <burn-component
+                    :burn-rate="burnRate"
+                    :long-alert-perc="longWindowPerc"></burn-component>
+                <!-- Long Window Alert Policy -->
+                <h3>
+                    Alert Policy
+                    <help-component>
+                        <p>
+                            This is a pseudo-code that help you understand what triggers the alert.
+                            You need to translate it to your alerting tool.
+                        </p>
+                    </help-component>
+                </h3>
+                <div class="code block">
+                    <div class="formula" id="alert-formula-code">
                         <div class="formula__fraction">
                             <div class="formula__fraction--top">
                                 <code>
@@ -1088,9 +1014,9 @@
                                         <span class="exprs">{{ good }}</span>
                                     </label>
                                     <span class="punct">, </span>
-                                    <label for="alert-short-window-divider-input">
+                                    <label for="alert-error-budget-perc">
                                         <span class="const">
-                                            {{ alertShortWindow.humanSec }}
+                                            {{ alertLongWindow.humanSec }}
                                         </span>
                                     </label>
                                     <span class="punct">)</span>
@@ -1099,7 +1025,7 @@
                             </div>
                             <div class="formula__fraction--bottom">
                                 <code v-if="isTimeBased">
-                                    <span class="const">{{ alertShortWindow.eventCountL10n }}</span>
+                                    <span class="const">{{ alertLongWindow.eventCountL10n }}</span>
                                 </code>
                                 <code v-else>
                                     <label for="sli-type-input">
@@ -1115,10 +1041,11 @@
                                             <span class="exprs">{{ valid }}</span>
                                         </label>
                                     </span>
+                                    <span class="punct"></span>
                                     <span class="punct">, </span>
-                                    <label for="alert-short-window-divider-input">
+                                    <label for="alert-error-budget-perc">
                                         <span class="const">
-                                            {{ alertShortWindow.humanSec }}
+                                            {{ alertLongWindow.humanSec }}
                                         </span>
                                     </label>
                                     <span class="punct">)</span>
@@ -1133,113 +1060,181 @@
                                 </span>
                             </code>
                         </div>
-                    </div>
 
-                </div>
-            </div>
-            <button @click="copy('alert-formula-code', 'alert-formula')" type="button" class="large">Copy</button>
-
-            <div class="block">
-                <label for="show-short-window-alert">
-                    <input
-                        id="show-short-window-alert"
-                        type="checkbox"
-                        v-model="shortWindowVisible"
-                    >
-                    Show Short-Window Alert Settings
-                </label>
-                <help-component>
-                    <p>
-                        The purpose of the short-window alert is to reduce false alerts.
-                    </p>
-                    <p>
-                        It checks a shorter look-back window (hence the name) to make sure that
-                        the burn rate is still high before triggering the alert.
-                        This reduces false positives where an alert is triggered for a temporary high burn rate.
-                    </p>
-                    <p>
-                        The Short-Window alert reduces false positives
-                        at the expence of making the alerting setup more complex.
-                    </p>
-                </help-component>
-            </div>
-
-            <div v-if="shortWindowVisible">
-                <!-- Short Window Alert -->
-                <h3>
-                    <label for="alert-short-window-divider-input">
-                        Short/Long ratio: 1/{{ shortWindowDivider }}
-                    </label>
-                    <help-component>
-                        <p>
-                            The Short-Window is usually 1/12th of the Long-Window (per
-                            <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener">
-                                Google SRE Workbook
-                            </a>
-                            recommendation).
-                            But you can play with different dividers to see how they impact
-                            the detection time of the alert.
-                        </p>
-                        <p v-if="shortWindowDivider !== 12">
-                            <button type="button" @click="shortWindowDivider = 12">Reset to 1/12</button>
-                        </p>
-                        <p>
-                            Your chosen Short-Window is 1/{{ shortWindowDivider }} of the Long-Window.
-                            Long-Window alert triggers after consuming {{ longWindowPerc }}%
-                            of the total error budget.
-                        </p>
-                        <p>
-                            Therefore, the Short-Window alert triggers after consuming:
-                        </p>
-                        <div class="formula">
+                        <div v-if="shortWindowVisible" class="formula__break"></div>
+                        <code v-if="shortWindowVisible">
+                            <span class="punct">&&</span>
+                        </code>
+                        <div v-if="shortWindowVisible" class="formula__break"></div>
+                        <div v-if="shortWindowVisible" class="formula">
                             <div class="formula__fraction">
                                 <div class="formula__fraction--top">
                                     <code>
-                                        <span class="const">{{ percL10n(longWindowPerc) }}</span>
+                                        <label for="sli-type-input">
+                                            <span class="funct">count</span>
+                                        </label>
+                                        <span class="punct">(</span>
+                                        <label for="sli-event-unit">
+                                            <span class="exprs">{{ sloWindow.normUnit }}</span>
+                                        </label>
+                                        <span class="punct">, </span>
+                                        <label for="sli-good-input">
+                                            <span class="exprs">{{ good }}</span>
+                                        </label>
+                                        <span class="punct">, </span>
+                                        <label for="alert-short-window-divider-input">
+                                            <span class="const">
+                                                {{ alertShortWindow.humanSec }}
+                                            </span>
+                                        </label>
+                                        <span class="punct">)</span>
                                     </code>
+                                    <span class="invis"> /</span>
                                 </div>
                                 <div class="formula__fraction--bottom">
-                                    <code>
-                                        <span class="const">{{ shortWindowDivider }}</span>
+                                    <code v-if="isTimeBased">
+                                        <span class="const">{{ alertShortWindow.eventCountL10n }}</span>
+                                    </code>
+                                    <code v-else>
+                                        <label for="sli-type-input">
+                                            <span class="funct">count</span>
+                                        </label>
+                                        <span class="punct">(</span>
+                                        <label for="sli-event-unit">
+                                            <span class="exprs">{{ sloWindow.normUnit }}</span>
+                                        </label>
+                                        <span v-if="valid">
+                                            <span class="punct">, </span>
+                                            <label for="sli-valid-input">
+                                                <span class="exprs">{{ valid }}</span>
+                                            </label>
+                                        </span>
+                                        <span class="punct">, </span>
+                                        <label for="alert-short-window-divider-input">
+                                            <span class="const">
+                                                {{ alertShortWindow.humanSec }}
+                                            </span>
+                                        </label>
+                                        <span class="punct">)</span>
                                     </code>
                                 </div>
                             </div>
                             <div class="formula__whole">
                                 <code>
-                                    <span class="punct"> = </span>
-                                    <span class="const">{{ percL10n(alertShortWindowPerc) }}</span>
+                                    <span class="punct"> ≤ </span>
+                                    <span class="const">
+                                        {{ numL10n(percentToRatio(slo)) }}
+                                    </span>
                                 </code>
                             </div>
                         </div>
 
-                    </help-component>
-                </h3>
-                <p>
-                    Alert if at least {{ percL10n(alertShortWindowPerc) }} of the error budget is still being consumed in the last:
-                    <br />
-                    <time>{{ alertShortWindow.humanTimeSec }}</time>
-                </p>
-                <input
-                    id="alert-short-window-divider-input"
-                    type="range"
-                    :min="config.shortWindowDivider.min"
-                    :max="config.shortWindowDivider.max"
-                    :step="config.shortWindowDivider.step"
-                    v-model.number="shortWindowDivider"
-                >
-                <div class="block">
-                    <h4>Alert Budget</h4>
-                    <p>
-                        {{ alertShortWindow }}
-                    </p>    
-                    <p v-if="alertShortWindow.eventCountL10n === 0">
-                        Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
-                        time slot length ({{ unit }} sec)
-                        because it will lead to division by zero error.
-                    </p>
+                    </div>
                 </div>
-            </div>
-        </section>
+                <button @click="copy('alert-formula-code', 'alert-formula')" type="button" class="large">Copy</button>
+
+                <div class="block">
+                    <label for="show-short-window-alert">
+                        <input
+                            id="show-short-window-alert"
+                            type="checkbox"
+                            v-model="shortWindowVisible"
+                        >
+                        Show Short-Window Alert Settings
+                    </label>
+                    <help-component>
+                        <p>
+                            The purpose of the short-window alert is to reduce false alerts.
+                        </p>
+                        <p>
+                            It checks a shorter look-back window (hence the name) to make sure that
+                            the burn rate is still high before triggering the alert.
+                            This reduces false positives where an alert is triggered for a temporary high burn rate.
+                        </p>
+                        <p>
+                            The Short-Window alert reduces false positives
+                            at the expence of making the alerting setup more complex.
+                        </p>
+                    </help-component>
+                </div>
+
+                <div v-if="shortWindowVisible">
+                    <!-- Short Window Alert -->
+                    <h3>
+                        <label for="alert-short-window-divider-input">
+                            Short/Long ratio: 1/{{ shortWindowDivider }}
+                        </label>
+                        <help-component>
+                            <p>
+                                The Short-Window is usually 1/12th of the Long-Window (per
+                                <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener">
+                                    Google SRE Workbook
+                                </a>
+                                recommendation).
+                                But you can play with different dividers to see how they impact
+                                the detection time of the alert.
+                            </p>
+                            <p v-if="shortWindowDivider !== 12">
+                                <button type="button" @click="shortWindowDivider = 12">Reset to 1/12</button>
+                            </p>
+                            <p>
+                                Your chosen Short-Window is 1/{{ shortWindowDivider }} of the Long-Window.
+                                Long-Window alert triggers after consuming {{ longWindowPerc }}%
+                                of the total error budget.
+                            </p>
+                            <p>
+                                Therefore, the Short-Window alert triggers after consuming:
+                            </p>
+                            <div class="formula">
+                                <div class="formula__fraction">
+                                    <div class="formula__fraction--top">
+                                        <code>
+                                            <span class="const">{{ percL10n(longWindowPerc) }}</span>
+                                        </code>
+                                    </div>
+                                    <div class="formula__fraction--bottom">
+                                        <code>
+                                            <span class="const">{{ shortWindowDivider }}</span>
+                                        </code>
+                                    </div>
+                                </div>
+                                <div class="formula__whole">
+                                    <code>
+                                        <span class="punct"> = </span>
+                                        <span class="const">{{ percL10n(alertShortWindowPerc) }}</span>
+                                    </code>
+                                </div>
+                            </div>
+
+                        </help-component>
+                    </h3>
+                    <p>
+                        Alert if at least {{ percL10n(alertShortWindowPerc) }} of the error budget is still being consumed in the last:
+                        <br />
+                        <time>{{ alertShortWindow.humanTimeSec }}</time>
+                    </p>
+                    <input
+                        id="alert-short-window-divider-input"
+                        type="range"
+                        :min="config.shortWindowDivider.min"
+                        :max="config.shortWindowDivider.max"
+                        :step="config.shortWindowDivider.step"
+                        v-model.number="shortWindowDivider"
+                    >
+                    <div class="block">
+                        <h4>Alert Budget</h4>
+                        <p>
+                            {{ alertShortWindow }}
+                        </p>    
+                        <p v-if="alertShortWindow.eventCountL10n === 0">
+                            Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
+                            time slot length ({{ unit }} sec)
+                            because it will lead to division by zero error.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </article>
 
         <section v-if="shareUrl">
             <h1 id="share-title">Share</h1>

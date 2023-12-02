@@ -31,10 +31,12 @@ const app = createApp({
             examples,
             // The index of the currently selected example
             selectedExampleIndex: 0,
-            // Show the short window alert
-            shortWindowVisible: false,
+            // Show the announcement banner
+            showAnnouncement: true,
             // Show the cookie popup (use localStorage to remember the user's choice)
             showCookiePopup,
+            // Show the short window alert
+            shortWindowVisible: false,
             // The text shown in the toast notification
             toastCaption: '',
             // The title of the SLI
