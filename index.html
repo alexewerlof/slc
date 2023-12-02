@@ -955,11 +955,6 @@
                         </code>
                     </help-component>
                 </h3>
-                <p>
-                    Alert when at least {{ percL10n(longWindowPerc) }} of the error budget is consumed in the last:
-                    <br />
-                    <time>{{ alertLongWindow.humanTimeSec }}</time>
-                </p>
                 <p v-if="alertTTRWindow.sec < 3600">
                     Note: The time to resolve (TTR) is too short for a human to react.
                     It is strongly recommended to automate the response to the alert.
@@ -972,17 +967,15 @@
                     :step="config.longWindowPerc.step"
                     v-model.number="longWindowPerc"
                 >
-                <div>
-                    <h4>Alert budget</h4>
-                    <p>
-                        {{ alertLongWindow }}
-                    </p>
-                    <p v-if="alertLongWindow.eventCountL10n === 0">
-                        Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
-                        time slot length ({{ unit }} sec)
-                        because it will lead to division by zero error.
-                    </p>
-                </div>
+                <h4>Long Alert budget</h4>
+                <p>
+                    {{ alertLongWindow }}
+                </p>
+                <p v-if="alertLongWindow.eventCountL10n === 0">
+                    Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
+                    time slot length ({{ unit }} sec)
+                    because it will lead to division by zero error.
+                </p>
                 <!-- Burn Chart Component -->
                 <burn-component
                     :burn-rate="burnRate"
@@ -1182,23 +1175,24 @@
                                 <button type="button" @click="shortWindowDivider = config.shortWindowDivider.default">Reset to 1/{{ config.shortWindowDivider.default }}</button>
                             </p>
                             <p>
-                                Your chosen Short-Window is 1/{{ shortWindowDivider }} of the Long-Window.
                                 Long-Window alert triggers after consuming {{ longWindowPerc }}%
                                 of the total error budget.
-                            </p>
-                            <p>
                                 Therefore, the Short-Window alert triggers after consuming:
                             </p>
                             <div class="formula">
                                 <div class="formula__fraction">
                                     <div class="formula__fraction--top">
                                         <code>
-                                            <span class="const">{{ percL10n(longWindowPerc) }}</span>
+                                            <label for="alert-error-budget-perc">
+                                                <span class="const">{{ percL10n(longWindowPerc) }}</span>
+                                            </label>
                                         </code>
                                     </div>
                                     <div class="formula__fraction--bottom">
                                         <code>
-                                            <span class="const">{{ shortWindowDivider }}</span>
+                                            <label for="alert-short-window-divider-input">
+                                                <span class="const">{{ shortWindowDivider }}</span>
+                                            </label>
                                         </code>
                                     </div>
                                 </div>
@@ -1209,14 +1203,19 @@
                                     </code>
                                 </div>
                             </div>
-
+                            <p>
+                                This means the alert will trigger only if we are burning the error budget at least
+                                at the
+                                <label for="burn-rate-input">{{ burnRate }}</label>x burn rate.
+                            </p>
+                            <p>
+                                In other words, the alert will only trigger if at least
+                                {{ percL10n(alertShortWindowPerc) }}
+                                of the error budget is still being consumed in the last
+                                <time>{{ alertShortWindow.humanTimeSec }}</time>.
+                            </p>        
                         </help-component>
                     </h3>
-                    <p>
-                        Alert if at least {{ percL10n(alertShortWindowPerc) }} of the error budget is still being consumed in the last:
-                        <br />
-                        <time>{{ alertShortWindow.humanTimeSec }}</time>
-                    </p>
                     <input
                         id="alert-short-window-divider-input"
                         type="range"
@@ -1226,7 +1225,7 @@
                         v-model.number="shortWindowDivider"
                     >
                     <div class="block">
-                        <h4>Alert Budget</h4>
+                        <h4>Short Alert Budget</h4>
                         <p>
                             {{ alertShortWindow }}
                         </p>    
