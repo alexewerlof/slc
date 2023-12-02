@@ -179,7 +179,7 @@
                 <div v-if="isTimeBased">
                     <!-- SLI Time Slot -->
                     <h3>
-                        <label for="sli-event-unit">Time Slot: {{ unit }} sec</label>
+                        <label for="sli-event-unit">Event Unit: {{ sloWindow.normUnit }}</label>
                         <help-component>
                             <p>
                                 The time slot is the time window that the metric data is aggregated to
@@ -317,9 +317,9 @@
                     >
                 </div>
 
-                <!-- SLI Formula -->
+                <!-- Service Level Formula -->
                 <h2>
-                    SLI Formula
+                    Service Level Formula
                     <help-component>
                         <p>
                             The formula for calculating SLI for the given SLO window is
@@ -572,7 +572,7 @@
                     </help-component>
                 </h2>
 
-                <p v-if="isTimeBased">
+                <p>
                     {{ sloWindow }}
                 </p>
 
@@ -751,7 +751,7 @@
                     </help-component>
                 </h4>
                 <input type="text" v-model="badEventCurrency">
-                <h3>
+                <h3 v-if="errorBudget.cost">
                     Error Budget Cost
                     <help-component>
                         <p>
@@ -1140,7 +1140,7 @@
                             type="checkbox"
                             v-model="shortWindowVisible"
                         >
-                        Show Short-Window Alert Settings
+                        Use Short-Window Alert
                     </label>
                     <help-component>
                         <p>
