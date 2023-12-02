@@ -41,14 +41,20 @@ input[type=text], input[type=number], select, textarea {
     padding: 1em;
     font-family: inherit;
     font-size: inherit;
-    border: none;
-    border-left: 1px solid var(--secondary-color);
+    border: 1px solid transparent;
+    border-left-color: var(--secondary-color);
     background-color: var(--background-lighter);
     color: inherit;
     width: 100%;
     box-sizing: border-box;
-    transition: background-color var(--animation-speed) ease-in-out;
+    transition: background-color var(--animation-speed) ease-in-out,
+                border-color var(--animation-speed) ease-in-out;
 }
+
+input[type=text]:hover, input[type=number]:hover, select:hover, textarea:hover {
+    border-color: var(--secondary-color);
+}
+
 
 input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
     background-color: var(--secondary-color);
