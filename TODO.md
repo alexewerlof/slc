@@ -7,6 +7,7 @@
 
 # Medium prio
 
+- [ ] Turn this into a PWA app to be installed for easier access offline
 - [ ] Add the short alert window line as well
 - [ ] Add more examples from SLDs and workshops
 - [ ] Break down the error budget for common windows regardless of the chosen window
