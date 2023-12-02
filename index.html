@@ -161,8 +161,8 @@
                             <input
                                 type="radio"
                                 v-model="isTimeBased"
-                                :value="true">
-                            Time-Based
+                                :value="false">
+                            Event-Based
                         </label>
                     </p>
                     <p>
@@ -170,8 +170,8 @@
                             <input
                                 type="radio"
                                 v-model="isTimeBased"
-                                :value="false">
-                            Event-Based
+                                :value="true">
+                            Time-Based
                         </label>
                     </p>
                 </div>
@@ -688,12 +688,13 @@
                         Expected 
                         <label for="sli-valid-input">
                             <code>{{ valid }}</code>
-                        </label>
-                        &nbsp;
-                        <label for="sli-event-unit">
+                        </label> <label for="sli-event-unit">
                             <code>{{ sloWindow.normUnit }}</code>
                         </label>
-                        in {{ sloWindow.humanTime }}:
+                        in
+                        <label for="slo-window-unit-multiplier">
+                            {{ sloWindow.humanTime }}
+                        </label>:
                     </p>
                     <input
                         type="number"
@@ -893,9 +894,9 @@
                     :step="config.burnRate.step"
                     v-model.number="burnRate"
                 >
-                <h4>Time to exhaust the entire error budget</h4>
+                <h4>Error Budget Consumption</h4>
                 <p>
-                    <time>{{ errorBudgetBurn }}</time>
+                    {{ errorBudgetBurn }}
                 </p>
                 <!-- Long Window Alert -->
                 <h2>
@@ -909,7 +910,7 @@
                 <!-- Alert after consuming -->
                 <h3>
                     <label for="alert-error-budget-perc">
-                        After Consuming: {{ percL10n(longWindowPerc) }}
+                        After Consuming ≥ {{ percL10n(longWindowPerc) }}
                     </label>
                     <help-component>
                         <p>
@@ -967,9 +968,9 @@
                     :step="config.longWindowPerc.step"
                     v-model.number="longWindowPerc"
                 >
-                <h4>Long Alert budget</h4>
+                <h4>Budget</h4>
                 <p>
-                    {{ alertLongWindow }}
+                    At least {{ alertLongWindow }}
                 </p>
                 <p v-if="alertLongWindow.eventCountL10n === 0">
                     Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
@@ -1225,9 +1226,9 @@
                         v-model.number="shortWindowDivider"
                     >
                     <div class="block">
-                        <h4>Short Alert Budget</h4>
+                        <h4>Budget</h4>
                         <p>
-                            {{ alertShortWindow }}
+                            At least {{ alertShortWindow }}
                         </p>    
                         <p v-if="alertShortWindow.eventCountL10n === 0">
                             Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
