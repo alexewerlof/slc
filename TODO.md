@@ -12,6 +12,7 @@
 - [ ] Add more examples from SLDs and workshops
 - [ ] Break down the error budget for common windows regardless of the chosen window
 - [ ] Allow exporting to OpenSLO format
+- [ ] Update the page title with the SLI description field so when the link is embedded, it shows instead of the default SLC title
 - [ ] Write the remaining help posts
   - [ ] Compliance period
   - [ ] Error budget
