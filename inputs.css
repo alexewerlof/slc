@@ -17,6 +17,7 @@ input[type=range]::-webkit-slider-runnable-track {
     height: 100%;
 }
 
+input[type=range]:hover::-webkit-slider-runnable-track,
 input[type=range]:focus::-webkit-slider-runnable-track {
     border-color: var(--secondary-color);
 }
@@ -30,11 +31,9 @@ input[type=range]::-webkit-slider-thumb {
     transition: width var(--animation-speed) ease-in-out
 }
 
-input[type=range]:hover::-webkit-slider-thumb,
 input[type=range]:focus::-webkit-slider-thumb {
     margin-top: -0.5em;
     height: 200%;
-    width: 0.5em;
 }
 
 input[type=text], input[type=number], select, textarea {
