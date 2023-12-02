@@ -179,7 +179,7 @@
                 <div v-if="isTimeBased">
                     <!-- SLI Time Slot -->
                     <h3>
-                        <label for="sli-time-slot-length-input">Time Slot: {{ unit }} sec</label>
+                        <label for="sli-event-unit">Time Slot: {{ unit }} sec</label>
                         <help-component>
                             <p>
                                 The time slot is the time window that the metric data is aggregated to
@@ -213,7 +213,7 @@
                         </help-component>
                     </h3>
                     <input
-                        id="sli-time-slot-length-input"
+                        id="sli-event-unit"
                         type="range"
                         :min="config.timeSlot.min"
                         :max="config.timeSlot.max"
