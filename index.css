@@ -30,6 +30,11 @@ body {
 }
 
 @media screen and (min-width: 1000px) {
+    body {
+        /* No time for branding! It'll be too crowded */
+        background-image: none;
+    }
+
     article {
         display: flex;
         justify-content: center;
