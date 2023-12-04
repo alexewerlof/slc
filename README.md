@@ -2,7 +2,7 @@
 
 A simple SLI/SLO calculator that allows playing with different parameters to see their impact.
 
-[See it live](https://slo.alexewerlof.com/)
+[See it live](https://slc.alexewerlof.com/)
 
 # Learn more
 
