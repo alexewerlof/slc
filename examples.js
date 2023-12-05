@@ -6,21 +6,21 @@ Some examples are based on:
 */
 export default [
     {
-        title: 'Empty Time-Based SLI',
+        title: '< Empty Time-Based SLI >',
         description: '',
         unit: 60,
         good: '',
         valid: '',
     },
     {
-        title: 'Empty Event-Based SLI',
+        title: '< Empty Event-Based SLI >',
         description: '',
         unit: 'events',
         good: '',
         valid: '',
     },
     {
-        title: 'Availability: Synthetic uptime probe',
+        title: 'Availability: Synthetic uptime',
         description: 'The percentage of successful synthetic probes that do a HTTP GET request to the root endpoint evrey minute',
         unit: 60,
         good: 'response_code == 200',
@@ -36,7 +36,7 @@ export default [
     {
         title: 'Availability: Organic purchase flow',
         description: 'The percentage of settled payments out of all orders placed via the website',
-        good: 'payment settled',
+        good: 'settled payment',
         valid: 'orders placed via website',
     },
     {
@@ -55,50 +55,52 @@ export default [
     },
     {
         title: 'Latency: Database Query',
-        description: 'The percentage of sufficiently fast database queries for a specific query type. "Sufficiently fast" is defined as ≤ 100 ms',
+        description: 'The percentage of sufficiently fast database insertion queries. "Sufficiently fast" is defined as ≤ 100 ms',
         unit: 'insertion queries',
         good: 'query_latency ≤ 100ms',
         valid: 'all to the customers table',
     },
     {
+        // https://web.dev/articles/ttfb
+        title: 'Latency: TTFB',
+        description: 'The percentage of requests where the time to first byte was sufficiently fast. "Sufficiently fast" is defined as ≤ 800 ms',
+        unit: 'connections',
+        good: 'ttfb ≤ 800ms',
+        valid: 'all',
+    },
+    {
+        // https://web.dev/articles/fcp
+        title: 'Latency: FCP',
+        description: 'The percentage of page renders where the time from when the page starts loading to when any part of the page content is rendered on screen was sufficiently fast. "Sufficiently fast" is defined as ≤ 1,000 ms',
+        unit: 'page renders',
+        good: 'fcp ≤ 1000ms',
+        valid: 'all',
+    },
+    {
         title: 'Latency: P99 response time',
-        description: 'The percentage of requests where the P75 percentile over 5 minutes was sufficiently fast. "Sufficiently fast" is defined as ≤ 800 ms',
+        description: 'The percentage of 5 minute time slots where the P75 percentile of response latency was sufficiently fast. "Sufficiently fast" is defined as ≤ 800 ms',
         unit: 300,
         good: 'P75(response_latency) ≤ 800ms',
     },
     {
-        title: 'Latency: P99 of all requests',
-        description: 'The P99 of all requests will successfully complete within 4,000 ms 99.9% of the time.',
-        unit: 60,
-        good: 'P99(response_latency) ≤ 4000ms',
-    },
-    {
         title: 'Throughput: Worker Efficiency',
-        description: 'The number of minutes where an expensive wroker processed enough requests to justify the cost of keeping it alive',
+        description: 'The number of minutes where an expensive wroker processed enough requests to justify the cost of keeping it alive. "Enough requests" is defined as ≥ 100',
         unit: 60,
-        good: 'processed',
-        valid: 'all',
+        good: 'processed messages ≥ 100',
     },
     {
-        title: 'Throughput: Cache hit rate',
+        title: 'Throughput: Cache hit',
         description: 'The number of requests that were responded via the cache storage instead of going to the origin',
         unit: 'request',
         good: 'responded from cache',
-        valid: 'all to cache',
+        valid: 'all',
     },
     {
         title: 'Freshness: New Articles',
-        description: 'The difference between “Published” timestamp in the browser and “Published” timestamp in the CMS is sufficiently small. "Sufficiently small" is defined as ≤ 1m',
+        description: 'The difference between “Published” timestamp in the browser and “Published” timestamp in the CMS is sufficiently small. "Sufficiently small" is defined as ≤ 60 seconds',
         unit: 'articles',
-        good: 'cms_timestamp - web_timestamp ≤ 1m',
-        valid: 'all FROM breaking news section',
-    },
-    {
-        title: 'Freshness: Page Updates',
-        description: 'The difference between “Last Updated” timestamp in the browser and “Last Updated” timestamp in the origin is sufficiently small. "Sufficiently small" is defined as ≤ 5m. A prope is used to scan the front-page',
-        unit: 'page checks',
-        good: 'origin_last_update - browser_last_update ≤ 5m',
-        valid: 'all front-page',
+        good: 'cms_timestamp - web_timestamp ≤ 60',
+        valid: 'from breaking news section',
     },
     {
         title: 'Correctness: Main database table',
@@ -184,4 +186,8 @@ export default [
         good: 'time_to_acknowledge ≤ 5m',
         valid: 'Incident Priority == 1',
     },
-]
+].sort(byTitle)
+
+function byTitle(example1, example2) {
+    return example1.title.localeCompare(example2.title)
+}
