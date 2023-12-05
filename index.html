@@ -360,41 +360,33 @@
                     <div class="formula" id="sli-formula-code">
                         <div class="formula__fraction">
                             <div class="formula__fraction--top">
-                                <label for="sli-good-input">
-                                    <code>
-                                        <label for="sli-type-input">
-                                            <span class="funct">count</span>
-                                        </label>
-                                        <span class="punct">(</span>
-                                        <label for="sli-event-unit">
-                                            <span class="exprs">{{ sloWindow.normUnit }}</span>
-                                        </label>
-                                        <span class="punct">, </span>
-                                        <label for="sli-good-input">
-                                            <span class="exprs">{{ good }}</span>
-                                        </label>
-                                        <span class="punct">)</span>
-                                    </code>
-                                </label>
+                                <code>
+                                    <span class="funct">count</span>
+                                    <span class="punct">(</span>
+                                    <label for="sli-event-unit">
+                                        <span class="exprs">{{ sloWindow.normUnit }}</span>
+                                    </label>
+                                    <span class="punct">, </span>
+                                    <label for="sli-good-input">
+                                        <span class="exprs">{{ good }}</span>
+                                    </label>
+                                    <span class="punct">)</span>
+                                </code>
                                 <span class="invis"> /</span>
                             </div>
                             <div class="formula__fraction--bottom">
-                                <label for="sli-valid-input">
-                                    <code>
-                                        <label for="sli-type-input">
-                                            <span class="funct">count</span>
-                                        </label>
-                                        <span class="punct">(</span>
-                                        <label for="sli-event-unit">
-                                            <span class="exprs">{{ sloWindow.normUnit }}</span>
-                                        </label>
-                                        <span v-if="valid" class="punct">, </span>
-                                        <label v-if="valid" for="sli-valid-input">
-                                            <span class="exprs">{{ valid }}</span>
-                                        </label>
-                                        <span class="punct">)</span>
-                                    </code>
-                                </label>
+                                <code>
+                                    <span class="funct">count</span>
+                                    <span class="punct">(</span>
+                                    <label for="sli-event-unit">
+                                        <span class="exprs">{{ sloWindow.normUnit }}</span>
+                                    </label>
+                                    <span v-if="valid" class="punct">, </span>
+                                    <label v-if="valid" for="sli-valid-input">
+                                        <span class="exprs">{{ valid }}</span>
+                                    </label>
+                                    <span class="punct">)</span>
+                                </code>
                             </div>
                         </div>
                         <div class="formula__whole">
@@ -996,9 +988,7 @@
                         <div class="formula__fraction">
                             <div class="formula__fraction--top">
                                 <code>
-                                    <label for="sli-type-input">
-                                        <span class="funct">count</span>
-                                    </label>
+                                    <span class="funct">count</span>
                                     <span class="punct">(</span>
                                     <label for="sli-event-unit">
                                         <span class="exprs">{{ sloWindow.normUnit }}</span>
@@ -1066,9 +1056,7 @@
                             <div class="formula__fraction">
                                 <div class="formula__fraction--top">
                                     <code>
-                                        <label for="sli-type-input">
-                                            <span class="funct">count</span>
-                                        </label>
+                                        <span class="funct">count</span>
                                         <span class="punct">(</span>
                                         <label for="sli-event-unit">
                                             <span class="exprs">{{ sloWindow.normUnit }}</span>
