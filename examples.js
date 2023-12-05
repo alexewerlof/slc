@@ -184,18 +184,4 @@ export default [
         good: 'time_to_acknowledge ≤ 5m',
         valid: 'Incident Priority == 1',
     },
-    {
-        title: 'MTBF (beta)',
-        description: 'The mean time between failures is larger than 7 days',
-        unit: 60,
-        good: 'P50(time_between_failures, 30d) ≥ 7 days',
-        valid: 'all',
-    },
-    {
-        title: 'MTTR (beta)',
-        description: 'The mean time to restore a service after an incident is less than 30 minutes',
-        unit: 60,
-        good: 'P50(time_to_resolution, 30d) ≤ 30m',
-        valid: 'all',
-    },
 ]
