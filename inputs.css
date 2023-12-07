@@ -112,5 +112,5 @@ label {
 }
 
 label.spaced + label.spaced {
-    margin-left: 1em;
+    margin-left: 0.2em;
 }

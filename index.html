@@ -653,15 +653,24 @@
                         <div class="error-budget-diagram__error-fill" :style="{ width: errorBudgetPerc + '%'}"></div>
                     </div>
                     <div class="error-budget-diagram__good-caption">
-                        Good
-                        <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
+                        <label class="spaced" for="slo-int-input">
+                            {{ numL10n(goodEventCount) }}
+                        </label>
+                        <label class="spaced" for="sli-good-input">
+                            good
+                        </label>
+                        <label class="spaced" for="sli-event-unit">
+                            <code>{{ sloWindow.normUnit }}</code>
+                        </label>
                     </div>
                     <div class="error-budget-diagram__valid-caption">
-                        <label for="sli-valid-input">
-                            <code>{{ valid }}</code>
+                        <label class="spaced" for="error-budget-example-input">
+                            {{ numL10n(validEventCount) }}
                         </label>
-                        &nbsp;
-                        <label for="sli-event-unit">
+                        <label class="spaced" for="sli-valid-input">
+                            valid
+                        </label>
+                        <label class="spaced" for="sli-event-unit">
                             <code>{{ sloWindow.normUnit }}</code>
                         </label>
                         in
@@ -715,6 +724,19 @@
                         <p>
                             This cost will be used to put a tangible number on various windows and events.
                         </p>
+                        <p>
+                            But there are ways to make the bad events cheaper.
+                            In a future article, we will discuss all parents of reliability and how to make errors cheap.
+                            In the mean time check out the following techniques:
+                        </p>
+                        <ul>
+                            <li>
+                                <ext-link href="https://blog.alexewerlof.com/p/fallback">Fallback</ext-link>
+                            </li>
+                            <li>
+                                <ext-link href="https://blog.alexewerlof.com/p/failover">Failover</ext-link>
+                            </li>
+                        </ul>
                     </help-component>
                 </h3>
                 <input type="number"
@@ -727,7 +749,8 @@
                     Currency
                     <help-component>
                         <p>
-                            You can set the currency to see how much it costs you to violate the SLO.
+                            You can set the currency to see how much it costs to violate the SLO.
+                            If you can't put a currency on the errors, feel free to get creative.
                         </p>
                         <table>
                             <caption>Typical Currencies</caption>
@@ -744,30 +767,6 @@
                     </help-component>
                 </h4>
                 <input type="text" v-model="badEventCurrency">
-                <h3 v-if="errorBudget.cost">
-                    Error Budget Cost
-                    <help-component>
-                        <p>
-                            If this number doesn't look good, it might be tempting to reduce the error budget and force a higher SLO.
-                        </p>
-                        <p>
-                            But there are other ways to make the errors cheap.
-                            In a future article, we will discuss all parents of reliability and how to make errors cheap.
-                            In the mean time check out the following techniques:
-                            <ul>
-                                <li>
-                                    <ext-link href="https://blog.alexewerlof.com/p/fallback">Fallback</ext-link>
-                                </li>
-                                <li>
-                                    <ext-link href="https://blog.alexewerlof.com/p/failover">Failover</ext-link>
-                                </li>
-                            </ul>
-                        </p>
-                    </help-component>
-                </h3>
-                <p>
-                    {{ errorBudget }}
-                </p>
             </section>
 
             <!------------------------ Alert ------------------------>
