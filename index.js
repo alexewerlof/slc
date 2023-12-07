@@ -229,19 +229,26 @@ const app = createApp({
             return toFixed(100 - this.slo)
         },
 
-        eventCount() {
+        validEventCount() {
             if (this.isTimeBased) {
                 return this.sloWindow.timeSlotCount
             } else {
-                return this.errorBudgetValidExample
+                return this.errorBudgetValidExample || config.errorBudgetValidExample.min
             }
+        },
+
+        goodEventCount() {
+            return this.validEventCount - this.badEventCount
+        },
+
+        badEventCount() {
+            return Math.floor(percent(this.errorBudgetPerc, this.validEventCount))
         },
 
         errorBudget() {
             const { sec, unit } = this.sloWindow
-            const eventCount = Math.floor(percent(this.errorBudgetPerc, this.eventCount))
             const eventCost = this.badEventCost || 0
-            return new Budget(sec, unit, eventCount, eventCost, this.badEventCurrency)
+            return new Budget(sec, unit, this.badEventCount, eventCost, this.badEventCurrency)
         },
 
         // Time to burn the entire error budget at the given burnRate
