@@ -13,9 +13,11 @@ code {
 }
 
 .block.code button {
-    opacity: 0.6;
-    font-size: 1.4em;
-    padding: 0.1em;
+    opacity: 0.5;
+    font-size: 1.5em;
+    padding: 0.2em;
+    background-color: transparent;
+    color: var(--primary-color);
     border: none;
     position: absolute;
     top: 0;
