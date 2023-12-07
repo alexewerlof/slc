@@ -219,8 +219,12 @@ export const config = fz({
                 description: 'Chinese Yuan',
             },
             {
-                currency: 'F*',
-                description: 'F**cks in frustration 🤬',
+                currency: '😟',
+                description: 'Sad customers',
+            },
+            {
+                currency: '🤬',
+                description: 'Curses in frustration',
             }
         ]),
     }),
