@@ -9,6 +9,24 @@ code {
 .block.code {
     background-color: var(--background-darker);
     padding: 1em;
+    position: relative;
+}
+
+.block.code button {
+    opacity: 0.6;
+    font-size: 1.4em;
+    padding: 0.1em;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.block.code button:hover, .block.code button:focus {
+    opacity: 1;
 }
 
 code label {
