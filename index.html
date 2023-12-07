@@ -647,29 +647,30 @@
                 </h1>
                 <div class="error-budget-diagram">
                     <div class="error-budget-diagram__error-caption">
-                        <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
-                        allowed to violate
-                        <label for="sli-good-input"><code>{{ good }}</code></label>
+                        {{ errorBudget }}
                     </div>
                     <div class="error-budget-diagram__fill">
                         <div class="error-budget-diagram__error-fill" :style="{ width: errorBudgetPerc + '%'}"></div>
                     </div>
                     <div class="error-budget-diagram__good-caption">
-                        <label for="sli-good-input"><code>{{ good }}</code></label>
-                        &nbsp;
+                        Good
                         <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
                     </div>
                     <div class="error-budget-diagram__valid-caption">
-                        <label for="sli-valid-input"><code>{{ valid }}</code></label>
+                        <label for="sli-valid-input">
+                            <code>{{ valid }}</code>
+                        </label>
                         &nbsp;
-                        <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
+                        <label for="sli-event-unit">
+                            <code>{{ sloWindow.normUnit }}</code>
+                        </label>
                         in
                         <label for="slo-window-unit-multiplier"><code>{{ sloWindow.humanTime }}</code></label>
                     </div>
                 </div>
                 <div v-if="!isTimeBased">
                     <h3>
-                        <label for="error-budget-example-input">Example number of valid {{ sloWindow.normUnit }}</label>
+                        <label for="error-budget-example-input">Expected number of valid {{ sloWindow.normUnit }}</label>
                         <help-component>
                             Here you can enter the numbers for your expected load and see
                             how many {{ sloWindow.normUnit }} are allowed to fail during the SLO window
@@ -677,7 +678,6 @@
                         </help-component>
                     </h3>
                     <p>
-                        Expected 
                         <label for="sli-valid-input">
                             <code>{{ valid }}</code>
                         </label> <label for="sli-event-unit">
