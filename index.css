@@ -66,9 +66,9 @@ header .announcement {
 }
 
 .logo {
-    height: 3em;
-    padding: 0 0.8em 0.5em 0;
-    vertical-align: middle;
+    height: 1em;
+    position: relative;
+    top: 0.1em;
 }
 
 header h1 {
