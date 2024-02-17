@@ -1,8 +1,6 @@
 # High prio
 
-- [ ] Make it responsive to use the available space on large screens
 - [ ] Allow subsetting the valid time slot
-- [ ] Take advantage of the entire desktop screen real estate instead of prioritizing mobile screens (still have responsive design)
 - [ ] Support multi-layered SLOs
 
 # Medium prio
@@ -22,6 +20,7 @@
 
 # Shipped
 
+- [x] 2023-12-05: Make it responsive to use the available space on large screens
 - [x] 2023-11-28: Fixed a Bug: if the SLO was something like 99.461, the alerting number would be like 0.995 instead of 0.99461
 - [x] 2023-11-27: Let the page scroll where the URL hash points to
 - [x] 2023-11-26: Allow assigning a currency value to the error budget to convert it to money
