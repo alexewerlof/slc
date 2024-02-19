@@ -36,7 +36,7 @@ input[type=range]:focus::-webkit-slider-thumb {
     height: 200%;
 }
 
-input[type=text], input[type=number], select, textarea {
+input[type=search], input[type=text], input[type=number], select, textarea {
     padding: 1em;
     font-family: inherit;
     font-size: inherit;
@@ -50,17 +50,17 @@ input[type=text], input[type=number], select, textarea {
                 border-color var(--animation-speed) ease-in-out;
 }
 
-input[type=text]:hover, input[type=number]:hover, select:hover, textarea:hover {
+input[type=search]:hover, input[type=text]:hover, input[type=number]:hover, select:hover, textarea:hover {
     border-color: var(--secondary-color);
 }
 
 
-input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
+input[type=search]:focus, input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
     background-color: var(--secondary-color);
     color: var(--background-color);
 }
 
-input[type=text]:focus-visible, input[type=number]:focus-visible, select:focus-visible, textarea:focus-visible {
+input[type=search]:focus-visible, [type=text]:focus-visible, input[type=number]:focus-visible, select:focus-visible, textarea:focus-visible {
     outline: none;
 }
 

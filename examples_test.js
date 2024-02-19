@@ -1,12 +1,12 @@
 import { assert } from "https://deno.land/std@0.216.0/assert/mod.ts"
 import { inRangePosInt, isDef, isStr } from "./lib/validation.js"
 import { config } from "./config.js"
-import examples from './examples.js'
+import { templates } from './examples.js'
 
-Deno.test('all examples are valid', () => {
-    for (const example of examples) {
-        Deno.test(`example: ${example.title}`, () => {
-            const { title, description, unit, good, valid } = example
+Deno.test('all templates are valid', () => {
+    for (const template of templates) {
+        Deno.test(`template: ${template.title}`, () => {
+            const { title, description, unit, good, valid } = template
             assert(isStr(title))
             assert(isStr(description))
             assert(isStr(unit) || inRangePosInt(unit, config.timeSlot.min, config.timeSlot.max))

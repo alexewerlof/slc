@@ -4,7 +4,7 @@ import HelpComponent from './components/help-component.js'
 import BurnComponent from './components/burn-component.js'
 import ExtLink from './components/ext-link.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
-import examples from './examples.js'
+import { searchTemplates } from './examples.js'
 import { daysToSeconds, normalizeUnit } from './lib/time.js'
 import { Window } from './lib/window.js'
 import { currL10n, numL10n, percL10n } from './lib/fmt.js'
@@ -28,10 +28,8 @@ const app = createApp({
         return {
             // Expose the config to the UI
             config,
-            // All the examples from example.js
-            examples,
-            // The index of the currently selected example
-            selectedExampleIndex: 0,
+            // Search terms for filtering the templates
+            templateFilter: '',
             // Show the announcement banner
             showAnnouncement: true,
             // Show the cookie popup (use localStorage to remember the user's choice)
@@ -160,11 +158,6 @@ const app = createApp({
             }
         },
         
-        loadSelectedExample() {
-            this.loadState(this.examples[this.selectedExampleIndex])
-            this.toastCaption = `Loaded example`
-        },
-        
         hideCookiePopup() {
             this.showCookiePopup = false
             try {
@@ -186,6 +179,9 @@ const app = createApp({
         },
     },
     computed: {
+        filteredTemplates() {
+            return searchTemplates(this.templateFilter)
+        },
         sloWindow() {
             return new Window(
                 daysToSeconds(this.windowDays),
