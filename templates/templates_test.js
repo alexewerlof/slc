@@ -1,7 +1,7 @@
 import { assert } from "https://deno.land/std@0.216.0/assert/mod.ts"
-import { inRangePosInt, isDef, isStr } from "./lib/validation.js"
-import { config } from "./config.js"
-import { templates } from './templates/templates.js'
+import { inRangePosInt, isDef, isStr } from "../lib/validation.js"
+import { config } from "../config.js"
+import { templates } from './templates.js'
 
 Deno.test('all templates are valid', () => {
     for (const template of templates) {

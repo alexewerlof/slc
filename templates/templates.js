@@ -1,4 +1,4 @@
-import { caseInsensitiveSearch } from './lib/search.js'
+import { caseInsensitiveSearch } from '../lib/search.js'
 
 /*
 Some examples are based on:
