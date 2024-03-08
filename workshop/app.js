@@ -123,7 +123,7 @@ class Consumption extends ObjectWithId {
 
 // If a certain service fails, what activities will it impact and how?
 class Failure extends ObjectWithId {
-    constructor(service, consumption, symptom, consequence) {
+    constructor(service, consumption, symptom, consequence, businessImpact) {
         super()
         
         if (!service || !(service instanceof Service)) {
@@ -138,6 +138,7 @@ class Failure extends ObjectWithId {
         
         this.symptom = symptom ?? ''
         this.consequence = consequence ?? ''
+        this.businessImpact = businessImpact ?? ''
     }
 
     toString() {
@@ -145,12 +146,9 @@ class Failure extends ObjectWithId {
     }
 }
 
-class Metric extends ObjectWithId {
-    static instances = []
-    
+class Metric extends ObjectWithId {    
     constructor(risk, name) {
         super()
-        Metric.instances.push(this)
         this.risk = risk ?? null
         this.name = name ?? ''
     }
@@ -160,22 +158,42 @@ export const app = createApp({
     data() {
         const systems = []
         const consumers = []
+        const failures = []
 
         const api = new System('API server')
         api.addNewService('Fetch car models')
         api.addNewService('Fetch car prices')
-
         systems.push(api)
+
+        const fileStorage = new System('File storage')
+        fileStorage.addNewService('Store car images')
+        fileStorage.addNewService('Store car documents')
+        fileStorage.addNewService('Retrieve car documents')
+        systems.push(fileStorage)
 
         const web = new Consumer('Web client')
         web.addNewConsumption('Car catalog page')
         web.addNewConsumption('Car detail page')
         consumers.push(web)
 
+        const mobile = new Consumer('Mobile client')
+        mobile.addNewConsumption('Car catalog page')
+        mobile.addNewConsumption('Car control')
+        consumers.push(mobile)
+
+        console.log('xx', api.services[0])
+
+        const fail1 = new Failure(api.services[0], web.consumptions[0], 'Service is slow', 'User will leave', 'Loss of potential customer')
+        const fail2 = new Failure(api.services[1], web.consumptions[1], 'Price is wrong', 'We sell the car with the wrong price', 'Loss of revenue')
+        const fail3 = new Failure(fileStorage.services[0], web.consumptions[0], 'Image is missing', 'User will get confused and leave', 'Loss of potential customer')
+        const fail4 = new Failure(fileStorage.services[2], web.consumptions[1], 'Document is missing', 'User interest dies out', 'Loss of potential customer')
+        
+        failures.push(fail1, fail2, fail3, fail4)
+
         return {
             systems,
             consumers,
-            failures: [],
+            failures,
         }
     },
     methods: {
@@ -197,19 +215,28 @@ export const app = createApp({
         removeConsumption(consumption) {
             consumption.remove()
         },
-        updateFailures() {
-            const newFailures = []
-            for (const consumption of this.allConsumptions) {
-                for (const service of consumption.dependencies) {
-                    const failure = this.failures.find(
-                        f => f.service === service && f.consumption === consumption
-                    )
-                    newFailures.push(failure ?? new Failure(service, consumption))
-                }
+        addNewFailure(consumption, service) {
+            this.failures.push(new Failure(service, consumption))
+        },
+        getFailures(consumption, service) {
+            return this.failures.filter(f => f.consumption === consumption && f.service === service)
+        },
+        failureUp(failure) {
+            // move the failure up in the failures array
+            const index = this.failures.indexOf(failure)
+            if (index > 0) {
+                this.failures.splice(index, 1)
+                this.failures.splice(index - 1, 0, failure)
             }
-            this.failures.length = 0
-            this.failures.push(...newFailures)
-        }
+        },
+        failureDown(failure) {
+            // move the failure down in the failures array
+            const index = this.failures.indexOf(failure)
+            if (index < this.failures.length - 1) {
+                this.failures.splice(index, 1)
+                this.failures.splice(index + 1, 0, failure)
+            }
+        },
     },
     computed: {
         allServices() {
