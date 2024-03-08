@@ -21,8 +21,8 @@ class System extends ObjectWithId {
         this.services = []
     }
 
-    addNewService(description) {
-        this.services.push(new Service(this, description))
+    addNewService(name) {
+        this.services.push(new Service(this, name))
     }
 
     removeService(service) {
@@ -40,13 +40,13 @@ class System extends ObjectWithId {
 }
 
 class Service extends ObjectWithId {
-    constructor(system, description) {
+    constructor(system, name) {
         super()
         if (!system || !(system instanceof System)) {
             throw new Error(`Service must tie to a system. Got ${system}`)
         }
         this.system = system
-        this.description = description ?? ''
+        this.name = name ?? ''
     }
 
     remove() {
@@ -54,13 +54,13 @@ class Service extends ObjectWithId {
     }
 
     toString() {
-        return `${this.system.name} => ${this.description}`
+        return `${this.system.name} => ${this.name}`
     }
 
     toJSON() {
         return {
             id: this.id,
-            description: this.description,
+            name: this.name,
         }
     }
 }
@@ -73,8 +73,8 @@ class Consumer extends ObjectWithId {
         this.name = name ?? ''
     }
 
-    addNewConsumption(description) {
-        this.consumptions.push(new Consumption(this, description))
+    addNewConsumption(name) {
+        this.consumptions.push(new Consumption(this, name))
     }
 
     removeConsumption(consumption) {
@@ -92,7 +92,7 @@ class Consumer extends ObjectWithId {
 }
 
 class Consumption extends ObjectWithId {
-    constructor(consumer, description) {
+    constructor(consumer, name) {
         super()
 
         if (!consumer || !(consumer instanceof Consumer)) {
@@ -100,8 +100,18 @@ class Consumption extends ObjectWithId {
         }
         this.consumer = consumer
         
-        this.description = description ?? ''
+        this.name = name ?? ''
         this.dependencies = []
+    }
+
+    hasDependency(service) {
+        return this.dependencies.includes(service)
+    }
+
+    addDependency(service) {
+        if (!this.hasDependency(service)) {
+            this.dependencies.push(service)
+        }
     }
 
     remove() {
@@ -109,13 +119,13 @@ class Consumption extends ObjectWithId {
     }
 
     toString() {
-        return `${this.consumer.name} -> ${this.description}`
+        return `${this.consumer.name} -> ${this.name}`
     }
 
     toJSON() {
         return {
             id: this.id,
-            description: this.description,
+            name: this.name,
             dependencies: this.dependencies,
         }
     }
@@ -123,7 +133,7 @@ class Consumption extends ObjectWithId {
 
 // If a certain service fails, what activities will it impact and how?
 class Failure extends ObjectWithId {
-    constructor(service, consumption, symptom, consequence, businessImpact) {
+    constructor(service, consumption, symptom, consequence, businessImpact, metric, metricLocation) {
         super()
         
         if (!service || !(service instanceof Service)) {
@@ -134,23 +144,18 @@ class Failure extends ObjectWithId {
         if (!consumption || !(consumption instanceof Consumption)) {
             throw new Error(`Failure must tie to a consumption. Got ${consumption}`)
         }
+        consumption.addDependency(service)
         this.consumption = consumption
         
         this.symptom = symptom ?? ''
         this.consequence = consequence ?? ''
         this.businessImpact = businessImpact ?? ''
+        this.metric = metric ?? ''
+        this.metricLocation = metricLocation ?? ''
     }
 
     toString() {
-        return `${this.consumption.description} >> ${this.symptom}`
-    }
-}
-
-class Metric extends ObjectWithId {    
-    constructor(risk, name) {
-        super()
-        this.risk = risk ?? null
-        this.name = name ?? ''
+        return `${this.consumption.name} >> ${this.symptom}`
     }
 }
 
@@ -186,7 +191,7 @@ export const app = createApp({
         const fail1 = new Failure(api.services[0], web.consumptions[0], 'Service is slow', 'User will leave', 'Loss of potential customer')
         const fail2 = new Failure(api.services[1], web.consumptions[1], 'Price is wrong', 'We sell the car with the wrong price', 'Loss of revenue')
         const fail3 = new Failure(fileStorage.services[0], web.consumptions[0], 'Image is missing', 'User will get confused and leave', 'Loss of potential customer')
-        const fail4 = new Failure(fileStorage.services[2], web.consumptions[1], 'Document is missing', 'User interest dies out', 'Loss of potential customer')
+        const fail4 = new Failure(fileStorage.services[2], web.consumptions[1], 'Document is missing', 'User interest dies out', 'Loss of potential customer', 'number of documents that 404', 'Web client')
         
         failures.push(fail1, fail2, fail3, fail4)
 

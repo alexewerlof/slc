@@ -66,7 +66,7 @@
                             <tbody>
                                 <tr v-for="service of system.services" :key="service.id">
                                     <td>
-                                        <input type="text" v-model="service.description">
+                                        <input type="text" v-model="service.name">
                                     </td>
                                     <td>
                                         <button @click="removeService(service)">Remove Service</button>
@@ -99,9 +99,9 @@
                     <div v-for="consumption of consumer.consumptions" :key="consumption.id">
                         <label>
                             <h3>Consumption Description</h3>
-                            <input type="text" v-model="consumption.description">
+                            <input type="text" v-model="consumption.name">
                         </label>
-                        <p>What services does {{ consumption.description || 'this consumption' }} rely on?</p>
+                        <p>What services does {{ consumption.name || 'this consumption' }} rely on?</p>
                         <ul>
                             <li v-for="service of allServices" :key="service.id">
                                 <label>
@@ -181,6 +181,36 @@
                             <td>
                                 <button @click="failureUp(failure)">🔼</button>
                                 <button @click="failureDown(failure)">🔽</button>
+                            </td>
+                        </tr>
+                </table>
+            </section>
+        </article>
+
+        <article>
+            <section>
+                <h1>Metrics</h1>
+                <p>What should we be measuring to be on top of those risks?</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Consumption</th>
+                            <th>Symptom</th>
+                            <th>Metric</th>
+                            <th>Measurement Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="failure of failures" :key="failure.id">
+                            <td>{{ failure.service }}</td>
+                            <td>{{ failure.consumption }}</td>
+                            <td>{{ failure.symptom }}</td>
+                            <td>
+                                <input type="text" v-model="failure.metric">
+                            </td>
+                            <td>
+                                <input type="text" v-model="failure.metricLocation">
                             </td>
                         </tr>
                 </table>
