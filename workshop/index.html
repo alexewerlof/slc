@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());gtag('config', 'G-J0S6RM2D7G');
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../vue-specific.css">
+    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="index.css">
+    <meta name="description" content="A simple utility for facilitating Service Level Workshops.">
+    <meta property="og:title" content="Service Level Workshop">
+    <meta property="og:description" content="A simple utility for facilitating Service Level Workshops.">
+    <meta property="og:image" content="https://slc.alexewerlof.com/img/icon.png">
+    <meta property="og:url" content="https://slc.alexewerlof.com">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/png" href="../img/icon.png">
+    <title>Service Level Workshop</title>
+</head>
+
+<body>
+    <noscript>
+        <p>This web application requires JavaScript to work.</p>
+    </noscript>
+    <main id="app" v-cloak>
+        <header>
+            <h1>Service Level Workshop</h1>
+        </header>
+        <article>
+            <section>
+                <h2>Definition of Service</h2>
+
+                <h3>Systems</h3>
+                <p>What are the services that your team owns?</p>
+                <p>
+                    It might be tempting to list all the systems that your team owns.
+                    Don't!
+                    Service Levels is about how reliability is perceived
+                    from your consumers' perspective and as far as they are concerned,
+                    your internal systems are not their business.
+                    We should set the Service Levels at the boundary of your team's
+                    responsibility.
+                </p>
+                <div v-for="system in systems" :key="system.id">
+                    <label>
+                        <h3>System Name</h3>
+                        <input type="text" v-model="system.name">
+                    </label>
+                    <h3>Services</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th></th>
+                            </tr>
+                            <tbody>
+                                <tr v-for="service in system.services" :key="service.id">
+                                    <td>
+                                        <input type="text" v-model="service.description">
+                                    </td>
+                                    <td>
+                                        <button @click="removeService(service)">Remove Service</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </thead>
+                    </table>
+                    <div class="button-bar">
+                        <button @click="addNewService(system)">Add New Service to {{ system }}</button>
+                    </div>
+                </div>
+                <div class="button-bar">
+                    <button @click="addNewSystem">Add New System</button>
+                </div>
+            </section>
+        </article>
+
+        <article>
+            <section>
+                <h2>Consumers</h2>
+                <p>What other entities (people or systems) use the services owned by your team?</p>
+                <div v-for="consumer in consumers" :key="consumer.id">
+                    <label>
+                        <h3>Consumer Name</h3>
+                        <input type="text" v-model="consumer.name">
+                    </label>
+                    <h3>Consumptions</h3>
+                    <p>How does this consumer consume your services?</p>
+                    <div v-for="consumption in consumer.consumptions" :key="consumption.id">
+                        <label>
+                            <h3>Consumption Description</h3>
+                            <input type="text" v-model="consumption.description">
+                        </label>
+                        <h3>Consumption Dependencies</h3>
+                        <p>What services does this consumption rely owns?</p>
+                        <ul>
+                            <li v-for="service of allServices" :key="service.id">
+                                <label>
+                                    <input type="checkbox" :value="service" v-model="consumption.dependencies">
+                                    {{ service }}
+                                </label>
+                        </ul>
+                    </div>
+                    <div class="button-bar">
+                        <button @click="addNewConsumption(consumer)">Add New Consumption to {{ consumer }}</button>
+                    </div>
+                    <div class="button-bar">
+                        <button @click="addNewConsumer">Add New Consumer</button>
+                    </div>
+                </div>
+            </section>
+        </article>
+
+        <article>
+            <section>
+                <h2>Failures</h2>
+                <p>What are the consequences and symptoms?</p>
+
+                <div class="button-bar">
+                    <button @click="updateFailures">Update failures</button>
+                </div>
+
+                <table>
+                    <thead>
+                        <th>Consumption</th>
+                        <th>System</th>
+                        <th>Service</th>
+                        <th>Consequence</th>
+                        <th>Symptom</th>
+                    </thead>
+                    <tbody>
+                        <tr v-for="failure of failures">
+                            <td>{{ failure.consumption }}</td>
+                            <td>{{ failure.service.system }}</td>
+                            <td>{{ failure.service.description }}</td>
+                            <td><input type="text" v-model="failure.consequence"></td>
+                            <td><input type="text" v-model="failure.symptom"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </article>
+
+        <article>
+            <pre><code>{{ state }}</code></pre>
+        </article>
+    </main>
+    <script type="module" src="index.js" defer async></script>
+</body>
+
+</html>

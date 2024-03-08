@@ -81,20 +81,26 @@
                 </help-component>
             </h2>
             <input id="template-filter" type="search" v-model="templateFilter" placeholder="Search for an example">
-            <ul>
-                <li
+            <div class="search-results" v-if="filteredTemplates.length">
+                <div class="search-results__count">
+                    {{ filteredTemplates.length }} templates
+                </div>
+                <div class="search-result"
                     v-for="template in filteredTemplates"
                     :key="template.title">
-                    <h4>{{ template.title }}
-                        <button @click="loadState(template)">Try!</button>
-                    </h4>
-                    <p>{{ template.description }}</p>
-                    <ul>
-                        <li v-for="tag in template.tags">
-                            <button @click="templateFilter = tag">{{ tag }}</button>
-                        </li>
-                    </ul>
-                </li>
+                    <div class="search-result__link"
+                        @click="loadState(template)">
+                        <h3 class="search-result__title">🗎 {{ template.title }}</h3>
+                        <p class="search-result__description">{{ template.description }}</p>
+                    </div>
+                    <div class="search_result__tags button-bar">
+                        <button
+                            class="search-result__tag" 
+                            v-for="tag in template.tags"
+                            @click="templateFilter = tag">{{ tag }}
+                        </button>
+                    </div>
+                </div>
             </ul>
         </section>
 
