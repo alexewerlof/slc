@@ -37,7 +37,7 @@
         <article>
             <section>
                 <h1>Systems</h1>
-                <p>What are the services that your team owns?</p>
+                <p>What are the services that your team owns? Systems offer services to the consumers.</p>
                 <p>
                     It might be tempting to list all the systems that your team owns.
                     Don't!
@@ -105,7 +105,7 @@
                         <ul>
                             <li v-for="service of allServices" :key="service.id">
                                 <label>
-                                    <input type="checkbox" :value="service" v-model="consumption.dependencies">
+                                    <input type="checkbox" :value="service" v-model="consumption.dependencies" @change="setConsumption($event, consumption, service)">
                                     {{ service }}
                                 </label>
                         </ul>
@@ -136,7 +136,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="failure of getFailures(consumption, service)" :key="service.id">
+                                <tr v-for="failure of filterFailures(consumption, service)" :key="service.id">
                                     <td>
                                         <input type="text" v-model="failure.consequence">
                                     </td>
@@ -218,7 +218,44 @@
         </article>
 
         <article>
-            <pre><code>{{ state }}</code></pre>
+            <section>
+                <h1>Result</h1>
+                <p>These are the key metrics for each system</p>
+                <table>
+                    <thead>
+                        <th>System</th>
+                        <th>Service</th>
+                        <th>Metric</th>
+                        <th>Measurement Location</th>
+                        <th>Type</th>
+                        <th>Good</th>
+                        <th>Valid</th>
+                        <th>SLC</th>
+                    </thead>
+                    <tbody v-for="system of systems">
+                        <tr v-for="failure of filterFailuresBySystem(system)">
+                            <td>{{ system.name }}</td>
+                            <td>{{ failure.service }}</td>
+                            <td>{{ failure.metric || 'TBD' }}</td>
+                            <td>{{ failure.metricLocation || 'TBD' }}</td>
+                            <td>
+                                <label><input type="checkbox">Event Based</label>
+                            </td>
+                            <td>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <a>SLC</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>JSON</h2>
+                <pre><code>{{ state }}</code></pre>
+            </section>
         </article>
     </main>
     <script type="module" src="index.js" defer async></script>
