@@ -135,7 +135,20 @@
 
                 <div v-for="consumption of allConsumptions" :key="consumption.id">
                     <div v-for="service of consumption.dependencies" :key="service.id">
-                        <h2>When {{ service }} fails towards {{ consumption }}</h2>
+                        <h2>
+                            What can fail when
+                            <label>
+                                {{ consumption.consumer }}
+                            </label>
+                            tries to consume
+                            <label>
+                                {{ service }}
+                            </label>
+                            for
+                            <label>
+                                {{ consumption.name }}
+                            </label> 
+                        </h2>
                         <table>
                             <thead>
                                 <tr>

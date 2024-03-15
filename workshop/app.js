@@ -177,13 +177,13 @@ export const app = createApp({
         systems.push(fileStorage)
 
         const web = new Consumer('Web client')
-        web.addNewConsumption('Car catalog page')
-        web.addNewConsumption('Car detail page')
+        web.addNewConsumption('Render car catalog page')
+        web.addNewConsumption('Render car detail page')
         consumers.push(web)
 
         const mobile = new Consumer('Mobile client')
-        mobile.addNewConsumption('Car catalog page')
-        mobile.addNewConsumption('Car control')
+        mobile.addNewConsumption('Render car catalog page')
+        mobile.addNewConsumption('Control the car remotely')
         consumers.push(mobile)
 
         const fail1 = new Failure(api.services[0], web.consumptions[0], 'Service is slow', 'User will leave', 'Loss of potential customer')
