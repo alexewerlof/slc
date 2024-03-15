@@ -50,7 +50,7 @@ class Service extends ObjectWithId {
     }
 
     remove() {
-        this.service.removeService(this)
+        this.system.removeService(this)
     }
 
     toString() {
@@ -182,14 +182,46 @@ export const app = createApp({
         consumers.push(web)
 
         const mobile = new Consumer('Mobile client')
-        mobile.addNewConsumption('Render car catalog page')
+        mobile.addNewConsumption('Render car image')
         mobile.addNewConsumption('Control the car remotely')
         consumers.push(mobile)
 
-        const fail1 = new Failure(api.services[0], web.consumptions[0], 'Service is slow', 'User will leave', 'Loss of potential customer')
-        const fail2 = new Failure(api.services[1], web.consumptions[1], 'Price is wrong', 'We sell the car with the wrong price', 'Loss of revenue')
-        const fail3 = new Failure(fileStorage.services[0], web.consumptions[0], 'Image is missing', 'User will get confused and leave', 'Loss of potential customer')
-        const fail4 = new Failure(fileStorage.services[2], web.consumptions[1], 'Document is missing', 'User interest dies out', 'Loss of potential customer', 'number of documents that 404', 'Web client')
+        const fail1 = new Failure(
+            api.services[0],
+            web.consumptions[0],
+            'Service is slow',
+            'User will leave',
+            'Loss of potential customer',
+            'response time',
+            'API',
+        )
+        const fail2 = new Failure(
+            api.services[1],
+            web.consumptions[1],
+            'Price is wrong',
+            'We sell the car with the wrong price',
+            'Loss of revenue',
+            'price correctness',
+            'API',
+        )
+        const fail3 = new Failure(
+            fileStorage.services[0],
+            web.consumptions[0],
+            'Image is missing',
+            'User will get confused and leave',
+            'Loss of potential customer',
+            'number of images that 404',
+            'Web client',
+        )
+        const fail4 = new Failure(
+            fileStorage.services[2],
+            web.consumptions[1],
+            'Document is missing',
+            'User interest dies out',
+            'Loss of potential customer',
+            'number of documents that 404',
+            'Web client',
+        )
         
         failures.push(fail1, fail2, fail3, fail4)
 
@@ -203,7 +235,9 @@ export const app = createApp({
         setConsumption($event, consumption, service) {
             if ($event.target.checked) {
                 // make sure that we have a failure for this service and consumption
-                this.addNewFailure(consumption, service)
+                if (!this.hasFailure(consumption, service)) {
+                    this.addNewFailure(consumption, service)
+                }
             } else {
                 // remove any failure that ties to this service and consumption
                 this.removeFailures(consumption, service)
@@ -231,26 +265,24 @@ export const app = createApp({
             return this.filterFailures(consumption, service).length > 0
         },
         addNewFailure(consumption, service) {
-            if (this.hasFailure(consumption, service)) {
-                this.failures.push(new Failure(service, consumption))
-            } else {
-                console.warn(`Failure already exists for service ${service} and consumption ${consumption}`)
+            this.failures.push(new Failure(service, consumption))
+        },
+        removeFailure(failure) {
+            const index = this.failures.indexOf(failure)
+            if (index > -1) {
+                this.failures.splice(index, 1)
             }
         },
         removeFailures(consumption, service) {
-            const existing = this.filterFailures(consumption, service)
-            for (const failure of existing) {
-                const index = this.failures.indexOf(failure)
-                if (index > -1) {
-                    this.failures.splice(index, 1)
-                }
+            const existingFailures = this.filterFailures(consumption, service)
+            for (const failure of existingFailures) {
+                this.removeFailure(failure)
             }
         },
         filterFailures(consumption, service) {
             return this.failures.filter(f => f.consumption === consumption && f.service === service)
         },
         filterFailuresBySystem(system) {
-            console.log(system, 'dd')
             return this.failures.filter(f => f.service.system === system)
         },
         failureUp(failure) {

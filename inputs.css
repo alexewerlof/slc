@@ -85,6 +85,16 @@ textarea {
     resize: vertical;
 }
 
+.button-bar {
+    display: flex;
+    justify-content: left;
+    margin: 1em 0;
+}
+
+.button-bar button + button {
+    margin-left: 0.5em;
+}
+
 button {
     background-color: var(--primary-color);
     color: var(--background-color);
@@ -97,7 +107,7 @@ button:hover {
     background-color: var(--primary-lighter);
 }
 
-button.large {
+button.large, .button-bar button {
     padding: 0.7em 1.4em;
 }
 
