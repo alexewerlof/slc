@@ -47,38 +47,42 @@
                     We should set the Service Levels at the boundary of your team's
                     responsibility.
                 </p>
-                <div v-for="system of systems" :key="system.id">
-                    <label>
-                        <h3>System Name</h3>
-                        <input type="text" v-model="system.name">
-                    </label>
-                    <h3>Services of {{ system.name }}</h3>
-                    <p>
-                        What kind of problem does {{ system.name }} solve?
-                        In the next step, we dig into whose problem it solves.
-                    </p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th></th>
-                            </tr>
-                            <tbody>
-                                <tr v-for="service of system.services" :key="service.id">
-                                    <td>
-                                        <input type="text" v-model="service.name">
-                                    </td>
-                                    <td>
-                                        <button @click="removeService(service)">Remove Service</button>
-                                    </td>
+                <article v-for="system of systems" :key="system.id">
+                    <section>
+                        <label>
+                            <h2>System Name</h2>
+                            <input type="text" v-model="system.name">
+                        </label>
+                    </section>
+                    <section>
+                        <h3>Services of {{ system.name }}</h3>
+                        <p>
+                            What kind of problem does {{ system.name }} solve?
+                            In the next step, we dig into whose problem it solves.
+                        </p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th></th>
                                 </tr>
-                            </tbody>
-                        </thead>
-                    </table>
-                    <div class="button-bar">
-                        <button @click="addNewService(system)">Add New Service to {{ system }}</button>
-                    </div>
-                </div>
+                                <tbody>
+                                    <tr v-for="service of system.services" :key="service.id">
+                                        <td>
+                                            <input type="text" v-model="service.name">
+                                        </td>
+                                        <td>
+                                            <button @click="removeService(service)">Remove Service</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </thead>
+                        </table>
+                        <div class="button-bar">
+                            <button @click="addNewService(system)">Add New Service to {{ system }}</button>
+                        </div>
+                    </section>
+                </article>
                 <div class="button-bar">
                     <button @click="addNewSystem">Add New System</button>
                 </div>
@@ -89,33 +93,37 @@
             <section>
                 <h1>Consumers</h1>
                 <p>What other entities (people or systems) use the services owned by your team?</p>
-                <div v-for="consumer of consumers" :key="consumer.id">
-                    <label>
-                        <h3>Consumer Name</h3>
-                        <input type="text" v-model="consumer.name">
-                    </label>
-                    <h3>Consumptions</h3>
-                    <p>How does {{ consumer.name || 'this consumer'}} consume your services?</p>
-                    <div v-for="consumption of consumer.consumptions" :key="consumption.id">
+                <article v-for="consumer of consumers" :key="consumer.id">
+                    <section>
                         <label>
-                            <h3>Consumption Description</h3>
-                            <input type="text" v-model="consumption.name">
+                            <h2>Consumer Name</h2>
+                            <input type="text" v-model="consumer.name">
                         </label>
-                        <p>What services does {{ consumption.name || 'this consumption' }} rely on?</p>
-                        <ul>
-                            <li v-for="service of allServices" :key="service.id">
-                                <label>
-                                    <input type="checkbox" :value="service" v-model="consumption.dependencies" @change="setConsumption($event, consumption, service)">
-                                    {{ service }}
-                                </label>
-                        </ul>
-                    </div>
-                    <div class="button-bar">
-                        <button @click="addNewConsumption(consumer)">Add New Consumption to {{ consumer }}</button>
-                    </div>
-                    <div class="button-bar">
-                        <button @click="addNewConsumer">Add New Consumer</button>
-                    </div>
+                    </section>
+                    <section>
+                        <h3>Consumptions</h3>
+                        <p>How does {{ consumer.name || 'this consumer'}} consume your services?</p>
+                        <div v-for="consumption of consumer.consumptions" :key="consumption.id">
+                            <label>
+                                <h3>Consumption Description</h3>
+                                <input type="text" v-model="consumption.name">
+                            </label>
+                            <p>What services does {{ consumption.name || 'this consumption' }} rely on?</p>
+                            <ul>
+                                <li v-for="service of allServices" :key="service.id">
+                                    <label>
+                                        <input type="checkbox" :value="service" v-model="consumption.dependencies" @change="setConsumption($event, consumption, service)">
+                                        {{ service }}
+                                    </label>
+                            </ul>
+                        </div>
+                        <div class="button-bar">
+                            <button @click="addNewConsumption(consumer)">Add New Consumption to {{ consumer }}</button>
+                        </div>
+                    </section>
+                </article>
+                <div class="button-bar">
+                    <button @click="addNewConsumer">Add New Consumer</button>
                 </div>
             </section>
         </article>
@@ -131,17 +139,17 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Consequence for {{ consumption.consumer }}</th>
                                     <th>Symptom from {{ consumption.consumer }} perspective</th>
+                                    <th>Consequence for {{ consumption.consumer }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="failure of filterFailures(consumption, service)" :key="service.id">
                                     <td>
-                                        <input type="text" v-model="failure.consequence">
+                                        <input type="text" v-model="failure.symptom">
                                     </td>
                                     <td>
-                                        <input type="text" v-model="failure.symptom">
+                                        <input type="text" v-model="failure.consequence">
                                     </td>
                                 </tr>
                             </tbody>
@@ -171,10 +179,10 @@
                     </thead>
                     <tbody>
                         <tr v-for="(failure, index) in failures" :key="failure.id">
-                            <td>{{ failure.service }}</td>
-                            <td>{{ failure.symptom }}</td>
-                            <td>{{ failure.consumption }}</td>
-                            <td>{{ failure.consequence }}</td>
+                            <td>{{ failure.service || '⚠️TBD' }}</td>
+                            <td>{{ failure.symptom || '⚠️TBD' }}</td>
+                            <td>{{ failure.consumption || '⚠️TBD' }}</td>
+                            <td>{{ failure.consequence || '⚠️TBD' }}</td>
                             <td>
                                 <input type="text" v-model="failure.businessImpact">
                             </td>
@@ -203,9 +211,9 @@
                     </thead>
                     <tbody>
                         <tr v-for="failure of failures" :key="failure.id">
-                            <td>{{ failure.service }}</td>
-                            <td>{{ failure.consumption }}</td>
-                            <td>{{ failure.symptom }}</td>
+                            <td>{{ failure.service || '⚠️TBD' }}</td>
+                            <td>{{ failure.consumption || '⚠️TBD' }}</td>
+                            <td>{{ failure.symptom || '⚠️TBD' }}</td>
                             <td>
                                 <input type="text" v-model="failure.metric">
                             </td>
@@ -219,7 +227,7 @@
 
         <article>
             <section>
-                <h1>Result</h1>
+                <h1>Service Levels</h1>
                 <p>These are the key metrics for each system</p>
                 <table>
                     <thead>
@@ -236,8 +244,8 @@
                         <tr v-for="failure of filterFailuresBySystem(system)">
                             <td>{{ system.name }}</td>
                             <td>{{ failure.service }}</td>
-                            <td>{{ failure.metric || 'TBD' }}</td>
-                            <td>{{ failure.metricLocation || 'TBD' }}</td>
+                            <td>{{ failure.metric || '⚠️TBD' }}</td>
+                            <td>{{ failure.metricLocation || '⚠️TBD' }}</td>
                             <td>
                                 <label><input type="checkbox">Event Based</label>
                             </td>
