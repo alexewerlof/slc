@@ -166,8 +166,8 @@ export const app = createApp({
         const failures = []
 
         const api = new System('API server')
-        api.addNewService('Fetch car models')
-        api.addNewService('Fetch car prices')
+        api.addNewService('Car models API')
+        api.addNewService('Car prices API')
         systems.push(api)
 
         const fileStorage = new System('File storage')
@@ -199,7 +199,7 @@ export const app = createApp({
             failures,
         }
     },
-    methods: {        
+    methods: {
         setConsumption($event, consumption, service) {
             if ($event.target.checked) {
                 // make sure that we have a failure for this service and consumption
@@ -233,6 +233,8 @@ export const app = createApp({
         addNewFailure(consumption, service) {
             if (this.hasFailure(consumption, service)) {
                 this.failures.push(new Failure(service, consumption))
+            } else {
+                console.warn(`Failure already exists for service ${service} and consumption ${consumption}`)
             }
         },
         removeFailures(consumption, service) {
