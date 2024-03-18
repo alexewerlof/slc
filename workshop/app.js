@@ -186,44 +186,53 @@ export const app = createApp({
         mobile.addNewConsumption('Control the car remotely')
         consumers.push(mobile)
 
-        const fail1 = new Failure(
-            api.services[0],
-            web.consumptions[0],
-            'Service is slow',
-            'User will leave',
-            'Loss of potential customer',
-            'response time',
-            'API',
+        failures.push(
+            new Failure(
+                api.services[0],
+                web.consumptions[0],
+                'Web page response is slow',
+                'User will leave',
+                'Loss of potential customer',
+                'response time',
+                'API',
+            ),
+            new Failure(
+                api.services[0],
+                web.consumptions[0],
+                'Wrong car specs are shown to the user',
+                'User will get the wrong info',
+                'Legal responsibility, bad reputation',
+                'data correctness',
+                'web client',
+            ),
+            new Failure(
+                api.services[1],
+                web.consumptions[1],
+                'Price is wrong',
+                'We sell the car with the wrong price',
+                'Loss of revenue',
+                'price correctness',
+                'API',
+            ),
+            new Failure(
+                fileStorage.services[0],
+                web.consumptions[0],
+                'Image is missing',
+                'User will get confused and leave',
+                'Loss of potential customer',
+                'number of images that 404',
+                'Web client',
+            ),
+            new Failure(
+                fileStorage.services[2],
+                web.consumptions[1],
+                'Document is missing',
+                'User interest dies out',
+                'Loss of potential customer',
+                'number of documents that 404',
+                'Web client',
+            ),
         )
-        const fail2 = new Failure(
-            api.services[1],
-            web.consumptions[1],
-            'Price is wrong',
-            'We sell the car with the wrong price',
-            'Loss of revenue',
-            'price correctness',
-            'API',
-        )
-        const fail3 = new Failure(
-            fileStorage.services[0],
-            web.consumptions[0],
-            'Image is missing',
-            'User will get confused and leave',
-            'Loss of potential customer',
-            'number of images that 404',
-            'Web client',
-        )
-        const fail4 = new Failure(
-            fileStorage.services[2],
-            web.consumptions[1],
-            'Document is missing',
-            'User interest dies out',
-            'Loss of potential customer',
-            'number of documents that 404',
-            'Web client',
-        )
-        
-        failures.push(fail1, fail2, fail3, fail4)
 
         return {
             systems,
