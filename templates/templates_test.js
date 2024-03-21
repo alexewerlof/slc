@@ -6,13 +6,19 @@ import { templates } from './templates.js'
 Deno.test('all templates are valid', () => {
     for (const template of templates) {
         Deno.test(`template: ${template.title}`, () => {
-            const { title, description, unit, good, valid } = template
+            const { title, description, unit, good, valid, tags } = template
             assert(isStr(title))
             assert(isStr(description))
             assert(isStr(unit) || inRangePosInt(unit, config.timeSlot.min, config.timeSlot.max))
             assert(isStr(good))
             if (isDef(valid)) {
                 assert(isStr(valid))
+            }
+            if (tags) {
+                assert(Array.isArray(tags))
+                for (const tag of tags) {
+                    assert(isStr(tag))
+                }
             }
         })
     }

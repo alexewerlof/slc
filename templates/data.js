@@ -1,4 +1,4 @@
-const commonTags = [ 'database' ]
+const commonTags = [ 'data' ]
 
 export default [
     {
@@ -63,7 +63,6 @@ export default [
         description: 'Percentage of customer records where the account information matches the information acquired via banking API',
         unit: 'customer records',
         good: 'match_bank_record("name", "phone", "address")',
-        valid: 'all',
         tags: [ ...commonTags ],
     },
     {

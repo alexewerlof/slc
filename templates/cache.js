@@ -6,7 +6,6 @@ export default [
         description: 'The percentage of sufficiently fast cache response. "Sufficiently fast" is defined as ≤ 10 ms',
         unit: 'cache requests',
         good: 'response_time ≤ 10ms',
-        valid: 'all',
         tags: [ ...commonTags ],
     },
     {
@@ -14,7 +13,6 @@ export default [
         description: 'The number of requests that were responded via the cache storage instead of going to the origin',
         unit: 'request',
         good: 'responded from cache',
-        valid: 'all',
         tags: [ ...commonTags ],
     },
     {
@@ -22,7 +20,6 @@ export default [
         description: 'The percentage of responses from cache that are fresh (not stale)',
         unit: 'cache hits',
         good: 'fresh',
-        valid: 'all',
         tags: [ ...commonTags ],
     },
     {

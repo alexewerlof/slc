@@ -1,0 +1,88 @@
+const commonTags = [ 'ai', 'genai' ]
+
+export default [
+    {
+        title: 'Success: Prompt Processing',
+        description: 'Measure the number of promots processed without error',
+        unit: 'prompts',
+        good: 'no response errors',
+        tags: [ ...commonTags, 'server', 'chat' ],
+    },
+    {
+        title: 'Success: User feedback',
+        description: 'Measure the quality of output based on the user feedback',
+        unit: 'responses',
+        good: 'user feedback is positive',
+        tags: [ ...commonTags, 'quality' ],
+    },
+    {
+        title: 'Success: Response report',
+        description: 'Measure the number of responses that were flagged by the user as inappropriate or incorrect',
+        unit: 'responses',
+        good: 'user reports',
+        tags: [ ...commonTags, 'quality' ],
+    },  
+    {
+        title: 'Success: Response retries',
+        description: 'Measure the number of time a response was generated without having to retry the same prompt',
+        unit: 'prompts',
+        good: 'no retry',
+        tags: [ ...commonTags, 'quality' ],
+    },
+    {
+        title: 'Throughput: Prompt Processing',
+        description: 'Hardware utilization as in the number of users served per machine or GPU core',
+        unit: 60,
+        good: 'queries served per machine > 300',
+        tags: [ ...commonTags, 'quality', 'utilization' ],
+    },
+    {
+        title: 'Latency: Time to First Token',
+        description: 'Measure the time it takes to generate the first token',
+        unit: 'responses',
+        good: 'TTFT < 1s',
+        tags: [ ...commonTags, 'quality', 'text' ],
+    },
+    {
+        title: 'Latency: Time to generate complete response',
+        description: 'Measure the time it takes to generate a complete response',
+        unit: 'responses',
+        good: 'last_token_timestamp - first_token_timestamp <= 15000ms',
+        tags: [ ...commonTags, 'quality', 'text' ],
+    },
+    {
+        title: 'Throughput: Token per second',
+        description: 'Normalize the amount of time it took to generate a response based on its length in number of tokens. Measure the time it takes to generate a complete response based on the number of tokens. TPS = tokens / second is calculated as the number of tokens generated per second by dividing the number of tokens by the time it took to generate the response.',
+        unit: 'complete responses',
+        good: 'tps > 0.5',
+        tags: [ ...commonTags, 'quality', 'text' ],
+    },
+    {
+        title: 'Throughput: Response token length',
+        description: 'Ensure that the response is long enough (to be useful) but not too long (due to cost). This is to protect the model from attacks that cause it to generate too long responses which will be expensive for the business. We use the P99 response token length for the calculation.',
+        unit: 300,
+        good: ' <= response tokens <= 4000',
+        tags: [ ...commonTags, 'quality' ],
+    },
+    {
+        title: 'GenAI Text: Chat length (can either show engagement or struggle to get a desired answer)',
+        description: '',
+        unit: '',
+        good: '',
+        tags: [ ...commonTags, 'quality' ],
+    },
+    {
+        title: 'Latency: Time to respond a video request',
+        description: 'The time it took to generate an image using AI',
+        unit: 'prompts',
+        good: 'response time < 40s',
+        tags: [ ...commonTags, 'quality', 'image generation'],
+    },
+    {
+        title: 'Latency: Time to respond an image request',
+        description: 'The time it took to generate a video using AI',
+        unit: 'prompts',
+        good: 'response time < 400s',
+        tags: [ ...commonTags, 'quality', 'video generation' ],
+    },
+]
