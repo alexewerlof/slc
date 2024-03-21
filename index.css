@@ -183,6 +183,10 @@ footer {
     color: var(--primary-color);
 }
 
+.footer__logo {
+    width: 10em;
+}
+
 .link-list {
     margin: 0;
     padding: 0;

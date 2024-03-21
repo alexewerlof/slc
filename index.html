@@ -21,7 +21,7 @@
     <meta property="og:image" content="https://slc.alexewerlof.com/img/icon.png">
     <meta property="og:url" content="https://slc.alexewerlof.com">
     <meta property="og:type" content="website">
-    <link rel="icon" type="image/png" href="img/icon.png">
+    <link rel="icon" type="image/svg" href="img/icon.svg">
     <link rel="manifest" href="manifest.json">
     <title>Service Level Calculator</title>
 </head>
@@ -736,7 +736,7 @@
                 </div>
 
                 <h3>
-                    Average cost of bad <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
+                    <label for="bad-event-cost-input">Average cost of bad</label> <label for="sli-event-unit"><code>{{ sloWindow.normUnit }}</code></label>
                     <help-component>
                         <p>
                             When one of the
@@ -769,13 +769,14 @@
                     </help-component>
                 </h3>
                 <input type="number"
+                    id="bad-event-cost-input"
                     v-model.number="badEventCost"
                     :min="config.badEventCost.min"
                     :max="config.badEventCost.max"
                     :step="config.badEventCost.step">
 
                 <h4>
-                    Currency
+                    <label for="bad-event-currency-input">Currency</label>
                     <help-component>
                         <p>
                             You can set the currency to see how much it costs to violate the SLO.
@@ -795,7 +796,10 @@
                         </table>
                     </help-component>
                 </h4>
-                <input type="text" v-model="badEventCurrency">
+                <input
+                    id="bad-event-currency-input"
+                    type="text"
+                    v-model="badEventCurrency">
             </section>
 
             <!------------------------ Alert ------------------------>
@@ -1321,7 +1325,7 @@
                 </em>
             </p>
             <ext-link href="https://alexewerlof.com">
-                <img alt="logo" src="img/logo.png" width="150px"/>
+                <img alt="logo" class="footer__logo" src="img/logo.png" />
             </ext-link>
         </footer>
 
