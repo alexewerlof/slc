@@ -59,7 +59,7 @@ export default [
     },
     {
         title: 'Throughput: Response token length',
-        description: 'Ensure that the response is long enough (to be useful) but not too long (due to cost). This is to protect the model from attacks that cause it to generate too long responses which will be expensive for the business. We use the P99 response token length for the calculation.',
+        description: 'Ensure that the response is long enough (to be useful) but not too long (due to cost). This is to protect the model from attacks that cause it to generate too long responses which will be expensive for the business. We use the response token length for the calculation.',
         unit: 300,
         good: ' <= response tokens <= 4000',
         tags: [ ...commonTags, 'quality' ],

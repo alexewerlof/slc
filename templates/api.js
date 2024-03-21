@@ -42,7 +42,7 @@ export default [
         title: 'Latency: P99 response time',
         description: 'The percentage of 5 minute time slots where the P75 percentile of response latency was sufficiently fast. "Sufficiently fast" is defined as ≤ 800 ms',
         unit: 300,
-        good: 'P75(response_latency) ≤ 800ms',
+        good: 'P99(response_latency) ≤ 800ms',
         tags: [ ...commonTags, 'web', 'database', 'graphql', 'rest', 'grpc'],
     },
     {

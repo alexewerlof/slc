@@ -140,40 +140,29 @@ td button {
 }
 
 .search-results {
-    height: 30vh;
-    overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 30vh;
+    overflow-y: auto;
     overflow-x: hidden;
-    position: absolute;
-    right: 1em;
-    left: 1em;
-    box-shadow: 0 0 1em black;
-    background-color: var(--background-color);
 }
 
 .search-results__count {
+    flex-grow: 1;
     padding: 0.5em;
 }
 
 .search-result {
-    padding: 0 1em;
+    flex-basis: 100%;
+    max-width: 30em;
+    min-width: 20em;
+    flex-grow: 1;
+    text-align: left;
 }
 
-.search-result__link {
-    cursor: pointer;
+.search-result h3 {
+    margin: 0.2em 0;
 }
-
-.search-result__link:hover {
-    background-color: var(--background-lighter);
-}
-
-.search-result__title {
-    margin: 2em 0 0em 0;
-}
-
-.search-result__title:hover {
-    text-decoration: underline;
-}
-
 
 footer {
     padding: 4em 0;
