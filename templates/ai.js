@@ -2,28 +2,28 @@ const commonTags = [ 'ai', 'genai' ]
 
 export default [
     {
-        title: 'Success: Prompt Processing',
+        title: 'Availability: Prompt Processing',
         description: 'Measure the number of promots processed without error',
         unit: 'prompts',
         good: 'no response errors',
         tags: [ ...commonTags, 'server', 'chat' ],
     },
     {
-        title: 'Success: User feedback',
+        title: 'Availability: User feedback',
         description: 'Measure the quality of output based on the user feedback',
         unit: 'responses',
         good: 'user feedback is positive',
         tags: [ ...commonTags, 'quality' ],
     },
     {
-        title: 'Success: Response report',
+        title: 'Availability: Response report',
         description: 'Measure the number of responses that were flagged by the user as inappropriate or incorrect',
         unit: 'responses',
         good: 'user reports',
         tags: [ ...commonTags, 'quality' ],
     },  
     {
-        title: 'Success: Response retries',
+        title: 'Availability: Response retries',
         description: 'Measure the number of time a response was generated without having to retry the same prompt',
         unit: 'prompts',
         good: 'no retry',
