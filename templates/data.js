@@ -1,5 +1,9 @@
 const commonTags = [ 'data' ]
 
+/*
+https://www.collibra.com/us/en/blog/the-6-dimensions-of-data-quality
+*/
+
 export default [
     {
         title: 'Latency: Database Query',

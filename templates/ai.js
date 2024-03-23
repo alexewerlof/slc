@@ -1,4 +1,4 @@
-const commonTags = [ 'ai', 'genai' ]
+const commonTags = [ 'ai', 'genai', 'generative ai' ]
 
 export default [
     {
@@ -7,13 +7,6 @@ export default [
         unit: 'prompts',
         good: 'no response errors',
         tags: [ ...commonTags, 'server', 'chat' ],
-    },
-    {
-        title: 'Availability: User feedback',
-        description: 'Measure the quality of output based on the user feedback',
-        unit: 'responses',
-        good: 'user feedback is positive',
-        tags: [ ...commonTags, 'quality' ],
     },
     {
         title: 'Availability: Response report',
@@ -37,20 +30,6 @@ export default [
         tags: [ ...commonTags, 'quality', 'utilization' ],
     },
     {
-        title: 'Latency: Time to First Token',
-        description: 'Measure the time it takes to generate the first token',
-        unit: 'responses',
-        good: 'TTFT < 1s',
-        tags: [ ...commonTags, 'quality', 'text' ],
-    },
-    {
-        title: 'Latency: Time to generate complete response',
-        description: 'Measure the time it takes to generate a complete response',
-        unit: 'responses',
-        good: 'last_token_timestamp - first_token_timestamp <= 15000ms',
-        tags: [ ...commonTags, 'quality', 'text' ],
-    },
-    {
         title: 'Throughput: Token per second',
         description: 'Normalize the amount of time it took to generate a response based on its length in number of tokens. Measure the time it takes to generate a complete response based on the number of tokens. TPS = tokens / second is calculated as the number of tokens generated per second by dividing the number of tokens by the time it took to generate the response.',
         unit: 'complete responses',
@@ -65,11 +44,18 @@ export default [
         tags: [ ...commonTags, 'quality' ],
     },
     {
-        title: 'GenAI Text: Chat length (can either show engagement or struggle to get a desired answer)',
-        description: '',
-        unit: '',
-        good: '',
-        tags: [ ...commonTags, 'quality' ],
+        title: 'Latency: Time to First Token',
+        description: 'Measure the time it takes to generate the first token',
+        unit: 'responses',
+        good: 'TTFT < 1s',
+        tags: [ ...commonTags, 'quality', 'text' ],
+    },
+    {
+        title: 'Latency: Time to generate complete response',
+        description: 'Measure the time it takes to generate a complete response',
+        unit: 'responses',
+        good: 'last_token_timestamp - first_token_timestamp <= 15000ms',
+        tags: [ ...commonTags, 'quality', 'text' ],
     },
     {
         title: 'Latency: Time to respond a video request',
@@ -84,5 +70,19 @@ export default [
         unit: 'prompts',
         good: 'response time < 400s',
         tags: [ ...commonTags, 'quality', 'video generation' ],
+    },
+    {
+        title: 'Correctness: Chat length',
+        description: 'Chat length as measured by number of messages in a conversation can indicate engagement or struggle to get a quality answer. We only need to alert on the latter.',
+        unit: 'chat sessions',
+        good: 'no message is flagged as inappropriate or incorrect',
+        tags: [ ...commonTags, 'quality', 'chat' ],
+    },
+    {
+        title: 'Correctness: User feedback',
+        description: 'Measure the quality of output based on the user feedback',
+        unit: 'responses',
+        good: 'user feedback is positive',
+        tags: [ ...commonTags, 'quality' ],
     },
 ]

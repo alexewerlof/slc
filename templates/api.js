@@ -32,6 +32,14 @@ export default [
         tags: [ ...commonTags, 'graphql', 'rest', 'grpc' ],
     },
     {
+        title: 'Availability: Retries',
+        description: 'The percentage of requests that were retried',
+        unit: 'requests',
+        good: 'retries == 0',
+        valid: 'GET',
+        tags: [ ...commonTags, 'web', 'graphql', 'rest', 'grpc' ],
+    },
+    {
         title: 'Latency: Response Latency',
         description: 'The percentage of sufficiently fast requests, as measured from the load balancer metrics. "Sufficiently fast" is defined as ≤ 400 ms',
         unit: 'load balancer requests',
@@ -45,12 +53,4 @@ export default [
         good: 'P99(response_latency) ≤ 800ms',
         tags: [ ...commonTags, 'web', 'database', 'graphql', 'rest', 'grpc'],
     },
-    {
-        title: 'Availability: Retries',
-        description: 'The percentage of requests that were retried',
-        unit: 'requests',
-        good: 'retries == 0',
-        valid: 'GET',
-        tags: [ ...commonTags, 'web', 'graphql', 'rest', 'grpc' ],
-    }
 ]
