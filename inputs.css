@@ -1,4 +1,5 @@
 @import url('variables.css');
+@import url('vue-specific.css');
 
 input[type=range] {
     --webkit-appearance: none;
