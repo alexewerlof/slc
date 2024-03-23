@@ -1,7 +1,7 @@
-const template = await (await fetch('components/help-component.html')).text()
+import { fetchTemplate } from '../lib/fetch-template.js'
 
 export default {
-    template,
+    template: await fetchTemplate('help-component.html', import.meta.url),
     data() {
         return {
             isVisible: this.visible,

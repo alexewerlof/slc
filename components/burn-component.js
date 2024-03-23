@@ -1,9 +1,9 @@
+import { fetchTemplate } from '../lib/fetch-template.js'
 import { arrToPolygonPoints } from '../lib/svg.js'
 import burnEventComponent from './burn-event-component.js'
-const template = await (await fetch('components/burn-component.html')).text()
 
 export default {
-    template,
+    template: await fetchTemplate('burn-component.html', import.meta.url),
     data() {
         return {
             width: 500,
