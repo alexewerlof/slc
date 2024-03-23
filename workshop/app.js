@@ -1,4 +1,4 @@
-import { createApp } from '../vendor/vue@3.3.4_dist_vue.esm-browser.prod.js'
+import { createApp } from '../vendor/vue.js'
 
 function uuid() {
     return Math.floor(Math.random() * 100_000_000);

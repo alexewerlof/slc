@@ -1,4 +1,4 @@
-import { createApp } from './vendor/vue@3.3.4_dist_vue.esm-browser.prod.js'
+import { createApp } from './vendor/vue.js'
 import { config } from './config.js'
 import HelpComponent from './components/help-component.js'
 import BurnComponent from './components/burn-component.js'
