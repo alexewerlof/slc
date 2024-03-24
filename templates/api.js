@@ -19,6 +19,7 @@ export default [
     {
         title: 'Availability: Organic purchase flow',
         description: 'The percentage of settled payments out of all orders placed via the website',
+        unit: 'orders',
         good: 'settled payment',
         valid: 'orders placed via website',
         tags: [ ...commonTags, 'frontend', 'mobile', 'payment' ],

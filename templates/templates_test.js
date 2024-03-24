@@ -3,23 +3,21 @@ import { inRangePosInt, isDef, isStr } from "../lib/validation.js"
 import { config } from "../config.js"
 import { templates } from './templates.js'
 
-Deno.test('all templates are valid', () => {
-    for (const template of templates) {
-        Deno.test(`template: ${template.title}`, () => {
-            const { title, description, unit, good, valid, tags } = template
-            assert(isStr(title))
-            assert(isStr(description))
-            assert(isStr(unit) || inRangePosInt(unit, config.timeSlot.min, config.timeSlot.max))
-            assert(isStr(good))
-            if (isDef(valid)) {
-                assert(isStr(valid))
+for (const template of templates) {
+    Deno.test(`Template: ${template.title}`, (t) => {
+        const { title, description, unit, good, valid, tags } = template
+        assert(isStr(title), `invalid "title" field: ${title}`)
+        assert(isStr(description), `invalid "description" field: ${description}`)
+        assert(isStr(unit) || inRangePosInt(unit, config.timeSlot.min, config.timeSlot.max), `invalid "unit" field : ${unit}`)
+        assert(isStr(good), `invalid "good" field: ${good}`)
+        if (isDef(valid)) {
+            assert(isStr(valid), `invalid "valid" field: ${valid}`)
+        }
+        if (tags) {
+            assert(Array.isArray(tags), `invalid "tags" field: ${tags}`)
+            for (const tag of tags) {
+                assert(isStr(tag), `invalid "tag" in the tags array: ${tag}`)
             }
-            if (tags) {
-                assert(Array.isArray(tags))
-                for (const tag of tags) {
-                    assert(isStr(tag))
-                }
-            }
-        })
-    }
-})
+        }
+    })
+}
