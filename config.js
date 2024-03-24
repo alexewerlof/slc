@@ -1,4 +1,8 @@
 function fz(obj) {
+    if (Array.isArray(obj)) {
+        return Object.freeze(obj.map(fz))
+    }
+    
     return Object.freeze(obj)
 }
 
