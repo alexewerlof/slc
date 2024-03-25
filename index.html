@@ -52,47 +52,6 @@
                 <li><a href="#share-title">Share</a></li>
             </ul>
         </header>
-    
-        <!------------------------ Templates ------------------------>
-        <section>
-            <h1>Introduction</h1>
-            <p>
-                This is an educational tool to help you understand the concepts of
-                SLI, SLO, Error Budget, and Alerting in a playful and interactive manner.
-                Throughout the interface, there are buttons that help you learn more about
-                the concepts and fine tune parameters! Try:
-                <help-component>
-                    Yay! 🎉 This is how it works!
-                    <ext-link href="https://blog.alexewerlof.com/p/slc">Read the introduction here</ext-link>
-                    or click that "close" text to hide this message.
-                </help-component>
-            </p>
-            <h2>
-                <label for="template-filter">Templates</label>
-                <help-component>
-                    <p>
-                        You can load a template to kick start setting your service level objectives and start tweaking it for your needs.
-                    </p>
-                    <p>
-                        These templates come from the workshops I run across different teams.
-                        If you have an idea for a template, you can make a PR.
-                    </p>
-                </help-component>
-            </h2>
-            <input id="template-filter" type="search" v-model="templateFilter" placeholder="Search for an template">
-            <div class="search-results__count" v-if="filteredTemplates.length">
-                {{ filteredTemplates.length }} templates <button @click="templateFilter = ''">clear</button>
-            </div>
-            <div class="search-results" v-if="filteredTemplates.length">
-                <button class="search-result"
-                    v-for="template in filteredTemplates"
-                    :key="template.title"
-                    @click="loadState(template)">
-                        <h3>🗎 {{ template.title }}</h3>
-                        <p>{{ template.description }}</p>
-                </button>
-            </ul>
-        </section>
 
         <article>
             <!------------------------ SLI ------------------------>
@@ -133,6 +92,7 @@
                         </p>
                     </help-component>
                 </h1>
+                🎉Tip: <ext-link href="templates/index.html">Use Templates</ext-link>
                 <h3>
                     <label for="sli-title-input">Title</label>
                 </h3>

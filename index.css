@@ -139,31 +139,6 @@ td button {
     width: 100%;
 }
 
-.search-results {
-    display: flex;
-    flex-wrap: wrap;
-    max-height: 30vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.search-results__count {
-    flex-grow: 1;
-    padding: 0.5em;
-}
-
-.search-result {
-    flex-basis: 100%;
-    max-width: 30em;
-    min-width: 20em;
-    flex-grow: 1;
-    text-align: left;
-}
-
-.search-result h3 {
-    margin: 0.2em 0;
-}
-
 footer {
     padding: 4em 0;
     text-align: center;

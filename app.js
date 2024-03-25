@@ -4,13 +4,12 @@ import HelpComponent from './components/help-component.js'
 import BurnComponent from './components/burn-component.js'
 import ExtLink from './components/ext-link.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
-import { searchTemplates } from './templates/templates.js'
 import { daysToSeconds } from './lib/time.js'
 import { Window } from './lib/window.js'
 import { numL10n, percL10n } from './lib/fmt.js'
 import { inRange, inRangePosInt, isNum, isStr } from './lib/validation.js'
 import { trackEvent } from './lib/ga-utils.js'
-import { urlToState } from './lib/share.js'
+import { stateToUrl, urlToState } from './lib/share.js'
 import { Budget } from './lib/budget.js'
 
 export const app = createApp({
@@ -28,8 +27,6 @@ export const app = createApp({
         return {
             // Expose the config to the UI
             config,
-            // Search terms for filtering the templates
-            templateFilter: '',
             // Show the announcement banner
             showAnnouncement: true,
             // Show the cookie popup (use localStorage to remember the user's choice)
@@ -179,9 +176,6 @@ export const app = createApp({
         },
     },
     computed: {
-        filteredTemplates() {
-            return searchTemplates(this.templateFilter)
-        },
         sloWindow() {
             return new Window(
                 daysToSeconds(this.windowDays),
@@ -271,30 +265,8 @@ export const app = createApp({
 
         shareUrl() {
             try {
-                const url = new URL(window.location.origin)
-
-                // A few fields may be empty strings, so let's keep the URL short
-                if (this.title) {
-                    url.searchParams.set('title', this.title)
-                }
-                if (this.description) {
-                    url.searchParams.set('description', this.description)
-                }
-                url.searchParams.set('unit', this.unit)
-                url.searchParams.set('good', this.good)
-                if (this.valid) {
-                    url.searchParams.set('valid', this.valid)
-                }
-                url.searchParams.set('slo', this.slo)
-                url.searchParams.set('windowDays', this.windowDays)
-                url.searchParams.set('errorBudgetValidExample', this.errorBudgetValidExample)
-                url.searchParams.set('badEventCost', this.badEventCost)
-                url.searchParams.set('badEventCurrency', this.badEventCurrency)
-                url.searchParams.set('burnRate', this.burnRate)
-                url.searchParams.set('longWindowPerc', this.longWindowPerc)
-                url.searchParams.set('shortWindowDivider', this.shortWindowDivider)
-            
-                return url.toString()
+                const url = new URL(window.location.pathname, window.location.origin)
+                return stateToUrl(url, this).toString()
             } catch (e) {
                 console.error('Could not create shareurl', e)
                 return null
