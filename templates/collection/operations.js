@@ -1,3 +1,5 @@
+const commonTags = [ 'ops', 'operations' ]
+
 export default [
     {
         title: 'Incident Handling Speed',
@@ -5,6 +7,7 @@ export default [
         unit: 'incidents',
         good: 'time_to_restore ≤ 30m',
         valid: 'Incident Severity == 1 || 2',
+        tags: [ ...commonTags, 'MTTR' ],
     },
     {
         title: 'Time To Acknolwledge',
@@ -12,5 +15,6 @@ export default [
         unit: 'incidents',
         good: 'time_to_acknowledge ≤ 5m',
         valid: 'Incident Priority == 1',
+        tags: [ ...commonTags, 'MTTA' ],
     },
 ]

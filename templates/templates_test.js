@@ -13,11 +13,9 @@ for (const template of templates) {
         if (isDef(valid)) {
             assert(isStr(valid), `invalid "valid" field: ${valid}`)
         }
-        if (tags) {
-            assert(Array.isArray(tags), `invalid "tags" field: ${tags}`)
-            for (const tag of tags) {
-                assert(isStr(tag), `invalid "tag" in the tags array: ${tag}`)
-            }
+        assert(Array.isArray(tags), `invalid "tags" field: ${tags}`)
+        for (const tag of tags) {
+            assert(isStr(tag), `invalid "tag" in the tags array: ${tag}`)
         }
     })
 }
