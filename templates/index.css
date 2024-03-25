@@ -10,12 +10,12 @@
 }
 
 .search-result {
-    padding: 1.5em 0;
+    padding: 1em;
     margin: 0;
 }
 
 .search-result:hover {
-    background-color: var(--background-lighter);
+    background-color: var(--background-darker);
 }
 
 .search-result__tags {
@@ -27,13 +27,18 @@
 
 .search-result__tags li {
     display: inline;
-    padding: 0.1em;
+}
+
+.search-result__tags li + li {
+    display: inline;
+    padding-left: 0.1em;
 }
 
 .search-result__type {
     color: var(--secondary-color);
     font-size: 0.8em;
     margin: 0;
+    padding-bottom: 0.4em;
 }
 
 .search-result__title {
