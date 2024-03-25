@@ -1,27 +1,13 @@
 import { TemplateSearch } from '../lib/search.js'
-import ai from './ai.js'
-import api  from './api.js'
-import cache from './cache.js'
-import data from './data.js'
-import frontend from './frontend.js'
-import operations from './operations.js'
-import queue from './queue.js'
+import ai from './collection/ai.js'
+import api  from './collection/api.js'
+import cache from './collection/cache.js'
+import data from './collection/data.js'
+import frontend from './collection/frontend.js'
+import operations from './collection/operations.js'
+import queue from './collection/queue.js'
 
 export const templates = [
-    {
-        title: '< Empty Time-Based SLI >',
-        description: '',
-        unit: 60,
-        good: '',
-        valid: '',
-    },
-    {
-        title: '< Empty Event-Based SLI >',
-        description: '',
-        unit: 'events',
-        good: '',
-        valid: '',
-    },
     ...ai,
     ...api,
     ...cache,
