@@ -3,7 +3,7 @@ import { arrToPolygonPoints } from '../lib/svg.js'
 import burnEventComponent from './burn-event-component.js'
 
 export default {
-    template: await fetchTemplate('burn-component.html', import.meta.url),
+    template: await fetchTemplate(import.meta.url),
     data() {
         return {
             width: 500,

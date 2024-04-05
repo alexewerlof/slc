@@ -2,7 +2,7 @@ import { fetchTemplate } from '../lib/fetch-template.js'
 import { arrToPolygonPoints } from '../lib/svg.js'
 
 export default {
-    template: await fetchTemplate('burn-event-component.html', import.meta.url),
+    template: await fetchTemplate(import.meta.url),
     computed: {
         isTitleOnRight() {
             return this.x < (this.width / 2)
