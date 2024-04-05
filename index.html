@@ -622,6 +622,42 @@
                                 <span class="const">{{ percL10n(errorBudgetPerc) }}</span>
                             </code>
                         </p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Subtract</th>
+                                    <th>Add</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>{{ numL10n(1) }}</th>
+                                    <td><button type="button" @click="changeErrorBudget(-1)">{{ numL10n(-1) }}</button></td>
+                                    <td><button type="button" @click="changeErrorBudget(1)">{{ numL10n(1) }}</button></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ numL10n(10) }}</th>
+                                    <td><button type="button" @click="changeErrorBudget(-10)">{{ numL10n(-10) }}</button></td>
+                                    <td><button type="button" @click="changeErrorBudget(10)">{{ numL10n(10) }}</button></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ numL10n(100) }}</th>
+                                    <td><button type="button" @click="changeErrorBudget(-100)">{{ numL10n(-100) }}</button></td>
+                                    <td><button type="button" @click="changeErrorBudget(100)">{{ numL10n(100) }}</button></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ numL10n(1000) }}</th>
+                                    <td><button type="button" @click="changeErrorBudget(-1000)">{{ numL10n(-1000) }}</button></td>
+                                    <td><button type="button" @click="changeErrorBudget(1000)">{{ numL10n(1000) }}</button></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ numL10n(10000) }}</th>
+                                    <td><button type="button" @click="changeErrorBudget(-10000)">{{ numL10n(-10000) }}</button></td>
+                                    <td><button type="button" @click="changeErrorBudget(10000)">{{ numL10n(10000) }}</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </help-component>
                 </h1>
                 <div class="error-budget-diagram">

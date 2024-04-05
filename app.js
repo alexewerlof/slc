@@ -92,7 +92,15 @@ export const app = createApp({
         },
         
         changeSLO(amount) {
-            this.slo = toFixed(clamp(this.slo + amount, 0, config.slo.max))
+            this.slo = clamp(toFixed(this.slo + amount), config.slo.min, config.slo.max)
+        },
+
+        changeErrorBudget(amount) {
+            // Event based
+            const newBadEventCount = clamp(this.badEventCount + amount, 1, this.validEventCount)
+            const newGoodEventCount = this.validEventCount - newBadEventCount
+            const newSLO = toFixed(newGoodEventCount / this.validEventCount * 100)
+            this.slo = clamp(newSLO, config.slo.min, config.slo.max)
         },
         
         loadState(newState) {
