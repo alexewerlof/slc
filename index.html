@@ -828,11 +828,11 @@
                             It is the ratio of the error budget to the SLO window.
                         </p>
                         <p>
-                            A burn rate of 1x means that the error budget will be consumed during the
+                            A burn rate of <button @click="burnRate = 1">1x</button> means that the error budget will be consumed during the
                             SLO window (accepted).
                         </p>
                         <p>
-                            A burn rate of 2x means that the error budget will be consumed in half the
+                            A burn rate of <button @click="burnRate = 2">2x</button> means that the error budget will be consumed in half the
                             SLO window. This is not acceptable because at this rate, the SLO will be
                             violated before the end of the SLO window.
                         </p>
