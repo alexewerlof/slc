@@ -1,6 +1,6 @@
 import { fetchTemplate } from '../lib/fetch-template.js'
 import { arrToPolygonPoints } from '../lib/svg.js'
-import burnEventComponent from './burn-event-component.js'
+import burnEventComponent from './burn-event.js'
 
 export default {
     template: await fetchTemplate(import.meta.url),

@@ -1,5 +1,5 @@
 import { createApp } from '../vendor/vue.js'
-import HelpComponent from '../components/help-component.js'
+import HelpComponent from '../components/help.js'
 import ExtLink from '../components/ext-link.js'
 
 import { searchTemplates } from './templates.js'
