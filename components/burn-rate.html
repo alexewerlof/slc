@@ -16,7 +16,7 @@
         <line
             class="burn-line"
             :x1="leftX"
-            :x2="d.ebBurnedX"
+            :x2="burnedX"
             :y1="bottomY"
             :y2="topY" />
     </g>
@@ -35,7 +35,7 @@
     <burn-event-component
         :width="width"
         :height="height"
-        :x="d.ebBurnedX"
+        :x="burnedX"
         :y1="margin.top"
         :y2="height - margin.bottom"
         color="--brand-red"
