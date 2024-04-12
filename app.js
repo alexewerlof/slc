@@ -2,6 +2,7 @@ import { createApp } from './vendor/vue.js'
 import { config } from './config.js'
 import HelpComponent from './components/help.js'
 import BurnComponent from './components/burn.js'
+import BurnRateComponent from './components/burn-rate.js'
 import ExtLink from './components/ext-link.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import { daysToSeconds } from './lib/time.js'
@@ -76,6 +77,7 @@ export const app = createApp({
     components: {
         HelpComponent,
         BurnComponent,
+        BurnRateComponent,
         ExtLink,
     },
     methods: {

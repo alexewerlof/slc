@@ -5,6 +5,7 @@
 @import url('toast.css');
 @import url('components/help.css');
 @import url('components/burn.css');
+@import url('components/burn-rate.css');
 @import url('components/burn-event.css');
 
 html {

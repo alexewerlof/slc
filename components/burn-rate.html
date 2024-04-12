@@ -1,0 +1,67 @@
+<svg v-bind:viewBox="viewBox" xmlns="http://www.w3.org/2000/svg">
+    <!-- horizontal axis -->
+    <g>
+        <line
+            class="axis"
+            :x1="leftX"
+            :x2="rightX"
+            :y1="bottomY"
+            :y2="bottomY" />
+        <!-- horizontal axis title -->        
+        <text
+            class="axis-title axis-title--horizontal"
+            :x="rightX"
+            :y="bottomY + 18">
+            Time
+        </text>
+        <polygon
+            class="axis-arrow"
+            :points="horizontalAxisArrowPoints" />
+    </g>
+    <!-- vertical axis -->
+    <g>
+        <line
+            class="axis"
+            :x1="leftX"
+            :x2="leftX"
+            :y1="topY"
+            :y2="bottomY" />
+        <text
+            class="axis-title axis-title--vertical"
+            x="15"
+            y="20">
+            Error Budget Consumption
+        </text>
+    </g>
+    <!-- burn line -->
+    <g>
+        <line
+            class="burn-line"
+            :x1="leftX"
+            :x2="d.ebBurnedX"
+            :y1="bottomY"
+            :y2="topY" />
+    </g>
+    <!-- end of SLO window -->
+    <burn-event-component
+        :width="width"
+        :height="height"
+        :x="width - margin.right"
+        :y1="margin.top"
+        :y2="height - margin.bottom"
+        color="--secondary-color"
+        offset="1">
+        End of the compliance period
+    </burn-event-component>
+    <!-- error budget burned -->
+    <burn-event-component
+        :width="width"
+        :height="height"
+        :x="d.ebBurnedX"
+        :y1="margin.top"
+        :y2="height - margin.bottom"
+        color="--brand-red"
+        offset="2">
+        Error Budget Exhausted
+    </burn-event-component>
+</svg>

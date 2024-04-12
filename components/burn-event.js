@@ -25,6 +25,17 @@ export default {
                 [this.x, this.titleY + 3],
             )
         },
+        lineStyle() {
+            return {
+                stroke: `var(${ this.color })`,
+                strokeWidth: `${this.thickness}px`,
+            }
+        },
+        textStyle() {
+            return {
+                fill: `var(${ this.color })`,
+            }
+        }
     },
     props: {
         width: Number,
@@ -35,5 +46,9 @@ export default {
         offset: Number,
         // Name of a css variable as defined in variables.css
         color: String,
+        thickness: {
+            type: Number,
+            default: 1,
+        },
     },
 }

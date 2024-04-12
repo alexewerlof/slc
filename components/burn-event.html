@@ -3,16 +3,16 @@
         :x1="x"
         :x2="x"
         :y1="y1"
-        :style="{ stroke: `var(${ color })` }"
+        :style="lineStyle"
         :y2="y2" />
     <text
         :x="titleX"
         :y="titleY"
         :text-anchor="textAnchor"
-        :style="{ fill: `var(${ color })` }"
+        :style="textStyle"
         ><slot></slot></text>
     <polygon
         class="burn-event-arrow"
-        :style="{ fill: `var(${ color })` }"
+        :style="textStyle"
         :points="arrowPoints" />
 </g>
