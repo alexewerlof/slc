@@ -1,5 +1,7 @@
-import { fetchTemplate } from '../lib/fetch-template.js'
+import { fetchTemplate, loadCss } from '../lib/fetch-template.js'
 import { arrToPolygonPoints } from '../lib/svg.js'
+
+loadCss(import.meta.url)
 
 export default {
     template: await fetchTemplate(import.meta.url),
