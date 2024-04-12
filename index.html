@@ -993,8 +993,9 @@
                 </p>
                 <!-- Burn Chart Component -->
                 <alert-component
-                    :burn-rate="burnRate"
-                    :long-alert-perc="longWindowPerc"></alert-component>
+                    :long-window-perc="longWindowPerc"
+                    :short-window-divider="shortWindowDivider"
+                    :short-window-visible="shortWindowVisible"></alert-component>
                 <!-- Long Window Alert Policy -->
                 <h3>
                     Alert Policy

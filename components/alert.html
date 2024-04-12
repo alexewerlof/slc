@@ -17,52 +17,38 @@
         <line
             class="burn-line"
             :x1="leftX"
-            :x2="d.ebBurnedX"
+            :x2="rightX"
             :y1="topY"
             :y2="bottomY" />
     </g>    
-    <!-- start of SLO window -->
     <burn-event-component
         :width="width"
         :height="height"
-        :x="margin.left"
-        :y1="margin.top"
-        :y2="height - margin.bottom"
-        color="--secondary-color"
-        offset="4">
-        Error budget starts burning too fast
-    </burn-event-component>
-    <!-- end of SLO window -->
-    <burn-event-component
-        :width="width"
-        :height="height"
-        :x="width - margin.right"
-        :y1="margin.top"
-        :y2="height - margin.bottom"
-        color="--secondary-color"
-        offset="1">
-        End of the rolling SLO window
-    </burn-event-component>
-    <!-- error budget burned -->
-    <burn-event-component
-        :width="width"
-        :height="height"
-        :x="d.ebBurnedX"
+        :x="rightX"
         :y1="margin.top"
         :y2="height - margin.bottom"
         color="--brand-red"
-        offset="2">
+        offset="1">
         Error Budget Exhausted
     </burn-event-component>
-    <!-- long window alert burned -->
     <burn-event-component
         :width="width"
         :height="height"
-        :x="d.longAlertX"
+        :x="longWindowX"
         :y1="margin.top"
         :y2="height - margin.bottom"
         color="--brand-green"
         offset="3">
         Alert Triggers
+    </burn-event-component>
+    <burn-event-component v-if="shortWindowVisible"
+        :width="width"
+        :height="height"
+        :x="shortWindowX"
+        :y1="margin.top"
+        :y2="height - margin.bottom"
+        color="--brand-purple"
+        offset="2">
+        Short Window
     </burn-event-component>
 </svg>
