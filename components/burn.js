@@ -1,6 +1,8 @@
 import { fetchTemplate } from '../lib/fetch-template.js'
 import { arrToPolygonPoints } from '../lib/svg.js'
 import burnEventComponent from './burn-event.js'
+import verticalAxisComponent from './vertical-axis.js'
+import horizontalAxisComponent from './horizontal-axis.js'
 
 export default {
     template: await fetchTemplate(import.meta.url),
@@ -22,6 +24,8 @@ export default {
     },
     components: {
         burnEventComponent,
+        verticalAxisComponent,
+        horizontalAxisComponent,
     },
     computed: {
         viewBox() {

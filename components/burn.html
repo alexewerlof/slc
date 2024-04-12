@@ -1,30 +1,17 @@
 <svg v-bind:viewBox="viewBox" xmlns="http://www.w3.org/2000/svg">
     <!-- horizontal axis -->
-    <g>
-        <line
-            class="axis"
-            :x1="leftX"
-            :x2="rightX"
-            :y1="bottomY"
-            :y2="bottomY" />
-        <!-- horizontal axis title -->        
-        <text
-            class="axis-title axis-title--horizontal"
-            :x="rightX"
-            :y="bottomY + 18">
-            Time
-        </text>
-        <polygon
-            class="axis-arrow"
-            :points="horizontalAxisArrowPoints" />
-    </g>
-    <!-- vertical axis -->
-    <text
-        class="axis-title axis-title--vertical"
-        x="10"
-        y="20">
+    <horizontal-axis-component
+        :x1="leftX"
+        :x2="rightX"
+        :y="bottomY">
+        Time
+    </horizontal-axis-component>
+    <vertical-axis-component
+        :x="leftX"
+        :y1="topY"
+        :y2="bottomY">
         Remaining Error Budget
-    </text>
+    </vertical-axis-component>
     <!-- burn line -->
     <g>
         <line

@@ -1,13 +1,14 @@
 import { fetchTemplate } from '../lib/fetch-template.js'
-import { arrToPolygonPoints } from '../lib/svg.js'
 import burnEventComponent from './burn-event.js'
+import verticalAxisComponent from './vertical-axis.js'
+import horizontalAxisComponent from './horizontal-axis.js'
 
 export default {
     template: await fetchTemplate(import.meta.url),
     data() {
         return {
-            width: 400,
-            height: 400,
+            width: 500,
+            height: 300,
             margin: {
                 left: 27,
                 right: 5,
@@ -22,6 +23,8 @@ export default {
     },
     components: {
         burnEventComponent,
+        verticalAxisComponent,
+        horizontalAxisComponent,
     },
     computed: {
         viewBox() {
@@ -41,13 +44,6 @@ export default {
         },
         bottomY() {
             return this.height - this.margin.bottom
-        },
-        horizontalAxisArrowPoints() {
-            return arrToPolygonPoints(
-                [this.rightX, this.bottomY],
-                [this.rightX - 5, this.bottomY - 3],
-                [this.rightX - 5, this.bottomY + 3],
-            )
         },
         d() {
             // the ratio of the error budget from the total SLO window

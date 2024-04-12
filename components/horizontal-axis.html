@@ -1,0 +1,18 @@
+<g>
+    <line
+        class="axis"
+        :x1="x1"
+        :x2="x2"
+        :y1="y"
+        :y2="y" />
+    <!-- horizontal axis title -->        
+    <text
+        class="axis-title axis-title--horizontal"
+        :x="x2"
+        :y="y + 18">
+        <slot></slot>
+    </text>
+    <polygon
+        class="axis-arrow"
+        :points="arrowPoints" />
+</g>
