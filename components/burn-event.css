@@ -11,6 +11,10 @@
     text-shadow: 0px 0px 3px var(--background-color);
 }
 
+.event tspan:not(:first-child) {
+    font-size: 0.6rem;
+}
+
 .event .burn-event-arrow {
     fill: var(--foreground-color);
 }

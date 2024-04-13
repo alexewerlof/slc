@@ -10,7 +10,11 @@
         :y="titleY"
         :text-anchor="textAnchor"
         :style="textStyle"
-        ><slot></slot></text>
+        >
+        <tspan v-for="(textLine, i) of textLines"
+            :x="titleX"
+            :y="titleY + (i * 12)">{{ textLine }}</tspan>
+    </text>
     <polygon
         class="burn-event-arrow"
         :style="textStyle"

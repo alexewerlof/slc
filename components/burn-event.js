@@ -1,5 +1,6 @@
 import { fetchTemplate, loadCss } from '../lib/fetch-template.js'
 import { arrToPolygonPoints } from '../lib/svg.js'
+import { isStr } from '../lib/validation.js'
 
 loadCss(import.meta.url)
 
@@ -40,7 +41,11 @@ export default {
             return {
                 fill: `var(${ this.color })`,
             }
-        }
+        },
+        textLines() {
+            // Return the text content of children
+            return this.$slots.default().map(node => node.children).filter(isStr)
+        },
     },
     props: {
         width: Number,

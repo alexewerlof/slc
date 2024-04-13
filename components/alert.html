@@ -40,6 +40,11 @@
         color="--brand-green"
         offset="3">
         Alert Triggers
+        <br>
+        When at least {{ alertLongWindow.eventCountL10n }} failures
+        <br>
+        occured in the last
+        {{ alertLongWindow.humanTime }}
     </burn-event-component>
     <burn-event-component v-if="shortWindowVisible"
         :width="width"
@@ -50,5 +55,10 @@
         color="--brand-purple"
         offset="2">
         Short Window
+        <br>
+        When at least {{ alertShortWindow.eventCountL10n }} failures
+        <br>
+        occured in the last
+        {{ alertShortWindow.humanTime }}
     </burn-event-component>
 </svg>

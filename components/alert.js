@@ -23,6 +23,8 @@ export default {
         longWindowPerc: Number,
         shortWindowDivider: Number,
         shortWindowVisible: Boolean,
+        alertLongWindow: Object,
+        alertShortWindow: Object,
     },
     components: {
         burnEventComponent,
