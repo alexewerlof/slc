@@ -3,6 +3,9 @@ import { arrToPolygonPoints } from '../lib/svg.js'
 
 loadCss(import.meta.url)
 
+const titleDistance = 8
+const arrowHeight = 5
+
 export default {
     template: await fetchTemplate(import.meta.url),
     computed: {
@@ -14,7 +17,7 @@ export default {
         },
         titleX() {
             // 5 is an experimental value that looks good on the current graph size
-            return this.x + (this.isTitleOnRight ? 5 : -5)
+            return this.x + (this.isTitleOnRight ? titleDistance : -titleDistance)
         },
         titleY() {
             // 5 is an experimental value that looks good on the current graph size
@@ -23,8 +26,8 @@ export default {
         arrowPoints() {
             return arrToPolygonPoints(
                 [this.titleX, this.titleY],
-                [this.x, this.titleY - 3],
-                [this.x, this.titleY + 3],
+                [this.x, this.titleY - arrowHeight],
+                [this.x, this.titleY + arrowHeight],
             )
         },
         lineStyle() {
