@@ -97,3 +97,32 @@ code .const {
     text-align: center;
     padding-top: 0.1em;
 }
+
+math {
+    font-family: inherit;
+    font-size: 1.2em;
+    display: inline-block;
+    width: 100%; /* or any specific width */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+mfrac {
+    font-size: 1.3em;
+}
+
+mn {
+    color: var(--brand-purple);
+}
+
+mo {
+    color: var(--brand-pink);
+}
+
+mi {
+    color: var(--secondary-color);
+}
+
+mtd {
+    text-align: left;
+}

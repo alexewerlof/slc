@@ -65,28 +65,31 @@
                             is perceived by the consumers of the service. They are normalized to be a number between
                             0 and 100 using this formula:
                         </p>
-                        <div class="formula">
-                            <div class="formula__whole">
-                                SLI
-                                <code>
-                                    <span class="punct">=</span>
-                                </code>
-                            </div>
-                            <div class="formula__fraction">
-                                <div class="formula__fraction--top">
-                                    <ext-link href="https://blog.alexewerlof.com/p/sli-good">Good</ext-link>
-                                </div>
-                                <div class="formula__fraction--bottom">
-                                    <ext-link href="https://blog.alexewerlof.com/p/valid-vs-total">Valid</ext-link>
-                                </div>
-                            </div>
-                            <div class="formula__whole">
-                                <code>
-                                    <span class="punct"> × </span>
-                                    <span class="const">100</span>
-                                </code>
-                            </div>
-                        </div>
+                        <math>
+                            <mrow>
+                                <mi>SLI</mi>
+                                <mo>=</mo>
+                                <mfrac>
+                                    <mrow>
+                                        <mi>Good</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>Valid</mi>
+                                    </mrow>
+                                </mfrac>
+                                <mrow>
+                                    <mo>&times;</mo>
+                                    <mn>100</mn>
+                                </mrow>
+                            </mrow>
+                        </math>
+                        <p>
+                            You can read more about the definition of
+                            <ext-link href="https://blog.alexewerlof.com/p/sli-good">Good</ext-link>
+                            and
+                            <ext-link href="https://blog.alexewerlof.com/p/valid-vs-total">Valid</ext-link>
+                            .
+                        </p>
                         <p>
                             Common SLIs include latency, availability, yield, durability, correctness, etc.
                         </p>
@@ -241,8 +244,9 @@
                     <help-component>
                         <p>
                             <ext-link href="https://blog.alexewerlof.com/p/sli-good">
-                                What is a good {{ sloWindow.normUnit }}?
+                                What are good {{ sloWindow.normUnit }}
                             </ext-link>
+                            from consumer's perspective?
                             How do good {{ sloWindow.normUnit }} look like?
                             
                             What is the metric that you can measure to identify the
@@ -262,6 +266,13 @@
                             Valid {{ sloWindow.normUnit }}
                         </label>
                         <help-component>
+                            <p>
+                                <ext-link href="https://blog.alexewerlof.com/p/sli-good">
+                                    What are good {{ sloWindow.normUnit }}
+                                </ext-link>
+                                from service provider's perspective?
+                                This is an opportunity to define the scope of the optimization.
+                            </p>
                             <p>
                                 For simplicity, sometimes "total" is used instead of "valid".
                                 But 
@@ -303,34 +314,28 @@
                             the percentage of good per valid.
                         </p>
                         <p>
-                            Depending on whether the SLI is time-based or event-based,
+                            Depending on whether the SLI is
+                            <ext-link href="https://blog.alexewerlof.com/p/time-based-vs-event-based">time-based or event-based</ext-link>,
                             the formula calculates the percentage of bad time or bad events.
                         </p>
-                        <div class="formula">
-                            <div class="formula__whole">
-                                SLI
-                                <code>
-                                    <span class="punct">=</span>
-                                </code>
-                            </div>
-                            <div class="formula__fraction">
-                                <div class="formula__fraction--top">
-                                    <span class="invis">(</span>
-                                    <span>Good {{ sloWindow.normUnit }}</span>
-                                    <span class="invis"> /</span>
-                                </div>
-                                <div class="formula__fraction--bottom">
-                                    <span>Valid {{ sloWindow.normUnit }}</span>
-                                    <span class="invis">)</span>
-                                </div>
-                            </div>
-                            <div class="formula__whole">
-                                <code>
-                                    <span class="punct"> × </span>
-                                    <span class="const">100</span>
-                                </code>
-                            </div>
-                        </div>    
+                        <math>
+                            <mrow>
+                                <mi>SLI</mi>
+                                <mo>=</mo>
+                                <mfrac>
+                                    <mrow>
+                                        <mi>Good {{ sloWindow.normUnit }}</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>Valid {{ sloWindow.normUnit }}</mi>
+                                    </mrow>
+                                </mfrac>
+                                <mrow>
+                                    <mo>&times;</mo>
+                                    <mn>100</mn>
+                                </mrow>
+                            </mrow>
+                        </math>
                     </help-component>
                 </h2>
                 <div class="code block">
@@ -577,51 +582,33 @@
                             It is the percentage of bad {{ sloWindow.normUnit }} that you can have
                             before you violate the SLO.
                         </p>
-                        <div class="formula">
-                            <div class="formula__whole">
-                                <code>
-                                    <span class="exprs">error_budget</span>
-                                    <span class="punct"> = </span>
-                                    <span class="const">{{ percL10n(100) }}</span>
-                                    <span class="punct"> - </span>
-                                    <span class="exprs">SLO</span>
-                                    <span class="punct"> =</span>
-                                </code>
-                            </div>
+                        <math>
+                            <mtable>
+                                <mtr>
+                                    <mtd>
+                                        <mi>error_budget</mi>
+                                    </mtd>
+                                    <mtd>
+                                        <mo>=</mo>
+                                        <mn>100</mn>
+                                        <mo>-</mo>
+                                        <mi>SLO</mi>
+                                    </mtd>
+                                </mtr>
 
-                            <div class="formula__fraction">
-                                <div class="formula__fraction--top">
-                                    <ext-link href="https://blog.alexewerlof.com/p/valid-vs-total">Valid</ext-link>
-                                    <code>
-                                        <span class="punct"> - </span>
-                                    </code>
-                                    <ext-link href="https://blog.alexewerlof.com/p/sli-good">Good</ext-link>
-                                </div>
-                                <div class="formula__fraction--bottom">
-                                    <ext-link href="https://blog.alexewerlof.com/p/valid-vs-total">Valid</ext-link>
-                                </div>
-                            </div>
-                            <div class="formula__whole">
-                                <code>
-                                    <span class="punct"> × </span>
-                                    <span class="const">100</span>
-                                </code>
-                            </div>
-                        </div>
-                        <p>
-                            In this case:
-                        </p>
-                        <p>
-                            <code>
-                                <span class="exprs">error_budget</span>
-                                <span class="punct"> = </span>
-                                <span class="const">{{ percL10n(100) }}</span>
-                                <span class="punct"> - </span>
-                                <span class="const">{{ percL10n(slo) }}</span>
-                                <span class="punct"> = </span>
-                                <span class="const">{{ percL10n(errorBudgetPerc) }}</span>
-                            </code>
-                        </p>
+                                <mtr>
+                                    <mtd></mtd>
+                                    <mtd>
+                                        <mo>=</mo>
+                                        <mn>{{ percL10n(100) }}</mn>
+                                        <mo>-</mo>
+                                        <mi>{{ percL10n(slo) }}</mi>
+                                        <mo>=</mo>
+                                        <mn>{{ percL10n(errorBudgetPerc) }}</mn>
+                                    </mtd>
+                                </mtr>
+                            </mtable>
+                        </math>
                         <table>
                             <thead>
                                 <tr>
