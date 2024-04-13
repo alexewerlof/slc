@@ -108,7 +108,7 @@ export const config = fz({
         default: 'all',
     }),
     slo: fz({
-        min: 0,
+        min: 50,
         max: 99.999,
         default: 99,
         presets: fz([
