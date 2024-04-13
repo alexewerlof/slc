@@ -968,14 +968,18 @@
                     :step="config.longWindowPerc.step"
                     v-model.number="longWindowPerc"
                 >
-                <h4>Budget</h4>
-                <p>
-                    At least {{ alertLongWindow }}
+                <div class="block" v-if="badEventCost">
+                    <h4>Budget</h4>
+                    <p>
+                        {{ alertLongWindow.costL10n }}
+                    </p>
+                </div>
+                <p v-if="alertLongWindow.sec <= 60">
+                    Warning: Long alert Window is too short at this burn rate ({{ burnRate }}x) 
+                    which may lead to alert fatigue.
                 </p>
-                <p v-if="alertLongWindow.eventCountL10n === 0">
-                    Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
-                    time slot length ({{ unit }} sec)
-                    because it will lead to division by zero error.
+                <p v-if="alertLongWindow.eventCount === 0">
+                    Error: Long alert Window is too short for enough valid events to be counted.
                 </p>
                 <!-- Burn Chart Component -->
                 <alert-component
@@ -1224,17 +1228,19 @@
                         :step="config.shortWindowDivider.step"
                         v-model.number="shortWindowDivider"
                     >
-                    <div class="block">
+                    <div class="block" v-if="badEventCost">
                         <h4>Budget</h4>
                         <p>
-                            At least {{ alertShortWindow }}
-                        </p>    
-                        <p v-if="alertShortWindow.eventCountL10n === 0">
-                            Warning: Alert Window is not usable at this burn rate ({{ burnRate }}x) and 
-                            time slot length ({{ unit }} sec)
-                            because it will lead to division by zero error.
+                            {{ alertShortWindow.costL10n }}
                         </p>
-                    </div>
+                    </div> 
+                    <p v-if="alertShortWindow.sec <= 60">
+                        Warning: Short alert Window is too short at this burn rate ({{ burnRate }}x) 
+                        which may lead to alert fatigue.
+                    </p>
+                    <p v-if="alertShortWindow.eventCount === 0">
+                        Error: Short alert Window is too short for enough valid events to be counted.
+                    </p>
                 </div>
             </section>
         </article>
