@@ -17,7 +17,6 @@ export default {
             return this.isTitleOnRight ? 'start': 'end'
         },
         titleX() {
-            // 5 is an experimental value that looks good on the current graph size
             return this.x + (this.isTitleOnRight ? titleDistance : -titleDistance)
         },
         titleY() {
