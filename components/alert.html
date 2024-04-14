@@ -44,7 +44,7 @@
         When at least {{ alertLongWindow.eventCountL10n }} failures
         <br>
         occured in the last
-        {{ alertLongWindow.humanTime }}
+        {{ alertLongWindow.humanSec }}
     </burn-event-component>
     <burn-event-component v-if="shortWindowVisible"
         :width="width"
@@ -59,6 +59,6 @@
         When at least {{ alertShortWindow.eventCountL10n }} failures
         <br>
         occured in the last
-        {{ alertShortWindow.humanTime }}
+        {{ alertShortWindow.humanSec }}
     </burn-event-component>
 </svg>

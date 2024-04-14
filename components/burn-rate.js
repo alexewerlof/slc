@@ -21,6 +21,7 @@ export default {
     },
     props: {
         burnRate: Number,
+        errorBudgetBurn: Object,
     },
     components: {
         burnEventComponent,

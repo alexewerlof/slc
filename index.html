@@ -899,11 +899,9 @@
                 >
                 <!-- Burn Chart Component -->
                 <burn-rate-component
-                    :burn-rate="burnRate"></burn-rate-component>
-                <h4>Error Budget Consumption</h4>
-                <p>
-                    {{ errorBudgetBurn }}
-                </p>
+                    :burn-rate="burnRate"
+                    :error-budget-burn="errorBudgetBurn">
+                </burn-rate-component>
                 <!-- Long Window Alert -->
                 <h2>
                     Long-Window
