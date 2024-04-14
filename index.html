@@ -268,10 +268,12 @@
                         <help-component>
                             <p>
                                 <ext-link href="https://blog.alexewerlof.com/p/sli-good">
-                                    What are good {{ sloWindow.normUnit }}
+                                    What are the {{ sloWindow.normUnit }}
                                 </ext-link>
-                                from service provider's perspective?
-                                This is an opportunity to define the scope of the optimization.
+                                that are important to the service consumer?
+                                You probably don't want to count all the {{ sloWindow.normUnit }}.
+                                This is an opportunity to narrow down the scope of the optimization
+                                and what triggers an alert.
                             </p>
                             <p>
                                 For simplicity, sometimes "total" is used instead of "valid".
@@ -900,7 +902,8 @@
                 <!-- Burn Chart Component -->
                 <burn-rate-component
                     :burn-rate="burnRate"
-                    :error-budget-burn="errorBudgetBurn">
+                    :error-budget-burn="errorBudgetBurn"
+                    :slo-window-budget-burn="sloWindowBudgetBurn">
                 </burn-rate-component>
                 <!-- Long Window Alert -->
                 <h2>

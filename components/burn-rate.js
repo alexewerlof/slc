@@ -22,6 +22,7 @@ export default {
     props: {
         burnRate: Number,
         errorBudgetBurn: Object,
+        sloWindowBudgetBurn: Object,
     },
     components: {
         burnEventComponent,

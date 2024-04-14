@@ -256,6 +256,14 @@ export const app = createApp({
             return this.errorBudget.shrinkWindow(100 / this.burnRate)
         },
 
+        // If nothing is done to stop the failures, there'll be burnRate times more errors by the end of the SLO window
+        sloWindowBudgetBurn() {
+            const { sec, unit } = this.sloWindow
+            const eventCost = this.badEventCost || 0
+            return new Budget(sec, unit, Math.ceil(this.badEventCount * this.burnRate), eventCost, this.badEventCurrency)
+        },
+
+
         alertLongWindow() {
             return this.errorBudgetBurn.shrink(this.longWindowPerc)
         },
