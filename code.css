@@ -119,7 +119,7 @@ mo {
     color: var(--brand-pink);
 }
 
-mi {
+ms, mi {
     color: var(--secondary-color);
 }
 

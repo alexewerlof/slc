@@ -801,6 +801,12 @@
                                 Too slow and the error burget will be burned before you know it.
                             </li>
                         </ul>
+                        <p>
+                            Google SRE Workbook goes through
+                            <ext-link href="https://sre.google/workbook/alerting-on-slos/">
+                                6 alerting strategies based on SLOs
+                            </ext-link>.
+                        </p>
                     </help-component>
                 </h1>
 
@@ -912,7 +918,7 @@
                     <label for="alert-error-budget-perc">
                         After Consuming ≥ {{ percL10n(longWindowPerc) }}
                     </label>
-                    <help-component visible>
+                    <help-component>
                         <p>
                             We don't want to wait for the entire error budget to be consumed before
                             alerting! It will be too late to take action.
@@ -929,6 +935,8 @@
                         </p>
                         <math>
                             <mrow>
+                                <mi>TTTrigger</mi>
+                                <mo>=</mo>
                                 <mn class="const">{{ percL10n(longWindowPerc) }}</mn>
                                 <mo class="funct">&times;</mo>
                                 <mn class="const">{{ sloWindow.humanSec }}</mn>
@@ -947,7 +955,10 @@
                         </p>
                         <math>
                             <mrow>
-                                <mi>TTRespond</mi>
+                                <msub>
+                                    <mi>TTRespond</mi>
+                                    <ms>max</ms>
+                                </msub>
                                 <mo>=</mo>
                                 <mn>{{ errorBudgetBurn.humanSec }}</mn>
                                 <mo>-</mo>
@@ -999,8 +1010,13 @@
                     Alert Policy
                     <help-component>
                         <p>
-                            This is a pseudo-code that help you understand what triggers the alert.
-                            You need to translate it to your alerting tool.
+                            This is a pseudo-code for trigerring alerts based on the
+                            SLI metric in relation to the desired SLO (
+                                <label for="slo-int-input">
+                                    <code class="const">{{ percL10n(slo) }}</code>
+                                </label>
+                            ).
+                            You need to translate it to your observability and/or alerting tool.
                         </p>
                     </help-component>
                 </h3>
@@ -1154,7 +1170,7 @@
                             The purpose of the short-window alert is to reduce false alerts.
                         </p>
                         <p>
-                            It checks a shorter look-back window (hence the name) to make sure that
+                            It checks a shorter lookback window (hence the name) to make sure that
                             the burn rate is still high before triggering the alert.
                             This reduces false positives where an alert is triggered for a temporary high burn rate.
                         </p>
@@ -1189,40 +1205,52 @@
                                 of the total error budget.
                                 Therefore, the Short-Window alert triggers after consuming:
                             </p>
-                            <div class="formula">
-                                <div class="formula__fraction">
-                                    <div class="formula__fraction--top">
-                                        <code>
-                                            <label for="alert-error-budget-perc">
-                                                <span class="const">{{ percL10n(longWindowPerc) }}</span>
-                                            </label>
-                                        </code>
-                                    </div>
-                                    <div class="formula__fraction--bottom">
-                                        <code>
-                                            <label for="alert-short-window-divider-input">
-                                                <span class="const">{{ shortWindowDivider }}</span>
-                                            </label>
-                                        </code>
-                                    </div>
-                                </div>
-                                <div class="formula__whole">
-                                    <code>
-                                        <span class="punct"> = </span>
-                                        <span class="const">{{ percL10n(alertShortWindowPerc) }}</span>
-                                    </code>
-                                </div>
-                            </div>
+                            <math>
+                                <mrow>
+                                    <msub>
+                                        <mi>Lookbcack</mi>
+                                        <ms>Short</ms>
+                                    </msub>
+                                    <mo>=</mo>
+                                    <mfrac>
+                                        <msub>
+                                            <mi>Lookback</mi>
+                                            <ms>Long</ms>
+                                        </msub>
+                                        <mn>{{ shortWindowDivider }}</mn>
+                                    </mfrac>
+                                    <mo>=</mo>
+                                    <mfrac>
+                                        <mn>{{ percL10n(longWindowPerc) }}</mn>
+                                        <mn>{{ shortWindowDivider }}</mn>
+                                    </mfrac>
+                                    <mo> = </mo>
+                                    <mn>{{ percL10n(alertShortWindowPerc) }}</mn>
+                                </mrow>
+                            </math>
                             <p>
-                                This means the alert will trigger only if we are burning the error budget at least
-                                at the
-                                <label for="burn-rate-input">{{ burnRate }}</label>x burn rate.
+                                Converted to time based on the current window ({{ sloWindow.humanTime }}):
                             </p>
+                            <math>
+                                <mrow>
+                                    <msub>
+                                        <mi>Lookbcack</mi>
+                                        <ms>Short</ms>
+                                    </msub>
+                                    <mo>=</mo>
+                                    <mn>{{ percL10n(alertShortWindowPerc) }}</mn>
+                                    <mo>&times;</mo>
+                                    <mn>{{ sloWindow.humanSec }}</mn>
+                                    <mo>=</mo>
+                                    <mn>{{ alertShortWindow.humanSec }}</mn>
+                                </mrow>
+                            </math>
                             <p>
-                                In other words, the alert will only trigger if at least
-                                {{ percL10n(alertShortWindowPerc) }}
-                                of the error budget is still being consumed in the last
-                                <time>{{ alertShortWindow.humanTimeSec }}</time>.
+                                This means the alert will trigger only if we are <em>still</em>
+                                burning the error budget at least at the
+                                <label for="burn-rate-input">{{ burnRate }}</label>x burn rate
+                                in the past
+                                <label for="alertShortWindowDivider">{{ alertShortWindow.humanTime }}</label>.
                             </p>        
                         </help-component>
                     </h3>
