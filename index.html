@@ -912,7 +912,7 @@
                     <label for="alert-error-budget-perc">
                         After Consuming ≥ {{ percL10n(longWindowPerc) }}
                     </label>
-                    <help-component>
+                    <help-component visible>
                         <p>
                             We don't want to wait for the entire error budget to be consumed before
                             alerting! It will be too late to take action.
@@ -927,33 +927,39 @@
                             (or SLO compliance window) which is
                             <time>{{ sloWindow.humanTime }}</time>.
                         </p>
-                        <code>
-                            <span class="const">
-                                {{ percL10n(longWindowPerc) }}
-                            </span>
-                            <span class="funct"> × </span>
-                            <span class="const">
-                                {{ sloWindow.humanSec }}
-                            </span>
-                            <span class="punct"> = </span>
-                            <span class="const">
-                                {{ alertLongWindow.humanSec }}
-                            </span>
-                        </code>
+                        <math>
+                            <mrow>
+                                <mn class="const">{{ percL10n(longWindowPerc) }}</mn>
+                                <mo class="funct">&times;</mo>
+                                <mn class="const">{{ sloWindow.humanSec }}</mn>
+                                <mo class="punct">=</mo>
+                                <mn class="const">{{ alertLongWindow.humanSec }}</mn>
+                            </mrow>
+                        </math>
                         <p>
-                            Time to respond before the entire error budget is exhausted:
+                            Assuming that the entire error budget was available at the begining of the incident,
+                            the maximum time available to respond before the entire error budget is exhausted is:
                             <br />
                             <time>{{ alertTTRWindow.humanTimeSec}}</time>
                         </p>
-                        <code>
-                            <span class="exprs">TTRespond</span>
-                            <span class="punct"> = </span>
-                            <span class="const">{{ errorBudgetBurn.humanSec }}</span>
-                            <span class="punct"> - </span>
-                            <span class="const">{{ alertLongWindow.humanSec }}</span>
-                            <span class="punct"> = </span>
-                            <span class="const">{{ alertTTRWindow.humanSec }}</span>
-                        </code>
+                        <p>
+                            Because:
+                        </p>
+                        <math>
+                            <mrow>
+                                <mi>TTRespond</mi>
+                                <mo>=</mo>
+                                <mn>{{ errorBudgetBurn.humanSec }}</mn>
+                                <mo>-</mo>
+                                <mn>{{ alertLongWindow.humanSec }}</mn>
+                                <mo>=</mo>
+                                <mn>{{ alertTTRWindow.humanSec }}</mn>
+                            </mrow>
+                        </math>
+                        <p>
+                            Remember that this is the best case scenario.
+                            In reality, you may have much less time if you don't want to consume the entire error budget for an incident.
+                        </p>
                     </help-component>
                 </h3>
                 <p v-if="alertTTRWindow.sec < 3600">
