@@ -11,9 +11,9 @@
         :text-anchor="textAnchor"
         :style="textStyle"
         >
-        <tspan v-for="(textLine, i) of textLines"
+        <tspan v-for="(tspan, i) of tspans"
             :x="titleX"
-            :y="titleY + (i * 12)">{{ textLine }}</tspan>
+            :y="titleY + (i * 12)">{{ tspan }}</tspan>
     </text>
     <polygon
         class="burn-event-arrow"

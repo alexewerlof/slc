@@ -29,7 +29,7 @@
         :y2="height - margin.bottom"
         color="--brand-red"
         offset="1">
-        Error Budget Exhausted
+        <tspan>Error Budget Exhausted</tspan>
     </burn-event-component>
     <burn-event-component
         :width="width"
@@ -39,12 +39,9 @@
         :y2="height - margin.bottom"
         color="--brand-green"
         offset="3">
-        Alert Triggers
-        <br>
-        When at least {{ alertLongWindow.eventCountL10n }} failures
-        <br>
-        occured in the last
-        {{ alertLongWindow.humanSec }}
+        <tspan>Alert Triggers</tspan>
+        <tspan>When at least {{ alertLongWindow.eventCountL10n }} failures</tspan>
+        <tspan>occured in the last {{ alertLongWindow.humanSec }}</tspan>
     </burn-event-component>
     <burn-event-component v-if="shortWindowVisible"
         :width="width"
@@ -54,11 +51,8 @@
         :y2="height - margin.bottom"
         color="--brand-purple"
         offset="2">
-        Short Window
-        <br>
-        When at least {{ alertShortWindow.eventCountL10n }} failures
-        <br>
-        occured in the last
-        {{ alertShortWindow.humanSec }}
+        <tspan>Short Window</tspan>
+        <tspan>When at least {{ alertShortWindow.eventCountL10n }} failures</tspan>
+        <tspan>occured in the last {{ alertShortWindow.humanSec }}</tspan>
     </burn-event-component>
 </svg>

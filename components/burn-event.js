@@ -41,9 +41,9 @@ export default {
                 fill: `var(${ this.color })`,
             }
         },
-        textLines() {
-            // Return the text content of children
-            return this.$slots.default().map(node => node.children).filter(isStr)
+        /** Return the text content of tspan children */
+        tspans() {
+            return this.$slots.default().filter(node => node.type === 'tspan').map(node => node.children)
         },
     },
     props: {

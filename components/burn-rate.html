@@ -29,7 +29,7 @@
         :y2="height - margin.bottom"
         color="--secondary-color"
         offset="1">
-        End of the compliance period
+        <tspan>End of the compliance period</tspan>
     </burn-event-component>
     <!-- error budget burned -->
     <burn-event-component
@@ -40,10 +40,8 @@
         :y2="height - margin.bottom"
         color="--brand-red"
         offset="2">
-        Error Budget Exhausted
-        <br>
-        {{ errorBudgetBurn.eventCountL10n }} failures
-        <br>
-        in {{ errorBudgetBurn.humanTime }}
+        <tspan>Error Budget Exhausted</tspan>
+        <tspan>{{ errorBudgetBurn.eventCountL10n }} failures</tspan>
+        <tspan>in {{ errorBudgetBurn.humanTime }}</tspan>
     </burn-event-component>
 </svg>
