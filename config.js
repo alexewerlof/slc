@@ -240,7 +240,7 @@ export const config = fz({
     }),
     longWindowPerc: fz({
         min: 0.1,
-        max: 90,
+        max: 99,
         step: 0.1,
         default: 5,
     }),
