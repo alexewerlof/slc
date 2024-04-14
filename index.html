@@ -986,12 +986,6 @@
                     :step="config.longWindowPerc.step"
                     v-model.number="longWindowPerc"
                 >
-                <div class="block" v-if="badEventCost">
-                    <h4>Budget</h4>
-                    <p>
-                        {{ alertLongWindow.costL10n }}
-                    </p>
-                </div>
                 <p v-if="alertLongWindow.sec <= 60">
                     Warning: Long alert Window is too short at this burn rate ({{ burnRate }}x) 
                     which may lead to alert fatigue.
@@ -1263,12 +1257,6 @@
                         :step="config.shortWindowDivider.step"
                         v-model.number="shortWindowDivider"
                     >
-                    <div class="block" v-if="badEventCost">
-                        <h4>Budget</h4>
-                        <p>
-                            {{ alertShortWindow.costL10n }}
-                        </p>
-                    </div> 
                     <p v-if="alertShortWindow.sec <= 60">
                         Warning: Short alert Window is too short at this burn rate ({{ burnRate }}x) 
                         which may lead to alert fatigue.

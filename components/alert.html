@@ -42,6 +42,7 @@
         <tspan>Alert Triggers</tspan>
         <tspan>When at least {{ alertLongWindow.eventCountL10n }} failures</tspan>
         <tspan>occured in the last {{ alertLongWindow.humanSec }}</tspan>
+        <tspan v-if="alertLongWindow.cost">costing at least {{ alertLongWindow.costL10n }}</tspan>
     </burn-event-component>
     <burn-event-component v-if="shortWindowVisible"
         :width="width"

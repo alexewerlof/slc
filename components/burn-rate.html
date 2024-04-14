@@ -43,5 +43,6 @@
         <tspan>Error Budget Exhausted</tspan>
         <tspan>{{ errorBudgetBurn.eventCountL10n }} failures</tspan>
         <tspan>in {{ errorBudgetBurn.humanTime }}</tspan>
+        <tspan v-if="errorBudgetBurn.cost">costing {{ errorBudgetBurn.costL10n }}</tspan>
     </burn-event-component>
 </svg>
