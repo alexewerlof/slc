@@ -10,7 +10,7 @@
         :x="leftX"
         :y1="topY"
         :y2="bottomY">
-        Remaining Error Budget
+        Failures
     </vertical-axis-component>
     <!-- burn line -->
     <g>
@@ -18,8 +18,8 @@
             class="burn-line"
             :x1="leftX"
             :x2="rightX"
-            :y1="topY"
-            :y2="bottomY" />
+            :y1="bottomY"
+            :y2="topY" />
     </g>    
     <burn-event-component
         :width="width"
