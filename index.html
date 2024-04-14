@@ -945,8 +945,6 @@
                         <p>
                             Assuming that the entire error budget was available at the begining of the incident,
                             the maximum time available to respond before the entire error budget is exhausted is:
-                            <br />
-                            <time>{{ alertTTRWindow.humanTimeSec}}</time>
                         </p>
                         <p>
                             Because:
@@ -966,8 +964,13 @@
                             </mrow>
                         </math>
                         <p>
+                            Which is 
+                            <time>{{ alertTTRWindow.humanTime }}</time>.
+                        </p>
+                        <p>
                             Remember that this is the best case scenario.
                             In reality, you may have much less time if you don't want to consume the entire error budget for an incident.
+                            Also note that the burn rate can be higher than {{ burnRate }}x.
                         </p>
                     </help-component>
                 </h3>
@@ -1044,7 +1047,7 @@
                             </div>
                             <div class="formula__fraction--bottom">
                                 <code v-if="isTimeBased">
-                                    <span class="const">{{ alertLongWindow.eventCountL10n }}</span>
+                                    <span class="const">{{ alertLongWindow.timeSlotCount }}</span>
                                 </code>
                                 <code v-else>
                                     <label for="sli-event-unit">
@@ -1112,7 +1115,7 @@
                                 </div>
                                 <div class="formula__fraction--bottom">
                                     <code v-if="isTimeBased">
-                                        <span class="const">{{ alertShortWindow.eventCountL10n }}</span>
+                                        <span class="const">{{ alertShortWindow.timeSlotCount }}</span>
                                     </code>
                                     <code v-else>
                                         <label for="sli-event-unit">
