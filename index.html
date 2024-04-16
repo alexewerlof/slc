@@ -649,38 +649,12 @@
                         </table>
                     </help-component>
                 </h1>
-                <div class="error-budget-diagram">
-                    <div class="error-budget-diagram__error-caption">
-                        {{ errorBudget }}
-                    </div>
-                    <div class="error-budget-diagram__fill">
-                        <div class="error-budget-diagram__error-fill" :style="{ width: errorBudgetPerc + '%'}"></div>
-                    </div>
-                    <div class="error-budget-diagram__good-caption">
-                        <label class="spaced" for="slo-int-input">
-                            {{ numL10n(goodEventCount) }}
-                        </label>
-                        <label class="spaced" for="sli-good-input">
-                            good
-                        </label>
-                        <label class="spaced" for="sli-event-unit">
-                            <code>{{ sloWindow.normUnit }}</code>
-                        </label>
-                    </div>
-                    <div class="error-budget-diagram__valid-caption">
-                        <label class="spaced" for="error-budget-example-input">
-                            {{ numL10n(validEventCount) }}
-                        </label>
-                        <label class="spaced" for="sli-valid-input">
-                            valid
-                        </label>
-                        <label class="spaced" for="sli-event-unit">
-                            <code>{{ sloWindow.normUnit }}</code>
-                        </label>
-                        in
-                        <label for="slo-window-unit-multiplier"><code>{{ sloWindow.humanTime }}</code></label>
-                    </div>
-                </div>
+                <error-budget-component
+                    :error-budget="errorBudget"
+                    :error-budget-perc="errorBudgetPerc"
+                    :good-event-count="goodEventCount"
+                    :valid-event-count="validEventCount">
+                </error-budget-component>
                 <div v-if="!isTimeBased">
                     <h3>
                         <label for="error-budget-example-input">Expected number of valid {{ sloWindow.normUnit }}</label>

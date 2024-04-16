@@ -3,6 +3,7 @@ import { config } from './config.js'
 import HelpComponent from './components/help.js'
 import AlertComponent from './components/alert.js'
 import BurnRateComponent from './components/burn-rate.js'
+import ErrorBudgetComponent from './components/error-budget.js'
 import ExtLink from './components/ext-link.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import { daysToSeconds } from './lib/time.js'
@@ -76,6 +77,7 @@ export const app = createApp({
     },
     components: {
         HelpComponent,
+        ErrorBudgetComponent,
         AlertComponent,
         BurnRateComponent,
         ExtLink,
