@@ -1,32 +1,24 @@
 <div class="error-budget-diagram">
     <div class="error-budget-diagram__error-caption">
-        {{ errorBudget }}
+        {{ errorBudget.eventCountL10n }} failures are allowed
+        <br>
+        in {{ errorBudget.humanSec }}
+        <br>
+        <span v-if="errorBudget.cost">costing {{ errorBudget.costL10n }}</span>
     </div>
     <div class="error-budget-diagram__fill">
         <div class="error-budget-diagram__error-fill" :style="errorBudgetFillWidth"></div>
     </div>
     <div class="error-budget-diagram__good-caption">
-        <label class="spaced" for="slo-int-input">
-            {{ numL10n(goodEventCount) }}
-        </label>
-        <label class="spaced" for="sli-good-input">
-            good
-        </label>
-        <label class="spaced" for="sli-event-unit">
-            <code>{{ errorBudget.normUnit }}</code>
-        </label>
+        {{ numL10n(goodEventCount) }}
+        good
+        {{ errorBudget.normUnit }}
     </div>
     <div class="error-budget-diagram__valid-caption">
-        <label class="spaced" for="error-budget-example-input">
-            {{ numL10n(validEventCount) }}
-        </label>
-        <label class="spaced" for="sli-valid-input">
-            valid
-        </label>
-        <label class="spaced" for="sli-event-unit">
-            <code>{{ errorBudget.normUnit }}</code>
-        </label>
+        {{ numL10n(validEventCount) }}
+        valid
+        {{ errorBudget.normUnit }}
         in
-        <label for="slo-window-unit-multiplier"><code>{{ errorBudget.humanTime }}</code></label>
+        {{ errorBudget.humanTime }}
     </div>
 </div>
