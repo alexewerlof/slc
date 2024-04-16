@@ -1,31 +1,31 @@
-.error-budget-diagram {
+.error-budget-component {
     border-top: none;
 }
 
-.error-budget-diagram__fill {
+.error-budget-component__fill {
     background-color: var(--brand-green);
 }
 
-.error-budget-diagram__error-fill {
+.error-budget-component__error-fill {
     height: 3em;
     background-color: var(--brand-red);
 }
 
-.error-budget-diagram__error-caption {
+.error-budget-component__error-caption {
     padding-left: 0.2em;
     padding-bottom: 0.2em;
     color: var(--brand-red);
     border-left: 1px solid currentColor;
 }
 
-.error-budget-diagram__good-caption {
+.error-budget-component__good-caption {
     text-align: right;
     padding-right: 0.2em;
     color: var(--brand-green);
     border-right: 1px solid currentColor;
 }
 
-.error-budget-diagram__valid-caption {
+.error-budget-component__valid-caption {
     color: var(--primary-color);
     border: 1px solid currentColor;
     margin-top: 0.5em;

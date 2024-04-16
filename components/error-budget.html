@@ -1,20 +1,20 @@
-<div class="error-budget-diagram">
-    <div class="error-budget-diagram__error-caption">
+<div class="error-budget-component">
+    <div class="error-budget-component__error-caption">
         {{ errorBudget.eventCountL10n }} failures are allowed
         <br>
         in {{ errorBudget.humanSec }}
         <br>
         <span v-if="errorBudget.cost">costing {{ errorBudget.costL10n }}</span>
     </div>
-    <div class="error-budget-diagram__fill">
-        <div class="error-budget-diagram__error-fill" :style="errorBudgetFillWidth"></div>
+    <div class="error-budget-component__fill">
+        <div class="error-budget-component__error-fill" :style="errorBudgetFillWidth"></div>
     </div>
-    <div class="error-budget-diagram__good-caption">
+    <div class="error-budget-component__good-caption">
         {{ numL10n(goodEventCount) }}
         good
         {{ errorBudget.normUnit }}
     </div>
-    <div class="error-budget-diagram__valid-caption">
+    <div class="error-budget-component__valid-caption">
         {{ numL10n(validEventCount) }}
         valid
         {{ errorBudget.normUnit }}
