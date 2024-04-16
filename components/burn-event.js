@@ -1,6 +1,5 @@
 import { fetchTemplate, loadCss } from '../lib/fetch-template.js'
 import { arrToPolygonPoints } from '../lib/svg.js'
-import { isStr } from '../lib/validation.js'
 
 loadCss(import.meta.url)
 
