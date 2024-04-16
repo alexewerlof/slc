@@ -260,7 +260,9 @@ export const app = createApp({
         sloWindowBudgetBurn() {
             const { sec, unit } = this.sloWindow
             const eventCost = this.badEventCost || 0
-            return new Budget(sec, unit, Math.ceil(this.badEventCount * this.burnRate), eventCost, this.badEventCurrency)
+            const burnedEventAtThisRate = Math.ceil(this.badEventCount * this.burnRate)
+            const eventCount = Math.min(this.validEventCount, burnedEventAtThisRate)
+            return new Budget(sec, unit, eventCount, eventCost, this.badEventCurrency)
         },
 
 
