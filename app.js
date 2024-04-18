@@ -65,6 +65,13 @@ export const app = createApp({
             shortWindowDivider: config.shortWindowDivider.default,
         }
     },
+    watch: {
+        windowDays(newVal, oldVal) {
+            if (newVal !== oldVal) {
+                this.errorBudgetValidExample = Math.round(this.errorBudgetValidExample * newVal / oldVal)
+            }
+        }
+    },
     mounted() {
         this.loadState(urlToState(window.location.href))
         this.$nextTick(() => {
