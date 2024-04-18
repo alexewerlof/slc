@@ -1,8 +1,7 @@
 <div class="error-budget-component" :style="errorBudgetGridTemplateColumns">
     <div></div>
     <div class="error-budget-component__error-caption">
-        In {{ errorBudget.humanSec }}
-        a maximum of {{ errorBudget.eventCountL10n }}
+        A maximum of {{ errorBudget.eventCountL10n }}
         bad {{ errorBudget.normUnit }} are allowed
         <span v-if="errorBudget.cost">costing {{ errorBudget.costL10n }}</span>
     </div>
