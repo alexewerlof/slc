@@ -1,19 +1,21 @@
-<div class="error-budget-component">
+<div class="error-budget-component" :style="errorBudgetGridTemplateColumns">
+    <div></div>
     <div class="error-budget-component__error-caption">
-        {{ errorBudget.eventCountL10n }} failures are allowed
-        <br>
-        in {{ errorBudget.humanSec }}
-        <br>
+        In {{ errorBudget.humanSec }}
+        a maximum of {{ errorBudget.eventCountL10n }}
+        bad {{ errorBudget.normUnit }} are allowed
         <span v-if="errorBudget.cost">costing {{ errorBudget.costL10n }}</span>
     </div>
-    <div class="error-budget-component__fill">
-        <div class="error-budget-component__error-fill" :style="errorBudgetFillWidth"></div>
-    </div>
-    <div class="error-budget-component__good-caption">
+
+    <div class="error-budget-component__fill--bad" :style="errorBudgetFillWidth"></div>
+    <div class="error-budget-component__fill--good">
+        At least
         {{ numL10n(goodEventCount) }}
         good
         {{ errorBudget.normUnit }}
+        are guaranteed
     </div>
+
     <div class="error-budget-component__valid-caption">
         {{ numL10n(validEventCount) }}
         valid

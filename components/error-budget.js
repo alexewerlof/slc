@@ -6,9 +6,9 @@ loadCss(import.meta.url)
 export default {
     template: await fetchTemplate(import.meta.url),
     computed: {
-        errorBudgetFillWidth() {
+        errorBudgetGridTemplateColumns() {
             return {
-                width: `${this.errorBudgetPerc}%`,
+                'grid-template-columns': `${this.errorBudgetPerc}% auto`,
             }
         }
     },
