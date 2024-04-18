@@ -51,8 +51,8 @@ export const app = createApp({
             slo: config.slo.default,
             // The length of the SLO window in days
             windowDays: config.windowDays.default,
-            // For event based error budgets, this number holds the total valid events so we can compute the ammount of allowed failures
-            errorBudgetValidExample: config.errorBudgetValidExample.default,
+            // For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events
+            estimatedValidEvents: config.estimatedValidEvents.default,
             // The cost of a bad event
             badEventCost: config.badEventCost.default,
             // The unit of the bad event cost
@@ -68,7 +68,7 @@ export const app = createApp({
     watch: {
         windowDays(newVal, oldVal) {
             if (newVal !== oldVal) {
-                this.errorBudgetValidExample = Math.round(this.errorBudgetValidExample * newVal / oldVal)
+                this.estimatedValidEvents = Math.round(this.estimatedValidEvents * newVal / oldVal)
             }
         }
     },
@@ -145,8 +145,8 @@ export const app = createApp({
                     this.windowDays = newState.windowDays
                 }
             
-                if (inRangePosInt(newState.errorBudgetValidExample, config.errorBudgetValidExample.min, config.errorBudgetValidExample.max)) {
-                    this.errorBudgetValidExample = newState.errorBudgetValidExample
+                if (inRangePosInt(newState.estimatedValidEvents, config.estimatedValidEvents.min, config.estimatedValidEvents.max)) {
+                    this.estimatedValidEvents = newState.estimatedValidEvents
                 }
             
                 if (inRange(newState.badEventCost, config.badEventCost.min, config.badEventCost.max)) {
@@ -242,7 +242,7 @@ export const app = createApp({
             if (this.isTimeBased) {
                 return this.sloWindow.timeSlotCount
             } else {
-                return this.errorBudgetValidExample || config.errorBudgetValidExample.min
+                return this.estimatedValidEvents || config.estimatedValidEvents.min
             }
         },
 

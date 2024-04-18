@@ -183,7 +183,7 @@ export const config = fz({
             },
         ]),
     }),
-    errorBudgetValidExample: fz({
+    estimatedValidEvents: fz({
         min: 1,
         max: 1_000_000_000,
         step: 1,
