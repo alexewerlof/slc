@@ -26,6 +26,28 @@ body {
     margin: 1em 0;
 }
 
+.block p {
+    margin-block: 0.25em 0;
+}
+
+.info.block {
+    padding: 0.5rem;
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+}
+
+.warning.block {
+    padding: 0.5rem;
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+.error.block {
+    padding: 0.5rem;
+    background-color: var(--brand-red);
+    color: var(--background-color);
+}
+
 @media screen and (min-width: 1000px) {
     body {
         /* No time for branding! It'll be too crowded */
