@@ -5,6 +5,7 @@ import AlertComponent from './components/alert.js'
 import BurnRateComponent from './components/burn-rate.js'
 import ErrorBudgetComponent from './components/error-budget.js'
 import ExtLink from './components/ext-link.js'
+import { setTitle } from './lib/header.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import { daysToSeconds } from './lib/time.js'
 import { Window } from './lib/window.js'
@@ -70,7 +71,10 @@ export const app = createApp({
             if (newVal !== oldVal) {
                 this.estimatedValidEvents = Math.round(this.estimatedValidEvents * newVal / oldVal)
             }
-        }
+        },
+        title(newTitle) {
+            setTitle(document, newTitle)
+        },
     },
     mounted() {
         this.loadState(urlToState(window.location.href))
