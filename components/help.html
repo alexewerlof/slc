@@ -1,4 +1,4 @@
-<button @click="toggle()" class="help-component-button">{{isVisible ? "Close" : caption }}</button>
+<button @click="toggle()" class="help-component__button">{{isVisible ? "Close" : caption }}</button>
 <transition>
     <div v-show="isVisible" class="help-component__contents">
         <slot></slot>

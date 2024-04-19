@@ -1,6 +1,6 @@
 @import url('../variables.css');
 
-.help-component-button {
+.help-component__button {
     display: inline-block;
     font-family: var(--body-font-family);
     text-decoration: underline;
@@ -10,7 +10,7 @@
     cursor: help;
 }
 
-.help-component-button:hover {
+.help-component__button:hover {
     background-color: transparent;
 }
 
