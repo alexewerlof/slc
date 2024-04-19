@@ -968,7 +968,7 @@
                 </div>
                 <div v-if="longWindowPerc > 33" class="warning block">
                     <p>
-                        Warning: Remember that the alert will trigger after consuming {{ percL10n(longWindowPerc) }} of the error budget is consumed! That error budget is for {{ sloWindow.humanTime }}.
+                        Warning: Remember that the alert will trigger after {{ percL10n(longWindowPerc) }} of the error budget is consumed! That error budget is for {{ sloWindow.humanTime }}.
                     </p>
                     <p>
                         Based on your setting an alert burns {{ percL10n(longWindowPerc) }} just to trigger. Then it needs some time to resolve too.
