@@ -416,30 +416,27 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <p v-if="slo > 99.9">
-                            Just be mindful of the price tag for this high service level <em>objective</em>!
-
-                            Everyone wants the highest possible number but
-                            <ext-link href="https://blog.alexewerlof.com/p/Rule of 10x per 9">
-                                not everyone is willing to pay the price.
-                            </ext-link>
-                        </p>
-                        <p v-if="slo < 70">
-                            Note: this is an unusually low service level objective.
-                            Typically service level <em>objective</em> is above {{ percL10n(90) }} with some rare exceptions.
-                            Please check the <a href="#error-budget-title">Error budget</a> for implications of your chosen SLO.
-                        </p>
-                        <p v-if="slo < 50">
-                            It looks like you're expecting the service level to be violated more than met!
-                            It may be tempting to start from a low objective, but maybe the definition of
-                            your service level <em>indicator</em> could be improved to narrow down the focus
-                            of service level optimization.
-                        </p>
-                        <p v-if="slo < 1">
-                            😂 Are you joking?
-                        </p>
                     </help-component>
                 </h1>
+                <div v-if="slo > 99.9" class="info block">
+                    <p>
+                        Note: Just be mindful of the price tag for this high service level <em>objective</em>!
+                    </p>
+
+                    <p>
+                        Everyone wants the highest possible number but
+                        <ext-link href="https://blog.alexewerlof.com/p/10x9">
+                            not everyone is willing to pay the price.
+                        </ext-link>
+                    </p>
+                </div>
+                <div v-if="slo < 70" class="info block">
+                    <p>
+                        Note: this is an unusually low service level objective.
+                        Typically service level <em>objective</em> is above {{ percL10n(90) }} with some rare exceptions.
+                        Please check the <a href="#error-budget-title">Error budget</a> for implications of your chosen SLO.
+                    </p>
+                </div>
                 <input
                     id="slo-int-input"
                     type="range"
@@ -649,6 +646,11 @@
                         </table>
                     </help-component>
                 </h1>
+                <div class="warning block" v-if="errorBudget.eventCount === 0" aria-colcount="warning block">
+                    <p>
+                        Warning: The error budget is 0 based on the number of valids {{ sloWindow.normUnit }}.
+                    </p>
+                </div>
                 <error-budget-component
                     :error-budget="errorBudget"
                     :error-budget-perc="errorBudgetPerc"
@@ -952,10 +954,12 @@
                         </p>
                     </help-component>
                 </h3>
-                <p v-if="alertTTRWindow.sec < 3600">
-                    Note: The time to resolve (TTR) is too short for a human to react.
-                    It is strongly recommended to automate the response to the alert.
-                </p>
+                <div v-if="alertTTRWindow.sec < 3600" class="info block">
+                    <p>
+                        Note: The time to resolve (TTR) is too short for a human to react.
+                        It is strongly recommended to automate the incident resolution instead of relying on human response to alerts.
+                    </p>
+                </div>
                 <input
                     id="alert-error-budget-perc"
                     type="range"
@@ -964,13 +968,17 @@
                     :step="config.longWindowPerc.step"
                     v-model.number="longWindowPerc"
                 >
-                <p v-if="alertLongWindow.sec <= 60">
-                    Warning: Long alert Window is too short at this burn rate ({{ burnRate }}x) 
-                    which may lead to alert fatigue.
-                </p>
-                <p v-if="alertLongWindow.eventCount === 0">
-                    Error: Long alert Window is too short for enough valid events to be counted.
-                </p>
+                <div v-if="alertLongWindow.sec <= 60" class="warning block">
+                    <p>
+                        Warning: Long alert Window is too short at this burn rate ({{ burnRate }}x) 
+                        which may lead to alert fatigue.
+                    </p>
+                </div>
+                <div class="error block" v-if="alertLongWindow.eventCount === 0" class="error block">
+                    <p>
+                        Error: Division by zero! Long alert Window is too short for enough valid {{ sloWindow.normUnit }} to be counted.
+                    </p>
+                </div>
                 <!-- Burn Chart Component -->
                 <alert-component
                     :long-window-perc="longWindowPerc"
@@ -1235,13 +1243,17 @@
                         :step="config.shortWindowDivider.step"
                         v-model.number="shortWindowDivider"
                     >
-                    <p v-if="alertShortWindow.sec <= 60">
-                        Warning: Short alert Window is too short at this burn rate ({{ burnRate }}x) 
-                        which may lead to alert fatigue.
-                    </p>
-                    <p v-if="alertShortWindow.eventCount === 0">
-                        Error: Short alert Window is too short for enough valid events to be counted.
-                    </p>
+                    <div v-if="alertShortWindow.sec <= 60" class="warning block">
+                        <p>
+                            Warning: Short alert Window is too short at this burn rate ({{ burnRate }}x) 
+                            which may lead to alert fatigue.
+                        </p>
+                    </div>
+                    <div v-if="alertShortWindow.eventCount === 0" class="error block">
+                        <p>
+                            Error: Short alert Window is too short for enough valid events to be counted.
+                        </p>
+                    </div>
                 </div>
             </section>
         </article>
