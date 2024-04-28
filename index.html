@@ -648,7 +648,7 @@
                 </h1>
                 <div class="warning block" v-if="errorBudget.eventCount === 0" aria-colcount="warning block">
                     <p>
-                        Warning: The error budget is 0 based on the number of valids {{ sloWindow.normUnit }}.
+                        Warning: The error budget is 0 based on your estimated number of valids {{ sloWindow.normUnit }}.
                     </p>
                 </div>
                 <error-budget-component
@@ -956,7 +956,7 @@
                 </h3>
                 <div v-if="alertLongWindow.sec < 600" class="warning block">
                     <p>
-                        Warning: The alert is too "jumpy" as in: it will trigger too often.
+                        Warning: The alert is too "jumpy" and will trigger too often.
                         This may lead to alert fatigue or even worse: ignoring the alerts.
                     </p>
                 </div>
