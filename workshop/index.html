@@ -34,6 +34,31 @@
         </header>
         <article>
             <section>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th v-for="system of systems" :key="system.id" :colspan="system.services.length">{{ system.name }}</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th v-for="service of allServices" :key="service.id">{{ service.name }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="consumption of allConsumptions" :key="consumption.id">
+                            <th>{{ consumption.consumer.name }}</th>
+                            <th>{{ consumption.name }}</th>
+                            <th v-for="service of allServices" :key="service.id">{{ filterFailures(consumption, service).length }}</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </article>
+        <article>
+            <section>
                 <h1>Systems</h1>
                 <p>What are the services that your team owns? Systems offer services to the consumers.</p>
                 <p>
@@ -243,8 +268,8 @@
                 <table>
                     <thead>
                         <th>Service</th>
-                        <th>Metric</th>
                         <th>Measurement Location</th>
+                        <th>Metric</th>
                         <th>Type</th>
                         <th>Good</th>
                         <th>Valid</th>
@@ -253,8 +278,8 @@
                     <tbody v-for="system of systems">
                         <tr v-for="failure of filterFailuresBySystem(system)">
                             <td>{{ failure.service }}</td>
-                            <td>{{ failure.metric || '⚠️TBD' }}</td>
                             <td>{{ failure.metricLocation || '⚠️TBD' }}</td>
+                            <td><code>{{ failure.metric || '⚠️TBD' }}</code></td>
                             <td>
                                 <label><input type="checkbox">Event Based</label>
                             </td>
