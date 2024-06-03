@@ -1,8 +1,8 @@
-import { fetchTemplate } from '../lib/fetch-template.js'
+import { loadComponent } from '../lib/fetch-template.js'
 import { arrToPolygonPoints } from '../lib/svg.js'
 
 export default {
-    template: await fetchTemplate(import.meta.url),
+    template: await loadComponent(import.meta.url, false),
     props: {
         x1: Number,
         x2: Number,

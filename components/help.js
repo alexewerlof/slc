@@ -1,9 +1,7 @@
-import { fetchTemplate, loadCss } from '../lib/fetch-template.js'
-
-loadCss(import.meta.url)
+import { loadComponent } from '../lib/fetch-template.js'
 
 export default {
-    template: await fetchTemplate(import.meta.url),
+    template: await loadComponent(import.meta.url),
     data() {
         return {
             isVisible: this.visible,

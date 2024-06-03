@@ -1,13 +1,11 @@
-import { fetchTemplate, loadCss } from '../lib/fetch-template.js'
+import { loadComponent } from '../lib/fetch-template.js'
 import { arrToPolygonPoints } from '../lib/svg.js'
-
-loadCss(import.meta.url)
 
 const titleDistance = 8
 const arrowHeight = 5
 
 export default {
-    template: await fetchTemplate(import.meta.url),
+    template: await loadComponent(import.meta.url),
     computed: {
         isTitleOnRight() {
             return this.x < (this.width / 2)

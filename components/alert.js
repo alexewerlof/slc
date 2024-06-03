@@ -1,12 +1,10 @@
-import { fetchTemplate, loadCss } from '../lib/fetch-template.js'
+import { loadComponent } from '../lib/fetch-template.js'
 import burnEventComponent from './burn-event.js'
 import verticalAxisComponent from './vertical-axis.js'
 import horizontalAxisComponent from './horizontal-axis.js'
 
-loadCss(import.meta.url)
-
 export default {
-    template: await fetchTemplate(import.meta.url),
+    template: await loadComponent(import.meta.url),
     data() {
         return {
             width: 500,
