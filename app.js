@@ -9,7 +9,7 @@ import { setTitle } from './lib/header.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import { daysToSeconds } from './lib/time.js'
 import { Window } from './lib/window.js'
-import { numL10n, percL10n } from './lib/fmt.js'
+import { entity2symbol, numL10n, percL10n } from './lib/fmt.js'
 import { inRange, inRangePosInt, isNum, isStr } from './lib/validation.js'
 import { trackEvent } from './lib/ga-utils.js'
 import { stateToUrl, urlToState } from './lib/share.js'
@@ -46,6 +46,14 @@ export const app = createApp({
             unit: config.unit.default,
             // definition of good events or good time slots
             good: config.good.default,
+            // Does good SLI has a lower bound? If yes, what type of lower bound is it for good data points?
+            lowerBound: config.lowerBound.default,
+            // Lower bound threshold
+            lowerThreshold: config.lowerThreshold.default,
+            // Does good SLI has an upper bound? If yes, what type of upper bound is it for good data points?
+            upperBound: config.upperBound.default,
+            // Upper bound threshold
+            upperThreshold: config.upperThreshold.default,
             // definition of valid events or valid time slots
             valid: config.valid.default,
             // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
@@ -104,6 +112,18 @@ export const app = createApp({
 
         percL10n(x) {
             return percL10n(x)
+        },
+
+        entity2symbol(entity) {
+            return entity2symbol(entity)
+        },
+
+        boundCaption(caption, boundType) {
+            if (boundType === '') {
+                return 'None'
+            }
+
+            return `${this.good} ${ entity2symbol(boundType) } ${caption}`
         },
         
         changeSLO(amount) {
@@ -214,6 +234,10 @@ export const app = createApp({
             set(newVal) {
                 this.unit = newVal ? 60 : 'events'
             }
+        },
+
+        isBounded() {
+            return Boolean(this.lowerBound || this.upperBound)
         },
 
         sloInt: {

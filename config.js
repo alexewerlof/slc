@@ -104,6 +104,26 @@ export const config = fz({
     good: fz({
         default: 'successful',
     }),
+    lowerBound: fz({
+        possibleValues: ['', 'gt', 'ge'],
+        default: '',
+    }),
+    lowerThreshold: fz({
+        min: -1000_000_000,
+        max: 1000_000_000,
+        step: 1,
+        default: 0,
+    }),
+    upperBound: fz({
+        possibleValues: ['', 'lt', 'le'],
+        default: '',
+    }),
+    upperThreshold: fz({
+        min: -1000_000_000,
+        max: 1000_000_000,
+        step: 1,
+        default: 2000,
+    }),
     valid: fz({
         default: 'all',
     }),
