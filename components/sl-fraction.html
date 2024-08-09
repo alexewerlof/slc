@@ -1,18 +1,22 @@
 <div class="formula__fraction">
-    <div class="formula__fraction--top">
-        <code>
-            <span class="funct">count</span>
-            <span class="punct">(</span>
+    <code>
+        <div class="formula__fraction--top">
+            <span class="funct">COUNT</span>
+            <span>&nbsp;</span>
             <label for="sli-event-unit">
                 <span class="exprs">{{ unit }}</span>
             </label>
-            <span class="punct">, </span>
+            <span>&nbsp;</span>
+            <span class="funct">WHERE</span>
+            <span>&nbsp;</span>
             <span v-if="lowerBound">
                 <label for="lower-threshold-input" title="Lower Threshold">
                     <span class="exprs">{{ lowerThreshold }}</span>
                 </label>
                 <label for="lower-bound-type">
+                    <span>&nbsp;</span>
                     <span class="punct">{{ entity2symbolNorm(lowerBound) }}</span>
+                    <span>&nbsp;</span>
                 </label>
             </span>
             
@@ -20,49 +24,50 @@
             
             <span v-if="upperBound">
                 <label for="upper-bound-type">
+                    <span>&nbsp;</span>
                     <span class="punct">{{ entity2symbolNorm(upperBound) }}</span>
+                    <span>&nbsp;</span>
                 </label>
                 <label for="upper-threshold-input" title="Upper Threshold">
                     <span class="exprs">{{ upperThreshold }}</span>
                 </label>
             </span>
             <span v-if="isNum(windowSec)">
-                <span class="punct">, </span>
                 <label :for="timeLabelId">
+                    <span>&nbsp;</span>
+                    <span class="funct">OVER</span>
+                    <span>&nbsp;</span>
                     <span class="const">
                         {{ humanSec(windowSec) }}
                     </span>
                 </label>
             </span>
-            <span class="punct">)</span>
-        </code>
-        <span class="invis"> /</span>
-    </div>
-    <div class="formula__fraction--bottom">
-        <code>
-            <label for="sli-event-unit">
-                <span class="funct">count</span>
-            </label>
-            <span class="punct">(</span>
+            <span class="invis"> /</span>
+        </div>
+        <div class="formula__fraction--bottom">
+            <span class="funct">COUNT</span>
+            <span>&nbsp;</span>
             <label for="sli-event-unit">
                 <span class="exprs">{{ unit }}</span>
             </label>
             <span v-if="valid">
-                <span class="punct">, </span>
+                <span>&nbsp;</span>
+                <span class="funct">WHERE</span>
+                <span>&nbsp;</span>
                 <label for="sli-valid-input">
                     <span class="exprs">{{ valid }}</span>
                 </label>
             </span>
-            <span class="punct"></span>
             <span v-if="isNum(windowSec)">
-                <span class="punct">, </span>
                 <label :for="timeLabelId">
+                    <span>&nbsp;</span>
+                    <span class="funct">OVER</span>
+                    <span>&nbsp;</span>
                     <span class="const">
                         {{ humanSec(windowSec) }}
                     </span>
                 </label>
             </span>
-            <span class="punct">)</span>
-        </code>
-    </div>
+        </div>
+    </code>
 </div>
