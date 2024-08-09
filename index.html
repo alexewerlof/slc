@@ -601,6 +601,42 @@
                     </div>
                 </div>
 
+                <h2>
+                    Service Level Status
+                    <help-component>
+                        <p>
+                            Service Leval Status (SLS) gives the status of the Service Level at a given time.
+                            If it is below the SLO, then we're burning the error budget.
+                        </p>
+                        <p>
+                            Read more
+                            <ext-link href="https://blog.alexewerlof.com/p/sls">here</ext-link>.
+                        </p>
+                    </help-component>
+                </h2>
+                <div class="code block">
+                    <div class="formula" id="sli-formula-code">
+                        <s-l-fraction-component
+                            :unit="sloWindow.normUnit"
+                            :is-time-based="isTimeBased"
+                            :lower-bound="lowerBound"
+                            :lower-threshold="lowerThreshold"
+                            :good="good"
+                            :upper-bound="upperBound"
+                            :upper-threshold="upperThreshold"
+                            :window-sec="sloWindow.sec"
+                            :valid="valid"
+                            time-label-id="slo-window-unit-multiplier"></s-l-fraction-component>
+                        <div class="formula__whole">
+                            <code>
+                                <span class="punct"> × </span>
+                                <span class="const">100</span>
+                            </code>
+                        </div>
+                    </div>
+                    <button @click="copy('sli-formula-code', 'sli-formula')" type="button" title="Copy to clipboard">⎘</button>
+                </div>
+
             <!------------------------ Error budget ------------------------>
                 <h1 id="error-budget-title">
                     Error budget: {{ percL10n(errorBudgetPerc) }}
