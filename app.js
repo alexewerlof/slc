@@ -104,21 +104,13 @@ export const app = createApp({
         HelpComponent,
     },
     methods: {
-        percentToRatio(x) {
-            return percentToRatio(x)
-        },
+        percentToRatio,
 
-        numL10n(x) {
-            return numL10n(x)
-        },
+        numL10n,
 
-        percL10n(x) {
-            return percL10n(x)
-        },
+        percL10n,
 
-        entity2symbol(entity) {
-            return entity2symbol(entity)
-        },
+        entity2symbol,
 
         boundCaption(caption, boundType) {
             if (boundType === '') {
