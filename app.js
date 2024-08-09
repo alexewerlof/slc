@@ -251,6 +251,14 @@ export const app = createApp({
             }
         },
 
+        lowerThresholdMax() {
+            return this.upperBound ? this.upperThreshold : config.lowerThreshold.max
+        },
+
+        upperThresholdMin() {
+            return this.lowerBound ? this.lowerThreshold : config.upperThreshold.min
+        },
+
         sloFrac: {
             get() {
                 return toFixed(this.slo % 1)

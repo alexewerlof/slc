@@ -600,7 +600,7 @@
                         <input type="number"
                             v-model.number="lowerThreshold"
                             :min="config.lowerThreshold.min"
-                            :max="upperThreshold - 1"
+                            :max="lowerThresholdMax"
                             :step="config.lowerThreshold.step">
                     </div>
 
@@ -611,7 +611,7 @@
                         </div>
                         <input type="number"
                             v-model.number="upperThreshold"
-                            :min="lowerThreshold + 1"
+                            :min="upperThresholdMin"
                             :max="config.upperThreshold.max"
                             :step="config.upperThreshold.step">
                     </div>
