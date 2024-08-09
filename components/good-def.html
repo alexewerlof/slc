@@ -1,0 +1,19 @@
+<span v-if="lowerBound">
+    <label for="lower-threshold-input" title="Lower Threshold">
+        <span class="exprs">{{ lowerThreshold }}</span>
+    </label>
+    <label for="lower-bound-type">
+        <span class="punct">{{ entity2symbolNorm(lowerBound) }}</span>
+    </label>
+</span>
+
+<label for="sli-good-input"><span class="exprs">{{ good }}</span></label>
+
+<span v-if="upperBound">
+    <label for="upper-bound-type">
+        <span class="punct">{{ entity2symbolNorm(upperBound) }}</span>
+    </label>
+    <label for="upper-threshold-input" title="Upper Threshold">
+        <span class="exprs">{{ upperThreshold }}</span>
+    </label>
+</span>

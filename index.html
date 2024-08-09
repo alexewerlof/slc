@@ -381,23 +381,12 @@
                                         <span class="exprs">{{ sloWindow.normUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
-                                    <span v-if="lowerBound">
-                                        <label for="lower-threshold-input">
-                                            <span class="exprs">LT</span>
-                                        </label>
-                                        <label for="lower-bound-type">
-                                            <span class="punct">{{ entity2symbol(lowerBound) }}</span>
-                                        </label>
-                                    </span>
-                                    <label for="sli-good-input"><span class="exprs">{{ good }}</span></label>
-                                    <span v-if="upperBound">
-                                        <label for="upper-bound-type">
-                                            <span class="punct">{{ entity2symbol(upperBound) }}</span>
-                                        </label>
-                                        <label for="upper-threshold-input">
-                                            <span class="exprs">UT</span>
-                                        </label>
-                                    </span>
+                                    <good-def-component
+                                        :lower-bound="lowerBound"
+                                        lower-threshold="LT"
+                                        :good="good"
+                                        :upper-bound="upperBound"
+                                        upper-threshold="UT"></good-def-component>
                                     <span class="punct">)</span>
                                 </code>
                                 <span class="invis"> /</span>
@@ -1107,9 +1096,12 @@
                                         <span class="exprs">{{ sloWindow.normUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
-                                    <label for="sli-good-input">
-                                        <span class="exprs">{{ good }}</span>
-                                    </label>
+                                    <good-def-component
+                                        :lower-bound="lowerBound"
+                                        :lower-threshold="lowerThreshold"
+                                        :good="good"
+                                        :upper-bound="upperBound"
+                                        :upper-threshold="upperThreshold"></good-def-component>
                                     <span class="punct">, </span>
                                     <label for="alert-error-budget-perc">
                                         <span class="const">
@@ -1175,9 +1167,12 @@
                                             <span class="exprs">{{ sloWindow.normUnit }}</span>
                                         </label>
                                         <span class="punct">, </span>
-                                        <label for="sli-good-input">
-                                            <span class="exprs">{{ good }}</span>
-                                        </label>
+                                        <good-def-component
+                                            :lower-bound="lowerBound"
+                                            :lower-threshold="lowerThreshold"
+                                            :good="good"
+                                            :upper-bound="upperBound"
+                                            :upper-threshold="upperThreshold"></good-def-component>
                                         <span class="punct">, </span>
                                         <label for="alert-short-window-divider-input">
                                             <span class="const">
