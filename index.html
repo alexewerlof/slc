@@ -572,11 +572,8 @@
                     <h2>Thresholds of good</h2>
                     <div class="block" v-if="lowerBound">
                         <h3>
-                            <label for="lower-threshold-input">Lower Threshold</label>
+                            <label for="lower-threshold-input">Lower Threshold (LT)</label>
                         </h3>
-                        <div class="block">
-                            {{ boundCaption(lowerThreshold, lowerBound) }}
-                        </div>
                         <input type="number"
                             id="lower-threshold-input"
                             v-model.number="lowerThreshold"
@@ -587,11 +584,8 @@
 
                     <div class="block" v-if="upperBound">
                         <h3>
-                            <label for="upper-threshold-input">Upper Threshold</label>
+                            <label for="upper-threshold-input">Upper Threshold (UT)</label>
                         </h3>
-                        <div class="block">
-                            {{ boundCaption(upperThreshold, upperBound) }} 
-                        </div>
                         <input type="number"
                             id="upper-threshold-input"
                             v-model.number="upperThreshold"
