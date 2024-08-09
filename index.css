@@ -115,7 +115,7 @@ header h1 {
     padding: 0 1em;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
     font-family: var(--title-font-family);
 }
 
@@ -134,6 +134,11 @@ h2 {
 
 h3 {
     font-size: 1.2em;
+    font-weight: 400;
+}
+
+h4 {
+    font-size: 1.1em;
     font-weight: 400;
 }
 
