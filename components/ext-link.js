@@ -6,7 +6,7 @@ shorten the code for external links and
 reduce the risk of typo errors.
 */
 export default {
-    template: await loadComponent(import.meta.url, false),
+    template: await loadComponent(import.meta.url, true),
     props: {
         href: String,
     },
