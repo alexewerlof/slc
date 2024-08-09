@@ -372,40 +372,15 @@
                 </h2>
                 <div class="code block">
                     <div class="formula" id="sli-formula-code">
-                        <div class="formula__fraction">
-                            <div class="formula__fraction--top">
-                                <code>
-                                    <span class="funct">count</span>
-                                    <span class="punct">(</span>
-                                    <label for="sli-event-unit">
-                                        <span class="exprs">{{ sloWindow.normUnit }}</span>
-                                    </label>
-                                    <span class="punct">, </span>
-                                    <good-def-component
-                                        :lower-bound="lowerBound"
-                                        lower-threshold="LT"
-                                        :good="good"
-                                        :upper-bound="upperBound"
-                                        upper-threshold="UT"></good-def-component>
-                                    <span class="punct">)</span>
-                                </code>
-                                <span class="invis"> /</span>
-                            </div>
-                            <div class="formula__fraction--bottom">
-                                <code>
-                                    <span class="funct">count</span>
-                                    <span class="punct">(</span>
-                                    <label for="sli-event-unit">
-                                        <span class="exprs">{{ sloWindow.normUnit }}</span>
-                                    </label>
-                                    <span v-if="valid" class="punct">, </span>
-                                    <label v-if="valid" for="sli-valid-input">
-                                        <span class="exprs">{{ valid }}</span>
-                                    </label>
-                                    <span class="punct">)</span>
-                                </code>
-                            </div>
-                        </div>
+                        <s-l-fraction-component
+                            :unit="sloWindow.normUnit"
+                            :is-time-based="isTimeBased"
+                            :lower-bound="lowerBound"
+                            lower-threshold="LT"
+                            :good="good"
+                            :upper-bound="upperBound"
+                            upper-threshold="UT"
+                            :valid="valid"></s-l-fraction-component>
                         <div class="formula__whole">
                             <code>
                                 <span class="punct"> × </span>
@@ -1087,60 +1062,17 @@
                 </h3>
                 <div class="code block">
                     <div class="formula" id="alert-formula-code">
-                        <div class="formula__fraction">
-                            <div class="formula__fraction--top">
-                                <code>
-                                    <span class="funct">count</span>
-                                    <span class="punct">(</span>
-                                    <label for="sli-event-unit">
-                                        <span class="exprs">{{ sloWindow.normUnit }}</span>
-                                    </label>
-                                    <span class="punct">, </span>
-                                    <good-def-component
-                                        :lower-bound="lowerBound"
-                                        :lower-threshold="lowerThreshold"
-                                        :good="good"
-                                        :upper-bound="upperBound"
-                                        :upper-threshold="upperThreshold"></good-def-component>
-                                    <span class="punct">, </span>
-                                    <label for="alert-error-budget-perc">
-                                        <span class="const">
-                                            {{ alertLongWindow.humanSec }}
-                                        </span>
-                                    </label>
-                                    <span class="punct">)</span>
-                                </code>
-                                <span class="invis"> /</span>
-                            </div>
-                            <div class="formula__fraction--bottom">
-                                <code v-if="isTimeBased">
-                                    <span class="const">{{ alertLongWindow.timeSlotCount }}</span>
-                                </code>
-                                <code v-else>
-                                    <label for="sli-event-unit">
-                                        <span class="funct">count</span>
-                                    </label>
-                                    <span class="punct">(</span>
-                                    <label for="sli-event-unit">
-                                        <span class="exprs">{{ sloWindow.normUnit }}</span>
-                                    </label>
-                                    <span v-if="valid">
-                                        <span class="punct">, </span>
-                                        <label for="sli-valid-input">
-                                            <span class="exprs">{{ valid }}</span>
-                                        </label>
-                                    </span>
-                                    <span class="punct"></span>
-                                    <span class="punct">, </span>
-                                    <label for="alert-error-budget-perc">
-                                        <span class="const">
-                                            {{ alertLongWindow.humanSec }}
-                                        </span>
-                                    </label>
-                                    <span class="punct">)</span>
-                                </code>
-                            </div>
-                        </div>
+                        <s-l-fraction-component
+                            :unit="sloWindow.normUnit"
+                            :is-time-based="isTimeBased"
+                            :lower-bound="lowerBound"
+                            :lower-threshold="lowerThreshold"
+                            :good="good"
+                            :upper-bound="upperBound"
+                            :upper-threshold="upperThreshold"
+                            :valid="valid"
+                            :window-sec="alertLongWindow.sec"
+                            time-label-id="alert-error-budget-perc"></s-l-fraction-component>
                         <div class="formula__whole">
                             <code>
                                 <span class="punct"> ≤ </span>
@@ -1157,72 +1089,28 @@
                             <span class="punct">&&</span>
                         </code>
                         <div v-if="shortWindowVisible" class="formula__break"></div>
-                        <div v-if="shortWindowVisible" class="formula">
-                            <div class="formula__fraction">
-                                <div class="formula__fraction--top">
-                                    <code>
-                                        <span class="funct">count</span>
-                                        <span class="punct">(</span>
-                                        <label for="sli-event-unit">
-                                            <span class="exprs">{{ sloWindow.normUnit }}</span>
-                                        </label>
-                                        <span class="punct">, </span>
-                                        <good-def-component
-                                            :lower-bound="lowerBound"
-                                            :lower-threshold="lowerThreshold"
-                                            :good="good"
-                                            :upper-bound="upperBound"
-                                            :upper-threshold="upperThreshold"></good-def-component>
-                                        <span class="punct">, </span>
-                                        <label for="alert-short-window-divider-input">
-                                            <span class="const">
-                                                {{ alertShortWindow.humanSec }}
-                                            </span>
-                                        </label>
-                                        <span class="punct">)</span>
-                                    </code>
-                                    <span class="invis"> /</span>
-                                </div>
-                                <div class="formula__fraction--bottom">
-                                    <code v-if="isTimeBased">
-                                        <span class="const">{{ alertShortWindow.timeSlotCount }}</span>
-                                    </code>
-                                    <code v-else>
-                                        <label for="sli-event-unit">
-                                            <span class="funct">count</span>
-                                        </label>
-                                        <span class="punct">(</span>
-                                        <label for="sli-event-unit">
-                                            <span class="exprs">{{ sloWindow.normUnit }}</span>
-                                        </label>
-                                        <span v-if="valid">
-                                            <span class="punct">, </span>
-                                            <label for="sli-valid-input">
-                                                <span class="exprs">{{ valid }}</span>
-                                            </label>
-                                        </span>
-                                        <span class="punct">, </span>
-                                        <label for="alert-short-window-divider-input">
-                                            <span class="const">
-                                                {{ alertShortWindow.humanSec }}
-                                            </span>
-                                        </label>
-                                        <span class="punct">)</span>
-                                    </code>
-                                </div>
-                            </div>
-                            <div class="formula__whole">
-                                <code>
-                                    <span class="punct"> ≤ </span>
-                                    <label for="slo-int-input">
-                                        <span class="const">
-                                            {{ numL10n(percentToRatio(slo)) }}
-                                        </span>
-                                    </label>
-                                </code>
-                            </div>
+                        <s-l-fraction-component
+                            v-if="shortWindowVisible"
+                            :unit="sloWindow.normUnit"
+                            :is-time-based="isTimeBased"
+                            :lower-bound="lowerBound"
+                            :lower-threshold="lowerThreshold"
+                            :good="good"
+                            :upper-bound="upperBound"
+                            :upper-threshold="upperThreshold"
+                            :valid="valid"
+                            :window-sec="alertShortWindow.sec"
+                            time-label-id="alert-short-window-divider-input"></s-l-fraction-component>
+                        <div class="formula__whole">
+                            <code>
+                                <span class="punct"> ≤ </span>
+                                <label for="slo-int-input">
+                                    <span class="const">
+                                        {{ numL10n(percentToRatio(slo)) }}
+                                    </span>
+                                </label>
+                            </code>
                         </div>
-
                     </div>
                     <button @click="copy('alert-formula-code', 'alert-formula')" type="button" title="Copy to clipboard">⎘</button>
                 </div>
