@@ -266,15 +266,23 @@
                         <p>The actual thresholds are part of the SLO definition.</p>
                     </help-component>
                 </h3>
-                <h4>Lower Bound</h4>
-                <select v-model="lowerBound">
+                <h4>
+                    <label for="lower-bound-type">Lower Bound</label>
+                </h4>
+                <select
+                    id="lower-bound-type"
+                    v-model="lowerBound">
                     <option v-for="v of config.lowerBound.possibleValues"
                         :value="v">
                         {{ boundCaption('Lower Threshold', v) }}
                     </option>
                 </select>
-                <h4>Upper Bound</h4>
-                <select v-model="upperBound">
+                <h4>
+                    <label for="upper-bound-type">Upper Bound</label>
+                </h4>
+                <select
+                    id="upper-bound-type"
+                    v-model="upperBound">
                     <option v-for="v of config.upperBound.possibleValues"
                         :value="v">
                         {{ boundCaption('Upper Threshold', v) }}
@@ -373,17 +381,23 @@
                                         <span class="exprs">{{ sloWindow.normUnit }}</span>
                                     </label>
                                     <span class="punct">, </span>
-                                    <label for="sli-good-input">
-                                        <span v-if="lowerBound">
-                                            <span class="exprs">{{ lowerThreshold }}</span>
+                                    <span v-if="lowerBound">
+                                        <label for="lower-threshold-input">
+                                            <span class="exprs">LT</span>
+                                        </label>
+                                        <label for="lower-bound-type">
                                             <span class="punct">{{ entity2symbol(lowerBound) }}</span>
-                                        </span>
-                                        <span class="exprs">{{ good }}</span>
-                                        <span v-if="upperBound">
+                                        </label>
+                                    </span>
+                                    <label for="sli-good-input"><span class="exprs">{{ good }}</span></label>
+                                    <span v-if="upperBound">
+                                        <label for="upper-bound-type">
                                             <span class="punct">{{ entity2symbol(upperBound) }}</span>
-                                            <span class="exprs">{{ upperThreshold }}</span>
-                                        </span>
-                                    </label>
+                                        </label>
+                                        <label for="upper-threshold-input">
+                                            <span class="exprs">UT</span>
+                                        </label>
+                                    </span>
                                     <span class="punct">)</span>
                                 </code>
                                 <span class="invis"> /</span>
@@ -593,11 +607,14 @@
                 <div v-if="isBounded">
                     <h2>Thresholds of good</h2>
                     <div class="block" v-if="lowerBound">
-                        <h3>Lower Threshold</h3>
+                        <h3>
+                            <label for="lower-threshold-input">Lower Threshold</label>
+                        </h3>
                         <div class="block">
                             {{ boundCaption(lowerThreshold, lowerBound) }}
                         </div>
                         <input type="number"
+                            id="lower-threshold-input"
                             v-model.number="lowerThreshold"
                             :min="config.lowerThreshold.min"
                             :max="lowerThresholdMax"
@@ -605,11 +622,14 @@
                     </div>
 
                     <div class="block" v-if="upperBound">
-                        <h3>Upper Threshold</h3>
+                        <h3>
+                            <label for="upper-threshold-input">Upper Threshold</label>
+                        </h3>
                         <div class="block">
                             {{ boundCaption(upperThreshold, upperBound) }} 
                         </div>
                         <input type="number"
+                            id="upper-threshold-input"
                             v-model.number="upperThreshold"
                             :min="upperThresholdMin"
                             :max="config.upperThreshold.max"
