@@ -34,7 +34,7 @@ export default [
     },
     {
         title: 'Availability: Retries',
-        description: 'The percentage of requests that were retried',
+        description: 'The percentage of requests that were not retried',
         unit: 'requests',
         good: 'retries == 0',
         valid: 'GET',
