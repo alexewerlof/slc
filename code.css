@@ -49,6 +49,7 @@ code .punct {
 /* expressions */
 code .exprs {
     color: var(--secondary-color);
+    word-break: break-word;
 }
 
 /* constants */
