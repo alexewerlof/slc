@@ -376,10 +376,10 @@
                             :unit="sloWindow.normUnit"
                             :is-time-based="isTimeBased"
                             :lower-bound="lowerBound"
-                            lower-threshold="LT"
+                            lower-threshold="$LT"
                             :good="good"
                             :upper-bound="upperBound"
-                            upper-threshold="UT"
+                            upper-threshold="$UT"
                             :valid="valid"></s-l-fraction-component>
                         <div class="formula__whole">
                             <code>
@@ -572,7 +572,7 @@
                     <h2>Thresholds of good</h2>
                     <div class="block" v-if="lowerBound">
                         <h3>
-                            <label for="lower-threshold-input">Lower Threshold (LT)</label>
+                            <label for="lower-threshold-input">Lower Threshold (<code>$LT</code>)</label>
                         </h3>
                         <input type="number"
                             id="lower-threshold-input"
@@ -584,7 +584,7 @@
 
                     <div class="block" v-if="upperBound">
                         <h3>
-                            <label for="upper-threshold-input">Upper Threshold (UT)</label>
+                            <label for="upper-threshold-input">Upper Threshold (<code>$UT</code>)</label>
                         </h3>
                         <input type="number"
                             id="upper-threshold-input"
