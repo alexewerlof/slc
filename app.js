@@ -10,7 +10,7 @@ import { setTitle } from './lib/header.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import { daysToSeconds } from './lib/time.js'
 import { Window } from './lib/window.js'
-import { entity2symbol, numL10n, percL10n } from './lib/fmt.js'
+import { entity2symbol, hasComparators, numL10n, percL10n } from './lib/fmt.js'
 import { inRange, inRangePosInt, isNum, isStr } from './lib/validation.js'
 import { trackEvent } from './lib/ga-utils.js'
 import { stateToUrl, urlToState } from './lib/share.js'
@@ -104,13 +104,11 @@ export const app = createApp({
         SLFractionComponent,
     },
     methods: {
-        percentToRatio,
-
-        numL10n,
-
-        percL10n,
-
         entity2symbol,
+        hasComparators,
+        numL10n,
+        percentToRatio,
+        percL10n,
 
         boundCaption(caption, boundType) {
             if (boundType === '') {
@@ -303,7 +301,6 @@ export const app = createApp({
             const eventCount = Math.min(this.validEventCount, burnedEventAtThisRate)
             return new Budget(sec, unit, eventCount, eventCost, this.badEventCurrency)
         },
-
 
         alertLongWindow() {
             return this.errorBudgetBurn.shrink(this.longWindowPerc)

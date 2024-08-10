@@ -263,12 +263,40 @@
                     Boundaries
                     <help-component>
                         <p>What metric values define a good {{ sloWindow.normUnit }}?</p>
-                        <p>The actual thresholds are part of the SLO definition.</p>
+                        <p>
+                            The actual thresholds are part of the SLO definition.
+                            This allows
+                            <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
+                                Multi-Tierd SLOs
+                            </ext-link>
+                            where different expectations have different commitments.
+                        </p>
                     </help-component>
                 </h3>
                 <h4>
                     <label for="lower-bound-type">Lower Bound</label>
+                    <help-component>
+                        <p>
+                            <ext-link href="https://blog.alexewerlof.com/p/sli-good">
+                                Good
+                            </ext-link>
+                            values can be bound.
+                            The actual lower threshold is part of the SLO definition.
+                        </p>
+                    </help-component>
                 </h4>
+                <div class="warning block" v-if="lowerBound && hasComparators(good)">
+                    <p>
+                        There seems to be a comparator in the definition of good already:
+                        <label for="sli-good-input">
+                            <code>{{ good }}</code>
+                        </label>.
+                    </p>
+                    <p>
+                        Having another bound makes the formula harder to read.
+                        Please use only one way to set the boundaries.
+                    </p>
+                </div>
                 <select
                     id="lower-bound-type"
                     v-model="lowerBound">
@@ -279,7 +307,28 @@
                 </select>
                 <h4>
                     <label for="upper-bound-type">Upper Bound</label>
+                    <help-component>
+                        <p>
+                            <ext-link href="https://blog.alexewerlof.com/p/sli-good">
+                                Good
+                            </ext-link>
+                            values can be bound.
+                            The actual upper threshold is part of the SLO definition.
+                        </p>
+                    </help-component>
                 </h4>
+                <div class="warning block" v-if="upperBound && hasComparators(good)">
+                    <p>
+                        There seems to be a comparator in the definition of good already:
+                        <label for="sli-good-input">
+                            <code>{{ good }}</code>
+                        </label>.
+                    </p>
+                    <p>
+                        Having another bound makes the formula harder to read.
+                        Please use only one way to set the boundaries.
+                    </p>
+                </div>
                 <select
                     id="upper-bound-type"
                     v-model="upperBound">
@@ -573,6 +622,15 @@
                     <div class="block" v-if="lowerBound">
                         <h3>
                             <label for="lower-threshold-input">Lower Threshold (<code>$LT</code>)</label>
+                            <help-component>
+                                <p>
+                                    The lower threshold is the value that defines the lower bound of good {{ sloWindow.normUnit }}.
+                                    It is part of the SLO definition and allows for
+                                    <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
+                                        Multi-Tierd SLOs
+                                    </ext-link>.
+                                </p>
+                            </help-component>
                         </h3>
                         <input type="number"
                             id="lower-threshold-input"
@@ -585,6 +643,15 @@
                     <div class="block" v-if="upperBound">
                         <h3>
                             <label for="upper-threshold-input">Upper Threshold (<code>$UT</code>)</label>
+                            <help-component>
+                                <p>
+                                    The lower threshold is the value that defines the lower bound of good {{ sloWindow.normUnit }}.
+                                    It is part of the SLO definition and allows for
+                                    <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
+                                        Multi-Tierd SLOs
+                                    </ext-link>.
+                                </p>
+                            </help-component>
                         </h3>
                         <input type="number"
                             id="upper-threshold-input"
