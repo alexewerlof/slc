@@ -105,7 +105,7 @@ export const config = fz({
         default: 'successful',
     }),
     lowerBound: fz({
-        possibleValues: ['', 'gt', 'ge'],
+        possibleValues: fz(['', 'gt', 'ge']),
         default: '',
     }),
     lowerThreshold: fz({
@@ -115,7 +115,7 @@ export const config = fz({
         default: 0,
     }),
     upperBound: fz({
-        possibleValues: ['', 'lt', 'le'],
+        possibleValues: fz(['', 'lt', 'le']),
         default: '',
     }),
     upperThreshold: fz({
