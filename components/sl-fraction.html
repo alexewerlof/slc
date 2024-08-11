@@ -32,16 +32,14 @@
                     <span class="exprs">{{ upperThreshold }}</span>
                 </label>
             </span>
-            <span v-if="isNum(windowSec)">
-                <span>&nbsp;</span>
-                <span class="funct">OVER</span>
-                <span>&nbsp;</span>
-                <label :for="timeLabelId">
-                    <span class="const">
-                        {{ humanSec(windowSec) }}
-                    </span>
-                </label>
-            </span>
+            <span>&nbsp;</span>
+            <span class="funct">OVER</span>
+            <span>&nbsp;</span>
+            <label :for="timeLabelId">
+                <span class="const">
+                    {{ timePeriod }}
+                </span>
+            </label>
             <span class="invis"> /</span>
         </div>
         <div class="formula__fraction--bottom">
@@ -58,16 +56,14 @@
                     <span class="exprs">{{ valid }}</span>
                 </label>
             </span>
-            <span v-if="isNum(windowSec)">
-                <span>&nbsp;</span>
-                <span class="funct">OVER</span>
-                <span>&nbsp;</span>
-                <label :for="timeLabelId">
-                    <span class="const">
-                        {{ humanSec(windowSec) }}
-                    </span>
-                </label>
-            </span>
+            <span>&nbsp;</span>
+            <span class="funct">OVER</span>
+            <span>&nbsp;</span>
+            <label :for="timeLabelId">
+                <span class="const">
+                    {{ timePeriod }}
+                </span>
+            </label>
         </div>
     </code>
 </div>

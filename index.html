@@ -423,13 +423,14 @@
                     <div class="formula" id="sli-formula-code">
                         <s-l-fraction-component
                             :unit="sloWindow.normUnit"
-                            :is-time-based="isTimeBased"
                             :lower-bound="lowerBound"
                             lower-threshold="$LT"
                             :good="good"
                             :upper-bound="upperBound"
                             upper-threshold="$UT"
-                            :valid="valid"></s-l-fraction-component>
+                            :valid="valid"
+                            time-period="SLO Window"
+                            time-label-id="slo-window-unit-multiplier"></s-l-fraction-component>
                         <div class="formula__whole">
                             <code>
                                 <span class="punct"> × </span>
@@ -679,14 +680,13 @@
                     <div class="formula" id="sli-formula-code">
                         <s-l-fraction-component
                             :unit="sloWindow.normUnit"
-                            :is-time-based="isTimeBased"
                             :lower-bound="lowerBound"
                             :lower-threshold="lowerThreshold"
                             :good="good"
                             :upper-bound="upperBound"
                             :upper-threshold="upperThreshold"
-                            :window-sec="sloWindow.sec"
                             :valid="valid"
+                            :time-period="sloWindow.humanSec"
                             time-label-id="slo-window-unit-multiplier"></s-l-fraction-component>
                         <div class="formula__whole">
                             <code>
@@ -1161,14 +1161,13 @@
                     <div class="formula" id="alert-formula-code">
                         <s-l-fraction-component
                             :unit="sloWindow.normUnit"
-                            :is-time-based="isTimeBased"
                             :lower-bound="lowerBound"
                             :lower-threshold="lowerThreshold"
                             :good="good"
                             :upper-bound="upperBound"
                             :upper-threshold="upperThreshold"
                             :valid="valid"
-                            :window-sec="alertLongWindow.sec"
+                            :time-period="alertLongWindow.humanSec"
                             time-label-id="alert-error-budget-perc"></s-l-fraction-component>
                         <div class="formula__whole">
                             <code>
@@ -1188,14 +1187,13 @@
                             <s-l-fraction-component
                                 v-if="shortWindowVisible"
                                 :unit="sloWindow.normUnit"
-                                :is-time-based="isTimeBased"
                                 :lower-bound="lowerBound"
                                 :lower-threshold="lowerThreshold"
                                 :good="good"
                                 :upper-bound="upperBound"
                                 :upper-threshold="upperThreshold"
                                 :valid="valid"
-                                :window-sec="alertShortWindow.sec"
+                                :time-period="alertShortWindow.humanSec"
                                 time-label-id="alert-short-window-divider-input"></s-l-fraction-component>
                             <div class="formula__whole">
                                 <code>
