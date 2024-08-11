@@ -1,25 +1,31 @@
 <div class="error-budget-component" :style="errorBudgetGridTemplateColumns">
     <div></div>
     <div class="error-budget-component__error-caption">
-        A maximum of {{ errorBudget.eventCountL10n }}
-        bad {{ errorBudget.unitNorm }} are allowed
-        <span v-if="errorBudget.cost">costing {{ errorBudget.costL10n }}</span>
+        A maximum of
+        <label for="slo-int-input">{{ errorBudget.eventCountL10n }}</label>
+        bad
+        <label for="sli-event-unit">{{ errorBudget.unitNorm }}</label>
+        are allowed
+        <span v-if="errorBudget.cost">
+            costing
+            <label for="bad-event-cost-input">{{ errorBudget.costL10n }}</label>
+        </span>
     </div>
 
     <div class="error-budget-component__fill--bad" :style="errorBudgetFillWidth"></div>
     <div class="error-budget-component__fill--good">
         At least
-        {{ numL10n(goodEventCount) }}
+        <label for="slo-int-input">{{ numL10n(goodEventCount) }}</label>
         good
-        {{ errorBudget.unitNorm }}
+        <label for="sli-event-unit">{{ errorBudget.unitNorm }}</label>
         are guaranteed
     </div>
 
     <div class="error-budget-component__valid-caption">
-        {{ numL10n(validEventCount) }}
+        <label for="error-budget-example-input">{{ numL10n(validEventCount) }}</label>
         valid
-        {{ errorBudget.unitNorm }}
+        <label for="sli-event-unit">{{ errorBudget.unitNorm }}</label>
         in
-        {{ errorBudget.humanTime }}
+        <label for="slo-window-unit-multiplier">{{ errorBudget.humanTime }}</label>
     </div>
 </div>
