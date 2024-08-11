@@ -125,7 +125,7 @@ export const config = fz({
         default: 2000,
     }),
     valid: fz({
-        default: 'all',
+        default: '',
     }),
     slo: fz({
         min: 50,
