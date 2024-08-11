@@ -40,7 +40,7 @@
         color="--brand-green"
         offset="3">
         <tspan>Alert Triggers</tspan>
-        <tspan>When at least {{ alertLongWindow.eventCountL10n }} failures</tspan>
+        <tspan>When at least {{ alertLongWindow.eventCountL10n }} failed {{ alertLongWindow.unitNorm }}</tspan>
         <tspan>occured in the last {{ alertLongWindow.humanSec }}</tspan>
         <tspan v-if="alertLongWindow.cost">costing at least {{ alertLongWindow.costL10n }}</tspan>
     </burn-event-component>
@@ -53,7 +53,7 @@
         color="--brand-purple"
         offset="2">
         <tspan>Short Window</tspan>
-        <tspan>When at least {{ alertShortWindow.eventCountL10n }} failures</tspan>
+        <tspan>When at least {{ alertShortWindow.eventCountL10n }} failed {{ alertShortWindow.unitNorm }}</tspan>
         <tspan>occured in the last {{ alertShortWindow.humanSec }}</tspan>
     </burn-event-component>
 </svg>

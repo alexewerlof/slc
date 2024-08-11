@@ -30,7 +30,7 @@
         color="--secondary-color"
         offset="2">
         <tspan>End of the compliance period</tspan>
-        <tspan>{{ sloWindowBudgetBurn.eventCountL10n }} failures</tspan>
+        <tspan>{{ sloWindowBudgetBurn.eventCountL10n }} failed {{ errorBudgetBurn.unitNorm }}</tspan>
         <tspan>in {{ sloWindowBudgetBurn.humanTime }}</tspan>
         <tspan v-if="sloWindowBudgetBurn.cost">costing {{ sloWindowBudgetBurn.costL10n }}</tspan>
     </burn-event-component>
@@ -44,7 +44,7 @@
         color="--brand-red"
         offset="3">
         <tspan>Error Budget Exhausted</tspan>
-        <tspan>{{ errorBudgetBurn.eventCountL10n }} failures</tspan>
+        <tspan>{{ errorBudgetBurn.eventCountL10n }} failed {{ errorBudgetBurn.unitNorm }}</tspan>
         <tspan>in {{ errorBudgetBurn.humanTime }}</tspan>
         <tspan v-if="errorBudgetBurn.cost">costing {{ errorBudgetBurn.costL10n }}</tspan>
     </burn-event-component>
