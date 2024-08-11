@@ -3,9 +3,11 @@ const commonTags = [ 'web', 'api', 'cache' ]
 export default [
     {
         title: 'Latency: Cache latency',
-        description: 'The percentage of sufficiently fast cache response. "Sufficiently fast" is defined as ≤ 10 ms',
+        description: 'The percentage of sufficiently fast cache response.',
         unit: 'cache requests',
-        good: 'response_time ≤ 10ms',
+        good: 'response_time',
+        upperBound: 'le',
+        upperThreshold: 10,
         tags: [ ...commonTags ],
     },
     {
@@ -19,15 +21,18 @@ export default [
         title: 'Freshness: Cache hit freshness',
         description: 'The percentage of responses from cache that are fresh (not stale)',
         unit: 'cache hits',
-        good: 'fresh',
+        good: 'max_age - now',
+        upperBound: 'le',
+        upperThreshold: 100,
+        metricUnit: 'ms',
         tags: [ ...commonTags ],
     },
     {
         title: 'Consistency: Cache',
         description: 'Percentage cache entries which match the data in the upstream. Use sampling to randomly check.',
         unit: 'cache entries',
-        good: 'sum(match(cache_entry, database_record))',
-        valid: 'sum(cache_entry)',
+        good: 'match(cache_entry, origin_entry)',
+        metricUnit: 'entries',
         tags: [ ...commonTags ],
     },
 ]
