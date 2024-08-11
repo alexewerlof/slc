@@ -84,6 +84,16 @@ export const app = createApp({
         title(newTitle) {
             setTitle(document, newTitle)
         },
+        lowerThreshold(newVal) {
+            if (newVal > this.upperThreshold) {
+                this.upperThreshold = newVal
+            }
+        },
+        upperThreshold(newVal) {
+            if (newVal < this.lowerThreshold) {
+                this.lowerThreshold = newVal
+            }
+        },
     },
     mounted() {
         this.loadState(urlToState(window.location.href))

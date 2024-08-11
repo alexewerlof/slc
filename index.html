@@ -661,6 +661,11 @@
                             :max="config.upperThreshold.max"
                             :step="config.upperThreshold.step">
                     </div>
+                    <div class="warning block" v-if="upperThreshold <= lowerThreshold">
+                        <p>
+                            The upper threshold must be greater than the lower threshold.
+                        </p>
+                    </div>
                 </div>
 
                 <h2>
