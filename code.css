@@ -101,7 +101,7 @@ code .const {
 
 math {
     font-family: inherit;
-    font-size: 1.2em;
+    font-size: 1em;
     display: inline-block;
     width: 100%; /* or any specific width */
     overflow-wrap: break-word;
