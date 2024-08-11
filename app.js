@@ -158,6 +158,22 @@ export const app = createApp({
                 if (isStr(newState.good)) {
                     this.good = newState.good
                 }
+
+                if (config.lowerBound.possibleValues.includes(newState.lowerBound)) {
+                    this.lowerBound = newState.lowerBound
+                }
+
+                if (config.upperBound.possibleValues.includes(newState.upperBound)) {
+                    this.upperBound = newState.upperBound
+                }
+                
+                if (inRange(newState.lowerThreshold, config.lowerThreshold.min, config.lowerThreshold.max)) {
+                    this.lowerThreshold = newState.lowerThreshold
+                }
+                
+                if (inRange(newState.upperThreshold, config.upperThreshold.min, config.upperThreshold.max)) {
+                    this.upperThreshold = newState.upperThreshold
+                }
             
                 if (isStr(newState.valid)) {
                     this.valid = newState.valid
