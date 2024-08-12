@@ -13,7 +13,7 @@ input[type=range] {
 
 input[type=range]::-webkit-slider-runnable-track {
     border: 1px solid transparent;
-    border-top-color: var(--secondary-color);
+    border-bottom-color: var(--secondary-color);
     transition: border-color var(--animation-speed) ease-in-out;
     background-color: var(--background-lighter);
     height: 100%;
