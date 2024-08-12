@@ -6,15 +6,13 @@
 - [ ] rename good -> metric
 - [ ] rename valid -> eventUnit
 - [ ] Add in-browser LLM for the workshop
+- [ ] Support calendar-bound windows
 
 # Medium prio
 
-- [ ] Turn this into a PWA app to be installed for easier access offline
-- [ ] Add the short alert window line as well
 - [ ] Add more examples from SLDs and workshops
-- [ ] Break down the error budget for common windows regardless of the chosen window
+- [ ] Show down the error budget for common windows regardless of the chosen window (like uptime.is does) at least in the help window
 - [ ] Allow exporting to OpenSLO format
-- [ ] Update the page title with the SLI description field so when the link is embedded, it shows instead of the default SLC title
 - [ ] Write the remaining help posts
   - [ ] Compliance period
   - [ ] Error budget
@@ -25,6 +23,9 @@
 # Shipped
 
 - [X] 2024-08-12: Write a convertor for URL v0 to v1 unit -> if number ? assign to timeslot, otherwise if valid is not set explicitly, set valid
+- [X] 2024-04-19: Update the page title with the SLI description field so when the link is embedded, it shows instead of the default SLC title
+- [X] 2024-04-12: Add the short alert window line as well
+- [X] 2024-02-17: Turn this into a PWA app to be installed for easier access offline
 - [x] 2023-12-05: Make it responsive to use the available space on large screens
 - [x] 2023-11-28: Fixed a Bug: if the SLO was something like 99.461, the alerting number would be like 0.995 instead of 0.99461
 - [x] 2023-11-27: Let the page scroll where the URL hash points to
