@@ -1,9 +1,11 @@
 # High prio
 
+- [ ] Add SLS simulator
 - [ ] Allow subsetting the valid timeslice
 - [ ] Support multi-layered SLOs
 - [ ] rename good -> metric
 - [ ] rename valid -> eventUnit
+- [ ] Add in-browser LLM for the workshop
 
 # Medium prio
 
