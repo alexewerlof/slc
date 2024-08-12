@@ -1,7 +1,10 @@
 # High prio
 
-- [ ] Allow subsetting the valid time slot
+- [ ] Allow subsetting the valid timeslice
 - [ ] Support multi-layered SLOs
+- [ ] Write a convertor for URL v0 to v1
+      - unit -> x (if number, assign to timeslot, otherwise if valid is not set explicitly, set valid)
+      - good -> metric
 
 # Medium prio
 
@@ -26,7 +29,7 @@
 - [x] 2023-11-26: Allow assigning a currency value to the error budget to convert it to money
 - [x] 2023-11-26: Fixed a bug with URL serialization and simplified the code
 - [x] 2023-11-10: Enable smooth scrolling
-- [x] 2023-11-03: the state unit now works for both time slots and event names
+- [x] 2023-11-03: the state unit now works for both timeslices and event names
 - [X] 2023-11-01: Shorten the index.html by putting repetitive parts in config
 - [X] 2023-11-01: Allow sharing SLO and alerting params as well as the example values when available
 - [X] 2023-11-01: Validate that the numerical parameters (from examples, localStorage, or URL params) are within range (store the non-strict ranges in a config to use for tests as well)
@@ -35,7 +38,7 @@
 - [X] 2023-10-30: Update the logo in the splash screen and feedback form
 - [X] 2023-10-30: Fix a bug when editing "good" to be empty crashes the app (it's because generating share link validates the state)
 - [X] 2023-10-30: Allow copying the formulas
-- [X] 2023-10-30: Table for time slot values and event unit
+- [X] 2023-10-30: Table for timeslice values and event unit
 - [X] 2023-10-30: Add invisible characters so when the formula is copied to a text editor, it reads better.
 - [X] 2023-10-??: Format the numbers with location-specific separators to make it easier to read
 - [X] 2023-10-??: Allow load/save of the SLI via URL query (also requires adding validation)
