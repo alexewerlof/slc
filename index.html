@@ -851,24 +851,22 @@
                 </error-budget-component>
                 <div v-if="!isTimeBased">
                     <h3>
-                        <label for="estimated-valid-events-input">Expected number of valid {{ sloWindow.eventUnitNorm }}</label>
-                        <help-component>
-                            Here you can enter the numbers for your expected load and see
-                            how many {{ sloWindow.eventUnitNorm }} are allowed to fail during the SLO window
-                            while still being within the error budget.
-                        </help-component>
-                    </h3>
-                    <p>
+                        <label for="estimated-valid-events-input">
+                            Expected number of
+                        </label>
                         <label for="sli-event-unit">
                             <code>{{ valid }}</code>
-                        </label> <label for="sli-event-unit">
-                            <code>{{ sloWindow.eventUnitNorm }}</code>
                         </label>
                         in
                         <label for="slo-window-unit-multiplier">
                             {{ sloWindow.humanTime }}
-                        </label>:
-                    </p>
+                        </label>
+                        <help-component>
+                            Here you can enter the numbers for your expected load and see
+                            how many {{ valid }} are allowed to fail during the SLO window
+                            while still being within the error budget.
+                        </help-component>
+                    </h3>
                     <input
                         type="number"
                         v-model.number="estimatedValidEvents"
