@@ -2,9 +2,8 @@
 
 - [ ] Allow subsetting the valid timeslice
 - [ ] Support multi-layered SLOs
-- [ ] Write a convertor for URL v0 to v1
-      - unit -> x (if number, assign to timeslot, otherwise if valid is not set explicitly, set valid)
-      - good -> metric
+- [ ] rename good -> metric
+- [ ] rename valid -> eventUnit
 
 # Medium prio
 
@@ -23,6 +22,7 @@
 
 # Shipped
 
+- [X] 2024-08-12: Write a convertor for URL v0 to v1 unit -> if number ? assign to timeslot, otherwise if valid is not set explicitly, set valid
 - [x] 2023-12-05: Make it responsive to use the available space on large screens
 - [x] 2023-11-28: Fixed a Bug: if the SLO was something like 99.461, the alerting number would be like 0.995 instead of 0.99461
 - [x] 2023-11-27: Let the page scroll where the URL hash points to

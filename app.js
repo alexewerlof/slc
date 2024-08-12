@@ -31,6 +31,8 @@ export const app = createApp({
         return {
             // Expose the config to the UI
             config,
+            // For sharing and loading state to and from URL
+            urlVer: config.urlVer,
             // Show the announcement banner
             showAnnouncement: true,
             // Show the cookie popup (use localStorage to remember the user's choice)
