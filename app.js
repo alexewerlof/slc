@@ -51,6 +51,8 @@ export const app = createApp({
             timeslice: config.timeslice.default,
             // definition of good events or good timeslices
             good: config.good.default,
+            // The unit of the metric that is used to identify good events
+            metricUnit: config.metricUnit.default,
             // Does good SLI has a lower bound? If yes, what type of lower bound is it for good data points?
             lowerBound: config.lowerBound.default,
             // Lower bound threshold

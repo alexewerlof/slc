@@ -106,6 +106,10 @@ export const config = fz({
     good: fz({
         default: 'successful',
     }),
+    metricUnit: fz({
+        default: '',
+        placeholder: 'e.g. ms, errors, items, etc.',
+    }),
     lowerBound: fz({
         possibleValues: fz(['', 'gt', 'ge']),
         default: '',
