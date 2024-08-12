@@ -16,52 +16,7 @@ export const config = fz({
         default: '',
         placeholder: 'Description for my SLI',
     }),
-    unit: fz({
-        default: 'events',
-        presets: fz([
-            {
-                unit: 'events',
-                useCase: 'When the unit of Good and Bad events are different (default)',
-            },
-            {
-                unit: 'requests',
-                useCase: 'REST/GraphQL servers, serverless functions, ...',
-            },
-            {
-                unit: 'queries',
-                useCase: 'Databases, LLM models, log servers, ...',
-            },
-            {
-                unit: 'entries',
-                useCase: 'Storage systems, data processors, ...',
-            },
-            {
-                unit: 'messages',
-                useCase: 'Queue systems, data pipelines, ...',
-            },
-            {
-                unit: 'page_views',
-                useCase: 'Web Servers, Document Servers, ...',
-            },
-            {
-                unit: 'logins',
-                useCase: 'Authentication providers, session servers, ...',
-            },
-            {
-                unit: 'incidents',
-                useCase: 'Operational teams, ...',
-            },
-            {
-                unit: 'sessions',
-                useCase: 'UIs supporting user flows, mobile apps, web apps, ...',
-            },
-            {
-                unit: 'transactions',
-                useCase: 'Transaction services, data pipelines',
-            },
-        ]),
-    }),
-    timeSlot: fz({
+    timeslice: fz({
         min: 1,
         max: 3600,
         step: 1,
@@ -101,6 +56,51 @@ export const config = fz({
             },
         ]),
     }),
+    valid: fz({
+        default: 'events',
+        presets: fz([
+            {
+                eventUnit: 'events',
+                useCase: 'When the unit of Good and Bad events are different (default)',
+            },
+            {
+                eventUnit: 'requests',
+                useCase: 'REST/GraphQL servers, serverless functions, ...',
+            },
+            {
+                eventUnit: 'queries',
+                useCase: 'Databases, LLM models, log servers, ...',
+            },
+            {
+                eventUnit: 'entries',
+                useCase: 'Storage systems, data processors, ...',
+            },
+            {
+                eventUnit: 'messages',
+                useCase: 'Queue systems, data pipelines, ...',
+            },
+            {
+                eventUnit: 'page_views',
+                useCase: 'Web Servers, Document Servers, ...',
+            },
+            {
+                eventUnit: 'logins',
+                useCase: 'Authentication providers, session servers, ...',
+            },
+            {
+                eventUnit: 'incidents',
+                useCase: 'Operational teams, ...',
+            },
+            {
+                eventUnit: 'sessions',
+                useCase: 'UIs supporting user flows, mobile apps, web apps, ...',
+            },
+            {
+                eventUnit: 'transactions',
+                useCase: 'Transaction services, data pipelines',
+            },
+        ]),
+    }),
     good: fz({
         default: 'successful',
     }),
@@ -123,9 +123,6 @@ export const config = fz({
         max: 1000_000_000,
         step: 1,
         default: 2000,
-    }),
-    valid: fz({
-        default: '',
     }),
     slo: fz({
         min: 50,

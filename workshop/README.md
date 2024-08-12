@@ -30,7 +30,7 @@ Here's how different concepts relate to each other:
 - `variables` **has** 1 `owner`.
 - `metrics` are used to define `SLI` (`good` and `valid`).
 - `SLI.type` can be `event-based` on `time-based`.
-- When `SLI.type == time-based`, `SLI` **has** `time-slot`
+- When `SLI.type == time-based`, `SLI` **has** `time-slice`
 - When `SLI.type == event-based`, `SLI` **can have** `event-unit`
 - `consumer` **influences** `SLI.type`
 - `SLI` **has** definition of `good` and `valid`
@@ -67,5 +67,5 @@ Our goal is to:
 3. Identify the consumptions that the consumers do (for each consumer, specify one or more consumption per service)
 4. Identify the failures that can happen between the services and the consumptions. State the consequences.
 5. Sort the failures based on the impact they have on the business. Sort based on consequences on the business.
-6. Decide what good looks like (and whether it's an event or timeslot)
+6. Decide what good looks like (and whether it's an event or timeslice)
 7. Identify the metrics that can be used to measure the failures

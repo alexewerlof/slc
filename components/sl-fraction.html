@@ -1,69 +1,42 @@
-<div class="formula__fraction">
-    <code>
-        <div class="formula__fraction--top">
-            <span class="funct">COUNT</span>
+<code>
+    <span class="funct">Percentage_of</span>
+    <span>&nbsp;</span>
+    <label for="sli-event-unit">
+        <span class="exprs">{{ eventUnit }}</span>
+    </label>
+    <span>&nbsp;</span>
+    <span class="funct">where</span>
+    <span>&nbsp;</span>
+    <span v-if="lowerBound">
+        <label for="lower-threshold-input" title="Lower Threshold">
+            <span class="exprs">{{ lowerThreshold }}</span>
+        </label>
+        <label for="lower-bound-type">
             <span>&nbsp;</span>
-            <label for="sli-event-unit">
-                <span class="exprs">{{ unit }}</span>
-            </label>
+            <span class="punct">{{ entity2symbolNorm(lowerBound) }}</span>
             <span>&nbsp;</span>
-            <span class="funct">WHERE</span>
+        </label>
+    </span>
+    
+    <label for="sli-good-input"><span class="exprs">{{ good }}</span></label>
+    
+    <span v-if="upperBound">
+        <label for="upper-bound-type">
             <span>&nbsp;</span>
-            <span v-if="lowerBound">
-                <label for="lower-threshold-input" title="Lower Threshold">
-                    <span class="exprs">{{ lowerThreshold }}</span>
-                </label>
-                <label for="lower-bound-type">
-                    <span>&nbsp;</span>
-                    <span class="punct">{{ entity2symbolNorm(lowerBound) }}</span>
-                    <span>&nbsp;</span>
-                </label>
-            </span>
-            
-            <label for="sli-good-input"><span class="exprs">{{ good }}</span></label>
-            
-            <span v-if="upperBound">
-                <label for="upper-bound-type">
-                    <span>&nbsp;</span>
-                    <span class="punct">{{ entity2symbolNorm(upperBound) }}</span>
-                    <span>&nbsp;</span>
-                </label>
-                <label for="upper-threshold-input" title="Upper Threshold">
-                    <span class="exprs">{{ upperThreshold }}</span>
-                </label>
-            </span>
+            <span class="punct">{{ entity2symbolNorm(upperBound) }}</span>
             <span>&nbsp;</span>
-            <span class="funct">OVER</span>
-            <span>&nbsp;</span>
-            <label :for="timeLabelId">
-                <span class="const">
-                    {{ timePeriod }}
-                </span>
-            </label>
-            <span class="invis"> /</span>
-        </div>
-        <div class="formula__fraction--bottom">
-            <span class="funct">COUNT</span>
-            <span>&nbsp;</span>
-            <label for="sli-event-unit">
-                <span class="exprs">{{ unit }}</span>
-            </label>
-            <span v-if="valid">
-                <span>&nbsp;</span>
-                <span class="funct">WHERE</span>
-                <span>&nbsp;</span>
-                <label for="sli-valid-input">
-                    <span class="exprs">{{ valid }}</span>
-                </label>
-            </span>
-            <span>&nbsp;</span>
-            <span class="funct">OVER</span>
-            <span>&nbsp;</span>
-            <label :for="timeLabelId">
-                <span class="const">
-                    {{ timePeriod }}
-                </span>
-            </label>
-        </div>
-    </code>
-</div>
+        </label>
+        <label for="upper-threshold-input" title="Upper Threshold">
+            <span class="exprs">{{ upperThreshold }}</span>
+        </label>
+    </span>
+    <span>&nbsp;</span>
+    <span class="funct">during</span>
+    <span>&nbsp;</span>
+    <label :for="timeLabelId">
+        <span class="const">
+            {{ timePeriod }}
+        </span>
+    </label>
+    <span class="invis"> /</span>
+</code>

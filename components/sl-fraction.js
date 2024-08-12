@@ -11,7 +11,7 @@ that exist in the UI.
 export default {
     template: await loadComponent(import.meta.url, true),
     props: {
-        unit: String,
+        eventUnit: String,
         lowerBound: String,
         lowerThreshold: String,
         good: String,

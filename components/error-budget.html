@@ -4,7 +4,7 @@
         A maximum of
         <label for="slo-int-input">{{ errorBudget.eventCountL10n }}</label>
         bad
-        <label for="sli-event-unit">{{ errorBudget.unitNorm }}</label>
+        <label for="sli-event-unit">{{ errorBudget.eventUnitNorm }}</label>
         are allowed
         <span v-if="errorBudget.cost">
             costing
@@ -17,14 +17,14 @@
         At least
         <label for="slo-int-input">{{ numL10n(goodEventCount) }}</label>
         good
-        <label for="sli-event-unit">{{ errorBudget.unitNorm }}</label>
+        <label for="sli-event-unit">{{ errorBudget.eventUnitNorm }}</label>
         are guaranteed
     </div>
 
     <div class="error-budget-component__valid-caption">
         <label for="estimated-valid-events-input">{{ numL10n(validEventCount) }}</label>
         valid
-        <label for="sli-event-unit">{{ errorBudget.unitNorm }}</label>
+        <label for="sli-event-unit">{{ errorBudget.eventUnitNorm }}</label>
         in
         <label for="slo-window-unit-multiplier">{{ errorBudget.humanTime }}</label>
     </div>

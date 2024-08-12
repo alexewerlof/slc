@@ -116,22 +116,62 @@
                     <help-component>
                         <p>
                             SLIs can either be either:
-                            <ul>
-                                <li>
-                                    <em>Time-Based</em>: Concerned with the <em>duration</em> of good time in a given period.
-                                    The duration is actually a time window where the data is aggregated for a good/bad result.
-                                    In a sense the Time-Based SLI is also an Event-Based SLI where an event is an
-                                    aggregation window.
-                                </li>
-                                <li>
-                                    <em>Event-Based</em>: Concerned with the <em>count</em> of good events in a set of valid events in a given time period.
-                                </li>
-                            </ul>
-                            Learn more
                             <ext-link href="https://blog.alexewerlof.com/p/time-based-vs-event-based">
-                                here
+                                event-based or time-based
                             </ext-link>.
                         </p>
+                        <table>
+                            <caption>Comparing SLI Types</caption>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Event-Based</th>
+                                    <th>Time-Based</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Use</td>
+                                    <td>When consumers perceive reliability by events</td>
+                                    <td>When consumers perceive reliability by time</td>
+                                </tr>
+                                <tr>
+                                    <td>Counts</td>
+                                    <td>Good events</td>
+                                    <td>Good timeslices</td>
+                                </tr>
+                                <tr>
+                                    <td>Advantage</td>
+                                    <td>More accurately adjust to the amount of load</td>
+                                    <td>More forgiving towards the negative impact of failed events</td>
+                                </tr>
+                                <tr>
+                                    <td>Formula</td>
+                                    <td>
+                                        <math>
+                                            <mrow>
+                                                <mfrac>
+                                                    <mrow><mi>Good events</mi></mrow>
+                                                    <mrow><mi>Valid events</mi></mrow>
+                                                </mfrac>
+                                                <mrow><mo>×</mo><mn>100</mn></mrow>
+                                            </mrow>
+                                        </math>
+                                    </td>
+                                    <td>
+                                        <math>
+                                            <mrow>
+                                                <mfrac>
+                                                    <mrow><mi>Good timeslices</mi></mrow>
+                                                    <mrow><mi>All timeslices</mi></mrow>
+                                                </mfrac>
+                                                <mrow><mo>×</mo><mn>100</mn></mrow>
+                                            </mrow>
+                                        </math>
+                                </tr>
+                            </tbody>
+
+                        </table>
                     </help-component>
                 </h2>
 
@@ -157,33 +197,41 @@
                 </div>
 
                 <div v-if="isTimeBased">
-                    <!-- SLI Time Slot -->
-                    <h3>
-                        <label for="sli-event-unit">Event Unit: {{ sloWindow.unitNorm }}</label>
+                    <!-- SLI timeslice -->
+                    <h2>
+                        <label for="sli-event-unit">Timeslice: {{ timeslice }}</label>
                         <help-component>
                             <p>
-                                The time slot is the time window that the metric data is aggregated to
-                                calculate a good/bad time period.
+                                Time-based SLIs aggregate metric data over a timeslice
+                                to mark it as success or failure.
                             </p>
                             <p>
+                                This can also reduce the resolution of the data.
                                 For example, probing an endpoint every 60 seconds to see if it is available,
                                 assumes that the endpoint is available for the entire 60 seconds.
+                            </p>
+                            <p>
+                                Another common example is to compare the average of data points with a desired
+                                valud. Averages hide the spikes and valleys in the data.
+                                It is better to use
+                                <ext-link href="https://github.com/alexewerlof/percentile">percentiles</ext-link>
+                                instead.
                             </p>
                             <p>
                                 Another example is percentiles. When calculating the 99th percentile of the
                                 latency every 5 minutes, the aggregation window is 5 x 60 = 300 seconds.
                             </p>
                             <table>
-                                <caption>Typical time slot lengths</caption>
+                                <caption>Typical timeslice lengths</caption>
                                 <thead>
                                     <tr>
-                                        <th>Time Slot</th>
+                                        <th>Timeslice</th>
                                         <th>Seconds</th>
                                         <th aria-label="try button"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="p in config.timeSlot.presets">
+                                    <tr v-for="p in config.timeslice.presets">
                                         <td>{{ p.title }}</td>
                                         <td>{{ p.seconds }}</td>
                                         <td><button type="button" @click="unit = p.seconds">Try!</button></td>
@@ -191,166 +239,28 @@
                                 </tbody>
                             </table>
                         </help-component>
-                    </h3>
+                    </h2>
                     <input
                         id="sli-event-unit"
                         type="range"
-                        :min="config.timeSlot.min"
-                        :max="config.timeSlot.max"
-                        :step="config.timeSlot.step"
+                        :min="config.timeslice.min"
+                        :max="config.timeslice.max"
+                        :step="config.timeslice.step"
                         placeholder="60"
-                        v-model.number="unit">
+                        v-model.number="timeslice">
                 </div>
-                <div v-else>
-                    <!-- SLI Event Unit -->
-                    <h3>
-                        <label for="sli-event-unit">Events Unit</label>
-                        <help-component>
-                            <p>
-                                The unit of the event that the SLI is measuring.
-                                This is mainly used in the UI to make it easier to understand.
-                            </p>
-                            <p>
-                                If the Good and Valid events are the same type, you can use a
-                                custom event name. Otherwise, you can just use the default
-                                and generic "event".
-                            </p>
-                            <table>
-                                <caption>Common event units</caption>
-                                <thead>
-                                    <th>Event Unit</th>
-                                    <th>Use case</th>
-                                    <th aria-label="try button"></th>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="p of config.unit.presets">
-                                        <td>{{ p.unit }}</td>
-                                        <td>{{ p.useCase }}</td>
-                                        <td><button type="button" @click="unit = p.unit">Try!</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </help-component>
-                    </h3>
-                    <input
-                        id="sli-event-unit"
-                        type="text"
-                        v-model="unit">
-                </div>
-
-                <!-- SLI: Good -->
-                <h2>
-                    <label for="sli-good-input">Good {{ sloWindow.unitNorm }}</label>
-                    <help-component>
-                        <p>
-                            <ext-link href="https://blog.alexewerlof.com/p/sli-good">
-                                What are good {{ sloWindow.unitNorm }}
-                            </ext-link>
-                            from consumer's perspective?
-                            How do good {{ sloWindow.unitNorm }} look like?
-                            
-                            What is the metric that you can measure to identify the
-                            good {{ sloWindow.unitNorm }} from all the valid {{ sloWindow.unitNorm }}?
-                        </p>
-                    </help-component>
-                </h2>
-                <input
-                    id="sli-good-input"
-                    type="text"
-                    v-model="good">
-                
-                <h3>
-                    Boundaries
-                    <help-component>
-                        <p>What metric values define a good {{ sloWindow.unitNorm }}?</p>
-                        <p>
-                            The actual thresholds are part of the SLO definition.
-                            This allows
-                            <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
-                                Multi-Tierd SLOs
-                            </ext-link>
-                            where different expectations have different commitments.
-                        </p>
-                    </help-component>
-                </h3>
-                <h4>
-                    <label for="lower-bound-type">Lower Bound</label>
-                    <help-component>
-                        <p>
-                            <ext-link href="https://blog.alexewerlof.com/p/sli-good">
-                                Good
-                            </ext-link>
-                            values can be bound.
-                            The actual lower threshold is part of the SLO definition.
-                        </p>
-                    </help-component>
-                </h4>
-                <div class="warning block" v-if="lowerBound && hasComparators(good)">
-                    <p>
-                        There seems to be a comparator in the definition of good already:
-                        <label for="sli-good-input">
-                            <code>{{ good }}</code>
-                        </label>.
-                    </p>
-                    <p>
-                        Having another bound makes the formula harder to read.
-                        Please use only one way to set the boundaries.
-                    </p>
-                </div>
-                <select
-                    id="lower-bound-type"
-                    v-model="lowerBound">
-                    <option v-for="v of config.lowerBound.possibleValues"
-                        :value="v">
-                        {{ boundCaption('Lower Threshold', v) }}
-                    </option>
-                </select>
-                <h4>
-                    <label for="upper-bound-type">Upper Bound</label>
-                    <help-component>
-                        <p>
-                            <ext-link href="https://blog.alexewerlof.com/p/sli-good">
-                                Good
-                            </ext-link>
-                            values can be bound.
-                            The actual upper threshold is part of the SLO definition.
-                        </p>
-                    </help-component>
-                </h4>
-                <div class="warning block" v-if="upperBound && hasComparators(good)">
-                    <p>
-                        There seems to be a comparator in the definition of good already:
-                        <label for="sli-good-input">
-                            <code>{{ good }}</code>
-                        </label>.
-                    </p>
-                    <p>
-                        Having another bound makes the formula harder to read.
-                        Please use only one way to set the boundaries.
-                    </p>
-                </div>
-                <select
-                    id="upper-bound-type"
-                    v-model="upperBound">
-                    <option v-for="v of config.upperBound.possibleValues"
-                        :value="v">
-                        {{ boundCaption('Upper Threshold', v) }}
-                    </option>
-                </select>
-
-                <!-- SLI: Valid -->
-                <div class="block">
+                <div v-else class="block">
                     <h2>
-                        <label for="sli-valid-input">
-                            Valid {{ sloWindow.unitNorm }}
+                        <label for="sli-event-unit">
+                            Valid events
                         </label>
                         <help-component>
                             <p>
-                                <ext-link href="https://blog.alexewerlof.com/p/sli-good">
-                                    What are the {{ sloWindow.unitNorm }}
-                                </ext-link>
-                                that are important to the service consumer?
-                                You probably don't want to count all the {{ sloWindow.unitNorm }}.
+                                How do consumers perceive reliability of your service?
+                                What kind of events are important to the service consumers?
+                            </p>
+                            <p>
+                                You probably don't want to count all the.
                                 This is an opportunity to narrow down the scope of the optimization
                                 and what triggers an alert.
                             </p>
@@ -374,16 +284,164 @@
                                 </ul>
                             </p>
                             <p>
-                                Leave this field empty to use "total" instead.
+                                Note: use a plural form of the event name so that the UI reads more fluently.
                             </p>
+                            <table>
+                                <caption>Common events</caption>
+                                <thead>
+                                    <th>Event</th>
+                                    <th>Use case</th>
+                                    <th aria-label="try button"></th>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="p of config.valid.presets">
+                                        <td>{{ p.eventUnit }}</td>
+                                        <td>{{ p.useCase }}</td>
+                                        <td><button type="button" @click="valid = p.eventUnit">Try!</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </help-component>
                     </h2>
 
                     <input
-                        id="sli-valid-input"
+                        id="sli-event-unit"
                         type="text"
                         v-model="valid"
                     >
+                </div>
+
+                <!-- SLI: Good -->
+                <h2>Good {{ sloWindow.eventUnitNorm }}</h2>
+                <h3>
+                    <label for="sli-good-input">Metric name</label>
+                    <help-component>
+                        <p>
+                            <ext-link href="https://blog.alexewerlof.com/p/sli-good">
+                                What are good {{ sloWindow.eventUnitNorm }}
+                            </ext-link>
+                            from consumer's perspective?
+                            How do good {{ sloWindow.eventUnitNorm }} look like?
+                            
+                            What is the metric that you can measure to identify the
+                            good {{ sloWindow.eventUnitNorm }} from all the valid {{ sloWindow.eventUnitNorm }}?
+                        </p>
+                    </help-component>
+                </h3>
+                <input
+                    id="sli-good-input"
+                    type="text"
+                    v-model="good">
+
+                <h3>
+                    <label for="sli-metric-unit">Metric Unit</label>
+                    <help-component>
+                        <p>
+                            This is the unit of the metric (
+                            <label for="sli-good-input">
+                                <code>{{ good }}</code>
+                            </label>) not to be confused
+                            with the unit of the events (
+                            <label for="sli-event-unit">
+                                <code>{{ sloWindow.eventUnitNorm }}</code>
+                            </label>).
+                        </p>
+                </h3>
+                <input
+                    id="sli-metric-unit"
+                    type="text"
+                    v-model="metricUnit">
+                
+                <div class="block">
+                    <label>
+                        <input type="checkbox" id="sli-good-boundaries" v-model="showBounds" :disabled="isBounded">
+                        Show boundaries
+                    </label>
+                    <help-component>
+                        <p>What metric values define a good {{ sloWindow.eventUnitNorm }}?</p>
+                        <p>
+                            The actual thresholds are part of the SLO definition.
+                            This allows
+                            <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
+                                Multi-Tierd SLOs
+                            </ext-link>
+                            where different expectations have different commitments.
+                        </p>
+                    </help-component>
+                </div>
+                <div v-if="showBounds">
+                    <h4>
+                        <label for="lower-bound-type">Lower Bound</label>
+                        <help-component>
+                            <p>
+                                <ext-link href="https://blog.alexewerlof.com/p/sli-good">
+                                    Good
+                                </ext-link>
+                                values can be bound.
+                            </p>
+                            <p>
+                                The actual
+                                <label for="lower-threshold-input">Lower Threshold (<code>$LT</code>)</label>
+                                is part of the SLO definition.
+                            </p>
+                        </help-component>
+                    </h4>
+                    <div class="warning block" v-if="lowerBound && hasComparators(good)">
+                        <p>
+                            There seems to be a comparator in the definition of good already:
+                            <label for="sli-good-input">
+                                <code>{{ good }}</code>
+                            </label>.
+                        </p>
+                        <p>
+                            Having another bound makes the formula harder to read.
+                            Please use only one way to set the boundaries.
+                        </p>
+                    </div>
+                    <select
+                        id="lower-bound-type"
+                        v-model="lowerBound">
+                        <option v-for="v of config.lowerBound.possibleValues"
+                            :value="v">
+                            {{ boundCaption('Lower Threshold', v) }}
+                        </option>
+                    </select>
+                    <h4>
+                        <label for="upper-bound-type">Upper Bound</label>
+                        <help-component>
+                            <p>
+                                <ext-link href="https://blog.alexewerlof.com/p/sli-good">
+                                    Good
+                                </ext-link>
+                                values can be bound.
+                            </p>
+                            <p>
+                                The actual
+                                <label for="upper-threshold-input">Upper Threshold (<code>$UT</code>)</label>
+                                is part of the SLO definition.
+                            </p>
+                        </help-component>
+                    </h4>
+                    <div class="warning block" v-if="upperBound && hasComparators(good)">
+                        <p>
+                            There seems to be a comparator in the definition of good already:
+                            <label for="sli-good-input">
+                                <code>{{ good }}</code>
+                            </label>.
+                        </p>
+                        <p>
+                            Having another bound makes the formula harder to read.
+                            Please use only one way to set the boundaries.
+                        </p>
+                    </div>
+                    <select
+                        id="upper-bound-type"
+                        v-model="upperBound">
+                        <option v-for="v of config.upperBound.possibleValues"
+                            :value="v">
+                            {{ boundCaption('Upper Threshold', v) }}
+                        </option>
+                    </select>
                 </div>
 
                 <!-- Service Level Formula -->
@@ -405,10 +463,10 @@
                                 <mo>=</mo>
                                 <mfrac>
                                     <mrow>
-                                        <mi>Good {{ sloWindow.unitNorm }}</mi>
+                                        <mi>Good {{ sloWindow.eventUnitNorm }}</mi>
                                     </mrow>
                                     <mrow>
-                                        <mi>Valid {{ sloWindow.unitNorm }}</mi>
+                                        <mi>Valid {{ sloWindow.eventUnitNorm }}</mi>
                                     </mrow>
                                 </mfrac>
                                 <mrow>
@@ -419,10 +477,10 @@
                         </math>
                     </help-component>
                 </h2>
-                <div class="code block">
-                    <div class="formula" id="sli-formula-code">
+                <div class="code block" id="sli-formula-code">
+                    <div id="sli-formula-code">
                         <s-l-fraction-component
-                            :unit="sloWindow.unitNorm"
+                            :event-unit="sloWindow.eventUnitNorm"
                             :lower-bound="lowerBound"
                             lower-threshold="$LT"
                             :good="good"
@@ -431,12 +489,6 @@
                             :valid="valid"
                             time-period="SLO Window"
                             time-label-id="slo-window-unit-multiplier"></s-l-fraction-component>
-                        <div class="formula__whole">
-                            <code>
-                                <span class="punct"> × </span>
-                                <span class="const">100</span>
-                            </code>
-                        </div>
                     </div>
                     <button @click="copy('sli-formula-code', 'sli-formula')" type="button" title="Copy to clipboard">⎘</button>
                 </div>
@@ -450,7 +502,7 @@
                     </label>
                     <help-component>
                         <p>
-                            Service Level Objective (SLO) is the target percentage of good {{ sloWindow.unitNorm }}.
+                            Service Level Objective (SLO) is the target percentage of good {{ sloWindow.eventUnitNorm }}.
                         </p>
                         <p>
                             Using the two sliders below you can fine tune the SLO to your needs.
@@ -581,7 +633,7 @@
                         </p>
                         <p>
                             You can play with different ranges to see how a given SLO translates to different
-                            good {{ sloWindow.unitNorm }} and how it impacts the error budget.
+                            good {{ sloWindow.eventUnitNorm }} and how it impacts the error budget.
                         </p>
                         <table>
                             <caption>Typical compliance periods</caption>
@@ -618,14 +670,17 @@
                     id="slo-window-unit-multiplier"
                 >
 
-                <div v-if="isBounded">
-                    <h2>Thresholds of good</h2>
+                <div v-if="isBounded && showBounds">
+                    <h2>
+                        Thresholds of good
+                        <label for="sli-good-input">{{ good }}</label>
+                    </h2>
                     <div class="block" v-if="lowerBound">
                         <h3>
                             <label for="lower-threshold-input">Lower Threshold (<code>$LT</code>)</label>
                             <help-component>
                                 <p>
-                                    The lower threshold is the value that defines the lower bound of good {{ sloWindow.unitNorm }}.
+                                    The lower threshold is the value that defines the lower bound of good {{ sloWindow.eventUnitNorm }}.
                                     It is part of the SLO definition and allows for
                                     <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
                                         Multi-Tierd SLOs
@@ -646,7 +701,7 @@
                             <label for="upper-threshold-input">Upper Threshold (<code>$UT</code>)</label>
                             <help-component>
                                 <p>
-                                    The lower threshold is the value that defines the lower bound of good {{ sloWindow.unitNorm }}.
+                                    The lower threshold is the value that defines the lower bound of good {{ sloWindow.eventUnitNorm }}.
                                     It is part of the SLO definition and allows for
                                     <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
                                         Multi-Tierd SLOs
@@ -682,9 +737,9 @@
                     </help-component>
                 </h2>
                 <div class="code block">
-                    <div class="formula" id="sli-formula-code">
+                    <div id="sli-formula-code">
                         <s-l-fraction-component
-                            :unit="sloWindow.unitNorm"
+                            :event-unit="sloWindow.eventUnitNorm"
                             :lower-bound="lowerBound"
                             :lower-threshold="lowerThreshold"
                             :good="good"
@@ -693,12 +748,6 @@
                             :valid="valid"
                             :time-period="sloWindow.humanSec"
                             time-label-id="slo-window-unit-multiplier"></s-l-fraction-component>
-                        <div class="formula__whole">
-                            <code>
-                                <span class="punct"> × </span>
-                                <span class="const">100</span>
-                            </code>
-                        </div>
                     </div>
                     <button @click="copy('sli-formula-code', 'sli-formula')" type="button" title="Copy to clipboard">⎘</button>
                 </div>
@@ -721,7 +770,7 @@
                         </p>
                         <p>
                             Error budget is the complement of SLO.
-                            It is the percentage of bad {{ sloWindow.unitNorm }} that you can have
+                            It is the percentage of bad {{ sloWindow.eventUnitNorm }} that you can have
                             before you violate the SLO.
                         </p>
                         <math>
@@ -791,7 +840,7 @@
                 </h1>
                 <div class="warning block" v-if="errorBudget.eventCount === 0" aria-colcount="warning block">
                     <p>
-                        Warning: The error budget is 0 based on your estimated number of valids {{ sloWindow.unitNorm }}.
+                        Warning: The error budget is 0 based on your estimated number of valids {{ sloWindow.eventUnitNorm }}.
                     </p>
                 </div>
                 <error-budget-component
@@ -802,18 +851,18 @@
                 </error-budget-component>
                 <div v-if="!isTimeBased">
                     <h3>
-                        <label for="estimated-valid-events-input">Expected number of valid {{ sloWindow.unitNorm }}</label>
+                        <label for="estimated-valid-events-input">Expected number of valid {{ sloWindow.eventUnitNorm }}</label>
                         <help-component>
                             Here you can enter the numbers for your expected load and see
-                            how many {{ sloWindow.unitNorm }} are allowed to fail during the SLO window
+                            how many {{ sloWindow.eventUnitNorm }} are allowed to fail during the SLO window
                             while still being within the error budget.
                         </help-component>
                     </h3>
                     <p>
-                        <label for="sli-valid-input">
+                        <label for="sli-event-unit">
                             <code>{{ valid }}</code>
                         </label> <label for="sli-event-unit">
-                            <code>{{ sloWindow.unitNorm }}</code>
+                            <code>{{ sloWindow.eventUnitNorm }}</code>
                         </label>
                         in
                         <label for="slo-window-unit-multiplier">
@@ -830,12 +879,12 @@
                 </div>
 
                 <h3>
-                    <label for="bad-event-cost-input">Average cost of bad</label> <label for="sli-event-unit"><code>{{ sloWindow.unitNorm }}</code></label>
+                    <label for="bad-event-cost-input">Average cost of failed</label> <label for="sli-event-unit"><code>{{ sloWindow.eventUnitNorm }}</code></label>
                     <help-component>
                         <p>
                             When one of the
                             <label for="sli-event-unit">
-                                <code>{{ sloWindow.unitNorm }}</code>
+                                <code>{{ sloWindow.eventUnitNorm }}</code>
                             </label>
                             violates the
                             <label for="sli-good-input">
@@ -952,6 +1001,16 @@
                             violated before the end of the SLO window.
                         </p>
                         <p>
+                            You have selected a burn rate of {{ burnRate }}x.
+                            This means the error budget ({{ errorBudget.eventCountL10n }} failed {{ errorBudget.eventUnitNorm }}) will be consumed in
+                            <time>{{ errorBudgetBurn.humanTime }}</time>
+                            instead of being spread across {{ sloWindow.humanTime }}.
+                        </p>
+                        <p>
+                            If the error budget continues to burn at this rate throughout the SLO window,
+                            there will be {{ sloWindowBudgetBurn }}.
+                        </p>
+                        <p>
                             Google SRE Workbook goes through 6 alerting strategies and
                             <ext-link href="https://sre.google/workbook/alerting-on-slos/">
                                 recommends
@@ -1066,11 +1125,12 @@
                             </mrow>
                         </math>
                         <p>
-                            Assuming that the entire error budget was available at the begining of the incident,
-                            the maximum time available to respond before the entire error budget is exhausted is:
+                            Which is
+                            <time>{{ alertLongWindow.humanTime }}</time>.
                         </p>
                         <p>
-                            Because:
+                            Assuming that the entire error budget was available at the begining of the incident,
+                            the maximum time available to respond before the entire error budget is exhausted is:
                         </p>
                         <math>
                             <mrow>
@@ -1137,7 +1197,7 @@
                 </div>
                 <div class="error block" v-if="alertLongWindow.eventCount === 0" class="error block">
                     <p>
-                        Error: Division by zero! Long alert Window is too short for enough valid {{ sloWindow.unitNorm }} to be counted.
+                        Error: Division by zero! Long alert Window is too short for enough valid {{ sloWindow.eventUnitNorm }} to be counted.
                     </p>
                 </div>
                 <!-- Burn Chart Component -->
@@ -1163,9 +1223,9 @@
                     </help-component>
                 </h3>
                 <div class="code block">
-                    <div class="formula" id="alert-formula-code">
+                    <div id="alert-formula-code">
                         <s-l-fraction-component
-                            :unit="sloWindow.unitNorm"
+                            :event-unit="sloWindow.eventUnitNorm"
                             :lower-bound="lowerBound"
                             :lower-threshold="lowerThreshold"
                             :good="good"
@@ -1174,25 +1234,21 @@
                             :valid="valid"
                             :time-period="alertLongWindow.humanSec"
                             time-label-id="alert-error-budget-perc"></s-l-fraction-component>
-                        <div class="formula__whole">
-                            <code>
-                                <span class="punct"> ≤ </span>
-                                <label for="slo-int-input">
-                                    <span class="const">
-                                        {{ numL10n(percentToRatio(slo)) }}
-                                    </span>
-                                </label>
-                            </code>
-                        </div>
-
-                        <div v-if="shortWindowVisible" class="formula__break"></div>
+                        <code>
+                            <span class="punct"> ≤ </span>
+                            <label for="slo-int-input">
+                                <span class="const">
+                                    {{ numL10n(percentToRatio(slo)) }}
+                                </span>
+                            </label>
+                        </code>
                         <code v-if="shortWindowVisible">
+                            <br>
                             <span class="punct">&&</span>
-                            <div class="formula__break"></div>
-                            <span>&nbsp;</span>
+                            <br>
                             <s-l-fraction-component
                                 v-if="shortWindowVisible"
-                                :unit="sloWindow.unitNorm"
+                                :event-unit="sloWindow.eventUnitNorm"
                                 :lower-bound="lowerBound"
                                 :lower-threshold="lowerThreshold"
                                 :good="good"
@@ -1201,7 +1257,7 @@
                                 :valid="valid"
                                 :time-period="alertShortWindow.humanSec"
                                 time-label-id="alert-short-window-divider-input"></s-l-fraction-component>
-                            <div class="formula__whole">
+                            <div>
                                 <code>
                                     <span class="punct"> ≤ </span>
                                     <label for="slo-int-input">
@@ -1310,7 +1366,9 @@
                                 burning the error budget at least at the
                                 <label for="burn-rate-input">{{ burnRate }}</label>x burn rate
                                 in the past
-                                <label for="alertShortWindowDivider">{{ alertShortWindow.humanTime }}</label>.
+                                <label for="alertShortWindowDivider">
+                                    <time>{{ alertShortWindow.humanTime }}</time>
+                                </label>.
                             </p>        
                         </help-component>
                     </h3>

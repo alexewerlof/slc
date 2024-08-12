@@ -8,7 +8,7 @@ export default [
     {
         title: 'Latency: Database Query',
         description: 'The percentage of sufficiently fast database insertion queries.',
-        unit: 'customer table insertions',
+        valid: 'customer table insertions',
         good: 'query_latency',
         metricUnit: 'ms',
         upperBound: 'le',
@@ -18,7 +18,7 @@ export default [
     {
         title: 'Freshness: New Articles',
         description: 'The difference between “Published” timestamp in the browser and “Published” timestamp in the CMS is sufficiently small.',
-        unit: 'breaking news articles',
+        valid: 'breaking news articles',
         good: 'cms_timestamp - web_timestamp',
         metricUnit: 's',
         upperBound: 'le',
@@ -28,7 +28,7 @@ export default [
     {
         title: 'Correctness: Main database table',
         description: 'The proportion of records coming into the pipeline that resulted in the correct value coming out.',
-        unit: 'records',
+        valid: 'records',
         good: 'correct value',
         valid: 'incoming pipeline',
         tags: [ ...commonTags, 'nosql', 'rdbms' ],
@@ -36,14 +36,14 @@ export default [
     {
         title: 'Coverage: Order data',
         description: 'Percentage of order records that exist in the fulfillment system',
-        unit: 'order records',
+        valid: 'order records',
         good: 'exist in fulfillment system',
         tags: [ ...commonTags, 'nosql', 'rdbms', 'retail' ],
     },
     {
         title: 'Completeness: Customer data',
         description: 'Percentage of customer records that have the minimum information essential for a productive engagement',
-        unit: 'customer records',
+        valid: 'customer records',
         good: 'contain required attributes',
         tags: [ ...commonTags, 'nosql', 'rdbms' ],
     },
@@ -51,7 +51,7 @@ export default [
         // https://sre.google/workbook/slo-document/
         title: 'Completeness: Game data',
         description: 'The proportion of hours in which 100% of the games in the data store were processed (no records were skipped). Uses metrics exported by the score pipeline',
-        unit: 'pipeline runs',
+        valid: 'pipeline runs',
         good: 'processed records percentage',
         lowerBound: 'ge',
         lowerThreshold: 100,
@@ -61,7 +61,7 @@ export default [
     {
         title: 'Consistency: Replication Lag',
         description: 'The percentage of database write events which are repliacated in a sufficiently quick time.',
-        unit: 'database writes',
+        valid: 'database writes',
         good: 'replication_lag',
         metricUnit: 'ms',
         upperBound: 'le',
@@ -71,14 +71,14 @@ export default [
     {
         title: 'Accuracy: Account Information',
         description: 'Percentage of customer records where the account information matches the information acquired via banking API',
-        unit: 'customer records',
+        valid: 'customer records',
         good: 'match_bank_record("name", "phone", "address")',
         tags: [ ...commonTags, 'nosql', 'rdbms' ],
     },
     {
         title: 'Consistency: Customer data',
         description: 'Percentage of order records from the order intake system that match those of the order fulfillment system',
-        unit: 'order records',
+        valid: 'order records',
         good: 'fulfilled',
         metricUnit: 'orders',
         valid: 'intake',
@@ -88,7 +88,7 @@ export default [
     {
         title: 'Validity: Person height',
         description: 'Percentage of personnel records where the height information is valid',
-        unit: 'personnel records',
+        valid: 'personnel records',
         good: 'person.height',
         metricUnit: 'cm',
         lowerBound: 'ge',
@@ -100,7 +100,7 @@ export default [
     {
         title: 'Uniqueness: Profile Pictures',
         description: 'For fraud detection or reducing errors, we want to make sure that no two profiles have the same profile picture.',
-        unit: 'profile pictures',
+        valid: 'profile pictures',
         good: 'unique',
         tags: [ ...commonTags, 'nosql', 'rdbms', 'files' ],
     },

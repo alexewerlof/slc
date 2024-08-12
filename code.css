@@ -63,42 +63,6 @@ code .const {
     font-size: xx-small;
 }
 
-/* a simple container for a fractional formula in plain HTML instead of MathML */
-.formula {
-    display: flex;
-    gap: 0.5em;
-    flex-wrap: wrap;
-}
-
-/* takes the whole height */
-.formula__whole {
-    align-self: center;
-}
-
-.formula__break {
-    flex-basis: 100%;
-    height: 0;
-}
-
-/* a two cell column */
-.formula__fraction {
-    display: flex;
-    flex-direction: column;
-}
-
-/* takes the top half */
-.formula__fraction--top {
-    text-align: center;
-    border-bottom: 1px solid var(--brand-pink);
-    padding-bottom: 0.2em;
-}
-
-/* takes the bottom half */
-.formula__fraction--bottom {
-    text-align: center;
-    padding-top: 0.1em;
-}
-
 math {
     font-family: inherit;
     font-size: 1em;

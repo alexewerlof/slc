@@ -5,7 +5,7 @@ import SLFractionComponent from '../components/sl-fraction.js'
 
 import { searchTemplates } from './templates.js'
 import { isNum } from '../lib/validation.js'
-import { normalizeUnit } from '../lib/time.js'
+import { humanTimeSlices } from '../lib/time.js'
 import { stateToUrl } from '../lib/share.js'
 
 export const app = createApp({
@@ -26,10 +26,11 @@ export const app = createApp({
             return stateToUrl(url, template).toString()
         },
         templateUnit(template) {
-            return normalizeUnit(template.unit)
+            const { timeslice, valid } = template
+            return isNum(timeslice) ? humanTimeSlices(timeslice) : valid
         },
         templateType(template) {
-            return isNum(template.unit) ? 'Time-Based' : 'Event-Based'
+            return isNum(template.timeslice) ? 'Time-Based' : 'Event-Based'
         },
     },
     components: {

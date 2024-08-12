@@ -37,15 +37,17 @@ export const app = createApp({
             showCookiePopup,
             // Show the short window alert
             shortWindowVisible: false,
+            // Show boundary edit boxes
+            showBounds: true,
             // The text shown in the toast notification
             toastCaption: '',
             // The title of the SLI
             title: config.title.default,
             // The description of the SLI
             description: config.description.default,
-            // unit of SLI or number of seconds in a time slot
-            unit: config.unit.default,
-            // definition of good events or good time slots
+            // length of timeslice for time based SLIs. When it is negative, it indicates event based SLIs
+            timeslice: config.timeslice.default,
+            // definition of good events or good timeslices
             good: config.good.default,
             // Does good SLI has a lower bound? If yes, what type of lower bound is it for good data points?
             lowerBound: config.lowerBound.default,
@@ -55,7 +57,7 @@ export const app = createApp({
             upperBound: config.upperBound.default,
             // Upper bound threshold
             upperThreshold: config.upperThreshold.default,
-            // definition of valid events or valid time slots
+            // definition of valid events or valid timeslices
             valid: config.valid.default,
             // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
             slo: config.slo.default,
@@ -92,6 +94,11 @@ export const app = createApp({
         upperThreshold(newVal) {
             if (newVal < this.lowerThreshold) {
                 this.lowerThreshold = newVal
+            }
+        },
+        showBounds(newVal) {
+            if (!newVal && this.isBounded) {
+                this.showBounds = true
             }
         },
     },
@@ -150,9 +157,11 @@ export const app = createApp({
                     this.description = newState.description
                 }
             
-                // Unit is a bit special. It can be the event name or a time slot length in seconds
-                if (isStr(newState.unit) || inRangePosInt(newState.unit, config.timeSlot.min, config.timeSlot.max)) {
-                    this.unit = newState.unit
+                // Unit is a bit special. It can be the event name or a timeslice length in seconds
+                if (inRangePosInt(newState.timeslice, config.timeslice.min, config.timeslice.max)) {
+                    this.timeslice = newState.timeslice
+                } else {
+                    this.isTimeBased = false
                 }
             
                 if (isStr(newState.good)) {
@@ -240,17 +249,18 @@ export const app = createApp({
         sloWindow() {
             return new Window(
                 daysToSeconds(this.windowDays),
-                this.unit,
+                this.valid,
+                this.timeslice,
             )
         },
 
         // whether the SLI is time-based or event-based
         isTimeBased: {
             get() {
-                return isNum(this.unit)
+                return this.timeslice > 0
             },
-            set(newVal) {
-                this.unit = newVal ? 60 : 'events'
+            set(newIsTimeBased) {
+                this.timeslice = newIsTimeBased ? Math.abs(this.timeslice) : -Math.abs(this.timeslice)
             }
         },
 
@@ -293,8 +303,8 @@ export const app = createApp({
         },
 
         validEventCount() {
-            if (this.isTimeBased) {
-                return this.sloWindow.timeSlotCount
+            if (this.sloWindow.isTimeBased) {
+                return this.sloWindow.timesliceCount
             } else {
                 return this.estimatedValidEvents || config.estimatedValidEvents.min
             }
@@ -309,23 +319,23 @@ export const app = createApp({
         },
 
         errorBudget() {
-            const { sec, unit } = this.sloWindow
+            const { sec, valid, timeslice } = this.sloWindow
             const eventCost = this.badEventCost || 0
-            return new Budget(sec, unit, this.badEventCount, eventCost, this.badEventCurrency)
+            return new Budget(sec, valid, timeslice, this.badEventCount, eventCost, this.badEventCurrency)
         },
 
         // Time to burn the entire error budget at the given burnRate
         errorBudgetBurn() {
-            return this.errorBudget.shrinkWindow(100 / this.burnRate)
+            return this.errorBudget.shrinkSec(100 / this.burnRate)
         },
 
         // If nothing is done to stop the failures, there'll be burnRate times more errors by the end of the SLO window
         sloWindowBudgetBurn() {
-            const { sec, unit } = this.sloWindow
+            const { sec, valid, timeslice } = this.sloWindow
             const eventCost = this.badEventCost || 0
             const burnedEventAtThisRate = Math.ceil(this.badEventCount * this.burnRate)
             const eventCount = Math.min(this.validEventCount, burnedEventAtThisRate)
-            return new Budget(sec, unit, eventCount, eventCost, this.badEventCurrency)
+            return new Budget(sec, valid, timeslice, eventCount, eventCost, this.badEventCurrency)
         },
 
         alertLongWindow() {
