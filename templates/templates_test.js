@@ -1,4 +1,4 @@
-import { assert } from "https://deno.land/std@0.216.0/assert/mod.ts"
+import { assert } from "../vendor/deno.js"
 import { inRange, inRangePosInt, isDef, isStr } from "../lib/validation.js"
 import { config } from "../config.js"
 import { templates } from './templates.js'
