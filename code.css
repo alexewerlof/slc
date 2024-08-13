@@ -57,12 +57,6 @@ code .const {
     color: var(--brand-purple);
 }
 
-/* invisible text that is used to annotate the code for when it is copied*/
-.invis {
-    color: transparent;
-    font-size: xx-small;
-}
-
 math {
     font-family: inherit;
     font-size: 1em;
