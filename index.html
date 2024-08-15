@@ -314,7 +314,7 @@
                 <!-- SLI: Good -->
                 <h2>Good {{ sloWindow.eventUnitNorm }}</h2>
                 <h3>
-                    <label for="sli-good-input">Metric name</label>
+                    <label for="sli-metric-name">Metric name</label>
                     <help-component>
                         <p>
                             <ext-link href="https://blog.alexewerlof.com/p/sli-good">
@@ -322,24 +322,25 @@
                             </ext-link>
                             from consumer's perspective?
                             How do good {{ sloWindow.eventUnitNorm }} look like?
-                            
+                        </p>
+                        <p>
                             What is the metric that you can measure to identify the
                             good {{ sloWindow.eventUnitNorm }} from all the valid {{ sloWindow.eventUnitNorm }}?
                         </p>
                     </help-component>
                 </h3>
                 <input
-                    id="sli-good-input"
+                    id="sli-metric-name"
                     type="text"
-                    v-model="good">
+                    v-model="metricName">
 
                 <h3>
                     <label for="sli-metric-unit">Metric Unit</label>
                     <help-component>
                         <p>
                             This is the unit of the metric (
-                            <label for="sli-good-input">
-                                <code>{{ good }}</code>
+                            <label for="sli-metric-name">
+                                <code>{{ metricName }}</code>
                             </label>) not to be confused
                             with the unit of the events (
                             <label for="sli-event-unit">
@@ -387,11 +388,11 @@
                             </p>
                         </help-component>
                     </h4>
-                    <div class="warning block" v-if="lowerBound && hasComparators(good)">
+                    <div class="warning block" v-if="lowerBound && hasComparators(metricName)">
                         <p>
-                            There seems to be a comparator in the definition of good already:
-                            <label for="sli-good-input">
-                                <code>{{ good }}</code>
+                            There seems to be a comparator in the definition of metric already:
+                            <label for="sli-metric-name">
+                                <code>{{ metricName }}</code>
                             </label>.
                         </p>
                         <p>
@@ -404,7 +405,7 @@
                         v-model="lowerBound">
                         <option v-for="v of config.lowerBound.possibleValues"
                             :value="v">
-                            {{ boundCaption(this.good, v, '$LT') }}
+                            {{ boundCaption(metricName, v, '$LT') }}
                         </option>
                     </select>
                     <h4>
@@ -423,11 +424,11 @@
                             </p>
                         </help-component>
                     </h4>
-                    <div class="warning block" v-if="upperBound && hasComparators(good)">
+                    <div class="warning block" v-if="upperBound && hasComparators(metricName)">
                         <p>
-                            There seems to be a comparator in the definition of good already:
-                            <label for="sli-good-input">
-                                <code>{{ good }}</code>
+                            There seems to be a comparator in the definition of metric already:
+                            <label for="sli-metric-name">
+                                <code>{{ metricName }}</code>
                             </label>.
                         </p>
                         <p>
@@ -440,7 +441,7 @@
                         v-model="upperBound">
                         <option v-for="v of config.upperBound.possibleValues"
                             :value="v">
-                            {{ boundCaption(this.good, v, '$UT') }}
+                            {{ boundCaption(metricName, v, '$UT') }}
                         </option>
                     </select>
                 </div>
@@ -484,7 +485,7 @@
                             :event-unit="sloWindow.eventUnitNorm"
                             :lower-bound="lowerBound"
                             lower-threshold="$LT"
-                            :good="good"
+                            :metric-name="metricName"
                             :upper-bound="upperBound"
                             upper-threshold="$UT"
                             :valid="valid"
@@ -503,7 +504,10 @@
                     </label>
                     <help-component>
                         <p>
-                            Service Level Objective (SLO) is the target percentage of good {{ sloWindow.eventUnitNorm }}.
+                            Service Level Objective (SLO) is the target percentage of
+                            good {{ sloWindow.eventUnitNorm }}
+                            out of total {{ sloWindow.eventUnitNorm }}
+                            in {{ sloWindow }}.
                         </p>
                         <p>
                             Using the two sliders below you can fine tune the SLO to your needs.
@@ -673,16 +677,36 @@
 
                 <div v-if="isBounded && showBounds">
                     <h2>
-                        Thresholds of good
-                        <label for="sli-good-input">{{ good }}</label>
+                        Thresholds
+                        <label for="sli-metric-name">{{ valid }}</label>
+                        <help-component>
+                            <p>
+                                The thresholds are the values that put boundaries on the
+                                values of {{ metricName }}
+                                to define good {{ sloWindow.eventUnitNorm }}.
+                            </p>
+                            <p>
+                                They are part of the SLO definition and allow for
+                                <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
+                                    Multi-Tierd SLOs
+                                </ext-link>.
+                            </p>
+                        </help-component>
                     </h2>
                     <div class="block" v-if="lowerBound">
                         <h3>
                             <label for="lower-threshold-input">Lower Threshold (<code>$LT</code>)</label>
                             <help-component>
                                 <p>
-                                    The lower threshold is the value that defines the lower bound of good {{ sloWindow.eventUnitNorm }}.
-                                    It is part of the SLO definition and allows for
+                                    The lower threshold (LT) defines the minimum possible values
+                                    for the {{ metricName }}
+                                    <span v-if="metricUnit">
+                                        (in <label for="sli-metric-unit"><code>{{ metricUnit }}</code></label>)
+                                    </span>
+                                    to indicate good {{ sloWindow.eventUnitNorm }}.
+                                </p>
+                                <p>
+                                    LT is part of the SLO definition and for example allows for
                                     <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
                                         Multi-Tierd SLOs
                                     </ext-link>.
@@ -702,8 +726,15 @@
                             <label for="upper-threshold-input">Upper Threshold (<code>$UT</code>)</label>
                             <help-component>
                                 <p>
-                                    The lower threshold is the value that defines the lower bound of good {{ sloWindow.eventUnitNorm }}.
-                                    It is part of the SLO definition and allows for
+                                    The upper threshold (UT) defines the maximum possible values
+                                    for the {{ metricName }}
+                                    <span v-if="metricUnit">
+                                        (in <label for="sli-metric-unit"><code>{{ metricUnit }}</code></label>)
+                                    </span>
+                                    to indicate good {{ sloWindow.eventUnitNorm }}.
+                                </p>
+                                <p>
+                                    UT is part of the SLO definition and for example allows for
                                     <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
                                         Multi-Tierd SLOs
                                     </ext-link>.
@@ -728,12 +759,17 @@
                     Service Level Status
                     <help-component>
                         <p>
-                            Service Leval Status (SLS) gives the status of the Service Level at a given time.
-                            If it is below the SLO, then we're burning the error budget.
+                            <ext-link href="https://blog.alexewerlof.com/p/sls">
+                                Service Level Status (SLS)
+                            </ext-link>
+                            is the percentage of good
+                            {{ sloWindow.eventUnitNorm }} in a given time.
                         </p>
                         <p>
-                            Read more
-                            <ext-link href="https://blog.alexewerlof.com/p/sls">here</ext-link>.
+                            SLS is the status of the Service Level and directly relates to SLO.
+                            Whenever SLS is below SLO, we have breached the SLO.
+                            In case of <ext-link href="https://blog.alexewerlof.com/p/sla">SLA</ext-link>,
+                            this may have severe consequences.
                         </p>
                     </help-component>
                 </h2>
@@ -743,7 +779,8 @@
                             :event-unit="sloWindow.eventUnitNorm"
                             :lower-bound="lowerBound"
                             :lower-threshold="lowerThreshold"
-                            :good="good"
+                            :metric-name="metricName"
+                            :metric-unit="metricUnit"
                             :upper-bound="upperBound"
                             :upper-threshold="upperThreshold"
                             :valid="valid"
@@ -755,7 +792,10 @@
 
             <!------------------------ Error budget ------------------------>
                 <h1 id="error-budget-title">
-                    Error budget: {{ percL10n(errorBudgetPerc) }}
+                    Error budget:
+                    <label for="slo-int-input">
+                        {{ percL10n(errorBudgetPerc) }}
+                    </label>
                     <help-component>
                         <p>
                             Error budget is one of the core ideas behind using SLI/SLOs to improve reliability.
@@ -878,19 +918,17 @@
                 </div>
 
                 <h3>
-                    <label for="bad-event-cost-input">Average cost of failed</label> <label for="sli-event-unit"><code>{{ sloWindow.eventUnitNorm }}</code></label>
+                    <label for="bad-event-cost-input">Average cost of failed</label>
+                    <label for="sli-event-unit">
+                        <code>{{ sloWindow.eventUnitNorm }}</code>
+                    </label>
                     <help-component>
                         <p>
-                            When one of the
+                            How much does a bad
                             <label for="sli-event-unit">
                                 <code>{{ sloWindow.eventUnitNorm }}</code>
                             </label>
-                            violates the
-                            <label for="sli-good-input">
-                                <code>{{ good }}</code>
-                            </label>
-                            condition,
-                            how much does it cost the business or your team?
+                            cost the business or your team?
                         </p>
                         <p>
                             This cost will be used to put a tangible number on various windows and events.
@@ -1227,7 +1265,8 @@
                             :event-unit="sloWindow.eventUnitNorm"
                             :lower-bound="lowerBound"
                             :lower-threshold="lowerThreshold"
-                            :good="good"
+                            :metric-name="metricName"
+                            :metric-unit="metricUnit"
                             :upper-bound="upperBound"
                             :upper-threshold="upperThreshold"
                             :valid="valid"
@@ -1250,7 +1289,8 @@
                                 :event-unit="sloWindow.eventUnitNorm"
                                 :lower-bound="lowerBound"
                                 :lower-threshold="lowerThreshold"
-                                :good="good"
+                                :metric-name="metricName"
+                                :metric-unit="metricUnit"
                                 :upper-bound="upperBound"
                                 :upper-threshold="upperThreshold"
                                 :valid="valid"

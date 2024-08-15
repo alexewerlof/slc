@@ -9,7 +9,10 @@
     <span>&nbsp;</span>
     <span v-if="lowerBound">
         <label for="lower-threshold-input" title="Lower Threshold">
-            <span class="exprs">{{ lowerThreshold }}</span>
+            <span class="const">{{ lowerThreshold }}</span>
+        </label>
+        <label for="sli-metric-unit">
+            <span class="exprs">{{ metricUnit }}</span>
         </label>
         <label for="lower-bound-type">
             <span>&nbsp;</span>
@@ -18,7 +21,7 @@
         </label>
     </span>
     
-    <label for="sli-good-input"><span class="exprs">{{ good }}</span></label>
+    <label for="sli-metric-name"><span class="exprs">{{ metricName }}</span></label>
     
     <span v-if="upperBound">
         <label for="upper-bound-type">
@@ -27,7 +30,10 @@
             <span>&nbsp;</span>
         </label>
         <label for="upper-threshold-input" title="Upper Threshold">
-            <span class="exprs">{{ upperThreshold }}</span>
+            <span class="const">{{ upperThreshold }}</span>
+        </label>
+        <label for="sli-metric-unit">
+            <span class="exprs">{{ metricUnit }}</span>
         </label>
     </span>
     <span>&nbsp;</span>

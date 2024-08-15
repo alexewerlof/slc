@@ -63,7 +63,7 @@ export const config = fz({
         presets: fz([
             {
                 eventUnit: 'events',
-                useCase: 'When the unit of Good and Bad events are different (default)',
+                useCase: 'No custom name for the events (default)',
             },
             {
                 eventUnit: 'requests',
@@ -103,7 +103,7 @@ export const config = fz({
             },
         ]),
     }),
-    good: fz({
+    metricName: fz({
         default: 'successful',
     }),
     metricUnit: fz({

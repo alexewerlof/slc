@@ -49,15 +49,15 @@ export const app = createApp({
             description: config.description.default,
             // length of timeslice for time based SLIs. When it is negative, it indicates event based SLIs
             timeslice: config.timeslice.default,
-            // definition of good events or good timeslices
-            good: config.good.default,
+            // the metric that indicates whether an event or timeslice is good
+            metricName: config.metricName.default,
             // The unit of the metric that is used to identify good events
             metricUnit: config.metricUnit.default,
-            // Does good SLI has a lower bound? If yes, what type of lower bound is it for good data points?
+            // The type of lower bound for the metric values that indicate a good event
             lowerBound: config.lowerBound.default,
             // Lower bound threshold
             lowerThreshold: config.lowerThreshold.default,
-            // Does good SLI has an upper bound? If yes, what type of upper bound is it for good data points?
+            // The type of upper bound for the metric values that indicate a good event
             upperBound: config.upperBound.default,
             // Upper bound threshold
             upperThreshold: config.upperThreshold.default,
@@ -161,8 +161,8 @@ export const app = createApp({
                     this.isTimeBased = false
                 }
             
-                if (isStr(newState.good)) {
-                    this.good = newState.good
+                if (isStr(newState.metricName)) {
+                    this.metricName = newState.metricName
                 }
 
                 if (config.lowerBound.possibleValues.includes(newState.lowerBound)) {

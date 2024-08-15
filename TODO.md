@@ -3,7 +3,6 @@
 - [ ] Add SLS simulator
 - [ ] Allow subsetting the valid timeslice
 - [ ] Support multi-layered SLOs
-- [ ] rename good -> metric
 - [ ] rename valid -> eventUnit
 - [ ] Add in-browser LLM for the workshop
 - [ ] Support calendar-bound windows
@@ -22,6 +21,7 @@
 
 # Shipped
 
+- [X] 2024-08-15: rename good -> metricName
 - [X] 2024-08-12: Write a convertor for URL v0 to v1 unit -> if number ? assign to timeslot, otherwise if valid is not set explicitly, set valid
 - [X] 2024-04-19: Update the page title with the SLI description field so when the link is embedded, it shows instead of the default SLC title
 - [X] 2024-04-12: Add the short alert window line as well
@@ -39,7 +39,7 @@
 - [X] 2023-10-31: Put the W logo in the background to make it a bit more vibrant
 - [X] 2023-10-31: Fix the "valid" description not showing in the formula
 - [X] 2023-10-30: Update the logo in the splash screen and feedback form
-- [X] 2023-10-30: Fix a bug when editing "good" to be empty crashes the app (it's because generating share link validates the state)
+- [X] 2023-10-30: Fix a bug when editing "metricName" to be empty crashes the app (it's because generating share link validates the state)
 - [X] 2023-10-30: Allow copying the formulas
 - [X] 2023-10-30: Table for timeslice values and event unit
 - [X] 2023-10-30: Add invisible characters so when the formula is copied to a text editor, it reads better.

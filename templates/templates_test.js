@@ -9,7 +9,7 @@ for (const template of templates) {
             title,
             description,
             timeslice,
-            good,
+            metricName,
             metricUnit,
             lowerBound,
             lowerThreshold,
@@ -24,7 +24,7 @@ for (const template of templates) {
             assert(!isDef(valid), 'Cannot have both valid and timeslice fields')
             assert(inRangePosInt(timeslice, config.timeslice.min, config.timeslice.max), `invalid timeslice : ${timeslice}`)
         }
-        assert(isStr(good), `invalid "good" field: ${good}`)
+        assert(isStr(metricName), `invalid "metricName" field: ${metricName}`)
         if (isDef(lowerBound)) {
             assert(config.lowerBound.possibleValues.includes(lowerBound), `invalid "lowerBound" field: ${lowerBound}`)
         }

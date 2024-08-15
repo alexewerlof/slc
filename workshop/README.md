@@ -34,8 +34,8 @@ Here's how different concepts relate to each other:
 - When `SLI.type == event-based`, `SLI` **can have** `event-unit`
 - `consumer` **influences** `SLI.type`
 - `SLI` **has** definition of `good` and `valid`
-- `SLI.good` can be parameterized: `upper-bound`, `lower-bound`, or both
-- `SLO` specifies the parameters for `SLI.good` if it is parameterized. The parameters are set by the `consumer`.
+- `SLI.metricName` can be parameterized using `upper-bound`, `lower-bound`, or both
+- `SLO` specifies the thresholds for `SLI.metricName` if it is parameterized. The parameters are set by the `consumer`.
 - `owner` commits to `SLO` through `alerts`
 - `SLO` **has** `SLO.value` (e.g. 99.9%)
 - `SLO` **has** `SLO.window` (e.g. 30 days)
