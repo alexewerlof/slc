@@ -15,7 +15,7 @@ export default {
         metricUnit: String,
         upperBound: String,
         upperThreshold: String,
-        valid: String,
+        eventUnit: String,
         timePeriod: String,
         timeLabelId: String,
     },

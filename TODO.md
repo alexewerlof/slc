@@ -3,7 +3,6 @@
 - [ ] Add SLS simulator
 - [ ] Allow subsetting the valid timeslice
 - [ ] Support multi-layered SLOs
-- [ ] rename valid -> eventUnit
 - [ ] Add in-browser LLM for the workshop
 - [ ] Support calendar-bound windows
 
@@ -21,6 +20,7 @@
 
 # Shipped
 
+- [X] 2024-08-15: rename valid -> eventUnit
 - [X] 2024-08-15: rename good -> metricName
 - [X] 2024-08-12: Write a convertor for URL v0 to v1 unit -> if number ? assign to timeslot, otherwise if valid is not set explicitly, set valid
 - [X] 2024-04-19: Update the page title with the SLI description field so when the link is embedded, it shows instead of the default SLC title

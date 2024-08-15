@@ -28,8 +28,8 @@ export const app = createApp({
             return stateToUrl(url, { urlVer, ...template }).toString()
         },
         templateUnit(template) {
-            const { timeslice, valid } = template
-            return isNum(timeslice) ? humanTimeSlices(timeslice) : valid
+            const { timeslice, eventUnit } = template
+            return isNum(timeslice) ? humanTimeSlices(timeslice) : eventUnit
         },
         templateType(template) {
             return isNum(template.timeslice) ? 'Time-Based' : 'Event-Based'

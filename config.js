@@ -58,7 +58,7 @@ export const config = fz({
             },
         ]),
     }),
-    valid: fz({
+    eventUnit: fz({
         default: 'events',
         presets: fz([
             {

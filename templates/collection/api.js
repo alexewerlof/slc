@@ -11,7 +11,7 @@ export default [
     {
         title: 'Availability: Organic traffic uptime',
         description: 'The percentage of successful requests to the endpoint',
-        valid: 'inbound requests',
+        eventUnit: 'inbound requests',
         metricName: 'response_code',
         lowerBound: 'ge',
         lowerThreshold: 200,
@@ -22,14 +22,14 @@ export default [
     {
         title: 'Availability: Organic purchase flow',
         description: 'The percentage of settled payments out of all orders placed via the website',
-        valid: 'orders placed via website',
+        eventUnit: 'orders placed via website',
         metricName: 'settled payment',
         tags: [ ...commonTags, 'frontend', 'mobile', 'payment' ],
     },
     {
         title: 'Availability: Error Rate',
         description: 'The percentage of authenticated requests that were successful',
-        valid: 'authenticated requests',
+        eventUnit: 'authenticated requests',
         metricName: 'response_code',
         upperBound: 'lt',
         upperThreshold: 500,
@@ -38,14 +38,14 @@ export default [
     {
         title: 'Availability: Retries',
         description: 'The percentage of requests that were not retried',
-        valid: 'GET requests',
+        eventUnit: 'GET requests',
         metricName: 'retries == 0',
         tags: [ ...commonTags, 'web', 'graphql', 'rest', 'grpc' ],
     },
     {
         title: 'Latency: Response Latency',
         description: 'The percentage of sufficiently fast requests, as measured from the load balancer metrics.',
-        valid: 'load balancer requests',
+        eventUnit: 'load balancer requests',
         metricName: 'response_latency',
         upperBound: 'le',
         upperThreshold: 400,

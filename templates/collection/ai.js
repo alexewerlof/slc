@@ -4,7 +4,7 @@ export default [
     {
         title: 'Availability: Prompt processing failures',
         description: 'Measure the number of prompts processed without error',
-        valid: 'prompts',
+        eventUnit: 'prompts',
         metricName: 'processing.error.count',
         metricUnit: 'errors',
         upperBound: 'le',
@@ -14,14 +14,14 @@ export default [
     {
         title: 'Availability: Flagged responses',
         description: 'Measure the number of responses that were flagged by the user as inappropriate or incorrect',
-        valid: 'assistant messages',
+        eventUnit: 'assistant messages',
         metricName: 'not flagged by the user',
         tags: [ ...commonTags, 'quality' ],
     },  
     {
         title: 'Availability: Response retries',
         description: 'Measure the number of time a response was generated without having to retry the same prompt',
-        valid: 'prompts',
+        eventUnit: 'prompts',
         metricName: 'no retry',
         tags: [ ...commonTags, 'quality' ],
     },
@@ -37,7 +37,7 @@ export default [
     {
         title: 'Throughput: Token per second',
         description: 'Normalize the amount of time it took to generate a response based on its length in number of tokens. Measure the time it takes to generate a complete response based on the number of tokens. TPS = tokens / second is calculated as the number of tokens generated per second by dividing the number of tokens by the time it took to generate the response.',
-        valid: 'complete responses',
+        eventUnit: 'complete responses',
         metricName: 'TPS',
         metricUnit: 'tokens/s',
         lowerBound: 'gt',
@@ -47,7 +47,7 @@ export default [
     {
         title: 'Latency: Time to First Token',
         description: 'Measure the time it takes to generate the first token',
-        valid: 'responses',
+        eventUnit: 'responses',
         metricName: 'TTFT',
         metricUnit: 'ms',
         upperBound: 'lt',
@@ -69,7 +69,7 @@ export default [
     {
         title: 'Latency: Time to generate complete response',
         description: 'Measure the time it takes to generate a complete response',
-        valid: 'responses',
+        eventUnit: 'responses',
         metricName: 'last_token_timestamp - first_token_timestamp',
         metricUnit: 'ms',
         upperBound: 'le',
@@ -79,7 +79,7 @@ export default [
     {
         title: 'Latency: Time to respond a video generation request',
         description: 'The time it took to generate an image using AI',
-        valid: 'prompts',
+        eventUnit: 'prompts',
         metricName: 'response time',
         metricUnit: 's',
         upperBound: 'lt',
@@ -89,7 +89,7 @@ export default [
     {
         title: 'Latency: Time to respond an image request',
         description: 'The time it took to generate a video using AI',
-        valid: 'prompts',
+        eventUnit: 'prompts',
         metricName: 'response time',
         metricUnit: 's',
         upperBound: 'lt',
@@ -99,14 +99,14 @@ export default [
     {
         title: 'Correctness: Chat length',
         description: 'Chat length as measured by number of messages in a conversation can indicate engagement or struggle to get a quality answer. We only need to alert on the latter.',
-        valid: 'chat sessions',
+        eventUnit: 'chat sessions',
         metricName: 'no message is flagged as inappropriate or incorrect',
         tags: [ ...commonTags, 'quality', 'chat' ],
     },
     {
         title: 'Correctness: User feedback',
         description: 'Measure the quality of output based on the user feedback',
-        valid: 'assistant messages',
+        eventUnit: 'assistant messages',
         metricName: 'no user thumb down feedback',
         tags: [ ...commonTags, 'quality' ],
     },

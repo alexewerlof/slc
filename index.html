@@ -265,7 +265,7 @@
                                 and what triggers an alert.
                             </p>
                             <p>
-                                For simplicity, sometimes "total" is used instead of "valid".
+                                For simplicity, sometimes <em>total</em> is used instead of <em>valid</em>.
                                 But 
                                 <ext-link href="https://blog.alexewerlof.com/p/valid-vs-total">
                                     there is a difference
@@ -294,10 +294,10 @@
                                     <th aria-label="try button"></th>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="p of config.valid.presets">
+                                    <tr v-for="p of config.eventUnit.presets">
                                         <td>{{ p.eventUnit }}</td>
                                         <td>{{ p.useCase }}</td>
-                                        <td><button type="button" @click="valid = p.eventUnit">Try!</button></td>
+                                        <td><button type="button" @click="eventUnit = p.eventUnit">Try!</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -307,7 +307,7 @@
                     <input
                         id="sli-event-unit"
                         type="text"
-                        v-model="valid"
+                        v-model="eventUnit"
                     >
                 </div>
 
@@ -488,7 +488,7 @@
                             :metric-name="metricName"
                             :upper-bound="upperBound"
                             upper-threshold="$UT"
-                            :valid="valid"
+                            :eventUnit="eventUnit"
                             time-period="SLO Window"
                             time-label-id="slo-window-unit-multiplier"></s-l-fraction-component>
                     </div>
@@ -678,7 +678,7 @@
                 <div v-if="isBounded && showBounds">
                     <h2>
                         Thresholds
-                        <label for="sli-metric-name">{{ valid }}</label>
+                        <label for="sli-metric-name">{{ eventUnit }}</label>
                         <help-component>
                             <p>
                                 The thresholds are the values that put boundaries on the
@@ -783,7 +783,7 @@
                             :metric-unit="metricUnit"
                             :upper-bound="upperBound"
                             :upper-threshold="upperThreshold"
-                            :valid="valid"
+                            :eventUnit="eventUnit"
                             :time-period="sloWindow.humanSec"
                             time-label-id="slo-window-unit-multiplier"></s-l-fraction-component>
                     </div>
@@ -896,7 +896,7 @@
                             Expected number of
                         </label>
                         <label for="sli-event-unit">
-                            <code>{{ valid }}</code>
+                            <code>{{ eventUnit }}</code>
                         </label>
                         in
                         <label for="slo-window-unit-multiplier">
@@ -904,7 +904,7 @@
                         </label>
                         <help-component>
                             Here you can enter the numbers for your expected load and see
-                            how many {{ valid }} are allowed to fail during the SLO window
+                            how many {{ eventUnit }} are allowed to fail during the SLO window
                             while still being within the error budget.
                         </help-component>
                     </h3>
@@ -1269,7 +1269,7 @@
                             :metric-unit="metricUnit"
                             :upper-bound="upperBound"
                             :upper-threshold="upperThreshold"
-                            :valid="valid"
+                            :eventUnit="eventUnit"
                             :time-period="alertLongWindow.humanSec"
                             time-label-id="alert-error-budget-perc"></s-l-fraction-component>
                         <code>
@@ -1293,7 +1293,7 @@
                                 :metric-unit="metricUnit"
                                 :upper-bound="upperBound"
                                 :upper-threshold="upperThreshold"
-                                :valid="valid"
+                                :eventUnit="eventUnit"
                                 :time-period="alertShortWindow.humanSec"
                                 time-label-id="alert-short-window-divider-input"></s-l-fraction-component>
                             <div>

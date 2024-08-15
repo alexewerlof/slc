@@ -61,8 +61,8 @@ export const app = createApp({
             upperBound: config.upperBound.default,
             // Upper bound threshold
             upperThreshold: config.upperThreshold.default,
-            // definition of valid events or valid timeslices
-            valid: config.valid.default,
+            // definition of valid events for event-based SLIs
+            eventUnit: config.eventUnit.default,
             // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
             slo: config.slo.default,
             // The length of the SLO window in days
@@ -181,8 +181,8 @@ export const app = createApp({
                     this.upperThreshold = newState.upperThreshold
                 }
             
-                if (isStr(newState.valid)) {
-                    this.valid = newState.valid
+                if (isStr(newState.eventUnit)) {
+                    this.eventUnit = newState.eventUnit
                 }
             
                 if (inRange(newState.slo, config.slo.min, config.slo.max)) {
@@ -246,7 +246,7 @@ export const app = createApp({
         sloWindow() {
             return new Window(
                 daysToSeconds(this.windowDays),
-                this.valid,
+                this.eventUnit,
                 this.timeslice,
             )
         },
@@ -316,9 +316,9 @@ export const app = createApp({
         },
 
         errorBudget() {
-            const { sec, valid, timeslice } = this.sloWindow
+            const { sec, eventUnit, timeslice } = this.sloWindow
             const eventCost = this.badEventCost || 0
-            return new Budget(sec, valid, timeslice, this.badEventCount, eventCost, this.badEventCurrency)
+            return new Budget(sec, eventUnit, timeslice, this.badEventCount, eventCost, this.badEventCurrency)
         },
 
         // Time to burn the entire error budget at the given burnRate
@@ -328,11 +328,11 @@ export const app = createApp({
 
         // If nothing is done to stop the failures, there'll be burnRate times more errors by the end of the SLO window
         sloWindowBudgetBurn() {
-            const { sec, valid, timeslice } = this.sloWindow
+            const { sec, eventUnit, timeslice } = this.sloWindow
             const eventCost = this.badEventCost || 0
             const burnedEventAtThisRate = Math.ceil(this.badEventCount * this.burnRate)
             const eventCount = Math.min(this.validEventCount, burnedEventAtThisRate)
-            return new Budget(sec, valid, timeslice, eventCount, eventCost, this.badEventCurrency)
+            return new Budget(sec, eventUnit, timeslice, eventCount, eventCost, this.badEventCurrency)
         },
 
         alertLongWindow() {

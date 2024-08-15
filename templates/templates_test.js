@@ -15,13 +15,13 @@ for (const template of templates) {
             lowerThreshold,
             upperBound,
             upperThreshold,
-            valid,
+            eventUnit,
             tags
         } = template
         assert(isStr(title), `invalid "title" field: ${title}`)
         assert(isStr(description), `invalid "description" field: ${description}`)
         if (isDef(timeslice)) {
-            assert(!isDef(valid), 'Cannot have both valid and timeslice fields')
+            assert(!isDef(eventUnit), 'Cannot have both eventUnit and timeslice fields')
             assert(inRangePosInt(timeslice, config.timeslice.min, config.timeslice.max), `invalid timeslice : ${timeslice}`)
         }
         assert(isStr(metricName), `invalid "metricName" field: ${metricName}`)
@@ -43,8 +43,8 @@ for (const template of templates) {
         if(isDef(metricUnit)) {
             assert(isStr(metricUnit), `invalid "metricUnit" field: ${metricUnit}`)
         }
-        if (isDef(valid)) {
-            assert(isStr(valid), `invalid "valid" field: ${valid}`)
+        if (isDef(eventUnit)) {
+            assert(isStr(eventUnit), `invalid "eventUnit" field: ${eventUnit}`)
         }
         assert(Array.isArray(tags), `invalid "tags" field: ${tags}`)
         for (const tag of tags) {

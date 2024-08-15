@@ -5,7 +5,7 @@ export default [
         // https://web.dev/articles/ttfb
         title: 'Latency: Time To First Byte (TTFB)',
         description: 'The percentage of requests where the time to first byte was sufficiently fast.',
-        valid: 'connections',
+        eventUnit: 'connections',
         metricName: 'TTFB',
         metricUnit: 'ms',
         upperBound: 'le',
@@ -16,7 +16,7 @@ export default [
         // https://web.dev/articles/fcp
         title: 'Latency: First Contentful Paint (FCP)',
         description: 'The percentage of page renders where the time from when the page starts loading to when any part of the page content is rendered on screen was sufficiently fast.',
-        valid: 'page renders',
+        eventUnit: 'page renders',
         metricName: 'FCP',
         metricUnit: 'ms',
         upperBound: 'le',
@@ -27,7 +27,7 @@ export default [
         // https://web.dev/articles/lcp
         title: 'Latency: Largest Contentful Paint (LCP)',
         description: 'Percentage of requests with an acceptable LCP (Largest Contentful Paint)',
-        valid: 'paints',
+        eventUnit: 'paints',
         metricName: 'LCP',
         metricUnit: 'ms',
         upperBound: 'le',
@@ -38,7 +38,7 @@ export default [
         // https://web.dev/articles/cls
         title: 'Latency: Cumulative Layout Shift (CLS)',
         description: 'Percentage of requests with an acceptably low CLS (Cumulative Layout Shift)',
-        valid: 'shifts',
+        eventUnit: 'shifts',
         metricName: 'CLS',
         metricUnit: 'shifts',
         upperBound: 'le',
@@ -49,7 +49,7 @@ export default [
         // First Input Delay (FID)
         title: 'Latency: First Input Delay (FID)',
         description: 'The percentage of page renders where the time from when the page starts loading to when the user first interacts with the page was sufficiently fast.',
-        valid: 'page renders',
+        eventUnit: 'page renders',
         metricName: 'FID',
         metricUnit: 'ms',
         upperBound: 'le',
@@ -60,7 +60,7 @@ export default [
         // Interaction to Next Paint (INP)
         title: 'Latency: Interaction to Next Paint (INP)',
         description: 'The percentage of page renders where the time from when the user first interacts with the page to when the next paint is rendered on screen was sufficiently fast.',
-        valid: 'page renders',
+        eventUnit: 'page renders',
         metricName: 'INP',
         metricUnit: 'ms',
         upperBound: 'le',
@@ -70,7 +70,7 @@ export default [
     {
         title: 'Availability: Real User Monitoring (RUM)',
         description: 'The percentage of purchase flows that performed without any critical errors',
-        valid: 'purchase flows',
+        eventUnit: 'purchase flows',
         metricName: 'flow.criticalErrors',
         metricUnit: 'errors',
         upperBound: 'lt',
