@@ -23,6 +23,7 @@ export default {
         shortWindowVisible: Boolean,
         alertLongWindow: Object,
         alertShortWindow: Object,
+        errorBudgetBurn: Object,
     },
     components: {
         burnEventComponent,

@@ -30,6 +30,9 @@
         color="--brand-red"
         offset="1">
         <tspan>Error Budget Exhausted</tspan>
+        <tspan>{{ errorBudgetBurn.eventCountL10n }} failed {{ errorBudgetBurn.eventUnitNorm }}</tspan>
+        <tspan>in {{ errorBudgetBurn.humanTime }}</tspan>
+        <tspan v-if="errorBudgetBurn.cost">costing {{ errorBudgetBurn.costL10n }}</tspan>
     </burn-event-component>
     <burn-event-component
         :width="width"
@@ -41,7 +44,7 @@
         offset="3">
         <tspan>Alert Triggers</tspan>
         <tspan>When at least {{ alertLongWindow.eventCountL10n }} failed {{ alertLongWindow.eventUnitNorm }}</tspan>
-        <tspan>occured in the last {{ alertLongWindow.humanSec }}</tspan>
+        <tspan>in the last {{ alertLongWindow.humanTime }}</tspan>
         <tspan v-if="alertLongWindow.cost">costing at least {{ alertLongWindow.costL10n }}</tspan>
     </burn-event-component>
     <burn-event-component v-if="shortWindowVisible"
@@ -54,6 +57,6 @@
         offset="2">
         <tspan>Short Window</tspan>
         <tspan>When at least {{ alertShortWindow.eventCountL10n }} failed {{ alertShortWindow.eventUnitNorm }}</tspan>
-        <tspan>occured in the last {{ alertShortWindow.humanSec }}</tspan>
+        <tspan>in the last {{ alertShortWindow.humanTime }}</tspan>
     </burn-event-component>
 </svg>
