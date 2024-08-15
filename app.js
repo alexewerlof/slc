@@ -10,7 +10,7 @@ import { setTitle } from './lib/header.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
 import { daysToSeconds } from './lib/time.js'
 import { Window } from './lib/window.js'
-import { entity2symbol, hasComparators, numL10n, percL10n } from './lib/fmt.js'
+import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from './lib/fmt.js'
 import { inRange, inRangePosInt, isNum, isStr } from './lib/validation.js'
 import { trackEvent } from './lib/ga-utils.js'
 import { stateToUrl, urlToState } from './lib/share.js'
@@ -125,19 +125,12 @@ export const app = createApp({
         SLFractionComponent,
     },
     methods: {
+        boundCaption,
         entity2symbol,
         hasComparators,
         numL10n,
         percentToRatio,
         percL10n,
-
-        boundCaption(caption, boundType) {
-            if (boundType === '') {
-                return 'None'
-            }
-
-            return `${this.good} ${ entity2symbol(boundType) } ${caption}`
-        },
         
         changeSLO(amount) {
             this.slo = clamp(toFixed(this.slo + amount), config.slo.min, config.slo.max)
