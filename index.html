@@ -695,7 +695,11 @@
                     </h2>
                     <div class="block" v-if="lowerBound">
                         <h3>
-                            <label for="lower-threshold-input">Lower Threshold (<code>$LT</code>)</label>
+                            <label for="lower-threshold-input">$LT
+                                <span v-if="metricUnit">
+                                    (<code>{{ metricUnit }}</code>)
+                                </span>
+                            </label>
                             <help-component>
                                 <p>
                                     The lower threshold (LT) defines the minimum possible values
@@ -723,7 +727,11 @@
 
                     <div class="block" v-if="upperBound">
                         <h3>
-                            <label for="upper-threshold-input">Upper Threshold (<code>$UT</code>)</label>
+                            <label for="upper-threshold-input">$UT
+                                <span v-if="metricUnit">
+                                    (<code>{{ metricUnit }}</code>)
+                                </span>
+                            </label>
                             <help-component>
                                 <p>
                                     The upper threshold (UT) defines the maximum possible values
