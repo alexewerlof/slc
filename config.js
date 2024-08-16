@@ -104,7 +104,7 @@ export const config = fz({
         ]),
     }),
     metricName: fz({
-        default: 'successful',
+        default: 'metric condition',
     }),
     metricUnit: fz({
         default: '',
