@@ -71,10 +71,10 @@ export default [
         title: 'Availability: Real User Monitoring (RUM)',
         description: 'The percentage of purchase flows that performed without any critical errors',
         eventUnit: 'purchase flows',
-        metricName: 'flow.criticalErrors',
+        metricName: 'flow.errorCount.critical',
         metricUnit: 'errors',
-        upperBound: 'lt',
-        upperThreshold: 1,
+        upperBound: 'le',
+        upperThreshold: 0,
         tags: [ ...commonTags, 'payment', 'rum', 'mobile', 'web', 'frontend', 'mobile' ],
     }
 ]

@@ -28,9 +28,8 @@ export default [
     {
         title: 'Correctness: Main database table',
         description: 'The proportion of records coming into the pipeline that resulted in the correct value coming out.',
-        eventUnit: 'records',
-        metricName: 'correct value',
-        eventUnit: 'incoming pipeline',
+        eventUnit: 'incoming pipeline records',
+        metricName: 'isCorrect(outputValue)',
         tags: [ ...commonTags, 'nosql', 'rdbms' ],
     },
     {
@@ -55,7 +54,6 @@ export default [
         metricName: 'processed records percentage',
         lowerBound: 'ge',
         lowerThreshold: 100,
-        eventUnit: 'pipeline runs',
         tags: [ ...commonTags, 'api', 'nosql', 'rdbms' ],
     },
     {
@@ -72,16 +70,14 @@ export default [
         title: 'Accuracy: Account Information',
         description: 'Percentage of customer records where the account information matches the information acquired via banking API',
         eventUnit: 'customer records',
-        metricName: 'match_bank_record("name", "phone", "address")',
+        metricName: 'database_record == api_record',
         tags: [ ...commonTags, 'nosql', 'rdbms' ],
     },
     {
         title: 'Consistency: Customer data',
         description: 'Percentage of order records from the order intake system that match those of the order fulfillment system',
         eventUnit: 'order records',
-        metricName: 'fulfilled',
-        metricUnit: 'orders',
-        eventUnit: 'intake',
+        metricName: 'order.status == "fulfilled"',
         tags: [ ...commonTags, 'nosql', 'rdbms', 'retail' ],
     },
 

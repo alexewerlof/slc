@@ -31,7 +31,7 @@ export default [
         title: 'Consistency: Cache',
         description: 'Percentage cache entries which match the data in the upstream. Use sampling to randomly check.',
         eventUnit: 'cache entries',
-        metricName: 'match(cache_entry, origin_entry)',
+        metricName: 'cache_entry == origin_entry',
         metricUnit: 'entries',
         tags: [ ...commonTags ],
     },

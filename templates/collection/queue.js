@@ -3,9 +3,12 @@ const commonTags = [ 'async', 'queue' ]
 export default [
     {
         title: 'Throughput: Worker Efficiency',
-        description: 'The number of minutes where an expensive wroker processed enough requests to justify the cost of keeping it alive. "Enough requests" is defined as ≥ 100',
+        description: 'The number of minutes where an expensive wroker processed enough requests to justify the cost of keeping it alive.',
         timeslice: 60,
-        metricName: 'processed messages ≥ 100',
+        metricName: 'messages.processed.count',
+        metricUnit: 'messages',
+        upperBound: 'le',
+        upperThreshold: 100,
         tags: [ ...commonTags ],
     },
     {
