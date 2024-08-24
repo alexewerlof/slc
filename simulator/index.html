@@ -114,7 +114,6 @@
                 'Generator',
                 'Percentile',
                 'Service',
-                'Incidents',
                 'Analytics',
                 'JSON Data',
             ]"></tabs-component>
@@ -136,11 +135,15 @@
                 axis-title-y="Relative probability"></plot-2d-component>
             <article>
                 <section>
-                    <h2>Fine Tune</h2>
+                    <h1>Data distribution</h1>
                     <table>
                         <thead>
                             <tr>
-                                <th colspan="2">Range</th>
+                                <th colspan="2">
+                                    Range
+                                    <button @click="removeRange">-</button>                
+                                    <button @click="addRange">+</button>
+                                </th>
                                 <th></th>
                                 <th>Quick Set</th>
                                 <th colspan="2">Probability</th>
@@ -181,11 +184,12 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button @click="addRange">Add</button>
-                    <button @click="removeRange">Remove</button>        
                 </section>
                 <section>
-                    <h2>Data Points</h2>
+                    <h1>Count</h1>
+                    <p>
+                        Window: {{ windowDays }} days
+                    </p>
                     <div>
                         <label>
                             <h3>Data Points Per Day: {{ dataCountPerDay }}</h3>
@@ -200,12 +204,15 @@
                         </p>
                     </div>    
                     <label>
-                        <h3>Data Count: {{ windowCount }}x Windows ({{ dataCount }})</h3>
+                        <h3>Window Count: {{ windowCount }} Windows</h3>
                         <input type="range"
                             :min="config.simulator.windowCount.min"
                             :max="config.simulator.windowCount.max"
                             :step="windowCount.step"
                             v-model="windowCount">
+                        <p>
+                            {{ dataCount }} data points in {{ windowCount }} windows
+                        </p>
                     </label>
                     <label>
                         <h3>Min Value</h3>
@@ -230,6 +237,30 @@
                     <div class="button-bar">
                         <button @click="generateData">Generate Data</button>
                     </div>
+                </section>
+                <section>
+                    <h1>Emulate an incident</h1>
+                    <label>
+                        <h2>Incident length {{ percL10n(incidentLengthPerc) }} Window ({{ incidentDataCount }})</h2>
+                        <input type="range"
+                            :min="config.incidentLengthPerc.min"
+                            :max="config.incidentLengthPerc.max"
+                            :step="config.incidentLengthPerc.step"
+                            v-model.number="incidentLengthPerc">
+        
+                    </label>
+                    <label>
+                        <h2>Insertion Point</h2>
+                        <input type="range"
+                            min="0"
+                            :max="dataCount"
+                            v-model.number="incidentInsertionPoint">
+                        at point {{ incidentInsertionPoint }}
+                    </label>
+        
+                    <div class="button-bar">
+                        <button @click="addIncident">Insert Incident</button>
+                    </div>        
                 </section>
             </article>
 
@@ -366,31 +397,6 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-
-        <div class="tab-content" v-if="selectedTab === 'Incidents'">
-            <h1>Emulate an incident</h1>
-            <label>
-                <h2>Incident length {{ percL10n(incidentLengthPerc) }} Window ({{ incidentDataCount }})</h2>
-                <input type="range"
-                    :min="config.incidentLengthPerc.min"
-                    :max="config.incidentLengthPerc.max"
-                    :step="config.incidentLengthPerc.step"
-                    v-model.number="incidentLengthPerc">
-
-            </label>
-            <label>
-                <h2>Insertion Point</h2>
-                <input type="range"
-                    min="0"
-                    :max="dataCount"
-                    v-model.number="incidentInsertionPoint">
-                at point {{ incidentInsertionPoint }}
-            </label>
-
-            <div class="button-bar">
-                <button @click="addIncident">Insert Incident</button>
-            </div>
         </div>
 
         <div class="tab-content" v-if="selectedTab === 'JSON Data'">
