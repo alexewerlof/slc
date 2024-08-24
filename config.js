@@ -367,10 +367,10 @@ export const config = fz({
         presets: [0, 0.1, 1, 5, 50, 95, 99, 99.9, 100],
     },
     // How long should an incident be in terms of window length
-    incidentMultiplier: {
+    incidentLengthPerc: {
         min: 0.01,
-        max: 2,
+        max: 100,
         step: 0.01,
-        default: 0.2,
+        default: 10,
     },
 })

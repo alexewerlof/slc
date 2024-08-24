@@ -7,6 +7,8 @@ import { config } from '../config.js'
 import { d3 } from '../vendor/d3.js'
 import { boundTypeToOperator, calculateSlsMetric, createIsGood } from '../lib/sl.js'
 import { isNum } from '../lib/validation.js'
+import { percent } from '../lib/math.js'
+import { percL10n } from '../lib/fmt.js'
 
 const percentageColor = d3.scaleLinear()
     .domain([config.slider.min, config.slider.max])
@@ -34,7 +36,7 @@ const app = createApp({
             percentages: config.simulator.percentages.default,
             onlyInt: true,
             sortAscending: true,
-            incidentMultiplier: config.incidentMultiplier.default,
+            incidentLengthPerc: config.incidentLengthPerc.default,
             incidentInsertionPoint: 0,
             lowerThreshold: config.lowerThreshold.default,
             upperThreshold: config.upperThreshold.default,
@@ -69,7 +71,7 @@ const app = createApp({
             return Math.round(this.windowDataCount * this.windowCount)
         },
         incidentDataCount() {
-            return Math.round(this.windowDataCount * this.incidentMultiplier)
+            return Math.round(percent(this.incidentLengthPerc, this.windowDataCount))
         },
         sortedMetricData() {
             return [...this.metricData].sort(this.sortAscending ? d3.ascending : d3.descending)
@@ -277,6 +279,7 @@ const app = createApp({
         }
     },
     methods: {
+        percL10n,
         setAllPercentagesTo(val) {
             this.percentages = new Array(this.percentages.length).fill(val)
         },
@@ -330,8 +333,7 @@ const app = createApp({
             const incidentDataCount = Math.min(this.dataCount - this.incidentInsertionPoint, this.incidentDataCount)
             console.log('metricData.length', this.metricData.length, '. Inserting', incidentDataCount, 'incident data points at', this.incidentInsertionPoint)
             const incidentData = generateData(incidentDataCount, incidentBuckets, this.onlyInt)
-            this.metricData = overwriteData(this.metricData, incidentData, this.incidentInsertionPoint),
-            console.log('done', incidentData.length)
+            this.metricData = overwriteData(this.metricData, incidentData, this.incidentInsertionPoint)
         },
     },
     created() {
