@@ -66,17 +66,6 @@
                             v-model.number="windowDays">
                     </label>
                 </div>
-                <div>
-                    <label>
-                        <h3>Data Points Per Day</h3>
-                        <input type="range"
-                            :min="config.simulator.dataCountPerDay.min"
-                            :max="config.simulator.dataCountPerDay.max"
-                            :step="config.simulator.dataCountPerDay.step"
-                            v-model.number="dataCountPerDay">
-                        {{ dataCountPerDay }} data points
-                    </label>
-                </div>    
                 <h3>SLO Good Bounds</h3>
 
                 <div v-if="lowerBound">
@@ -197,6 +186,19 @@
                 </section>
                 <section>
                     <h2>Data Points</h2>
+                    <div>
+                        <label>
+                            <h3>Data Points Per Day: {{ dataCountPerDay }}</h3>
+                            <input type="range"
+                                :min="config.simulator.dataCountPerDay.min"
+                                :max="config.simulator.dataCountPerDay.max"
+                                :step="config.simulator.dataCountPerDay.step"
+                                v-model.number="dataCountPerDay">
+                        </label>
+                        <p>
+                            {{ windowDataCount }} data points per {{ windowDays }} days
+                        </p>
+                    </div>    
                     <label>
                         <h3>Data Count: {{ windowCount }}x Windows ({{ dataCount }})</h3>
                         <input type="range"
