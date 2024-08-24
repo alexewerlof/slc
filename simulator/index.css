@@ -1,0 +1,29 @@
+article {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+section {
+    margin: 1em;
+    flex: 1;
+}
+
+.frequency-table tr:first-child th,
+.frequency-table td {
+    width: 3em;
+    text-align: center;
+}
+
+.json-data {
+    overflow-wrap: anywhere;
+}
+
+.freq-indicator {
+    font-size: 1%;
+    height: 10px;
+    width: 40px;
+    background-color: currentColor;
+    margin: 0 auto;
+}

@@ -1,0 +1,6 @@
+<div class="tabs">
+    <div v-for="tabName in tabNames"
+        class="tabs__tab"
+        :class="{ 'tabs__tab--active': selectedTab === tabName }"
+        @click="$emit('update:selectedTab', tabName)">{{ tabName }}</div>
+</div>

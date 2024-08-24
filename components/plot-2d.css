@@ -1,0 +1,97 @@
+.plot-2d {
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+}
+
+.plot-2d:hover {
+    background-color: var(--background-lighter);
+}
+
+.plot-2d__bars,
+.plot-2d__line {
+    stroke: var(--secondary-color);
+    stroke-width: 0.8;
+    fill: none;
+}
+
+.plot-2d__axis path{
+    stroke: var(--foreground-color);
+    stroke-width: 1.2;
+    fill: none;
+}
+
+.plot-2d__axis .tick line {
+    stroke: var(--foreground-color);
+    stroke-width: 1.5;
+    fill: none;
+}
+
+.plot-2d__axis .tick text {
+    fill: var(--foreground-color);
+    font-size: 15px;
+    font-family: var(--title-font-family);
+}
+
+.plot-2d__axis-title {
+    fill: var(--primary-color);
+    font-size: 18px;
+    font-family: var(--title-font-family);
+}
+
+.plot-2d__axis-title--x {
+    text-anchor: end;
+    dominant-baseline: ideographic;
+}
+
+.plot-2d__axis-title--y {
+    dominant-baseline: ideographic;
+    writing-mode: tb;
+}
+
+.plot-2d__guide-line {
+    stroke: var(--brand-red);
+    stroke-width: 1;
+    stroke-dasharray: 3;
+}
+
+.plot-2d__guide-title {
+    fill: var(--brand-red);
+    font-size: 13px;
+}
+
+.plot-2d__guide-title--x {
+    text-anchor: middle;
+    dominant-baseline: text-after-edge;
+}
+
+.plot-2d__guide-title--y {
+    dominant-baseline: middle;
+}
+
+.plot-2d__crosshair-line--vertical,
+.plot-2d__crosshair-line--horizontal {
+    stroke: var(--brand-green);
+    stroke-width: 1;
+    stroke-dasharray: 3;
+}
+
+.plot-2d__crosshair-circle {
+    fill: var(--brand-green);
+}
+
+.plot-2d__crosshair-label {
+    fill: var(--brand-green);
+    font-size: 13px;
+    text-shadow: 0px 0px 3px #000;
+}
+
+.plot-2d__crosshair-label--x {
+    text-anchor: middle;
+    dominant-baseline: text-after-edge;
+}
+
+.plot-2d__crosshair-label--y {
+    text-anchor: start;
+    dominant-baseline: middle;
+}
