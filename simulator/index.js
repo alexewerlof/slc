@@ -213,15 +213,15 @@ const app = createApp({
             return [
                 {
                     y: 1,
-                    label: '1x',
+                    label: '1',
                 },
                 {
                     y: 6,
-                    label: '6x',
+                    label: '6',
                 },
                 {
                     y: 14.4,
-                    label: '14.4x',
+                    label: '14.4',
                 },
                 {
                     x: this.windowDataCount,
