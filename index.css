@@ -115,7 +115,7 @@ header h1 {
     padding: 0 1em;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5, h6, th {
     font-family: var(--title-font-family);
 }
 
@@ -149,10 +149,6 @@ time {
 table {
     width: 100%;
     border-collapse: collapse;
-}
-
-th {
-    font-family: var(--title-font-family);
 }
 
 th, td {
