@@ -123,16 +123,6 @@
             <button v-for="pre in config.simulator.percentages.presets"
                 @click="percentages = [...pre.values]">{{ pre.name }}
             </button>
-            <plot-2d-component
-                :points="probabilityPoints"
-                :padding="[30, 100, 50, 90]"
-                :guides="probabilityGuides"
-                :x-extent="[min, max]"
-                :y-extent="[0, 100]"
-                :label-render-x="unitRender"
-                :label-render-y="percentRender"
-                :axis-title-x="metricName"
-                axis-title-y="Relative probability"></plot-2d-component>
             <article>
                 <section>
                     <h1>Data distribution</h1>
@@ -184,6 +174,18 @@
                             </tr>
                         </tbody>
                     </table>
+                    <plot-2d-component
+                        width="600"
+                        height="400"
+                        :points="probabilityPoints"
+                        :padding="[30, 35, 50, 90]"
+                        :guides="probabilityGuides"
+                        :x-extent="[min, max]"
+                        :y-extent="[0, 100]"
+                        :label-render-x="unitRender"
+                        :label-render-y="percentRender"
+                        :axis-title-x="metricName"
+                        axis-title-y="Relative probability"></plot-2d-component>
                 </section>
                 <section>
                     <h1>Count</h1>
