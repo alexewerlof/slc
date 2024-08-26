@@ -18,7 +18,35 @@
                 <h1>Metric Name</h1>
                 <input type="text" v-model="sli.metricName" />
                 <h2>Good</h2>
-                <p><code>{{ sli.good }}</code></p>
+                <div class="code block"><code>{{ sli.good }}</code></div>
+                <h3>Condition</h3>
+                <div class="box">
+                    <label>
+                        <input type="checkbox" v-model="sli.condition.isBounded"> Bounded
+                    </label>
+                </div>
+                <div v-if="sli.condition.isBounded">
+                    <h4>Lower Bound</h4>
+                    <select
+                        id="lower-bound-type"
+                        v-model="sli.condition.lowerBound">
+                        <option v-for="v of config.lowerBound.possibleValues"
+                            :value="v">
+                            {{ boundCaption(sli.metricName, v, '$LT') }}
+                        </option>
+                    </select>
+                    <h4>Upper Bound</h4>
+                    <select
+                        id="upper-bound-type"
+                        v-model="sli.condition.upperBound">
+                        <option v-for="v of config.upperBound.possibleValues"
+                            :value="v">
+                            {{ boundCaption(sli.metricName, v, '$UT') }}
+                        </option>
+                    </select>
+                </div>
+                <h2>Bad</h2>
+                <div class="code block"><code>{{ sli.bad }}</code></div>
             </section>
             <section>
                 <h1>SLOs</h1>
@@ -26,9 +54,10 @@
                 <article v-for="(slo,i) of sli.objectives">
                     <section>
                         <h2>
-                            SLO: {{ slo }}
+                            SLO: {{ percL10n(slo.perc) }}
                             <button @click="removeSlo(i)">Remove SLO</button>
                         </h2>
+                        <div class="code block"><code>{{ slo.good }}</code></div>
                         <p>Percentage: <code>{{ slo.percL10n }}</code></p>
                         <input
                             type="range"
@@ -40,22 +69,29 @@
                             type="range"
                             v-model="slo.window.days" />
 
-                        <div v-if="slo.sli.isLowerBounded">
-                            <h3>Lower Threshold: <code>{{ slo.lowerThreshold }}</code></h3>
+                        <div v-if="slo.sli.condition.isLowerBounded">
+                            <h3>Lower Threshold: <code>{{ slo.thresholds.lower }}</code></h3>
                             <input
                                 type="range"
-                                v-model.number="slo.lowerThreshold"
-                                :min="slo.lowerThresholdMin"
-                                :max="slo.lowerThresholdMax"/>
+                                v-model.number="slo.thresholds.lower"
+                                :min="slo.thresholds.lowerMin"
+                                :max="slo.thresholds.lowerMax"/>
                         </div>
 
-                        <div v-if="slo.sli.isUpperBounded">
-                            <h3>Upper Threshold: <code>{{ slo.upperThreshold }}</code></h3>
+                        <div v-if="slo.sli.condition.isUpperBounded">
+                            <h3>Upper Threshold: <code>{{ slo.thresholds.upper }}</code></h3>
                             <input
                                 type="range"
-                                v-model.number="slo.upperThreshold"
-                                :min="slo.upperThresholdMin"
-                                :max="slo.upperThresholdMax"/>
+                                v-model.number="slo.thresholds.upper"
+                                :min="slo.thresholds.upperMin"
+                                :max="slo.thresholds.upperMax"/>
+                        </div>
+
+                        <div v-if="!slo.sli.condition.isBounded">
+                            <h3>Equal to</h3>
+                            <input
+                                type="text"
+                                v-model="slo.thresholds.equalTo" />
                         </div>
                         <p>Error Budget: {{ slo.errorBudgetPercL10n }}</p>
                         <input type="range" v-model.number="slo.errorBudgetPerc" />

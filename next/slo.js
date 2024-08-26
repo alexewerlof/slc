@@ -3,8 +3,10 @@ import { percL10n } from "../lib/fmt.js"
 import { clamp } from "../lib/math.js"
 import { daysToSeconds } from "../lib/time.js"
 import { inRange } from "../lib/validation.js"
+import { badFormula, goodFormula } from "./condition.js"
 import { ErrorBudget } from "./error-budget.js"
 import { SLI } from "./sli.js"
+import { Thresholds } from "./thresholds.js"
 import { TimeWindow } from "./time-window.js"
 
 export class SLO {
@@ -24,17 +26,15 @@ export class SLO {
         }
         this.perc = perc
         this.window = new TimeWindow(this, daysToSeconds(windowDays))
-        if (!inRange(lowerThreshold, config.lowerThreshold.min, config.lowerThreshold.max)) {
-            throw new RangeError(`SLO: lowerThreshold must be a number between ${ config.lowerThreshold.min } and ${ config.lowerThreshold.max }. Got ${ lowerThreshold }`)
-        }
-        this._lowerThreshold = lowerThreshold
-        if (!inRange(upperThreshold, config.upperThreshold.min, config.upperThreshold.max)) {
-            throw new RangeError(`SLO: upperThreshold must be a number between ${ config.upperThreshold.min } and ${ config.upperThreshold.max }. Got ${ upperThreshold }`)
-        }
-        this._upperThreshold = upperThreshold
-        if (this.lowerThreshold > this.upperThreshold) {
-            throw new RangeError(`SLO: lowerThreshold must be less than upperThreshold. Got lowerThreshold=${ lowerThreshold } and upperThreshold=${ upperThreshold }`)
-        }
+        this.thresholds = new Thresholds(this, lowerThreshold, upperThreshold)
+    }
+
+    get good() {
+        return goodFormula(this.sli, this.thresholds)
+    }
+
+    get bad() {
+        return badFormula(this.sli, this.thresholds)
     }
 
     get percL10n() {
@@ -53,45 +53,14 @@ export class SLO {
         return percL10n(this.errorBudgetPerc)
     }
 
-    get lowerThreshold() {
-        return this._lowerThreshold
-    }
-
-    get lowerThresholdMin() {
-        return config.lowerThreshold.min
-    }
-
-    get lowerThresholdMax() {
-        return this.sli.isUpperBounded ? this.upperThreshold : config.lowerThreshold.max
-    }
-
-    set lowerThreshold(val) {
-        this._lowerThreshold = clamp(val, this.lowerThresholdMin, this.lowerThresholdMax)
-        if (this._lowerThreshold > this._upperThreshold) {
-            this.upperThreshold = this._lowerThreshold
-        }
-    }
-
-    get upperThreshold() {
-        return this._upperThreshold
-    }
-
-    get upperThresholdMin() {
-        return this.sli.isLowerBounded ? this.lowerThreshold : config.upperThreshold.min
-    }
-
-    get upperThresholdMax() {
-        return config.upperThreshold.max
-    }
-
-    set upperThreshold(val) {
-        this._upperThreshold = clamp(val, this.upperThresholdMin, this.upperThresholdMax)
-        if (this._upperThreshold < this._lowerThreshold) {
-            this.lowerThreshold = this._upperThreshold
-        }
-    }
-
     toString() {
-        return `${ percL10n(this.perc) } of ${ this.sli.good } over the last ${ this.window.humanSec }`
+        const ret = []
+        ret.push('Percentage of')
+        ret.push(this.sli.good)
+        ret.push('over the last')
+        ret.push(this.window.humanSec)
+        ret.push('>=')
+        ret.push(percL10n(this.perc))
+        return ret.join(' ')
     }
 }
