@@ -54,7 +54,6 @@ export class SLO {
     }
 
     get lowerThreshold() {
-        console.log('getting lower threshold', this._lowerThreshold)
         return this._lowerThreshold
     }
 
@@ -67,8 +66,10 @@ export class SLO {
     }
 
     set lowerThreshold(val) {
-        console.log('setting lower threshold to', val)
         this._lowerThreshold = clamp(val, this.lowerThresholdMin, this.lowerThresholdMax)
+        if (this._lowerThreshold > this._upperThreshold) {
+            this.upperThreshold = this._lowerThreshold
+        }
     }
 
     get upperThreshold() {
@@ -85,6 +86,9 @@ export class SLO {
 
     set upperThreshold(val) {
         this._upperThreshold = clamp(val, this.upperThresholdMin, this.upperThresholdMax)
+        if (this._upperThreshold < this._lowerThreshold) {
+            this.lowerThreshold = this._upperThreshold
+        }
     }
 
     toString() {
