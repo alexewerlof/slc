@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <main id="app">
+        <article>
+            <section>
+                <p>{{ message }}</p>
+                <h1>Metric Name</h1>
+                <input type="text" v-model="sli.metricName" />
+                <h2>Good</h2>
+                <p><code>{{ sli.good }}</code></p>
+            </section>
+            <section>
+                <h1>SLOs</h1>
+                <button @click="addSlo">Add SLO</button>
+                <article v-for="(slo,i) of sli.objectives">
+                    <section>
+                        <h2>
+                            SLO: {{ slo }}
+                            <button @click="removeSlo(i)">Remove SLO</button>
+                        </h2>
+                        <p>Percentage: <code>{{ slo.percL10n }}</code></p>
+                        <input
+                            type="range"
+                            v-model.number="slo.perc" />
+                        
+                        <h3>Window Days: <code>{{ slo.window.days }}</code></h3>
+                        <p>{{ slo.window }}</p>
+                        <input
+                            type="range"
+                            v-model="slo.window.days" />
+
+                        <div v-if="slo.sli.isLowerBounded">
+                            <h3>Lower Threshold: <code>{{ slo.lowerThreshold }}</code></h3>
+                            <input
+                                type="range"
+                                v-model.number="slo.lowerThreshold"
+                                :min="slo.lowerThresholdMin"
+                                :max="slo.lowerThresholdMax"/>
+                        </div>
+
+                        <div v-if="slo.sli.isUpperBounded">
+                            <h3>Upper Threshold: <code>{{ slo.upperThreshold }}</code></h3>
+                            <input
+                                type="range"
+                                v-model.number="slo.upperThreshold"
+                                :min="slo.upperThresholdMin"
+                                :max="slo.upperThresholdMax"/>
+                        </div>
+                        <p>Error Budget: {{ slo.errorBudgetPercL10n }}</p>
+                        <input type="range" v-model.number="slo.errorBudgetPerc" />
+                    </section>
+                    <section>
+                        <h2>Alerts</h2>
+                    </section>
+                </article>
+            </section>
+    </article>
+    </main>
+    <script type="module" src="index.js"></script>
+</body>
+</html>
