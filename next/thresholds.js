@@ -1,7 +1,7 @@
 import { config } from "../config.js"
 import { clamp } from "../lib/math.js"
 import { inRange } from "../lib/validation.js"
-import { SLO } from "./slo.js"
+import { Objective } from "./objective.js"
 
 export class Thresholds {
     constructor(
@@ -9,23 +9,23 @@ export class Thresholds {
         lower = config.lowerThreshold.default,
         upper = config.upperThreshold.default,
     ) {
-        if (!(slo instanceof SLO)) {
-            throw new TypeError(`Thresholds: slo must be an instance of SLO. Got ${ slo }`)
+        if (!(slo instanceof Objective)) {
+            throw new TypeError(`Thresholds: slo must be an instance of Objective. Got ${ slo }`)
         }
-        this.slo = slo
+        this.objective = slo
 
         if (!inRange(lower, config.lowerThreshold.min, config.lowerThreshold.max)) {
-            throw new RangeError(`SLO: lowerThreshold must be a number between ${ config.lowerThreshold.min } and ${ config.lowerThreshold.max }. Got ${ lower }`)
+            throw new RangeError(`Objective: lowerThreshold must be a number between ${ config.lowerThreshold.min } and ${ config.lowerThreshold.max }. Got ${ lower }`)
         }
         this._lower = lower
         
         if (!inRange(upper, config.upperThreshold.min, config.upperThreshold.max)) {
-            throw new RangeError(`SLO: upperThreshold must be a number between ${ config.upperThreshold.min } and ${ config.upperThreshold.max }. Got ${ upper }`)
+            throw new RangeError(`Objective: upperThreshold must be a number between ${ config.upperThreshold.min } and ${ config.upperThreshold.max }. Got ${ upper }`)
         }
         this._upper = upper
         
         if (this.lower > this.upper) {
-            throw new RangeError(`SLO: lowerThreshold must be less than upperThreshold. Got lowerThreshold=${ lower } and upperThreshold=${ upper }`)
+            throw new RangeError(`Objective: lowerThreshold must be less than upperThreshold. Got lowerThreshold=${ lower } and upperThreshold=${ upper }`)
         }
 
         this.equalTo = '$ET'
@@ -36,11 +36,11 @@ export class Thresholds {
     }
 
     get lowerMax() {
-        return this.slo.sli.condition.isUpperBounded ? this.upper : config.lowerThreshold.max
+        return this.objective.indicator.condition.isUpperBounded ? this.upper : config.lowerThreshold.max
     }
 
     get upperMin() {
-        return this.slo.sli.condition.isLowerBounded ? this.lower : config.upperThreshold.min
+        return this.objective.indicator.condition.isLowerBounded ? this.lower : config.upperThreshold.min
     }
 
     get upperMax() {

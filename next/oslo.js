@@ -10,7 +10,7 @@ function osloObj(kind, metadata = {}, spec = {}) {
 }
 
 export function sliObj(sli) {
-    return osloObj('SLI', {
+    return osloObj('Indicator', {
         name: sli.metricName,
         // displayname: sli.displayname,
     }, {
@@ -21,7 +21,7 @@ export function sliObj(sli) {
 
 export function sloObj(slo) {
     const name = slo.toString()
-    return osloObj('SLO', {
+    return osloObj('Objective', {
         name,
         // displayname: slo.displayname,
     }, {

@@ -1,34 +1,27 @@
 import { config } from '../config.js';
 import { boundCaption, percL10n } from '../lib/fmt.js';
 import { createApp} from '../vendor/vue.js';
-import { ServiceLevel } from './service-level.js';
-import { SLI } from './sli.js';
+import { Service } from './service.js';
+import { Indicator } from './indicator.js';
 import * as oslo from './oslo.js';
 import * as yaml  from '../vendor/js-yaml.js'
+import { Level } from './level.js';
 
 const app = createApp({
     data() {
-        const sli = new SLI('requests', 'latency', 'ms', '', 'lt')
+        const service = new Service('my-service', 'My service description')
+        const level = new Level(service, 'consumption')
+        service.addLevel(level)
+        const sli = new Indicator(level, 'requests', 'latency', 'ms', '', 'lt')
+        level.addIndicator(sli)
         return {
             config,
-            sl: new ServiceLevel('My title', 'My long description'),
-            sli,
-            osloExport: 'nothing',
+            service,
         }
     },
     methods: {
         percL10n,
         boundCaption,
-
-        addSlo() {
-            this.sli.addObjective()
-        },
-        removeSlo(index) {
-            this.sli.removeObjective(index)
-        },
-        updateOslo() {
-            this.osloExport = yaml.dump(oslo.sloObj(this.sli.objectives[0]))
-        },
     }
 })
 

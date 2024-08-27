@@ -12,92 +12,91 @@
             <pre><code>{{ osloExport }}</code></pre>
         </div>
         <button @click="updateOslo()">Update Oslo Export</button>
-        <article>
-            <section>
-                <p>{{ message }}</p>
+        <article v-for="level of service.levels">
+            <section v-for="indicator of level.indicators">
                 <h1>Metric Name</h1>
-                <input type="text" v-model="sli.metricName" />
+                <input type="text" v-model="indicator.metricName" />
                 <h2>Good</h2>
-                <div class="code block"><code>{{ sli.good }}</code></div>
+                <div class="code block"><code>{{ indicator.good }}</code></div>
                 <h3>Condition</h3>
                 <div class="box">
                     <label>
-                        <input type="checkbox" v-model="sli.condition.isBounded"> Bounded
+                        <input type="checkbox" v-model="indicator.condition.isBounded"> Bounded
                     </label>
                 </div>
-                <div v-if="sli.condition.isBounded">
+                <div v-if="indicator.condition.isBounded">
                     <h4>Lower Bound</h4>
                     <select
                         id="lower-bound-type"
-                        v-model="sli.condition.lowerBound">
+                        v-model="indicator.condition.lowerBound">
                         <option v-for="v of config.lowerBound.possibleValues"
                             :value="v">
-                            {{ boundCaption(sli.metricName, v, '$LT') }}
+                            {{ boundCaption(indicator.metricName, v, '$LT') }}
                         </option>
                     </select>
                     <h4>Upper Bound</h4>
                     <select
                         id="upper-bound-type"
-                        v-model="sli.condition.upperBound">
+                        v-model="indicator.condition.upperBound">
                         <option v-for="v of config.upperBound.possibleValues"
                             :value="v">
-                            {{ boundCaption(sli.metricName, v, '$UT') }}
+                            {{ boundCaption(indicator.metricName, v, '$UT') }}
                         </option>
                     </select>
                 </div>
                 <h2>Bad</h2>
-                <div class="code block"><code>{{ sli.bad }}</code></div>
-            </section>
-            <section>
+                <div class="code block"><code>{{ indicator.bad }}</code></div>
+
                 <h1>SLOs</h1>
-                <button @click="addSlo">Add SLO</button>
-                <article v-for="(slo,i) of sli.objectives">
+                <button @click="indicator.addNewObjective()">Add Objective</button>
+                <article v-for="(objective,i) of indicator.objectives">
                     <section>
                         <h2>
-                            SLO: {{ percL10n(slo.perc) }}
-                            <button @click="removeSlo(i)">Remove SLO</button>
+                            Objective: {{ percL10n(objective.perc) }}
+                            <button @click="removeSlo(i)">Remove Objective</button>
                         </h2>
-                        <div class="code block"><code>{{ slo.good }}</code></div>
-                        <p>Percentage: <code>{{ slo.percL10n }}</code></p>
+                        <div class="code block"><code>{{ objective.good }}</code></div>
+                        <p>Percentage: <code>{{ objective.percL10n }}</code></p>
                         <input
                             type="range"
-                            v-model.number="slo.perc" />
+                            v-model.number="objective.perc" />
                         
-                        <h3>Window Days: <code>{{ slo.window.days }}</code></h3>
-                        <p>{{ slo.window }}</p>
+                        <h3>Window Days: <code>{{ objective.window.days }}</code></h3>
+                        <p>{{ objective.window }}</p>
                         <input
                             type="range"
-                            v-model="slo.window.days" />
+                            v-model="objective.window.days" />
 
-                        <div v-if="slo.sli.condition.isLowerBounded">
-                            <h3>Lower Threshold: <code>{{ slo.thresholds.lower }}</code></h3>
+                        <div v-if="objective.indicator.condition.isLowerBounded">
+                            <h3>Lower Threshold: <code>{{ objective.thresholds.lower }}</code></h3>
                             <input
                                 type="range"
-                                v-model.number="slo.thresholds.lower"
-                                :min="slo.thresholds.lowerMin"
-                                :max="slo.thresholds.lowerMax"/>
+                                v-model.number="objective.thresholds.lower"
+                                :min="objective.thresholds.lowerMin"
+                                :max="objective.thresholds.lowerMax"/>
                         </div>
 
-                        <div v-if="slo.sli.condition.isUpperBounded">
-                            <h3>Upper Threshold: <code>{{ slo.thresholds.upper }}</code></h3>
+                        <div v-if="objective.indicator.condition.isUpperBounded">
+                            <h3>Upper Threshold: <code>{{ objective.thresholds.upper }}</code></h3>
                             <input
                                 type="range"
-                                v-model.number="slo.thresholds.upper"
-                                :min="slo.thresholds.upperMin"
-                                :max="slo.thresholds.upperMax"/>
+                                v-model.number="objective.thresholds.upper"
+                                :min="objective.thresholds.upperMin"
+                                :max="objective.thresholds.upperMax"/>
                         </div>
 
-                        <div v-if="!slo.sli.condition.isBounded">
+                        <div v-if="!objective.indicator.condition.isBounded">
                             <h3>Equal to</h3>
                             <input
                                 type="text"
-                                v-model="slo.thresholds.equalTo" />
+                                v-model="objective.thresholds.equalTo" />
                         </div>
-                        <p>Error Budget: {{ slo.errorBudgetPercL10n }}</p>
-                        <input type="range" v-model.number="slo.errorBudgetPerc" />
+                        <p>Error Budget: {{ objective.errorBudgetPercL10n }}</p>
+                        <input type="range" v-model.number="objective.errorBudgetPerc" />
                     </section>
                     <section>
-                        <h2>Alerts</h2>
+                        <h1>Alerts</h1>
+                        <button @click="objective.addNewAlert(i)">Add Alert</button>
                     </section>
                 </article>
             </section>

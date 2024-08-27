@@ -1,7 +1,7 @@
 import { config } from "../config.js"
 import { entity2symbol } from "../lib/fmt.js"
 
-export class Condition {
+export class Bound {
     constructor(
         lowerBound = config.lowerBound.default,
         upperBound = config.upperBound.default,
@@ -12,7 +12,7 @@ export class Condition {
 
     set lowerBound(val) {
         if (!config.lowerBound.possibleValues.includes(val)) {
-            throw new RangeError(`SLI: lowerBound must be one of ${config.lowerBound.possibleValues.join(', ')}. Got ${val} (${typeof val})`)
+            throw new RangeError(`Indicator: lowerBound must be one of ${config.lowerBound.possibleValues.join(', ')}. Got ${val} (${typeof val})`)
         }
         this._lowerBound = val
     }
@@ -23,7 +23,7 @@ export class Condition {
 
     set upperBound(val) {
         if (!config.upperBound.possibleValues.includes(val)) {
-            throw new RangeError(`SLI: upperBound must be one of ${config.upperBound.possibleValues.join(', ')}. Got ${val} (${typeof val})`)
+            throw new RangeError(`Indicator: upperBound must be one of ${config.upperBound.possibleValues.join(', ')}. Got ${val} (${typeof val})`)
         }
         this._upperBound = val
     }
@@ -73,8 +73,8 @@ export function oppositeBound(bound) {
     }
 }
 
-export function formula(good, sli, thresholds) {
-    const { eventUnit, metricName, condition } = sli
+export function formula(good, indicator, thresholds) {
+    const { eventUnit, metricName, condition } = indicator
     const ret = [eventUnit]
     ret.push('where')
     if (condition.isBounded) {
@@ -102,10 +102,10 @@ export function formula(good, sli, thresholds) {
     return ret.join(' ')
 }
 
-export function goodFormula(sli, thresholds) {
-    return formula(true, sli, thresholds)
+export function goodFormula(indicator, thresholds) {
+    return formula(true, indicator, thresholds)
 }
 
-export function badFormula(sli, thresholds) {
-    return formula(false, sli, thresholds)
+export function badFormula(indicator, thresholds) {
+    return formula(false, indicator, thresholds)
 }

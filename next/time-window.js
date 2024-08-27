@@ -1,5 +1,5 @@
 import { numL10n } from "../lib/fmt.js"
-import { daysToSeconds, getTimeSlices, humanSec, humanTime, humanTimeSlices } from "../lib/time.js"
+import { daysToSeconds, countTimeslices, humanSec, humanTime, humanTimeSlices } from "../lib/time.js"
 import { isNum, isStr } from "../lib/validation.js"
 
 /**
@@ -9,18 +9,16 @@ import { isNum, isStr } from "../lib/validation.js"
 export class TimeWindow {
     // The raw number of seconds in this time window
     sec
-    // Valid events for the event-based SLIs
-    eventUnit
     // If the timeslice is set to a positive number, the window is time-based
     timeslice
-    constructor(sli, sec) {
-        this.sli = sli
+    constructor(slo, sec) {
+        this.objective = slo
 
         if (!isNum(sec)) {
             throw new TypeError(`Window: sec must be a number. Got ${ sec }`)
         }
         if (sec < 0) {
-            throw new RangeError(`Window: sec must be a positive number. Got ${ sec }`)
+            throw new RangeError(`Window: sec must be positive. Got ${ sec }`)
         }
         this.sec = sec
     }
@@ -33,15 +31,11 @@ export class TimeWindow {
         return this.sec / daysToSeconds(1)
     }
 
-    get isTimeBased() {
-        return this.timeslice > 0
-    }
-
-    get timesliceCount() {
-        if (!this.sli.isTimeBased) {
-            throw new Error('Cannot calculate number of timeslices for a window that is not time-based')
+    get countTimeslices() {
+        if (this.objective.indicator.isEventBased) {
+            throw new Error('Cannot calculate number of timeslices for an event-based Indicator')
         }
-        return Math.floor(getTimeSlices(this.sec, this.timeslice))
+        return Math.floor(countTimeslices(this.sec, this.objective.indicator.timeslice))
     }
 
     get humanSec() {
@@ -58,8 +52,8 @@ export class TimeWindow {
 
     toString() {
         let ret = `${ this.humanTime } (${ this.humanSec }`
-        if (this.sli.isTimeBased) {
-            ret += ` = ${ numL10n(this.timesliceCount) } ${ this.eventUnitNorm }`
+        if (this.objective.isTimeBased) {
+            ret += ` = ${ numL10n(this.countTimeslices) } ${ this.objective.indicator.eventUnitNorm }`
         }
         ret += ')'
         return ret
