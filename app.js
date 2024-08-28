@@ -1,6 +1,6 @@
 import { createApp } from './vendor/vue.js'
 import { config } from './config.js'
-import AlertComponent from './components/alert.js'
+import AlertChartComponent from './components/alert-chart.js'
 import BurnRateComponent from './components/burn-rate.js'
 import ErrorBudgetComponent from './components/error-budget.js'
 import ExtLink from './components/ext-link.js'
@@ -117,7 +117,7 @@ export const app = createApp({
         })
     },
     components: {
-        AlertComponent,
+        AlertChartComponent,
         BurnRateComponent,
         ErrorBudgetComponent,
         ExtLink,

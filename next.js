@@ -4,7 +4,7 @@ import { createApp} from './vendor/vue.js'
 import { Service } from './lib/service.js'
 import { Indicator } from './lib/indicator.js'
 import { Level } from './lib/level.js'
-import AlertComponent from './components/alert.js'
+import AlertChartComponent from './components/alert-chart.js'
 import BurnRateComponent from './components/burn-rate.js'
 import ErrorBudgetComponent from './components/error-budget.js'
 import ExtLink from './components/ext-link.js'
@@ -32,7 +32,7 @@ const app = createApp({
         },
     },
     components: {
-        AlertComponent,
+        AlertChartComponent,
         BurnRateComponent,
         ErrorBudgetComponent,
         ExtLink,
