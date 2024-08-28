@@ -44,20 +44,24 @@
                     Service Level Calculator
                 </h1>
             </a>
-            <ul class="top-nav only-mobile">
-                <li><a href="#sli-title">SLI</a></li>
-                <li><a href="#slo-title">SLO</a></li>
-                <li><a href="#error-budget-title">Error Budget</a></li>
-                <li><a href="#alert-title">Alerting</a></li>
-                <li><a href="#share-title">Share</a></li>
-            </ul>
         </header>
 
         <div class="block">
             <p>🎉Tip: <ext-link href="templates/index.html">Use Templates</ext-link></p>
         </div>
-        <article v-for="level of service.levels">
-            <section v-for="indicator of level.indicators">
+
+        <show-hide-component
+            v-for="(level, levelIndex) of service.levels"
+            title="Level"
+            :name="levelIndex">
+
+            <button @click="level.addNewIndicator()">Add Indicator</button>
+
+            <show-hide-component
+                v-for="(indicator, indicatorIndex) of level.indicators"
+                title="Indicator"
+                :name="indicatorIndex">
+
                 <h1>
                     Indicator
                     <help-component>
@@ -346,11 +350,14 @@
 
                 <h1>SLOs</h1>
                 <button @click="indicator.addNewObjective()">Add Objective</button>
-                <article v-for="(objective,i) of indicator.objectives">
+                <show-hide-component
+                    v-for="(objective,objectiveIndex) of indicator.objectives"
+                    title="Objective"
+                    :name="objective.name || objectiveIndex">
                     <section>
                         <h2>
                             Objective: {{ percL10n(objective.perc) }}
-                            <button @click="removeObjective(i)">Remove Objective</button>
+                            <button @click="removeObjective(objectiveIndex)">Remove Objective</button>
                         </h2>
                         <div class="code block"><code>{{ objective.good }}</code></div>
                         <p>Percentage: <code>{{ percL10n(objective.perc) }}</code></p>
@@ -475,9 +482,9 @@
                                 </code>
                         </div>
                     </section>
-                </article>
-            </section>
-    </article>
+                </show-hide-component>
+            </show-hide-component>
+    </show-hide-component>
     </main>
     <script type="module" src="next.js"></script>
 </body>

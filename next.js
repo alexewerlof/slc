@@ -9,6 +9,7 @@ import BurnRateComponent from './components/burn-rate.js'
 import ErrorBudgetComponent from './components/error-budget.js'
 import ExtLink from './components/ext-link.js'
 import HelpComponent from './components/help.js'
+import ShowHideComponent from './components/show-hide.js'
 import SLFractionComponent from './components/sl-fraction.js'
 import { setTitle } from './lib/header.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
@@ -37,6 +38,7 @@ const app = createApp({
         ErrorBudgetComponent,
         ExtLink,
         HelpComponent,
+        ShowHideComponent,
         SLFractionComponent,
     },
     methods: {
