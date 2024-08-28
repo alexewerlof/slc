@@ -1,10 +1,10 @@
-import { assert } from "../vendor/deno.js"
+import { test, assert } from "../vendor/deno.js"
 import { inRange, inRangePosInt, isDef, isStr } from "../lib/validation.js"
 import { config } from "../config.js"
 import { templates } from './templates.js'
 
 for (const template of templates) {
-    Deno.test(`Template: ${template.title}`, (t) => {
+    test(`Template: ${template.title}`, (t) => {
         const {
             title,
             description,
