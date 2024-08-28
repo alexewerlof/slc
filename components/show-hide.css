@@ -1,0 +1,14 @@
+.show-hide-component {
+    border-left: 1px solid var(--primary-color);
+    margin-left: 1em;
+}
+
+.show-hide-component__title {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    cursor: pointer;
+}
+
+.show-hide-component__contents {
+    margin: 1em;
+}

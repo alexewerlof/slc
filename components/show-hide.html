@@ -1,0 +1,10 @@
+<div class="show-hide-component">
+    <h1 @click="toggle()" class="show-hide-component__title">
+        {{ icon }} {{ title }}
+    </h1>
+    <transition>
+        <div v-show="isVisible" class="show-hide-component__contents">
+            <slot></slot>
+        </div>
+    </transition>
+</div>
