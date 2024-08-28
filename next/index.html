@@ -53,10 +53,10 @@
                     <section>
                         <h2>
                             Objective: {{ percL10n(objective.perc) }}
-                            <button @click="removeSlo(i)">Remove Objective</button>
+                            <button @click="removeObjective(i)">Remove Objective</button>
                         </h2>
                         <div class="code block"><code>{{ objective.good }}</code></div>
-                        <p>Percentage: <code>{{ objective.percL10n }}</code></p>
+                        <p>Percentage: <code>{{ percL10n(objective.perc) }}</code></p>
                         <input
                             type="range"
                             v-model.number="objective.perc" />
@@ -91,12 +91,76 @@
                                 type="text"
                                 v-model="objective.thresholds.equalTo" />
                         </div>
-                        <p>Error Budget: {{ objective.errorBudgetPercL10n }}</p>
+                        <h3>Error Budget: {{ percL10n(objective.errorBudgetPerc) }}</h3>
                         <input type="range" v-model.number="objective.errorBudgetPerc" />
+
+                        <h3>Counts</h3>
+                        <h4>Good: at least {{ objective.goodCount }} {{ indicator.eventUnitNorm }}</h4>
+                        <h4>Bad: at most {{ objective.badCount }} {{ indicator.eventUnitNorm }}</h4>
+                        <h4>Valid: {{ objective.validCount }} {{ indicator.eventUnitNorm }}</h4>
+                        <input type="text" v-model.number="objective.estimatedValidEvents" />
+
+                        <h3>Cost of 1 bad event</h3>
+                        <h4>Min</h4>
+                        <input type="number" v-model.number="objective.errorBudget.minUnitCost" />
+                        <h4>Average</h4>
+                        <input type="number" v-model.number="objective.errorBudget.avgUnitCost" />
+                        <h4>Max</h4>
+                        <input type="number" v-model.number="objective.errorBudget.maxUnitCost" />
+                        <h4></h4>
+                        <h4>{{ objective.errorBudget.avgCost(objective.badCount) }}</h4>
+                        <h4>Currency</h4>
+                        <input type="text" v-model="objective.errorBudget.currency" />
                     </section>
                     <section>
                         <h1>Alerts</h1>
-                        <button @click="objective.addNewAlert(i)">Add Alert</button>
+                        <button @click="objective.addNewAlert()">Add Alert</button>
+                        <div v-for="alert of objective.alerts">
+                            <p>{{ alert.sloWindow }}</p>
+                            <h2>Alert</h2>
+                            <h3>Burn Rate: {{ alert.burnRate }}x</h3>
+                            <p>Time to exhaust error budget: {{ alert.exhaustWindow }}</p>
+                            <p>Bad: {{ alert.badCount }}</p>
+                            <input type="range"
+                                v-model.number="alert.burnRate"
+                                :min="config.burnRate.min"
+                                :max="config.burnRate.max"
+                                :step="config.burnRate.step" />
+                            
+                            <h3>After burning: {{ percL10n(alert.longWindowPerc) }}</h3>
+                            <p>Lookback Window: {{ alert.longWindow }}</p>
+                            <p>Bad: {{ alert.badCountLong }}</p>
+                            <input type="range"
+                                v-model.number="alert.longWindowPerc"
+                                :min="config.longWindowPerc.min"
+                                :max="config.longWindowPerc.max"
+                                :step="config.longWindowPerc.step" />
+                            
+                            <h3>Divider: {{ alert.shortWindowDivider }}</h3>
+                            <p>Lookback Window: {{ alert.shortWindow }}</p>
+                            <p>Bad: {{ alert.badCountShort }}</p>
+                            <input type="range"
+                                v-model.number="alert.shortWindowDivider"
+                                :min="config.shortWindowDivider.min"
+                                :max="config.shortWindowDivider.max"
+                                :step="config.shortWindowDivider.step" />
+
+                            <div class="code block">
+                                <code>
+                                    Percentage of {{ objective.good }}
+                                    during the last
+                                    {{ alert.longWindow.humanSec }}
+                                    &lt; {{ objective.perc }}
+                                </code>
+                                <code v-if="alert.useShortWindow">
+                                    <br>&&
+                                    <br>
+                                    Percentage of {{ objective.good }}
+                                    during the least
+                                    {{ alert.shortWindow.humanSec }}
+                                    &lt; {{ objective.perc }}
+                                </code>
+                        </div>
                     </section>
                 </article>
             </section>

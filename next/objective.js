@@ -1,9 +1,11 @@
 import { config } from "../config.js"
 import { percL10n } from "../lib/fmt.js"
+import { percent } from "../lib/math.js"
 import { daysToSeconds } from "../lib/time.js"
 import { inRange } from "../lib/validation.js"
 import { Alert } from "./alert.js"
 import { badFormula, goodFormula } from "./bound.js"
+import { Budget } from "./budget.js"
 import { Indicator } from "./indicator.js"
 import { Thresholds } from "./thresholds.js"
 import { TimeWindow } from "./time-window.js"
@@ -15,6 +17,7 @@ export class Objective {
         windowDays = config.windowDays.default,
         lowerThreshold = config.lowerThreshold.default,
         upperThreshold = config.upperThreshold.default,
+        estimatedValidEvents = config.estimatedValidEvents.default,
     ) {
         if (!(indicator instanceof Indicator)) {
             throw new TypeError(`Objective: sli must be an instance of Indicator. Got ${ indicator }`)
@@ -24,8 +27,10 @@ export class Objective {
             throw new RangeError(`Objective: perc must be a number between 0 and 100. Got ${ perc }`)
         }
         this.perc = perc
-        this.window = new TimeWindow(this, windowDays)
+        this.window = new TimeWindow(this, daysToSeconds(windowDays))
         this.thresholds = new Thresholds(this, lowerThreshold, upperThreshold)
+        this.estimatedValidEvents = estimatedValidEvents
+        this.errorBudget = new Budget()
         this.alerts = []
     }
 
@@ -37,8 +42,20 @@ export class Objective {
         return badFormula(this.indicator, this.thresholds)
     }
 
-    get percL10n() {
-        return percL10n(this.perc)
+    get valid() {
+        return this.indicator.valid
+    }
+
+    get goodCount() {
+        return Math.floor(percent(this.perc, this.validCount))
+    }
+
+    get badCount() {
+        return this.validCount - this.goodCount
+    }
+
+    get validCount() {
+        return this.indicator.isTimeBased ? this.window.countTimeslices() : this.estimatedValidEvents
     }
 
     set errorBudgetPerc(val) {
@@ -47,10 +64,6 @@ export class Objective {
 
     get errorBudgetPerc() {
         return 100 - this.perc
-    }
-
-    get errorBudgetPercL10n() {
-        return percL10n(this.errorBudgetPerc)
     }
 
     addNewAlert() {

@@ -29,6 +29,10 @@ export class Indicator {
         return badFormula(this)
     }
 
+    get valid() {
+        return `all ${ this.eventUnitNorm }`
+    }
+
     addObjective(objective) {
         if(!(objective instanceof Objective)) {
             throw new TypeError(`Indicator: objective must be an instance of Objective. Got ${ objective }`)
@@ -46,7 +50,7 @@ export class Indicator {
 
     get eventUnitNorm() {
         if (this.isEventBased) {
-            return this.eventName || 'events'
+            return this.eventUnit || 'events'
         }
         return humanTimeSlices(this.timeSliceLength)
     }

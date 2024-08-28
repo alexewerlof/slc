@@ -13,6 +13,7 @@ const app = createApp({
         const level = new Level(service, 'consumption')
         service.addLevel(level)
         const sli = new Indicator(level, 'requests', 'latency', 'ms', '', 'lt')
+        sli.addNewObjective()
         level.addIndicator(sli)
         return {
             config,
