@@ -257,7 +257,7 @@ export const config = fz({
     }),
     burnRate: fz({
         min: 1,
-        max: 20,
+        max: 100,
         step: 0.1,
         default: 6,
     }),
