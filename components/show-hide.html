@@ -1,7 +1,7 @@
 <div class="show-hide-component">
-    <h1 @click="toggle()" class="show-hide-component__title">
-        {{ icon }} {{ title }}
-    </h1>
+    <div @click="toggle()" class="show-hide-component__title">
+        {{ icon }} {{ title }} {{ name }}
+    </div>
     <transition>
         <div v-show="isVisible" class="show-hide-component__contents">
             <slot></slot>

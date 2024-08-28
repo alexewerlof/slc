@@ -17,6 +17,7 @@ export default {
             type: String,
             default: 'NO TITLE!',
         },
+        name: String,
     },
     methods: {
         toggle() {
