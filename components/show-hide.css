@@ -1,6 +1,7 @@
 .show-hide-component {
     border-left: 2px solid var(--primary-color);
     margin-left: 1em;
+    box-shadow: -5px -4px 7px 7px var(--background-darker);
 }
 
 .show-hide-component__title {
