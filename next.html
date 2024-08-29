@@ -344,7 +344,14 @@
                     <div class="annotated__controls">
                         <h2>Good {{ indicator.eventUnitNorm }}</h2>
                         <h3>Metric Name</h3>
-                        <input type="text" v-model="indicator.metricName" />
+                        <input type="text" v-model="indicator.metricName" />        
+                    </div>
+                    <div class="annotated__help">
+                        
+                    </div>
+                </div>
+                <div class="annotated">
+                    <div class="annotated__controls">
                         <h3>Condition</h3>
                         <div class="box">
                             <label>
@@ -373,6 +380,17 @@
                         </div>
                     </div>
                     <div class="annotated__help">
+                        <p>
+                            The thresholds are the values that put boundaries on the
+                            values of {{ metricName }}
+                            to define good {{ indicator.eventUnitNorm }}.
+                        </p>
+                        <p>
+                            They are part of the SLO definition and allow for
+                            <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
+                                Multi-Tierd SLOs
+                            </ext-link>.
+                        </p>
                         <h2>Definition of good</h2>
                         <div class="code block"><code>{{ indicator.good }}</code></div>
                         <h2>Definition of bad</h2>
@@ -408,6 +426,79 @@
                                 v-model.number="objective.perc" />
                         </div>
                         <div class="annotated__help">
+                            <div v-if="objective.perc > 99.9" class="info block">
+                                <p>
+                                    Be mindful of the price tag for this high service level <em>objective</em>!
+                                </p>
+            
+                                <p>
+                                    Everyone wants the highest possible number but
+                                    <ext-link href="https://blog.alexewerlof.com/p/10x9">
+                                        not everyone is willing to pay the price.
+                                    </ext-link>
+                                </p>
+                            </div>
+                            <div v-if="objective.perc < 70" class="info block">
+                                <p>
+                                    This is an unusually low service level objective.
+                                    Typically service level <em>objective</em> is above {{ percL10n(90) }} with some rare exceptions.
+                                    Please check the <a href="#error-budget-title">Error budget</a> for implications of your chosen SLO.
+                                </p>
+                            </div>
+                            <p>
+                                Service Level Objective (SLO) is the target percentage of
+                                good {{ objective.indicator.eventUnitNorm }}
+                                out of total {{ objective.indicator.eventUnitNorm }}
+                                in {{ objective.window }}.
+                            </p>
+                            <table>
+                                <caption>Typical SLO values</caption>
+                                <thead>
+                                    <tr>
+                                        <th>Informal Name</th>
+                                        <th>SLO Value</th>
+                                        <th aria-label="try button"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="p in config.slo.presets">
+                                        <td>{{ p.title }}</td>
+                                        <td>{{percL10n(p.slo)}}</td>
+                                        <td><button type="button" @click="objective.perc = p.slo">Try!</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>You can use these buttons to fine-tune your SLO.</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>{{ Math.floor(objective.perc) }}.XYZ</th>
+                                        <th>Subtract</th>
+                                        <th>Add</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>X</th>
+                                        <td><button type="button" @click="objective.perc -= 0.1">{{ percL10n(-0.1) }}</button></td>
+                                        <td><button type="button" @click="objective.perc += 0.1">{{ percL10n(+0.1) }}</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Y</th>
+                                        <td><button type="button" @click="objective.perc -= 0.01">{{ percL10n(-0.01) }}</button></td>
+                                        <td><button type="button" @click="objective.perc += 0.01">{{ percL10n(+0.01) }}</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Z</th>
+                                        <td><button type="button" @click="objective.perc -= 0.001">{{ percL10n(-0.001) }}</button></td>
+                                        <td><button type="button" @click="objective.perc += 0.001">{{ percL10n(+0.001) }}</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th>XYZ</th>
+                                        <td colspan="2"><button type="button" @click="objective.perc = Math.floor(objective.perc)">reset</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             <div class="code block"><code>{{ objective.good }}</code></div>
                         </div>
                     </div>
@@ -418,60 +509,303 @@
                             <p>{{ objective.window }}</p>
                             <input
                                 type="range"
-                                v-model="objective.window.days" />
+                                v-model="objective.window.days"
+                                :min="config.windowDays.min"
+                                :max="config.windowDays.max"
+                                :step="config.windowDays.step" />
+                        </div>
+                        <div class="annotated__help">
+                            <p>
+                                The SLO window (also known as the
+                                <ext-link href="https://blog.alexewerlof.com/p/compliance-period">compliance period</ext-link>)
+                                is the time period
+                                for which the SLO is calculated.
+                            </p>
+                            <p>
+                                Essentially this adjusts the <em>forgiveness</em> of the SLO.
+                                For example if the window is 30 days, we are not concerned with any incidents
+                                and breaches of SLO that happened before that.
+                            </p>
+                            <p>
+                                Smaller windows also help prevent the error budget from accumulating too much.
+                                For example, if the SLO is 99% for a time-based Availability SLI (uptime),
+                                the error budget allows 432 minutes of downtime per month.
+                                This amount can be consumed in multiple down times during the month or one chunk of long downtime.
+                                But the same SLO allows only 100 minutes of downtime per week.
+                            </p>
+                            <p>
+                                It is usually 30 days or 4 weeks.
+                            </p>
+                            <p>
+                                You can play with different ranges to see how a given SLO translates to different
+                                good {{ objective.indicator.eventUnitNorm }} and how it impacts the error budget.
+                            </p>
+                            <table>
+                                <caption>Typical compliance periods</caption>
+                                <thead>
+                                    <tr>
+                                        <th>Window</th>
+                                        <th>Days</th>
+                                        <th>Advantage</th>
+                                        <th aria-label="try button"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="p of config.windowDays.presets">
+                                        <td>{{ p.title }}</td>
+                                        <td>{{ p.days }}</td>
+                                        <td>{{ p.useCase }}</td>
+                                        <td><button type="button" @click="objective.window.days=p.days">Try!</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="annotated">
+                        <div class="annotated__controls">
+                            <h2>Thresholds</h2>
                         </div>
                         <div class="annotated__help">
                             
                         </div>
                     </div>
 
-                    <div class="annotated">
+                    <div v-if="objective.indicator.condition.isBounded" class="annotated">
                         <div class="annotated__controls">
-                            <div v-if="objective.indicator.condition.isLowerBounded">
-                                <h3>Lower Threshold: <code>{{ objective.thresholds.lower }}</code></h3>
-                                <input
-                                    type="range"
-                                    v-model.number="objective.thresholds.lower"
-                                    :min="objective.thresholds.lowerMin"
-                                    :max="objective.thresholds.lowerMax"/>
-                            </div>
-    
-                            <div v-if="objective.indicator.condition.isUpperBounded">
-                                <h3>Upper Threshold: <code>{{ objective.thresholds.upper }}</code></h3>
-                                <input
-                                    type="range"
-                                    v-model.number="objective.thresholds.upper"
-                                    :min="objective.thresholds.upperMin"
-                                    :max="objective.thresholds.upperMax"/>
-                            </div>
-    
-                            <div v-if="!objective.indicator.condition.isBounded">
-                                <h3>Equal to</h3>
-                                <input
-                                    type="text"
-                                    v-model="objective.thresholds.equalTo" />
-                            </div>
+                            <h3>Lower Threshold: <code>{{ objective.thresholds.lower }}</code></h3>
+                            <input
+                                type="range"
+                                v-model.number="objective.thresholds.lower"
+                                :min="objective.thresholds.lowerMin"
+                                :max="objective.thresholds.lowerMax"/>
+
+                            <h3>Upper Threshold: <code>{{ objective.thresholds.upper }}</code></h3>
+                            <input
+                                type="range"
+                                v-model.number="objective.thresholds.upper"
+                                :min="objective.thresholds.upperMin"
+                                :max="objective.thresholds.upperMax"/>
                         </div>
                         <div class="annotated__help">
-                            xx
+                            <div class="warning block" v-if="upperThreshold <= lowerThreshold">
+                                <p>
+                                    The upper threshold must be greater than the lower threshold.
+                                </p>
+                            </div>
+                            <p>
+                                The upper and lower threshold (<code>$UT</code> and <code>$LT</code>) define the 
+                                accepted range of values for the {{ metricName }}
+                                from the consumer's perspective to indicate good {{ indicator.eventUnitNorm }}.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div v-if="!objective.indicator.condition.isBounded" class="annotated">
+                        <div class="annotated__controls">
+                            <h3>Equal to</h3>
+                            <input
+                                type="text"
+                                v-model="objective.thresholds.equalTo" />
+                        </div>
+                        <div class="annotated__help">
+                            <p>
+                                Good {{ objective.indicator.eventNameNorm }} are indicated by when
+                                the value of {{ objective.indicator.metricName }} is equal
+                                to {{ objective.thresholds.equalTo }}.
+                            </p>
                         </div>
                     </div>
                     
                     <div class="annotated">
                         <div class="annotated__controls">
-                            <h3>Error Budget: {{ percL10n(objective.errorBudgetPerc) }}</h3>
+                            <h2>Error Budget: {{ percL10n(objective.errorBudgetPerc) }}</h2>
                             <input type="range" v-model.number="objective.errorBudgetPerc" />
                             <h3>Estimated valid count</h3>
                             <input type="text" v-model.number="objective.estimatedValidEvents" />
                         </div>
                         <div class="annotated__help">
+                            <div class="warning block" v-if="objective.badCount === 0" aria-colcount="warning block">
+                                <p>
+                                    Warning: The error budget is 0 based on your estimated number of valids {{ sloWindow.eventUnitNorm }}.
+                                </p>
+                            </div>
                             <h3>Counts</h3>
                             <h4>Good: at least {{ objective.goodCount }} {{ indicator.eventUnitNorm }}</h4>
                             <h4>Bad: at most {{ objective.badCount }} {{ indicator.eventUnitNorm }}</h4>
                             <h4>Valid: {{ objective.validCount }} {{ indicator.eventUnitNorm }}</h4>
+                            <p>
+                                Error budget is one of the core ideas behind using SLI/SLOs to improve reliability.
+                                Instead of denying or forbidding errors, error budget allows the system to fail
+                                within a pre-defined limit.
+                            </p>
+                            <p>
+                                The number one enemy of reliability is change.
+                                But we need change to be able to improve the system.
+                                Error budgets do exactly that.
+                                They provide a budget of error for the team to improve the system while keeping
+                                the consumers happy enough.
+                            </p>
+                            <p>
+                                Error budget is the complement of SLO.
+                                It is the percentage of bad {{ objective.indicator.eventUnitNorm }} that you can have
+                                before you violate the SLO.
+                            </p>
+                            <math>
+                                <mtable>
+                                    <mtr>
+                                        <mtd>
+                                            <mi>error_budget</mi>
+                                        </mtd>
+                                        <mtd>
+                                            <mo>=</mo>
+                                            <mn>100</mn>
+                                            <mo>-</mo>
+                                            <mi>SLO</mi>
+                                        </mtd>
+                                    </mtr>
+    
+                                    <mtr>
+                                        <mtd></mtd>
+                                        <mtd>
+                                            <mo>=</mo>
+                                            <mn>{{ percL10n(100) }}</mn>
+                                            <mo>-</mo>
+                                            <mi>{{ percL10n(objective.perc) }}</mi>
+                                            <mo>=</mo>
+                                            <mn>{{ percL10n(objective.errorBudgetPerc) }}</mn>
+                                        </mtd>
+                                    </mtr>
+                                </mtable>
+                            </math>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Failures</th>
+                                        <th>Less</th>
+                                        <th>More</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>{{ numL10n(1) }}</th>
+                                        <td>
+                                            <button type="button"
+                                                @click="objective.errorBudgetPerc -= objective.eventDeltaPerc(1)">
+                                                {{ numL10n(-1) }}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button"
+                                                @click="objective.errorBudgetPerc += objective.eventDeltaPerc(1)">
+                                                {{ numL10n(1) }}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ numL10n(10) }}</th>
+                                        <td>
+                                            <button type="button"
+                                                @click="objective.errorBudgetPerc -= objective.eventDeltaPerc(10)">
+                                                {{ numL10n(-10) }}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button"
+                                                @click="objective.errorBudgetPerc += objective.eventDeltaPerc(10)">
+                                                {{ numL10n(10) }}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ numL10n(100) }}</th>
+                                        <td>
+                                            <button type="button"
+                                                @click="objective.errorBudgetPerc -= objective.eventDeltaPerc(100)">
+                                                {{ numL10n(-100) }}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button"
+                                                @click="objective.errorBudgetPerc += objective.eventDeltaPerc(100)">
+                                                {{ numL10n(100) }}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ numL10n(1000) }}</th>
+                                        <td>
+                                            <button type="button"
+                                                @click="objective.errorBudgetPerc -= objective.eventDeltaPerc(1000)">
+                                                {{ numL10n(-1000) }}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button"
+                                                @click="objective.errorBudgetPerc += objective.eventDeltaPerc(1000)">
+                                                {{ numL10n(1000) }}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ numL10n(10000) }}</th>
+                                        <td>
+                                            <button type="button"
+                                                @click="objective.errorBudgetPerc -= objective.eventDeltaPerc(10000
+                                                )">{{ numL10n(-10000) }}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button"
+                                                @click="objective.errorBudgetPerc += objective.eventDeltaPerc(10000
+                                                )">{{ numL10n(10000) }}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
+                    <div class="annotated">
+                        <div class="annotated__controls">
+                            <div class="code block">
+                                <code>
+                                    <span class="funct"> Percentage of </span>
+                                    <span class="exprs">{{ objective.indicator.eventUnitNorm }}</span>
+                                    <span class="funct"> during the last </span>
+                                    <span class="exprs">{{ objective.window.humanSec }}</span>
+                                    <span class="funct"> where </span>
+                                    <span class="exprs">{{ objective.good }}</span>
+                                </code>
+                            </div>
+                        </div>
+                        <div class="annotated__help">
+                            <p>
+                                <ext-link href="https://blog.alexewerlof.com/p/sls">
+                                    Service Level Status (SLS)
+                                </ext-link>
+                                is the percentage of good
+                                {{ objective.indicator.eventUnitNorm }} in a given time.
+                            </p>
+                            <p>
+                                SLS is the status of the Service Level and directly relates to SLO.
+                                Whenever SLS is below SLO, we have breached the SLO.
+                                In case of <ext-link href="https://blog.alexewerlof.com/p/sla">SLA</ext-link>,
+                                this may have severe consequences.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="annotated">
+                        <div class="annotated__controls">
+                            
+                        </div>
+                        <div class="annotated__help">
+                            
+                        </div>
+                    </div>
+                    
                     <div class="annotated">
                         <div class="annotated__controls">
                             <div class="block">
@@ -479,14 +813,6 @@
                                     <input type="checkbox" v-model="objective.cost.use"> Use Cost
                                 </label>
                             </div>
-                        </div>
-                        <div class="annotated__help">
-                            Why cost matters?
-                        </div>
-                    </div>
-                    
-                    <div class="annotated">
-                        <div class="annotated__controls">
                             <div v-if="objective.cost.use">
                                 <h3>Cost of 1 bad event</h3>
                                 <h4>Currency</h4>
@@ -497,22 +823,87 @@
                                 <input type="number" v-model.number="objective.cost.avgUnitCost" />
                                 <h4>Max</h4>
                                 <input type="number" v-model.number="objective.cost.maxUnitCost" />
-                                <h4>Error Budget Cost</h4>
-                                <p>{{ objective.cost.all(objective.badCount) }}</p>
                             </div>
                         </div>
                         <div class="annotated__help">
-                            What is this?
+                            <h4>Error Budget Cost</h4>
+                            <p>{{ objective.cost.all(objective.badCount) }}</p>
+                            <p>
+                                You can optionally assign a cost to errors in order to help you set a meaningful
+                                error budget that matches your customer expectations.
+                            </p>
+                            <p>
+                                The idea is to use money to put the failures in perspective and don't over-optimize when not needed.
+                            </p>
+                            <p>
+                                How much does a bad
+                                <label for="sli-event-unit">
+                                    <code>{{ objective.indicator.eventUnitNorm }}</code>
+                                </label>
+                                cost the business or your team?
+                            </p>
+                            <p>
+                                You can set the currency to see how much it costs to violate the SLO.
+                                If you can't put a currency on the errors, feel free to get creative.
+                            </p>
+                            <table>
+                                <caption>Typical Currencies</caption>
+                                <tr>
+                                    <th>Abbreviation</th>
+                                    <th>Description</th>
+                                    <th></th>
+                                </tr>
+                                <tr v-for="p of config.badEventCurrency.presets">
+                                    <td>{{ p.currency }}</td>
+                                    <td>{{ p.description }}</td>
+                                    <td><button type="button" @click="objective.cost.currency = p.currency">Try!</button></td>
+                            </table>
+                            <p>
+                                This cost will be used to put a tangible number on various windows and events.
+                                It might be hard to put a number on failures especially if some resilience patterns are part of the architecture.
+                            </p>
+                            <p>
+                                There are many ways to make the failures cheaper.
+                                In a future article, we will discuss all patterns of reliability and how to make errors cheap.
+                                In the mean time check out the following techniques:
+                            </p>
+                            <ul>
+                                <li>
+                                    <ext-link href="https://blog.alexewerlof.com/p/fallback">Fallback</ext-link>
+                                </li>
+                                <li>
+                                    <ext-link href="https://blog.alexewerlof.com/p/failover">Failover</ext-link>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="button-bar">
-                        <button @click="objective.addNewAlert()">Add Alert</button>
+                    <div class="annotated">
+                        <div class="annotated__controls">
+                            <div class="button-bar">
+                                <button @click="objective.addNewAlert()">Add Alert</button>
+                            </div>        
+                        </div>
+                        <div class="annotated__help">
+                            <p>
+                                What is the point of setting SLI/SLO if we are not going to take application
+                                when the SLO is violated?
+                            </p>
+                            <p>
+                                Alerting on error budgets enable us to be on top of the reliability of our system.
+                                When using service levels, the alert triggers on the rate of consuming the error budget.
+                            </p>
+                            <p>
+                                A Service Level Objective (SLO) specifies a commitment.
+                                The commitment is only meaningful if the service provider is monitoring the
+                                metric that indicates the level of service (SLI).
+                            </p>
+                        </div>
                     </div>
                     <show-hide-component
-                        v-for="alert of objective.alerts"
+                        v-for="(alert, alertIndex) of objective.alerts"
                         title="Alert"
                         :name="alertIndex">
-                            <p>{{ alert.sloWindow }}</p>
+                        <p>{{ alert.sloWindow }}</p>
                         <div class="annotated">
                             <div class="annotated__controls">
                                 <h3>Burn Rate: {{ alert.burnRate }}x</h3>
@@ -528,7 +919,106 @@
                                     :step="config.burnRate.step" />
                             </div>
                             <div class="annotated__help">
-                                
+                                <p>
+                                    When setting an alert, the burn rate decides how quickly the alert reacts
+                                    to errors.
+                                </p>
+                                <ul>
+                                    <li>
+                                        Too fast and it will lead to false positives (alerting unnecessarily)
+                                        and alert fatigue (too many alerts).
+                                    </li>
+                                    <li>
+                                        Too slow and the error burget will be burned before you know it.
+                                    </li>
+                                </ul>
+                                <p>
+                                    Google SRE Workbook goes through
+                                    <ext-link href="https://sre.google/workbook/alerting-on-slos/">
+                                        6 alerting strategies based on SLOs
+                                    </ext-link>.
+                                </p>
+                                <p>
+                                    Burn rate is the rate at which the error budget is consumed.
+                                    It is the ratio of the error budget to the SLO window.
+                                </p>
+                                <p>
+                                    A burn rate of <button @click="alert.burnRate = 1">1x</button> means that the error budget will be consumed during the
+                                    SLO window (accepted).
+                                </p>
+                                <p>
+                                    A burn rate of <button @click="alert.burnRate = 2">2x</button> means that the error budget will be consumed in half the
+                                    SLO window. This is not acceptable because at this rate, the SLO will be
+                                    violated before the end of the SLO window.
+                                </p>
+                                <p>
+                                    You have selected a burn rate of {{ alert.burnRate }}x.
+                                    This means the error budget ({{ alert.objective.badCount }} failed {{ alert.objective.indicator.eventUnitNorm }}) will be consumed in
+                                    <time>{{ alert.exhaustWindow.humanTime }}</time>
+                                    instead of being spread across {{ objective.window.humanTime }}.
+                                </p>
+                                <p>
+                                    If the error budget continues to burn at this rate throughout the SLO window,
+                                    there will be {{ sloWindowBudgetBurn }}.
+                                </p>
+                                <p>
+                                    Google SRE Workbook goes through 6 alerting strategies and
+                                    <ext-link href="https://sre.google/workbook/alerting-on-slos/">
+                                        recommends
+                                    </ext-link>:
+                                </p>
+                                <table>
+                                    <thead>
+                                        <th>Burn Rate</th>
+                                        <th>Error Budget</th>
+                                        <th>Long-Window</th>
+                                        <th v-if="shortWindowVisible">Short-Window</th>
+                                        <th>Action</th>
+                                        <th aria-label="try button"></th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>14.4x</td>
+                                            <td>{{ percL10n(2) }} Consumed</td>
+                                            <td>1 hour</td>
+                                            <td v-if="shortWindowVisible">5 minutes</td>
+                                            <td>Page</td>
+                                            <td>
+                                                <button type="button" @click="alert.burnRate = 14.4, alert.longWindowPerc = 2, alert.shortWindowDivider = 12">
+                                                    Try!
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>6x</td>
+                                            <td>{{ percL10n(5) }} Consumed</td>
+                                            <td>6 hours</td>
+                                            <td v-if="shortWindowVisible">30 minutes</td>
+                                            <td>Page</td>
+                                            <td>
+                                                <button type="button" @click="alert.burnRate = 6, alert.longWindowPerc = 5, alert.shortWindowDivider = 12">
+                                                    Try!
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1x</td>
+                                            <td>{{ percL10n(10) }} Consumed</td>
+                                            <td>3 days</td>
+                                            <td v-if="shortWindowVisible">6 hours</td>
+                                            <td>Ticket</td>
+                                            <td>
+                                                <button type="button" @click="alert.burnRate = 1, alert.longWindowPerc = 10, alert.shortWindowDivider = 12">
+                                                    Try!
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p>
+                                    Note: The above values for Long-Window and Short-Window are based on a 1-month SLO window.
+                                    You can see your actual values in the comments below Long-Window and Short-Window.
+                                </p>
                             </div>
                         </div>
                             
@@ -546,16 +1036,135 @@
                                     :min="config.longWindowPerc.min"
                                     :max="config.longWindowPerc.max"
                                     :step="config.longWindowPerc.step" />
+                                
+                                <div v-if="alert.longWindow.sec < 600" class="warning block">
+                                    <p>
+                                        Warning: The alert is too "jumpy" and will trigger too often.
+                                        This may lead to alert fatigue or even worse: ignoring the alerts.
+                                    </p>
+                                </div>
+                                <div v-if="alert.maxTTRWindow.sec < 3600" class="info block">
+                                    <p>
+                                        Note: The maximum available time to resolve (TTR) is too short for a human to react.
+                                        It is strongly recommended to automate the incident resolution instead of relying on human response to alerts.
+                                        In practice you may have less time due to part of the error budget have already been consumed.
+                                    </p>
+                                </div>
                             </div>
                             <div class="annotated__help">
-                                
+                                <div v-if="alert.longWindowPerc > 33" class="warning block">
+                                    <p>
+                                        Warning: Remember that the alert will trigger after
+                                        {{ percL10n(alert.longWindowPerc) }}
+                                        of the error budget is consumed! That error budget is for
+                                        {{ alert.objective.window.humanTime }}.
+                                    </p>
+                                    <p>
+                                        Based on your setting an alert burns {{ percL10n(alert.longWindowPerc) }} just to trigger. Then it needs some time to resolve too.
+                                    </p>
+                                    <p>
+                                        How many alerts like this can you have in
+                                        {{ alert.objective.window.humanTime }}
+                                        before the entire error budget is consumed?
+                                    </p>
+                                </div>
+                                <p>
+                                    Long-window alert is the "normal" alert.
+                                    The reason it is called "long" is to distinguish it from the "short-window"
+                                    alert which is primarily used to reduce false positives and improve the alert reset time.
+                                </p>
+                                <p>
+                                    We don't want to wait for the entire error budget to be consumed before
+                                    alerting! It will be too late to take action.
+                                </p>
+                                <p>
+                                    Therefore the alert should trigger before a significant portion of the
+                                    error budget is consumed.
+                                </p>
+                                <p>
+                                    Based on your setup, the alert will trigger after we have consumed
+                                    {{ percL10n(alert.longWindowPerc) }} of the entire time allotted for the error budget
+                                    (or SLO compliance window) which is
+                                    <time>{{ alert.objective.window.humanTime }}</time>.
+                                </p>
+                                <math>
+                                    <mrow>
+                                        <mi>TTTrigger</mi>
+                                        <mo>=</mo>
+                                        <mn class="const">{{ percL10n(alert.longWindowPerc) }}</mn>
+                                        <mo class="funct">&times;</mo>
+                                        <mn class="const">{{ alert.objective.window.humanSec }}</mn>
+                                        <mo class="punct">=</mo>
+                                        <mn class="const">{{ alert.longWindow.humanSec }}</mn>
+                                    </mrow>
+                                </math>
+                                <p>
+                                    Which is
+                                    <time>{{ alert.longWindow.humanTime }}</time>.
+                                </p>
+                                <p>
+                                    Assuming that the entire error budget was available at the begining of the incident,
+                                    the maximum time available to respond before the entire error budget is exhausted is:
+                                </p>
+                                <math>
+                                    <mrow>
+                                        <msub>
+                                            <mi>TTRespond</mi>
+                                            <ms>max</ms>
+                                        </msub>
+                                        <mo>=</mo>
+                                        <mn>{{ alert.exhaustWindow.humanSec }}</mn>
+                                        <mo>-</mo>
+                                        <mn>{{ alert.longWindow.humanSec }}</mn>
+                                        <mo>=</mo>
+                                        <mn>{{ alert.maxTTRWindow.humanSec }}</mn>
+                                    </mrow>
+                                </math>
+                                <p>
+                                    Which is 
+                                    <time>{{ alert.maxTTRWindow.humanTime }}</time>.
+                                </p>
+                                <p>
+                                    Remember that this is the best case scenario where the failures start to happen
+                                    at the start of a completely unused error budget.
+                                    In reality, you may have much less time if you don't want to consume the entire error budget for an incident.
+                                    Also note that the burn rate can be higher than {{ burnRate }}x.
+                                </p>
                             </div>
                         </div>
                             
+                        <div class="annotated">
+                            <div class="annotated__controls">
+                                <div class="box">
+                                    <label for="show-short-window-alert">
+                                        <input
+                                            id="show-short-window-alert"
+                                            type="checkbox"
+                                            v-model="shortWindowVisible"
+                                        >
+                                        Use Short-Window Alert
+                                    </label>        
+                                </div>
+                            </div>
+                            <div class="annotated__help">
+                                <p>
+                                    The purpose of the short-window alert is to reduce false alerts.
+                                </p>
+                                <p>
+                                    It checks a shorter lookback window (hence the name) to make sure that
+                                    the burn rate is still high before triggering the alert.
+                                    This reduces false positives where an alert is triggered for a temporary high burn rate.
+                                </p>
+                                <p>
+                                    The Short-Window alert reduces false positives
+                                    at the expence of making the alerting setup more complex.
+                                </p>
+                            </div>
+                        </div>
                             
                         <div class="annotated">
                             <div class="annotated__controls">
-                                <h3>Divider: {{ alert.shortWindowDivider }}</h3>
+                                <h3>Short/Long ratio: <code>1/{{ alert.shortWindowDivider }}</code></h3>
                                 <p>Lookback Window: {{ alert.shortWindow }}</p>
                                 <p>Bad: {{ alert.badCountShort }} {{ alert.objective.indicator.eventUnitNorm }}</p>
                                 <p v-if="objective.cost.use">
@@ -566,30 +1175,183 @@
                                     :min="config.shortWindowDivider.min"
                                     :max="config.shortWindowDivider.max"
                                     :step="config.shortWindowDivider.step" />
+
+                                <div v-if="alert.longWindow.sec <= 60" class="warning block">
+                                    <p>
+                                        Warning: Long alert Window is too short at this burn rate ({{ burnRate }}x) 
+                                        which may lead to alert fatigue.
+                                    </p>
+                                </div>
+                                <div class="error block" if="alertLongWindow.eventCount === 0" class="error block">
+                                    <p>
+                                        Error: Division by zero! Long alert Window is too short for enough valid {{ alert.objective.indicator.eventUnitNorm }} to be counted.
+                                    </p>
+                                </div>
                             </div>
                             <div class="annotated__help">
+                                <p>
+                                    The Short-Window is usually 1/12th of the Long-Window (per
+                                    <ext-link href="https://sre.google/workbook/alerting-on-slos/">
+                                        Google SRE Workbook
+                                    </ext-link>
+                                    recommendation).
+                                    But you can play with different dividers to see how they impact
+                                    the detection time of the alert.
+                                </p>
+                                <p v-if="alert.shortWindowDivider !== config.shortWindowDivider.default">
+                                    <button type="button" @click="alert.shortWindowDivider = config.shortWindowDivider.default">Reset to 1/{{ config.shortWindowDivider.default }}</button>
+                                </p>
+                                <p>
+                                    Long-Window alert triggers after consuming
+                                    {{ percL10n(alert.longWindowPerc) }}
+                                    of the total error budget.
+                                    Therefore, the Short-Window alert triggers after consuming:
+                                </p>
+                                <math>
+                                    <mrow>
+                                        <msub>
+                                            <mi>Lookbcack</mi>
+                                            <ms>Short</ms>
+                                        </msub>
+                                        <mo>=</mo>
+                                        <mfrac>
+                                            <msub>
+                                                <mi>Lookback</mi>
+                                                <ms>Long</ms>
+                                            </msub>
+                                            <mn>{{ alert.shortWindowDivider }}</mn>
+                                        </mfrac>
+                                        <mo>=</mo>
+                                        <mfrac>
+                                            <mn>{{ percL10n(alert.longWindowPerc) }}</mn>
+                                            <mn>{{ alert.shortWindowDivider }}</mn>
+                                        </mfrac>
+                                        <mo> = </mo>
+                                        <mn>percL10n(alertShortWindowPerc)</mn>
+                                    </mrow>
+                                </math>
+                                <p>
+                                    Converted to time based on the current window
+                                    ({{ alert.objective.window.humanTime }}):
+                                </p>
+                                <math>
+                                    <mrow>
+                                        <msub>
+                                            <mi>Lookbcack</mi>
+                                            <ms>Short</ms>
+                                        </msub>
+                                        <mo>=</mo>
+                                        <mn>percL10n(alertShortWindowPerc)</mn>
+                                        <mo>&times;</mo>
+                                        <mn>{{ alert.objective.window.humanSec }}</mn>
+                                        <mo>=</mo>
+                                        <mn>{{ alert.shortWindow.humanSec }}</mn>
+                                    </mrow>
+                                </math>
+                                <p>
+                                    This means the alert will trigger only if we are <em>still</em>
+                                    burning the error budget at least at the
+                                    <label for="burn-rate-input">{{ burnRate }}</label>x burn rate
+                                    in the past
+                                    <label for="alertShortWindowDivider">
+                                        <time>{{ alert.shortWindow.humanTime }}</time>
+                                    </label>.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="annotated">
+                            <div class="annotated__controls">
                                 <div class="code block">
-                                    <code>
-                                        Percentage of {{ objective.good }}
-                                        during the last
-                                        {{ alert.longWindow.humanSec }}
-                                        &lt; {{ objective.perc }}
-                                    </code>
-                                    <code v-if="alert.useShortWindow">
-                                        <br>&&
-                                        <br>
-                                        Percentage of {{ objective.good }}
-                                        during the least
-                                        {{ alert.shortWindow.humanSec }}
-                                        &lt; {{ objective.perc }}
-                                    </code>
-                                </div>
+                                <code>
+                                    Percentage of {{ objective.good }}
+                                    during the last
+                                    {{ alert.longWindow.humanSec }}
+                                    &lt; {{ objective.perc }}
+                                </code>
+                                <code v-if="alert.useShortWindow">
+                                    <br>&&
+                                    <br>
+                                    Percentage of {{ objective.good }}
+                                    during the least
+                                    {{ alert.shortWindow.humanSec }}
+                                    &lt; {{ objective.perc }}
+                                </code>
+                            </div>
+                            </div>
+                            <div class="annotated__help">
+                                <p>
+                                    This is a pseudo-code for trigerring alerts based on the
+                                    SLI metric in relation to the desired SLO (
+                                        <label for="slo-int-input">
+                                            <code class="const">{{ percL10n(objective.perc) }}</code>
+                                        </label>
+                                    ).
+                                    You need to translate it to your observability and/or alerting tool.
+                                </p>
                             </div>
                         </div>
                     </show-hide-component>
                 </show-hide-component>
             </show-hide-component>
     </show-hide-component>
+
+    <!-- Toast Notification -->
+    <div v-if="toastCaption" class="toast" @animationend="this.toastCaption = ''">{{ toastCaption }}</div>
+
+    <!-- Cookie popup -->
+    <dialog id="cookie-banner" class="popup" :open="showCookiePopup">
+        <p>
+            This site uses cookies from Google to deliver its services and to analyze traffic.
+            Information about your use of this site is shared with Google. By using this site, you agree to its use of cookies.
+        </p>
+        <p>
+            Tip:
+            If you want to disable Google Analytics <em>on all sites</em>, you can use 
+            <ext-link href="https://tools.google.com/dlpage/gaoptout">
+                Google's official workaround</ext-link>.
+        </p>
+        <ext-link href="https://policies.google.com/technologies/cookies">
+            Learn More</ext-link>
+        &nbsp;
+        <button type="button" @click="hideCookiePopup">Got it</button>
+    </dialog>    
+
+    <footer>
+        <ul class="link-list">
+            <li>
+                <ext-link href="https://github.com/userpixel/slc/issues">Report issues</ext-link>
+            </li>
+            <li>
+                <ext-link href="https://alexewerlof.com">Alex Ewerlöf</ext-link>
+            </li>
+            <li>
+                <ext-link href="https://blog.alexewerlof.com/p/why-bother-with-sli-and-slo">Why bother?</ext-link>
+            </li>
+            <li>
+                <ext-link href="https://forms.gle/CspQc8AGqTmtG2AD7">Feedback</ext-link>
+            </li>
+        </ul>
+
+        <p>
+            This web app took hundreds of hours of my private time over 12 months to build.
+            I hope it helps you.
+        </p>
+        <p>
+            To support my work, you can subscribe to
+            <ext-link href="https://blog.alexewerlof.com/">my newsletter</ext-link>.
+            This also gives you full access to my online book on this topic:
+            <ext-link href="https://blog.alexewerlof.com/p/rem">Reliability Engineering Mindset</ext-link>.
+        </p>
+            <em>
+                Right now, you can get 20% off via
+                <ext-link href="https://blog.alexewerlof.com/protipsdiscount">this link</ext-link>.
+            </em>
+        </p>
+        <ext-link href="https://alexewerlof.com">
+            <img alt="logo" class="footer__logo" src="img/logo.png" />
+        </ext-link>
+    </footer>
     </main>
     <script type="module" src="next.js"></script>
 </body>
