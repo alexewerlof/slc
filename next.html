@@ -424,8 +424,6 @@
                             <input
                                 type="range"
                                 v-model.number="objective.perc" />
-                        </div>
-                        <div class="annotated__help">
                             <div v-if="objective.perc > 99.9" class="info block">
                                 <p>
                                     Be mindful of the price tag for this high service level <em>objective</em>!
@@ -445,6 +443,8 @@
                                     Please check the <a href="#error-budget-title">Error budget</a> for implications of your chosen SLO.
                                 </p>
                             </div>
+                        </div>
+                        <div class="annotated__help">
                             <p>
                                 Service Level Objective (SLO) is the target percentage of
                                 good {{ objective.indicator.eventUnitNorm }}
@@ -586,13 +586,13 @@
                                 v-model.number="objective.thresholds.upper"
                                 :min="objective.thresholds.upperMin"
                                 :max="objective.thresholds.upperMax"/>
-                        </div>
-                        <div class="annotated__help">
                             <div class="warning block" v-if="upperThreshold <= lowerThreshold">
                                 <p>
                                     The upper threshold must be greater than the lower threshold.
                                 </p>
                             </div>
+                        </div>
+                        <div class="annotated__help">
                             <p>
                                 The upper and lower threshold (<code>$UT</code> and <code>$LT</code>) define the 
                                 accepted range of values for the {{ metricName }}
@@ -623,13 +623,13 @@
                             <input type="range" v-model.number="objective.errorBudgetPerc" />
                             <h3>Estimated valid count</h3>
                             <input type="text" v-model.number="objective.estimatedValidEvents" />
-                        </div>
-                        <div class="annotated__help">
                             <div class="warning block" v-if="objective.badCount === 0" aria-colcount="warning block">
                                 <p>
                                     Warning: The error budget is 0 based on your estimated number of valids {{ sloWindow.eventUnitNorm }}.
                                 </p>
                             </div>
+                        </div>
+                        <div class="annotated__help">
                             <h3>Counts</h3>
                             <h4>Good: at least {{ objective.goodCount }} {{ indicator.eventUnitNorm }}</h4>
                             <h4>Bad: at most {{ objective.badCount }} {{ indicator.eventUnitNorm }}</h4>
@@ -1037,21 +1037,6 @@
                                     :max="config.longWindowPerc.max"
                                     :step="config.longWindowPerc.step" />
                                 
-                                <div v-if="alert.longWindow.sec < 600" class="warning block">
-                                    <p>
-                                        Warning: The alert is too "jumpy" and will trigger too often.
-                                        This may lead to alert fatigue or even worse: ignoring the alerts.
-                                    </p>
-                                </div>
-                                <div v-if="alert.maxTTRWindow.sec < 3600" class="info block">
-                                    <p>
-                                        Note: The maximum available time to resolve (TTR) is too short for a human to react.
-                                        It is strongly recommended to automate the incident resolution instead of relying on human response to alerts.
-                                        In practice you may have less time due to part of the error budget have already been consumed.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="annotated__help">
                                 <div v-if="alert.longWindowPerc > 33" class="warning block">
                                     <p>
                                         Warning: Remember that the alert will trigger after
@@ -1068,6 +1053,21 @@
                                         before the entire error budget is consumed?
                                     </p>
                                 </div>
+                                <div v-if="alert.longWindow.sec < 600" class="warning block">
+                                    <p>
+                                        Warning: The alert is too "jumpy" and will trigger too often.
+                                        This may lead to alert fatigue or even worse: ignoring the alerts.
+                                    </p>
+                                </div>
+                                <div v-if="alert.maxTTRWindow.sec < 3600" class="info block">
+                                    <p>
+                                        Note: The maximum available time to resolve (TTR) is too short for a human to react.
+                                        It is strongly recommended to automate the incident resolution instead of relying on human response to alerts.
+                                        In practice you may have less time due to part of the error budget have already been consumed.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="annotated__help">
                                 <p>
                                     Long-window alert is the "normal" alert.
                                     The reason it is called "long" is to distinguish it from the "short-window"
