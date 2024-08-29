@@ -1069,8 +1069,9 @@
                             </div>
                             <div class="annotated__help">
                                 <p>
-                                    Long-window alert is the "normal" alert.
-                                    The reason it is called "long" is to distinguish it from the "short-window"
+                                    Long-window alert is the <em>normal</em> alert.
+                                    The reason it is called <em>long-window</em>
+                                    to distinguish it from the <em>short-window</em>
                                     alert which is primarily used to reduce false positives and improve the alert reset time.
                                 </p>
                                 <p>
@@ -1156,7 +1157,7 @@
                                     This reduces false positives where an alert is triggered for a temporary high burn rate.
                                 </p>
                                 <p>
-                                    The Short-Window alert reduces false positives
+                                    The short-window alert reduces false positives
                                     at the expence of making the alerting setup more complex.
                                 </p>
                             </div>
@@ -1190,7 +1191,7 @@
                             </div>
                             <div class="annotated__help">
                                 <p>
-                                    The Short-Window is usually 1/12th of the Long-Window (per
+                                    The short-window is usually 1/12th of the Long-Window (per
                                     <ext-link href="https://sre.google/workbook/alerting-on-slos/">
                                         Google SRE Workbook
                                     </ext-link>
@@ -1223,28 +1224,10 @@
                                         </mfrac>
                                         <mo>=</mo>
                                         <mfrac>
-                                            <mn>{{ percL10n(alert.longWindowPerc) }}</mn>
+                                            <mn>{{ alert.longWindow.humanSec }}</mn>
                                             <mn>{{ alert.shortWindowDivider }}</mn>
                                         </mfrac>
                                         <mo> = </mo>
-                                        <mn>percL10n(alertShortWindowPerc)</mn>
-                                    </mrow>
-                                </math>
-                                <p>
-                                    Converted to time based on the current window
-                                    ({{ alert.objective.window.humanTime }}):
-                                </p>
-                                <math>
-                                    <mrow>
-                                        <msub>
-                                            <mi>Lookbcack</mi>
-                                            <ms>Short</ms>
-                                        </msub>
-                                        <mo>=</mo>
-                                        <mn>percL10n(alertShortWindowPerc)</mn>
-                                        <mo>&times;</mo>
-                                        <mn>{{ alert.objective.window.humanSec }}</mn>
-                                        <mo>=</mo>
                                         <mn>{{ alert.shortWindow.humanSec }}</mn>
                                     </mrow>
                                 </math>
