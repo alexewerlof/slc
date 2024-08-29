@@ -12,7 +12,7 @@ import HelpComponent from './components/help.js'
 import ShowHideComponent from './components/show-hide.js'
 import SLFractionComponent from './components/sl-fraction.js'
 import { setTitle } from './lib/header.js'
-import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
+import { percentToRatio } from './lib/math.js'
 
 const app = createApp({
     data() {
@@ -21,6 +21,7 @@ const app = createApp({
         service.addLevel(level)
         const sli = new Indicator(level, 'requests', 'latency', 'ms', '', 'lt')
         sli.addNewObjective()
+        sli.objectives[0].addNewAlert()
         level.addIndicator(sli)
         return {
             config,
