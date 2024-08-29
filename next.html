@@ -55,16 +55,43 @@
             title="Level"
             :name="levelIndex">
 
-            <button @click="level.addNewIndicator()">Add Indicator</button>
+            <div class="annotated">
+                <div class="annotated__controls">
+                    <h2>Consumer</h2>
+                    <input type="text" />
+                    <div class="button-bar">
+                        <button @click="level.addNewIndicator()">New Indicator</button>
+                    </div>
+                </div>
+                <div class="annotated__help">
+                    <p>A level is always set towards the expectations of a service consumer.</p>
+                </div>
+            </div>
 
             <show-hide-component
                 v-for="(indicator, indicatorIndex) of level.indicators"
-                title="Indicator"
+                title="Service Level Indicator"
                 :name="indicatorIndex">
 
-                <h1>
-                    Indicator
-                    <help-component>
+                <div class="annotated">
+                    <div class="annotated__controls">
+                        <h1>Service Level Indicator</h1>
+                        <h3>
+                            <label for="sli-title-input">Title</label>
+                        </h3>
+                        <input id="sli-title-input" type="text" v-model="title" :placeholder="config.title.placeholder">
+
+                        <h3>
+                            <label for="sli-description-input">Description</label>
+                        </h3>
+                        <textarea
+                            id="sli-description-input"
+                            rows="2"
+                            type="text"
+                            v-model="description"
+                            :placeholder="config.description.placeholder"></textarea>
+                    </div>
+                    <div class="annotated__help">
                         <p>
                             In simple words <ext-link href="https://blog.alexewerlof.com/p/sli">Service Level Indicators
                             </ext-link> are the metrics that represent how the reliability
@@ -99,27 +126,34 @@
                         <p>
                             Common SLIs include latency, availability, yield, durability, correctness, etc.
                         </p>
-                    </help-component>
-                </h1>
-                <h3>
-                    <label for="sli-title-input">Title</label>
-                </h3>
-                <input id="sli-title-input" type="text" v-model="title" :placeholder="config.title.placeholder">
-
-                <h3>
-                    <label for="sli-description-input">Description</label>
-                </h3>
-                <textarea
-                    id="sli-description-input"
-                    rows="2"
-                    type="text"
-                    v-model="description"
-                    :placeholder="config.description.placeholder"></textarea>
-                <h2>Event Unit</h2>
-                <input type="text" v-model="indicator.eventUnit" />
-                <h2>
-                    Type
-                    <help-component>
+                    </div>
+                </div>
+                
+                <div class="annotated">
+                    <div class="annotated__controls">
+                        <h2>Type</h2>
+                        <div class="block">
+                            <p>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        v-model="indicator.isTimeBased"
+                                        :value="false">
+                                    Event-Based
+                                </label>
+                            </p>
+                            <p>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        v-model="indicator.isTimeBased"
+                                        :value="true">
+                                    Time-Based
+                                </label>
+                            </p>
+                        </div>        
+                    </div>
+                    <div class="annotated__help">
                         <p>
                             SLIs can either be either:
                             <ext-link href="https://blog.alexewerlof.com/p/time-based-vs-event-based">
@@ -176,312 +210,383 @@
                                         </math>
                                 </tr>
                             </tbody>
-
                         </table>
-                    </help-component>
-                </h2>
-
-                <div class="block">
-                    <p>
-                        <label>
+                    </div>
+                </div>
+                
+                <div class="annotated">
+                    <div class="annotated__controls">
+                        <div v-if="isTimeBased">
+                            <!-- SLI timeslice -->
+                            <h2>
+                                <label for="sli-event-unit">Timeslice: {{ timeslice }}</label>
+                                <help-component>
+                                    <p>
+                                        Time-based SLIs aggregate metric data over a timeslice
+                                        to mark it as success or failure.
+                                    </p>
+                                    <p>
+                                        This can also reduce the resolution of the data.
+                                        For example, probing an endpoint every 60 seconds to see if it is available,
+                                        assumes that the endpoint is available for the entire 60 seconds.
+                                    </p>
+                                    <p>
+                                        Another common example is to compare the average of data points with a desired
+                                        valud. Averages hide the spikes and valleys in the data.
+                                        It is better to use
+                                        <ext-link href="https://github.com/alexewerlof/percentile">percentiles</ext-link>
+                                        instead.
+                                    </p>
+                                    <p>
+                                        Another example is percentiles. When calculating the 99th percentile of the
+                                        latency every 5 minutes, the aggregation window is 5 x 60 = 300 seconds.
+                                    </p>
+                                    <table>
+                                        <caption>Typical timeslice lengths</caption>
+                                        <thead>
+                                            <tr>
+                                                <th>Timeslice</th>
+                                                <th>Seconds</th>
+                                                <th aria-label="try button"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="p in config.timeslice.presets">
+                                                <td>{{ p.title }}</td>
+                                                <td>{{ p.seconds }}</td>
+                                                <td><button type="button" @click="unit = p.seconds">Try!</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </help-component>
+                            </h2>
                             <input
-                                type="radio"
-                                v-model="indicator.isTimeBased"
-                                :value="false">
-                            Event-Based
-                        </label>
-                    </p>
-                    <p>
-                        <label>
+                                id="sli-event-unit"
+                                type="range"
+                                :min="config.timeslice.min"
+                                :max="config.timeslice.max"
+                                :step="config.timeslice.step"
+                                placeholder="60"
+                                v-model.number="timeslice">
+                        </div>
+                        <div v-if="!isTimeBased" class="block">
+                            <h2>
+                                <label for="sli-event-unit">
+                                    Valid events
+                                </label>
+                                <help-component>
+                                    
+                                </help-component>
+                            </h2>
+        
                             <input
-                                type="radio"
-                                v-model="indicator.isTimeBased"
-                                :value="true">
-                            Time-Based
-                        </label>
-                    </p>
+                                id="sli-event-unit"
+                                type="text"
+                                v-model="indicator.eventUnit"
+                            >
+                        </div>
+                    </div>
+                    <div class="annotated__help">
+                        <p>
+                            In the service level model, consumers perceive the service level via events.
+                            Each event can be good or bad (also known as success or failure) based on the value of the metric.
+                        </p>
+                        <p>
+                            How do consumers perceive reliability of your service?
+                            What kind of events are important to the service consumers?
+                        </p>
+                        <p>
+                            You probably don't want to count all the.
+                            This is an opportunity to narrow down the scope of the optimization
+                            and what triggers an alert.
+                        </p>
+                        <p>
+                            For simplicity, sometimes <em>total</em> is used instead of <em>valid</em>.
+                            But 
+                            <ext-link href="https://blog.alexewerlof.com/p/valid-vs-total">
+                                there is a difference
+                            </ext-link>.
+                        </p>
+                        <p>
+                            While
+                            <ext-link href="https://blog.alexewerlof.com/p/sli">
+                                Service level indicator
+                            </ext-link>
+                            guides the optimization,
+                            the definition of valid scopes that optimization for two reasons:
+                            <ul>
+                                <li>Focus the optimization effort</li>
+                                <li>Clarify responsibility and control</li>
+                            </ul>
+                        </p>
+                        <p>
+                            Note: use a plural form of the event name so that the UI reads more fluently.
+                        </p>
+                        <table>
+                            <caption>Common events</caption>
+                            <thead>
+                                <th>Event</th>
+                                <th>Use case</th>
+                                <th aria-label="try button"></th>
+                            </thead>
+                            <tbody>
+                                <tr v-for="p of config.eventUnit.presets">
+                                    <td>{{ p.eventUnit }}</td>
+                                    <td>{{ p.useCase }}</td>
+                                    <td><button type="button" @click="eventUnit = p.eventUnit">Try!</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <h2>Metric Name</h2>
-                <input type="text" v-model="indicator.metricName" />
-                <div v-if="isTimeBased">
-                    <!-- SLI timeslice -->
-                    <h2>
-                        <label for="sli-event-unit">Timeslice: {{ timeslice }}</label>
-                        <help-component>
-                            <p>
-                                Time-based SLIs aggregate metric data over a timeslice
-                                to mark it as success or failure.
-                            </p>
-                            <p>
-                                This can also reduce the resolution of the data.
-                                For example, probing an endpoint every 60 seconds to see if it is available,
-                                assumes that the endpoint is available for the entire 60 seconds.
-                            </p>
-                            <p>
-                                Another common example is to compare the average of data points with a desired
-                                valud. Averages hide the spikes and valleys in the data.
-                                It is better to use
-                                <ext-link href="https://github.com/alexewerlof/percentile">percentiles</ext-link>
-                                instead.
-                            </p>
-                            <p>
-                                Another example is percentiles. When calculating the 99th percentile of the
-                                latency every 5 minutes, the aggregation window is 5 x 60 = 300 seconds.
-                            </p>
-                            <table>
-                                <caption>Typical timeslice lengths</caption>
-                                <thead>
-                                    <tr>
-                                        <th>Timeslice</th>
-                                        <th>Seconds</th>
-                                        <th aria-label="try button"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="p in config.timeslice.presets">
-                                        <td>{{ p.title }}</td>
-                                        <td>{{ p.seconds }}</td>
-                                        <td><button type="button" @click="unit = p.seconds">Try!</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </help-component>
-                    </h2>
-                    <input
-                        id="sli-event-unit"
-                        type="range"
-                        :min="config.timeslice.min"
-                        :max="config.timeslice.max"
-                        :step="config.timeslice.step"
-                        placeholder="60"
-                        v-model.number="timeslice">
+                
+                <div class="annotated">
+                    <div class="annotated__controls">
+                        <h2>Good {{ indicator.eventUnitNorm }}</h2>
+                        <h3>Metric Name</h3>
+                        <input type="text" v-model="indicator.metricName" />
+                        <h3>Condition</h3>
+                        <div class="box">
+                            <label>
+                                <input type="checkbox" v-model="indicator.condition.isBounded"> Bounded
+                            </label>
+                        </div>
+                        <div v-if="indicator.condition.isBounded">
+                            <h4>Lower Bound</h4>
+                            <select
+                                id="lower-bound-type"
+                                v-model="indicator.condition.lowerBound">
+                                <option v-for="v of config.lowerBound.possibleValues"
+                                    :value="v">
+                                    {{ boundCaption(indicator.metricName, v, '$LT') }}
+                                </option>
+                            </select>
+                            <h4>Upper Bound</h4>
+                            <select
+                                id="upper-bound-type"
+                                v-model="indicator.condition.upperBound">
+                                <option v-for="v of config.upperBound.possibleValues"
+                                    :value="v">
+                                    {{ boundCaption(indicator.metricName, v, '$UT') }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="annotated__help">
+                        <h2>Definition of good</h2>
+                        <div class="code block"><code>{{ indicator.good }}</code></div>
+                        <h2>Definition of bad</h2>
+                        <div class="code block"><code>{{ indicator.bad }}</code></div>        
+                    </div>
                 </div>
-                <div v-else class="block">
-                    <h2>
-                        <label for="sli-event-unit">
-                            Valid events
-                        </label>
-                        <help-component>
-                            <p>
-                                How do consumers perceive reliability of your service?
-                                What kind of events are important to the service consumers?
-                            </p>
-                            <p>
-                                You probably don't want to count all the.
-                                This is an opportunity to narrow down the scope of the optimization
-                                and what triggers an alert.
-                            </p>
-                            <p>
-                                For simplicity, sometimes <em>total</em> is used instead of <em>valid</em>.
-                                But 
-                                <ext-link href="https://blog.alexewerlof.com/p/valid-vs-total">
-                                    there is a difference
-                                </ext-link>.
-                            </p>
-                            <p>
-                                While
-                                <ext-link href="https://blog.alexewerlof.com/p/sli">
-                                    Service level indicator
-                                </ext-link>
-                                guides the optimization,
-                                the definition of valid scopes that optimization for two reasons:
-                                <ul>
-                                    <li>Focus the optimization effort</li>
-                                    <li>Clarify responsibility and control</li>
-                                </ul>
-                            </p>
-                            <p>
-                                Note: use a plural form of the event name so that the UI reads more fluently.
-                            </p>
-                            <table>
-                                <caption>Common events</caption>
-                                <thead>
-                                    <th>Event</th>
-                                    <th>Use case</th>
-                                    <th aria-label="try button"></th>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="p of config.eventUnit.presets">
-                                        <td>{{ p.eventUnit }}</td>
-                                        <td>{{ p.useCase }}</td>
-                                        <td><button type="button" @click="eventUnit = p.eventUnit">Try!</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </help-component>
-                    </h2>
-
-                    <input
-                        id="sli-event-unit"
-                        type="text"
-                        v-model="eventUnit"
-                    >
+                
+                <div class="annotated">
+                    <div class="annotated__controls">
+                        <div class="button-bar">
+                            <button @click="indicator.addNewObjective()">New Objective</button>
+                        </div>        
+                    </div>
+                    <div class="annotated__help">
+                        <p>
+                            While a Service Level Indicator specifies how a consumer perceives reliability of the service,
+                            a Service Level Objective specifies their expectation.
+                        </p>
+                    </div>
                 </div>
-                <h2>Good</h2>
-                <div class="code block"><code>{{ indicator.good }}</code></div>
-                <h3>Condition</h3>
-                <div class="box">
-                    <label>
-                        <input type="checkbox" v-model="indicator.condition.isBounded"> Bounded
-                    </label>
-                </div>
-                <div v-if="indicator.condition.isBounded">
-                    <h4>Lower Bound</h4>
-                    <select
-                        id="lower-bound-type"
-                        v-model="indicator.condition.lowerBound">
-                        <option v-for="v of config.lowerBound.possibleValues"
-                            :value="v">
-                            {{ boundCaption(indicator.metricName, v, '$LT') }}
-                        </option>
-                    </select>
-                    <h4>Upper Bound</h4>
-                    <select
-                        id="upper-bound-type"
-                        v-model="indicator.condition.upperBound">
-                        <option v-for="v of config.upperBound.possibleValues"
-                            :value="v">
-                            {{ boundCaption(indicator.metricName, v, '$UT') }}
-                        </option>
-                    </select>
-                </div>
-                <h2>Bad</h2>
-                <div class="code block"><code>{{ indicator.bad }}</code></div>
-
-                <h1>SLOs</h1>
-                <button @click="indicator.addNewObjective()">Add Objective</button>
                 <show-hide-component
                     v-for="(objective,objectiveIndex) of indicator.objectives"
                     title="Objective"
                     :name="objective.name || objectiveIndex">
-                    <section>
-                        <h2>
-                            Objective: {{ percL10n(objective.perc) }}
-                            <button @click="removeObjective(objectiveIndex)">Remove Objective</button>
-                        </h2>
-                        <div class="code block"><code>{{ objective.good }}</code></div>
-                        <p>Percentage: <code>{{ percL10n(objective.perc) }}</code></p>
-                        <input
-                            type="range"
-                            v-model.number="objective.perc" />
-                        
-                        <h3>Window Days: <code>{{ objective.window.days }}</code></h3>
-                        <p>{{ objective.window }}</p>
-                        <input
-                            type="range"
-                            v-model="objective.window.days" />
-
-                        <div v-if="objective.indicator.condition.isLowerBounded">
-                            <h3>Lower Threshold: <code>{{ objective.thresholds.lower }}</code></h3>
+                    <div class="annotated">
+                        <div class="annotated__controls">
+                            <h2>
+                                Target: {{ percL10n(objective.perc) }}
+                                <button @click="removeObjective(objectiveIndex)">Remove Objective</button>
+                            </h2>
                             <input
                                 type="range"
-                                v-model.number="objective.thresholds.lower"
-                                :min="objective.thresholds.lowerMin"
-                                :max="objective.thresholds.lowerMax"/>
+                                v-model.number="objective.perc" />
                         </div>
-
-                        <div v-if="objective.indicator.condition.isUpperBounded">
-                            <h3>Upper Threshold: <code>{{ objective.thresholds.upper }}</code></h3>
+                        <div class="annotated__help">
+                            <div class="code block"><code>{{ objective.good }}</code></div>
+                        </div>
+                    </div>
+                    
+                    <div class="annotated">
+                        <div class="annotated__controls">
+                            <h3>Window Days: <code>{{ objective.window.days }}</code></h3>
+                            <p>{{ objective.window }}</p>
                             <input
                                 type="range"
-                                v-model.number="objective.thresholds.upper"
-                                :min="objective.thresholds.upperMin"
-                                :max="objective.thresholds.upperMax"/>
+                                v-model="objective.window.days" />
                         </div>
+                        <div class="annotated__help">
+                            
+                        </div>
+                    </div>
 
-                        <div v-if="!objective.indicator.condition.isBounded">
-                            <h3>Equal to</h3>
-                            <input
-                                type="text"
-                                v-model="objective.thresholds.equalTo" />
+                    <div class="annotated">
+                        <div class="annotated__controls">
+                            <div v-if="objective.indicator.condition.isLowerBounded">
+                                <h3>Lower Threshold: <code>{{ objective.thresholds.lower }}</code></h3>
+                                <input
+                                    type="range"
+                                    v-model.number="objective.thresholds.lower"
+                                    :min="objective.thresholds.lowerMin"
+                                    :max="objective.thresholds.lowerMax"/>
+                            </div>
+    
+                            <div v-if="objective.indicator.condition.isUpperBounded">
+                                <h3>Upper Threshold: <code>{{ objective.thresholds.upper }}</code></h3>
+                                <input
+                                    type="range"
+                                    v-model.number="objective.thresholds.upper"
+                                    :min="objective.thresholds.upperMin"
+                                    :max="objective.thresholds.upperMax"/>
+                            </div>
+    
+                            <div v-if="!objective.indicator.condition.isBounded">
+                                <h3>Equal to</h3>
+                                <input
+                                    type="text"
+                                    v-model="objective.thresholds.equalTo" />
+                            </div>
                         </div>
-                        <h3>Error Budget: {{ percL10n(objective.errorBudgetPerc) }}</h3>
-                        <input type="range" v-model.number="objective.errorBudgetPerc" />
+                        <div class="annotated__help">
+                            xx
+                        </div>
+                    </div>
+                    
+                    <div class="annotated">
+                        <div class="annotated__controls">
+                            <h3>Error Budget: {{ percL10n(objective.errorBudgetPerc) }}</h3>
+                            <input type="range" v-model.number="objective.errorBudgetPerc" />
+                            <h3>Estimated valid count</h3>
+                            <input type="text" v-model.number="objective.estimatedValidEvents" />
+                        </div>
+                        <div class="annotated__help">
+                            <h3>Counts</h3>
+                            <h4>Good: at least {{ objective.goodCount }} {{ indicator.eventUnitNorm }}</h4>
+                            <h4>Bad: at most {{ objective.badCount }} {{ indicator.eventUnitNorm }}</h4>
+                            <h4>Valid: {{ objective.validCount }} {{ indicator.eventUnitNorm }}</h4>
+                        </div>
+                    </div>
 
-                        <h3>Counts</h3>
-                        <h4>Good: at least {{ objective.goodCount }} {{ indicator.eventUnitNorm }}</h4>
-                        <h4>Bad: at most {{ objective.badCount }} {{ indicator.eventUnitNorm }}</h4>
-                        <h4>Valid: {{ objective.validCount }} {{ indicator.eventUnitNorm }}</h4>
-                        <input type="text" v-model.number="objective.estimatedValidEvents" />
-
-                        <div class="block">
-                            <label>
-                                <input type="checkbox" v-model="objective.cost.use"> Use Cost
-                            </label>
+                    <div class="annotated">
+                        <div class="annotated__controls">
+                            <div class="block">
+                                <label>
+                                    <input type="checkbox" v-model="objective.cost.use"> Use Cost
+                                </label>
+                            </div>
                         </div>
-                        <div v-if="objective.cost.use">
-                            <h3>Cost of 1 bad event</h3>
-                            <h4>Currency</h4>
-                            <input type="text" v-model="objective.cost.currency" />
-                            <h4>Min</h4>
-                            <input type="number" v-model.number="objective.cost.minUnitCost" />
-                            <h4>Average</h4>
-                            <input type="number" v-model.number="objective.cost.avgUnitCost" />
-                            <h4>Max</h4>
-                            <input type="number" v-model.number="objective.cost.maxUnitCost" />
-                            <h4>Error Budget Cost</h4>
-                            <p>{{ objective.cost.all(objective.badCount) }}</p>
+                        <div class="annotated__help">
+                            Why cost matters?
                         </div>
-                    </section>
-                    <section>
-                        <h1>Alerts</h1>
+                    </div>
+                    
+                    <div class="annotated">
+                        <div class="annotated__controls">
+                            <div v-if="objective.cost.use">
+                                <h3>Cost of 1 bad event</h3>
+                                <h4>Currency</h4>
+                                <input type="text" v-model="objective.cost.currency" />
+                                <h4>Min</h4>
+                                <input type="number" v-model.number="objective.cost.minUnitCost" />
+                                <h4>Average</h4>
+                                <input type="number" v-model.number="objective.cost.avgUnitCost" />
+                                <h4>Max</h4>
+                                <input type="number" v-model.number="objective.cost.maxUnitCost" />
+                                <h4>Error Budget Cost</h4>
+                                <p>{{ objective.cost.all(objective.badCount) }}</p>
+                            </div>
+                        </div>
+                        <div class="annotated__help">
+                            What is this?
+                        </div>
+                    </div>
+                    <div class="button-bar">
                         <button @click="objective.addNewAlert()">Add Alert</button>
-                        <div v-for="alert of objective.alerts">
+                    </div>
+                    <show-hide-component
+                        v-for="alert of objective.alerts"
+                        title="Alert"
+                        :name="alertIndex">
                             <p>{{ alert.sloWindow }}</p>
-                            <h2>Alert</h2>
-                            <h3>Burn Rate: {{ alert.burnRate }}x</h3>
-                            <p>Time to exhaust error budget: {{ alert.exhaustWindow }}</p>
-                            <p>Bad: {{ alert.badCount }} {{ alert.objective.indicator.eventUnitNorm }}</p>
-                            <p v-if="objective.cost.use">
-                                Cost: {{ objective.cost.all(alert.badCount) }}
-                            </p>
-                            <input type="range"
-                                v-model.number="alert.burnRate"
-                                :min="config.burnRate.min"
-                                :max="config.burnRate.max"
-                                :step="config.burnRate.step" />
-                            
-                            <h3>After burning: {{ percL10n(alert.longWindowPerc) }}</h3>
-                            <p>Lookback Window: {{ alert.longWindow }}</p>
-                            <p>Bad: {{ alert.badCountLong }} {{ alert.objective.indicator.eventUnitNorm }}</p>
-                            <p v-if="objective.cost.use">
-                                Cost: {{ objective.cost.all(alert.badCountLong) }}
-                            </p>
-                            <input type="range"
-                                v-model.number="alert.longWindowPerc"
-                                :min="config.longWindowPerc.min"
-                                :max="config.longWindowPerc.max"
-                                :step="config.longWindowPerc.step" />
-                            
-                            <h3>Divider: {{ alert.shortWindowDivider }}</h3>
-                            <p>Lookback Window: {{ alert.shortWindow }}</p>
-                            <p>Bad: {{ alert.badCountShort }} {{ alert.objective.indicator.eventUnitNorm }}</p>
-                            <p v-if="objective.cost.use">
-                                Cost: {{ objective.cost.all(alert.badCountShort) }}
-                            </p>
-                            <input type="range"
-                                v-model.number="alert.shortWindowDivider"
-                                :min="config.shortWindowDivider.min"
-                                :max="config.shortWindowDivider.max"
-                                :step="config.shortWindowDivider.step" />
-
-                            <div class="code block">
-                                <code>
-                                    Percentage of {{ objective.good }}
-                                    during the last
-                                    {{ alert.longWindow.humanSec }}
-                                    &lt; {{ objective.perc }}
-                                </code>
-                                <code v-if="alert.useShortWindow">
-                                    <br>&&
-                                    <br>
-                                    Percentage of {{ objective.good }}
-                                    during the least
-                                    {{ alert.shortWindow.humanSec }}
-                                    &lt; {{ objective.perc }}
-                                </code>
+                        <div class="annotated">
+                            <div class="annotated__controls">
+                                <h3>Burn Rate: {{ alert.burnRate }}x</h3>
+                                <p>Time to exhaust error budget: {{ alert.exhaustWindow }}</p>
+                                <p>Bad: {{ alert.badCount }} {{ alert.objective.indicator.eventUnitNorm }}</p>
+                                <p v-if="objective.cost.use">
+                                    Cost: {{ objective.cost.all(alert.badCount) }}
+                                </p>
+                                <input type="range"
+                                    v-model.number="alert.burnRate"
+                                    :min="config.burnRate.min"
+                                    :max="config.burnRate.max"
+                                    :step="config.burnRate.step" />
+                            </div>
+                            <div class="annotated__help">
+                                
+                            </div>
                         </div>
-                    </section>
+                            
+
+                        <div class="annotated">
+                            <div class="annotated__controls">
+                                <h3>After burning: {{ percL10n(alert.longWindowPerc) }}</h3>
+                                <p>Lookback Window: {{ alert.longWindow }}</p>
+                                <p>Bad: {{ alert.badCountLong }} {{ alert.objective.indicator.eventUnitNorm }}</p>
+                                <p v-if="objective.cost.use">
+                                    Cost: {{ objective.cost.all(alert.badCountLong) }}
+                                </p>
+                                <input type="range"
+                                    v-model.number="alert.longWindowPerc"
+                                    :min="config.longWindowPerc.min"
+                                    :max="config.longWindowPerc.max"
+                                    :step="config.longWindowPerc.step" />
+                            </div>
+                            <div class="annotated__help">
+                                
+                            </div>
+                        </div>
+                            
+                            
+                        <div class="annotated">
+                            <div class="annotated__controls">
+                                <h3>Divider: {{ alert.shortWindowDivider }}</h3>
+                                <p>Lookback Window: {{ alert.shortWindow }}</p>
+                                <p>Bad: {{ alert.badCountShort }} {{ alert.objective.indicator.eventUnitNorm }}</p>
+                                <p v-if="objective.cost.use">
+                                    Cost: {{ objective.cost.all(alert.badCountShort) }}
+                                </p>
+                                <input type="range"
+                                    v-model.number="alert.shortWindowDivider"
+                                    :min="config.shortWindowDivider.min"
+                                    :max="config.shortWindowDivider.max"
+                                    :step="config.shortWindowDivider.step" />
+                            </div>
+                            <div class="annotated__help">
+                                <div class="code block">
+                                    <code>
+                                        Percentage of {{ objective.good }}
+                                        during the last
+                                        {{ alert.longWindow.humanSec }}
+                                        &lt; {{ objective.perc }}
+                                    </code>
+                                    <code v-if="alert.useShortWindow">
+                                        <br>&&
+                                        <br>
+                                        Percentage of {{ objective.good }}
+                                        during the least
+                                        {{ alert.shortWindow.humanSec }}
+                                        &lt; {{ objective.perc }}
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </show-hide-component>
                 </show-hide-component>
             </show-hide-component>
     </show-hide-component>
