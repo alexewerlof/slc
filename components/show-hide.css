@@ -1,5 +1,5 @@
 .show-hide-component {
-    border-left: 1px solid var(--primary-color);
+    border-left: 2px solid var(--primary-color);
     margin-left: 1em;
 }
 
@@ -8,8 +8,14 @@
     color: var(--background-color);
     cursor: pointer;
     font-size: 1.5em;
+    font-weight: 600;
+    padding: 0.5em;
+}
+
+.show-hide-component__icon {
+    font-size: 0.8em;
 }
 
 .show-hide-component__contents {
-    margin: 1em;
+    margin-left: 1em;
 }

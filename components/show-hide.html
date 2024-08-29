@@ -1,6 +1,6 @@
 <div class="show-hide-component">
     <div @click="toggle()" class="show-hide-component__title">
-        {{ icon }} {{ title }} {{ name }}
+        <span class="show-hide-component__icon">{{ icon }}</span> {{ title }} {{ name }}
     </div>
     <transition>
         <div v-show="isVisible" class="show-hide-component__contents">
