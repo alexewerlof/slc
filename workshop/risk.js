@@ -4,7 +4,7 @@ import { Service } from './provider.js'
 
 // If a certain service fails, what activities will it impact and how?
 export class Failure extends ObjectWithId {
-    constructor(service, consumption, symptom, consequence, businessImpact, metric, metricLocation) {
+    constructor(service, consumption, symptom, consequence, businessImpact) {
         super()
         
         if (!service || !(service instanceof Service)) {
@@ -21,8 +21,6 @@ export class Failure extends ObjectWithId {
         this.symptom = symptom ?? ''
         this.consequence = consequence ?? ''
         this.businessImpact = businessImpact ?? ''
-        this.metric = metric ?? ''
-        this.metricLocation = metricLocation ?? ''
     }
 
     toString() {

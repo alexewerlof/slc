@@ -169,7 +169,7 @@
                                 <tr>
                                     <th>Failed Service</th>
                                     <th>Symptom from {{ consumption.consumer }} perspective</th>
-                                    <th>Consequence for {{ consumption.name }}</th>
+                                    <th>Consequence on {{ consumption.name }}</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -228,75 +228,6 @@
                             </td>
                         </tr>
                 </table>
-            </section>
-        </article>
-
-        <article>
-            <section>
-                <h1>Metrics</h1>
-                <p>What should we be measuring to be on top of those risks?</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Service</th>
-                            <th>Consumption</th>
-                            <th>Symptom</th>
-                            <th>Metric</th>
-                            <th>Measurement Location</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="failure of failures" :key="failure.id">
-                            <td>{{ failure.service || '⚠️TBD' }}</td>
-                            <td>{{ failure.consumption || '⚠️TBD' }}</td>
-                            <td>{{ failure.symptom || '⚠️TBD' }}</td>
-                            <td>
-                                <input type="text" v-model="failure.metric">
-                            </td>
-                            <td>
-                                <input type="text" v-model="failure.metricLocation">
-                            </td>
-                        </tr>
-                </table>
-            </section>
-        </article>
-
-        <article>
-            <section>
-                <h1>Service Levels</h1>
-                <p>These are the key metrics for each system</p>
-                <table>
-                    <thead>
-                        <th>Service</th>
-                        <th>Measurement Location</th>
-                        <th>Metric</th>
-                        <th>Type</th>
-                        <th>Good</th>
-                        <th>Valid</th>
-                        <th>SLC</th>
-                    </thead>
-                    <tbody v-for="system of systems">
-                        <tr v-for="failure of filterFailuresBySystem(system)">
-                            <td>{{ failure.service }}</td>
-                            <td>{{ failure.metricLocation || '⚠️TBD' }}</td>
-                            <td><code>{{ failure.metric || '⚠️TBD' }}</code></td>
-                            <td>
-                                <label><input type="checkbox">Event Based</label>
-                            </td>
-                            <td>
-                                <input type="text">
-                            </td>
-                            <td>
-                                <input type="text">
-                            </td>
-                            <td>
-                                <a>SLC</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h2>JSON</h2>
-                <pre><code>{{ state }}</code></pre>
             </section>
         </article>
     </main>

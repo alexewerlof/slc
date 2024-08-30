@@ -16,6 +16,7 @@ export const app = createApp({
 
         const fileStorage = new System('File storage')
         fileStorage.addNewService('Store car images')
+        fileStorage.addNewService('Retrieve car images')
         fileStorage.addNewService('Store car documents')
         fileStorage.addNewService('Retrieve car documents')
         systems.push(fileStorage)
