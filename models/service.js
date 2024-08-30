@@ -26,6 +26,8 @@ export class Service {
     constructor(name, description) {
         this.name = name
         this.description = description
+        this.provider = 'service provider'
+        this.consumers = ['service consumer1', 'service consumer 2']
         this.levels = []
     }
 
@@ -39,5 +41,9 @@ export class Service {
 
     addNewLevel() {
         this.addLevel(new Level(this))
+    }
+
+    toString() {
+        return this.name
     }
 }
