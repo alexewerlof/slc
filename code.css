@@ -82,6 +82,10 @@ ms, mi {
     color: var(--secondary-color);
 }
 
+ms {
+    font-style: italic;
+}
+
 mtd {
     text-align: left;
 }
