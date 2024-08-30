@@ -71,14 +71,14 @@ body {
         display: flex;
         justify-content: center;
     }
-
+    
     .annotated__controls {
         flex: 1;
+        padding: 1em;
     }
 
     .annotated__help {
         background-color: var(--background-darker);
-        margin-left: 1em;
         padding: 1em;
         padding-bottom: 5em;
         width: 50vw;
