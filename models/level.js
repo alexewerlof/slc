@@ -19,4 +19,8 @@ export class Level {
     addNewIndicator() {
         this.addIndicator(new Indicator(this))
     }
+
+    toString() {
+        return 'towards ' + this.consumption
+    }
 }

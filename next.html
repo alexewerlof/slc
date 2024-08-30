@@ -50,27 +50,9 @@
             <p>🎉Tip: <ext-link href="templates/index.html">Use Templates</ext-link></p>
         </div>
 
-    <show-hide-component
-        v-for="(level, levelIndex) of service.levels"
-        title="Level"
-        :name="levelIndex">
-
-        <div class="annotated">
-            <div class="annotated__controls">
-                <h2>Consumer</h2>
-                <input type="text" />
-                <div class="button-bar">
-                    <button @click="level.addNewIndicator()">New Indicator</button>
-                </div>
-            </div>
-            <div class="annotated__help">
-                <p>A level is always set towards the expectations of a service consumer.</p>
-            </div>
-        </div>
-        <indicator-view
-            v-for="(indicator, indicatorIndex) of level.indicators"
-            :indicator="indicator"></indicator-view>
-    </show-hide-component>
+        <level-view
+            v-for="(level, levelIndex) of service.levels"
+            :level="level"></level-view>
 
     <!-- Toast Notification -->
     <div v-if="toastCaption" class="toast" @animationend="this.toastCaption = ''">{{ toastCaption }}</div>
