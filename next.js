@@ -6,6 +6,7 @@ import { Indicator } from './models/indicator.js'
 import { Level } from './models/level.js'
 import AlertView from './views/alert.js'
 import ObjectiveView from './views/objective.js'
+import IndicatorView from './views/indicator.js'
 import AlertChartComponent from './components/alert-chart.js'
 import BurnRateComponent from './components/burn-rate.js'
 import ErrorBudgetComponent from './components/error-budget.js'
@@ -38,6 +39,7 @@ const app = createApp({
     components: {
         AlertView,
         ObjectiveView,
+        IndicatorView,
         AlertChartComponent,
         BurnRateComponent,
         ErrorBudgetComponent,
