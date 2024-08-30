@@ -96,12 +96,13 @@ export class Objective {
 
     toString() {
         const ret = []
-        ret.push('Percentage of')
-        ret.push(this.indicator.good)
-        ret.push('over the last')
-        ret.push(this.window.humanSec)
-        ret.push('>=')
         ret.push(percL10n(this.perc))
+        ret.push('of')
+        ret.push(this.indicator.eventUnitNorm)
+        ret.push('over the last')
+        ret.push(this.window.humanTimeSec)
+        ret.push('have')
+        ret.push(this.good)
         return ret.join(' ')
     }
 }
