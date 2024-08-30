@@ -5,6 +5,7 @@ import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
 import IndicatorView from './indicator.js'
 import ShowHideComponent from '../components/show-hide.js'
+import ExtLink from '../components/ext-link.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -25,7 +26,8 @@ export default {
         numL10n,
     },
     components: {
+        ExtLink,
         IndicatorView,
         ShowHideComponent,
-    }
+    },
 }

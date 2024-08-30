@@ -14,10 +14,6 @@ export default {
             alert: this.alert,
         }
     },
-    components: {
-        ExtLink,
-        ShowHideComponent,
-    },
     props: {
         alert: {
             type: Object,
@@ -26,5 +22,9 @@ export default {
     },
     methods: {
         percL10n,
-    }
+    },
+    components: {
+        ExtLink,
+        ShowHideComponent,
+    },
 }

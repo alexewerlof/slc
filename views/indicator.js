@@ -5,6 +5,7 @@ import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
 import ObjectiveView from './objective.js'
 import ShowHideComponent from '../components/show-hide.js'
 import { Indicator } from '../models/indicator.js'
+import ExtLink from '../components/ext-link.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -26,7 +27,8 @@ export default {
         boundCaption,
     },
     components: {
+        ExtLink,
         ObjectiveView,
         ShowHideComponent,
-    }
+    },
 }
