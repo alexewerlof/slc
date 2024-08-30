@@ -1,6 +1,6 @@
 import { config } from '../config.js'
-import { clamp } from './math.js'
-import { inRange } from './validation.js'
+import { clamp } from '../lib/math.js'
+import { inRange } from '../lib/validation.js'
 import { Objective } from './objective.js'
 
 export class Thresholds {

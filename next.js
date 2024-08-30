@@ -1,9 +1,10 @@
 import { config } from './config.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from './lib/fmt.js'
 import { createApp} from './vendor/vue.js'
-import { Service } from './lib/service.js'
-import { Indicator } from './lib/indicator.js'
-import { Level } from './lib/level.js'
+import { Service } from './models/service.js'
+import { Indicator } from './models/indicator.js'
+import { Level } from './models/level.js'
+import AlertView from './views/alert.js'
 import AlertChartComponent from './components/alert-chart.js'
 import BurnRateComponent from './components/burn-rate.js'
 import ErrorBudgetComponent from './components/error-budget.js'
@@ -34,6 +35,7 @@ const app = createApp({
         },
     },
     components: {
+        AlertView,
         AlertChartComponent,
         BurnRateComponent,
         ErrorBudgetComponent,

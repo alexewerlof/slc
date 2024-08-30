@@ -1,5 +1,5 @@
 import { Indicator } from './indicator.js'
-import { isInstance } from './validation.js'
+import { isInstance } from '../lib/validation.js'
 
 export class Level {
     constructor(service, consumption) {

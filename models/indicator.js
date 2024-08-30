@@ -1,8 +1,8 @@
 import { config } from '../config.js'
-import { humanTimeSlices } from './time.js'
+import { humanTimeSlices } from '../lib/time.js'
 import { badFormula, Bound, goodFormula } from './bound.js'
 import { Objective } from './objective.js'
-import { isInstance } from './validation.js'
+import { isInstance } from '../lib/validation.js'
 
 export class Indicator {
     constructor(

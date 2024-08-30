@@ -1,6 +1,6 @@
 import { config } from '../config.js'
-import { percL10n } from './fmt.js'
-import { percent } from './math.js'
+import { percL10n } from '../lib/fmt.js'
+import { percent } from '../lib/math.js'
 import { TimeWindow } from './time-window.js'
 
 export class Alert {

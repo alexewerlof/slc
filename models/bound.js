@@ -1,5 +1,5 @@
 import { config } from '../config.js'
-import { entity2symbol, oppositeBound } from './fmt.js'
+import { entity2symbol, oppositeBound } from '../lib/fmt.js'
 
 export class Bound {
     constructor(

@@ -20,7 +20,7 @@ export class ServiceLevel {
 */
 
 import { Level } from './level.js'
-import { isInstance } from './validation.js'
+import { isInstance } from '../lib/validation.js'
 
 export class Service {
     constructor(name, description) {
