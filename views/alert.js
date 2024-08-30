@@ -3,6 +3,7 @@ import { isInstance } from '../lib/validation.js'
 import { Alert } from '../models/alert.js'
 import { config } from '../config.js'
 import { percL10n } from '../lib/fmt.js'
+import ExtLink from '../components/ext-link.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -11,6 +12,9 @@ export default {
             config,
             alert: this.alert,
         }
+    },
+    components: {
+        ExtLink,
     },
     props: {
         alert: {
