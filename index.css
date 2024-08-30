@@ -77,11 +77,11 @@ body {
     }
 
     .annotated__help {
-        flex: 1;
         background-color: var(--background-darker);
         margin-left: 1em;
         padding: 1em;
         padding-bottom: 5em;
+        width: 50vw;
     }
 }
 
