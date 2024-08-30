@@ -65,4 +65,8 @@ export class Indicator {
     get isTimeBased() {
         return !this.isEventBased
     }
+
+    toString() {
+        return this.eventUnitNorm + ' where ' + this.good
+    }
 }
