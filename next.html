@@ -899,12 +899,9 @@
                             </p>
                         </div>
                     </div>
-                    <show-hide-component
-                        v-for="(alert, alertIndex) of objective.alerts"
-                        title="Alert"
-                        :name="alertIndex">
-                        <alert-view :alert="alert"></alert-view>
-                    </show-hide-component>
+                    <alert-view
+                        v-for="alert of objective.alerts"
+                        :alert="alert"></alert-view>
                 </show-hide-component>
             </show-hide-component>
     </show-hide-component>

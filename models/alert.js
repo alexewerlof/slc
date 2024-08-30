@@ -49,6 +49,6 @@ export class Alert {
     }
 
     toString() {
-        return `Alert: ${ percL10n(this.longWindowPerc) } burn at ${this.burnRate}x`
+        return `when ${ percL10n(this.longWindowPerc) } of error budget burns at ${this.burnRate}x`
     }
 }
