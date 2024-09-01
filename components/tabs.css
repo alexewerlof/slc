@@ -1,16 +1,18 @@
 .tabs {
     display: flex;
     font-size: 1.5em;
-    border-bottom: 1px solid var(--primary-color);
+    border-bottom: var(--bthick) solid var(--primary-color);
+    padding: var(--gap);
+    padding-bottom: 0;
 }
 
 .tabs__tab {
-    border: 1px solid var(--primary-color);
+    border: var(--bthick) solid var(--primary-color);
     border-bottom: none;
     font-family: var(--title-font-family);
-    padding: 0.5em;
-    border-top-left-radius: 0.2em;
-    border-top-right-radius: 0.2em;
+    padding: var(--gap);
+    border-top-left-radius: var(--bradius);
+    border-top-right-radius: var(--bradius);
     cursor: pointer;
     margin-left: var(--gap);
 }
