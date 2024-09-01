@@ -101,8 +101,8 @@ textarea {
 button {
     background-color: var(--primary-color);
     color: var(--background-color);
-    border: 1px solid currentColor;
-    border-radius: 0.3em;
+    border: var(--bthick) solid currentColor;
+    border-radius: var(--bradius);
     cursor: pointer;
     transition: background-color var(--animation-speed);
 }
