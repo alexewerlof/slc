@@ -1,6 +1,7 @@
 .show-hide-component {
-    border-left: 2px solid var(--primary-color);
-    margin-left: 1em;
+    border: 2px solid var(--primary-color);
+    margin: 1em;
+    margin-top: 0;
     box-shadow: -1px -1px 7px 0px var(--background-darker);
 }
 
