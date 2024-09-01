@@ -1,0 +1,28 @@
+.annotated {
+}
+
+.annotated__controls {
+    padding: 1em;
+}
+
+.annotated__help {
+    background-color: var(--background-darker);
+    padding: 1em;
+    padding-bottom: 5em;
+}
+
+
+@media screen and (min-width: 1000px) {
+    .annotated {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .annotated__controls {
+        flex: 1;
+    }
+
+    .annotated__help {
+        flex: 1;
+    }
+}

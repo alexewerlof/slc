@@ -3,6 +3,7 @@
 @import url('inputs.css');
 @import url('code.css');
 @import url('toast.css');
+@import url('annotated.css');
 
 html {
     scroll-behavior: smooth;
@@ -65,23 +66,6 @@ body {
 
     .only-mobile {
         display: none;
-    }
-
-    .annotated {
-        display: flex;
-        justify-content: center;
-    }
-    
-    .annotated__controls {
-        flex: 1;
-        padding: 1em;
-    }
-
-    .annotated__help {
-        background-color: var(--background-darker);
-        padding: 1em;
-        padding-bottom: 5em;
-        width: 50vw;
     }
 }
 
