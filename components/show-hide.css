@@ -1,6 +1,6 @@
 .show-hide-component {
     border: 2px solid var(--primary-color);
-    margin: 1em;
+    margin: var(--gap2);
     margin-top: 0;
     box-shadow: -1px -1px 7px 0px var(--background-darker);
 }
@@ -11,7 +11,7 @@
     cursor: pointer;
     font-size: 1.5em;
     font-weight: 600;
-    padding: 0.5em;
+    padding: var(--gap);
 }
 
 .show-hide-component__icon {
