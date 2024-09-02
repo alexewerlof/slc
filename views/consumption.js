@@ -24,9 +24,6 @@ export default {
     methods: {
         percL10n,
         numL10n,
-        setConsumption($event, consumption, service) {
-            consumption.setDependency(service, $event.target.checked)
-        },
     },
     components: {
         ExtLink,

@@ -32,8 +32,8 @@
                 <label>
                     <input
                         type="checkbox"
-                        v-model="consumption.dependencies"
-                        :value="service">
+                        :checked="consumption.hasDependency(service)"
+                        @change="$event => consumption.setDependency(service, $event.target.checked)">
                     {{ service }}
                 </label>
             </div>
