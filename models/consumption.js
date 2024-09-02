@@ -10,6 +10,7 @@ export class Consumption {
         this.consumer = consumer
         this.title = title
         this.description = description
+        this.dependencies = []
     }
 
     hasDependency(service) {
@@ -17,8 +18,31 @@ export class Consumption {
     }
 
     addDependency(service) {
+        if (!isInstance(service, Service)) {
+            throw new Error(`Consumption.addDependency: service must be an instance of Service. Got ${service}`)
+        }
         if (!this.hasDependency(service)) {
             this.dependencies.push(service)
+        }
+    }
+
+    removeDependency(service) {
+        if (!isInstance(service, Service)) {
+            throw new Error(`Consumption.removeDependency: service must be an instance of Service. Got ${service}`)
+        }
+        const index = this.dependencies.indexOf(service)
+        if (index > -1) {
+            this.dependencies.splice(index, 1)
+        } else {
+            throw new ReferenceError(`Service ${service} not found in dependencies of ${this}`)
+        }
+    }
+
+    setDependency(service, value) {
+        if (value) {
+            this.addDependency(service)
+        } else {
+            this.removeDependency(service)
         }
     }
 
@@ -27,6 +51,6 @@ export class Consumption {
     }
 
     toString() {
-        return `${this.consumer.title}::${this.title}`
+        return `${this.consumer.title}::${this.title} (depends on ${this.dependencies.length} services)`
     }
 }

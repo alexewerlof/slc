@@ -44,7 +44,10 @@
             <h2>Consumes Services</h2>
             <div v-for="service of consumption.consumer.assessment.allServices">
                 <label>
-                    <input type="checkbox" v-model="consumption.services" :value="service">
+                    <input
+                        type="checkbox"
+                        v-model="consumption.dependencies"
+                        :value="service">
                     {{ service }}
                 </label>
             </div>
