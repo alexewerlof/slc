@@ -1,4 +1,6 @@
-import { isInstance } from "../lib/validation"
+import { isInstance } from '../lib/validation.js'
+import { Consumption } from './consumption.js'
+import { Service } from './service.js'
 
 export class Dependency {
     constructor(consumption, service) {
