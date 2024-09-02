@@ -24,7 +24,7 @@ body {
 
 .block {
     display: block;
-    margin: 1em 0;
+    margin: var(--gap2) 0;
 }
 
 .block p {
@@ -32,19 +32,19 @@ body {
 }
 
 .info.block {
-    padding: 0.5rem;
+    padding: var(--gap);
     background-color: var(--secondary-color);
     color: var(--background-color);
 }
 
 .warning.block {
-    padding: 0.5rem;
+    padding: var(--gap);
     background-color: var(--primary-color);
     color: var(--background-color);
 }
 
 .error.block {
-    padding: 0.5rem;
+    padding: var(--gap);
     background-color: var(--brand-red);
     color: var(--background-color);
 }
