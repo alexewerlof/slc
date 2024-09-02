@@ -9,12 +9,36 @@
             <h2>Description</h2>
             <input type="text" v-model="service.description">
             <div class="button-bar">
-                <button @click="service.system.removeService(service)">Remove Service</button>
+                <button @click="service.remove()">Remove Service</button>
             </div>
         </div>
         <div class="annotated__help">
             <p>
                 TBW
+            </p>
+        </div>
+    </div>
+
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>Dependents</h2>
+            <div v-for="consumption of service.system.assessment.allConsumptions">
+                <label>
+                    <input
+                        type="checkbox"
+                        :checked="consumption.hasDependency(service)"
+                        @change="$event => consumption.setDependency(service, $event.target.checked)">
+                    {{ consumption }}
+                </label>
+            </div>
+        </div>
+        <div class="annotated__help">
+            <p>
+                You can select all the consumers that depend on this service.
+                The dependency will be updated for the consumers as well.
+            </p>
+            <p>
+                If there are consumers that are missing, you can go back and add them to the system.
             </p>
         </div>
     </div>
