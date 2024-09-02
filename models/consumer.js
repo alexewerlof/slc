@@ -23,8 +23,8 @@ export class Consumer {
         this.consumptions.push(consumption)
     }
 
-    addNewConsumption(description) {
-        this.addConsumption(new Consumption(this, undefined, description))
+    addNewConsumption(title, description) {
+        this.addConsumption(new Consumption(this, title, description))
     }
 
     removeConsumption(consumption) {
