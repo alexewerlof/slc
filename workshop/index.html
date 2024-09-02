@@ -110,6 +110,12 @@
             <consumer-view v-for="consumer of assessment.consumers" :consumer="consumer"></consumer-view>
         </div>
 
+        <div v-if="selectedTab === 'Failures'">
+            <div class="block">
+                <dependency-view v-for="dependency of assessment.dependencies" :dependency="dependency"></dependency-view>
+            </div>
+        </div>
+
         <article v-if="selectedTab === 'Risks'">
             <section>
                 <h1>Failures</h1>

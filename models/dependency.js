@@ -1,5 +1,6 @@
 import { isInstance } from '../lib/validation.js'
 import { Consumption } from './consumption.js'
+import { Failure } from './failure.js'
 import { Service } from './service.js'
 
 export class Dependency {
@@ -12,6 +13,11 @@ export class Dependency {
             throw new Error(`Expected an instance of Service. Got ${service}`)
         }
         this.service = service
+        this.failures = []
+    }
+    
+    addNewFailure() {
+        this.failures.push(new Failure(this))
     }
     
     toString() {

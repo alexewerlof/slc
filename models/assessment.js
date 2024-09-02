@@ -10,7 +10,6 @@ export class Assessment {
         this.systems = []
         this.consumers = []
         this.dependencies = []
-        this.failures = []
     }
     
     get allServices() {
@@ -88,15 +87,5 @@ export class Assessment {
         } else {
             this.removeDependency(consumer, service)
         }
-    }
-    
-    addNewFailure(service, consumption) {
-        if (!isInstance(service, Service)) {
-            throw new Error(`Expected an instance of Service. Got ${service}`)
-        }
-        if (!isInstance(consumption, Consumption)) {
-            throw new Error(`Expected an instance of Consumption. Got ${consumption}`)
-        }
-        this.failures.push(new Failure(service, consumption))
     }
 }

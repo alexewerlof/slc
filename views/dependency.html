@@ -1,0 +1,21 @@
+<show-hide-component title="Dependency" :name="dependency">
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>{{ dependency }}</h2>
+            <div v-if="dependency.failures.length === 0" class="error block">
+                There are no failures associated with this particular dependency.
+            </div>
+            <div class="button-bar">
+                <button @click="dependency.addNewFailure()">Add New Failure</button>
+            </div>
+        </div>
+        <div class="annotated__help">
+            What could go wrong when {{ dependency.consumption.consumer.title }}
+            tries to {{ dependency.consumption.title }}
+            using the {{ dependency.service.title }}
+            provided by {{ dependency.service.system.title }}?
+        </div>
+    </div>
+
+    <failure-view v-for="failure of dependency.failures" :failure="failure"></failure-view>
+</show-hide-component>

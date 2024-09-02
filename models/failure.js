@@ -1,26 +1,19 @@
 import { isInstance } from '../lib/validation.js'
-import { Consumption } from './consumption.js'
-import { Service } from './service.js'
+import { Dependency } from './dependency.js'
 
 // If a certain service fails, what activities will it impact and how?
 export class Failure {
-    constructor(service, consumption, symptom = '', consequence = '', businessImpact = '') {
-        if (!isInstance(service, Service)) {
+    constructor(dependency, symptom = '', consequence = '', impact = '') {
+        if (!isInstance(dependency, Dependency)) {
             throw new Error(`Expected a Service instance. Got ${service}`)
         }
-        this.service = service
-
-        if (!isInstance(consumption, Consumption)) {
-            throw new Error(`Expected a Consumption instance. Got ${consumption}`)
-        }
-        this.consumption = consumption
-        
+        this.dependency = dependency        
         this.symptom = symptom
         this.consequence = consequence
-        this.businessImpact = businessImpact
+        this.impact = impact
     }
 
     toString() {
-        return `${this.consumption} >> ${this.symptom}`
+        return `${this.dependency.consumption} -x-> ${this.dependency.service}`
     }
 }

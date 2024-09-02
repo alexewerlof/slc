@@ -3,6 +3,7 @@ import TabsComponent from '../components/tabs.js'
 import ExtLink from '../components/ext-link.js'
 import SystemView from '../views/system.js'
 import ConsumerView from '../views/consumer.js'
+import DependencyView from '../views/dependency.js'
 import { System } from '../models/system.js'
 import { Consumer } from '../models/consumer.js'
 import { Assessment } from '../models/assessment.js'
@@ -27,6 +28,8 @@ export const app = createApp({
         web.addNewConsumption('Render car catalog page')
         web.addNewConsumption('Render car detail page')
         assessment.addConsumer(web)
+
+        assessment.addDependency(web.consumptions[0], api.services[0])
 
         const mobile = new Consumer(assessment, 'Mobile client')
         mobile.addNewConsumption('Render car image')
@@ -89,14 +92,15 @@ export const app = createApp({
         }
         */
 
-        const tabNames = ['Provider', 'Consumers', 'Risks']
+        const tabNames = ['Provider', 'Consumers', 'Failures', 'Risks']
         return {
-            selectedTab: tabNames[1],
+            selectedTab: tabNames[2],
             tabNames,
             assessment,
         }
     },
     components: {
+        DependencyView,
         SystemView,
         ConsumerView,
         TabsComponent,
