@@ -1,0 +1,21 @@
+<show-hide-component
+    title="Service"
+    :name="service">
+
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>Title</h2>
+            <input type="text" v-model="service.title">
+            <h2>Description</h2>
+            <input type="text" v-model="service.description">
+            <div class="button-bar">
+                <button @click="service.system.removeService(service)">Remove Service</button>
+            </div>
+        </div>
+        <div class="annotated__help">
+            <p>
+                TBW
+            </p>
+        </div>
+    </div>
+</show-hide-component>

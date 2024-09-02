@@ -21,10 +21,16 @@ export class ServiceLevel {
 
 import { Level } from './level.js'
 import { isInstance } from '../lib/validation.js'
+import { Assessment } from './assessment.js'
+import { System } from './system.js'
 
 export class Service {
-    constructor(name, description) {
-        this.name = name
+    constructor(system, title = '', description = '') {
+        if (!isInstance(system, System)) {
+            throw new Error(`Service.constructor: system must be an instance of System. Got ${system}`)
+        }
+        this.system = system
+        this.title = title
         this.description = description
         this.provider = 'service provider'
         this.consumers = ['service consumer1', 'service consumer 2']
@@ -43,7 +49,11 @@ export class Service {
         this.addLevel(new Level(this))
     }
 
+    remove() {
+        this.system.removeService(this)
+    }
+
     toString() {
-        return this.name
+        return `${this.system.title}::${this.title}`
     }
 }

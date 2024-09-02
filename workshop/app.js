@@ -1,36 +1,39 @@
 import { createApp } from '../vendor/vue.js'
-import { System, Service } from './provider.js'
-import { Consumer, Consumption } from './consumer.js'
-import { Failure } from './risk.js'
+import TabsComponent from '../components/tabs.js'
+import ExtLink from '../components/ext-link.js'
+import SystemView from '../views/system.js'
+import ConsumerView from '../views/consumer.js'
+import { System } from '../models/system.js'
+import { Consumer } from '../models/consumer.js'
+import { Assessment } from '../models/assessment.js'
 
 export const app = createApp({
     data() {
-        const systems = []
-        const consumers = []
-        const failures = []
+        const assessment = new Assessment()
 
-        const api = new System('API server')
+        const api = new System(assessment, 'API server')
         api.addNewService('Car models API')
         api.addNewService('Car prices API')
-        systems.push(api)
+        assessment.addSystem(api)
 
-        const fileStorage = new System('File storage')
+        const fileStorage = new System(assessment, 'File storage')
         fileStorage.addNewService('Store car images')
         fileStorage.addNewService('Retrieve car images')
         fileStorage.addNewService('Store car documents')
         fileStorage.addNewService('Retrieve car documents')
-        systems.push(fileStorage)
+        assessment.addSystem(fileStorage)
 
-        const web = new Consumer('Web client')
+        const web = new Consumer(assessment, 'Web client')
         web.addNewConsumption('Render car catalog page')
         web.addNewConsumption('Render car detail page')
-        consumers.push(web)
+        assessment.addConsumer(web)
 
-        const mobile = new Consumer('Mobile client')
+        const mobile = new Consumer(assessment, 'Mobile client')
         mobile.addNewConsumption('Render car image')
         mobile.addNewConsumption('Control the car remotely')
-        consumers.push(mobile)
+        assessment.addConsumer(mobile)
 
+        /*
         failures.push(
             new Failure(
                 api.services[0],
@@ -78,105 +81,25 @@ export const app = createApp({
                 'Web client',
             ),
         )
-
+        
         return {
             systems,
             consumers,
             failures,
         }
-    },
-    methods: {
-        setConsumption($event, consumption, service) {
-            if ($event.target.checked) {
-                // make sure that we have a failure for this service and consumption
-                if (!this.hasFailure(consumption, service)) {
-                    this.addNewFailure(consumption, service)
-                }
-            } else {
-                // remove any failure that ties to this service and consumption
-                this.removeFailures(consumption, service)
-            }
-        },
-        addNewSystem() {
-            this.systems.push(new System())
-        },
-        addNewService(system) {
-            system.addNewService()
-        },
-        removeService(service) {
-            service.remove()
-        },
-        addNewConsumer() {
-            this.consumers.push(new Consumer())
-        },
-        addNewConsumption(consumer) {
-            consumer.addNewConsumption()
-        },
-        removeConsumption(consumption) {
-            consumption.remove()
-        },
-        hasFailure(consumption, service) {
-            return this.filterFailures(consumption, service).length > 0
-        },
-        addNewFailure(consumption, service) {
-            this.failures.push(new Failure(service, consumption))
-        },
-        removeFailure(failure) {
-            const index = this.failures.indexOf(failure)
-            if (index > -1) {
-                this.failures.splice(index, 1)
-            }
-        },
-        removeFailures(consumption, service) {
-            const existingFailures = this.filterFailures(consumption, service)
-            for (const failure of existingFailures) {
-                this.removeFailure(failure)
-            }
-        },
-        filterFailures(consumption, service) {
-            return this.failures.filter(f => f.consumption === consumption && f.service === service)
-        },
-        filterFailuresBySystem(system) {
-            return this.failures.filter(f => f.service.system === system)
-        },
-        failureUp(failure) {
-            // move the failure up in the failures array
-            const index = this.failures.indexOf(failure)
-            if (index > 0) {
-                this.failures.splice(index, 1)
-                this.failures.splice(index - 1, 0, failure)
-            }
-        },
-        failureDown(failure) {
-            // move the failure down in the failures array
-            const index = this.failures.indexOf(failure)
-            if (index < this.failures.length - 1) {
-                this.failures.splice(index, 1)
-                this.failures.splice(index + 1, 0, failure)
-            }
-        },
-    },
-    computed: {
-        allServices() {
-            const ret = []
-            for (const system of this.systems) {
-                ret.push(...system.services)
-            }
-            return ret
-        },
-        allConsumptions() {
-            const ret = []
-            for (const consumer of this.consumers) {
-                ret.push(...consumer.consumptions)
-            }
-            return ret
-        },
-        state() {
-            return JSON.stringify({
-                systems: this.systems,
-                consumers: this.consumers,
-                failures: this.failures,
-            }, null, 2)
+        */
+
+        const tabNames = ['Provider', 'Consumers', 'Risks']
+        return {
+            selectedTab: tabNames[1],
+            tabNames,
+            assessment,
         }
+    },
+    components: {
+        SystemView,
+        ConsumerView,
+        TabsComponent,
+        ExtLink,
     },
 })

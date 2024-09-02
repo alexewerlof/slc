@@ -57,106 +57,60 @@
                 </table>
             </section>
         </article>
-        <article>
-            <section>
-                <h1>Systems</h1>
-                <p>What are the services that your team owns? Systems offer services to the consumers.</p>
-                <p>
-                    It might be tempting to list all the systems that your team owns.
-                    Don't!
-                    Service Levels is about how reliability is perceived
-                    from your consumers' perspective and as far as they are concerned,
-                    your internal systems are not their business.
-                    We should set the Service Levels at the boundary of your team's
-                    responsibility.
-                </p>
-                <article v-for="system of systems" :key="system.id">
-                    <section>
-                        <label>
-                            <h2>System Name</h2>
-                            <p>What's a user-facing system that your team owns?</p>
-                            <input type="text" v-model="system.name">
-                        </label>
-                    </section>
-                    <section>
-                        <h3>Services of {{ system.name }}</h3>
-                        <p>
-                            What kind of problem does {{ system.name }} solve?
-                            In the next step, we dig into whose problem it solves.
-                        </p>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Description</th>
-                                    <th></th>
-                                </tr>
-                                <tbody>
-                                    <tr v-for="service of system.services" :key="service.id">
-                                        <td>
-                                            <input type="text" v-model="service.name">
-                                        </td>
-                                        <td>
-                                            <button @click="removeService(service)">Remove Service</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </thead>
-                        </table>
-                        <div class="button-bar">
-                            <button @click="addNewService(system)">Add New Service to {{ system }}</button>
-                        </div>
-                    </section>
-                </article>
-                <div class="button-bar">
-                    <button @click="addNewSystem">Add New System</button>
+        <tabs-component
+            v-model:selected-tab="selectedTab"
+            :tab-names="tabNames"></tabs-component>
+        <div v-if="selectedTab === 'Provider'">
+            <div class="annotated">
+                <div class="annotated__controls">
+                    <div class="button-bar">
+                        <button @click="assessment.addNewSystem()">Add New System</button>
+                    </div>        
                 </div>
-            </section>
-        </article>
-
-        <article>
-            <section>
-                <h1>Consumers</h1>
-                <p>What other entities (people or systems) use the services owned by your team?</p>
-                <article v-for="consumer of consumers" :key="consumer.id">
-                    <section>
-                        <label>
-                            <h2>Consumer Name</h2>
-                            <input type="text" v-model="consumer.name">
-                        </label>
-                    </section>
-                    <section>
-                        <h3>Consumptions</h3>
-                        <p>
-                            A consumption uses a unique combination of services.
-                            How does {{ consumer.name || 'this consumer'}} consume your services?
-                        </p>
-                        <div v-for="consumption of consumer.consumptions" :key="consumption.id">
-                            <label>
-                                <h4>Consumption Description</h4>
-                                <input type="text" v-model="consumption.name">
-                            </label>
-                            <p>What services does {{ consumption.name || 'this consumption' }} rely on?</p>
-                            <ul>
-                                <li v-for="service of allServices" :key="service.id">
-                                    <label>
-                                        <input type="checkbox" :value="service" v-model="consumption.dependencies" @change="setConsumption($event, consumption, service)">
-                                        {{ service }}
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="button-bar">
-                            <button @click="addNewConsumption(consumer)">Add New Consumption to {{ consumer }}</button>
-                        </div>
-                    </section>
-                </article>
-                <div class="button-bar">
-                    <button @click="addNewConsumer">Add New Consumer</button>
+                <div class="annotated__help">
+                    <p>
+                        Before defining service levels, we first need to identify the systems that provide
+                        those services.
+                    </p>
+                    <p>
+                        You don't need to list all of your systems.
+                        As a rule of thumb start with the consumer-facing services
+                        and as you work your way through the UI, you can come back and
+                        add any missing systems.
+                    </p>
                 </div>
-            </section>
-        </article>
+            </div>
+            <system-view v-for="system of assessment.systems" :system="system"></system-view>
+        </div>
 
-        <article>
+        <div v-if="selectedTab === 'Consumers'">
+            <div class="annotated">
+                <div class="annotated__controls">
+                    <div class="button-bar">
+                        <button @click="assessment.addNewConsumer()">Add New Consumer</button>
+                    </div>
+                </div>
+                <div class="annotated__help">
+                    <p>
+                        The consumer can be any system, team, or user that consumes the services offered by the system.
+                        In simple words, a consumer has a dependency on the system.
+                        Examples include: APIs, applications, authetication, etc.
+                    </p>
+                    <p>
+                        The consumer can itself be a service provider, but in this context it is the consumer of the systems
+                        that were listed in the previous tab.
+                    </p>
+                    <p>
+                        There can also be circular dependencies where one team consumes the services of another team but
+                        itself provides some services that are consumed by the other team.
+                        Those services are outside the scope of defining the service levels for the systems that are listed in the systems tab.
+                    </p>
+                </div>
+            </div>
+            <consumer-view v-for="consumer of assessment.consumers" :consumer="consumer"></consumer-view>
+        </div>
+
+        <article v-if="selectedTab === 'Risks'">
             <section>
                 <h1>Failures</h1>
                 <p>What are the all the ways a service consumption can break? What are the consequences for the consumer? How would the consumer notice the symptoms?</p>
@@ -196,9 +150,6 @@
                     </div>
                 </div>
             </section>
-        </article>
-
-        <article>
             <section>
                 <h1>Risks</h1>
                 <p>What are the risks associated with the failures? Sort them based on the impact on the business.</p>

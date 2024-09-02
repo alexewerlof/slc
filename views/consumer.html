@@ -1,0 +1,40 @@
+<show-hide-component
+    title="Consumer"
+    :name="consumer">
+
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>Title</h2>
+            <input type="text" v-model="consumer.title">
+            <h2>Description</h2>
+            <input type="text" v-model="consumer.description">
+        </div>
+        <div class="annotated__help">
+            <p>
+                Give this consumer a title and description to make it easier to identify.
+            </p>
+        </div>
+    </div>
+
+    <div class="annotated">
+        <div class="annotated__controls">
+            <div class="error block" v-if="consumer.consumptions.length === 0">
+                <p>
+                    At the moment this consumer hasn't defined any consumption.
+                    Therefore it is not useful for defining a service level.
+                </p>
+            </div>
+            <div class="button-bar">
+                <button @click="consumer.addNewConsumption()">Add New Consumption</button>
+            </div>
+        </div>
+        <div class="annotated__help">
+            <p>
+                In simple language, a consumption is how a consumer uses a service.
+                The most important aspect of a consumption is the purpose to use a system.
+            </p>
+        </div>
+    </div>
+
+    <consumption-view v-for="consumption of consumer.consumptions" :consumption="consumption"></consumption-view>
+</show-hide-component>

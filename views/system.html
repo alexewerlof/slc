@@ -1,0 +1,44 @@
+<show-hide-component
+    title="System"
+    :name="system">
+
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>Title</h2>
+            <input type="text" v-model="system.title">
+            <h2>Description</h2>
+            <input type="text" v-model="system.description">
+        </div>
+        <div class="annotated__help">
+            <p>
+                xx
+            </p>
+        </div>
+    </div>
+
+    <div class="annotated">
+        <div class="annotated__controls">
+            <div class="error block" v-if="system.services.length === 0">
+                <p>
+                    At the moment this system does not offer any consumer facing services.
+                    Therefore it is not possible to define a service level for it.
+                </p>
+            </div>
+            <div class="button-bar">
+                <button @click="system.addNewService()">Add New Service</button>
+            </div>
+        </div>
+        <div class="annotated__help">
+            <p>
+                The system offers
+                <ext-link href="https://blog.alexewerlof.com/p/service">service</ext-link>s
+                which are in turn consumed by the consumers.
+            </p>
+            <p>
+                Examples include: APIs, web sites, app components like SDKs, authetication, etc.
+            </p>
+        </div>
+    </div>
+
+    <service-view v-for="service of system.services" :service="service"></service-view>
+</show-hide-component>
