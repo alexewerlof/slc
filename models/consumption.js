@@ -11,42 +11,21 @@ export class Consumption {
         this.consumer = consumer
         this.title = title
         this.description = description
-        this.dependencies = []
+    }
+
+    get dependencies() {
+        return this.consumer.assessment.dependencies.filter(dependency => dependency.consumption === this)
     }
 
     hasDependency(service) {
-        return this.dependencies.includes(service)
-    }
-
-    addDependency(service) {
-        if (!isInstance(service, Service)) {
-            throw new Error(`Consumption.addDependency: service must be an instance of Service. Got ${service}`)
-        }
-        if (!this.hasDependency(service)) {
-            if (service.system.assessment !== this.consumer.assessment) {
-                throw new Error(`Consumption.addDependency: service ${service} is not in the same assessment as ${this.consumer}`)
-            }
-            this.dependencies.push(service)
-        }
-    }
-
-    removeDependency(service) {
-        if (!isInstance(service, Service)) {
-            throw new Error(`Consumption.removeDependency: service must be an instance of Service. Got ${service}`)
-        }
-        const index = this.dependencies.indexOf(service)
-        if (index > -1) {
-            this.dependencies.splice(index, 1)
-        } else {
-            throw new ReferenceError(`Service ${service} not found in dependencies of ${this}`)
-        }
+        return Boolean(this.consumer.assessment.getDependency(this, service))
     }
 
     setDependency(service, value) {
         if (value) {
-            this.addDependency(service)
+            this.consumer.assessment.addDependency(this, service)
         } else {
-            this.removeDependency(service)
+            this.consumer.assessment.removeDependency(this, service)
         }
     }
 
@@ -55,6 +34,6 @@ export class Consumption {
     }
 
     toString() {
-        return `${this.consumer.title}::${this.title} (depends on ${this.dependencies.length} services)`
+        return `${this.consumer.title}::${this.title}`
     }
 }
