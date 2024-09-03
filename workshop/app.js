@@ -92,7 +92,7 @@ export const app = createApp({
         }
         */
 
-        const tabNames = ['Provider', 'Consumers', 'Failures', 'Risks']
+        const tabNames = ['Provider', 'Consumers', 'Failures', 'Risks', 'Service Levels']
         return {
             selectedTab: tabNames[2],
             tabNames,
