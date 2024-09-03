@@ -15,15 +15,16 @@
 
 @media screen and (min-width: 1000px) {
     .annotated {
-        display: flex;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
     }
     
     .annotated__controls {
-        flex: 1;
+        grid-column: 1;
     }
-
+    
     .annotated__help {
-        flex: 1;
+        grid-column: 2;
     }
 }
