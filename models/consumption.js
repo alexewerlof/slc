@@ -14,7 +14,7 @@ export class Consumption {
     }
 
     get dependencies() {
-        return this.consumer.assessment.dependencies.filter(dependency => dependency.consumption === this)
+        return this.consumer.assessment.allDependencies.filter(dependency => dependency.consumption === this)
     }
 
     hasDependency(service) {

@@ -20,6 +20,10 @@ export class Assessment {
         return this.consumers.flatMap(consumer => consumer.consumptions)
     }
 
+    get allDependencies() {
+        return this.dependencies
+    }
+
     addSystem(system) {
         if (!isInstance(system, System)) {
             throw new Error(`Expected an instance of System. Got ${system}`)

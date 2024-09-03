@@ -112,7 +112,7 @@
 
         <div v-if="selectedTab === 'Failures'">
             <div class="block">
-                <dependency-view v-for="dependency of assessment.dependencies" :dependency="dependency"></dependency-view>
+                <dependency-view v-for="dependency of assessment.allDependencies" :dependency="dependency"></dependency-view>
             </div>
         </div>
 
