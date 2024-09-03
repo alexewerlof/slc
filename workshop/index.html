@@ -39,19 +39,25 @@
                         <tr>
                             <th></th>
                             <th></th>
-                            <th v-for="system of systems" :key="system.id" :colspan="system.services.length">{{ system.name }}</th>
+                            <th v-for="service of assessment.allServices">
+                                {{ service.system.title }}
+                            </th>
                         </tr>
                         <tr>
                             <th></th>
                             <th></th>
-                            <th v-for="service of allServices" :key="service.id">{{ service.name }}</th>
+                            <th v-for="service of assessment.allServices">
+                                {{ service.title }}
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="consumption of allConsumptions" :key="consumption.id">
-                            <th>{{ consumption.consumer.name }}</th>
-                            <th>{{ consumption.name }}</th>
-                            <th v-for="service of allServices" :key="service.id">{{ filterFailures(consumption, service).length }}</th>
+                        <tr v-for="consumption of assessment.allConsumptions">
+                            <th>{{ consumption.consumer.title }}</th>
+                            <th>{{ consumption.title }}</th>
+                            <td v-for="service of assessment.allServices">
+                                {{ assessment.getDependency(consumption, service)?.failures.length ?? '-' }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
