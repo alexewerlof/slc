@@ -1,7 +1,5 @@
-import { namify } from '../lib/fmt.js'
 import { isInstance } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
-import { Service } from './service.js'
 
 export class Consumption {
     constructor(consumer, title = '', description = '') {
