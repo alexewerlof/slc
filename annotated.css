@@ -1,12 +1,13 @@
 .annotated {
+    background-color: var(--background-darker);
 }
 
 .annotated__controls {
     padding: var(--gap2);
+    background-color: var(--background-color);
 }
 
 .annotated__help {
-    background-color: var(--background-darker);
     padding: var(--gap2);
     padding-bottom: 5em;
 }
