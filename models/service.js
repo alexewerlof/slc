@@ -31,21 +31,6 @@ export class Service {
         this.system = system
         this.title = title
         this.description = description
-        this.provider = 'service provider'
-        this.consumers = ['service consumer1', 'service consumer 2']
-        this.levels = []
-    }
-
-    addLevel(level) {
-        if (!isInstance(level, Level)) {
-            throw new TypeError('Service.addLevel: level must be an instance of Level')
-        }
-        level.service = this
-        this.levels.push(level)
-    }
-
-    addNewLevel() {
-        this.addLevel(new Level(this))
     }
 
     remove() {
