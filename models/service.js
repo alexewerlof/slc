@@ -21,7 +21,6 @@ export class ServiceLevel {
 
 import { Level } from './level.js'
 import { isInstance } from '../lib/validation.js'
-import { Assessment } from './assessment.js'
 import { System } from './system.js'
 
 export class Service {
