@@ -6,14 +6,12 @@ import { isInstance } from '../lib/validation.js'
 
 export class Indicator {
     constructor(
-        level,
         eventUnit,
         metricName,
         metricUnit,
         lowerBound,
         upperBound,
     ) {
-        this.level = level
         this.eventUnit = eventUnit ?? config.eventUnit.default
         this.metricName = metricName ?? config.metricName.default
         this.metricUnit = metricUnit ?? config.metricUnit.default

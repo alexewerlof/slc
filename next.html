@@ -50,9 +50,8 @@
             <p>🎉Tip: <ext-link href="templates/index.html">Use Templates</ext-link></p>
         </div>
 
-        <level-view
-            v-for="(level, levelIndex) of service.levels"
-            :level="level"></level-view>
+        <indicator-view
+            :indicator="indicator"></indicator-view>
 
     <!-- Toast Notification -->
     <div v-if="toastCaption" class="toast" @animationend="this.toastCaption = ''">{{ toastCaption }}</div>
