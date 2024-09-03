@@ -7,9 +7,12 @@
     background-color: var(--background-color);
 }
 
+.annotated__controls + .annotated__controls {
+    padding-top: 0;
+}
+
 .annotated__help {
     padding: var(--gap2);
-    padding-bottom: 5em;
 }
 
 
@@ -26,5 +29,6 @@
     
     .annotated__help {
         grid-column: 2;
+        padding-bottom: 5em;
     }
 }
