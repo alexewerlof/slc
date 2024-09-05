@@ -1,6 +1,4 @@
-<show-hide-component
-    title="Alert"
-    :name="alert">
+<div>
     <div class="annotated">
         <div class="annotated__controls">
             <h3>Burn Rate: {{ alert.burnRate }}x</h3>
@@ -371,4 +369,17 @@
             </p>
         </div>
     </div>
-</show-hide-component>
+
+    <div class="annotated">
+        <div class="annotated__controls">
+            <div class="button-bar">
+                <button @click="alert.remove()">Remove Alert</button>
+            </div>        
+        </div>
+        <div class="annotated__help">
+            <p>
+                Do you want to remove this alert?
+            </p>
+        </div>
+    </div>
+</div>

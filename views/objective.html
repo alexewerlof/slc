@@ -1,11 +1,8 @@
-<show-hide-component
-    title="Objective"
-    :name="objective">
+<div>
     <div class="annotated">
         <div class="annotated__controls">
             <h2>
                 Target: {{ percL10n(objective.perc) }}
-                <button @click="removeObjective(objectiveIndex)">Remove Objective</button>
             </h2>
             <input
                 type="range"
@@ -463,9 +460,18 @@
             </ul>
         </div>
     </div>
+
+    <show-hide-component
+        v-for="alert of objective.alerts"
+        title="Alert"
+        :name="alert">
+        <alert-view :alert="alert"></alert-view>
+    </show-hide-component>
+
     <div class="annotated">
         <div class="annotated__controls">
             <div class="button-bar">
+                <button @click="objective.remove()">Remove Objective</button>
                 <button @click="objective.addNewAlert()">Add Alert</button>
             </div>        
         </div>
@@ -485,7 +491,4 @@
             </p>
         </div>
     </div>
-    <alert-view
-        v-for="alert of objective.alerts"
-        :alert="alert"></alert-view>
-</show-hide-component>
+</div>

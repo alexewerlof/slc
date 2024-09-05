@@ -82,6 +82,10 @@ export class Objective {
         return eventCount * 100 / validCount
     }
 
+    remove() {
+        this.indicator.removeObjective(this)
+    }
+
     addAlert(alert) {
         if(!isInstance(alert, Alert)) {
             throw new TypeError(`Objective: alert must be an instance of Alert. Got ${ alert }`)
@@ -92,6 +96,17 @@ export class Objective {
 
     addNewAlert() {
         this.addAlert(new Alert(this))
+    }
+
+    removeAlert(alert) {
+        if (!isInstance(alert, Alert)) {
+            throw new TypeError(`Objective: alert must be an instance of Alert. Got ${ alert }`)
+        }
+        const index = this.alerts.indexOf(alert)
+        if (index === -1) {
+            throw new Error(`Objective: alert not found in alerts. Got ${ alert }`)
+        }
+        this.alerts.splice(index, 1)
     }
 
     toString() {

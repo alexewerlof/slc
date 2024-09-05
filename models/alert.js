@@ -48,6 +48,10 @@ export class Alert {
         return Math.floor(this.badCountLong / this.shortWindowDivider)
     }
 
+    remove() {
+        this.objective.removeAlert(this)
+    }
+
     toString() {
         return `when ${ percL10n(this.longWindowPerc) } of error budget burns at ${this.burnRate}x`
     }

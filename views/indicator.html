@@ -1,6 +1,4 @@
-<show-hide-component
-    title="Indicator"
-    :name="indicator">
+<div>
 
     <div class="annotated">
         <div class="annotated__controls">
@@ -326,6 +324,14 @@
         </div>
     </div>
     
+    <show-hide-component
+        v-for="objective of indicator.objectives"
+        title="Objective"
+        :name="objective">
+        <objective-view
+            :objective="objective"></objective-view>
+    </show-hide-component>
+
     <div class="annotated">
         <div class="annotated__controls">
             <div class="button-bar">
@@ -339,9 +345,4 @@
             </p>
         </div>
     </div>
-    <indicator-view
-        :indicator="indicator"></indicator-view>
-    <objective-view
-        v-for="objective of indicator.objectives"
-        :objective="objective"></objective-view>
-</show-hide-component>
+</div>
