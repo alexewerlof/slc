@@ -1,0 +1,84 @@
+<div>
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>Good {{ bound.indicator.metricName }} data points</h2>
+            <div>
+                <label>
+                    <input type="radio" v-model="bound.isRanged" :value="true"> Should be in a range
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input type="radio" v-model="bound.isRanged" :value="false"> Should be tested against a value
+                </label>
+            </div>       
+        </div>
+        <div class="annotated__help">
+
+        </div>
+    </div>
+
+    <div v-if="bound.isRanged" class="annotated">
+        <div class="annotated__controls">
+            <h3>Lower Bound</h3>
+            <select
+                id="lower-bound-type"
+                v-model="bound.lowerBound">
+                <option v-for="v of config.lowerBound.possibleValues"
+                    :value="v">
+                    {{ boundCaption(bound.indicator.metricName, v, '$LT') }}
+                </option>
+            </select>
+            <h3>Upper Bound</h3>
+            <select
+                id="upper-bound-type"
+                v-model="bound.upperBound">
+                <option v-for="v of config.upperBound.possibleValues"
+                    :value="v">
+                    {{ boundCaption(bound.indicator.metricName, v, '$UT') }}
+                </option>
+            </select>
+        </div>
+        <div class="annotated__help">
+            <p>
+                The thresholds are the values that put boundaries on the
+                values of {{ metricName }}
+                to define good {{ bound.indicator.eventUnitNorm }}.
+            </p>
+            <p>
+                They are part of the SLO definition and allow for
+                <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
+                    Multi-Tierd SLOs
+                </ext-link>.
+            </p>
+            <h2>Definition of good</h2>
+            <div class="code block"><code>{{ bound.indicator.good }}</code></div>
+            <h2>Definition of bad</h2>
+            <div class="code block"><code>{{ bound.indicator.bad }}</code></div>        
+        </div>
+    </div>
+
+    <div v-if="!bound.isRanged" class="annotated">
+        <div class="annotated__controls">
+            <h3>Equality bound</h3>
+            <select>
+                <option>datapoint === bound</option>
+                <option>datapoint !== bound</option>
+                <option>datapoint == true</option>
+                <option>datapoint == false</option>
+            </select>
+        </div>
+        <div class="annotated__help">
+
+        </div>
+    </div>
+
+    <div class="annotated">
+        <div class="annotated__controls">
+            
+        </div>
+        <div class="annotated__help">
+
+        </div>
+    </div>
+</div>

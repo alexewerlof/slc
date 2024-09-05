@@ -276,53 +276,8 @@
             
         </div>
     </div>
-    <div class="annotated">
-        <div class="annotated__controls">
-            <h3>Condition</h3>
-            <div class="box">
-                <label>
-                    <input type="checkbox" v-model="indicator.condition.isBounded"> Bounded
-                </label>
-            </div>
-            <div v-if="indicator.condition.isBounded">
-                <h4>Lower Bound</h4>
-                <select
-                    id="lower-bound-type"
-                    v-model="indicator.condition.lowerBound">
-                    <option v-for="v of config.lowerBound.possibleValues"
-                        :value="v">
-                        {{ boundCaption(indicator.metricName, v, '$LT') }}
-                    </option>
-                </select>
-                <h4>Upper Bound</h4>
-                <select
-                    id="upper-bound-type"
-                    v-model="indicator.condition.upperBound">
-                    <option v-for="v of config.upperBound.possibleValues"
-                        :value="v">
-                        {{ boundCaption(indicator.metricName, v, '$UT') }}
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="annotated__help">
-            <p>
-                The thresholds are the values that put boundaries on the
-                values of {{ metricName }}
-                to define good {{ indicator.eventUnitNorm }}.
-            </p>
-            <p>
-                They are part of the SLO definition and allow for
-                <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
-                    Multi-Tierd SLOs
-                </ext-link>.
-            </p>
-            <h2>Definition of good</h2>
-            <div class="code block"><code>{{ indicator.good }}</code></div>
-            <h2>Definition of bad</h2>
-            <div class="code block"><code>{{ indicator.bad }}</code></div>        
-        </div>
-    </div>
+
+    <bound-view :bound="indicator.bound"></bound-view>
     
     <show-hide-component
         v-for="objective of indicator.objectives"

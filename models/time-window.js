@@ -1,6 +1,7 @@
 import { numL10n } from '../lib/fmt.js'
 import { daysToSeconds, countTimeslices, humanSec, humanTime, humanTimeSlices } from '../lib/time.js'
-import { isNum, isStr } from '../lib/validation.js'
+import { isInstance, isNum } from '../lib/validation.js'
+import { Objective } from './objective.js'
 
 /**
  * Represents a time window and has some utility methods that allow to uniformly represent
@@ -9,16 +10,17 @@ import { isNum, isStr } from '../lib/validation.js'
 export class TimeWindow {
     // The raw number of seconds in this time window
     sec
-    // If the timeslice is set to a positive number, the window is time-based
-    timeslice
-    constructor(slo, sec) {
-        this.objective = slo
+    constructor(objective, sec) {
+        if (!isInstance(objective, Objective)) {
+            throw new TypeError(`TimeWindow: objective must be an instance of Objective. Got ${ objective }`)
+        }
+        this.objective = objective
 
         if (!isNum(sec)) {
-            throw new TypeError(`Window: sec must be a number. Got ${ sec }`)
+            throw new TypeError(`TimeWindow: sec must be a number. Got ${ sec }`)
         }
         if (sec < 0) {
-            throw new RangeError(`Window: sec must be positive. Got ${ sec }`)
+            throw new RangeError(`TimeWindow: sec must be positive. Got ${ sec }`)
         }
         this.sec = sec
     }

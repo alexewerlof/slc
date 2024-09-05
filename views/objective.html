@@ -154,7 +154,7 @@
         </div>
     </div>
 
-    <div v-if="objective.indicator.condition.isBounded" class="annotated">
+    <div v-if="objective.indicator.bound.isBounded" class="annotated">
         <div class="annotated__controls">
             <h3>Lower Threshold: <code>{{ objective.thresholds.lower }}</code></h3>
             <input
@@ -184,7 +184,7 @@
         </div>
     </div>
 
-    <div v-if="!objective.indicator.condition.isBounded" class="annotated">
+    <div v-if="!objective.indicator.bound.isBounded" class="annotated">
         <div class="annotated__controls">
             <h3>Equal to</h3>
             <input

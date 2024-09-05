@@ -2,23 +2,32 @@ import { config } from '../config.js'
 import { humanTimeSlices } from '../lib/time.js'
 import { badFormula, Bound, goodFormula } from './bound.js'
 import { Objective } from './objective.js'
-import { isInstance } from '../lib/validation.js'
+import { isInstance, isPosInt, isStr } from '../lib/validation.js'
 
 export class Indicator {
     constructor(
-        eventUnit,
-        metricName,
-        metricUnit,
-        lowerBound,
-        upperBound,
+        eventUnitOrTimeslice,
+        metricName = config.metricName.default,
+        metricUnit = config.metricUnit.default,
     ) {
-        this.eventUnit = eventUnit ?? config.eventUnit.default
-        this.metricName = metricName ?? config.metricName.default
-        this.metricUnit = metricUnit ?? config.metricUnit.default
+        if (isStr(eventUnitOrTimeslice)) {
+            this.eventUnit = eventUnitOrTimeslice
+            this.isTimeBased = false
+        } else {
+            if (!isPosInt(eventUnitOrTimeslice)) {
+                throw new TypeError(`Indicator: eventUnitOrTimeslice must be a positive integer. Got ${ eventUnitOrTimeslice } (${ typeof eventUnitOrTimeslice })`)
+            }
+            this.timeSliceLength = eventUnitOrTimeslice
+            this.isTimeBased = true
+        }
+        this.metricName = metricName
+        this.metricUnit = metricUnit
         this.timeSliceLength = 0
         this.objectives = []
-        this.condition = new Bound(lowerBound, upperBound)
-        this.name = 'some dummy name'
+        this.bound = new Bound(this)
+        if (!isInstance(this.bound, Bound)) {
+            throw new TypeError(`Indicator: bound must be an instance of Bound. Got ${ bound }`)
+        }
     }
 
     get good() {
@@ -51,17 +60,13 @@ export class Indicator {
 
     get eventUnitNorm() {
         if (this.isEventBased) {
-            return this.eventUnit || 'events'
+            return this.eventUnit || config.eventUnit.default
         }
         return humanTimeSlices(this.timeSliceLength)
     }
 
     get isEventBased() {
-        return this.timeSliceLength <= 0
-    }
-
-    get isTimeBased() {
-        return !this.isEventBased
+        return !this.isTimeBased
     }
 
     toString() {

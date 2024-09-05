@@ -1,36 +1,31 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
+import { Bound } from '../models/bound.js'
 import { config } from '../config.js'
-import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
-import BoundView from './bound.js'
-import ObjectiveView from './objective.js'
-import ShowHideComponent from '../components/show-hide.js'
-import { Indicator } from '../models/indicator.js'
+import { boundCaption, percL10n } from '../lib/fmt.js'
 import ExtLink from '../components/ext-link.js'
+import ShowHideComponent from '../components/show-hide.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
     data() {
         return {
             config,
-            indicator: this.indicator,
+            bound: this.bound,
         }
     },
     props: {
-        indicator: {
+        bound: {
             type: Object,
-            validator: v => isInstance(v, Indicator),
+            validator: v => isInstance(v, Bound),
         },
     },
     methods: {
         percL10n,
-        numL10n,
         boundCaption,
     },
     components: {
         ExtLink,
-        BoundView,
-        ObjectiveView,
         ShowHideComponent,
     },
 }

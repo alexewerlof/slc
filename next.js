@@ -17,7 +17,8 @@ import { percentToRatio } from './lib/math.js'
 
 const app = createApp({
     data() {
-        const indicator = new Indicator('requests', 'latency', 'ms', '', 'lt')
+        const indicator = new Indicator('requests', 'latency', 'ms')
+        indicator.bound.upperBound = 'lt'
         indicator.addNewObjective()
         indicator.objectives[0].addNewAlert()
         return {

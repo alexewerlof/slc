@@ -1,11 +1,20 @@
 import { config } from '../config.js'
 import { entity2symbol, oppositeBound } from '../lib/fmt.js'
+import { isInstance } from '../lib/validation.js'
+import { Indicator } from './indicator.js'
 
 export class Bound {
     constructor(
+        indicator,
         lowerBound = config.lowerBound.default,
         upperBound = config.upperBound.default,
     ) {
+        if (!isInstance(indicator, Indicator)) {
+            throw new TypeError(`Bound: indicator must be an instance of Indicator. Got ${indicator}`)
+        }
+        this.indicator = indicator
+        this.isRanged = true
+        this.equalBound = ''
         this.lowerBound = lowerBound
         this.upperBound = upperBound
     }
@@ -57,21 +66,21 @@ export class Bound {
 }
 
 export function formula(good, indicator, thresholds) {
-    const { metricName, condition } = indicator
+    const { metricName, bound } = indicator
     const ret = []
-    if (condition.isBounded) {
-        if (condition.isLowerBounded) {
+    if (bound.isBounded) {
+        if (bound.isLowerBounded) {
             ret.push(metricName)
-            const { lowerBound } = condition
+            const { lowerBound } = bound
             ret.push(good ? entity2symbol(lowerBound) : entity2symbol(oppositeBound(lowerBound)))
             ret.push(thresholds ? thresholds.lower : '$LT')
-            if (condition.isUpperBounded) {
+            if (bound.isUpperBounded) {
                 ret.push(good ? '&&' : '||')
             }
         }
-        if (condition.isUpperBounded) {
+        if (bound.isUpperBounded) {
             ret.push(metricName)
-            const { upperBound } = condition
+            const { upperBound } = bound
             ret.push(good ? entity2symbol(upperBound) : entity2symbol(oppositeBound(upperBound)))
             ret.push(thresholds ? thresholds.upper : '$UT')
         }

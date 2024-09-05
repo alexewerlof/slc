@@ -36,11 +36,11 @@ export class Thresholds {
     }
 
     get lowerMax() {
-        return this.objective.indicator.condition.isUpperBounded ? this.upper : config.lowerThreshold.max
+        return this.objective.indicator.bound.isUpperBounded ? this.upper : config.lowerThreshold.max
     }
 
     get upperMin() {
-        return this.objective.indicator.condition.isLowerBounded ? this.lower : config.upperThreshold.min
+        return this.objective.indicator.bound.isLowerBounded ? this.lower : config.upperThreshold.min
     }
 
     get upperMax() {
