@@ -157,6 +157,11 @@ th, td {
     border-bottom: 1px solid var(--divider-color);
 }
 
+th[colspan] {
+    text-align: center;
+    font-size: 1.2em;
+}
+
 td button {
     width: 100%;
 }
