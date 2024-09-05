@@ -53,7 +53,8 @@ input[type=search], input[type=text], input[type=number], select, textarea {
                 border-color var(--animation-speed) ease-in-out;
 }
 
-input[type=search]:hover, input[type=text]:hover, input[type=number]:hover, select:hover, textarea:hover {
+input[type=search]:hover, input[type=text]:hover, input[type=number]:hover, select:hover, textarea:hover,
+table input[type=search], table input[type=text], table input[type=number], table select, table textarea {
     border-color: var(--secondary-color);
 }
 
