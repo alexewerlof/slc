@@ -1,6 +1,4 @@
-<show-hide-component
-    title="Consumer"
-    :name="consumer">
+<div>
 
     <div class="annotated">
         <div class="annotated__controls">
@@ -38,5 +36,11 @@
         </div>
     </div>
 
-    <consumption-view v-for="consumption of consumer.consumptions" :consumption="consumption"></consumption-view>
-</show-hide-component>
+    <show-hide-component
+        v-for="consumption of consumer.consumptions"
+        title="Consumption"
+        :name="consumption">
+
+        <consumption-view :consumption="consumption"></consumption-view>
+    </show-hide-component>
+</div>

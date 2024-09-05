@@ -1,5 +1,6 @@
 import { createApp } from '../vendor/vue.js'
 import TabsComponent from '../components/tabs.js'
+import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
 import SystemView from '../views/system.js'
 import ConsumerView from '../views/consumer.js'
@@ -104,6 +105,7 @@ export const app = createApp({
         SystemView,
         ConsumerView,
         TabsComponent,
+        ShowHideComponent,
         ExtLink,
     },
 })

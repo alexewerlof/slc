@@ -1,4 +1,4 @@
-<show-hide-component title="Dependency" :name="dependency">
+<div>
     <div class="annotated">
         <div class="annotated__controls">
             <h2>{{ dependency }}</h2>
@@ -17,5 +17,10 @@
         </div>
     </div>
 
-    <failure-view v-for="failure of dependency.failures" :failure="failure"></failure-view>
-</show-hide-component>
+    <show-hide-component
+        v-for="failure of dependency.failures"
+        title="Failure"
+        :name="failure">
+        <failure-view :failure="failure"></failure-view>
+    </show-hide-component>
+</div>

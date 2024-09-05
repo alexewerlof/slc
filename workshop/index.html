@@ -86,7 +86,12 @@
                     </p>
                 </div>
             </div>
-            <system-view v-for="system of assessment.systems" :system="system"></system-view>
+            <show-hide-component 
+                v-for="system of assessment.systems"
+                title="System"
+                :name="system">
+                <system-view :system="system"></system-view>
+            </show-hide-component>
         </div>
 
         <div v-if="selectedTab === 'Consumers'">
@@ -113,7 +118,12 @@
                     </p>
                 </div>
             </div>
-            <consumer-view v-for="consumer of assessment.consumers" :consumer="consumer"></consumer-view>
+            <show-hide-component 
+                v-for="consumer of assessment.consumers"
+                title="Consumer"
+                :name="consumer">
+                <consumer-view :consumer="consumer"></consumer-view>
+            </show-hide-component>
         </div>
 
         <div v-if="selectedTab === 'Failures'">
@@ -133,7 +143,12 @@
                 </div>
             </div>
             <div class="block">
-                <dependency-view v-for="dependency of assessment.allDependencies" :dependency="dependency"></dependency-view>
+                <show-hide-component 
+                    v-for="dependency of assessment.allDependencies"
+                    title="Dependency"
+                    :name="consumption">
+                    <dependency-view :dependency="dependency"></dependency-view>
+                </show-hide-component>
             </div>
         </div>
 
