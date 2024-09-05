@@ -100,16 +100,17 @@ textarea {
 }
 
 button {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     color: var(--background-color);
     border: var(--bthick) solid currentColor;
     border-radius: var(--bradius);
+    border: 1px solid var(--secondary-color);
     cursor: pointer;
     transition: background-color var(--animation-speed);
 }
 
 button:hover {
-    background-color: var(--primary-lighter);
+    filter: brightness(115%);
 }
 
 button.large, .button-bar button {
