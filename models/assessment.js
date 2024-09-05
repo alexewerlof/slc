@@ -24,6 +24,10 @@ export class Assessment {
         return this.dependencies
     }
 
+    get allFailures() {
+        return this.allDependencies.flatMap(dependency => dependency.failures)
+    }
+
     addSystem(system) {
         if (!isInstance(system, System)) {
             throw new Error(`Expected an instance of System. Got ${system}`)

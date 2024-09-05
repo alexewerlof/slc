@@ -94,7 +94,7 @@ export const app = createApp({
 
         const tabNames = ['Provider', 'Consumers', 'Failures', 'Risks', 'Service Levels']
         return {
-            selectedTab: tabNames[2],
+            selectedTab: tabNames[3],
             tabNames,
             assessment,
         }

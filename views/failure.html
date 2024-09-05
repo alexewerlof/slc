@@ -5,12 +5,18 @@
             <input type="text" v-model="failure.symptom">
         </div>
         <div class="annotated__help">
-            How would the consumer know that something is broken?
-            Service Levels are set at the boundaries between the teams.
-            What goes on inside the team is not the consumers' business.
-            We need to distinguish between root cause and symptoms.
-            The root cause is often happenning in the {{ failure.dependency.service }}
-            whereas the symptom is what the {{ failure.dependency.consumption.consumer }} sees.
+            <p>
+                How would the consumer know that something is broken?
+                We need to distinguish between root cause and symptoms.
+            </p>
+            <ol>
+                <li>The symptom is what the {{ failure.dependency.consumption.consumer.title }} sees.</li>
+                <li>The root cause is {{ failure.dependency.service.system.title }} or any other systems that causes the symptom.</li>
+            </ol>
+            <p>
+                Service Levels are set at the boundaries between the teams.
+                What goes on inside the team is not the consumers' business.
+            </p>
         </div>
     </div>
     
@@ -20,22 +26,13 @@
             <input type="text" v-model="failure.consequence">
         </div>
         <div class="annotated__help">
-            How would the consumer know that something is broken?
-            Service Levels are set at the boundaries between the teams.
-            What goes on inside the team is not the consumers' business.
-        </div>
-    </div>
-
-    <div class="annotated">
-        <div class="annotated__controls">
-            <h2>Impact</h2>
-            <input type="text" v-model="failure.impact">
-        </div>
-        <div class="annotated__help">
-            What is the business impact of the this failure happenning?
-            While the consequences mostly affect the 
-            {{ failure.dependency.consumption.consumer }},
-            the impact is felt by the business in terms of revenue, reputation, and legal compliance.
+            <p>
+                What is the consequence of the failure happening?
+                <ol>
+                    <li>The consequence is <em>how</em> that symptom affects the {{ failure.dependency.consumption.consumer.title }} to {{ failure.dependency.consumption.title }}.</li>
+                    <li>The symptom is <em>what</em> tells the {{ failure.dependency.consumption.consumer.title }} that something is wrong</li>
+                </ol>
+            </p>
         </div>
     </div>
 </show-hide-component>

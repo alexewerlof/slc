@@ -117,56 +117,37 @@
         </div>
 
         <div v-if="selectedTab === 'Failures'">
+            <div class="annotated">
+                <div class="annotated__controls">
+                    <div v-for="consumption of assessment.allConsumptions">
+                        <div class="error block">
+                            {{ consumption.consumer }} has no service dependency.
+                            Please either remove it or add a dependendency in order to proceed.
+                        </div>
+                    </div>        
+                </div>
+                <div class="annotated__help">
+                    <p>
+                        Failures threaten the consumption of a service.
+                    </p>
+                </div>
+            </div>
             <div class="block">
                 <dependency-view v-for="dependency of assessment.allDependencies" :dependency="dependency"></dependency-view>
             </div>
         </div>
 
-        <article v-if="selectedTab === 'Risks'">
-            <section>
-                <h1>Failures</h1>
-                <p>What are the all the ways a service consumption can break? What are the consequences for the consumer? How would the consumer notice the symptoms?</p>
-
-                <div v-for="consumption of allConsumptions" :key="consumption.id">
-                    <h2>Consumption: {{ consumption }}</h2>
-                    <div v-for="service of consumption.dependencies" :key="service.id">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Failed Service</th>
-                                    <th>Symptom from {{ consumption.consumer }} perspective</th>
-                                    <th>Consequence on {{ consumption.name }}</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="failure of filterFailures(consumption, service)" :key="service.id">
-                                    <th>
-                                        {{ service }}
-                                    </th>
-                                    <td>
-                                        <input type="text" v-model="failure.symptom">
-                                    </td>
-                                    <td>
-                                        <input type="text" v-model="failure.consequence">
-                                    </td>
-                                    <td>
-                                        <button @click="removeFailure(failure)">Remove Failure</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="button-bar">
-                            <button @click="addNewFailure(consumption, service)">Add New Failure for {{ service }}</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <div v-if="selectedTab === 'Risks'">
             <section>
                 <h1>Risks</h1>
                 <p>What are the risks associated with the failures? Sort them based on the impact on the business.</p>
                 <table>
                     <thead>
+                        <tr>
+                            <th colspan="2">Provicer</th>
+                            <th colspan="2">Consumer</th>
+                            <th colspan="2">Business</th>
+                        </tr>
                         <tr>
                             <th>Service</th>
                             <th>Symptom</th>
@@ -177,13 +158,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(failure, index) in failures" :key="failure.id">
-                            <td>{{ failure.service || '⚠️TBD' }}</td>
+                        <tr v-for="failure in assessment.allFailures">
+                            <td>{{ failure.dependency.service || '⚠️TBD' }}</td>
                             <td>{{ failure.symptom || '⚠️TBD' }}</td>
-                            <td>{{ failure.consumption || '⚠️TBD' }}</td>
+                            <td>{{ failure.dependency.consumption || '⚠️TBD' }}</td>
                             <td>{{ failure.consequence || '⚠️TBD' }}</td>
                             <td>
-                                <input type="text" v-model="failure.businessImpact">
+                                <input type="text" v-model="failure.impact">
                             </td>
                             <td>
                                 <button @click="failureUp(failure)">🔼</button>
@@ -192,7 +173,7 @@
                         </tr>
                 </table>
             </section>
-        </article>
+        </div>
     </main>
     <script type="module" src="index.js" defer async></script>
 </body>
