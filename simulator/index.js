@@ -202,6 +202,17 @@ const app = createApp({
             const slsValues = calculateSlsMetric(this.metricData, this.sliDefinition, this.sloDefinition)
             return slsValues.map((value, i) => [i, value])
         },
+        slsRange() {
+            let min = d3.min(this.slsPoints.map(([x, y]) => y))
+            if (min > 99) {
+                min = 99
+            } else if (min > 95) {
+                min = 95
+            } else if (min > 90) {
+                min = 90
+            }
+            return [min, 100]
+        },
         burnRatePoints() {
             const errorBudgetPercent = 100 - this.slo.value
             return this.slsPoints.map(([x, sls]) => {
