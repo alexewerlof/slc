@@ -119,10 +119,16 @@
             ]"></tabs-component>
 
         <div class="tab-content" v-if="selectedTab === 'Generator'">
-            <h3>Presets</h3>
-            <button v-for="pre in config.simulator.percentages.presets"
-                @click="percentages = [...pre.values]">{{ pre.name }}
-            </button>
+            <article>
+                <section>
+                    <h3>Presets</h3>
+                    <div class="button-bar">
+                        <button v-for="pre in config.simulator.percentages.presets"
+                            @click="percentages = [...pre.values]">{{ pre.name }}
+                        </button>
+                    </div>
+                </section>
+            </article>
             <article>
                 <section>
                     <h1>Data distribution</h1>
