@@ -204,12 +204,8 @@ const app = createApp({
         },
         slsRange() {
             let min = d3.min(this.slsPoints.map(([x, y]) => y))
-            if (min > 99) {
-                min = 99
-            } else if (min > 95) {
-                min = 95
-            } else if (min > 90) {
-                min = 90
+            if (min > this.slo.value) {
+                min = this.slo.value
             }
             return [min, 100]
         },
