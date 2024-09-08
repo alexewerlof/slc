@@ -1,33 +1,36 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
-import { Consumer } from '../models/consumer.js'
 import { config } from '../config.js'
-import { numL10n, percL10n } from '../lib/fmt.js'
+import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
+import BoundView from './bound-view.js'
+import ObjectiveView from './objective-view.js'
 import ShowHideComponent from '../components/show-hide.js'
+import { Indicator } from '../models/indicator.js'
 import ExtLink from '../components/ext-link.js'
-import ConsumptionView from './consumption.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
     data() {
         return {
             config,
-            consumer: this.consumer,
+            indicator: this.indicator,
         }
     },
     props: {
-        consumer: {
+        indicator: {
             type: Object,
-            validator: v => isInstance(v, Consumer),
+            validator: v => isInstance(v, Indicator),
         },
     },
     methods: {
         percL10n,
         numL10n,
+        boundCaption,
     },
     components: {
         ExtLink,
-        ConsumptionView,
+        BoundView,
+        ObjectiveView,
         ShowHideComponent,
     },
 }

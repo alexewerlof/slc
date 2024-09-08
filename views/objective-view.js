@@ -3,7 +3,7 @@ import { isInstance } from '../lib/validation.js'
 import { Objective } from '../models/objective.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
-import AlertView from './alert.js'
+import AlertView from './alert-view.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
 

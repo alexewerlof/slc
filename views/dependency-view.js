@@ -4,7 +4,7 @@ import { config } from '../config.js'
 import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
-import FailureView from './failure.js'
+import FailureView from './failure-view.js'
 import { Dependency } from '../models/dependency.js'
 
 export default {
