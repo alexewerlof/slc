@@ -192,7 +192,19 @@
                         :label-render-y="percentRender"
                         :axis-title-x="metricName"
                         axis-title-y="Relative probability"></plot-2d-component>
-                </section>
+                    <h4>Expected Shape of Data Distribution</h4>
+                    <plot-2d-component
+                        width="600"
+                        height="400"
+                        :points="distributionPoints"
+                        :padding="[30, 55, 50, 90]"
+                        :guides="thresholdGuidesY"
+                        :x-extent="[0, dataCount]"
+                        :y-extent="[min, max]"
+                        :label-render-y="unitRender"
+                        axis-title-x="Sorted Data Index"
+                        :axis-title-y="metricName"></plot-2d-component>
+                    </section>
                 <section>
                     <h1>Count</h1>
                     <p>

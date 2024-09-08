@@ -88,6 +88,16 @@ const app = createApp({
         buckets() {
             return createBuckets(this.min, this.max, this.percentages)
         },
+        distributionPoints() {
+            const ret = []
+            ret.push([0, this.min])
+            let sum = 0
+            for (let bucket of this.buckets) {
+                sum += bucket.probability
+                ret.push([Math.round(percent(sum, this.dataCount)), bucket.max])
+            }
+            return ret
+        },
         probabilityPoints() {
             return this.buckets.flatMap(bucket => {
                 return [
@@ -106,11 +116,13 @@ const app = createApp({
                 })
             }
 
-            const lastBucket = this.buckets[this.buckets.length - 1]
-            ret.push({
-                x: lastBucket.max,
-                label: lastBucket.max,
-            })
+            if (this.buckets.length > 1) {
+                const lastBucket = this.buckets[this.buckets.length - 1]
+                ret.push({
+                    x: lastBucket.max,
+                    label: lastBucket.max,
+                })
+            }
 
             if (this.upperBound) {
                 ret.push({
