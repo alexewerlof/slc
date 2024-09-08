@@ -1,0 +1,31 @@
+.percentage-overview-component {
+    display: grid;
+}
+
+.percentage-overview-component__error-caption {
+    color: var(--brand-red);
+    border-left: 1px solid var(--brand-red);
+    padding: 0.2em;
+}
+
+.percentage-overview-component__fill--bad {
+    background-color: var(--brand-red);
+}
+
+.percentage-overview-component__fill--good {
+    background-color: var(--brand-green);
+    color: var(--background-color);
+    border-left: 1px solid var(--brand-red);
+    padding: 0.2em;
+}
+
+.percentage-overview-component__valid-caption {
+    grid-column: span 2;
+    color: var(--primary-color);
+    border: 1px solid currentColor;
+    margin-bottom: 0.5em;
+    text-align: center;
+    border-bottom: none;
+    border-top-left-radius: 0.2em;
+    border-top-right-radius: 0.2em;
+}

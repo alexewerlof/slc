@@ -1,0 +1,15 @@
+<div class="percentage-overview-component" :style="style">
+    <div class="percentage-overview-component__valid-caption">
+        {{ validCaption }}
+    </div>
+
+    <div></div>
+    <div class="percentage-overview-component__error-caption">
+        {{ badCaption }}
+    </div>
+
+    <div class="percentage-overview-component__fill--bad" :style="errorBudgetFillWidth"></div>
+    <div class="percentage-overview-component__fill--good">
+        {{ goodCaption }}
+    </div>
+</div>

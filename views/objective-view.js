@@ -4,6 +4,7 @@ import { Objective } from '../models/objective.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
 import AlertView from './alert-view.js'
+import PercentageOverviewComponent from '../components/percentage-overview.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
 
@@ -28,6 +29,7 @@ export default {
     components: {
         AlertView,
         ExtLink,
+        PercentageOverviewComponent,
         ShowHideComponent,
     },
 }

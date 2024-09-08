@@ -213,6 +213,12 @@
             </div>
         </div>
         <div class="annotated__help">
+            <percentage-overview-component
+                :bad-perc="objective.errorBudgetPerc"
+                :bad-caption="`A maximum of ${ objective.badCount } are allowed to have ${ objective.bad }`"
+                :good-caption="`${ objective.goodCount } are guaranteed to have ${ objective.good }`"
+                :valid-caption="`From ${ objective.estimatedValidEvents } ${ objective.indicator.eventUnitNorm }`">
+            </percentage-overview-component>
             <h3>Counts</h3>
             <h4>Good: at least {{ objective.goodCount }} {{ objective.indicator.eventUnitNorm }}</h4>
             <h4>Bad: at most {{ objective.badCount }} {{ objective.indicator.eventUnitNorm }}</h4>
