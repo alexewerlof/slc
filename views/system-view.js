@@ -3,7 +3,7 @@ import { isInstance } from '../lib/validation.js'
 import { System } from '../models/system.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
-import ServiceView from './service.js'
+import ServiceView from './service-view.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
 
