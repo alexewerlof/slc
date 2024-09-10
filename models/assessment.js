@@ -34,10 +34,11 @@ export class Assessment {
         }
         system.assessment = this
         this.systems.push(system)
+        return system
     }
     
     addNewSystem(title, description) {
-        this.systems.push(new System(this, title, description))
+        return this.systems.push(new System(this, title, description))
     }
 
     addConsumer(consumer) {
@@ -46,10 +47,11 @@ export class Assessment {
         }
         consumer.assessment = this
         this.consumers.push(consumer)
+        return consumer
     }
     
     addNewConsumer(title, description) {
-        this.consumers.push(new Consumer(this, title, description))
+        return this.consumers.push(new Consumer(this, title, description))
     }
 
     _dependencyPredicate(consumption, service) {
@@ -75,9 +77,12 @@ export class Assessment {
     }
 
     addDependency(consumption, service) {
-        if (!this.getDependency(consumption, service)) {
-            this.dependencies.push(new Dependency(consumption, service))
+        let dependency = this.getDependency(consumption, service)
+        if (!dependency) {
+            dependency = new Dependency(consumption, service)
+            this.dependencies.push(dependency)
         }
+        return dependency
     }
 
     removeDependency(consumption, service) {

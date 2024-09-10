@@ -30,69 +30,28 @@ export const app = createApp({
         webClientConsumer.addNewConsumption('Render car detail page')
         assessment.addConsumer(webClientConsumer)
 
-        assessment.addDependency(webClientConsumer.consumptions[0], apiServerSystem.services[0])
-        assessment.dependencies[0].addNewFailure('Web page response is slow')
-
+        const dep1 = assessment.addDependency(webClientConsumer.consumptions[0], apiServerSystem.services[0])
+        dep1.addNewFailure(
+            'Web page response is slow',
+            'User may leave',
+            'Loss of potential customer',
+        )
+        dep1.addNewFailure(
+            'Wrong car specs are shown to the user',
+            'User will get the wrong info',
+            'Legal responsibility, bad reputation',
+        )
         const mobileClientConsumer = new Consumer(assessment, 'Mobile client')
         mobileClientConsumer.addNewConsumption('Render car image')
         mobileClientConsumer.addNewConsumption('Control the car remotely')
         assessment.addConsumer(mobileClientConsumer)
 
-        /*
-        failures.push(
-            new Failure(
-                api.services[0],
-                web.consumptions[0],
-                'Web page response is slow',
-                'User will leave',
-                'Loss of potential customer',
-                'response time',
-                'API',
-            ),
-            new Failure(
-                api.services[0],
-                web.consumptions[0],
-                'Wrong car specs are shown to the user',
-                'User will get the wrong info',
-                'Legal responsibility, bad reputation',
-                'data correctness',
-                'web client',
-            ),
-            new Failure(
-                api.services[1],
-                web.consumptions[1],
-                'Price is wrong',
-                'We sell the car with the wrong price',
-                'Loss of revenue',
-                'price correctness',
-                'API',
-            ),
-            new Failure(
-                fileStorage.services[0],
-                web.consumptions[0],
-                'Image is missing',
-                'User will get confused and leave',
-                'Loss of potential customer',
-                'number of images that 404',
-                'Web client',
-            ),
-            new Failure(
-                fileStorage.services[2],
-                web.consumptions[1],
-                'Document is missing',
-                'User interest dies out',
-                'Loss of potential customer',
-                'number of documents that 404',
-                'Web client',
-            ),
+        const dep2 = assessment.addDependency(webClientConsumer.consumptions[0], fileStorageSystem.services[0])
+        dep2.addNewFailure(
+            'Image is missing',
+            'User will get confused and leave',
+            'Loss of potential customer',
         )
-        
-        return {
-            systems,
-            consumers,
-            failures,
-        }
-        */
 
         const tabNames = ['Provider', 'Consumers', 'Failures', 'Risks', 'Service Levels']
         return {
