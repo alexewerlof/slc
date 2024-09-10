@@ -11,6 +11,10 @@ export class Service {
         this.description = description
     }
 
+    get consumptions() {
+        return this.system.assessment.allConsumptions.find(consumption => consumption.hasDependency(this)) ?? []
+    }
+
     remove() {
         this.system.removeService(this)
     }

@@ -129,12 +129,7 @@
         <div v-if="selectedTab === 'Failures'">
             <div class="annotated">
                 <div class="annotated__controls">
-                    <div v-for="consumption of assessment.allConsumptions">
-                        <div class="error block">
-                            {{ consumption.consumer }} has no service dependency.
-                            Please either remove it or add a dependendency in order to proceed.
-                        </div>
-                    </div>        
+                    
                 </div>
                 <div class="annotated__help">
                     <p>
@@ -142,14 +137,12 @@
                     </p>
                 </div>
             </div>
-            <div class="block">
-                <show-hide-component 
-                    v-for="dependency of assessment.allDependencies"
-                    title="Dependency"
-                    :name="dependency">
-                    <dependency-view :dependency="dependency"></dependency-view>
-                </show-hide-component>
-            </div>
+            <show-hide-component 
+                v-for="dependency of assessment.allDependencies"
+                title="Dependency"
+                :name="dependency">
+                <dependency-view :dependency="dependency"></dependency-view>
+            </show-hide-component>
         </div>
 
         <div v-if="selectedTab === 'Risks'">

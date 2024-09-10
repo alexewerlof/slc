@@ -29,6 +29,16 @@
                     {{ consumption }}
                 </label>
             </div>
+
+            <div class="error block" v-if="service.consumptions.length === 0">
+                <p>
+                    This service is not consumed by any consumer.
+                    Failures are identified at the point of consuming a service.
+                </p>
+                <p>
+                    Please either remove it or add a dependent in order to proceed.
+                </p>
+            </div>
         </div>
         <div class="annotated__help">
             <p>

@@ -2,7 +2,13 @@
     <div class="annotated">
         <div class="annotated__controls">
             <div v-if="dependency.failures.length === 0" class="error block">
-                There are no failures associated with this particular dependency.
+                <p>
+                    There are no failures associated with this particular dependency.
+                    Service levels tie to risks which in turn tie to failures.
+                </p>
+                <p>
+                    Please specify a failure.
+                </p>
             </div>
             <div class="button-bar">
                 <button @click="dependency.addNewFailure()">Add New Failure</button>
