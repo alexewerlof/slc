@@ -66,6 +66,88 @@
         <tabs-component
             v-model:selected-tab="selectedTab"
             :tab-names="tabNames"></tabs-component>
+        <div v-if="selectedTab === 'Start'">
+            <section>
+                <h1>Intro</h1>
+                <p>
+                    This app helps you to systemmatically assess your services together with the consumers
+                    to identify proper Service Level Objectives.
+                </p>
+                <p>
+                    The UI is roughly broken into the following steps:
+                </p>
+                <ul>
+                    <li><button @click="selectedTab = 'Provider'">Provider</button>: Define the systems that provide the services</li>
+                    <li><button @click="selectedTab = 'Consumers'">Consumers</button>: Define the consumers of the services</li>
+                    <li><button @click="selectedTab = 'Failures'">Failures</button>: Define the failures that threaten the consumption of the services</li>
+                    <li><button @click="selectedTab = 'Risks'">Risks</button>: Define the business impact of failures and sort them accordingly</li>
+                    <li><button @click="selectedTab = 'Service'">Service</button> Levels: Define the metrics that allows you to be on top of those risks</li>
+                </ul>      
+                <p>
+                    You can go back and forth between the tabs as you work your way through the UI.
+                </p>
+                <h2>Why failures?</h2>
+                <p>
+                    There are many ways to approach service levels
+                    and there are even more pitfalls.
+                </p>
+                <p>
+                    Our approach is based on the following assumptions:
+                </p>
+                <ul>
+                    <li><em>No vanity metrics</em>: SLI tie to system reliability from the consumers' perspective. If an anomaly does not lead to a consumer facing failure and business risk, it is out of scope.</li>
+                    <li><em>Full ownership</em>: SLOs should tie to real commitments. The best way to implement commitments is to set alerts on the service level objectives</li>
+                    <li><em>Proper modeling</em>: have a clear meaning behind every word to build a common language.</li>
+                </ul>
+                <h2>Mental Model</h2>
+                <p>
+                    The UI in this app is built using the following mental model:
+                </p>
+                <div class="code block">
+                    <code>
+                        <span class="exprs">Provider</span>
+                        owns 1+
+                        <span class="exprs">System</span>
+                        <br>
+                        <span class="exprs">System</span>
+                        offers 1+
+                        <span class="exprs">Service</span>s.
+                        <br>
+                        <span class="exprs">Consumer</span>
+                        has 1+
+                        <span class="exprs">Consumption</span>s
+                        to achieve a goal
+                        <br>
+                        <span class="exprs">Consumption</span>
+                        has 1+
+                        <span class="exprs">Dependency</span>
+                        to <span class="exprs">Service</span>s.
+                        <br>
+                        <span class="exprs">Dependency</span>
+                        has 1+
+                        <span class="exprs">Failure</span>
+                        <br>
+                        <span class="exprs">Risks</span>
+                        associates a business
+                        <span class="exprs">Impact</span>
+                        to a
+                        <span class="exprs">Failure</span>
+                        <br>
+                        <span class="exprs">SLI</span>
+                        is a metric to identify
+                        <span class="exprs">Failure</span>
+                        <br>
+                        <span class="exprs">SLS</span>
+                        calculates
+                        <span class="exprs">SLI</span> over a window
+                        <br>
+                        <span class="exprs">SLO</span>
+                        is a target for
+                        <span class="exprs">SLI</span>
+                    </code>
+                </div>
+            </section>
+        </div>
         <div v-if="selectedTab === 'Provider'">
             <div class="annotated">
                 <div class="annotated__controls">

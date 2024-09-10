@@ -53,9 +53,9 @@ export const app = createApp({
             'Loss of potential customer',
         )
 
-        const tabNames = ['Provider', 'Consumers', 'Failures', 'Risks', 'Service Levels']
+        const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Service Levels']
         return {
-            selectedTab: tabNames[3],
+            selectedTab: tabNames[0],
             tabNames,
             assessment,
         }
