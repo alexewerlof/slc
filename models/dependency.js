@@ -15,9 +15,18 @@ export class Dependency {
         this.service = service
         this.failures = []
     }
+
+    addFailure(failure) {
+        if (!isInstance(failure, Failure)) {
+            throw new Error(`Expected an instance of Failure. Got ${failure}`)
+        }
+        failure.dependency = this
+        this.failures.push(failure)
+        return failure
+    }
     
-    addNewFailure() {
-        this.failures.push(new Failure(this))
+    addNewFailure(symptom, consequence, impact) {
+        return this.addFailure(new Failure(this, symptom, consequence, impact))
     }
     
     toString() {

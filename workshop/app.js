@@ -13,29 +13,30 @@ export const app = createApp({
     data() {
         const assessment = new Assessment()
 
-        const api = new System(assessment, 'API server')
-        api.addNewService('Car models API')
-        api.addNewService('Car prices API')
-        assessment.addSystem(api)
+        const apiServerSystem = new System(assessment, 'API server')
+        apiServerSystem.addNewService('Car models API')
+        apiServerSystem.addNewService('Car prices API')
+        assessment.addSystem(apiServerSystem)
 
-        const fileStorage = new System(assessment, 'File storage')
-        fileStorage.addNewService('Store car images')
-        fileStorage.addNewService('Retrieve car images')
-        fileStorage.addNewService('Store car documents')
-        fileStorage.addNewService('Retrieve car documents')
-        assessment.addSystem(fileStorage)
+        const fileStorageSystem = new System(assessment, 'File storage')
+        fileStorageSystem.addNewService('Store car images')
+        fileStorageSystem.addNewService('Retrieve car images')
+        fileStorageSystem.addNewService('Store car documents')
+        fileStorageSystem.addNewService('Retrieve car documents')
+        assessment.addSystem(fileStorageSystem)
 
-        const web = new Consumer(assessment, 'Web client')
-        web.addNewConsumption('Render car catalog page')
-        web.addNewConsumption('Render car detail page')
-        assessment.addConsumer(web)
+        const webClientConsumer = new Consumer(assessment, 'Web client')
+        webClientConsumer.addNewConsumption('Render car catalog page')
+        webClientConsumer.addNewConsumption('Render car detail page')
+        assessment.addConsumer(webClientConsumer)
 
-        assessment.addDependency(web.consumptions[0], api.services[0])
+        assessment.addDependency(webClientConsumer.consumptions[0], apiServerSystem.services[0])
+        assessment.dependencies[0].addNewFailure('Web page response is slow')
 
-        const mobile = new Consumer(assessment, 'Mobile client')
-        mobile.addNewConsumption('Render car image')
-        mobile.addNewConsumption('Control the car remotely')
-        assessment.addConsumer(mobile)
+        const mobileClientConsumer = new Consumer(assessment, 'Mobile client')
+        mobileClientConsumer.addNewConsumption('Render car image')
+        mobileClientConsumer.addNewConsumption('Control the car remotely')
+        assessment.addConsumer(mobileClientConsumer)
 
         /*
         failures.push(
