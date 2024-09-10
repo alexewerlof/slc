@@ -39,22 +39,22 @@
                         <tr>
                             <th></th>
                             <th></th>
-                            <th v-for="service of assessment.allServices">
+                            <th v-for="service of assessment.allServices" :title="service.system.description">
                                 {{ service.system.title }}
                             </th>
                         </tr>
                         <tr>
                             <th></th>
                             <th></th>
-                            <th v-for="service of assessment.allServices">
+                            <th v-for="service of assessment.allServices" :title="service.description">
                                 {{ service.title }}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="consumption of assessment.allConsumptions">
-                            <th>{{ consumption.consumer.title }}</th>
-                            <th>{{ consumption.title }}</th>
+                            <th :title="consumption.consumer.description">{{ consumption.consumer.title }}</th>
+                            <th :title="consumption.description">{{ consumption.title }}</th>
                             <td v-for="service of assessment.allServices">
                                 {{ consumption.getDependency(service)?.failures.length ?? '-' }}
                             </td>
