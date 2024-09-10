@@ -22,15 +22,6 @@
         grid-template-columns: 1fr 1fr;
         gap: 0;
     }
-
-    .annotated h1,
-    .annotated h2,
-    .annotated h3,
-    .annotated h4,
-    .annotated h5,
-    .annotated h6 {
-        margin-top: 0;
-    }
     
     .annotated__controls {
         grid-column: 1;
