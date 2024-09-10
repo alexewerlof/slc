@@ -19,11 +19,11 @@ export class System {
         }
         service.system = this
         this.services.push(service)
-        console.log(`Added ${service} to system ${this}`)
+        return service
     }
 
     addNewService(title, description) {
-        this.addService(new Service(this, title, description))
+        return this.addService(new Service(this, title, description))
     }
 
     removeService(service) {

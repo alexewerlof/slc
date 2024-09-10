@@ -48,10 +48,11 @@ export class Indicator {
         }
         objective.indicator = this
         this.objectives.push(objective)
+        return objective
     }
 
     addNewObjective() {
-        this.addObjective(new Objective(this))
+        return this.addObjective(new Objective(this))
     }
 
     removeObjective(index) {

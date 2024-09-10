@@ -21,10 +21,11 @@ export class Consumer {
         }
         consumption.consumer = this
         this.consumptions.push(consumption)
+        return consumption
     }
 
     addNewConsumption(title, description) {
-        this.addConsumption(new Consumption(this, title, description))
+        return this.addConsumption(new Consumption(this, title, description))
     }
 
     removeConsumption(consumption) {

@@ -92,10 +92,11 @@ export class Objective {
         }
         alert.objective = this
         this.alerts.push(alert)
+        return alert
     }
 
     addNewAlert() {
-        this.addAlert(new Alert(this))
+        return this.addAlert(new Alert(this))
     }
 
     removeAlert(alert) {
