@@ -30,7 +30,7 @@ export const app = createApp({
         webClientConsumer.addNewConsumption('Render car detail page')
         assessment.addConsumer(webClientConsumer)
 
-        const dep1 = assessment.addDependency(webClientConsumer.consumptions[0], apiServerSystem.services[0])
+        const dep1 = webClientConsumer.consumptions[0].addDependency(apiServerSystem.services[0])
         dep1.addNewFailure(
             'Web page response is slow',
             'User may leave',
@@ -46,7 +46,7 @@ export const app = createApp({
         mobileClientConsumer.addNewConsumption('Control the car remotely')
         assessment.addConsumer(mobileClientConsumer)
 
-        const dep2 = assessment.addDependency(webClientConsumer.consumptions[0], fileStorageSystem.services[0])
+        const dep2 = webClientConsumer.consumptions[0].addDependency(fileStorageSystem.services[0])
         dep2.addNewFailure(
             'Image is missing',
             'User will get confused and leave',

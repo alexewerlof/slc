@@ -56,7 +56,7 @@
                             <th>{{ consumption.consumer.title }}</th>
                             <th>{{ consumption.title }}</th>
                             <td v-for="service of assessment.allServices">
-                                {{ assessment.getDependency(consumption, service)?.failures.length ?? '-' }}
+                                {{ consumption.getDependency(service)?.failures.length ?? '-' }}
                             </td>
                         </tr>
                     </tbody>
