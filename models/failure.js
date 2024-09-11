@@ -1,3 +1,4 @@
+import { clamp } from '../lib/math.js'
 import { isInstance } from '../lib/validation.js'
 import { Dependency } from './dependency.js'
 
@@ -14,6 +15,6 @@ export class Failure {
     }
 
     toString() {
-        return `${this.dependency.consumption} -x-> ${this.dependency.service}`
+        return `${this.dependency.consumption} -x-> ${this.dependency.service} - ${this.symptom}`
     }
 }
