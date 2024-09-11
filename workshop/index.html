@@ -228,41 +228,41 @@
         </div>
 
         <div v-if="selectedTab === 'Risks'">
-            <section>
-                <h1>Risks</h1>
-                <p>What are the risks associated with the failures? Sort them based on the impact on the business.</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th colspan="2">Provicer</th>
-                            <th colspan="2">Consumer</th>
-                            <th colspan="2">Business</th>
-                        </tr>
-                        <tr>
-                            <th>Service</th>
-                            <th>Symptom</th>
-                            <th>Consumption</th>
-                            <th>Consequence</th>
-                            <th>Business Impact</th>
-                            <th>Priority</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="failure in assessment.allFailures">
-                            <td>{{ failure.dependency.service || '⚠️TBD' }}</td>
-                            <td>{{ failure.symptom || '⚠️TBD' }}</td>
-                            <td>{{ failure.dependency.consumption || '⚠️TBD' }}</td>
-                            <td>{{ failure.consequence || '⚠️TBD' }}</td>
-                            <td>
-                                <input type="text" v-model="failure.businessImpact">
-                            </td>
-                            <td>
-                                <button @click="failureUp(failure)">🔼</button>
-                                <button @click="failureDown(failure)">🔽</button>
-                            </td>
-                        </tr>
-                </table>
-            </section>
+            <div class="annotated">
+                <div class="annotated__controls">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Likelihood</th>
+                                <th v-for="impactLevel of config.impactLevel.possibleValues">
+                                    {{ impactLevel.title }} Impact Level
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="likelihood of config.likelihood.possibleValues">
+                                <th>{{ likelihood.title }}</th>
+                                <td v-for="impactLevel of config.impactLevel.possibleValues">
+                                    {{ assessment.getRisks(likelihood.value, impactLevel.value).length }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="annotated__help">
+                    <p>
+                        Risks are tied to the failures.
+                        The idea with this page is to think about the business impact of
+                        the failures in order to prioritize which symptoms should
+                        be prioritized for the service level first.
+                    </p>
+                </div>
+            </div>
+            <show-hide-component 
+                v-for="risk of assessment.allRisks"
+                title="Risk"
+                :name="risk">
+                <risk-view :risk="risk"></risk-view>
         </div>
     </main>
     <script type="module" src="index.js" defer async></script>

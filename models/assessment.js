@@ -1,9 +1,7 @@
 import { System } from '../models/system.js'
 import { Consumer } from '../models/consumer.js'
 import { isInstance } from '../lib/validation.js'
-import { Service } from './service.js'
-import { Consumption } from './consumption.js'
-import { Dependency } from './dependency.js'
+import { config } from '../config.js'
 
 export class Assessment {
     constructor() {
@@ -25,6 +23,20 @@ export class Assessment {
 
     get allFailures() {
         return this.allDependencies.flatMap(dependency => dependency.failures)
+    }
+
+    get allRisks() {
+        return this.allFailures.flatMap(failure => failure.risk)
+    }
+
+    getRisks(likelihood, impactLevel) {
+        if (!config.likelihood.possibleValues.map(({ value }) => value).includes(likelihood)) {
+            throw new RangeError(`Expected likelihood to be one of ${config.likelihood.possibleValues}. Got ${likelihood}`)
+        }
+        if (!config.impactLevel.possibleValues.map(({ value }) => value).includes(impactLevel)) {
+            throw new RangeError(`Expected impactLevel to be one of ${config.impactLevel.possibleValues}. Got ${impactLevel}`)
+        }
+        return this.allRisks.filter(risk => risk.likelihood === likelihood && risk.impactLevel === impactLevel)
     }
 
     addSystem(system) {

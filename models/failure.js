@@ -1,5 +1,6 @@
 import { isInstance } from '../lib/validation.js'
 import { Dependency } from './dependency.js'
+import { Risk } from './risk.js'
 
 // If a certain service fails, what activities will it impact and how?
 export class Failure {
@@ -10,7 +11,7 @@ export class Failure {
         this.dependency = dependency        
         this.symptom = symptom
         this.consequence = consequence
-        this.businessImpact = businessImpact
+        this.risk = new Risk(this, businessImpact)
     }
 
     toString() {

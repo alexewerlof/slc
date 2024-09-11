@@ -5,9 +5,11 @@ import ExtLink from '../components/ext-link.js'
 import SystemView from '../views/system-view.js'
 import ConsumerView from '../views/consumer-view.js'
 import DependencyView from '../views/dependency-view.js'
+import RiskView from '../views/risk-view.js'
 import { System } from '../models/system.js'
 import { Consumer } from '../models/consumer.js'
 import { Assessment } from '../models/assessment.js'
+import { config } from '../config.js'
 
 export const app = createApp({
     data() {
@@ -32,7 +34,7 @@ export const app = createApp({
 
         const dep1 = webClientConsumer.consumptions[0].addDependency(apiServerSystem.services[0])
         dep1.addNewFailure(
-            'Web page response is slow',
+            'Web page response is too slow',
             'User may leave',
             'Loss of potential customer',
         )
@@ -55,15 +57,17 @@ export const app = createApp({
 
         const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Service Levels']
         return {
-            selectedTab: tabNames[0],
+            selectedTab: tabNames[4],
             tabNames,
             assessment,
+            config,
         }
     },
     components: {
         DependencyView,
         SystemView,
         ConsumerView,
+        RiskView,
         TabsComponent,
         ShowHideComponent,
         ExtLink,

@@ -1,0 +1,78 @@
+<div>
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>Business Impact</h2>
+            <input type="text" v-model="risk.businessImpact">
+        </div>
+        <div class="annotated__help">
+            <p>
+                What is the business impacted when
+                {{ risk.failure.consequence }}
+                because
+                {{ risk.failure.symptom }} (symptom)
+                which is caused by
+                {{ risk.failure.dependency.service.title }}
+                (provided by {{ risk.failure.dependency.service.system.title }})
+                when
+                {{ risk.failure.dependency.consumption.consumer.title }}
+                is trying to
+                {{ risk.failure.dependency.consumption.title }}
+            </p>
+            <code>
+                <span title="Consequence" class="exprs">
+                    {{ risk.failure.consequence }}
+                </span>
+                <br>
+                &nbsp;<span class="punct">↳</span>
+                Because
+                <span title="Symptom" class="exprs">
+                    {{ risk.failure.symptom }}
+                </span>
+                <br>
+                &nbsp;&nbsp;<span class="punct">↳</span>
+                When
+                <span title="Consumer" class="exprs">
+                    {{ risk.failure.dependency.consumption.consumer.title }}
+                </span>
+                is trying to
+                <span title="Consumption" class="exprs">
+                    {{ risk.failure.dependency.consumption.title }}
+                </span>
+                <br>
+                &nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
+                Using
+                <span title="Service" class="exprs">
+                    {{ risk.failure.dependency.service.title }}
+                </span>
+                provided by
+                <span title="System" class="exprs">
+                    {{ risk.failure.dependency.service.system.title }}
+                </span>
+            </code>
+        </div>
+    </div>
+    
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>Impact Level</h2>
+            <select v-model="risk.impactLevel">
+                <option v-for="impactLevel of config.impactLevel.possibleValues"
+                    :value="impactLevel.value">
+                    {{ impactLevel.title }}
+                </option>
+            </select>
+            <h2>Likelihood</h2>
+            <select v-model="risk.likelihood">
+                <option v-for="likelihood of config.likelihood.possibleValues"
+                    :value="likelihood.value">
+                    {{ likelihood.title }}
+                </option>
+            </select>
+        </div>
+        <div class="annotated__help">
+            <p>
+                YY
+            </p>
+        </div>
+    </div>
+</div>
