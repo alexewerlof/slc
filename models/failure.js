@@ -4,14 +4,14 @@ import { Dependency } from './dependency.js'
 
 // If a certain service fails, what activities will it impact and how?
 export class Failure {
-    constructor(dependency, symptom = '', consequence = '', impact = '') {
+    constructor(dependency, symptom = '', consequence = '', businessImpact = '') {
         if (!isInstance(dependency, Dependency)) {
             throw new Error(`Expected a Service instance. Got ${service}`)
         }
         this.dependency = dependency        
         this.symptom = symptom
         this.consequence = consequence
-        this.impact = impact
+        this.businessImpact = businessImpact
     }
 
     toString() {

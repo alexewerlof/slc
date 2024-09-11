@@ -254,7 +254,7 @@
                             <td>{{ failure.dependency.consumption || '⚠️TBD' }}</td>
                             <td>{{ failure.consequence || '⚠️TBD' }}</td>
                             <td>
-                                <input type="text" v-model="failure.impact">
+                                <input type="text" v-model="failure.businessImpact">
                             </td>
                             <td>
                                 <button @click="failureUp(failure)">🔼</button>

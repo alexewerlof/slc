@@ -25,8 +25,8 @@ export class Dependency {
         return failure
     }
     
-    addNewFailure(symptom, consequence, impact) {
-        return this.addFailure(new Failure(this, symptom, consequence, impact))
+    addNewFailure(symptom, consequence, businessImpact) {
+        return this.addFailure(new Failure(this, symptom, consequence, businessImpact))
     }
     
     toString() {
