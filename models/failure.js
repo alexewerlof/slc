@@ -1,4 +1,3 @@
-import { clamp } from '../lib/math.js'
 import { isInstance } from '../lib/validation.js'
 import { Dependency } from './dependency.js'
 

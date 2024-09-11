@@ -8,10 +8,9 @@ import ShowHideComponent from '../components/show-hide.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
-    data() {
-        return {
-            config,
-            alert: this.alert,
+    computed: {
+        config() {
+            return config
         }
     },
     props: {

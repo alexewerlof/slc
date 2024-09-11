@@ -9,10 +9,9 @@ import { Dependency } from '../models/dependency.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
-    data() {
-        return {
-            config,
-            dependency: this.dependency,
+    computed: {
+        config() {
+            return config
         }
     },
     props: {

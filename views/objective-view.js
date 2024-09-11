@@ -10,10 +10,9 @@ import ExtLink from '../components/ext-link.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
-    data() {
-        return {
-            config,
-            objective: this.objective,
+    computed: {
+        config() {
+            return config
         }
     },
     props: {

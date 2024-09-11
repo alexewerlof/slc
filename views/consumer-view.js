@@ -9,10 +9,9 @@ import ConsumptionView from './consumption-view.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
-    data() {
-        return {
-            config,
-            consumer: this.consumer,
+    computed: {
+        config() {
+            return config
         }
     },
     props: {

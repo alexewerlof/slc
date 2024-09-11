@@ -8,10 +8,9 @@ import { Failure } from '../models/failure.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
-    data() {
-        return {
-            config,
-            failure: this.failure,
+    computed: {
+        config() {
+            return config
         }
     },
     props: {
