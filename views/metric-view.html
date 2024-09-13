@@ -4,13 +4,65 @@
             <h2>Name</h2>
             <input type="text" v-model="metric.name">
             <h2>Symptoms</h2>
+            <ol>
+                <li v-for="risk in metric.assessment.allRisks">
+                    <label>
+                        <table>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="checkbox">
+                                    {{ risk.failure.symptom }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Consumption</th>
+                                <td>{{ risk.failure.dependency.consumption }}</td>
+                            </tr>
+                            <tr>
+                                <th>Service</th>
+                                <td>{{ risk.failure.dependency.service }}</td>
+                            </tr>
+                            <tr>
+                                <th>Impact Level</th>
+                                <td>{{ risk.impactLevel }}</td>
+                            </tr>
+                            <tr>
+                                <th>Likelihood</th>
+                                <td>{{ risk.likelihood }}</td>
+                            </tr>
+                        </table>
+                    </label>
+                </li>
+            </ol>
+
+            <ol>
+                <li v-for="risk in metric.assessment.allRisks">
+                    <label>
+                        <input type="checkbox">
+                        {{ risk.failure.symptom }}
+                        <br>
+                        <strong>Consumption:</strong>
+                        {{ risk.failure.dependency.consumption }}
+                        <br>
+                        <strong>Service:</strong>
+                        {{ risk.failure.dependency.service }}
+                        <br>
+                        <strong>Impact Level:</strong>
+                        {{ risk.impactLevel }}
+                        <br>
+                        <strong>Likelihood:</strong>
+                        {{ risk.likelihood }}
+                    </label>
+                    <hr>
+                </li>
+            </ol>
+
             <table>
                 <thead>
                     <tr>
                         <th>Detects</th>
                         <th>Symptom</th>
-                        <th>Consequence</th>
-                        <th>Business Impact</th>
+                        <th>Depdency</th>
                         <th>Impact Level</th>
                         <th>Likelihood</th>
                     </tr>
@@ -19,8 +71,30 @@
                     <tr v-for="risk in metric.assessment.allRisks">
                         <td><input type="checkbox"></td>
                         <td>{{ risk.failure.symptom }}</td>
-                        <td>{{ risk.failure.consequence }}</td>
-                        <td>{{ risk.businessImpact}}</td>
+                        <td>{{ risk.failure.dependency }}</td>
+                        <td>{{ risk.impactLevel }}</td>
+                        <td>{{ risk.likelihood }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table></table>
+                <thead>
+                    <tr>
+                        <th>Detects</th>
+                        <th>Symptom</th>
+                        <th>Consumption</th>
+                        <th>Service</th>
+                        <th>Impact Level</th>
+                        <th>Likelihood</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="risk in metric.assessment.allRisks">
+                        <td><input type="checkbox"></td>
+                        <td>{{ risk.failure.symptom }}</td>
+                        <td>{{ risk.failure.dependency.consumption }}</td>
+                        <td>{{ risk.failure.dependency.service }}</td>
                         <td>{{ risk.impactLevel }}</td>
                         <td>{{ risk.likelihood }}</td>
                     </tr>
