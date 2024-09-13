@@ -264,6 +264,29 @@
                 :name="risk">
                 <risk-view :risk="risk"></risk-view>
         </div>
+
+        <div v-if="selectedTab === 'Metrics'">
+            <div class="annotated">
+                <div class="annotated__controls">
+                    <div class="button-bar">
+                        <button @click="assessment.addNewMetric()">Add a new Metric</button>
+                    </div>
+                </div>
+                <div class="annotated__help">
+                    <p>
+                        Risks are tied to the failures.
+                        The idea with this page is to think about the business impact of
+                        the failures in order to prioritize which symptoms should
+                        be prioritized for the service level first.
+                    </p>
+                </div>
+            </div>
+            <show-hide-component 
+                v-for="metric of assessment.metrics"
+                title="Metric"
+                :name="metric">
+                <metric-view :metric="metric"></metric-view>
+            </div>
     </main>
     <script type="module" src="index.js" defer async></script>
 </body>

@@ -1,0 +1,36 @@
+<div>
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>Name</h2>
+            <input type="text" v-model="metric.name">
+            <h2>Symptoms</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Detects</th>
+                        <th>Symptom</th>
+                        <th>Consequence</th>
+                        <th>Business Impact</th>
+                        <th>Impact Level</th>
+                        <th>Likelihood</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="risk in metric.assessment.allRisks">
+                        <td><input type="checkbox"></td>
+                        <td>{{ risk.failure.symptom }}</td>
+                        <td>{{ risk.failure.consequence }}</td>
+                        <td>{{ risk.businessImpact}}</td>
+                        <td>{{ risk.impactLevel }}</td>
+                        <td>{{ risk.likelihood }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="annotated__help">
+            <p>
+                Metric description
+            </p>
+        </div>
+    </div>
+</div>
