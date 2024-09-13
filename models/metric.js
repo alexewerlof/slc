@@ -1,6 +1,5 @@
 import { isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
-import { Risk } from './risk.js'
 
 export class Metric {
     constructor(assessment, name = '', description = '') {
