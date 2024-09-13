@@ -3,7 +3,7 @@ import { Assessment } from './assessment.js'
 import { Risk } from './risk.js'
 
 export class Metric {
-    constructor(assessment, name, description) {
+    constructor(assessment, name = '', description = '') {
         if (!isInstance(assessment, Assessment)) {
             throw new Error(`Expected an instance of Assessment. Got ${assessment}`)
         }
