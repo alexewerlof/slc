@@ -3,7 +3,9 @@
 @import url('inputs.css');
 @import url('code.css');
 @import url('toast.css');
+@import url('layout.css');
 @import url('annotated.css');
+
 
 html {
     scroll-behavior: smooth;
@@ -116,8 +118,9 @@ header h1 {
     padding: 0 1em;
 }
 
-h1, h2, h3, h4, h5, h6, th {
+h1, h2, h3, h4, h5, h6, th, legend, caption {
     font-family: var(--title-font-family);
+    font-weight: 400;
 }
 
 h1[id] {
@@ -135,12 +138,15 @@ h2 {
 
 h3 {
     font-size: 1.2em;
-    font-weight: 400;
 }
 
 h4 {
     font-size: 1.1em;
-    font-weight: 400;
+}
+
+hr {
+    border: none;
+    border-top: var(--bthick) solid var(--divider-color);
 }
 
 time {

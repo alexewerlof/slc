@@ -1,6 +1,13 @@
 @import url('variables.css');
 @import url('vue-specific.css');
 
+fieldset {
+    border: 1px solid var(--ui-border);
+    border-radius: var(--bradius);
+    padding: var(--gap);
+    margin: var(--gap) 0;
+}
+
 input[type=range] {
     --webkit-appearance: none;
     appearance: none;
@@ -12,8 +19,7 @@ input[type=range] {
 }
 
 input[type=range]::-webkit-slider-runnable-track {
-    border: 1px solid transparent;
-    border-bottom-color: var(--secondary-color);
+    border: 1px solid var(--ui-border);
     transition: border-color var(--animation-speed) ease-in-out;
     background-color: var(--background-lighter);
     height: 100%;
@@ -40,11 +46,11 @@ input[type=range]:focus::-webkit-slider-thumb {
 }
 
 input[type=search], input[type=text], input[type=number], select, textarea {
-    padding: 1em;
+    padding: var(--gap);
     font-family: inherit;
     font-size: inherit;
-    border: 1px solid transparent;
-    border-left-color: var(--secondary-color);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--bradius);
     background-color: var(--background-lighter);
     color: inherit;
     width: 100%;
@@ -102,11 +108,16 @@ textarea {
 button {
     background-color: var(--secondary-color);
     color: var(--background-color);
-    border: var(--bthick) solid currentColor;
+    border: 1px solid currentColor;
     border-radius: var(--bradius);
-    border: 1px solid var(--secondary-color);
     cursor: pointer;
     transition: background-color var(--animation-speed);
+}
+
+button[disabled] {
+    background-color: var(--background-lighter);
+    color: var(--ui-border);
+    cursor: not-allowed;
 }
 
 button:hover {
@@ -114,7 +125,7 @@ button:hover {
 }
 
 button.large, .button-bar button {
-    padding: 0.7em 1.4em;
+    padding: var(--gap) var(--gap2);
 }
 
 a, a:hover, a:active {
