@@ -1,5 +1,3 @@
-@import url('../variables.css');
-
 .axis {
     stroke: var(--primary-color);
     stroke-width: 2px;

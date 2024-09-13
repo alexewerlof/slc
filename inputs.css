@@ -1,6 +1,3 @@
-@import url('variables.css');
-@import url('vue-specific.css');
-
 fieldset {
     border: 1px solid var(--ui-border);
     border-radius: var(--bradius);

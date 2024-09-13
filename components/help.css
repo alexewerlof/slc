@@ -1,5 +1,3 @@
-@import url('../variables.css');
-
 .help-component__button {
     display: inline-block;
     font-family: var(--body-font-family);
