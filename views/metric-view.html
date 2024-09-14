@@ -2,108 +2,78 @@
     <div class="annotated">
         <div class="annotated__controls">
             <h2>Name</h2>
-            <input type="text" v-model="metric.name">
+            <input type="text" v-model="metric.title">
+        </div>
+        <div class="annotated__help">
+            <p>
+                What metric should you be measuring in order to detect the symptoms?
+            </p>
+        </div>
+        <div class="annotated__controls">
             <h2>Symptoms</h2>
             <ol>
                 <li v-for="risk in metric.assessment.allRisks">
                     <label>
-                        <table>
-                            <tr>
-                                <td colspan="2">
-                                    <input type="checkbox">
-                                    {{ risk.failure.symptom }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Consumption</th>
-                                <td>{{ risk.failure.dependency.consumption }}</td>
-                            </tr>
-                            <tr>
-                                <th>Service</th>
-                                <td>{{ risk.failure.dependency.service }}</td>
-                            </tr>
-                            <tr>
-                                <th>Impact Level</th>
-                                <td>{{ risk.impactLevel }}</td>
-                            </tr>
-                            <tr>
-                                <th>Likelihood</th>
-                                <td>{{ risk.likelihood }}</td>
-                            </tr>
-                        </table>
+                        <code>
+                            <input type="checkbox"
+                                >
+                            <span title="Consequence" class="exprs">
+                                {{ risk.failure.symptom }}
+                            </span>
+                            <span class="punct"> (</span>Likelihood
+                            <span class="const">{{ risk.likelihood }}</span>
+                            <span class="punct">)</span>
+                            <br>
+                            &nbsp;<span class="punct">↳</span>
+                            When
+                            <span title="Consumer" class="exprs">
+                                {{ risk.failure.dependency.consumption.consumer.title }}
+                            </span>
+                            <br>
+                            &nbsp;&nbsp;<span class="punct">↳</span>
+                            Is trying to
+                            <span title="Consumption" class="exprs">
+                                {{ risk.failure.dependency.consumption.title }}
+                            </span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
+                            Using
+                            <span title="Service" class="exprs">
+                                {{ risk.failure.dependency.service.title }}
+                            </span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
+                            Provided by
+                            <span title="System" class="exprs">
+                                {{ risk.failure.dependency.service.system.title }}
+                            </span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
+                            Leading to
+                            <span title="Consumption" class="exprs">
+                                {{ risk.businessImpact }}
+                            </span>
+                            <span class="punct"> (</span>Impact Level
+                            <span class="const">{{ risk.impactLevel }}</span>
+                            <span class="punct">)</span>
+                        </code>
                     </label>
                 </li>
             </ol>
-
-            <ol>
-                <li v-for="risk in metric.assessment.allRisks">
-                    <label>
-                        <input type="checkbox">
-                        {{ risk.failure.symptom }}
-                        <br>
-                        <strong>Consumption:</strong>
-                        {{ risk.failure.dependency.consumption }}
-                        <br>
-                        <strong>Service:</strong>
-                        {{ risk.failure.dependency.service }}
-                        <br>
-                        <strong>Impact Level:</strong>
-                        {{ risk.impactLevel }}
-                        <br>
-                        <strong>Likelihood:</strong>
-                        {{ risk.likelihood }}
-                    </label>
-                    <hr>
-                </li>
-            </ol>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Detects</th>
-                        <th>Symptom</th>
-                        <th>Depdency</th>
-                        <th>Impact Level</th>
-                        <th>Likelihood</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="risk in metric.assessment.allRisks">
-                        <td><input type="checkbox"></td>
-                        <td>{{ risk.failure.symptom }}</td>
-                        <td>{{ risk.failure.dependency }}</td>
-                        <td>{{ risk.impactLevel }}</td>
-                        <td>{{ risk.likelihood }}</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <table></table>
-                <thead>
-                    <tr>
-                        <th>Detects</th>
-                        <th>Symptom</th>
-                        <th>Consumption</th>
-                        <th>Service</th>
-                        <th>Impact Level</th>
-                        <th>Likelihood</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="risk in metric.assessment.allRisks">
-                        <td><input type="checkbox"></td>
-                        <td>{{ risk.failure.symptom }}</td>
-                        <td>{{ risk.failure.dependency.consumption }}</td>
-                        <td>{{ risk.failure.dependency.service }}</td>
-                        <td>{{ risk.impactLevel }}</td>
-                        <td>{{ risk.likelihood }}</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
         <div class="annotated__help">
             <p>
-                Metric description
+                Select all risks that this metric can help you identify.
+            </p>
+            <p>
+                The goal is to be be on top of the risks meaning: instead of relying on manual detection (e.g. consumers calling you to report a problem), you can use this metric to detect the problem as soon as possible.
+            </p>
+            <p>
+                The metrics detect symptoms.
+                The symptoms are ordered by their associated risk impact and likelihood.
+            </p>
+            <p>
+                You can capture multiple symptoms with the same metric.
             </p>
         </div>
     </div>
