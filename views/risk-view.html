@@ -57,17 +57,19 @@
             <h2>Impact Level</h2>
             <select v-model="risk.impactLevel">
                 <option v-for="impactLevel of config.impactLevel.possibleValues"
-                    :value="impactLevel.value">
-                    {{ impactLevel.title }}
+                    :value="impactLevel">
+                    {{ impactLevel }}
                 </option>
             </select>
             <h2>Likelihood</h2>
             <select v-model="risk.likelihood">
                 <option v-for="likelihood of config.likelihood.possibleValues"
-                    :value="likelihood.value">
-                    {{ likelihood.title }}
+                    :value="likelihood">
+                    {{ likelihood }}
                 </option>
             </select>
+            <h2>Priority</h2>
+            <p>{{ risk.priority }}</p>
         </div>
         <div class="annotated__help">
             <p>

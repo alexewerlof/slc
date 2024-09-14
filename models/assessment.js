@@ -31,11 +31,15 @@ export class Assessment {
         return this.allFailures.flatMap(failure => failure.risk)
     }
 
+    get allRisksSortedByPriority() {
+        return this.allRisks.sort((a, b) => b.priority - a.priority)
+    }
+
     getRisks(likelihood, impactLevel) {
-        if (!config.likelihood.possibleValues.map(({ value }) => value).includes(likelihood)) {
+        if (!config.likelihood.possibleValues.includes(likelihood)) {
             throw new RangeError(`Expected likelihood to be one of ${config.likelihood.possibleValues}. Got ${likelihood}`)
         }
-        if (!config.impactLevel.possibleValues.map(({ value }) => value).includes(impactLevel)) {
+        if (!config.impactLevel.possibleValues.includes(impactLevel)) {
             throw new RangeError(`Expected impactLevel to be one of ${config.impactLevel.possibleValues}. Got ${impactLevel}`)
         }
         return this.allRisks.filter(risk => risk.likelihood === likelihood && risk.impactLevel === impactLevel)

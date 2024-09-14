@@ -235,21 +235,24 @@
                             <tr>
                                 <th>Likelihood</th>
                                 <th v-for="impactLevel of config.impactLevel.possibleValues">
-                                    {{ impactLevel.title }} Impact Level
+                                    {{ impactLevel }} Impact Level
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="likelihood of config.likelihood.possibleValues">
-                                <th>{{ likelihood.title }}</th>
+                                <th>{{ likelihood }}</th>
                                 <td v-for="impactLevel of config.impactLevel.possibleValues">
-                                    {{ assessment.getRisks(likelihood.value, impactLevel.value).length }}
+                                    {{ assessment.getRisks(likelihood, impactLevel).length }}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="annotated__help">
+                    <p>
+                        Metrics are used to measure the level of a service.
+                    </p>
                     <p>
                         Risks are tied to the failures.
                         The idea with this page is to think about the business impact of

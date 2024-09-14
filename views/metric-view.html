@@ -3,11 +3,22 @@
         <div class="annotated__controls">
             <h2>Name</h2>
             <input type="text" v-model="metric.title">
+            <h2>Description</h2>
+            <textarea v-model="metric.description"></textarea>
         </div>
         <div class="annotated__help">
             <p>
                 What metric should you be measuring in order to detect the symptoms?
             </p>
+            <p>
+                You can add more information in the description for example:
+            </p>
+            <ul>
+                <li>Where are you measuring the metric</li>
+                <li>Using what tools</li>
+                <li>What is a good data point for the metric</li>
+                <li>etc.</li>
+            </ul>
         </div>
         <div class="annotated__controls">
             <h2>Symptoms</h2>
@@ -20,42 +31,57 @@
                             <span title="Consequence" class="exprs">
                                 {{ risk.failure.symptom }}
                             </span>
-                            <span class="punct"> (</span>Likelihood
-                            <span class="const">{{ risk.likelihood }}</span>
-                            <span class="punct">)</span>
                             <br>
-                            &nbsp;<span class="punct">↳</span>
+                            &nbsp;
+                            <span class="punct">↳</span>
                             When
                             <span title="Service" class="exprs">
                                 {{ risk.failure.dependency.service.title }}
                             </span>
                             <br>
-                            &nbsp;&nbsp;<span class="punct">↳</span>
+                            &nbsp;&nbsp;
+                            <span class="punct">↳</span>
                             Provided by
                             <span title="System" class="exprs">
                                 {{ risk.failure.dependency.service.system.title }}
                             </span>
                             <br>
-                            &nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
+                            &nbsp;&nbsp;&nbsp;
+                            <span class="punct">↳</span>
                             Is used by
                             <span title="Consumer" class="exprs">
                                 {{ risk.failure.dependency.consumption.consumer.title }}
                             </span>
                             <br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="punct">↳</span>
                             In order to
                             <span title="Consumption" class="exprs">
                                 {{ risk.failure.dependency.consumption.title }}
                             </span>
                             <br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="punct">↳</span>
+                            With the consequence of
+                            <span title="Consequence" class="exprs">
+                                {{ risk.failure.consequence }}
+                            </span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="punct">↳</span>
                             Leading to
-                            <span title="Consumption" class="exprs">
+                            <span title="Business Impact" class="exprs">
                                 {{ risk.businessImpact }}
                             </span>
-                            <span class="punct"> (</span>Impact Level
-                            <span class="const">{{ risk.impactLevel }}</span>
-                            <span class="punct">)</span>
+                            <span class="punct"> (</span>
+                            <span title="Impact Level" class="exprs">
+                                {{ risk.impactLevel }}
+                            </span>
+                            impact<span class="punct">, </span>
+                            <span title="Likelihood" class="exprs">
+                                {{ risk.likelihood }}
+                            </span>
+                            likelihood<span class="punct">)</span>
                         </code>
                     </label>
                 </li>

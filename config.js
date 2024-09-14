@@ -374,49 +374,22 @@ export const config = fz({
         default: 10,
     },
     impactLevel: fz({
-        default: 2,
+        default: 'Medium',
         possibleValues: fz([
-            {
-                title: 'Low',
-                value: 1,
-            },
-            {
-                title: 'Medium',
-                value: 2,
-            },
-            {
-                title: 'High',
-                value: 3,
-            },
-            {
-                title: 'Critical',
-                value: 4,
-            },
+            'Low',
+            'Medium',
+            'High',
+            'Critical',
         ]),
     }),
     likelihood: fz({
-        default: 3,
+        default: 'Possible',
         possibleValues: fz([
-            {
-                title: 'Rare',
-                value: 1,
-            },
-            {
-                title: 'Unlikely',
-                value: 2,
-            },
-            {
-                title: 'Possible',
-                value: 3,
-            },
-            {
-                title: 'Likely',
-                value: 4,
-            },
-            {
-                title: 'Certain',
-                value: 5,
-            },
+            'Rare',
+            'Unlikely',
+            'Possible',
+            'Likely',
+            'Certain',
         ]),
     }),
 })
