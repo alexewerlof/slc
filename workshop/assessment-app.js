@@ -56,7 +56,7 @@ export const app = createApp({
             'Loss of potential customer',
         )
 
-        assessment.addNewMetric(dep1.failures[0].risk)
+        assessment.addNewMetric('Response time', 'How long it takes to respond to a request', dep1.failures[0].risk)
 
         const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics']
         return {

@@ -71,11 +71,12 @@ export class Assessment {
         if (!isInstance(metric, Metric)) {
             throw new Error(`Expected an instance of Metric. Got ${metric}`)
         }
+        metric.assessment = this
         this.metrics.push(metric)
         return metric
     }
 
-    addNewMetric() {
-        return this.metrics.push(new Metric(this))
+    addNewMetric(title, description, ...risks) {
+        return this.metrics.push(new Metric(this, title, description, ...risks))
     }
 }
