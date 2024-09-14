@@ -26,26 +26,26 @@
                             <br>
                             &nbsp;<span class="punct">↳</span>
                             When
-                            <span title="Consumer" class="exprs">
-                                {{ risk.failure.dependency.consumption.consumer.title }}
-                            </span>
-                            <br>
-                            &nbsp;&nbsp;<span class="punct">↳</span>
-                            Is trying to
-                            <span title="Consumption" class="exprs">
-                                {{ risk.failure.dependency.consumption.title }}
-                            </span>
-                            <br>
-                            &nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
-                            Using
                             <span title="Service" class="exprs">
                                 {{ risk.failure.dependency.service.title }}
                             </span>
                             <br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
+                            &nbsp;&nbsp;<span class="punct">↳</span>
                             Provided by
                             <span title="System" class="exprs">
                                 {{ risk.failure.dependency.service.system.title }}
+                            </span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
+                            Is used by
+                            <span title="Consumer" class="exprs">
+                                {{ risk.failure.dependency.consumption.consumer.title }}
+                            </span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
+                            In order to
+                            <span title="Consumption" class="exprs">
+                                {{ risk.failure.dependency.consumption.title }}
                             </span>
                             <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
