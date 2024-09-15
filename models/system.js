@@ -44,7 +44,7 @@ export class System {
     }
 
     toJSON() {
-        return osloObj('System', {
+        return osloObj('System', undefined, {
             displayName: this.displayName,
             description: this.description,
             services: this.services,

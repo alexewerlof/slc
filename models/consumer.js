@@ -1,3 +1,4 @@
+import { osloObj } from '../lib/oslo.js'
 import { isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { Consumption } from './consumption.js'
@@ -42,10 +43,10 @@ export class Consumer {
     }
 
     toJSON() {
-        return {
+        return osloObj('Consumer', undefined, {
             displayName: this.displayName,
             description: this.description,
             consumptions: this.consumptions,
-        }
+        })
     }
 }
