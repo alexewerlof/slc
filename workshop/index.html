@@ -285,10 +285,10 @@
                 </div>
             </div>
             <show-hide-component 
-                v-for="metric of assessment.metrics"
-                title="Metric"
-                :name="metric">
-                <metric-view :metric="metric"></metric-view>
+                v-for="service of assessment.allServices"
+                title="Service"
+                :name="service">
+                <service-metric-view :service="service"></service-metric-view>
             </div>
     </main>
     <script type="module" src="index.js" defer async></script>

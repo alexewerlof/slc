@@ -31,10 +31,6 @@ export class Assessment {
         return this.allFailures.flatMap(failure => failure.risk)
     }
 
-    get allRisksSortedByPriority() {
-        return this.allRisks.sort((a, b) => b.priority - a.priority)
-    }
-
     getRisks(likelihood, impactLevel) {
         if (!config.likelihood.possibleValues.includes(likelihood)) {
             throw new RangeError(`Expected likelihood to be one of ${config.likelihood.possibleValues}. Got ${likelihood}`)
@@ -69,18 +65,5 @@ export class Assessment {
     
     addNewConsumer(title, description) {
         return this.consumers.push(new Consumer(this, title, description))
-    }
-
-    addMetric(metric) {
-        if (!isInstance(metric, Metric)) {
-            throw new Error(`Expected an instance of Metric. Got ${metric}`)
-        }
-        metric.assessment = this
-        this.metrics.push(metric)
-        return metric
-    }
-
-    addNewMetric(title, description, ...risks) {
-        return this.metrics.push(new Metric(this, title, description, ...risks))
     }
 }

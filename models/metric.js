@@ -1,24 +1,24 @@
 import { isInstance } from '../lib/validation.js'
-import { Assessment } from './assessment.js'
-import { Risk } from './risk.js'
+import { Service } from './service.js'
+import { Failure } from './failure.js'
 
 export class Metric {
-    constructor(assessment, title = '', description = '', ...risks) {
-        if (!isInstance(assessment, Assessment)) {
-            throw new Error(`Expected an instance of Assessment. Got ${assessment}`)
+    constructor(service, title = '', description = '', ...failures) {
+        if (!isInstance(service, Service)) {
+            throw new Error(`Expected an instance of Service. Got ${service}`)
         }
-        this.assessment = assessment
+        this.service = service
         this.title = title
         this.description = description
-        for (const risk of risks) {
-            if (!isInstance(risk, Risk)) {
-                throw new Error(`Expected risks to be instances of Risk. Got ${risk}`)
+        for (const failure of failures) {
+            if (!isInstance(failure, Failure)) {
+                throw new Error(`Expected failures to be instances of Failure. Got ${failure}`)
             }
         }
-        this.risks = risks
+        this.failures = failures
     }
 
     toString() {
-        return `${ this.title } (${ this.risks.length })`
+        return `${ this.service }::${this.title} (${ this.failures.length })`
     }
 }

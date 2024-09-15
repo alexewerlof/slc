@@ -1,0 +1,109 @@
+<div>
+
+    <div class="annotated">
+        <div class="annotated__controls">
+            <p>
+                <strong>Service: </strong>{{ service.title }}
+            </p>
+            <p>
+                <strong>From System: </strong>{{ service.system.title }}
+            </p>
+            <p v-if="service.description">
+                {{ service.description }}
+            </p>
+            <h2>Failures</h2>
+            <ul>
+                <li v-for="failure of service.failures">
+                    <code>
+                        {{ failure.title }}
+                        <span title="Consequence" class="exprs">
+                            {{ failure.symptom }}
+                        </span>
+                        <br>
+                        <span class="punct">↳</span>
+                        When
+                        <span title="Service" class="exprs">
+                            {{ failure.dependency.service.title }}
+                        </span>
+                        <br>
+                        &nbsp;
+                        <span class="punct">↳</span>
+                        Provided by
+                        <span title="System" class="exprs">
+                            {{ failure.dependency.service.system.title }}
+                        </span>
+                        <br>
+                        &nbsp;&nbsp;
+                        <span class="punct">↳</span>
+                        Is used by
+                        <span title="Consumer" class="exprs">
+                            {{ failure.dependency.consumption.consumer.title }}
+                        </span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;
+                        <span class="punct">↳</span>
+                        In order to
+                        <span title="Consumption" class="exprs">
+                            {{ failure.dependency.consumption.title }}
+                        </span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="punct">↳</span>
+                        With the consequence of
+                        <span title="Consequence" class="exprs">
+                            {{ failure.consequence }}
+                        </span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="punct">↳</span>
+                        Leading to
+                        <span title="Business Impact" class="exprs">
+                            {{ failure.risk.businessImpact }}
+                        </span>
+                        <span class="punct"> (</span>
+                        <span title="Impact Level" class="exprs">
+                            {{ failure.risk.impactLevel }}
+                        </span>
+                        impact<span class="punct">, </span>
+                        <span title="Likelihood" class="exprs">
+                            {{ failure.risk.likelihood }}
+                        </span>
+                        likelihood<span class="punct">)</span>
+                    </code>
+                </li>
+            </ul>
+            <div v-if="service.failures.length === 0" class="error block">
+                <p>
+                    You have not identified any failures for this service.
+                    Make sure that there is a consumption for this service and you
+                    have identified the symptoms for the failures.
+                </p>
+            </div>
+        </div>
+        <div class="annotated__help">
+            <p>
+
+            </p>
+        </div>
+    </div>
+
+    <div class="annotated" v-if="service.failures.length">
+        <div class="annotated__controls">
+            <div class="button-bar">
+                <button @click="service.addNewMetric()">Add New Metric</button>
+            </div>
+        </div>
+        <div class="annotated__help">
+            {{ service.failures.length }} failures are identified and
+            {{ service.metrics.length }} metrics measure the symptoms.
+        </div>
+    </div>
+    
+    <show-hide-component
+        v-for="metric in service.metrics"
+        title="Metric"
+        :name="metric">
+        <metric-view
+            :metric="metric"></metric-view>
+    </show-hide-component>
+</div>

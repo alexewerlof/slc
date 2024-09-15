@@ -23,63 +23,63 @@
         <div class="annotated__controls">
             <h2>Symptoms</h2>
             <ol>
-                <li v-for="risk in metric.assessment.allRisks">
+                <li v-for="failure in metric.service.failuresByRisk">
                     <label>
                         <code>
-                            <input type="checkbox"
-                                >
+                            <input type="checkbox">
+                            {{ failure.title }}
                             <span title="Consequence" class="exprs">
-                                {{ risk.failure.symptom }}
+                                {{ failure.symptom }}
                             </span>
                             <br>
                             &nbsp;
                             <span class="punct">↳</span>
                             When
                             <span title="Service" class="exprs">
-                                {{ risk.failure.dependency.service.title }}
+                                {{ failure.dependency.service.title }}
                             </span>
                             <br>
                             &nbsp;&nbsp;
                             <span class="punct">↳</span>
                             Provided by
                             <span title="System" class="exprs">
-                                {{ risk.failure.dependency.service.system.title }}
+                                {{ failure.dependency.service.system.title }}
                             </span>
                             <br>
                             &nbsp;&nbsp;&nbsp;
                             <span class="punct">↳</span>
                             Is used by
                             <span title="Consumer" class="exprs">
-                                {{ risk.failure.dependency.consumption.consumer.title }}
+                                {{ failure.dependency.consumption.consumer.title }}
                             </span>
                             <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <span class="punct">↳</span>
                             In order to
                             <span title="Consumption" class="exprs">
-                                {{ risk.failure.dependency.consumption.title }}
+                                {{ failure.dependency.consumption.title }}
                             </span>
                             <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <span class="punct">↳</span>
                             With the consequence of
                             <span title="Consequence" class="exprs">
-                                {{ risk.failure.consequence }}
+                                {{ failure.consequence }}
                             </span>
                             <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <span class="punct">↳</span>
                             Leading to
                             <span title="Business Impact" class="exprs">
-                                {{ risk.businessImpact }}
+                                {{ failure.risk.businessImpact }}
                             </span>
                             <span class="punct"> (</span>
                             <span title="Impact Level" class="exprs">
-                                {{ risk.impactLevel }}
+                                {{ failure.risk.impactLevel }}
                             </span>
                             impact<span class="punct">, </span>
                             <span title="Likelihood" class="exprs">
-                                {{ risk.likelihood }}
+                                {{ failure.risk.likelihood }}
                             </span>
                             likelihood<span class="punct">)</span>
                         </code>
