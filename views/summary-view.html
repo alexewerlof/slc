@@ -1,0 +1,38 @@
+<article>
+    <section>
+        <h1>Summary</h1>
+        <h2>Services</h2>
+        <ul>
+            <li v-for="service of assessment.allServices">
+                {{ service }}
+            </li>
+        </ul>
+        <h2>Consumptions</h2>
+        <ul>
+            <li v-for="consumption of assessment.allConsumptions">
+                {{ consumption }}
+            </li>
+        </ul>
+        <h2>Dependencies</h2>
+        <ul>
+            <li v-for="dependency of assessment.allDependencies">
+                {{ dependency }}
+            </li>
+        </ul>
+        <h2>Risks</h2>
+        <ul>
+            <li v-for="risk of assessment.allRisks">
+                {{ risk }} ({{ risk.likelihood }}/{{ risk.impactLevel }})
+            </li>
+        </ul>
+        <h2>Metrics</h2>
+        <div v-for="service of assessment.allServices">
+            <h3>{{ service }}</h3>
+            <ul>
+                <li v-for="metric of service.metrics">
+                    {{ metric }}
+                </li>
+            </ul>
+        </div>
+    </section>
+</article>
