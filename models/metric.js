@@ -21,4 +21,12 @@ export class Metric {
     toString() {
         return `${ this.service }::${this.displayName} (${ this.failures.length })`
     }
+
+    toJSON() {
+        return {
+            displayName: this.displayName,
+            description: this.description,
+            // failures: this.failures,
+        }
+    }
 }

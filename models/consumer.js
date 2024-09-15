@@ -40,4 +40,12 @@ export class Consumer {
     toString() {
         return this.displayName
     }
+
+    toJSON() {
+        return {
+            displayName: this.displayName,
+            description: this.description,
+            consumptions: this.consumptions,
+        }
+    }
 }

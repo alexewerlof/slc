@@ -59,9 +59,9 @@ export const app = createApp({
 
         apiServerSystem.services[0].addNewMetric('Response time', 'How long it takes to respond to a request', dep1.failures[0])
 
-        const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary']
+        const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary', 'Export']
         return {
-            selectedTab: tabNames[6],
+            selectedTab: tabNames[7],
             tabNames,
             assessment,
             config,

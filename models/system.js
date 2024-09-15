@@ -1,6 +1,7 @@
 import { Service } from './service.js'
 import { isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
+import { osloObj } from '../lib/oslo.js'
 
 export class System {
     constructor(assessment, displayName = '', description = '') {
@@ -40,5 +41,13 @@ export class System {
 
     toString() {
         return this.displayName
+    }
+
+    toJSON() {
+        return osloObj('System', {
+            displayName: this.displayName,
+            description: this.description,
+            services: this.services,
+        })
     }
 }

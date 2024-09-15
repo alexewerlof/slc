@@ -2,13 +2,11 @@ import { System } from '../models/system.js'
 import { Consumer } from '../models/consumer.js'
 import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
-import { Metric } from './metric.js'
 
 export class Assessment {
     constructor() {
         this.systems = []
         this.consumers = []
-        this.metrics = []
     }
     
     get allServices() {
@@ -65,5 +63,12 @@ export class Assessment {
     
     addNewConsumer(title, description) {
         return this.consumers.push(new Consumer(this, title, description))
+    }
+
+    toJSON() {
+        return {
+            systems: this.systems,
+            consumers: this.consumers
+        }
     }
 }

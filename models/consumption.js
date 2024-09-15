@@ -54,4 +54,8 @@ export class Consumption {
     toString() {
         return `${this.consumer.displayName}::${this.displayName}`
     }
+
+    toJSON() {
+        return { todo: 'to-be-implemented' }
+    }
 }

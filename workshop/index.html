@@ -294,6 +294,16 @@
         <div v-if="selectedTab === 'Summary'">
             <summary-view :assessment="assessment"></summary-view>
         </div>
+
+        <div v-if="selectedTab === 'Export'">
+            <article>
+                <section>
+                    <div class="code block">
+                        <pre><code>{{ JSON.stringify(assessment, null, 2) }}</code></pre>
+                    </pre>
+                </section>
+            </article>
+        </div>
     </main>
     <script type="module" src="index.js" defer async></script>
 </body>

@@ -1,20 +1,17 @@
+import { namify } from '../lib/fmt.js'
+import { osloObj } from '../lib/oslo.js'
 import { isInstance } from '../lib/validation.js'
 import { Metric } from './metric.js'
 import { System } from './system.js'
 
 export class Service {
-    constructor(system, displayName = '', description = '', ...metrics) {
+    constructor(system, displayName = '', description = '') {
         if (!isInstance(system, System)) {
             throw new Error(`Service.constructor: system must be an instance of System. Got ${system}`)
         }
         this.system = system
         this.displayName = displayName
         this.description = description
-        for (const metric of metrics) {
-            if (!isInstance(metric, Metric)) {
-                throw new Error(`Service.constructor: metrics must be instances of Metric. Got ${metric}`)
-            }
-        }
         this.metrics = []
     }
 
@@ -38,7 +35,7 @@ export class Service {
         if (!isInstance(metric, Metric)) {
             throw new Error(`Expected an instance of Metric. Got ${metric}`)
         }
-        metric.assessment = this
+        metric.service = this
         this.metrics.push(metric)
         return metric
     }
@@ -49,5 +46,15 @@ export class Service {
 
     toString() {
         return `${this.system.displayName}::${this.displayName}`
+    }
+
+    toJSON() {
+        return osloObj('Service', {
+            name: namify([this.system.displayName, this.displayName].join('-')),
+        }, {
+            displayName: this.displayName,
+            description: this.description,
+            metrics: this.metrics,
+        })
     }
 }
