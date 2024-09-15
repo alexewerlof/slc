@@ -2,7 +2,7 @@
 
     <div class="annotated">
         <div class="annotated__controls">
-            <h2>Title</h2>
+            <h2>Service Name</h2>
             <input type="text" v-model="service.title">
             <h2>Description</h2>
             <input type="text" v-model="service.description">
@@ -23,16 +23,12 @@
 
     <div class="annotated">
         <div class="annotated__controls">
-            <h2>Dependents</h2>
-            <div v-for="consumption of service.system.assessment.allConsumptions">
-                <label>
-                    <input
-                        type="checkbox"
-                        :checked="consumption.hasDependency(service)"
-                        @change="$event => consumption.setDependency(service, $event.target.checked)">
+            <h2>Consumptions</h2>
+            <ul>
+                <li v-for="consumption of service.consumptions">
                     {{ consumption }}
-                </label>
-            </div>
+                </li>
+            </ul>
 
             <div class="error block" v-if="service.consumptions.length === 0">
                 <p>
