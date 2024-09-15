@@ -374,12 +374,13 @@ export const config = fz({
         default: 10,
     },
     impactLevel: fz({
-        default: 'Medium',
+        default: 'Moderate',
         possibleValues: fz([
-            'Low',
-            'Medium',
-            'High',
-            'Critical',
+            'Insignificant',
+            'Minor',
+            'Moderate',
+            'Major',
+            'Catastrophic',
         ]),
     }),
     likelihood: fz({
