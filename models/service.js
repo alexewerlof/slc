@@ -28,7 +28,7 @@ export class Service {
     }
 
     get failuresByRisk() {
-        return this.failures.sort((f1, f2) => f2.risk.priority - f1.risk.priority)
+        return this.failures.sort((f1, f2) => f2.priority - f1.priority)
     }
 
     addMetric(metric) {
@@ -40,8 +40,8 @@ export class Service {
         return metric
     }
 
-    addNewMetric(displayName, description, ...risks) {
-        return this.metrics.push(new Metric(this, displayName, description, ...risks))
+    addNewMetric(displayName, description, ...failures) {
+        return this.metrics.push(new Metric(this, displayName, description, ...failures))
     }
 
     toString() {

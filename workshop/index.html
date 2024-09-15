@@ -262,10 +262,10 @@
                 </div>
             </div>
             <show-hide-component 
-                v-for="risk of assessment.allRisks"
+                v-for="failure of assessment.allFailures"
                 title="Risk"
-                :name="risk">
-                <risk-view :risk="risk"></risk-view>
+                :name="`${failure.consequence} ⇛ ${failure.businessImpact}`">
+                <risk-view :failure="failure"></risk-view>
         </div>
 
         <div v-if="selectedTab === 'Metrics'">

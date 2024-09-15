@@ -19,10 +19,10 @@
                 {{ dependency }}
             </li>
         </ul>
-        <h2>Risks</h2>
+        <h2>Failures</h2>
         <ul>
-            <li v-for="risk of assessment.allRisks">
-                {{ risk }} ({{ risk.likelihood }}/{{ risk.impactLevel }})
+            <li v-for="failure of assessment.allFailures">
+                {{ failure }} ({{ failure.likelihood }}/{{ failure.impactLevel }})
             </li>
         </ul>
         <h2>Metrics</h2>

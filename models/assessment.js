@@ -25,10 +25,6 @@ export class Assessment {
         return this.allDependencies.flatMap(dependency => dependency.failures)
     }
 
-    get allRisks() {
-        return this.allFailures.flatMap(failure => failure.risk)
-    }
-
     getRisks(likelihood, impactLevel) {
         if (!config.likelihood.possibleValues.includes(likelihood)) {
             throw new RangeError(`Expected likelihood to be one of ${config.likelihood.possibleValues}. Got ${likelihood}`)
@@ -36,7 +32,7 @@ export class Assessment {
         if (!config.impactLevel.possibleValues.includes(impactLevel)) {
             throw new RangeError(`Expected impactLevel to be one of ${config.impactLevel.possibleValues}. Got ${impactLevel}`)
         }
-        return this.allRisks.filter(risk => risk.likelihood === likelihood && risk.impactLevel === impactLevel)
+        return this.allFailures.filter(failure => failure.likelihood === likelihood && failure.impactLevel === impactLevel)
     }
 
     addSystem(system) {
