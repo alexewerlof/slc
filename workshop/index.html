@@ -289,7 +289,11 @@
                 title="Service"
                 :name="service">
                 <service-metric-view :service="service"></service-metric-view>
-            </div>
+        </div>
+
+        <div v-if="selectedTab === 'Summary'">
+            summary
+        </div>
     </main>
     <script type="module" src="index.js" defer async></script>
 </body>

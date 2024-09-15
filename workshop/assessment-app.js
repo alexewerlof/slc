@@ -7,6 +7,7 @@ import ConsumerView from '../views/consumer-view.js'
 import DependencyView from '../views/dependency-view.js'
 import RiskView from '../views/risk-view.js'
 import ServiceMetricView from '../views/service-metric-view.js'
+import SummaryView from '../views/summary-view.js'
 import { System } from '../models/system.js'
 import { Consumer } from '../models/consumer.js'
 import { Assessment } from '../models/assessment.js'
@@ -58,9 +59,9 @@ export const app = createApp({
 
         apiServerSystem.services[0].addNewMetric('Response time', 'How long it takes to respond to a request', dep1.failures[0])
 
-        const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics']
+        const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary']
         return {
-            selectedTab: tabNames[1],
+            selectedTab: tabNames[6],
             tabNames,
             assessment,
             config,
@@ -72,6 +73,7 @@ export const app = createApp({
         ConsumerView,
         RiskView,
         ServiceMetricView,
+        SummaryView,
         TabsComponent,
         ShowHideComponent,
         ExtLink,
