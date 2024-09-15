@@ -3,7 +3,7 @@ import { config } from '../config.js'
 export class Risk {
     constructor(
         failure,
-        businessImpact,
+        businessImpact = '',
         likelihood = config.likelihood.default,
         impactLevel = config.impactLevel.default
     ) {
@@ -28,6 +28,6 @@ export class Risk {
     }
 
     toString() {
-        return `${this.failure.consequence} - ${this.businessImpact}`
+        return `${this.failure.consequence} ⇛ ${this.businessImpact}`
     }
 }

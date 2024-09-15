@@ -30,6 +30,6 @@ export class Dependency {
     }
     
     toString() {
-        return `${this.consumption} --> ${this.service}`
+        return `${this.consumption} → ${this.service} ⇒ ${this.consumption.title}`
     }
 }

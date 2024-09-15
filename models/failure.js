@@ -15,6 +15,6 @@ export class Failure {
     }
 
     toString() {
-        return `${this.dependency.consumption} -x-> ${this.dependency.service} - ${this.symptom}`
+        return `${this.dependency.consumption} ⇸ ${this.dependency.service} ⇒ ${this.symptom}`
     }
 }
