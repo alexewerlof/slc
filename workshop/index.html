@@ -292,7 +292,44 @@
         </div>
 
         <div v-if="selectedTab === 'Summary'">
-            summary
+            <article>
+                <section>
+                    <h1>Summary</h1>
+                    <h2>Services</h2>
+                    <ul>
+                        <li v-for="service of assessment.allServices">
+                            {{ service }}
+                        </li>
+                    </ul>
+                    <h2>Consumers</h2>
+                    <ul>
+                        <li v-for="consumer of assessment.consumers">
+                            {{ consumer }}
+                        </li>
+                    </ul>
+                    <h2>Dependencies</h2>
+                    <ul>
+                        <li v-for="dependency of assessment.allDependencies">
+                            {{ dependency }}
+                        </li>
+                    </ul>
+                    <h2>Risks</h2>
+                    <ul>
+                        <li v-for="risk of assessment.allRisks">
+                            {{ risk }} ({{ risk.likelihood }}/{{ risk.impactLevel }})
+                        </li>
+                    </ul>
+                    <h2>Metrics</h2>
+                    <div v-for="service of assessment.allServices">
+                        <h3>{{ service }}</h3>
+                        <ul>
+                            <li v-for="metric of service.metrics">
+                                {{ metric }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </article>
         </div>
     </main>
     <script type="module" src="index.js" defer async></script>
