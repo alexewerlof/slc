@@ -233,9 +233,9 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Likelihood</th>
+                                <th>Likelihood/Impact</th>
                                 <th v-for="impactLevel of config.impactLevel.possibleValues">
-                                    {{ impactLevel }} Impact Level
+                                    {{ impactLevel }}
                                 </th>
                             </tr>
                         </thead>
@@ -301,10 +301,10 @@
                             {{ service }}
                         </li>
                     </ul>
-                    <h2>Consumers</h2>
+                    <h2>Consumptions</h2>
                     <ul>
-                        <li v-for="consumer of assessment.consumers">
-                            {{ consumer }}
+                        <li v-for="consumption of assessment.allConsumptions">
+                            {{ consumption }}
                         </li>
                     </ul>
                     <h2>Dependencies</h2>
