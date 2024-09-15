@@ -3,12 +3,12 @@ import { Service } from './service.js'
 import { Failure } from './failure.js'
 
 export class Metric {
-    constructor(service, title = '', description = '', ...failures) {
+    constructor(service, displayName = '', description = '', ...failures) {
         if (!isInstance(service, Service)) {
             throw new Error(`Expected an instance of Service. Got ${service}`)
         }
         this.service = service
-        this.title = title
+        this.displayName = displayName
         this.description = description
         for (const failure of failures) {
             if (!isInstance(failure, Failure)) {
@@ -19,6 +19,6 @@ export class Metric {
     }
 
     toString() {
-        return `${ this.service }::${this.title} (${ this.failures.length })`
+        return `${ this.service }::${this.displayName} (${ this.failures.length })`
     }
 }

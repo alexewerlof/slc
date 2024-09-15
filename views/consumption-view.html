@@ -2,8 +2,8 @@
 
     <div class="annotated">
         <div class="annotated__controls">
-            <h2>Title</h2>
-            <input type="text" v-model="consumption.title">
+            <h2>Name</h2>
+            <input type="text" v-model="consumption.displayName">
             <h2>Description</h2>
             <input type="text" v-model="consumption.description">
             <div class="button-bar">
@@ -12,7 +12,7 @@
         </div>
         <div class="annotated__help">
             <p>
-                Give a title to this consumption to indicate how {{ consumption.consumer.title }}
+                Give a name to this consumption to indicate how {{ consumption.consumer.displayName }}
                 uses services.
             </p>
             <p>
@@ -50,7 +50,7 @@
         <div class="annotated__help">
             <p>
                 Check all the services that are required for {{ consumption.consumer }}
-                to {{ consumption.title }}.
+                to {{ consumption.displayName }}.
             </p>
             <p>
                 If there are services that are missing, you can go back and add them to the system.

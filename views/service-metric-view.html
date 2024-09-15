@@ -3,10 +3,10 @@
     <div class="annotated">
         <div class="annotated__controls">
             <p>
-                <strong>Service: </strong>{{ service.title }}
+                <strong>Service: </strong>{{ service.displayName }}
             </p>
             <p>
-                <strong>From System: </strong>{{ service.system.title }}
+                <strong>From System: </strong>{{ service.system.displayName }}
             </p>
             <p v-if="service.description">
                 {{ service.description }}
@@ -15,7 +15,7 @@
             <ul>
                 <li v-for="failure of service.failures">
                     <code>
-                        {{ failure.title }}
+                        {{ failure.displayName }}
                         <span title="Consequence" class="exprs">
                             {{ failure.symptom }}
                         </span>
@@ -23,28 +23,28 @@
                         <span class="punct">↳</span>
                         When
                         <span title="Service" class="exprs">
-                            {{ failure.dependency.service.title }}
+                            {{ failure.dependency.service.displayName }}
                         </span>
                         <br>
                         &nbsp;
                         <span class="punct">↳</span>
                         Provided by
                         <span title="System" class="exprs">
-                            {{ failure.dependency.service.system.title }}
+                            {{ failure.dependency.service.system.displayName }}
                         </span>
                         <br>
                         &nbsp;&nbsp;
                         <span class="punct">↳</span>
                         Is used by
                         <span title="Consumer" class="exprs">
-                            {{ failure.dependency.consumption.consumer.title }}
+                            {{ failure.dependency.consumption.consumer.displayName }}
                         </span>
                         <br>
                         &nbsp;&nbsp;&nbsp;
                         <span class="punct">↳</span>
                         In order to
                         <span title="Consumption" class="exprs">
-                            {{ failure.dependency.consumption.title }}
+                            {{ failure.dependency.consumption.displayName }}
                         </span>
                         <br>
                         &nbsp;&nbsp;&nbsp;&nbsp;

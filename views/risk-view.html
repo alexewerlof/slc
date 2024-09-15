@@ -11,12 +11,12 @@
                 because
                 {{ risk.failure.symptom }} (symptom)
                 which is caused by
-                {{ risk.failure.dependency.service.title }}
-                (provided by {{ risk.failure.dependency.service.system.title }})
+                {{ risk.failure.dependency.service.displayName }}
+                (provided by {{ risk.failure.dependency.service.system.displayName }})
                 when
-                {{ risk.failure.dependency.consumption.consumer.title }}
+                {{ risk.failure.dependency.consumption.consumer.displayName }}
                 is trying to
-                {{ risk.failure.dependency.consumption.title }}
+                {{ risk.failure.dependency.consumption.displayName }}
             </p>
             <code>
                 <span title="Consequence" class="exprs">
@@ -32,21 +32,21 @@
                 &nbsp;&nbsp;<span class="punct">↳</span>
                 When
                 <span title="Consumer" class="exprs">
-                    {{ risk.failure.dependency.consumption.consumer.title }}
+                    {{ risk.failure.dependency.consumption.consumer.displayName }}
                 </span>
                 is trying to
                 <span title="Consumption" class="exprs">
-                    {{ risk.failure.dependency.consumption.title }}
+                    {{ risk.failure.dependency.consumption.displayName }}
                 </span>
                 <br>
                 &nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
                 Using
                 <span title="Service" class="exprs">
-                    {{ risk.failure.dependency.service.title }}
+                    {{ risk.failure.dependency.service.displayName }}
                 </span>
                 provided by
                 <span title="System" class="exprs">
-                    {{ risk.failure.dependency.service.system.title }}
+                    {{ risk.failure.dependency.service.system.displayName }}
                 </span>
             </code>
         </div>

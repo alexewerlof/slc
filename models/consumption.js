@@ -3,12 +3,12 @@ import { Consumer } from './consumer.js'
 import { Dependency } from './dependency.js'
 
 export class Consumption {
-    constructor(consumer, title = '', description = '') {
+    constructor(consumer, displayName = '', description = '') {
         if (!isInstance(consumer, Consumer)) {
             throw new Error(`Consumption.constructor: consumer must be an instance of Consumer. Got ${consumer}`)
         }
         this.consumer = consumer
-        this.title = title
+        this.displayName = displayName
         this.description = description
         this.dependencies = []
     }
@@ -52,6 +52,6 @@ export class Consumption {
     }
 
     toString() {
-        return `${this.consumer.title}::${this.title}`
+        return `${this.consumer.displayName}::${this.displayName}`
     }
 }

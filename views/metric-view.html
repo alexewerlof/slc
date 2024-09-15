@@ -2,7 +2,7 @@
     <div class="annotated">
         <div class="annotated__controls">
             <h2>Name</h2>
-            <input type="text" v-model="metric.title">
+            <input type="text" v-model="metric.displayName">
             <h2>Description</h2>
             <textarea v-model="metric.description"></textarea>
         </div>
@@ -27,7 +27,7 @@
                     <label>
                         <code>
                             <input type="checkbox">
-                            {{ failure.title }}
+                            {{ failure.displayName }}
                             <span title="Consequence" class="exprs">
                                 {{ failure.symptom }}
                             </span>
@@ -36,28 +36,28 @@
                             <span class="punct">↳</span>
                             When
                             <span title="Service" class="exprs">
-                                {{ failure.dependency.service.title }}
+                                {{ failure.dependency.service.displayName }}
                             </span>
                             <br>
                             &nbsp;&nbsp;
                             <span class="punct">↳</span>
                             Provided by
                             <span title="System" class="exprs">
-                                {{ failure.dependency.service.system.title }}
+                                {{ failure.dependency.service.system.displayName }}
                             </span>
                             <br>
                             &nbsp;&nbsp;&nbsp;
                             <span class="punct">↳</span>
                             Is used by
                             <span title="Consumer" class="exprs">
-                                {{ failure.dependency.consumption.consumer.title }}
+                                {{ failure.dependency.consumption.consumer.displayName }}
                             </span>
                             <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <span class="punct">↳</span>
                             In order to
                             <span title="Consumption" class="exprs">
-                                {{ failure.dependency.consumption.title }}
+                                {{ failure.dependency.consumption.displayName }}
                             </span>
                             <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

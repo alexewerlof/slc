@@ -40,21 +40,21 @@
                             <th></th>
                             <th></th>
                             <th v-for="service of assessment.allServices" :title="service.system.description">
-                                {{ service.system.title }}
+                                {{ service.system.displayName }}
                             </th>
                         </tr>
                         <tr>
                             <th></th>
                             <th></th>
                             <th v-for="service of assessment.allServices" :title="service.description">
-                                {{ service.title }}
+                                {{ service.displayName }}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="consumption of assessment.allConsumptions">
-                            <th :title="consumption.consumer.description">{{ consumption.consumer.title }}</th>
-                            <th :title="consumption.description">{{ consumption.title }}</th>
+                            <th :title="consumption.consumer.description">{{ consumption.consumer.displayName }}</th>
+                            <th :title="consumption.description">{{ consumption.displayName }}</th>
                             <td v-for="service of assessment.allServices">
                                 {{ consumption.getDependency(service)?.failures.length ?? '-' }}
                             </td>

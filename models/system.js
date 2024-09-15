@@ -3,12 +3,12 @@ import { isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 
 export class System {
-    constructor(assessment, title = '', description = '') {
+    constructor(assessment, displayName = '', description = '') {
         if (!isInstance(assessment, Assessment)) {
             throw new Error(`System.constructor: assessment must be an instance of Assessment. Got ${assessment}`)
         }
         this.assessment = assessment
-        this.title = title
+        this.displayName = displayName
         this.description = description
         this.services = []
     }
@@ -22,8 +22,8 @@ export class System {
         return service
     }
 
-    addNewService(title, description) {
-        return this.addService(new Service(this, title, description))
+    addNewService(displayName, description) {
+        return this.addService(new Service(this, displayName, description))
     }
 
     removeService(service) {
@@ -39,6 +39,6 @@ export class System {
     }
 
     toString() {
-        return this.title
+        return this.displayName
     }
 }

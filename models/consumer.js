@@ -5,12 +5,12 @@ import { Consumption } from './consumption.js'
 export class Consumer {
     consumptions = []
 
-    constructor(assessment, title = '', description = '') {
+    constructor(assessment, displayName = '', description = '') {
         if (!isInstance(assessment, Assessment)) {
             throw new Error(`Consumer.constructor: assessment must be an instance of Assessment. Got ${assessment}`)
         }
         this.assessment = assessment
-        this.title = title
+        this.displayName = displayName
         this.description = description
         this.consumptions = []
     }
@@ -38,6 +38,6 @@ export class Consumer {
     }
 
     toString() {
-        return this.title
+        return this.displayName
     }
 }

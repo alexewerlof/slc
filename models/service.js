@@ -3,12 +3,12 @@ import { Metric } from './metric.js'
 import { System } from './system.js'
 
 export class Service {
-    constructor(system, title = '', description = '', ...metrics) {
+    constructor(system, displayName = '', description = '', ...metrics) {
         if (!isInstance(system, System)) {
             throw new Error(`Service.constructor: system must be an instance of System. Got ${system}`)
         }
         this.system = system
-        this.title = title
+        this.displayName = displayName
         this.description = description
         for (const metric of metrics) {
             if (!isInstance(metric, Metric)) {
@@ -43,11 +43,11 @@ export class Service {
         return metric
     }
 
-    addNewMetric(title, description, ...risks) {
-        return this.metrics.push(new Metric(this, title, description, ...risks))
+    addNewMetric(displayName, description, ...risks) {
+        return this.metrics.push(new Metric(this, displayName, description, ...risks))
     }
 
     toString() {
-        return `${this.system.title}::${this.title}`
+        return `${this.system.displayName}::${this.displayName}`
     }
 }
