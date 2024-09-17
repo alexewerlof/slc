@@ -11,12 +11,12 @@
                 because
                 {{ failure.symptom }} (symptom)
                 which is caused by
-                {{ failure.dependency.service.displayName }}
-                (provided by {{ failure.dependency.service.system.displayName }})
+                {{ failure.service.displayName }}
+                (provided by {{ failure.service.system.displayName }})
                 when
-                {{ failure.dependency.consumption.consumer.displayName }}
+                {{ failure.consumption.consumer.displayName }}
                 is trying to
-                {{ failure.dependency.consumption.displayName }}
+                {{ failure.consumption.displayName }}
             </p>
             <code>
                 <span title="Consequence" class="exprs">
@@ -32,21 +32,21 @@
                 &nbsp;&nbsp;<span class="punct">↳</span>
                 When
                 <span title="Consumer" class="exprs">
-                    {{ failure.dependency.consumption.consumer.displayName }}
+                    {{ failure.consumption.consumer.displayName }}
                 </span>
                 is trying to
                 <span title="Consumption" class="exprs">
-                    {{ failure.dependency.consumption.displayName }}
+                    {{ failure.consumption.displayName }}
                 </span>
                 <br>
                 &nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
                 Using
                 <span title="Service" class="exprs">
-                    {{ failure.dependency.service.displayName }}
+                    {{ failure.service.displayName }}
                 </span>
                 provided by
                 <span title="System" class="exprs">
-                    {{ failure.dependency.service.system.displayName }}
+                    {{ failure.service.system.displayName }}
                 </span>
             </code>
         </div>

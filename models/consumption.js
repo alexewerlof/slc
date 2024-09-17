@@ -1,6 +1,6 @@
+import { osloObj } from '../lib/oslo.js'
 import { isInstance } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
-import { Dependency } from './dependency.js'
 
 export class Consumption {
     constructor(consumer, displayName = '', description = '') {
@@ -10,34 +10,26 @@ export class Consumption {
         this.consumer = consumer
         this.displayName = displayName
         this.description = description
-        this.dependencies = []
     }
 
     getDependency(service) {
-        return this.dependencies.find(d => d.service === service)
+        return service.failures.find(f => f.consumption === this)
     }
 
     addDependency(service) {
-        let dependency = this.getDependency(service)
-        if (!dependency) {
-            dependency = new Dependency(this, service)
-            this.dependencies.push(dependency)
-        }
-        return dependency
+        return service.addNewFailure(this)
     }
 
     removeDependency(service) {
-        const index = this.dependencies.findIndex(d => d.service === service)
-        if (index > -1) {
-            this.dependencies.splice(index, 1)
-        } else {
-            throw new ReferenceError(`Dependency ${this} does not depend on ${service}`)
-        }
+        return service.removeConsumption(this)
     }
 
     setDependency(service, value) {
         if (value) {
-            this.addDependency(service)
+            // If there's at least one failure, we're good
+            if (!this.getDependency(service)) {
+                this.addDependency(service)
+            }
         } else {
             this.removeDependency(service)
         }
@@ -56,6 +48,9 @@ export class Consumption {
     }
 
     toJSON() {
-        return { todo: 'to-be-implemented' }
+        return osloObj('Consumption', undefined, {
+            displayName: this.displayName,
+            description: this.description,
+        })
     }
 }

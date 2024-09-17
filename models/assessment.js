@@ -17,12 +17,8 @@ export class Assessment {
         return this.consumers.flatMap(consumer => consumer.consumptions)
     }
 
-    get allDependencies() {
-        return this.allConsumptions.flatMap(consumption => consumption.dependencies)
-    }
-
     get allFailures() {
-        return this.allDependencies.flatMap(dependency => dependency.failures)
+        return this.allServices.flatMap(service => service.failures)
     }
 
     getRisks(likelihood, impactLevel) {

@@ -56,7 +56,7 @@
                             <th :title="consumption.consumer.description">{{ consumption.consumer.displayName }}</th>
                             <th :title="consumption.description">{{ consumption.displayName }}</th>
                             <td v-for="service of assessment.allServices">
-                                {{ consumption.getDependency(service)?.failures.length ?? '-' }}
+                                :D
                             </td>
                         </tr>
                     </tbody>
@@ -219,12 +219,6 @@
                     </p>
                 </div>
             </div>
-            <show-hide-component 
-                v-for="dependency of assessment.allDependencies"
-                title="Dependency"
-                :name="dependency">
-                <dependency-view :dependency="dependency"></dependency-view>
-            </show-hide-component>
         </div>
 
         <div v-if="selectedTab === 'Risks'">

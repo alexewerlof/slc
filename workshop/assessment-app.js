@@ -4,7 +4,6 @@ import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
 import SystemView from '../views/system-view.js'
 import ConsumerView from '../views/consumer-view.js'
-import DependencyView from '../views/dependency-view.js'
 import RiskView from '../views/risk-view.js'
 import ServiceMetricView from '../views/service-metric-view.js'
 import SummaryView from '../views/summary-view.js'
@@ -34,13 +33,14 @@ export const app = createApp({
         webClientConsumer.addNewConsumption('Render car detail page')
         assessment.addConsumer(webClientConsumer)
 
-        const dep1 = webClientConsumer.consumptions[0].addDependency(apiServerSystem.services[0])
-        dep1.addNewFailure(
+        apiServerSystem.services[0].addNewFailure(
+            webClientConsumer.consumptions[0],
             'Web page response is too slow',
             'User may leave',
             'Loss of potential customer',
         )
-        dep1.addNewFailure(
+        apiServerSystem.services[0].addNewFailure(
+            webClientConsumer.consumptions[0],
             'Wrong car specs are shown to the user',
             'User will get the wrong info',
             'Legal responsibility, bad reputation',
@@ -50,14 +50,14 @@ export const app = createApp({
         mobileClientConsumer.addNewConsumption('Control the car remotely')
         assessment.addConsumer(mobileClientConsumer)
 
-        const dep2 = webClientConsumer.consumptions[0].addDependency(fileStorageSystem.services[0])
-        dep2.addNewFailure(
+        fileStorageSystem.services[0].addNewFailure(
+            webClientConsumer.consumptions[0],
             'Image is missing',
             'User will get confused and leave',
             'Loss of potential customer',
         )
 
-        apiServerSystem.services[0].addNewMetric('Response time', 'How long it takes to respond to a request', dep1.failures[0])
+        apiServerSystem.services[0].addNewMetric('Response time', 'How long it takes to respond to a request')
 
         const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary', 'Export']
         return {
@@ -68,7 +68,6 @@ export const app = createApp({
         }
     },
     components: {
-        DependencyView,
         SystemView,
         ConsumerView,
         RiskView,
