@@ -30,7 +30,7 @@
                 <label>
                     <input
                         type="checkbox"
-                        :checked="consumption.hasDependency(service)"
+                        :checked="service.isConsumedBy(consumption)"
                         @change="$event => consumption.setDependency(service, $event.target.checked)">
                     {{ service }}
                 </label>

@@ -19,7 +19,8 @@ export class Service {
     }
 
     get consumptions() {
-        return this.system.assessment.allConsumptions.filter(consumption => consumption.hasDependency(this))
+        const set = new Set(this.failures.map(failure => failure.consumption))
+        return Array.from(set)
     }
 
     remove() {
@@ -41,6 +42,27 @@ export class Service {
 
     addNewFailure(consumption, symptom, consequence, businessImpact, likelihood, impactLevel) {
         return this.addFailure(new Failure(this, consumption, symptom, consequence, businessImpact, likelihood, impactLevel))
+    }
+
+    isConsumedBy(consumption) {
+        if (!isInstance(consumption, Consumption)) {
+            throw new Error(`Expected an instance of Consumption. Got ${consumption}`)
+        }
+        return this.failures.some(f => f.consumption === consumption)
+    }
+
+    getConsumptionFailures(consumption) {
+        if (!isInstance(consumption, Consumption)) {
+            throw new Error(`Expected an instance of Consumption. Got ${consumption}`)
+        }
+        return this.failures.filter(f => f.consumption === consumption)
+    }
+
+    addConsumption(consumption) {
+        if (this.isConsumedBy(consumption)) {
+            return this.addNewFailure(consumption)
+        }
+        return undefined
     }
 
     removeConsumption(consumption) {

@@ -12,31 +12,12 @@ export class Consumption {
         this.description = description
     }
 
-    getDependency(service) {
-        return service.failures.find(f => f.consumption === this)
-    }
-
-    addDependency(service) {
-        return service.addNewFailure(this)
-    }
-
-    removeDependency(service) {
-        return service.removeConsumption(this)
-    }
-
     setDependency(service, value) {
         if (value) {
-            // If there's at least one failure, we're good
-            if (!this.getDependency(service)) {
-                this.addDependency(service)
-            }
+            service.addConsumption(this)
         } else {
-            this.removeDependency(service)
+            service.removeConsumption(this)
         }
-    }
-
-    hasDependency(service) {
-        return Boolean(this.getDependency(service))
     }
 
     remove() {
