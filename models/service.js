@@ -1,6 +1,7 @@
 import { namify } from '../lib/fmt.js'
-import { osloObj } from '../lib/oslo.js'
+import { osloMetadata, osloObj } from '../lib/oslo.js'
 import { isInstance } from '../lib/validation.js'
+import { Consumption } from './consumption.js'
 import { Failure } from './failure.js'
 import { Metric } from './metric.js'
 import { System } from './system.js'
@@ -71,10 +72,10 @@ export class Service {
     }
 
     toJSON() {
-        return osloObj('Service', {
-            name: namify([this.system.displayName, this.displayName].join('-')),
-        }, {
-            displayName: this.displayName,
+        return osloObj('Service', osloMetadata(
+            namify([this.system.displayName, this.displayName].join('-')),
+            this.displayName,
+        ), {
             description: this.description,
             metrics: this.metrics,
         })

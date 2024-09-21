@@ -1,7 +1,7 @@
 import { Service } from './service.js'
 import { isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
-import { osloObj } from '../lib/oslo.js'
+import { osloMetadata, osloObj } from '../lib/oslo.js'
 
 export class System {
     constructor(assessment, displayName = '', description = '') {
@@ -44,8 +44,7 @@ export class System {
     }
 
     toJSON() {
-        return osloObj('System', undefined, {
-            displayName: this.displayName,
+        return osloObj('System', osloMetadata(undefined, this.displayName), {
             description: this.description,
             services: this.services,
         })

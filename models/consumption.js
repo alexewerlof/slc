@@ -1,4 +1,4 @@
-import { osloObj } from '../lib/oslo.js'
+import { osloMetadata, osloObj } from '../lib/oslo.js'
 import { isInstance } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
 
@@ -48,8 +48,7 @@ export class Consumption {
     }
 
     toJSON() {
-        return osloObj('Consumption', undefined, {
-            displayName: this.displayName,
+        return osloObj('Consumption', osloMetadata(undefined, this.displayName), {
             description: this.description,
         })
     }
