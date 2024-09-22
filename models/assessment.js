@@ -44,6 +44,18 @@ export class Assessment {
         return this.systems.push(new System(this, title, description))
     }
 
+    removeSystem(system) {
+        if (!isInstance(system, System)) {
+            throw new Error(`Expected an instance of System. Got ${system}`)
+        }
+        const index = this.systems.indexOf(system)
+        if (index === -1) {
+            return false
+        }
+        this.systems.splice(index, 1)
+        return true
+    }
+
     addConsumer(consumer) {
         if (!isInstance(consumer, Consumer)) {
             throw new Error(`Expected an instance of Consumer. Got ${consumer}`)
@@ -55,6 +67,18 @@ export class Assessment {
     
     addNewConsumer(title, description) {
         return this.consumers.push(new Consumer(this, title, description))
+    }
+
+    removeConsumer(consumer) {
+        if (!isInstance(consumer, Consumer)) {
+            throw new Error(`Expected an instance of Consumer. Got ${consumer}`)
+        }
+        const index = this.consumers.indexOf(consumer)
+        if (index === -1) {
+            return false
+        }
+        this.consumers.splice(index, 1)
+        return true
     }
 
     toJSON() {

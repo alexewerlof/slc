@@ -38,6 +38,10 @@ export class Consumer {
         }
     }
 
+    remove() {
+        return this.assessment.removeConsumer(this)
+    }
+
     toString() {
         return this.displayName
     }

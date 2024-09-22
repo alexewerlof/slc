@@ -6,9 +6,6 @@
             <input type="text" v-model="service.displayName">
             <h2>Description</h2>
             <input type="text" v-model="service.description">
-            <div class="button-bar">
-                <button @click="service.remove()">Remove Service</button>
-            </div>
         </div>
         <div class="annotated__help">
             <p>
@@ -19,9 +16,7 @@
                 A service is what the consumer interacts with. For example: an API endpoint may provide multiple capabilities that are used by the consumers to solve different use cases.
             </p>
         </div>
-    </div>
 
-    <div class="annotated">
         <div class="annotated__controls">
             <h2>Consumptions</h2>
             <ul>
@@ -48,6 +43,12 @@
             <p>
                 If there are consumers that are missing, you can go back and add them to the system.
             </p>
+        </div>
+
+        <div class="annotated__controls">
+            <div class="button-bar">
+                <button @click="service.remove()">Remove Service</button>
+            </div>
         </div>
     </div>
 </div>

@@ -39,6 +39,10 @@ export class System {
         }
     }
 
+    remove() {
+        return this.assessment.removeSystem(this)
+    }
+
     toString() {
         return this.displayName
     }

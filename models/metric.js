@@ -22,6 +22,10 @@ export class Metric {
         return `${ this.service }::${this.displayName} (${ this.failures.length })`
     }
 
+    remove() {
+        return this.service.removeMetric(this)
+    }
+
     toJSON() {
         return {
             displayName: this.displayName,

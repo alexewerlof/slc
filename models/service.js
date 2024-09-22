@@ -101,6 +101,18 @@ export class Service {
         return this.addMetric(new Metric(this, displayName, description, ...failures))
     }
 
+    removeMetric(metric) {
+        if (!isInstance(metric, Metric)) {
+            throw new Error(`Expected an instance of Metric. Got ${metric}`)
+        }
+        const index = this.metrics.indexOf(metric)
+        if (index === -1) {
+            return false
+        }
+        this.metrics.splice(index, 1)
+        return true
+    }
+
     toString() {
         return `${this.system.displayName}::${this.displayName}`
     }
