@@ -2,7 +2,9 @@
 
     <div class="annotated">
         <div class="annotated__controls">
-            <h2>Name</h2>
+            <h2>Consumer</h2>
+            <p>{{ consumption.consumer }}</p>
+            <h2>Consumption Name</h2>
             <input type="text" v-model="consumption.displayName">
             <h2>Description</h2>
             <textarea v-model="consumption.description"></textarea>

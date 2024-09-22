@@ -2,15 +2,8 @@
 
     <div class="annotated">
         <div class="annotated__controls">
-            <p>
-                <strong>Service: </strong>{{ service.displayName }}
-            </p>
-            <p>
-                <strong>From System: </strong>{{ service.system.displayName }}
-            </p>
-            <p v-if="service.description">
-                {{ service.description }}
-            </p>
+            <h2>Service</h2>
+            <p>{{ service }}</p>
             <h2>Failures</h2>
             <ul>
                 <li v-for="failure of service.failures">
