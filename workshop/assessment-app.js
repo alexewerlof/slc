@@ -4,6 +4,7 @@ import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
 import SystemView from '../views/system-view.js'
 import ConsumerView from '../views/consumer-view.js'
+import FailureView from '../views/failure-view.js'
 import RiskView from '../views/risk-view.js'
 import ServiceMetricView from '../views/service-metric-view.js'
 import SummaryView from '../views/summary-view.js'
@@ -61,7 +62,7 @@ export const app = createApp({
 
         const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary', 'Export']
         return {
-            selectedTab: tabNames[7],
+            selectedTab: tabNames[3],
             tabNames,
             assessment,
             config,
@@ -70,6 +71,7 @@ export const app = createApp({
     components: {
         SystemView,
         ConsumerView,
+        FailureView,
         RiskView,
         ServiceMetricView,
         SummaryView,

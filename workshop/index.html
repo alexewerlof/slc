@@ -219,6 +219,36 @@
                     </p>
                 </div>
             </div>
+            <show-hide-component
+                v-for="service of assessment.allServices"
+                title="Service"
+                :name="service">
+                <div class="annotated">
+                    <div class="annotated__controls">
+                        <div class="error block" v-if="service.failures.length === 0">
+                            <p>
+                                No failures defined for this service.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="annotated__help">
+                        <p>
+                            To identify service failures, first you need to declare which consumer::consumption
+                            depends on this service.
+                            That is is because the failures are tied to the consumption.
+                        </p>
+                        <p>
+                            You can do that in the "Consumers" tab.
+                        </p>
+                    </div>
+                </div>
+                <show-hide-component 
+                    v-for="failure of service.failures"
+                    title="Failure"
+                    :name="failure">
+                    <failure-view :failure="failure"></failure-view>
+                </show-hide-component>
+            </show-hide-component>
         </div>
 
         <div v-if="selectedTab === 'Risks'">
