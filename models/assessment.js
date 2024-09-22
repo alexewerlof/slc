@@ -41,7 +41,7 @@ export class Assessment {
     }
     
     addNewSystem(title, description) {
-        return this.systems.push(new System(this, title, description))
+        return this.addSystem(new System(this, title, description))
     }
 
     removeSystem(system) {
@@ -66,7 +66,7 @@ export class Assessment {
     }
     
     addNewConsumer(title, description) {
-        return this.consumers.push(new Consumer(this, title, description))
+        return this.addConsumer(new Consumer(this, title, description))
     }
 
     removeConsumer(consumer) {

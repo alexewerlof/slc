@@ -17,22 +17,19 @@ export const app = createApp({
     data() {
         const assessment = new Assessment()
 
-        const apiServerSystem = new System(assessment, 'API server')
+        const apiServerSystem = assessment.addNewSystem('API server')
         apiServerSystem.addNewService('Car models API')
         apiServerSystem.addNewService('Car prices API')
-        assessment.addSystem(apiServerSystem)
 
-        const fileStorageSystem = new System(assessment, 'File storage')
+        const fileStorageSystem = assessment.addNewSystem('File storage')
         fileStorageSystem.addNewService('Store car images')
         fileStorageSystem.addNewService('Retrieve car images')
         fileStorageSystem.addNewService('Store car documents')
         fileStorageSystem.addNewService('Retrieve car documents')
-        assessment.addSystem(fileStorageSystem)
 
-        const webClientConsumer = new Consumer(assessment, 'Web client')
+        const webClientConsumer = assessment.addNewConsumer('Web client')
         webClientConsumer.addNewConsumption('Render car catalog page')
         webClientConsumer.addNewConsumption('Render car detail page')
-        assessment.addConsumer(webClientConsumer)
 
         apiServerSystem.services[0].addNewFailure(
             webClientConsumer.consumptions[0],
@@ -46,10 +43,9 @@ export const app = createApp({
             'User will get the wrong info',
             'Legal responsibility, bad reputation',
         )
-        const mobileClientConsumer = new Consumer(assessment, 'Mobile client')
+        const mobileClientConsumer = assessment.addNewConsumer('Mobile client')
         mobileClientConsumer.addNewConsumption('Render car image')
         mobileClientConsumer.addNewConsumption('Control the car remotely')
-        assessment.addConsumer(mobileClientConsumer)
 
         fileStorageSystem.services[0].addNewFailure(
             webClientConsumer.consumptions[0],
