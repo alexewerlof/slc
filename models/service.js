@@ -72,9 +72,10 @@ export class Service {
 
     addConsumption(consumption) {
         if (this.isConsumedBy(consumption)) {
-            return this.addNewFailure(consumption)
+            return false
         }
-        return undefined
+        this.addNewFailure(consumption)
+        return true
     }
 
     removeConsumption(consumption) {
