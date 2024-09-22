@@ -20,6 +20,11 @@ export class Consumption {
         }
     }
 
+    hasNoDependency() {
+        // TODO: this is not the most performant algorithm
+        return this.consumer.assessment.allServices.some(service => service.failures.some(failure => failure.consumption === this))
+    }
+
     remove() {
         this.consumer.removeConsumption(this)
     }
