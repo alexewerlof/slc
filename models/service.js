@@ -44,6 +44,18 @@ export class Service {
         return this.addFailure(new Failure(this, consumption, symptom, consequence, businessImpact, likelihood, impactLevel))
     }
 
+    removeFailure(failure) {
+        if (!isInstance(failure, Failure)) {
+            throw new Error(`Expected an instance of Failure. Got ${failure}`)
+        }
+        const index = this.failures.indexOf(failure)
+        if (index === -1) {
+            return false
+        }
+        this.failures.splice(index, 1)
+        return true
+    }
+
     isConsumedBy(consumption) {
         if (!isInstance(consumption, Consumption)) {
             throw new Error(`Expected an instance of Consumption. Got ${consumption}`)

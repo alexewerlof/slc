@@ -43,6 +43,10 @@ export class Failure {
         return likelihoodValue * impactLevelValue
     }
 
+    remove() {
+        return this.service.removeFailure(this)
+    }
+
     toString() {
         return `${this.consumption} ⇸ ${this.service} ⇒ ${this.symptom}`
     }

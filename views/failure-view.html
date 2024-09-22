@@ -18,9 +18,7 @@
                 What goes on inside the team is not the consumers' business.
             </p>
         </div>
-    </div>
-    
-    <div class="annotated">
+
         <div class="annotated__controls">
             <h2>Consequence</h2>
             <input type="text" v-model="failure.consequence">
@@ -34,5 +32,17 @@
                 </ol>
             </p>
         </div>
+
+        <div class="annotated__controls">
+            <div class="button-bar">
+                <button @click="failure.service.addNewFailure(failure.consumption)">Add New Failure</button>
+                <button @click="failure.remove()">Remove</button>
+            </div>
+        </div>
+        <div class="annotated__help">
+            <p>
+                Define a new failure for {{ failure.consumption }} ⇸ {{ failure.service }}.
+            </p>
+
     </div>
 </div>
