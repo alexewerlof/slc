@@ -16,7 +16,7 @@
         <h2>Failures</h2>
         <ul>
             <li v-for="failure of assessment.allFailures">
-                {{ failure }} ({{ failure.likelihood }}/{{ failure.impactLevel }})
+                {{ failure }} ({{ failure.likelihood }}, {{ failure.impactLevel }})
             </li>
         </ul>
         <h2>Metrics</h2>
@@ -25,6 +25,11 @@
             <ul>
                 <li v-for="metric of service.metrics">
                     {{ metric }}
+                    <ol>
+                        <li v-for="failure of metric.measuredFailures">
+                            {{ failure }}
+                        </li>
+                    </ol>
                 </li>
             </ul>
         </div>

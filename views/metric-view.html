@@ -22,70 +22,15 @@
         </div>
         <div class="annotated__controls">
             <h2>Symptoms</h2>
-            <ol>
-                <li v-for="failure in metric.service.failuresByRisk">
-                    <label>
-                        <code>
-                            <input type="checkbox">
-                            {{ failure.displayName }}
-                            <span title="Consequence" class="exprs">
-                                {{ failure.symptom }}
-                            </span>
-                            <br>
-                            &nbsp;
-                            <span class="punct">↳</span>
-                            When
-                            <span title="Service" class="exprs">
-                                {{ failure.service.displayName }}
-                            </span>
-                            <br>
-                            &nbsp;&nbsp;
-                            <span class="punct">↳</span>
-                            Provided by
-                            <span title="System" class="exprs">
-                                {{ failure.service.system.displayName }}
-                            </span>
-                            <br>
-                            &nbsp;&nbsp;&nbsp;
-                            <span class="punct">↳</span>
-                            Is used by
-                            <span title="Consumer" class="exprs">
-                                {{ failure.consumption.consumer.displayName }}
-                            </span>
-                            <br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <span class="punct">↳</span>
-                            In order to
-                            <span title="Consumption" class="exprs">
-                                {{ failure.consumption.displayName }}
-                            </span>
-                            <br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span class="punct">↳</span>
-                            With the consequence of
-                            <span title="Consequence" class="exprs">
-                                {{ failure.consequence }}
-                            </span>
-                            <br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span class="punct">↳</span>
-                            Leading to
-                            <span title="Business Impact" class="exprs">
-                                {{ failure.businessImpact }}
-                            </span>
-                            <span class="punct"> (</span>
-                            <span title="Impact Level" class="exprs">
-                                {{ failure.impactLevel }}
-                            </span>
-                            impact<span class="punct">, </span>
-                            <span title="Likelihood" class="exprs">
-                                {{ failure.likelihood }}
-                            </span>
-                            likelihood<span class="punct">)</span>
-                        </code>
-                    </label>
-                </li>
-            </ol>
+            <div v-for="failure in metric.service.failuresByRisk">
+                <label>
+                    <input
+                        type="checkbox"
+                        :checked="metric.measuresFailure(failure)"
+                        @change="$event => metric.setFailure(failure, $event.target.checked)">
+                    {{ failure }}
+                </label>
+            </div>
         </div>
         <div class="annotated__help">
             <p>

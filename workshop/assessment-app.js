@@ -40,7 +40,7 @@ export const app = createApp({
             'User may leave',
             'Loss of potential customer',
         )
-        apiServerSystem.services[0].addNewFailure(
+        const f1 = apiServerSystem.services[0].addNewFailure(
             webClientConsumer.consumptions[0],
             'Wrong car specs are shown to the user',
             'User will get the wrong info',
@@ -58,11 +58,11 @@ export const app = createApp({
             'Loss of potential customer',
         )
 
-        apiServerSystem.services[0].addNewMetric('Response time', 'How long it takes to respond to a request')
+        apiServerSystem.services[0].addNewMetric('Response time', 'How long it takes to respond to a request', f1)
 
         const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary', 'Export']
         return {
-            selectedTab: tabNames[3],
+            selectedTab: tabNames[5],
             tabNames,
             assessment,
             config,

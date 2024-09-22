@@ -3,23 +3,44 @@ import { Service } from './service.js'
 import { Failure } from './failure.js'
 
 export class Metric {
-    constructor(service, displayName = '', description = '', ...failures) {
+    constructor(service, displayName = '', description = '', ...measuredFailures) {
         if (!isInstance(service, Service)) {
             throw new Error(`Expected an instance of Service. Got ${service}`)
         }
         this.service = service
         this.displayName = displayName
         this.description = description
-        for (const failure of failures) {
+        for (const failure of measuredFailures) {
             if (!isInstance(failure, Failure)) {
                 throw new Error(`Expected failures to be instances of Failure. Got ${failure}`)
             }
         }
-        this.failures = failures
+        this.measuredFailures = measuredFailures
+    }
+
+    measuresFailure(failure) {
+        if (!isInstance(failure, Failure)) {
+            throw new Error(`Expected an instance of Failure. Got ${failure}`)
+        }
+        return this.measuredFailures.includes(failure)
+    }
+
+    setFailure(failure, value) {
+        if (value) {
+            if (!this.measuresFailure(failure)) {
+                this.measuredFailures.push(failure)
+            }
+        } else {
+            const index = this.measuredFailures.indexOf(failure)
+            if (index === -1) {
+                throw new ReferenceError(`Failure ${failure} not found in metric ${this}`)
+            }
+            this.measuredFailures.splice(index, 1)
+        }
     }
 
     toString() {
-        return `${ this.service }::${this.displayName} (${ this.failures.length })`
+        return `${ this.service } ∡ ${this.displayName} (${ this.measuredFailures.length })`
     }
 
     remove() {
