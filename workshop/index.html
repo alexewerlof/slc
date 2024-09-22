@@ -56,7 +56,7 @@
                             <th :title="consumption.consumer.description">{{ consumption.consumer.displayName }}</th>
                             <th :title="consumption.description">{{ consumption.displayName }}</th>
                             <td v-for="service of assessment.allServices">
-                                :D
+                                {{ assessment.getDependencyCount(consumption, service) }}
                             </td>
                         </tr>
                     </tbody>

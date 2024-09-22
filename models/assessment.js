@@ -2,6 +2,8 @@ import { System } from '../models/system.js'
 import { Consumer } from '../models/consumer.js'
 import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
+import { Service } from './service.js'
+import { Consumption } from './consumption.js'
 
 export class Assessment {
     constructor() {
@@ -29,6 +31,16 @@ export class Assessment {
             throw new RangeError(`Expected impactLevel to be one of ${config.impactLevel.possibleValues}. Got ${impactLevel}`)
         }
         return this.allFailures.filter(failure => failure.likelihood === likelihood && failure.impactLevel === impactLevel)
+    }
+
+    getDependencyCount(consumption, service) {
+        if (!isInstance(consumption, Consumption)) {
+            throw new Error(`Expected an instance of Consumption. Got ${consumption}`)
+        }
+        if (!isInstance(service, Service)) {
+            throw new Error(`Expected an instance of Service. Got ${service}`)
+        }
+        return service.getConsumptionFailures(consumption).length
     }
 
     addSystem(system) {
