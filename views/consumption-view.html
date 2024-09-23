@@ -33,7 +33,7 @@
                 </label>
             </div>
 
-            <div class="error block" v-if="consumption.hasNoDependency()">
+            <div class="error block" v-if="consumption.dependencyCount === 0">
                 <p>
                     This consumption does not depend on any service.
                     Failures are identified at the point of consuming a service.

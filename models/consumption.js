@@ -20,9 +20,9 @@ export class Consumption {
         }
     }
 
-    hasNoDependency() {
+    get dependencyCount() {
         // TODO: this is not the most performant algorithm
-        return this.consumer.assessment.allServices.some(service => service.failures.some(failure => failure.consumption === this))
+        return this.consumer.assessment.allFailures.filter(failure => failure.consumption === this).length
     }
 
     remove() {
