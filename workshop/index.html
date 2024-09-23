@@ -28,313 +28,344 @@
     <noscript>
         <p>This web application requires JavaScript to work.</p>
     </noscript>
-    <main id="app" v-cloak>
-        <header>
-            <h1>Service Level Workshop (Alpha)</h1>
-        </header>
-        <article>
-            <section>
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th v-for="service of assessment.allServices" :title="service.system.description">
-                                {{ service.system.displayName }}
-                            </th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th v-for="service of assessment.allServices" :title="service.description">
+    <div id="app" class="app" v-cloak>
+        <aside class="sidebar">
+            <header>
+                <h1>Workshop <sup><small>alpha</small></sup></h1>
+            </header>
+            <nav>
+                <h2>Provider</h2>
+                <ul>
+                    <li v-for="system of assessment.systems">
+                        {{ system.displayName }}
+                        <ul>
+                            <li v-for="service of system.services">
                                 {{ service.displayName }}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="consumption of assessment.allConsumptions">
-                            <th :title="consumption.consumer.description">{{ consumption.consumer.displayName }}</th>
-                            <th :title="consumption.description">{{ consumption.displayName }}</th>
-                            <td v-for="service of assessment.allServices">
-                                {{ assessment.getDependencyCount(consumption, service) }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </article>
-        <tabs-component
-            v-model:selected-tab="selectedTab"
-            :tab-names="tabNames"></tabs-component>
-        <div v-if="selectedTab === 'Start'">
-            <section>
-                <h1>Intro</h1>
-                <p>
-                    This app helps you to systemmatically assess your services together with the consumers
-                    to identify proper Service Level Objectives.
-                </p>
-                <p>
-                    The UI is roughly broken into the following steps:
-                </p>
-                <ul>
-                    <li><button @click="selectedTab = 'Provider'">Provider</button>: Define the systems that provide the services</li>
-                    <li><button @click="selectedTab = 'Consumers'">Consumers</button>: Define the consumers of the services</li>
-                    <li><button @click="selectedTab = 'Failures'">Failures</button>: Define the failures that threaten the consumption of the services</li>
-                    <li><button @click="selectedTab = 'Risks'">Risks</button>: Define the business impact of failures and sort them accordingly</li>
-                    <li><button @click="selectedTab = 'Service'">Service</button> Levels: Define the metrics that allows you to be on top of those risks</li>
-                </ul>      
-                <p>
-                    You can go back and forth between the tabs as you work your way through the UI.
-                </p>
-                <h2>Why failures?</h2>
-                <p>
-                    There are many ways to approach service levels
-                    and there are even more pitfalls.
-                </p>
-                <p>
-                    Our approach is based on the following assumptions:
-                </p>
-                <ul>
-                    <li><em>No vanity metrics</em>: SLI tie to system reliability from the consumers' perspective. If an anomaly does not lead to a consumer facing failure and business risk, it is out of scope.</li>
-                    <li><em>Full ownership</em>: SLOs should tie to real commitments. The best way to implement commitments is to set alerts on the service level objectives</li>
-                    <li><em>Proper modeling</em>: have a clear meaning behind every word to build a common language.</li>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
-                <h2>Mental Model</h2>
-                <p>
-                    The UI in this app is built using the following mental model:
-                </p>
-                <div class="code block">
-                    <code>
-                        <span class="exprs">Provider</span>
-                        owns 1+
-                        <span class="exprs">System</span>
-                        <br>
-                        <span class="exprs">System</span>
-                        offers 1+
-                        <span class="exprs">Service</span>s.
-                        <br>
-                        <span class="exprs">Consumer</span>
-                        has 1+
-                        <span class="exprs">Consumption</span>s
-                        to achieve a goal
-                        <br>
-                        <span class="exprs">Consumption</span>
-                        has 1+
-                        <span class="exprs">Dependency</span>
-                        to <span class="exprs">Service</span>s.
-                        <br>
-                        <span class="exprs">Dependency</span>
-                        has 1+
-                        <span class="exprs">Failure</span>
-                        <br>
-                        <span class="exprs">Risks</span>
-                        associates a business
-                        <span class="exprs">Impact</span>
-                        to a
-                        <span class="exprs">Failure</span>
-                        <br>
-                        <span class="exprs">SLI</span>
-                        is a metric to identify
-                        <span class="exprs">Failure</span>
-                        <br>
-                        <span class="exprs">SLS</span>
-                        calculates
-                        <span class="exprs">SLI</span> over a window
-                        <br>
-                        <span class="exprs">SLO</span>
-                        is a target for
-                        <span class="exprs">SLI</span>
-                    </code>
-                </div>
-            </section>
-        </div>
-        <div v-if="selectedTab === 'Provider'">
-            <div class="annotated">
-                <div class="annotated__controls">
-                    <div class="button-bar">
-                        <button @click="assessment.addNewSystem()">Add New System</button>
-                    </div>        
-                </div>
-                <div class="annotated__help">
-                    <p>
-                        Before defining service levels, we first need to identify the systems that provide
-                        those services.
-                    </p>
-                    <p>
-                        You don't need to list all of your systems.
-                        As a rule of thumb start with the consumer-facing services
-                        and as you work your way through the UI, you can come back and
-                        add any missing systems.
-                    </p>
-                </div>
-            </div>
-            <show-hide-component 
-                v-for="system of assessment.systems"
-                title="System"
-                :name="system">
-                <system-view :system="system"></system-view>
-            </show-hide-component>
-        </div>
-
-        <div v-if="selectedTab === 'Consumers'">
-            <div class="annotated">
-                <div class="annotated__controls">
-                    <div class="button-bar">
-                        <button @click="assessment.addNewConsumer()">Add New Consumer</button>
-                    </div>
-                </div>
-                <div class="annotated__help">
-                    <p>
-                        The consumer can be any system, team, or user that consumes the services offered by the system.
-                        In simple words, a consumer has a dependency on the system.
-                        Examples include: APIs, applications, authetication, etc.
-                    </p>
-                    <p>
-                        The consumer can itself be a service provider, but in this context it is the consumer of the systems
-                        that were listed in the previous tab.
-                    </p>
-                    <p>
-                        There can also be circular dependencies where one team consumes the services of another team but
-                        itself provides some services that are consumed by the other team.
-                        Those services are outside the scope of defining the service levels for the systems that are listed in the systems tab.
-                    </p>
-                </div>
-            </div>
-            <show-hide-component 
-                v-for="consumer of assessment.consumers"
-                title="Consumer"
-                :name="consumer">
-                <consumer-view :consumer="consumer"></consumer-view>
-            </show-hide-component>
-        </div>
-
-        <div v-if="selectedTab === 'Failures'">
-            <div class="annotated">
-                <div class="annotated__controls">
-                    
-                </div>
-                <div class="annotated__help">
-                    <p>
-                        Failures threaten the consumption of a service.
-                    </p>
-                </div>
-            </div>
-            <show-hide-component
-                v-for="service of assessment.allServices"
-                title="Service"
-                :name="service">
-                <div class="annotated">
-                    <div class="annotated__controls">
-                        <div class="error block" v-if="service.failures.length === 0">
-                            <p>
-                                No failures defined for this service.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="annotated__help">
-                        <p>
-                            To identify service failures, first you need to declare which consumer::consumption
-                            depends on this service.
-                            That is is because the failures are tied to the consumption.
-                        </p>
-                        <p>
-                            You can do that in the "Consumers" tab.
-                        </p>
-                    </div>
-                </div>
-                <show-hide-component 
-                    v-for="failure of service.failures"
-                    title="Failure"
-                    :name="failure">
-                    <failure-view :failure="failure"></failure-view>
-                </show-hide-component>
-            </show-hide-component>
-        </div>
-
-        <div v-if="selectedTab === 'Risks'">
-            <div class="annotated">
-                <div class="annotated__controls">
+                <h2>Consumers</h2>
+                <ul>
+                    <li v-for="consumer of assessment.consumers">
+                        {{ consumer.displayName }}
+                        <ul>
+                            <li v-for="consumption of consumer.consumptions">
+                                {{ consumption.displayName }}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header>
+                <tabs-component
+                v-model:selected-tab="selectedTab"
+                :tab-names="tabNames"></tabs-component>
+            </header>
+            <article>
+                <section>
                     <table>
                         <thead>
                             <tr>
-                                <th>Likelihood/Impact</th>
-                                <th v-for="impactLevel of config.impactLevel.possibleValues">
-                                    {{ impactLevel }}
+                                <th></th>
+                                <th></th>
+                                <th v-for="service of assessment.allServices" :title="service.system.description">
+                                    {{ service.system.displayName }}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th v-for="service of assessment.allServices" :title="service.description">
+                                    {{ service.displayName }}
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="likelihood of config.likelihood.possibleValues">
-                                <th>{{ likelihood }}</th>
-                                <td v-for="impactLevel of config.impactLevel.possibleValues">
-                                    {{ assessment.getRisks(likelihood, impactLevel).length }}
+                            <tr v-for="consumption of assessment.allConsumptions">
+                                <th :title="consumption.consumer.description">{{ consumption.consumer.displayName }}</th>
+                                <th :title="consumption.description">{{ consumption.displayName }}</th>
+                                <td v-for="service of assessment.allServices">
+                                    {{ assessment.getDependencyCount(consumption, service) }}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="annotated__help">
-                    <p>
-                        Metrics are used to measure the level of a service.
-                    </p>
-                    <p>
-                        Risks are tied to the failures.
-                        The idea with this page is to think about the business impact of
-                        the failures in order to prioritize which symptoms should
-                        be prioritized for the service level first.
-                    </p>
-                </div>
-            </div>
-            <show-hide-component 
-                v-for="failure of assessment.allFailures"
-                title="Risk"
-                :name="`${failure.consequence} ⇛ ${failure.businessImpact}`">
-                <risk-view :failure="failure"></risk-view>
-        </div>
-
-        <div v-if="selectedTab === 'Metrics'">
-            <div class="annotated">
-                <div class="annotated__controls">
-                    <div class="button-bar">
-                        <button @click="assessment.addNewMetric()">Add a new Metric</button>
-                    </div>
-                </div>
-                <div class="annotated__help">
-                    <p>
-                        Risks are tied to the failures.
-                        The idea with this page is to think about the business impact of
-                        the failures in order to prioritize which symptoms should
-                        be prioritized for the service level first.
-                    </p>
-                </div>
-            </div>
-            <show-hide-component 
-                v-for="service of assessment.allServices"
-                title="Service"
-                :name="service">
-                <service-metric-view :service="service"></service-metric-view>
-        </div>
-
-        <div v-if="selectedTab === 'Summary'">
-            <summary-view :assessment="assessment"></summary-view>
-        </div>
-
-        <div v-if="selectedTab === 'Export'">
-            <article>
-                <section>
-                    <div class="button-bar">
-                        <button @click="exportToJson()">JSON</button>
-                        <button @click="exportToYaml('yaml')">YAML</button>
-                        <button @click="clickInput('import-file-selector')">Import</button>
-                    </div>
-                    <input hidden type="file" @change="importFile($event)" id="import-file-selector" accept=".json">
-                    <div class="code block">
-                        <pre><code>{{ exportedCode }}</code></pre>
-                    </pre>
                 </section>
             </article>
-        </div>
-    </main>
+            
+            <div v-if="selectedTab === 'Start'">
+                <section>
+                    <h1>Intro</h1>
+                    <p>
+                        This app helps you to systemmatically assess your services together with the consumers
+                        to identify proper Service Level Objectives.
+                    </p>
+                    <p>
+                        The UI is roughly broken into the following steps:
+                    </p>
+                    <ul>
+                        <li><button @click="selectedTab = 'Provider'">Provider</button>: Define the systems that provide the services</li>
+                        <li><button @click="selectedTab = 'Consumers'">Consumers</button>: Define the consumers of the services</li>
+                        <li><button @click="selectedTab = 'Failures'">Failures</button>: Define the failures that threaten the consumption of the services</li>
+                        <li><button @click="selectedTab = 'Risks'">Risks</button>: Define the business impact of failures and sort them accordingly</li>
+                        <li><button @click="selectedTab = 'Service'">Service</button> Levels: Define the metrics that allows you to be on top of those risks</li>
+                    </ul>      
+                    <p>
+                        You can go back and forth between the tabs as you work your way through the UI.
+                    </p>
+                    <h2>Why failures?</h2>
+                    <p>
+                        There are many ways to approach service levels
+                        and there are even more pitfalls.
+                    </p>
+                    <p>
+                        Our approach is based on the following assumptions:
+                    </p>
+                    <ul>
+                        <li><em>No vanity metrics</em>: SLI tie to system reliability from the consumers' perspective. If an anomaly does not lead to a consumer facing failure and business risk, it is out of scope.</li>
+                        <li><em>Full ownership</em>: SLOs should tie to real commitments. The best way to implement commitments is to set alerts on the service level objectives</li>
+                        <li><em>Proper modeling</em>: have a clear meaning behind every word to build a common language.</li>
+                    </ul>
+                    <h2>Mental Model</h2>
+                    <p>
+                        The UI in this app is built using the following mental model:
+                    </p>
+                    <div class="code block">
+                        <code>
+                            <span class="exprs">Provider</span>
+                            owns 1+
+                            <span class="exprs">System</span>
+                            <br>
+                            <span class="exprs">System</span>
+                            offers 1+
+                            <span class="exprs">Service</span>s.
+                            <br>
+                            <span class="exprs">Consumer</span>
+                            has 1+
+                            <span class="exprs">Consumption</span>s
+                            to achieve a goal
+                            <br>
+                            <span class="exprs">Consumption</span>
+                            has 1+
+                            <span class="exprs">Dependency</span>
+                            to <span class="exprs">Service</span>s.
+                            <br>
+                            <span class="exprs">Dependency</span>
+                            has 1+
+                            <span class="exprs">Failure</span>
+                            <br>
+                            <span class="exprs">Risks</span>
+                            associates a business
+                            <span class="exprs">Impact</span>
+                            to a
+                            <span class="exprs">Failure</span>
+                            <br>
+                            <span class="exprs">SLI</span>
+                            is a metric to identify
+                            <span class="exprs">Failure</span>
+                            <br>
+                            <span class="exprs">SLS</span>
+                            calculates
+                            <span class="exprs">SLI</span> over a window
+                            <br>
+                            <span class="exprs">SLO</span>
+                            is a target for
+                            <span class="exprs">SLI</span>
+                        </code>
+                    </div>
+                </section>
+            </div>
+            <div v-if="selectedTab === 'Provider'">
+                <div class="annotated">
+                    <div class="annotated__controls">
+                        <div class="button-bar">
+                            <button @click="assessment.addNewSystem()">Add New System</button>
+                        </div>        
+                    </div>
+                    <div class="annotated__help">
+                        <p>
+                            Before defining service levels, we first need to identify the systems that provide
+                            those services.
+                        </p>
+                        <p>
+                            You don't need to list all of your systems.
+                            As a rule of thumb start with the consumer-facing services
+                            and as you work your way through the UI, you can come back and
+                            add any missing systems.
+                        </p>
+                    </div>
+                </div>
+                <show-hide-component 
+                    v-for="system of assessment.systems"
+                    title="System"
+                    :name="system">
+                    <system-view :system="system"></system-view>
+                </show-hide-component>
+            </div>
+
+            <div v-if="selectedTab === 'Consumers'">
+                <div class="annotated">
+                    <div class="annotated__controls">
+                        <div class="button-bar">
+                            <button @click="assessment.addNewConsumer()">Add New Consumer</button>
+                        </div>
+                    </div>
+                    <div class="annotated__help">
+                        <p>
+                            The consumer can be any system, team, or user that consumes the services offered by the system.
+                            In simple words, a consumer has a dependency on the system.
+                            Examples include: APIs, applications, authetication, etc.
+                        </p>
+                        <p>
+                            The consumer can itself be a service provider, but in this context it is the consumer of the systems
+                            that were listed in the previous tab.
+                        </p>
+                        <p>
+                            There can also be circular dependencies where one team consumes the services of another team but
+                            itself provides some services that are consumed by the other team.
+                            Those services are outside the scope of defining the service levels for the systems that are listed in the systems tab.
+                        </p>
+                    </div>
+                </div>
+                <show-hide-component 
+                    v-for="consumer of assessment.consumers"
+                    title="Consumer"
+                    :name="consumer">
+                    <consumer-view :consumer="consumer"></consumer-view>
+                </show-hide-component>
+            </div>
+
+            <div v-if="selectedTab === 'Failures'">
+                <div class="annotated">
+                    <div class="annotated__controls">
+                        
+                    </div>
+                    <div class="annotated__help">
+                        <p>
+                            Failures threaten the consumption of a service.
+                        </p>
+                    </div>
+                </div>
+                <show-hide-component
+                    v-for="service of assessment.allServices"
+                    title="Service"
+                    :name="service">
+                    <div class="annotated">
+                        <div class="annotated__controls">
+                            <div class="error block" v-if="service.failures.length === 0">
+                                <p>
+                                    No failures defined for this service.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="annotated__help">
+                            <p>
+                                To identify service failures, first you need to declare which consumer::consumption
+                                depends on this service.
+                                That is is because the failures are tied to the consumption.
+                            </p>
+                            <p>
+                                You can do that in the "Consumers" tab.
+                            </p>
+                        </div>
+                    </div>
+                    <show-hide-component 
+                        v-for="failure of service.failures"
+                        title="Failure"
+                        :name="failure">
+                        <failure-view :failure="failure"></failure-view>
+                    </show-hide-component>
+                </show-hide-component>
+            </div>
+
+            <div v-if="selectedTab === 'Risks'">
+                <div class="annotated">
+                    <div class="annotated__controls">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Likelihood/Impact</th>
+                                    <th v-for="impactLevel of config.impactLevel.possibleValues">
+                                        {{ impactLevel }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="likelihood of config.likelihood.possibleValues">
+                                    <th>{{ likelihood }}</th>
+                                    <td v-for="impactLevel of config.impactLevel.possibleValues">
+                                        {{ assessment.getRisks(likelihood, impactLevel).length }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="annotated__help">
+                        <p>
+                            Metrics are used to measure the level of a service.
+                        </p>
+                        <p>
+                            Risks are tied to the failures.
+                            The idea with this page is to think about the business impact of
+                            the failures in order to prioritize which symptoms should
+                            be prioritized for the service level first.
+                        </p>
+                    </div>
+                </div>
+                <show-hide-component 
+                    v-for="failure of assessment.allFailures"
+                    title="Risk"
+                    :name="`${failure.consequence} ⇛ ${failure.businessImpact}`">
+                    <risk-view :failure="failure"></risk-view>
+            </div>
+
+            <div v-if="selectedTab === 'Metrics'">
+                <div class="annotated">
+                    <div class="annotated__controls">
+                        <div class="button-bar">
+                            <button @click="assessment.addNewMetric()">Add a new Metric</button>
+                        </div>
+                    </div>
+                    <div class="annotated__help">
+                        <p>
+                            Risks are tied to the failures.
+                            The idea with this page is to think about the business impact of
+                            the failures in order to prioritize which symptoms should
+                            be prioritized for the service level first.
+                        </p>
+                    </div>
+                </div>
+                <show-hide-component 
+                    v-for="service of assessment.allServices"
+                    title="Service"
+                    :name="service">
+                    <service-metric-view :service="service"></service-metric-view>
+            </div>
+
+            <div v-if="selectedTab === 'Summary'">
+                <summary-view :assessment="assessment"></summary-view>
+            </div>
+
+            <div v-if="selectedTab === 'Export'">
+                <article>
+                    <section>
+                        <div class="button-bar">
+                            <button @click="exportToJson()">JSON</button>
+                            <button @click="exportToYaml('yaml')">YAML</button>
+                            <button @click="clickInput('import-file-selector')">Import</button>
+                        </div>
+                        <input hidden type="file" @change="importFile($event)" id="import-file-selector" accept=".json">
+                        <div class="code block">
+                            <pre><code>{{ exportedCode }}</code></pre>
+                        </pre>
+                    </section>
+                </article>
+            </div>
+        </main>
+    </div>
     <script type="module" src="index.js" defer async></script>
 </body>
 

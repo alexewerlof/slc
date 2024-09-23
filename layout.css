@@ -2,3 +2,26 @@
     max-width: 1500px;
     margin: 0 auto;
 }
+
+.app {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.sidebar {
+    display: block;
+    border-right: 1px solid var(--divider-color);
+    width: 280px;
+    padding: var(--gap);
+}
+
+.sidebar header {
+    text-align: left;
+}
+
+.sidebar nav ul {
+    padding: 0;
+    padding-left: 1em;
+}
