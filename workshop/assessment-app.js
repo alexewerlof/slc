@@ -20,7 +20,7 @@ export const app = createApp({
         const assessment = Assessment.load(exampleJson)
         const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary', 'Export']
         return {
-            selectedTab: tabNames[7],
+            selectedTab: tabNames[0],
             tabNames,
             assessment,
             config,
