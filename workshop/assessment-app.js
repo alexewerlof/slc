@@ -12,6 +12,7 @@ import { Assessment } from '../models/assessment.js'
 import { config } from '../config.js'
 import { dump } from '../vendor/js-yaml.js'
 import { loadJson, readTextFile } from '../lib/share.js'
+import FeedbackBlobComponent from '../components/feedback-blob.js'
 
 const exampleJson = await loadJson('example.json')
 
@@ -34,6 +35,7 @@ export const app = createApp({
         RiskView,
         ServiceMetricView,
         SummaryView,
+        FeedbackBlobComponent,
         TabsComponent,
         ShowHideComponent,
         ExtLink,

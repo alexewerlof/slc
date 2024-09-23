@@ -4,6 +4,7 @@ import AlertChartComponent from './components/alert-chart.js'
 import BurnRateComponent from './components/burn-rate.js'
 import ErrorBudgetComponent from './components/error-budget.js'
 import ExtLink from './components/ext-link.js'
+import FeedbackBlobComponent from './components/feedback-blob.js'
 import HelpComponent from './components/help.js'
 import SLFractionComponent from './components/sl-fraction.js'
 import { setTitle } from './lib/header.js'
@@ -121,6 +122,7 @@ export const app = createApp({
         BurnRateComponent,
         ErrorBudgetComponent,
         ExtLink,
+        FeedbackBlobComponent,
         HelpComponent,
         SLFractionComponent,
     },
