@@ -53,7 +53,7 @@ export class Consumer {
         })
     }
 
-    get ref() {
+    get index() {
         return this.assessment.consumers.indexOf(this)
     }
 

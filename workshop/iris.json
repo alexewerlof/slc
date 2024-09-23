@@ -9,8 +9,8 @@
           "description": "Returns the body of the article in a JSON array",
           "failures": [
             {
-              "consumerRef": 1,
-              "consumptionRef": 0,
+              "consumerIndex": 1,
+              "consumptionIndex": 0,
               "symptom": "SSR fails due to timeout",
               "consequence": "Older version of the article is served from CDN",
               "businessImpact": "",
@@ -18,8 +18,8 @@
               "impactLevel": "Moderate"
             },
             {
-              "consumerRef": 0,
-              "consumptionRef": 0,
+              "consumerIndex": 0,
+              "consumptionIndex": 0,
               "symptom": "some content is missing",
               "consequence": "The reader may get confused or misinformed",
               "businessImpact": "",
@@ -34,8 +34,8 @@
           "description": "Returns the layout and basic content for the newsroom front page",
           "failures": [
             {
-              "consumerRef": 1,
-              "consumptionRef": 1,
+              "consumerIndex": 1,
+              "consumptionIndex": 1,
               "symptom": "Front page is slow",
               "consequence": "Readers get frustrated or leave",
               "businessImpact": "",
@@ -43,8 +43,8 @@
               "impactLevel": "Moderate"
             },
             {
-              "consumerRef": 1,
-              "consumptionRef": 1,
+              "consumerIndex": 1,
+              "consumptionIndex": 1,
               "symptom": "Front page is broken",
               "consequence": "Readers lose trust",
               "businessImpact": "",
@@ -52,8 +52,8 @@
               "impactLevel": "Moderate"
             },
             {
-              "consumerRef": 1,
-              "consumptionRef": 1,
+              "consumerIndex": 1,
+              "consumptionIndex": 1,
               "symptom": "Front page dot not loat",
               "consequence": "Readers lose trust",
               "businessImpact": "",
@@ -74,8 +74,8 @@
           "description": "The newsroom-specific business logic configuration",
           "failures": [
             {
-              "consumerRef": 0,
-              "consumptionRef": 0,
+              "consumerIndex": 0,
+              "consumptionIndex": 0,
               "symptom": "Config is malformed",
               "consequence": "Cannot apply the config",
               "businessImpact": "",
@@ -83,8 +83,8 @@
               "impactLevel": "Moderate"
             },
             {
-              "consumerRef": 1,
-              "consumptionRef": 1,
+              "consumerIndex": 1,
+              "consumptionIndex": 1,
               "symptom": "Config values are wrong",
               "consequence": "The front end may crash",
               "businessImpact": "",
@@ -92,8 +92,8 @@
               "impactLevel": "Moderate"
             },
             {
-              "consumerRef": 0,
-              "consumptionRef": 0,
+              "consumerIndex": 0,
+              "consumptionIndex": 0,
               "symptom": "Misconfiguration",
               "consequence": "A/B tests don't apply",
               "businessImpact": "",

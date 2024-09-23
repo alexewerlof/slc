@@ -9,8 +9,8 @@
             "description": "",
             "failures": [
               {
-                "consumerRef": 0,
-                "consumptionRef": 0,
+                "consumerIndex": 0,
+                "consumptionIndex": 0,
                 "symptom": "Web page response is too slow",
                 "consequence": "User may leave",
                 "businessImpact": "Loss of potential customer",
@@ -18,8 +18,8 @@
                 "impactLevel": "Moderate"
               },
               {
-                "consumerRef": 0,
-                "consumptionRef": 0,
+                "consumerIndex": 0,
+                "consumptionIndex": 0,
                 "symptom": "Wrong car specs are shown to the user",
                 "consequence": "User will get the wrong info",
                 "businessImpact": "Legal responsibility, bad reputation",
@@ -31,7 +31,7 @@
               {
                 "displayName": "Response time",
                 "description": "How long it takes to respond to a request",
-                "measuredFailuresRef": [
+                "measuredFailuresIndex": [
                   1
                 ]
               }
@@ -54,8 +54,8 @@
             "description": "",
             "failures": [
               {
-                "consumerRef": 0,
-                "consumptionRef": 0,
+                "consumerIndex": 0,
+                "consumptionIndex": 0,
                 "symptom": "Image is missing",
                 "consequence": "User will get confused and leave",
                 "businessImpact": "Loss of potential customer",

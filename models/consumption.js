@@ -39,7 +39,7 @@ export class Consumption {
         })
     }
 
-    get ref() {
+    get index() {
         return this.consumer.consumptions.indexOf(this)
     }
 

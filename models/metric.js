@@ -59,12 +59,12 @@ export class Metric {
         return {
             displayName: this.displayName,
             description: this.description,
-            measuredFailuresRef: this.measuredFailures.map(failure => failure.ref),
+            measuredFailuresIndex: this.measuredFailures.map(failure => failure.index),
         }
     }
 
     static load(service, metricObj) {
-        const measuredFailures = metricObj.measuredFailuresRef.map(ref => service.failures[ref])
+        const measuredFailures = metricObj.measuredFailuresIndex.map(index => service.failures[index])
         const newMetric = new Metric(service, metricObj.displayName, metricObj.description, ...measuredFailures)
         return newMetric
     }

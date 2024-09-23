@@ -64,14 +64,14 @@ export class Failure {
         })
     }
 
-    get ref() {
+    get index() {
         return this.service.failures.indexOf(this)
     }
 
     save() {
         return {
-            consumerRef: this.consumption.consumer.ref,
-            consumptionRef: this.consumption.ref,
+            consumerIndex: this.consumption.consumer.index,
+            consumptionIndex: this.consumption.index,
             symptom: this.symptom,
             consequence: this.consequence,
             businessImpact: this.businessImpact,
@@ -81,10 +81,10 @@ export class Failure {
     }
 
     static load(service, failureObj) {
-        const consumer = service.system.assessment.consumers[failureObj.consumerRef]
+        const consumer = service.system.assessment.consumers[failureObj.consumerIndex]
         const failure = new Failure(
             service,
-            consumer.consumptions[failureObj.consumptionRef],
+            consumer.consumptions[failureObj.consumptionIndex],
             failureObj.symptom,
             failureObj.consequence,
             failureObj.businessImpact,
