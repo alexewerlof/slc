@@ -37,10 +37,10 @@
                 <h2>Provider</h2>
                 <ul>
                     <li v-for="system of assessment.systems">
-                        {{ system.displayName }}
+                        <span :title="system.description">{{ system.displayName }}</span>
                         <ul>
                             <li v-for="service of system.services">
-                                {{ service.displayName }}
+                                <span :title="service.description">{{ service.displayName }}</span>
                             </li>
                         </ul>
                     </li>
@@ -48,10 +48,10 @@
                 <h2>Consumers</h2>
                 <ul>
                     <li v-for="consumer of assessment.consumers">
-                        {{ consumer.displayName }}
+                        <span :title="consumer.description">{{ consumer.displayName }}</span>
                         <ul>
                             <li v-for="consumption of consumer.consumptions">
-                                {{ consumption.displayName }}
+                                <span :title="consumption.description">{{ consumption.displayName }}</span>
                             </li>
                         </ul>
                     </li>
