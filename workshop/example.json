@@ -29,9 +29,25 @@
           ],
           "metrics": [
             {
-              "displayName": "Response time",
-              "description": "How long it takes to respond to a request",
-              "measuredFailuresIndex": []
+              "displayName": "response_code between 200-499",
+              "description": "error rate",
+              "measuredFailuresIndex": [
+                0
+              ]
+            },
+            {
+              "displayName": "latency < 10 seconds",
+              "description": "The response to climate API is relatively fast",
+              "measuredFailuresIndex": [
+                0
+              ]
+            },
+            {
+              "displayName": "GET climate successful",
+              "description": "",
+              "measuredFailuresIndex": [
+                1
+              ]
             }
           ]
         },
@@ -51,23 +67,29 @@
             {
               "consumerIndex": 1,
               "consumptionIndex": 1,
-              "symptom": "Can't lock the car",
-              "consequence": "Thieves may get in the car before the user gets to lock it",
-              "businessImpact": "The user may take significant financial damage and take us to court",
-              "likelihood": "Rare",
-              "impactLevel": "Catastrophic"
-            },
-            {
-              "consumerIndex": 1,
-              "consumptionIndex": 1,
               "symptom": "Can't unlock the car",
               "consequence": "The user may have to use a key",
               "businessImpact": "The user may call customer support",
               "likelihood": "Possible",
               "impactLevel": "Insignificant"
+            },
+            {
+              "consumerIndex": 1,
+              "consumptionIndex": 1,
+              "symptom": "Can't lock the car",
+              "consequence": "Thieves may get in the car before the user gets to lock it",
+              "businessImpact": "The user may take significant financial damage and take us to court",
+              "likelihood": "Rare",
+              "impactLevel": "Catastrophic"
             }
           ],
-          "metrics": []
+          "metrics": [
+            {
+              "displayName": "",
+              "description": "",
+              "measuredFailuresIndex": []
+            }
+          ]
         }
       ]
     },
