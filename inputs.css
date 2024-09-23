@@ -111,6 +111,10 @@ button {
     transition: background-color var(--animation-speed);
 }
 
+button.danger {
+    background-color: var(--brand-red);
+}
+
 button[disabled] {
     background-color: var(--background-lighter);
     color: var(--ui-border);
