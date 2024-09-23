@@ -79,18 +79,6 @@
             </p>
         </div>
     </div>
-
-    <div class="annotated" v-if="service.failures.length">
-        <div class="annotated__controls">
-            <div class="button-bar">
-                <button @click="service.addNewMetric()">Add New Metric</button>
-            </div>
-        </div>
-        <div class="annotated__help">
-            {{ service.failures.length }} failures are identified and
-            {{ service.metrics.length }} metrics measure the symptoms.
-        </div>
-    </div>
     
     <show-hide-component
         v-for="metric in service.metrics"
@@ -99,4 +87,17 @@
         <metric-view
             :metric="metric"></metric-view>
     </show-hide-component>
+
+    <div class="annotated" v-if="service.failures.length">
+        <div class="annotated__controls">
+            <div class="button-bar">
+                <button @click="service.addNewMetric()">Add New Metric</button>
+            </div>
+        </div>
+        <div class="annotated__help">
+            {{ service }} has {{ service.failures.length }} failures and
+            {{ service.metrics.length }} metrics.
+        </div>
+    </div>
+
 </div>

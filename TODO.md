@@ -10,7 +10,6 @@
 - [ ] Allow copying the JSON export
 - [ ] Allow directly saving the JSON export
 - [ ] Allow multiple consequences
-- [ ] The "Add New" button should be after the current list (e.g. system, service, consumer, consumption)
 
 # Medium prio
 
@@ -26,6 +25,7 @@
 
 # Shipped
 
+- [X] 2024-09-23: Workshop: The "Add New" button should be after the current list (e.g. system, service, consumer, consumption)
 - [X] 2024-08-15: rename valid -> eventUnit
 - [X] 2024-08-15: rename good -> metricName
 - [X] 2024-08-12: Write a convertor for URL v0 to v1 unit -> if number ? assign to timeslot, otherwise if valid is not set explicitly, set valid

@@ -16,6 +16,14 @@
         </div>
     </div>
 
+    <show-hide-component
+        v-for="consumption of consumer.consumptions"
+        title="Consumption"
+        :name="consumption">
+
+        <consumption-view :consumption="consumption"></consumption-view>
+    </show-hide-component>
+
     <div class="annotated">
         <div class="annotated__controls">
             <div class="error block" v-if="consumer.consumptions.length === 0">
@@ -37,11 +45,4 @@
         </div>
     </div>
 
-    <show-hide-component
-        v-for="consumption of consumer.consumptions"
-        title="Consumption"
-        :name="consumption">
-
-        <consumption-view :consumption="consumption"></consumption-view>
-    </show-hide-component>
 </div>

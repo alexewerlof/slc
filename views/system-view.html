@@ -21,6 +21,13 @@
         </div>
     </div>
 
+    <show-hide-component
+        v-for="service of system.services"
+        title="Service"
+        :name="service">
+        <service-view :service="service"></service-view>
+    </show-hide-component>
+
     <div class="annotated">
         <div class="annotated__controls">
             <div class="error block" v-if="system.services.length === 0">
@@ -46,10 +53,4 @@
         </div>
     </div>
 
-    <show-hide-component
-        v-for="service of system.services"
-        title="Service"
-        :name="service">
-        <service-view :service="service"></service-view>
-    </show-hide-component>
 </div>
