@@ -14,6 +14,7 @@
     border-right: 1px solid var(--divider-color);
     width: 280px;
     padding: var(--gap);
+    flex-shrink: 0;
 }
 
 .sidebar header {
@@ -23,4 +24,10 @@
 .sidebar nav ul {
     padding: 0;
     padding-left: 1em;
+}
+
+.main-content {
+    flex-grow: 1; /* Allow the main content to grow and take up remaining space */
+    padding: var(--gap);
+    overflow: auto; /* Ensure content doesn't overflow */
 }
