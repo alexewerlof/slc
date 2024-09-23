@@ -40,7 +40,7 @@ export class Metric {
     }
 
     toString() {
-        return `${ this.service } ∡ ${this.displayName} (${ this.measuredFailures.length })`
+        return `${ this.service } ∡ ${this.displayName}`
     }
 
     remove() {
