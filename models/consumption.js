@@ -38,4 +38,20 @@ export class Consumption {
             description: this.description,
         })
     }
+
+    get ref() {
+        return this.consumer.consumptions.indexOf(this)
+    }
+
+    save() {
+        return {
+            displayName: this.displayName,
+            description: this.description,
+        }
+    }
+
+    static load(consumer, consumptionObj) {
+        const consumption = new Consumption(consumer, consumptionObj.displayName, consumptionObj.description)
+        return consumption
+    }
 }

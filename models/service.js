@@ -128,4 +128,28 @@ export class Service {
             metrics: this.metrics,
         })
     }
+
+    get ref() {
+        return this.system.services.indexOf(this)
+    }
+
+    save() {
+        return {
+            displayName: this.displayName,
+            description: this.description,
+            failures: this.failures.map(failure => failure.save()),
+            metrics: this.metrics.map(metric => metric.save()),
+        }
+    }
+
+    static load(system, serviceObj) {
+        const newService = new Service(system, serviceObj.displayName, serviceObj.description)
+        for (const failureObj of serviceObj.failures) {
+            newService.addFailure(Failure.load(newService, failureObj))
+        }
+        for (const metricObj of serviceObj.metrics) {
+            newService.addMetric(Metric.load(newService, metricObj))
+        }
+        return newService
+    }
 }

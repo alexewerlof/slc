@@ -63,4 +63,34 @@ export class Failure {
             impactLevel: this.impactLevel,
         })
     }
+
+    get ref() {
+        return this.service.failures.indexOf(this)
+    }
+
+    save() {
+        return {
+            consumerRef: this.consumption.consumer.ref,
+            consumptionRef: this.consumption.ref,
+            symptom: this.symptom,
+            consequence: this.consequence,
+            businessImpact: this.businessImpact,
+            likelihood: this.likelihood,
+            impactLevel: this.impactLevel,
+        }
+    }
+
+    static load(service, failureObj) {
+        const consumer = service.system.assessment.consumers[failureObj.consumerRef]
+        const failure = new Failure(
+            service,
+            consumer.consumptions[failureObj.consumptionRef],
+            failureObj.symptom,
+            failureObj.consequence,
+            failureObj.businessImpact,
+            failureObj.likelihood,
+            failureObj.impactLevel
+        )
+        return failure
+    }
 }

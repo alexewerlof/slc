@@ -1,0 +1,119 @@
+{
+    "systems": [
+      {
+        "displayName": "API server",
+        "description": "",
+        "services": [
+          {
+            "displayName": "Car models API",
+            "description": "",
+            "failures": [
+              {
+                "consumerRef": 0,
+                "consumptionRef": 0,
+                "symptom": "Web page response is too slow",
+                "consequence": "User may leave",
+                "businessImpact": "Loss of potential customer",
+                "likelihood": "Possible",
+                "impactLevel": "Moderate"
+              },
+              {
+                "consumerRef": 0,
+                "consumptionRef": 0,
+                "symptom": "Wrong car specs are shown to the user",
+                "consequence": "User will get the wrong info",
+                "businessImpact": "Legal responsibility, bad reputation",
+                "likelihood": "Possible",
+                "impactLevel": "Moderate"
+              }
+            ],
+            "metrics": [
+              {
+                "displayName": "Response time",
+                "description": "How long it takes to respond to a request",
+                "measuredFailuresRef": [
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "displayName": "Car prices API",
+            "description": "",
+            "failures": [],
+            "metrics": []
+          }
+        ]
+      },
+      {
+        "displayName": "File storage",
+        "description": "",
+        "services": [
+          {
+            "displayName": "Store car images",
+            "description": "",
+            "failures": [
+              {
+                "consumerRef": 0,
+                "consumptionRef": 0,
+                "symptom": "Image is missing",
+                "consequence": "User will get confused and leave",
+                "businessImpact": "Loss of potential customer",
+                "likelihood": "Possible",
+                "impactLevel": "Moderate"
+              }
+            ],
+            "metrics": []
+          },
+          {
+            "displayName": "Retrieve car images",
+            "description": "",
+            "failures": [],
+            "metrics": []
+          },
+          {
+            "displayName": "Store car documents",
+            "description": "",
+            "failures": [],
+            "metrics": []
+          },
+          {
+            "displayName": "Retrieve car documents",
+            "description": "",
+            "failures": [],
+            "metrics": []
+          }
+        ]
+      }
+    ],
+    "consumers": [
+      {
+        "displayName": "Web client",
+        "description": "",
+        "consumptions": [
+          {
+            "displayName": "Render car catalog page",
+            "description": ""
+          },
+          {
+            "displayName": "Render car detail page",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "displayName": "Mobile client",
+        "description": "",
+        "consumptions": [
+          {
+            "displayName": "Render car image",
+            "description": ""
+          },
+          {
+            "displayName": "Control the car remotely",
+            "description": ""
+          }
+        ]
+      }
+    ]
+  }

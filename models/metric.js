@@ -54,4 +54,18 @@ export class Metric {
             // failures: this.failures,
         }
     }
+
+    save() {
+        return {
+            displayName: this.displayName,
+            description: this.description,
+            measuredFailuresRef: this.measuredFailures.map(failure => failure.ref),
+        }
+    }
+
+    static load(service, metricObj) {
+        const measuredFailures = metricObj.measuredFailuresRef.map(ref => service.failures[ref])
+        const newMetric = new Metric(service, metricObj.displayName, metricObj.description, ...measuredFailures)
+        return newMetric
+    }
 }

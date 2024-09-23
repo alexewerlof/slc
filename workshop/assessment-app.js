@@ -13,50 +13,13 @@ import { Consumer } from '../models/consumer.js'
 import { Assessment } from '../models/assessment.js'
 import { config } from '../config.js'
 import { dump } from '../vendor/js-yaml.js'
+import { loadJson } from '../lib/share.js'
+
+const exampleJson = await loadJson('example.json')
 
 export const app = createApp({
     data() {
-        const assessment = new Assessment()
-
-        const apiServerSystem = assessment.addNewSystem('API server')
-        apiServerSystem.addNewService('Car models API')
-        apiServerSystem.addNewService('Car prices API')
-
-        const fileStorageSystem = assessment.addNewSystem('File storage')
-        fileStorageSystem.addNewService('Store car images')
-        fileStorageSystem.addNewService('Retrieve car images')
-        fileStorageSystem.addNewService('Store car documents')
-        fileStorageSystem.addNewService('Retrieve car documents')
-
-        const webClientConsumer = assessment.addNewConsumer('Web client')
-        webClientConsumer.addNewConsumption('Render car catalog page')
-        webClientConsumer.addNewConsumption('Render car detail page')
-
-        apiServerSystem.services[0].addNewFailure(
-            webClientConsumer.consumptions[0],
-            'Web page response is too slow',
-            'User may leave',
-            'Loss of potential customer',
-        )
-        const f1 = apiServerSystem.services[0].addNewFailure(
-            webClientConsumer.consumptions[0],
-            'Wrong car specs are shown to the user',
-            'User will get the wrong info',
-            'Legal responsibility, bad reputation',
-        )
-        const mobileClientConsumer = assessment.addNewConsumer('Mobile client')
-        mobileClientConsumer.addNewConsumption('Render car image')
-        mobileClientConsumer.addNewConsumption('Control the car remotely')
-
-        fileStorageSystem.services[0].addNewFailure(
-            webClientConsumer.consumptions[0],
-            'Image is missing',
-            'User will get confused and leave',
-            'Loss of potential customer',
-        )
-
-        apiServerSystem.services[0].addNewMetric('Response time', 'How long it takes to respond to a request', f1)
-
+        const assessment = Assessment.load(exampleJson)
         const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary', 'Export']
         return {
             selectedTab: tabNames[7],
@@ -79,12 +42,14 @@ export const app = createApp({
     },
     methods: {
         exportToJson() {
-            this.exportedCode = JSON.stringify(this.assessment, null, 2)
+            // this.exportedCode = JSON.stringify(this.assessment, null, 2)
+            this.exportedCode = JSON.stringify(this.assessment.save(), null, 2)
         },
         
         exportToYaml() {
-            const obj = JSON.parse(JSON.stringify(this.assessment))
-            this.exportedCode = dump(obj)
+            // const obj = JSON.parse(JSON.stringify(this.assessment))
+            // this.exportedCode = dump(obj)
+            this.exportedCode = dump(this.assessment.save())
         }
     }
 })

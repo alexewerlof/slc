@@ -52,4 +52,24 @@ export class Consumer {
             consumptions: this.consumptions,
         })
     }
+
+    get ref() {
+        return this.assessment.consumers.indexOf(this)
+    }
+
+    save() {
+        return {
+            displayName: this.displayName,
+            description: this.description,
+            consumptions: this.consumptions.map(consumption => consumption.save())
+        }
+    }
+
+    static load(assessment, consumerObj) {
+        const newConsumer = new Consumer(assessment, consumerObj.displayName, consumerObj.description)
+        for (const consumption of consumerObj.consumptions) {
+            newConsumer.addConsumption(Consumption.load(newConsumer, consumption))
+        }
+        return newConsumer
+    }
 }

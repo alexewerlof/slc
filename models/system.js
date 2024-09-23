@@ -53,4 +53,24 @@ export class System {
             services: this.services,
         })
     }
+
+    get ref() {
+        return this.assessment.systems.indexOf(this)
+    }
+    
+    save() {
+        return {
+            displayName: this.displayName,
+            description: this.description,
+            services: this.services.map(service => service.save()),
+        }
+    }
+
+    static load(assessment, systemObj) {
+        const newSystem = new System(assessment, systemObj.displayName, systemObj.description)
+        for (const service of systemObj.services) {
+            newSystem.addService(Service.load(newSystem, service))
+        }
+        return newSystem
+    }
 }

@@ -99,4 +99,24 @@ export class Assessment {
             consumers: this.consumers
         }
     }
+
+    save() {
+        return {
+            systems: this.systems.map(system => system.save()),
+            consumers: this.consumers.map(consumer => consumer.save()),
+        }
+    }
+
+    static load(assessmentObj) {
+        const newAssessment = new Assessment()
+        for (const consumer of assessmentObj.consumers) {
+            newAssessment.addConsumer(Consumer.load(newAssessment, consumer))
+        }
+        for (const system of assessmentObj.systems) {
+            newAssessment.addSystem(System.load(newAssessment, system))
+        }
+
+        return newAssessment
+    }
+
 }
