@@ -5,6 +5,12 @@
 - [ ] Support multi-layered SLOs
 - [ ] Add in-browser LLM for the workshop
 - [ ] Support calendar-bound windows
+- [ ] Add some metrics to the example.json
+- [ ] The likelihood select box should go to the failure page
+- [ ] Allow copying the JSON export
+- [ ] Allow directly saving the JSON export
+- [ ] Allow multiple consequences
+- [ ] The "Add New" button should be after the current list (e.g. system, service, consumer, consumption)
 
 # Medium prio
 
