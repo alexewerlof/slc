@@ -379,19 +379,18 @@
             </div>
 
             <div v-if="selectedTab === 'Export'">
-                <article>
-                    <section>
-                        <div class="button-bar">
-                            <button @click="exportToJson()">JSON</button>
-                            <button @click="exportToYaml('yaml')">YAML</button>
-                            <button @click="clickInput('import-file-selector')">Import</button>
-                        </div>
-                        <input hidden type="file" @change="importFile($event)" id="import-file-selector" accept=".json">
-                        <div class="code block">
-                            <pre><code>{{ exportedCode }}</code></pre>
-                        </pre>
-                    </section>
-                </article>
+                <div class="block">
+                    <div class="button-bar">
+                        <button @click="exportToJson()">JSON</button>
+                        <button @click="exportToYaml('yaml')">YAML</button>
+                        <button @click="clickInput('import-file-selector')">Import</button>
+                    </div>
+                    <input hidden type="file" @change="importFile($event)" id="import-file-selector" accept=".json">
+                    <div class="code block">
+                        <pre id="exported-code"><code>{{ exportedCode }}</code></pre>
+                        <button @click="copy('exported-code')" type="button" title="Copy to clipboard">⎘</button>
+                    </pre>
+                </div>
             </div>
         </main>
         <feedback-blob-component prefill="Workshop"></feedback-blob-component>

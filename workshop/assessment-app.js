@@ -11,7 +11,7 @@ import SummaryView from '../views/summary-view.js'
 import { Assessment } from '../models/assessment.js'
 import { config } from '../config.js'
 import { dump } from '../vendor/js-yaml.js'
-import { loadJson, readTextFile } from '../lib/share.js'
+import { copyElementTextToClipboard, loadJson, readTextFile } from '../lib/share.js'
 import FeedbackBlobComponent from '../components/feedback-blob.js'
 
 const exampleJson = await loadJson('example.json')
@@ -64,6 +64,10 @@ export const app = createApp({
 
         clickInput(id) {
             document.getElementById(id).click()
+        },
+
+        async copy(elementId) {
+            return await copyElementTextToClipboard(elementId)
         }
     }
 })
