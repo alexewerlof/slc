@@ -325,7 +325,9 @@
                     <div class="button-bar">
                         <button @click="exportToJson()">JSON</button>
                         <button @click="exportToYaml('yaml')">YAML</button>
+                        <button @click="clickInput('import-file-selector')">Import</button>
                     </div>
+                    <input hidden type="file" @change="importFile($event)" id="import-file-selector" accept=".json">
                     <div class="code block">
                         <pre><code>{{ exportedCode }}</code></pre>
                     </pre>

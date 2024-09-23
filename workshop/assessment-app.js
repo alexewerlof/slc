@@ -1,4 +1,4 @@
-import { computed, createApp } from '../vendor/vue.js'
+import { createApp } from '../vendor/vue.js'
 import TabsComponent from '../components/tabs.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
@@ -8,12 +8,10 @@ import FailureView from '../views/failure-view.js'
 import RiskView from '../views/risk-view.js'
 import ServiceMetricView from '../views/service-metric-view.js'
 import SummaryView from '../views/summary-view.js'
-import { System } from '../models/system.js'
-import { Consumer } from '../models/consumer.js'
 import { Assessment } from '../models/assessment.js'
 import { config } from '../config.js'
 import { dump } from '../vendor/js-yaml.js'
-import { loadJson } from '../lib/share.js'
+import { loadJson, readTextFile } from '../lib/share.js'
 
 const exampleJson = await loadJson('example.json')
 
@@ -50,6 +48,20 @@ export const app = createApp({
             // const obj = JSON.parse(JSON.stringify(this.assessment))
             // this.exportedCode = dump(obj)
             this.exportedCode = dump(this.assessment.save())
+        },
+
+        async importFile($event) {
+            const fileContents = await readTextFile($event.target.files[0])
+            this.exportedCode = fileContents
+            try {
+                this.assessment = Assessment.load(JSON.parse(fileContents))
+            } catch (error) {
+                this.exportedCode = error
+            }
+        },
+
+        clickInput(id) {
+            document.getElementById(id).click()
         }
     }
 })
