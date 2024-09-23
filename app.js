@@ -14,7 +14,7 @@ import { Window } from './lib/window.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from './lib/fmt.js'
 import { inRange, inRangePosInt, isNum, isStr } from './lib/validation.js'
 import { trackEvent } from './lib/ga-utils.js'
-import { stateToUrl, urlToState } from './lib/share.js'
+import { copyElementTextToClipboard, stateToUrl, urlToState } from './lib/share.js'
 import { Budget } from './lib/budget.js'
 
 export const app = createApp({
@@ -235,8 +235,7 @@ export const app = createApp({
 
         async copy(elementId, label) {
             try {
-                var copyText = document.getElementById(elementId).innerText
-                await navigator.clipboard.writeText(copyText)
+                await copyElementTextToClipboard(elementId)
                 this.toastCaption = 'Copied to clipboard!'
                 trackEvent('copy', 'button', label)
             } catch(err) {
