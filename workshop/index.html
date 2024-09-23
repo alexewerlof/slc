@@ -322,8 +322,12 @@
         <div v-if="selectedTab === 'Export'">
             <article>
                 <section>
+                    <div class="button-bar">
+                        <button @click="exportToJson()">JSON</button>
+                        <button @click="exportToYaml('yaml')">YAML</button>
+                    </div>
                     <div class="code block">
-                        <pre><code>{{ JSON.stringify(assessment, null, 2) }}</code></pre>
+                        <pre><code>{{ exportedCode }}</code></pre>
                     </pre>
                 </section>
             </article>

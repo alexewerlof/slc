@@ -1,4 +1,4 @@
-import { createApp } from '../vendor/vue.js'
+import { computed, createApp } from '../vendor/vue.js'
 import TabsComponent from '../components/tabs.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
@@ -12,6 +12,7 @@ import { System } from '../models/system.js'
 import { Consumer } from '../models/consumer.js'
 import { Assessment } from '../models/assessment.js'
 import { config } from '../config.js'
+import { dump } from '../vendor/js-yaml.js'
 
 export const app = createApp({
     data() {
@@ -58,10 +59,11 @@ export const app = createApp({
 
         const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary', 'Export']
         return {
-            selectedTab: tabNames[5],
+            selectedTab: tabNames[7],
             tabNames,
             assessment,
             config,
+            exportedCode: '-',
         }
     },
     components: {
@@ -75,4 +77,14 @@ export const app = createApp({
         ShowHideComponent,
         ExtLink,
     },
+    methods: {
+        exportToJson() {
+            this.exportedCode = JSON.stringify(this.assessment, null, 2)
+        },
+        
+        exportToYaml() {
+            const obj = JSON.parse(JSON.stringify(this.assessment))
+            this.exportedCode = dump(obj)
+        }
+    }
 })

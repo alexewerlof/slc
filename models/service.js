@@ -120,10 +120,11 @@ export class Service {
 
     toJSON() {
         return osloObj('Service', osloMetadata(
-            namify([this.system.displayName, this.displayName].join('-')),
+            namify(this.system.displayName, this.displayName),
             this.displayName,
         ), {
             description: this.description,
+            failures: this.failures,
             metrics: this.metrics,
         })
     }

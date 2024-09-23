@@ -2,6 +2,7 @@ import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
 import { Service } from './service.js'
 import { Consumption } from './consumption.js'
+import { osloObj } from '../lib/oslo.js'
 
 // If a certain service fails, what activities will it impact and how?
 export class Failure {
@@ -49,5 +50,17 @@ export class Failure {
 
     toString() {
         return `${this.consumption} ⇸ ${this.service} ⇒ ${this.symptom}`
+    }
+
+    toJSON() {
+        return osloObj('Failure', undefined, {
+            // service: this.service,
+            // consumption: this.consumption,
+            symptom: this.symptom,
+            consequence: this.consequence,
+            businessImpact: this.businessImpact,
+            likelihood: this.likelihood,
+            impactLevel: this.impactLevel,
+        })
     }
 }
