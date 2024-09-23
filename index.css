@@ -30,6 +30,21 @@ body {
     margin: var(--gap2) 0;
 }
 
+.block-h {
+    display: block;
+    margin: var(--gap) 0;
+}
+
+.block-v {
+    display: block;
+    margin: 0 var(--gap);
+}
+
+.block-both {
+    display: block;
+    margin: var(--gap) var(--gap);
+}
+
 .block p {
     margin-block: 0.25em 0;
 }

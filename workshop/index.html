@@ -63,39 +63,7 @@
                 <tabs-component
                 v-model:selected-tab="selectedTab"
                 :tab-names="tabNames"></tabs-component>
-            </header>
-            <article>
-                <section>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th v-for="service of assessment.allServices" :title="service.system.description">
-                                    {{ service.system.displayName }}
-                                </th>
-                            </tr>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th v-for="service of assessment.allServices" :title="service.description">
-                                    {{ service.displayName }}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="consumption of assessment.allConsumptions">
-                                <th :title="consumption.consumer.description">{{ consumption.consumer.displayName }}</th>
-                                <th :title="consumption.description">{{ consumption.displayName }}</th>
-                                <td v-for="service of assessment.allServices">
-                                    {{ assessment.getDependencyCount(consumption, service) }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-            </article>
-            
+            </header>            
             <div v-if="selectedTab === 'Start'">
                 <section>
                     <h1>Intro</h1>
@@ -207,6 +175,36 @@
             </div>
 
             <div v-if="selectedTab === 'Consumers'">
+                <div class="block-both">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th v-for="service of assessment.allServices" :title="service.system.description">
+                                    {{ service.system.displayName }}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th v-for="service of assessment.allServices" :title="service.description">
+                                    {{ service.displayName }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="consumption of assessment.allConsumptions">
+                                <th :title="consumption.consumer.description">{{ consumption.consumer.displayName }}</th>
+                                <th :title="consumption.description">{{ consumption.displayName }}</th>
+                                <td v-for="service of assessment.allServices">
+                                    {{ assessment.getDependencyCount(consumption, service) ? '✅' : '❌' }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <div class="annotated">
                     <div class="annotated__controls">
                         <div class="button-bar">
@@ -239,6 +237,35 @@
             </div>
 
             <div v-if="selectedTab === 'Failures'">
+                <div class="block-both">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th v-for="service of assessment.allServices" :title="service.system.description">
+                                    {{ service.system.displayName }}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th v-for="service of assessment.allServices" :title="service.description">
+                                    {{ service.displayName }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="consumption of assessment.allConsumptions">
+                                <th :title="consumption.consumer.description">{{ consumption.consumer.displayName }}</th>
+                                <th :title="consumption.description">{{ consumption.displayName }}</th>
+                                <td v-for="service of assessment.allServices">
+                                    {{ assessment.getDependencyCount(consumption, service) }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="annotated">
                     <div class="annotated__controls">
                         
