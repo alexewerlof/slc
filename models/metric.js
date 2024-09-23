@@ -1,6 +1,9 @@
 import { isInstance } from '../lib/validation.js'
 import { Service } from './service.js'
 import { Failure } from './failure.js'
+import { config } from '../config.js'
+
+const lowestPriority = config.likelihood.possibleValues.length * config.impactLevel.possibleValues.length
 
 export class Metric {
     constructor(service, displayName = '', description = '', ...measuredFailures) {
@@ -37,6 +40,10 @@ export class Metric {
             }
             this.measuredFailures.splice(index, 1)
         }
+    }
+
+    get priority() {
+        return this.measuredFailures.reduce((acc, failure) => acc - failure.priority, lowestPriority)
     }
 
     toString() {

@@ -1,6 +1,49 @@
 <div>
     <div class="annotated">
         <div class="annotated__controls">
+            <h2>Service</h2>
+            <p>{{ metric.service }}</p>
+            <h2>Symptoms</h2>
+            <table>
+                <thead>
+                    <th></th>
+                    <th>Symptom</th>
+                    <th>Consumption</th>
+                </thead>
+                <tbody>
+                    <tr v-for="failure in metric.service.failuresByRisk">
+                        <td>
+                            <input
+                                type="checkbox"
+                                :checked="metric.measuresFailure(failure)"
+                                @change="$event => metric.setFailure(failure, $event.target.checked)">
+                        </td>
+                        <td>
+                            {{ failure.symptom }}
+                        </td>
+                        <td>
+                            {{ failure.consumption }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="annotated__help">
+            <p>
+                Select all risks that this metric can help you identify.
+            </p>
+            <p>
+                The goal is to be be on top of the risks meaning: instead of relying on manual detection (e.g. consumers calling you to report a problem), you can use this metric to detect the problem as soon as possible.
+            </p>
+            <p>
+                The metrics detect symptoms.
+                The symptoms are ordered by their associated risk impact and likelihood.
+            </p>
+            <p>
+                You can capture multiple symptoms with the same metric.
+            </p>
+        </div>
+        <div class="annotated__controls">
             <h2>Metric Name</h2>
             <input type="text" v-model="metric.displayName">
             <h2>Description</h2>
@@ -19,33 +62,6 @@
                 <li>What is a good data point for the metric</li>
                 <li>etc.</li>
             </ul>
-        </div>
-        <div class="annotated__controls">
-            <h2>Symptoms</h2>
-            <div v-for="failure in metric.service.failuresByRisk">
-                <label>
-                    <input
-                        type="checkbox"
-                        :checked="metric.measuresFailure(failure)"
-                        @change="$event => metric.setFailure(failure, $event.target.checked)">
-                    {{ failure }}
-                </label>
-            </div>
-        </div>
-        <div class="annotated__help">
-            <p>
-                Select all risks that this metric can help you identify.
-            </p>
-            <p>
-                The goal is to be be on top of the risks meaning: instead of relying on manual detection (e.g. consumers calling you to report a problem), you can use this metric to detect the problem as soon as possible.
-            </p>
-            <p>
-                The metrics detect symptoms.
-                The symptoms are ordered by their associated risk impact and likelihood.
-            </p>
-            <p>
-                You can capture multiple symptoms with the same metric.
-            </p>
         </div>
 
         <div class="annotated__controls">
