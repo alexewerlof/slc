@@ -1,10 +1,13 @@
 import { namify } from '../lib/fmt.js'
+import { icon } from '../lib/icons.js'
 import { osloMetadata, osloObj } from '../lib/oslo.js'
 import { isInstance } from '../lib/validation.js'
 import { Consumption } from './consumption.js'
 import { Failure } from './failure.js'
 import { Metric } from './metric.js'
 import { System } from './system.js'
+
+const scopeIcon = icon('scope')
 
 export class Service {
     constructor(system, displayName = '', description = '') {
@@ -115,7 +118,7 @@ export class Service {
     }
 
     toString() {
-        return `${this.system.displayName}::${this.displayName}`
+        return `${this.system.displayName}${scopeIcon}${this.displayName}`
     }
 
     toJSON() {

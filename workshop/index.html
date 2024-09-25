@@ -312,7 +312,7 @@
                         </div>
                         <div class="annotated__help">
                             <p>
-                                To identify service failures, first you need to declare which consumer::consumption
+                                To identify service failures, first you need to declare which consumption
                                 depends on this service.
                                 That is is because the failures are tied to the consumption.
                             </p>
@@ -398,9 +398,18 @@
             <div v-if="selectedTab === 'Export'">
                 <div class="block">
                     <div class="button-bar">
-                        <button @click="exportToJson()">JSON</button>
-                        <button @click="exportToYaml('yaml')">YAML</button>
-                        <button @click="clickInput('import-file-selector')">Import</button>
+                        <button @click="exportToJson()">
+                            {{ icon('export')}}
+                            JSON
+                        </button>
+                        <button @click="exportToYaml('yaml')">
+                            {{ icon('export')}}
+                            YAML
+                        </button>
+                        <button @click="clickInput('import-file-selector')">
+                            {{ icon('import')}}
+                            Import
+                        </button>
                     </div>
                     <input hidden type="file" @change="importFile($event)" id="import-file-selector" accept=".json">
                     <div class="code block">

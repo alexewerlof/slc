@@ -1,6 +1,9 @@
+import { icon } from '../lib/icons.js'
 import { osloMetadata, osloObj } from '../lib/oslo.js'
 import { isInstance } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
+
+const scopeIcon = icon('scope')
 
 export class Consumption {
     constructor(consumer, displayName = '', description = '') {
@@ -30,7 +33,7 @@ export class Consumption {
     }
 
     toString() {
-        return `${this.consumer.displayName}::${this.displayName}`
+        return `${this.consumer.displayName}${scopeIcon}${this.displayName}`
     }
 
     toJSON() {
