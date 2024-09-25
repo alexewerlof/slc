@@ -56,6 +56,9 @@ export class Service {
             return false
         }
         this.failures.splice(index, 1)
+        for (const metric of this.metrics) {
+            metric.unLinkFailure(failure)
+        }
         return true
     }
 

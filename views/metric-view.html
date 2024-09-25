@@ -15,7 +15,7 @@
                             <label>
                             <input
                                 type="checkbox"
-                                :checked="metric.measuresFailure(failure)"
+                                :checked="metric.isFailureLinked(failure)"
                                 @change="$event => metric.setFailure(failure, $event.target.checked)">
 
                                 {{ failure.symptom }}
@@ -27,7 +27,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div v-if="metric.measuredFailures.length === 0" class="error block">
+            <div v-if="metric.linkedFailures.length === 0" class="error block">
                 <p>
                     This metric is not tied to any failure.
                     A good service level indicator ties to at least one possible failure symptom.

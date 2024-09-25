@@ -8,44 +8,58 @@ const lowestPriority = config.likelihood.possibleValues.length * config.impactLe
 const metricIcon = icon('metric')
 
 export class Metric {
-    constructor(service, displayName = '', description = '', ...measuredFailures) {
+    constructor(service, displayName = '', description = '', ...linkedFailures) {
         if (!isInstance(service, Service)) {
             throw new Error(`Expected an instance of Service. Got ${service}`)
         }
         this.service = service
         this.displayName = displayName
         this.description = description
-        for (const failure of measuredFailures) {
+        for (const failure of linkedFailures) {
             if (!isInstance(failure, Failure)) {
                 throw new Error(`Expected failures to be instances of Failure. Got ${failure}`)
             }
         }
-        this.measuredFailures = measuredFailures
+        this.linkedFailures = linkedFailures
     }
 
-    measuresFailure(failure) {
+    isFailureLinked(failure) {
         if (!isInstance(failure, Failure)) {
             throw new Error(`Expected an instance of Failure. Got ${failure}`)
         }
-        return this.measuredFailures.includes(failure)
+        return this.linkedFailures.includes(failure)
+    }
+
+    linkFailure(failure) {
+        if (!isInstance(failure, Failure)) {
+            throw new Error(`Expected an instance of Failure. Got ${failure}`)
+        }
+        if (!this.isFailureLinked(failure)) {
+            this.linkedFailures.push(failure)
+        }
+    }
+
+    unLinkFailure(failure) {
+        if (!isInstance(failure, Failure)) {
+            throw new Error(`Expected an instance of Failure. Got ${failure}`)
+        }
+        const index = this.linkedFailures.indexOf(failure)
+        if (index === -1) {
+            throw new ReferenceError(`Failure ${failure} not found in metric ${this}`)
+        }
+        this.linkedFailures.splice(index, 1)
     }
 
     setFailure(failure, value) {
         if (value) {
-            if (!this.measuresFailure(failure)) {
-                this.measuredFailures.push(failure)
-            }
+            return this.linkFailure(failure)
         } else {
-            const index = this.measuredFailures.indexOf(failure)
-            if (index === -1) {
-                throw new ReferenceError(`Failure ${failure} not found in metric ${this}`)
-            }
-            this.measuredFailures.splice(index, 1)
+            return this.unLinkFailure(failure)
         }
     }
 
     get priority() {
-        return this.measuredFailures.reduce((acc, failure) => acc - failure.priority, lowestPriority)
+        return this.linkedFailures.reduce((acc, failure) => acc - failure.priority, lowestPriority)
     }
 
     toString() {
@@ -68,13 +82,13 @@ export class Metric {
         return {
             displayName: this.displayName,
             description: this.description,
-            measuredFailuresIndex: this.measuredFailures.map(failure => failure.index),
+            linkedFailuresIndex: this.linkedFailures.map(failure => failure.index),
         }
     }
 
     static load(service, metricObj) {
-        const measuredFailures = metricObj.measuredFailuresIndex.map(index => service.failures[index])
-        const newMetric = new Metric(service, metricObj.displayName, metricObj.description, ...measuredFailures)
+        const linkedFailures = metricObj.linkedFailuresIndex.map(index => service.failures[index])
+        const newMetric = new Metric(service, metricObj.displayName, metricObj.description, ...linkedFailures)
         return newMetric
     }
 }
