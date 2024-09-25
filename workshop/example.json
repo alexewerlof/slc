@@ -203,7 +203,9 @@
             {
               "displayName": "download does not break for an already established session",
               "description": "The manual files can be large. if the download is interrupted for any reasons, we may want to look into it.",
-              "measuredFailuresIndex": []
+              "measuredFailuresIndex": [
+                0
+              ]
             }
           ]
         },
