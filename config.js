@@ -397,11 +397,11 @@ export const config = fz({
         // ▢◻▣▷◇◈○◌◯◎◉⬡＋－🔎︎
         workshop: '⯐',
         feedback: '🗩',
-        from: '::',
+        scope: '::',
         edit: '✎',
         system: '▢',
         service: '⬡',
-        consumer: '▷',
+        consumer: '◇',
         consumption: '→',
         failure: '⇸',
         risk: '⚠',
