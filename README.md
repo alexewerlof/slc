@@ -54,6 +54,11 @@ I faced when using [uptime.is](https://uptime.is) with these preconditions:
 
 And here we are.
 
+## Thanks
+
+* [iconoir](https://iconoir.com/) for open source icons.
+* [Volvo Cars](https://www.volvocars.com/) employees for the feedback on the early versions of the product.
+
 ---
 
 Made by [Alex Ewerlöf](https://www.alexewerlof.com)
