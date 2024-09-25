@@ -1,5 +1,4 @@
 import { createApp } from '../vendor/vue.js'
-import IconComponent from '../components/icon.js'
 import TabsComponent from '../components/tabs.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
@@ -14,6 +13,7 @@ import { config } from '../config.js'
 import { dump } from '../vendor/js-yaml.js'
 import { copyElementTextToClipboard, loadJson, readTextFile } from '../lib/share.js'
 import FeedbackBlobComponent from '../components/feedback-blob.js'
+import { icon } from '../lib/icons.js'
 
 const exampleJson = await loadJson('example.json')
 
@@ -36,13 +36,14 @@ export const app = createApp({
         RiskView,
         ServiceMetricView,
         SummaryView,
-        IconComponent,
         FeedbackBlobComponent,
         TabsComponent,
         ShowHideComponent,
         ExtLink,
     },
     methods: {
+        icon,
+
         exportToJson() {
             // this.exportedCode = JSON.stringify(this.assessment, null, 2)
             this.exportedCode = JSON.stringify(this.assessment.save(), null, 2)

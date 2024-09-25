@@ -4,8 +4,8 @@ import { Alert } from '../models/alert.js'
 import { config } from '../config.js'
 import { percL10n } from '../lib/fmt.js'
 import ExtLink from '../components/ext-link.js'
-import IconComponent from '../components/icon.js'
 import ShowHideComponent from '../components/show-hide.js'
+import { icon } from '../lib/icons.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -22,10 +22,10 @@ export default {
     },
     methods: {
         percL10n,
+        icon,
     },
     components: {
         ExtLink,
-        IconComponent,
         ShowHideComponent,
     },
 }

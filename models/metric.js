@@ -2,8 +2,10 @@ import { isInstance } from '../lib/validation.js'
 import { Service } from './service.js'
 import { Failure } from './failure.js'
 import { config } from '../config.js'
+import { icon } from '../lib/icons.js'
 
 const lowestPriority = config.likelihood.possibleValues.length * config.impactLevel.possibleValues.length
+const metricIcon = icon('metric')
 
 export class Metric {
     constructor(service, displayName = '', description = '', ...measuredFailures) {
@@ -47,7 +49,7 @@ export class Metric {
     }
 
     toString() {
-        return `${ this.service } ∡ ${this.displayName}`
+        return `${ this.service } ${metricIcon} ${this.displayName}`
     }
 
     remove() {

@@ -40,11 +40,11 @@
         <div class="annotated__controls">
             <div class="button-bar">
                 <button @click="failure.service.addNewFailure(failure.consumption)">
-                    <icon-component name="add"></icon-component>
+                    {{ icon('add') }} 
                     Add New Failure
                 </button>
                 <button class="danger" @click="failure.remove()">
-                    <icon-component name="remove"></icon-component>
+                    {{ icon('remove') }} 
                     Remove Failure
                 </button>
             </div>

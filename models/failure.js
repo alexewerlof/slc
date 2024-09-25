@@ -3,6 +3,9 @@ import { config } from '../config.js'
 import { Service } from './service.js'
 import { Consumption } from './consumption.js'
 import { osloObj } from '../lib/oslo.js'
+import { icon } from '../lib/icons.js'
+
+const failureIcon = icon('failure')
 
 // If a certain service fails, what activities will it impact and how?
 export class Failure {
@@ -49,7 +52,7 @@ export class Failure {
     }
 
     toString() {
-        return `${this.consumption} ⇸ ${this.service} ⇒ ${this.symptom}`
+        return `${this.consumption} ${failureIcon} ${this.service} ⇒ ${this.symptom}`
     }
 
     toJSON() {

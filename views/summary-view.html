@@ -1,25 +1,55 @@
 <article>
     <section>
         <h1>Summary</h1>
-        <h2>Services</h2>
+        <h2>
+            {{ icon('system') }}
+            Systems
+        </h2>
+        <ul>
+            <li v-for="system of assessment.systems">
+                {{ system }}
+            </li>
+        </ul>
+        <h2>
+            {{ icon('service') }}
+            Services
+        </h2>
         <ul>
             <li v-for="service of assessment.allServices">
                 {{ service }}
             </li>
         </ul>
-        <h2>Consumptions</h2>
+        <h2>
+            {{ icon('consumer') }}
+            Consumers
+        </h2>
+        <ul>
+            <li v-for="consumer of assessment.consumers">
+                {{ consumer }}
+            </li>
+        </ul>
+        <h2>
+            {{ icon('consumption') }}
+            Consumptions
+        </h2>
         <ul>
             <li v-for="consumption of assessment.allConsumptions">
                 {{ consumption }}
             </li>
         </ul>
-        <h2>Failures</h2>
+        <h2>
+            {{ icon('failure') }}
+            Failures
+        </h2>
         <ul>
             <li v-for="failure of assessment.allFailures">
                 {{ failure }} ({{ failure.likelihood }}, {{ failure.impactLevel }})
             </li>
         </ul>
-        <h2>Metrics</h2>
+        <h2>
+            {{ icon('metric') }}
+            Metrics
+        </h2>
         <div v-for="service of assessment.allServices">
             <h3>{{ service }}</h3>
             <ul>

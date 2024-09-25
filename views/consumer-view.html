@@ -34,10 +34,10 @@
             </div>
             <div class="button-bar">
                 <button @click="consumer.addNewConsumption()">
-                    <icon-component name="add"></icon-component>
+                    {{ icon('add') }} 
                     Add New Consumption</button>
                 <button class="danger" @click="consumer.remove()">
-                    <icon-component name="remove"></icon-component>
+                    {{ icon('remove') }} 
                     Remove Consumer
                 </button>
             </div>

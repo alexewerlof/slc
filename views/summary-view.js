@@ -6,7 +6,7 @@ import { numL10n, percL10n } from '../lib/fmt.js'
 import ServiceView from './service-view.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
-import IconComponent from '../components/icon.js'
+import { icon } from '../lib/icons.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -22,12 +22,12 @@ export default {
         },
     },
     methods: {
+        icon,
         percL10n,
         numL10n,
     },
     components: {
         ExtLink,
-        IconComponent,
         ServiceView,
         ShowHideComponent,
     },

@@ -38,11 +38,11 @@
             </div>
             <div class="button-bar">
                 <button @click="system.addNewService()">
-                    <icon-component name="add"></icon-component>
+                    {{ icon('add') }} 
                     Add New Service
                 </button>
                 <button class="danger" @click="system.remove()">
-                    <icon-component name="remove"></icon-component>
+                    {{ icon('remove') }} 
                     Remove System
                 </button>
             </div>

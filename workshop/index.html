@@ -32,17 +32,23 @@
         <aside class="sidebar">
             <header>
                 <h1>
-                    <icon-component name="workshop"></icon-component>
-                    Workshop <sup><small>alpha</small></sup></h1>
+                    {{ icon('workshop') }}
+                    Workshop <sup title="Alpha testing edition"><small>α</small></sup></h1>
             </header>
             <nav>
                 <h2>Provider</h2>
                 <ul>
                     <li v-for="system of assessment.systems">
-                        <span :title="system.description">{{ system.displayName }}</span>
+                        <span :title="system.description">
+                            {{ icon('system') }}
+                            {{ system.displayName }}
+                        </span>
                         <ul>
                             <li v-for="service of system.services">
-                                <span :title="service.description">{{ service.displayName }}</span>
+                                <span :title="service.description">
+                                    {{ icon('service') }}
+                                    {{ service.displayName }}
+                                </span>
                             </li>
                         </ul>
                     </li>
@@ -50,10 +56,16 @@
                 <h2>Consumers</h2>
                 <ul>
                     <li v-for="consumer of assessment.consumers">
-                        <span :title="consumer.description">{{ consumer.displayName }}</span>
+                        <span :title="consumer.description">
+                            {{ icon('consumer') }}
+                            {{ consumer.displayName }}
+                        </span>
                         <ul>
                             <li v-for="consumption of consumer.consumptions">
-                                <span :title="consumption.description">{{ consumption.displayName }}</span>
+                                <span :title="consumption.description">
+                                    {{ icon('consumption') }}
+                                    {{ consumption.displayName }}
+                                </span>
                             </li>
                         </ul>
                     </li>
@@ -155,7 +167,7 @@
                     <div class="annotated__controls">
                         <div class="button-bar">
                             <button @click="assessment.addNewSystem()">
-                                <icon-component name="add"></icon-component>
+                                {{ icon('add') }} 
                                 Add New System
                             </button>
                         </div>        
@@ -205,7 +217,7 @@
                                 <th :title="consumption.consumer.description">{{ consumption.consumer.displayName }}</th>
                                 <th :title="consumption.description">{{ consumption.displayName }}</th>
                                 <td v-for="service of assessment.allServices">
-                                    {{ assessment.getDependencyCount(consumption, service) ? '✅' : '❌' }}
+                                    {{ assessment.getDependencyCount(consumption, service) ? '☑' : '◻' }}
                                 </td>
                             </tr>
                         </tbody>
@@ -216,7 +228,7 @@
                     <div class="annotated__controls">
                         <div class="button-bar">
                             <button @click="assessment.addNewConsumer()">
-                                <icon-component name="add"></icon-component>
+                                {{ icon('add') }} 
                                 Add New Consumer
                             </button>
                         </div>

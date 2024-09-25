@@ -23,13 +23,13 @@
                     {{ failure.consequence }}
                 </span>
                 <br>
-                &nbsp;<span class="punct">↳</span>
+                &nbsp;<span class="punct">{{ icon('remove') }}</span>
                 Because
                 <span title="Symptom" class="exprs">
                     {{ failure.symptom }}
                 </span>
                 <br>
-                &nbsp;&nbsp;<span class="punct">↳</span>
+                &nbsp;&nbsp;<span class="punct">{{ icon('remove') }}</span>
                 When
                 <span title="Consumer" class="exprs">
                     {{ failure.consumption.consumer.displayName }}
@@ -39,7 +39,7 @@
                     {{ failure.consumption.displayName }}
                 </span>
                 <br>
-                &nbsp;&nbsp;&nbsp;<span class="punct">↳</span>
+                &nbsp;&nbsp;&nbsp;<span class="punct">{{ icon('remove') }}</span>
                 Using
                 <span title="Service" class="exprs">
                     {{ failure.service.displayName }}

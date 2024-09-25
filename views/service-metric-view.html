@@ -5,66 +5,60 @@
             <h2>Service</h2>
             <p>{{ service }}</p>
             <h2>Failures</h2>
-            <ul>
-                <li v-for="failure of service.failures">
-                    <code>
-                        {{ failure.displayName }}
-                        <span title="Consequence" class="exprs">
-                            {{ failure.symptom }}
-                        </span>
-                        <br>
-                        <span class="punct">↳</span>
-                        When
-                        <span title="Service" class="exprs">
-                            {{ failure.service.displayName }}
-                        </span>
-                        <br>
-                        &nbsp;
-                        <span class="punct">↳</span>
-                        Provided by
-                        <span title="System" class="exprs">
-                            {{ failure.service.system.displayName }}
-                        </span>
-                        <br>
-                        &nbsp;&nbsp;
-                        <span class="punct">↳</span>
-                        Is used by
-                        <span title="Consumer" class="exprs">
-                            {{ failure.consumption.consumer.displayName }}
-                        </span>
-                        <br>
-                        &nbsp;&nbsp;&nbsp;
-                        <span class="punct">↳</span>
-                        In order to
-                        <span title="Consumption" class="exprs">
-                            {{ failure.consumption.displayName }}
-                        </span>
-                        <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <span class="punct">↳</span>
-                        With the consequence of
-                        <span title="Consequence" class="exprs">
-                            {{ failure.consequence }}
-                        </span>
-                        <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span class="punct">↳</span>
-                        Leading to
-                        <span title="Business Impact" class="exprs">
-                            {{ failure.businessImpact }}
-                        </span>
-                        <span class="punct"> (</span>
-                        <span title="Impact Level" class="exprs">
-                            {{ failure.impactLevel }}
-                        </span>
-                        impact<span class="punct">, </span>
-                        <span title="Likelihood" class="exprs">
-                            {{ failure.likelihood }}
-                        </span>
-                        likelihood<span class="punct">)</span>
-                    </code>
-                </li>
-            </ul>
+            <div v-for="failure of service.failures">
+                <h3>{{ failure.symptom }}</h3>
+                <code>
+                    <span class="punct">{{ icon('remove') }}</span>
+                    When
+                    <span title="Service" class="exprs">
+                        {{ failure.service.displayName }}
+                    </span>
+                    <br>
+                    &nbsp;
+                    <span class="punct">{{ icon('remove') }}</span>
+                    Provided by
+                    <span title="System" class="exprs">
+                        {{ failure.service.system.displayName }}
+                    </span>
+                    <br>
+                    &nbsp;&nbsp;
+                    <span class="punct">{{ icon('remove') }}</span>
+                    Is used by
+                    <span title="Consumer" class="exprs">
+                        {{ failure.consumption.consumer.displayName }}
+                    </span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;
+                    <span class="punct">{{ icon('remove') }}</span>
+                    In order to
+                    <span title="Consumption" class="exprs">
+                        {{ failure.consumption.displayName }}
+                    </span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="punct">{{ icon('remove') }}</span>
+                    With the consequence of
+                    <span title="Consequence" class="exprs">
+                        {{ failure.consequence }}
+                    </span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="punct">{{ icon('remove') }}</span>
+                    Leading to
+                    <span title="Business Impact" class="exprs">
+                        {{ failure.businessImpact }}
+                    </span>
+                    <span class="punct"> (</span>
+                    <span title="Impact Level" class="exprs">
+                        {{ failure.impactLevel }}
+                    </span>
+                    impact<span class="punct">, </span>
+                    <span title="Likelihood" class="exprs">
+                        {{ failure.likelihood }}
+                    </span>
+                    likelihood<span class="punct">)</span>
+                </code>
+            </div>
             <div v-if="service.failures.length === 0" class="error block">
                 <p>
                     You have not identified any failures for this service.
@@ -92,7 +86,7 @@
         <div class="annotated__controls">
             <div class="button-bar">
                 <button @click="service.addNewMetric()">
-                    <icon-component name="add"></icon-component>
+                    {{ icon('add') }} 
                     Add New Metric
                 </button>
             </div>

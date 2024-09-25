@@ -7,7 +7,7 @@ import AlertView from './alert-view.js'
 import PercentageOverviewComponent from '../components/percentage-overview.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
-import IconComponent from '../components/icon.js'
+import { icon } from '../lib/icons.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -23,13 +23,13 @@ export default {
         },
     },
     methods: {
+        icon,
         percL10n,
         numL10n,
     },
     components: {
         AlertView,
         ExtLink,
-        IconComponent,
         PercentageOverviewComponent,
         ShowHideComponent,
     },
