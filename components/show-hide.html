@@ -1,6 +1,8 @@
 <div :class="{ 'show-hide-component': true, 'show-hide-component--visible': isVisible }">
-    <div @click="toggle()" class="show-hide-component__title" >
-        <span class="show-hide-component__icon">{{ icon }}</span> {{ title }} {{ name }}
+    <div @click="toggle()" class="show-hide-component__header" >
+        <span class="show-hide-component__icon">{{ icon }}</span>
+        <span class="show-hide-component__title">{{ title }}</span>
+        <span class="show-hide-component__name">{{ name }}</span>
     </div>
     <transition>
         <div v-show="isVisible" class="show-hide-component__contents">

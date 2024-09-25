@@ -4,19 +4,28 @@
     box-shadow: -1px -1px 7px 0px var(--background-darker);
 }
 
-.show-hide-component--visible .show-hide-component__title {
+.show-hide-component--visible .show-hide-component__header {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.show-hide-component__title {
+.show-hide-component__header {
     border-radius: var(--bradius);
     background-color: var(--primary-color);
     color: var(--background-color);
     cursor: pointer;
-    font-size: 1.5em;
     font-weight: 600;
     padding: var(--gap);
+}
+
+.show-hide-component__title {
+    font-weight: 600;
+    font-family: var(--title-font-family);
+    margin-left: 0.4em;
+}
+
+.show-hide-component__name {
+    padding-left: 0.4em;
 }
 
 .show-hide-component__icon {
