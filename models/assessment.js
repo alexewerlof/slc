@@ -23,6 +23,10 @@ export class Assessment {
         return this.allServices.flatMap(service => service.failures)
     }
 
+    get allMetrics() {
+        return this.allServices.flatMap(service => service.metrics)
+    }
+
     getRisks(likelihood, impactLevel) {
         if (!config.likelihood.possibleValues.includes(likelihood)) {
             throw new RangeError(`Expected likelihood to be one of ${config.likelihood.possibleValues}. Got ${likelihood}`)

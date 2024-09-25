@@ -50,18 +50,10 @@
             {{ icon('metric') }}
             Metrics
         </h2>
-        <div v-for="service of assessment.allServices">
-            <h3>{{ service }}</h3>
-            <ul>
-                <li v-for="metric of service.metrics">
+        <ul>
+            <li v-for="metric of assessment.allMetrics">
                     {{ metric }}
-                    <ol>
-                        <li v-for="failure of metric.measuredFailures">
-                            {{ failure }}
-                        </li>
-                    </ol>
-                </li>
-            </ul>
-        </div>
+            </li>
+        </ul>
     </section>
 </article>
