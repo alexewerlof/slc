@@ -13,6 +13,7 @@ import { config } from '../config.js'
 import { dump } from '../vendor/js-yaml.js'
 import { copyElementTextToClipboard, loadJson, readTextFile } from '../lib/share.js'
 import FeedbackBlobComponent from '../components/feedback-blob.js'
+import HeroComponent from '../components/hero.js'
 import { icon } from '../lib/icons.js'
 
 const exampleJson = await loadJson('example.json')
@@ -37,6 +38,7 @@ export const app = createApp({
         ServiceMetricView,
         SummaryView,
         FeedbackBlobComponent,
+        HeroComponent,
         TabsComponent,
         ShowHideComponent,
         ExtLink,
