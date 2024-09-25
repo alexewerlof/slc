@@ -1,10 +1,14 @@
 .annotated {
-    background-color: var(--background-darker);
+    background: linear-gradient(to right, var(--background-color) 50%, var(--background-darker) 50%);
+}
+
+.show-hide-component .annotated {
+    border-bottom-left-radius: var(--bradius);
+    border-bottom-right-radius: var(--bradius);
 }
 
 .annotated__controls {
     padding: var(--gap2);
-    background-color: var(--background-color);
 }
 
 .annotated__controls + .annotated__controls {

@@ -39,3 +39,7 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+.show-hide-component .show-hide-component {
+    margin: var(--gap3);
+}
