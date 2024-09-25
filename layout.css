@@ -23,7 +23,11 @@
 
 .sidebar nav ul {
     padding: 0;
-    padding-left: 1em;
+    padding-left: 0.5em;
+}
+
+.sidebar nav li {
+    list-style: none;
 }
 
 .main-content {
