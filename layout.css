@@ -3,7 +3,7 @@
     margin: 0 auto;
 }
 
-.app {
+.main-container {
     display: flex;
     flex-direction: row;
     align-items: stretch;
@@ -30,7 +30,7 @@
     list-style: none;
 }
 
-.main-content {
+.main-container .main-content {
     flex-grow: 1; /* Allow the main content to grow and take up remaining space */
     padding: var(--gap);
     overflow: auto; /* Ensure content doesn't overflow */
