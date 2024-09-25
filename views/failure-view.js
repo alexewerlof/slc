@@ -4,6 +4,7 @@ import { config } from '../config.js'
 import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
+import IconComponent from '../components/icon.js'
 import { Failure } from '../models/failure.js'
 
 export default {
@@ -26,6 +27,7 @@ export default {
     },
     components: {
         ExtLink,
+        IconComponent,
         ShowHideComponent,
     },
 }

@@ -1,4 +1,5 @@
 import { createApp } from '../vendor/vue.js'
+import IconComponent from '../components/icon.js'
 import TabsComponent from '../components/tabs.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
@@ -35,6 +36,7 @@ export const app = createApp({
         RiskView,
         ServiceMetricView,
         SummaryView,
+        IconComponent,
         FeedbackBlobComponent,
         TabsComponent,
         ShowHideComponent,

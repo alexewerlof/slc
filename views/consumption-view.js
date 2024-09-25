@@ -5,6 +5,7 @@ import { numL10n, percL10n } from '../lib/fmt.js'
 import IndicatorView from './indicator-view.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
+import IconComponent from '../components/icon.js'
 import { Consumption } from '../models/consumption.js'
 
 export default {
@@ -26,6 +27,7 @@ export default {
     },
     components: {
         ExtLink,
+        IconComponent,
         IndicatorView,
         ShowHideComponent,
     },

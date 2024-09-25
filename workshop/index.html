@@ -32,6 +32,7 @@
         <aside class="sidebar">
             <header>
                 <h1>
+                    <icon-component name="workshop"></icon-component>
                     Workshop <sup><small>alpha</small></sup></h1>
             </header>
             <nav>
@@ -153,7 +154,10 @@
                 <div class="annotated">
                     <div class="annotated__controls">
                         <div class="button-bar">
-                            <button @click="assessment.addNewSystem()">Add New System</button>
+                            <button @click="assessment.addNewSystem()">
+                                <icon-component name="add"></icon-component>
+                                Add New System
+                            </button>
                         </div>        
                     </div>
                     <div class="annotated__help">
@@ -211,7 +215,10 @@
                 <div class="annotated">
                     <div class="annotated__controls">
                         <div class="button-bar">
-                            <button @click="assessment.addNewConsumer()">Add New Consumer</button>
+                            <button @click="assessment.addNewConsumer()">
+                                <icon-component name="add"></icon-component>
+                                Add New Consumer
+                            </button>
                         </div>
                     </div>
                     <div class="annotated__help">
@@ -355,9 +362,6 @@
             <div v-if="selectedTab === 'Metrics'">
                 <div class="annotated">
                     <div class="annotated__controls">
-                        <div class="button-bar">
-                            <button @click="assessment.addNewMetric()">Add a new Metric</button>
-                        </div>
                     </div>
                     <div class="annotated__help">
                         <p>

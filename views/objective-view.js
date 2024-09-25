@@ -7,6 +7,7 @@ import AlertView from './alert-view.js'
 import PercentageOverviewComponent from '../components/percentage-overview.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
+import IconComponent from '../components/icon.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -28,6 +29,7 @@ export default {
     components: {
         AlertView,
         ExtLink,
+        IconComponent,
         PercentageOverviewComponent,
         ShowHideComponent,
     },

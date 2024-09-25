@@ -4,6 +4,7 @@ import { Bound } from '../models/bound.js'
 import { config } from '../config.js'
 import { boundCaption, percL10n } from '../lib/fmt.js'
 import ExtLink from '../components/ext-link.js'
+import IconComponent from '../components/icon.js'
 import ShowHideComponent from '../components/show-hide.js'
 
 export default {
@@ -25,6 +26,7 @@ export default {
     },
     components: {
         ExtLink,
+        IconComponent,
         ShowHideComponent,
     },
 }

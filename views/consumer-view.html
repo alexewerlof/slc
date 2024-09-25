@@ -33,8 +33,13 @@
                 </p>
             </div>
             <div class="button-bar">
-                <button @click="consumer.addNewConsumption()">Add New Consumption</button>
-                <button class="danger" @click="consumer.remove()">Remove Consumer</button>
+                <button @click="consumer.addNewConsumption()">
+                    <icon-component name="add"></icon-component>
+                    Add New Consumption</button>
+                <button class="danger" @click="consumer.remove()">
+                    <icon-component name="remove"></icon-component>
+                    Remove Consumer
+                </button>
             </div>
         </div>
         <div class="annotated__help">

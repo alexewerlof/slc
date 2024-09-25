@@ -39,8 +39,14 @@
 
         <div class="annotated__controls">
             <div class="button-bar">
-                <button @click="failure.service.addNewFailure(failure.consumption)">Add New Failure</button>
-                <button class="danger" @click="failure.remove()">Remove Failure</button>
+                <button @click="failure.service.addNewFailure(failure.consumption)">
+                    <icon-component name="add"></icon-component>
+                    Add New Failure
+                </button>
+                <button class="danger" @click="failure.remove()">
+                    <icon-component name="remove"></icon-component>
+                    Remove Failure
+                </button>
             </div>
         </div>
         <div class="annotated__help">

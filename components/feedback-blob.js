@@ -1,9 +1,13 @@
 import { loadComponent } from '../lib/fetch-template.js'
+import IconComponent from './icon.js'
 
 const baseUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSc-CQudkQ9WLVmryi7Idlwv03M7s0Sy6DMlENzhUJesKb3kmg/viewform?usp=pp_url&entry.879776814=undefined'
 
 export default {
     template: await loadComponent(import.meta.url),
+    components: {
+        IconComponent,
+    },
     props: {
         caption: {
             type: String,

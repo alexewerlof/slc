@@ -37,8 +37,14 @@
                 </p>
             </div>
             <div class="button-bar">
-                <button @click="system.addNewService()">Add New Service</button>
-                <button class="danger" @click="system.remove()">Remove System</button>
+                <button @click="system.addNewService()">
+                    <icon-component name="add"></icon-component>
+                    Add New Service
+                </button>
+                <button class="danger" @click="system.remove()">
+                    <icon-component name="remove"></icon-component>
+                    Remove System
+                </button>
             </div>
         </div>
         <div class="annotated__help">
