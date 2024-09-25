@@ -8,42 +8,42 @@
             <div v-for="failure of service.failures">
                 <h3>{{ failure.symptom }}</h3>
                 <code>
-                    <span class="punct">{{ icon('remove') }}</span>
+                    <span class="punct">{{ icon('because') }}</span>
                     When
                     <span title="Service" class="exprs">
                         {{ failure.service.displayName }}
                     </span>
                     <br>
                     &nbsp;
-                    <span class="punct">{{ icon('remove') }}</span>
+                    <span class="punct">{{ icon('because') }}</span>
                     Provided by
                     <span title="System" class="exprs">
                         {{ failure.service.system.displayName }}
                     </span>
                     <br>
                     &nbsp;&nbsp;
-                    <span class="punct">{{ icon('remove') }}</span>
+                    <span class="punct">{{ icon('because') }}</span>
                     Is used by
                     <span title="Consumer" class="exprs">
                         {{ failure.consumption.consumer.displayName }}
                     </span>
                     <br>
                     &nbsp;&nbsp;&nbsp;
-                    <span class="punct">{{ icon('remove') }}</span>
+                    <span class="punct">{{ icon('because') }}</span>
                     In order to
                     <span title="Consumption" class="exprs">
                         {{ failure.consumption.displayName }}
                     </span>
                     <br>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <span class="punct">{{ icon('remove') }}</span>
+                    <span class="punct">{{ icon('because') }}</span>
                     With the consequence of
                     <span title="Consequence" class="exprs">
                         {{ failure.consequence }}
                     </span>
                     <br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span class="punct">{{ icon('remove') }}</span>
+                    <span class="punct">{{ icon('because') }}</span>
                     Leading to
                     <span title="Business Impact" class="exprs">
                         {{ failure.businessImpact }}
