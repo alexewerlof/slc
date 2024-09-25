@@ -373,7 +373,10 @@
     <div class="annotated">
         <div class="annotated__controls">
             <div class="button-bar">
-                <button class="danger" @click="alert.remove()">Remove Alert</button>
+                <button class="danger" @click="alert.remove()">
+                    {{ icon('remove') }}
+                    Remove Alert
+                </button>
             </div>        
         </div>
         <div class="annotated__help">

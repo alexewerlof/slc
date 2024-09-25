@@ -97,22 +97,27 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Use</td>
+                        <th>Use</th>
                         <td>When consumers perceive reliability by events</td>
                         <td>When consumers perceive reliability by time</td>
                     </tr>
                     <tr>
-                        <td>Counts</td>
+                        <th>Counts</th>
                         <td>Good events</td>
                         <td>Good timeslices</td>
                     </tr>
                     <tr>
-                        <td>Advantage</td>
+                        <th>Accuracy</th>
                         <td>More accurately adjust to the amount of load</td>
                         <td>More forgiving towards the negative impact of failed events</td>
                     </tr>
                     <tr>
-                        <td>Formula</td>
+                        <th>Advantage</th>
+                        <td>Auto-adjusts to changes (spikes and drops) in the load</td>
+                        <td>Predictable error budget</td>
+                    </tr>
+                    <tr>
+                        <th>Formula</th>
                         <td>
                             <math>
                                 <mrow>
@@ -290,7 +295,10 @@
     <div class="annotated">
         <div class="annotated__controls">
             <div class="button-bar">
-                <button @click="indicator.addNewObjective()">New Objective</button>
+                <button @click="indicator.addNewObjective()">
+                    {{ icon('add') }}
+                    Add New Objective
+                </button>
             </div>        
         </div>
         <div class="annotated__help">
