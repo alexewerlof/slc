@@ -4,10 +4,11 @@ code {
     font-family: 'Roboto Mono', monospace;
 }
 
-.block.code {
+.code.block {
     background-color: var(--background-darker);
     padding: 1em;
     position: relative;
+    overflow: auto;
 }
 
 .block.code button {
