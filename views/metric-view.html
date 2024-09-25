@@ -6,20 +6,20 @@
             <h2>Symptoms</h2>
             <table>
                 <thead>
-                    <th></th>
                     <th>Symptom</th>
                     <th>Consumption</th>
                 </thead>
                 <tbody>
                     <tr v-for="failure in metric.service.failuresByRisk">
                         <td>
+                            <label>
                             <input
                                 type="checkbox"
                                 :checked="metric.measuresFailure(failure)"
                                 @change="$event => metric.setFailure(failure, $event.target.checked)">
-                        </td>
-                        <td>
-                            {{ failure.symptom }}
+
+                                {{ failure.symptom }}
+                            </label>
                         </td>
                         <td>
                             {{ failure.consumption }}
