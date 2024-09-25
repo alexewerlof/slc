@@ -1,8 +1,8 @@
 import { createApp } from '../vendor/vue.js'
 import HelpComponent from '../components/help.js'
 import ExtLink from '../components/ext-link.js'
+import FooterComponent from '../components/footer.js'
 import SLFractionComponent from '../components/sl-fraction.js'
-
 import { searchTemplates } from './templates.js'
 import { isNum } from '../lib/validation.js'
 import { humanTimeSlices } from '../lib/time.js'
@@ -38,6 +38,7 @@ export const app = createApp({
     components: {
         HelpComponent,
         ExtLink,
+        FooterComponent,
         SLFractionComponent,
     },
 })

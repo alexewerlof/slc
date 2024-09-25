@@ -9,6 +9,7 @@ import AlertChartComponent from './components/alert-chart.js'
 import BurnRateComponent from './components/burn-rate.js'
 import ErrorBudgetComponent from './components/error-budget.js'
 import ExtLink from './components/ext-link.js'
+import FooterComponent from './components/footer.js'
 import HelpComponent from './components/help.js'
 import ShowHideComponent from './components/show-hide.js'
 import SLFractionComponent from './components/sl-fraction.js'
@@ -39,6 +40,7 @@ const app = createApp({
         BurnRateComponent,
         ErrorBudgetComponent,
         ExtLink,
+        FooterComponent,
         HelpComponent,
         ShowHideComponent,
         SLFractionComponent,

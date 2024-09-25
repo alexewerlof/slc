@@ -187,18 +187,6 @@ td button {
     width: 100%;
 }
 
-footer {
-    padding: 4em 0;
-    text-align: center;
-    font-size: 0.8em;
-    background-color: var(--background-darker);
-    color: var(--primary-color);
-}
-
-.footer__logo {
-    width: 10em;
-}
-
 .link-list {
     margin: 0;
     padding: 0;

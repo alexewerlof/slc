@@ -1,0 +1,12 @@
+footer {
+    border-top: var(--bthick) solid var(--divider-color);
+    padding: 4em 0;
+    text-align: center;
+    font-size: 0.9em;
+    background-color: var(--background-darker);
+    color: var(--primary-color);
+}
+
+.footer__logo {
+    width: 10em;
+}
