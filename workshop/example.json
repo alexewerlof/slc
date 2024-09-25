@@ -85,9 +85,26 @@
           ],
           "metrics": [
             {
-              "displayName": "",
-              "description": "",
-              "measuredFailuresIndex": []
+              "displayName": "lock status api returns status in less than 10 seconds",
+              "description": "Status check should be reasonably fast",
+              "measuredFailuresIndex": [
+                0
+              ]
+            },
+            {
+              "displayName": "lock command API response_code === 202",
+              "description": "Successfully registered the command",
+              "measuredFailuresIndex": [
+                1,
+                2
+              ]
+            },
+            {
+              "displayName": "lock status api response code between 200 to 399 (inclusive)",
+              "description": "lock status check does not fail",
+              "measuredFailuresIndex": [
+                0
+              ]
             }
           ]
         }
@@ -101,15 +118,6 @@
           "displayName": "Get car image API",
           "description": "Returns the car image, useful for rendering the website and the app that's used to control the car",
           "failures": [
-            {
-              "consumerIndex": 0,
-              "consumptionIndex": 0,
-              "symptom": "Image is missing",
-              "consequence": "User will get confused and leave the site",
-              "businessImpact": "Loss of potential customer",
-              "likelihood": "Possible",
-              "impactLevel": "Minor"
-            },
             {
               "consumerIndex": 1,
               "consumptionIndex": 0,
@@ -127,9 +135,42 @@
               "businessImpact": "User may call customer support",
               "likelihood": "Unlikely",
               "impactLevel": "Insignificant"
+            },
+            {
+              "consumerIndex": 0,
+              "consumptionIndex": 0,
+              "symptom": "Image is missing",
+              "consequence": "User will get confused and leave the site",
+              "businessImpact": "Loss of potential customer",
+              "likelihood": "Possible",
+              "impactLevel": "Minor"
             }
           ],
-          "metrics": []
+          "metrics": [
+            {
+              "displayName": "response_code != 4xx",
+              "description": "some image is returned",
+              "measuredFailuresIndex": [
+                0,
+                2
+              ]
+            },
+            {
+              "displayName": "user does not report the image",
+              "description": "image matches the model (we use user report as a check asking them \"report problems\")",
+              "measuredFailuresIndex": [
+                0,
+                2
+              ]
+            },
+            {
+              "displayName": "mobile app log indicating missing image",
+              "description": "For all other reasons that an image may be missing in the app",
+              "measuredFailuresIndex": [
+                1
+              ]
+            }
+          ]
         }
       ]
     },
@@ -151,7 +192,20 @@
               "impactLevel": "Moderate"
             }
           ],
-          "metrics": []
+          "metrics": [
+            {
+              "displayName": "for a valid car model, the manual response code < 400",
+              "description": "",
+              "measuredFailuresIndex": [
+                0
+              ]
+            },
+            {
+              "displayName": "download does not break for an already established session",
+              "description": "The manual files can be large. if the download is interrupted for any reasons, we may want to look into it.",
+              "measuredFailuresIndex": []
+            }
+          ]
         },
         {
           "displayName": "Car contract API",
@@ -176,7 +230,22 @@
               "impactLevel": "Major"
             }
           ],
-          "metrics": []
+          "metrics": [
+            {
+              "displayName": "for valid requests, contract retrieval API response code < 400",
+              "description": "",
+              "measuredFailuresIndex": [
+                0
+              ]
+            },
+            {
+              "displayName": "the user credentials on the contract should match the user credentials that is logged in (web/mobile)",
+              "description": "",
+              "measuredFailuresIndex": [
+                1
+              ]
+            }
+          ]
         }
       ]
     },
@@ -198,7 +267,15 @@
               "impactLevel": "Major"
             }
           ],
-          "metrics": []
+          "metrics": [
+            {
+              "displayName": "Sampled double-check with CMS on a given RUM page is a pass",
+              "description": "To ensure that we show the right specs, we randomly check 1% of page views using a JavaScript snippet that scrapes data from our website and sends it to a backend that's made for the purpose of cross-checking this data against what the data that should have been sent via CMS (note: this will also check the cache errors)",
+              "measuredFailuresIndex": [
+                0
+              ]
+            }
+          ]
         }
       ]
     }
