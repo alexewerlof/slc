@@ -121,43 +121,64 @@
                         <code>
                             <span class="exprs">Provider</span>
                             owns 1+
-                            <span class="exprs">System</span>
+                            <span class="punct">{{ icon('system') }}</span>
+                            <span class="exprs">System</span>.
                             <br>
+
+                            <span class="punct">{{ icon('system') }}</span>
                             <span class="exprs">System</span>
                             offers 1+
-                            <span class="exprs">Service</span>s.
+                            <span class="punct">{{ icon('service') }}</span>
+                            <span class="exprs">Service</span>(s).
                             <br>
+
+                            <span class="punct">{{ icon('consumer') }}</span>
                             <span class="exprs">Consumer</span>
                             has 1+
-                            <span class="exprs">Consumption</span>s
+                            <span class="punct">{{ icon('consumption') }}</span>
+                            <span class="exprs">Consumption</span>(s).
                             to achieve a goal
                             <br>
+
+                            <span class="punct">{{ icon('consumption') }}</span>
                             <span class="exprs">Consumption</span>
-                            has 1+
-                            <span class="exprs">Dependency</span>
-                            to <span class="exprs">Service</span>s.
+                            depends on 1+
+                            <span class="punct">{{ icon('service') }}</span>
+                            <span class="exprs">Service</span>(s).
                             <br>
-                            <span class="exprs">Dependency</span>
-                            has 1+
+
+                            Each
+                            <span class="punct">{{ icon('consumption') }}</span>
+                            <span class="exprs">Consumption</span>
+                            -
+                            <span class="punct">{{ icon('service') }}</span>
+                            <span class="exprs">Service</span>
+                            pair has 1+
+                            <span class="punct">{{ icon('failure') }}</span>
+                            <span class="exprs">Failure</span>(s).
+                            <br>
+
+                            <span class="punct">{{ icon('failure') }}</span>
                             <span class="exprs">Failure</span>
+                            has
+                            <span class="punct">{{ icon('consequence') }}</span>
+                            <span class="exprs">Consequences</span>(s).
                             <br>
-                            <span class="exprs">Risks</span>
-                            associates a business
-                            <span class="exprs">Impact</span>
-                            to a
-                            <span class="exprs">Failure</span>
+
+                            <span class="punct">{{ icon('risk') }}</span>
+                            <span class="exprs">Risk</span>
+                            associates a
+                            <span class="punct">{{ icon('consequence') }}</span>
+                            <span class="exprs">Consequences</span>
+                            to a business
+                            <span class="exprs">Impact</span>.
                             <br>
-                            <span class="exprs">SLI</span>
-                            is a metric to identify
-                            <span class="exprs">Failure</span>
-                            <br>
-                            <span class="exprs">SLS</span>
-                            calculates
-                            <span class="exprs">SLI</span> over a window
-                            <br>
-                            <span class="exprs">SLO</span>
-                            is a target for
-                            <span class="exprs">SLI</span>
+
+                            <span class="punct">{{ icon('metric') }}</span>
+                            <span class="exprs">Metric</span>
+                            measures 1+
+                            <span class="punct">{{ icon('failure') }}</span>
+                            <span class="exprs">Failure</span>(s).
                         </code>
                     </div>
                 </section>
