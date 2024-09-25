@@ -1,23 +1,16 @@
 <div>
     <div class="annotated">
         <div class="annotated__controls">
-            <h2>Business Impact</h2>
-            <input type="text" v-model="failure.businessImpact">
+            <h2>Consumption</h2>
+            <p>{{ failure.consumption }}</p>
+            <h2>Symptom</h2>
+            <p>{{ failure.symptom }}</p>
+            <h2>Service</h2>
+            <p>{{ failure.service }}</p>
+            <h2>Consequence</h2>
+            {{ failure.consequence }}
         </div>
         <div class="annotated__help">
-            <p>
-                What is the business impacted when
-                {{ failure.consequence }}
-                because
-                {{ failure.symptom }} (symptom)
-                which is caused by
-                {{ failure.service.displayName }}
-                (provided by {{ failure.service.system.displayName }})
-                when
-                {{ failure.consumption.consumer.displayName }}
-                is trying to
-                {{ failure.consumption.displayName }}
-            </p>
             <code>
                 <span title="Consequence" class="exprs">
                     {{ failure.consequence }}
@@ -50,6 +43,18 @@
                 </span>
             </code>
         </div>
+        <div class="annotated__controls">
+            <h2>Business Impact</h2>
+            <input type="text" v-model="failure.businessImpact">
+        </div>
+        <div class="annotated__help">
+            <p>
+                What is the business impacted of this failure?
+            </p>
+            <p>
+                When thinking about the business impact, think about the money, time, and resources that are lost when this failure occurs.
+            </p>
+        </div>
     </div>
     
     <div class="annotated">
@@ -73,7 +78,11 @@
         </div>
         <div class="annotated__help">
             <p>
-                YY
+                Risk = likelihood &times; impact
+            </p>
+            <p>
+                What is the negative impact of this failure?
+                We use this setting to sort the metrics by the priority of the risks they monitor.
             </p>
         </div>
     </div>

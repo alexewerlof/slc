@@ -5,8 +5,21 @@
             <h2>Service</h2>
             <p>{{ service }}</p>
             <h2>Failures</h2>
-            <div v-for="failure of service.failures">
-                <h3>{{ failure.symptom }}</h3>
+            <div v-if="service.failures.length === 0" class="error block">
+                <p>
+                    You have not identified any failures for this service.
+                    Make sure that there is a consumption for this service and you
+                    have identified the symptoms for the failures.
+                </p>
+            </div>    
+        </div>
+    </div>
+        <div v-for="failure of service.failures" class="annotated">
+            <div class="annotated__controls">
+                <p>{{ failure.symptom }}</p>
+            </div>
+
+            <div class="annotated__help">
                 <code>
                     <span class="punct">{{ icon('because') }}</span>
                     When
@@ -59,18 +72,6 @@
                     likelihood<span class="punct">)</span>
                 </code>
             </div>
-            <div v-if="service.failures.length === 0" class="error block">
-                <p>
-                    You have not identified any failures for this service.
-                    Make sure that there is a consumption for this service and you
-                    have identified the symptoms for the failures.
-                </p>
-            </div>
-        </div>
-        <div class="annotated__help">
-            <p>
-
-            </p>
         </div>
     </div>
     
