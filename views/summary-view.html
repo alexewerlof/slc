@@ -44,6 +44,11 @@
         <ul>
             <li v-for="failure of assessment.allFailures">
                 {{ failure }} ({{ failure.likelihood }}, {{ failure.impactLevel }})
+                <ul>
+                    <li v-for="metric of failure.metrics">
+                        {{ metric }}
+                    </li>
+                </ul>
             </li>
         </ul>
         <h2>
@@ -52,7 +57,12 @@
         </h2>
         <ul>
             <li v-for="metric of assessment.allMetrics">
-                    {{ metric }}
+                {{ metric }}
+                <ul>
+                    <li v-for="failure of metric.linkedFailures">
+                        {{ failure }}
+                    </li>
+                </ul>
             </li>
         </ul>
     </section>

@@ -59,7 +59,7 @@ export class Metric {
     }
 
     get priority() {
-        return this.linkedFailures.reduce((acc, failure) => acc - failure.priority, lowestPriority)
+        return Math.min(...this.linkedFailures.map(failure => failure.priority))
     }
 
     toString() {

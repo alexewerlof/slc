@@ -47,6 +47,10 @@ export class Failure {
         return likelihoodValue * impactLevelValue
     }
 
+    get metrics() {
+        return this.service.metrics.filter(metric => metric.isFailureLinked(this))
+    }
+
     remove() {
         return this.service.removeFailure(this)
     }
