@@ -177,6 +177,7 @@
                             <span class="punct">{{ icon('consequence') }}</span>
                             <span class="exprs">Consequences</span>
                             to a business
+                            <span class="punct">{{ icon('impact') }}</span>
                             <span class="exprs">Impact</span>.
                             <br>
 
@@ -394,7 +395,7 @@
                 <show-hide-component 
                     v-for="failure of assessment.allFailures"
                     title="Risk"
-                    :name="`${failure.consequence} ⇛ ${failure.businessImpact}`">
+                    :name="`${failure.consequence} ${icon('impact')} ${failure.businessImpact}`">
                     <risk-view :failure="failure"></risk-view>
             </div>
 

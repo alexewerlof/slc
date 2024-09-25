@@ -411,6 +411,7 @@ export const config = fz({
         add: '＋',
         remove: '－',
         consequence: '⇒',
+        impact: '⇛',
         because: '↳',
     }),
 })
