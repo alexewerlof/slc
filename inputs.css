@@ -84,8 +84,17 @@ input[type=radio] {
     transition: background-color var(--animation-speed) ease-in-out;
 }
 
+input[type=radio]:disabled {
+    border-color: var(--disabled-color);
+    cursor: not-allowed;
+}
+
 input[type=radio]:checked {
     background-color: var(--secondary-color);
+}
+
+input[type=checkbox]:disabled {
+    cursor: not-allowed;
 }
 
 textarea {
