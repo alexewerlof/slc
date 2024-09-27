@@ -393,6 +393,16 @@ export const config = fz({
             'Certain',
         ]),
     }),
+    metricEffort: fz({
+        default: 'Easy',
+        possibleValues: fz([
+            'Easy',      // We already get that out of the box
+            'Medium',    // Some observability needs to be set up
+            'Hard',      // New code needs to be written
+            'Very Hard', // A rough approximation can be made with significant effort
+            'Impossible',// It's not possible to measure accurately
+        ]),
+    }),
     icons: fz({
         // ▢◻▣▷◇◈○◌◯◎◉⬡＋－🔎︎
         workshop: '⯐',
