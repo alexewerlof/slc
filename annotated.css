@@ -7,7 +7,7 @@
     border-bottom-right-radius: var(--bradius);
 }
 
-.annotated__controls {
+.annotated__full-width, .annotated__controls, .annotated__help {
     padding: var(--gap2);
 }
 
@@ -15,16 +15,16 @@
     padding-top: 0;
 }
 
-.annotated__help {
-    padding: var(--gap2);
-}
-
-
 @media screen and (min-width: 1000px) {
     .annotated {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 0;
+    }
+
+    .annotated__full-width {
+        grid-column: 1 / span 2;
+        background: var(--background-color);
     }
     
     .annotated__controls {

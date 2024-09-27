@@ -4,6 +4,25 @@ import { badFormula, Bound, goodFormula } from './bound.js'
 import { Objective } from './objective.js'
 import { isInstance, isPosInt, isStr } from '../lib/validation.js'
 
+/*
+SLI budgeting method:
+- event-based
+- time-based
+  - samples in regular intervals
+  - aggregates values over time slices
+
+By metric count:
+- homogeneous (only good||bad metric)
+- heterogeneous (good&&bad || good&&valid || bad&&valid metrics)
+
+Metric data points impact its condition:
+- boolean
+  - true || false
+- numeric
+  - range: UB&&LB || UB || LB (<, >, <=, >=) another name: below, above, between
+  - point: ==, !=
+*/
+
 export class Indicator {
     constructor(
         eventUnitOrTimeslice,
