@@ -20,7 +20,7 @@ export class Objective {
         estimatedValidEvents = config.estimatedValidEvents.default,
     ) {
         if (!(indicator instanceof Indicator)) {
-            throw new TypeError(`Objective: sli must be an instance of Indicator. Got ${ indicator }`)
+            throw new TypeError(`Objective: indicator must be an instance of Indicator. Got ${ indicator }`)
         }
         this.indicator = indicator
         if (!inRange(perc, 0, 100)) {
