@@ -1,5 +1,5 @@
 fieldset {
-    border: 1px solid var(--ui-border);
+    border: var(--bthick) solid var(--divider-color);
     border-radius: var(--bradius);
     padding: var(--gap);
     margin: var(--gap) 0;
