@@ -10,7 +10,6 @@ import ServiceMetricView from '../views/service-metric-view.js'
 import SummaryView from '../views/summary-view.js'
 import { Assessment } from '../models/assessment.js'
 import { config } from '../config.js'
-import { dump } from '../vendor/js-yaml.js'
 import { copyElementTextToClipboard, loadJson, readTextFile } from '../lib/share.js'
 import FeedbackBlobComponent from '../components/feedback-blob.js'
 import FooterComponent from '../components/footer.js'
@@ -53,9 +52,10 @@ export const app = createApp({
             this.exportedCode = JSON.stringify(this.assessment.save(), null, 2)
         },
         
-        exportToYaml() {
+        async exportToYaml() {
             // const obj = JSON.parse(JSON.stringify(this.assessment))
             // this.exportedCode = dump(obj)
+            const { dump } = await import('../vendor/js-yaml.js')
             this.exportedCode = dump(this.assessment.save())
         },
 
