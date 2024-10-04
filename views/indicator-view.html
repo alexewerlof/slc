@@ -57,7 +57,7 @@
     
     <div class="annotated">
         <div class="annotated__controls">
-            <h2>Type</h2>
+            <h2>Budgeting Method</h2>
             <div class="block">
                 <p>
                     <label>
@@ -142,6 +142,90 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>Metric Count</h2>
+            <p>
+                <label>
+                    <input
+                        type="radio"
+                        v-model="indicator.isHomogeneous"
+                        :value="0">
+                    1 (Homogeneous)
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input
+                        type="radio"
+                        v-model="indicator.isHomogeneous"
+                        :value="1">
+                    2 (Heterogeneous)
+                </label>
+            </p>
+            <h3>Homogeneous: Which metrics do you measure?</h3>
+            <p>
+                <label>
+                    <input
+                        type="radio"
+                        v-model="indicator.isHomogeneous"
+                        :value="0">
+                    Good
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input
+                        type="radio"
+                        v-model="indicator.isHomogeneous"
+                        :value="0">
+                    Bad
+                </label>
+            </p>
+            <h3>Heterogeneous: which metrics do you measure?</h3>
+            <p>
+                <label>
+                    <input
+                        type="checkbox"
+                        v-model="indicator.isHomogeneous"
+                        :value="1">
+                    Good
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input
+                        type="checkbox"
+                        v-model="indicator.isHomogeneous"
+                        :value="1">
+                    Bad
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input
+                        type="checkbox"
+                        v-model="indicator.isHomogeneous"
+                        :value="1">
+                    Valid
+                </label>
+            </p>
+        </div>
+        <div class="annotated__help">
+            <p>
+                There are two ways to calculate the SLI:
+                <ul>
+                    <li><strong>Homogeneus</strong>: uses one metric</li>
+                    <li><strong>Heterogeneous</strong>: uses two metrics</li>
+                </ul>
+                You can read more about the cons and pros of each model
+                <ext-link href="https://blog.alexewerlof.com/p/sli-heterogeneous-vs-homogeneous">
+                    here
+                </ext-link>.
+            </p>
         </div>
     </div>
     

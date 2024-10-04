@@ -1,11 +1,11 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
-import { percL10n } from '../lib/fmt.js'
+import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
+import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
-import { Metric } from '../models/metric.js'
 import { icon } from '../lib/icons.js'
-import ConditionView from './condition-view.js'
+import { Condition } from '../models/condition.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -15,17 +15,19 @@ export default {
         }
     },
     props: {
-        metric: {
+        condition: {
             type: Object,
-            validator: v => isInstance(v, Metric),
+            validator: v => isInstance(v, Condition),
         },
     },
     methods: {
         icon,
         percL10n,
+        numL10n,
+        boundCaption,
     },
     components: {
         ExtLink,
-        ConditionView,
+        ShowHideComponent,
     },
 }

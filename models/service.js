@@ -104,8 +104,8 @@ export class Service {
         return metric
     }
 
-    addNewMetric(displayName, description, ...failures) {
-        return this.addMetric(new Metric(this, displayName, description, ...failures))
+    addNewMetric(displayName, description, isBoolean, numericUnit) {
+        return this.addMetric(new Metric(this, displayName, description, isBoolean, numericUnit))
     }
 
     removeMetric(metric) {

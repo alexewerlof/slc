@@ -3,24 +3,35 @@ import { Service } from './service.js'
 import { Failure } from './failure.js'
 import { config } from '../config.js'
 import { icon } from '../lib/icons.js'
+import { Condition } from './condition.js'
 
 const lowestPriority = config.likelihood.possibleValues.length * config.impactLevel.possibleValues.length
 const metricIcon = icon('metric')
 
 export class Metric {
-    constructor(service, displayName = '', description = '', ...linkedFailures) {
+    constructor(service, displayName = '', description = '', isBoolean = false, numericUnit = '' ) {
         if (!isInstance(service, Service)) {
             throw new Error(`Expected an instance of Service. Got ${service}`)
         }
         this.service = service
         this.displayName = displayName
         this.description = description
-        for (const failure of linkedFailures) {
-            if (!isInstance(failure, Failure)) {
-                throw new Error(`Expected failures to be instances of Failure. Got ${failure}`)
-            }
-        }
-        this.linkedFailures = linkedFailures
+        this.isBoolean = isBoolean
+        this.numericUnit = numericUnit
+        this.condition = new Condition(this)
+        this.linkedFailures = []
+    }
+
+    get unit() {
+        return this.isNumeric ? this.numericUnit : 'True/False'
+    }
+
+    get isNumeric() {
+        return !this.isBoolean
+    }
+
+    set isNumeric(value) {
+        this.isBoolean = !value
     }
 
     isFailureLinked(failure) {
@@ -82,13 +93,20 @@ export class Metric {
         return {
             displayName: this.displayName,
             description: this.description,
+            isNumeric: this.isNumeric,
+            numericUnit: this.numericUnit,
             linkedFailuresIndex: this.linkedFailures.map(failure => failure.index),
         }
     }
 
     static load(service, metricObj) {
-        const linkedFailures = metricObj.linkedFailuresIndex.map(index => service.failures[index])
-        const newMetric = new Metric(service, metricObj.displayName, metricObj.description, ...linkedFailures)
+        const { displayName, description, isBoolean, numericUnit, linkedFailuresIndex } = metricObj
+        const newMetric = new Metric(service, displayName, description, isBoolean, numericUnit)
+        
+        for (const failureIndex of linkedFailuresIndex) {
+            newMetric.linkFailure(service.failures[failureIndex])
+        }
+
         return newMetric
     }
 }

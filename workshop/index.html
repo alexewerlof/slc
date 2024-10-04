@@ -383,9 +383,6 @@
                         </div>
                         <div class="annotated__help">
                             <p>
-                                Metrics are used to measure the level of a service.
-                            </p>
-                            <p>
                                 Risks are tied to the failures.
                                 The idea with this page is to think about the business impact of
                                 the failures in order to prioritize which symptoms should
@@ -400,16 +397,32 @@
                         <risk-view :failure="failure"></risk-view>
                 </div>
 
+                <div v-if="selectedTab === 'Events'">
+                    <div class="annotated">
+                        <div class="annotated__controls">
+                        </div>
+                        <div class="annotated__help">
+                            <p>
+                                In this page, you define what events you want to track
+                                for each risk.
+                                Each event identifies one or more failures.
+                            </p>
+                        </div>
+                    </div>
+                    <show-hide-component 
+                        v-for="service of assessment.allServices"
+                        title="Service"
+                        :name="service">
+                        <service-metric-view :service="service"></service-metric-view>
+                </div>
+
                 <div v-if="selectedTab === 'Metrics'">
                     <div class="annotated">
                         <div class="annotated__controls">
                         </div>
                         <div class="annotated__help">
                             <p>
-                                Risks are tied to the failures.
-                                The idea with this page is to think about the business impact of
-                                the failures in order to prioritize which symptoms should
-                                be prioritized for the service level first.
+                                Metrics are used to measure when a success or failure event happens.
                             </p>
                         </div>
                     </div>
