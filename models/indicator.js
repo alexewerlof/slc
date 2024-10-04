@@ -15,7 +15,7 @@ By metric count:
 - homogeneous (only good||bad metric)
 - heterogeneous (good&&bad || good&&valid || bad&&valid metrics)
 
-Metric data points impact its condition:
+Metric data points impact its condition for good||bad:
 - boolean
   - true || false
 - numeric
