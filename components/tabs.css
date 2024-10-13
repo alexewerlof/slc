@@ -1,4 +1,4 @@
-.tabs {
+.tabs-component {
     display: flex;
     font-size: 1.5em;
     border-bottom: var(--bthick) solid var(--primary-color);
@@ -6,7 +6,7 @@
     padding-bottom: 0;
 }
 
-.tabs__tab {
+.tabs-component__tab {
     border: var(--bthick) solid var(--primary-color);
     border-bottom: none;
     font-family: var(--title-font-family);
@@ -17,12 +17,12 @@
     margin-left: var(--gap);
 }
 
-.tabs__tab:hover {
+.tabs-component__tab:hover {
     background-color: var(--background-lighter);
 }
 
-.tabs__tab--active,
-.tabs__tab--active:hover {
+.tabs-component__tab--active,
+.tabs-component__tab--active:hover {
     background-color: var(--primary-color);
     color: var(--background-color);
 }
