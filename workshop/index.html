@@ -75,11 +75,11 @@
             </aside>
             <div class="main-content">
                 <header>
-                    <tabs-component
-                    v-model:selected-tab="selectedTab"
-                    :tab-names="tabNames"></tabs-component>
+                    <steps-component
+                        v-model:current-step="currentStep"
+                        :steps="steps"></steps-component>
                 </header>            
-                <div v-if="selectedTab === 'Start'">
+                <div v-if="currentStep === 0">
                     <section>
                         <hero-component>
                             <h1>Service Level Workshop</h1>
@@ -96,13 +96,13 @@
                             The UI is roughly broken into the following steps:
                         </p>
                         <ul>
-                            <li><button @click="selectedTab = 'Provider'">Provider</button>: Define the systems that provide the services</li>
-                            <li><button @click="selectedTab = 'Consumers'">Consumers</button>: Define the consumers of the services</li>
-                            <li><button @click="selectedTab = 'Failures'">Failures</button>: Define the failures that threaten the consumption of the services</li>
-                            <li><button @click="selectedTab = 'Risks'">Risks</button>: Define the business impact of failures and sort them accordingly</li>
-                            <li><button @click="selectedTab = 'Metrics'">Metrics</button>: What to measure to proactively be on top of the risks?</li>
-                            <li><button @click="selectedTab = 'Summary'">Summary</button>: A summary of the assessment</li>
-                            <li><button @click="selectedTab = 'Export'">Export</button>: Export the assessment to share with others</li>
+                            <li><button @click="currentStep = 1">Provider</button>: Define the systems that provide the services</li>
+                            <li><button @click="currentStep = 2">Consumers</button>: Define the consumers of the services</li>
+                            <li><button @click="currentStep = 3">Failures</button>: Define the failures that threaten the consumption of the services</li>
+                            <li><button @click="currentStep = 4">Risks</button>: Define the business impact of failures and sort them accordingly</li>
+                            <li><button @click="currentStep = 5">Metrics</button>: What to measure to proactively be on top of the risks?</li>
+                            <li><button @click="currentStep = 6">Summary</button>: A summary of the assessment</li>
+                            <li><button @click="currentStep = 7">Export</button>: Export the assessment to share with others</li>
                         </ul>      
                         <p>
                             You can go back and forth between the tabs as you work your way through the UI.
@@ -191,7 +191,7 @@
                         </div>
                     </section>
                 </div>
-                <div v-if="selectedTab === 'Provider'">
+                <div v-if="currentStep === 1">
                     <div class="annotated">
                         <div class="annotated__controls">
                             <div class="button-bar">
@@ -222,7 +222,7 @@
                     </show-hide-component>
                 </div>
 
-                <div v-if="selectedTab === 'Consumers'">
+                <div v-if="currentStep === 2">
                     <div class="block-both">
                         <table>
                             <thead>
@@ -287,7 +287,7 @@
                     </show-hide-component>
                 </div>
 
-                <div v-if="selectedTab === 'Failures'">
+                <div v-if="currentStep === 3">
                     <div class="block-both">
                         <table>
                             <thead>
@@ -359,7 +359,7 @@
                     </show-hide-component>
                 </div>
 
-                <div v-if="selectedTab === 'Risks'">
+                <div v-if="currentStep === 4">
                     <div class="annotated">
                         <div class="annotated__controls">
                             <table>
@@ -397,7 +397,7 @@
                         <risk-view :failure="failure"></risk-view>
                 </div>
 
-                <div v-if="selectedTab === 'Events'">
+                <div v-if="currentStep === 5">
                     <div class="annotated">
                         <div class="annotated__controls">
                         </div>
@@ -414,9 +414,7 @@
                         title="Service"
                         :name="service">
                         <service-metric-view :service="service"></service-metric-view>
-                </div>
 
-                <div v-if="selectedTab === 'Metrics'">
                     <div class="annotated">
                         <div class="annotated__controls">
                         </div>
@@ -433,11 +431,11 @@
                         <service-metric-view :service="service"></service-metric-view>
                 </div>
 
-                <div v-if="selectedTab === 'Summary'">
+                <div v-if="currentStep === 6">
                     <summary-view :assessment="assessment"></summary-view>
                 </div>
 
-                <div v-if="selectedTab === 'Export'">
+                <div v-if="currentStep === 7">
                     <div class="block">
                         <div class="button-bar">
                             <button @click="exportToJson()">

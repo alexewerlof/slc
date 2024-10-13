@@ -1,5 +1,5 @@
 import { createApp } from '../vendor/vue.js'
-import TabsComponent from '../components/tabs.js'
+import StepsComponent from '../components/steps.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
 import SystemView from '../views/system-view.js'
@@ -21,10 +21,10 @@ const exampleJson = await loadJson('example.json')
 export const app = createApp({
     data() {
         const assessment = Assessment.load(exampleJson)
-        const tabNames = ['Start', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary', 'Export']
+        const steps = ['Introduction', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary', 'Export']
         return {
-            selectedTab: tabNames[5],
-            tabNames,
+            currentStep: 5,
+            steps,
             assessment,
             config,
             exportedCode: '-',
@@ -40,7 +40,7 @@ export const app = createApp({
         FeedbackBlobComponent,
         FooterComponent,
         HeroComponent,
-        TabsComponent,
+        StepsComponent,
         ShowHideComponent,
         ExtLink,
     },
