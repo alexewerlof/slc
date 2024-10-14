@@ -1,8 +1,8 @@
 .steps-component {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    margin-top: 20px;
+    margin-top: var(--gap2);
 }
 
 .steps-component__step {
@@ -22,6 +22,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: var(--background-color);
 }
 
 .steps-component__step-number--active {
