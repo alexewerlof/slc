@@ -373,26 +373,6 @@ export const config = fz({
         step: 0.01,
         default: 10,
     },
-    impactLevel: fz({
-        default: 'Moderate',
-        possibleValues: fz([
-            'Insignificant',
-            'Minor',
-            'Moderate',
-            'Major',
-            'Catastrophic',
-        ]),
-    }),
-    likelihood: fz({
-        default: 'Possible',
-        possibleValues: fz([
-            'Rare',
-            'Unlikely',
-            'Possible',
-            'Likely',
-            'Certain',
-        ]),
-    }),
     metricEffort: fz({
         default: 'Easy',
         possibleValues: fz([

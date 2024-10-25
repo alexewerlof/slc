@@ -1,9 +1,9 @@
 import { Provider } from './provider.js'
 import { Consumer } from '../models/consumer.js'
 import { isInstance } from '../lib/validation.js'
-import { config } from '../config.js'
 import { Service } from './service.js'
 import { Consumption } from './consumption.js'
+import { Failure } from './failure.js'
 
 export class Assessment {
     constructor() {
@@ -27,12 +27,20 @@ export class Assessment {
         return this.allServices.flatMap(service => service.metrics)
     }
 
+    get possibleLikelihoods() {
+        return Failure.possibleLikelihoods
+    }
+
+    get possibleImpactLevels() {
+        return Failure.possibleImpactLevels
+    }
+
     getRisks(likelihood, impactLevel) {
-        if (!config.likelihood.possibleValues.includes(likelihood)) {
-            throw new RangeError(`Expected likelihood to be one of ${config.likelihood.possibleValues}. Got ${likelihood}`)
+        if (!Failure.possibleLikelihoods.includes(likelihood)) {
+            throw new RangeError(`Expected likelihood to be one of ${Failure.possibleLikelihoods}. Got ${likelihood}`)
         }
-        if (!config.impactLevel.possibleValues.includes(impactLevel)) {
-            throw new RangeError(`Expected impactLevel to be one of ${config.impactLevel.possibleValues}. Got ${impactLevel}`)
+        if (!Failure.possibleImpactLevels.includes(impactLevel)) {
+            throw new RangeError(`Expected impactLevel to be one of ${Failure.possibleImpactLevels}. Got ${impactLevel}`)
         }
         return this.allFailures.filter(failure => failure.likelihood === likelihood && failure.impactLevel === impactLevel)
     }

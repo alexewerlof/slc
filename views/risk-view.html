@@ -61,14 +61,14 @@
         <div class="annotated__controls">
             <h2>Impact Level</h2>
             <select v-model="failure.impactLevel">
-                <option v-for="impactLevel of config.impactLevel.possibleValues"
+                <option v-for="impactLevel of failure.constructor.possibleImpactLevels"
                     :value="impactLevel">
                     {{ impactLevel }}
                 </option>
             </select>
             <h2>Likelihood</h2>
             <select v-model="failure.likelihood">
-                <option v-for="likelihood of config.likelihood.possibleValues"
+                <option v-for="likelihood of failure.constructor.possibleLikelihoods"
                     :value="likelihood">
                     {{ likelihood }}
                 </option>

@@ -1,11 +1,9 @@
 import { isInstance } from '../lib/validation.js'
 import { Service } from './service.js'
 import { Failure } from './failure.js'
-import { config } from '../config.js'
 import { icon } from '../lib/icons.js'
 import { Condition } from './condition.js'
 
-const lowestPriority = config.likelihood.possibleValues.length * config.impactLevel.possibleValues.length
 const metricIcon = icon('metric')
 
 export class Metric {

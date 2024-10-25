@@ -366,15 +366,15 @@
                                 <thead>
                                     <tr>
                                         <th>Likelihood/Impact</th>
-                                        <th v-for="impactLevel of config.impactLevel.possibleValues">
+                                        <th v-for="impactLevel of assessment.possibleImpactLevels">
                                             {{ impactLevel }}
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="likelihood of config.likelihood.possibleValues">
+                                    <tr v-for="likelihood of assessment.possibleLikelihoods">
                                         <th>{{ likelihood }}</th>
-                                        <td v-for="impactLevel of config.impactLevel.possibleValues">
+                                        <td v-for="impactLevel of assessment.possibleImpactLevels">
                                             {{ assessment.getRisks(likelihood, impactLevel).length }}
                                         </td>
                                     </tr>

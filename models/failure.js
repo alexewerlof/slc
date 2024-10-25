@@ -9,14 +9,31 @@ const failureIcon = icon('failure')
 
 // If a certain service fails, what activities will it impact and how?
 export class Failure {
+
+    static possibleImpactLevels = [
+        'Insignificant',
+        'Minor',
+        'Moderate',
+        'Major',
+        'Catastrophic',
+    ]
+
+    static possibleLikelihoods = [
+        'Rare',
+        'Unlikely',
+        'Possible',
+        'Likely',
+        'Certain',
+    ]
+
     constructor(
         service,
         consumption,
         symptom = '',
         consequence = '',
         businessImpact = '',
-        likelihood = config.likelihood.default,
-        impactLevel = config.impactLevel.default
+        likelihood = Failure.possibleLikelihoods[0],
+        impactLevel = Failure.possibleImpactLevels[0],
     ) {
         if (!isInstance(service, Service)) {
             throw new Error(`Expected a Service instance. Got ${service}`)
@@ -33,17 +50,39 @@ export class Failure {
         this.impactLevel = impactLevel
     }
 
+    set likelihood(val) {
+        if (!Failure.possibleLikelihoods.includes(val)) {
+            throw new Error(`Expected likelihood to be one of ${Failure.possibleLikelihoods}. Got ${val}`)
+        }
+        this._likelihood = val
+    }
+
+    get likelihood() {
+        return this._likelihood
+    }
+
+    set impactLevel(val) {
+        if (!Failure.possibleImpactLevels.includes(val)) {
+            throw new Error(`Expected impactLevel to be one of ${Failure.possibleImpactLevels}. Got ${val}`)
+        }
+        this._impactLevel = val
+    }
+
+    get impactLevel() {
+        return this._impactLevel
+    }
+
     get priority() {
-        const likelihoodIndex = config.likelihood.possibleValues.indexOf(this.likelihood)
+        const likelihoodIndex = Failure.possibleLikelihoods.indexOf(this.likelihood)
         if (likelihoodIndex === -1) {
-            throw new RangeError(`Expected likelihood to be one of ${config.likelihood.possibleValues}. Got ${this.likelihood}`)
+            throw new RangeError(`Expected likelihood to be one of ${Failure.possibleLikelihoods}. Got ${this.likelihood}`)
         }
-        const impactLevelIndex = config.impactLevel.possibleValues.indexOf(this.impactLevel)
+        const impactLevelIndex = Failure.possibleImpactLevels.indexOf(this.impactLevel)
         if (impactLevelIndex === -1) {
-            throw new RangeError(`Expected impactLevel to be one of ${config.impactLevel.possibleValues}. Got ${this.impactLevel}`)
+            throw new RangeError(`Expected impactLevel to be one of ${Failure.possibleImpactLevels}. Got ${this.impactLevel}`)
         }
-        const likelihoodValue = config.likelihood.possibleValues.length - likelihoodIndex
-        const impactLevelValue = config.impactLevel.possibleValues.length - impactLevelIndex
+        const likelihoodValue = Failure.possibleLikelihoods.length - likelihoodIndex
+        const impactLevelValue = Failure.possibleImpactLevels.length - impactLevelIndex
         return likelihoodValue * impactLevelValue
     }
 
