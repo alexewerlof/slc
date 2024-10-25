@@ -10,7 +10,9 @@ import { Provider } from './provider.js'
 const scopeIcon = icon('scope')
 
 export class Service {
-    constructor(provider, displayName = '', description = '') {
+    static possibleTypes = ['Automated', 'Manual', 'Hybrid']
+
+    constructor(provider, displayName = '', description = '', type = Service.possibleTypes[0]) {
         if (!isInstance(provider, Provider)) {
             throw new Error(`Service.constructor: provider must be an instance of Provider. Got ${provider}`)
         }
@@ -19,6 +21,18 @@ export class Service {
         this.description = description
         this.failures = []
         this.metrics = []
+        this.type = type
+    }
+
+    set type(val) {
+        if (!Service.possibleTypes.includes(val)) {
+            throw new Error(`Service.type must be one of ${Service.possibleTypes}. Got ${val}`)
+        }
+        this._type = val
+    }
+
+    get type() {
+        return this._type
     }
 
     get consumptions() {
@@ -143,13 +157,14 @@ export class Service {
         return {
             displayName: this.displayName,
             description: this.description,
+            type: this.type,
             failures: this.failures.map(failure => failure.save()),
             metrics: this.metrics.map(metric => metric.save()),
         }
     }
 
     static load(provider, serviceObj) {
-        const newService = new Service(provider, serviceObj.displayName, serviceObj.description)
+        const newService = new Service(provider, serviceObj.displayName, serviceObj.description, serviceObj.type)
         for (const failureObj of serviceObj.failures) {
             newService.addFailure(Failure.load(newService, failureObj))
         }

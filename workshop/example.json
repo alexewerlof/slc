@@ -8,6 +8,7 @@
         {
           "displayName": "Climate API",
           "description": "Retrieves or sets car climate",
+          "type": "Automated",
           "failures": [
             {
               "consumerIndex": 1,
@@ -61,6 +62,7 @@
         {
           "displayName": "Car security API",
           "description": "Can be used to lock or unlock the car",
+          "type": "Automated",
           "failures": [
             {
               "consumerIndex": 1,
@@ -131,6 +133,7 @@
         {
           "displayName": "Get car image API",
           "description": "Returns the car image, useful for rendering the website and the app that's used to control the car",
+          "type": "Automated",
           "failures": [
             {
               "consumerIndex": 1,
@@ -202,6 +205,7 @@
         {
           "displayName": "Car manual API",
           "description": "Returns the car manual in different formats",
+          "type": "Automated",
           "failures": [
             {
               "consumerIndex": 0,
@@ -237,6 +241,7 @@
         {
           "displayName": "Car contract API",
           "description": "Retrieves leasing contracts",
+          "type": "Automated",
           "failures": [
             {
               "consumerIndex": 1,
@@ -288,6 +293,7 @@
         {
           "displayName": "Car specs",
           "description": "Returns car specs and marketing content in different languages",
+          "type": "Automated",
           "failures": [
             {
               "consumerIndex": 0,

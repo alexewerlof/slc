@@ -20,6 +20,26 @@
         </div>
 
         <div class="annotated__controls">
+            <h2>Type</h2>
+            <select v-model="service.type">
+                <option
+                    v-for="possibleType of service.constructor.possibleTypes">{{ possibleType }}</option>
+            </select>
+        </div>
+        <div class="annotated__help">
+            <p>A service can be any of these types:</p>
+            <ul>
+                <li><strong>Automated</strong>: a service that’s fully automated using software/hardware</li>
+                <li><strong>Manual</strong>: a manual service is either too expensive to automate or requires human intervention or judgement</li>
+                <li><strong>Hybrid</strong>: a mix of the two</li>
+            </ul>
+            <p>
+                Generally, the service levels are used for automated services but this categorization exists to signify that even the services that require manual effort can be measured and improved using service levels.
+                Read more <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">here</ext-link>.
+            </p>
+        </div>
+
+        <div class="annotated__controls">
             <h2>Consumptions</h2>
             <ul>
                 <li v-for="consumption of service.consumptions">
