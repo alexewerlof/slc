@@ -4,9 +4,11 @@ import { Assessment } from './assessment.js'
 import { Consumption } from './consumption.js'
 
 export class Consumer {
+    static possibleTypes = ['System', 'Component', 'Group']
+
     consumptions = []
 
-    constructor(assessment, displayName = '', description = '') {
+    constructor(assessment, displayName = '', description = '', type = Consumer.possibleTypes[0]) {
         if (!isInstance(assessment, Assessment)) {
             throw new Error(`Consumer.constructor: assessment must be an instance of Assessment. Got ${assessment}`)
         }
@@ -14,6 +16,18 @@ export class Consumer {
         this.displayName = displayName
         this.description = description
         this.consumptions = []
+        this.type = type
+    }
+
+    set type(val) {
+        if (!Consumer.possibleTypes.includes(val)) {
+            throw new Error(`Consumer.type must be one of ${Consumer.possibleTypes}. Got ${val}`)
+        }
+        this._type = val
+    }
+
+    get type() {
+        return this._type
     }
 
     addConsumption(consumption) {
@@ -61,12 +75,13 @@ export class Consumer {
         return {
             displayName: this.displayName,
             description: this.description,
+            type: this.type,
             consumptions: this.consumptions.map(consumption => consumption.save())
         }
     }
 
     static load(assessment, consumerObj) {
-        const newConsumer = new Consumer(assessment, consumerObj.displayName, consumerObj.description)
+        const newConsumer = new Consumer(assessment, consumerObj.displayName, consumerObj.description, consumerObj.type)
         for (const consumption of consumerObj.consumptions) {
             newConsumer.addConsumption(Consumption.load(newConsumer, consumption))
         }

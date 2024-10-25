@@ -324,6 +324,7 @@
     {
       "displayName": "Web site",
       "description": "Can be used by the potential consumers to learn about the cars, configure it, and order it",
+      "type": "System",
       "consumptions": [
         {
           "displayName": "Product Model Page",
@@ -334,6 +335,7 @@
     {
       "displayName": "Mobile client",
       "description": "Is used by the car owners to control the car",
+      "type": "System",
       "consumptions": [
         {
           "displayName": "Adjust temperature remotely",

@@ -14,6 +14,25 @@
                 Give this consumer a name and description to make it easier to identify.
             </p>
         </div>
+
+        <div class="annotated__controls">
+            <h2>Type</h2>
+            <select v-model="consumer.type">
+                <option
+                    v-for="possibleType of consumer.constructor.possibleTypes">{{ possibleType }}</option>
+            </select>
+        </div>
+        <div class="annotated__help">
+            <p>A service consumer can be any of these types:</p>
+            <ul>
+                <li><strong>Group</strong>: a group of 1 or more people</li>
+                <li><strong>Component</strong>: something that actually runs and deploys independently (e.g., a database, microservice, etc.)</li>
+                <li><strong>System</strong>: a logical grouping of components</li>
+            </ul>
+            <p>
+                Read more <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">here</ext-link>.
+            </p>
+        </div>
     </div>
 
     <show-hide-component
