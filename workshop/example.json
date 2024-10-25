@@ -3,6 +3,7 @@
     {
       "displayName": "Digital Twin API",
       "description": "Can be used to retrieve information about the car and control it remotely",
+      "type": "System",
       "services": [
         {
           "displayName": "Climate API",
@@ -31,6 +32,8 @@
             {
               "displayName": "response_code between 200-499",
               "description": "error rate",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 0
               ]
@@ -38,6 +41,8 @@
             {
               "displayName": "latency < 10 seconds",
               "description": "The response to climate API is relatively fast",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 0
               ]
@@ -45,6 +50,8 @@
             {
               "displayName": "GET climate successful",
               "description": "",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 1
               ]
@@ -87,6 +94,8 @@
             {
               "displayName": "lock status api returns status in less than 10 seconds",
               "description": "Status check should be reasonably fast",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 0
               ]
@@ -94,6 +103,8 @@
             {
               "displayName": "lock command API response_code === 202",
               "description": "Successfully registered the command",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 1,
                 2
@@ -102,6 +113,8 @@
             {
               "displayName": "lock status api response code between 200 to 399 (inclusive)",
               "description": "lock status check does not fail",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 0
               ]
@@ -113,6 +126,7 @@
     {
       "displayName": "Image Storage",
       "description": "Retrieves or stores images for different car models in different colors",
+      "type": "System",
       "services": [
         {
           "displayName": "Get car image API",
@@ -150,6 +164,8 @@
             {
               "displayName": "response_code != 4xx",
               "description": "some image is returned",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 0,
                 2
@@ -158,6 +174,8 @@
             {
               "displayName": "user does not report the image",
               "description": "image matches the model (we use user report as a check asking them \"report problems\")",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 0,
                 2
@@ -166,6 +184,8 @@
             {
               "displayName": "mobile app log indicating missing image",
               "description": "For all other reasons that an image may be missing in the app",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 1
               ]
@@ -177,6 +197,7 @@
     {
       "displayName": "Document Storage",
       "description": "Stores different types of files like PDF, HTML, and images",
+      "type": "System",
       "services": [
         {
           "displayName": "Car manual API",
@@ -196,6 +217,8 @@
             {
               "displayName": "for a valid car model, the manual response code < 400",
               "description": "",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 0
               ]
@@ -203,6 +226,8 @@
             {
               "displayName": "download does not break for an already established session",
               "description": "The manual files can be large. if the download is interrupted for any reasons, we may want to look into it.",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 0
               ]
@@ -236,6 +261,8 @@
             {
               "displayName": "for valid requests, contract retrieval API response code < 400",
               "description": "",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 0
               ]
@@ -243,6 +270,8 @@
             {
               "displayName": "the user credentials on the contract should match the user credentials that is logged in (web/mobile)",
               "description": "",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 1
               ]
@@ -254,6 +283,7 @@
     {
       "displayName": "CMS",
       "description": "Content management system",
+      "type": "System",
       "services": [
         {
           "displayName": "Car specs",
@@ -273,6 +303,8 @@
             {
               "displayName": "Sampled double-check with CMS on a given RUM page is a pass",
               "description": "To ensure that we show the right specs, we randomly check 1% of page views using a JavaScript snippet that scrapes data from our website and sends it to a backend that's made for the purpose of cross-checking this data against what the data that should have been sent via CMS (note: this will also check the cache errors)",
+              "isNumeric": true,
+              "numericUnit": "",
               "linkedFailuresIndex": [
                 0
               ]

@@ -4,7 +4,9 @@ import { Assessment } from './assessment.js'
 import { osloMetadata, osloObj } from '../lib/oslo.js'
 
 export class Provider {
-    constructor(assessment, displayName = '', description = '') {
+    static possibleTypes = ['System', 'Component', 'Group']
+
+    constructor(assessment, displayName = '', description = '', type = Provider.possibleTypes[0]) {
         if (!isInstance(assessment, Assessment)) {
             throw new Error(`Provider.constructor: assessment must be an instance of Assessment. Got ${assessment}`)
         }
@@ -12,6 +14,18 @@ export class Provider {
         this.displayName = displayName
         this.description = description
         this.services = []
+        this.type = type
+    }
+
+    set type(val) {
+        if (!Provider.possibleTypes.includes(val)) {
+            throw new Error(`Provider.type must be one of ${Provider.possibleTypes}. Got ${val}`)
+        }
+        this._type = val
+    }
+
+    get type() {
+        return this._type
     }
 
     addService(service) {
@@ -62,6 +76,7 @@ export class Provider {
         return {
             displayName: this.displayName,
             description: this.description,
+            type: this.type,
             services: this.services.map(service => service.save()),
         }
     }
