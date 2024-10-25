@@ -1,6 +1,6 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
-import { System } from '../models/system.js'
+import { Provider } from '../models/provider.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
 import ServiceView from './service-view.js'
@@ -16,9 +16,9 @@ export default {
         }
     },
     props: {
-        system: {
+        provider: {
             type: Object,
-            validator: v => isInstance(v, System),
+            validator: v => isInstance(v, Provider),
         },
     },
     methods: {

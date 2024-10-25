@@ -3,10 +3,10 @@ import { isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { osloMetadata, osloObj } from '../lib/oslo.js'
 
-export class System {
+export class Provider {
     constructor(assessment, displayName = '', description = '') {
         if (!isInstance(assessment, Assessment)) {
-            throw new Error(`System.constructor: assessment must be an instance of Assessment. Got ${assessment}`)
+            throw new Error(`Provider.constructor: assessment must be an instance of Assessment. Got ${assessment}`)
         }
         this.assessment = assessment
         this.displayName = displayName
@@ -18,7 +18,7 @@ export class System {
         if (!isInstance(service, Service)) {
             throw new Error(`Service must be an instance of Service. Got ${service}`)
         }
-        service.system = this
+        service.provider = this
         this.services.push(service)
         return service
     }
@@ -35,12 +35,12 @@ export class System {
         if (index > -1) {
             this.services.splice(index, 1)
         } else {
-            throw new ReferenceError(`Service ${service} not found in system ${this}`)
+            throw new ReferenceError(`Service ${service} not found in provider ${this}`)
         }
     }
 
     remove() {
-        return this.assessment.removeSystem(this)
+        return this.assessment.removeProvider(this)
     }
 
     toString() {
@@ -48,7 +48,7 @@ export class System {
     }
 
     toJSON() {
-        return osloObj('System', osloMetadata(undefined, this.displayName), {
+        return osloObj('Provider', osloMetadata(undefined, this.displayName), {
             description: this.description,
             services: this.services,
         })
@@ -66,11 +66,11 @@ export class System {
         }
     }
 
-    static load(assessment, systemObj) {
-        const newSystem = new System(assessment, systemObj.displayName, systemObj.description)
-        for (const service of systemObj.services) {
-            newSystem.addService(Service.load(newSystem, service))
+    static load(assessment, providerObj) {
+        const newProvider = new Provider(assessment, providerObj.displayName, providerObj.description)
+        for (const service of providerObj.services) {
+            newProvider.addService(Service.load(newProvider, service))
         }
-        return newSystem
+        return newProvider
     }
 }

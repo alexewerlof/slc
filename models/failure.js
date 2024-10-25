@@ -88,7 +88,7 @@ export class Failure {
     }
 
     static load(service, failureObj) {
-        const consumer = service.system.assessment.consumers[failureObj.consumerIndex]
+        const consumer = service.provider.assessment.consumers[failureObj.consumerIndex]
         const failure = new Failure(
             service,
             consumer.consumptions[failureObj.consumptionIndex],

@@ -1,9 +1,9 @@
 Here's how different concepts relate to each other:
 
 - `consumer` **has** 1+ `consumption`.
-- `system` **has** 1+ `service`. (note: this is the user-facing system. There can be internal or external dependencies.)
-- `system` **has** `owner`
-- `system` **has** 0+ `dependency`
+- `provider` **has** 1+ `service`. (note: There can be internal or external consumers.)
+- `provider` **has** `owner`
+- `provider` **has** 0+ `dependency` for which it acts as a `consumer`
 - `dependency` is either `internal` or `external` (the difference is who owns the dependency)
 - `consumption` are supported by 1+ `services`
 - `service` == `capability`.
@@ -16,7 +16,7 @@ Here's how different concepts relate to each other:
 - `consumption` face `threat`.
 - `threat` **has** `symptoms`.
 - `symptom` **has** `root cause`.
-- `root cause` **happens** in a `system` or `dependency`.
+- `root cause` **happens** in a `provider` or its `dependency`.
 - `symptom` **has** `impacts`.
 - `risks` are sorted based on `risk impact` on business.
 - `risk` **has** `impact`, `likelihood`, and `threat`.

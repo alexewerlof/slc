@@ -5,16 +5,16 @@ import { isInstance } from '../lib/validation.js'
 import { Consumption } from './consumption.js'
 import { Failure } from './failure.js'
 import { Metric } from './metric.js'
-import { System } from './system.js'
+import { Provider } from './provider.js'
 
 const scopeIcon = icon('scope')
 
 export class Service {
-    constructor(system, displayName = '', description = '') {
-        if (!isInstance(system, System)) {
-            throw new Error(`Service.constructor: system must be an instance of System. Got ${system}`)
+    constructor(provider, displayName = '', description = '') {
+        if (!isInstance(provider, Provider)) {
+            throw new Error(`Service.constructor: provider must be an instance of Provider. Got ${provider}`)
         }
-        this.system = system
+        this.provider = provider
         this.displayName = displayName
         this.description = description
         this.failures = []
@@ -27,7 +27,7 @@ export class Service {
     }
 
     remove() {
-        this.system.removeService(this)
+        this.provider.removeService(this)
     }
 
     get failuresByRisk() {
@@ -121,12 +121,12 @@ export class Service {
     }
 
     toString() {
-        return `${this.system.displayName}${scopeIcon}${this.displayName}`
+        return `${this.provider.displayName}${scopeIcon}${this.displayName}`
     }
 
     toJSON() {
         return osloObj('Service', osloMetadata(
-            namify(this.system.displayName, this.displayName),
+            namify(this.provider.displayName, this.displayName),
             this.displayName,
         ), {
             description: this.description,
@@ -136,7 +136,7 @@ export class Service {
     }
 
     get ref() {
-        return this.system.services.indexOf(this)
+        return this.provider.services.indexOf(this)
     }
 
     save() {
@@ -148,8 +148,8 @@ export class Service {
         }
     }
 
-    static load(system, serviceObj) {
-        const newService = new Service(system, serviceObj.displayName, serviceObj.description)
+    static load(provider, serviceObj) {
+        const newService = new Service(provider, serviceObj.displayName, serviceObj.description)
         for (const failureObj of serviceObj.failures) {
             newService.addFailure(Failure.load(newService, failureObj))
         }

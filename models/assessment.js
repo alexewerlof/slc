@@ -1,4 +1,4 @@
-import { System } from '../models/system.js'
+import { Provider } from './provider.js'
 import { Consumer } from '../models/consumer.js'
 import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
@@ -7,12 +7,12 @@ import { Consumption } from './consumption.js'
 
 export class Assessment {
     constructor() {
-        this.systems = []
+        this.providers = []
         this.consumers = []
     }
     
     get allServices() {
-        return this.systems.flatMap(system => system.services)
+        return this.providers.flatMap(provider => provider.services)
     }
     
     get allConsumptions() {
@@ -47,28 +47,28 @@ export class Assessment {
         return service.getConsumptionFailures(consumption).length
     }
 
-    addSystem(system) {
-        if (!isInstance(system, System)) {
-            throw new Error(`Expected an instance of System. Got ${system}`)
+    addProvider(provider) {
+        if (!isInstance(provider, Provider)) {
+            throw new Error(`Expected an instance of Provider. Got ${provider}`)
         }
-        system.assessment = this
-        this.systems.push(system)
-        return system
+        provider.assessment = this
+        this.providers.push(provider)
+        return provider
     }
     
-    addNewSystem(title, description) {
-        return this.addSystem(new System(this, title, description))
+    addNewProvider(title, description) {
+        return this.addProvider(new Provider(this, title, description))
     }
 
-    removeSystem(system) {
-        if (!isInstance(system, System)) {
-            throw new Error(`Expected an instance of System. Got ${system}`)
+    removeProvider(provider) {
+        if (!isInstance(provider, Provider)) {
+            throw new Error(`Expected an instance of Provider. Got ${provider}`)
         }
-        const index = this.systems.indexOf(system)
+        const index = this.providers.indexOf(provider)
         if (index === -1) {
             return false
         }
-        this.systems.splice(index, 1)
+        this.providers.splice(index, 1)
         return true
     }
 
@@ -99,14 +99,14 @@ export class Assessment {
 
     toJSON() {
         return {
-            systems: this.systems,
+            providers: this.providers,
             consumers: this.consumers
         }
     }
 
     save() {
         return {
-            systems: this.systems.map(system => system.save()),
+            providers: this.providers.map(provider => provider.save()),
             consumers: this.consumers.map(consumer => consumer.save()),
         }
     }
@@ -116,8 +116,8 @@ export class Assessment {
         for (const consumer of assessmentObj.consumers) {
             newAssessment.addConsumer(Consumer.load(newAssessment, consumer))
         }
-        for (const system of assessmentObj.systems) {
-            newAssessment.addSystem(System.load(newAssessment, system))
+        for (const provider of assessmentObj.providers) {
+            newAssessment.addProvider(Provider.load(newAssessment, provider))
         }
 
         return newAssessment

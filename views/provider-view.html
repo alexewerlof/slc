@@ -2,19 +2,18 @@
 
     <div class="annotated">
         <div class="annotated__controls">
-            <h2>System Name</h2>
-            <input type="text" v-model="system.displayName">
+            <h2>Provider Name</h2>
+            <input type="text" v-model="provider.displayName">
             <h2>Description</h2>
-            <textarea v-model="system.description"></textarea>
+            <textarea v-model="provider.description"></textarea>
         </div>
         <div class="annotated__help">
             <p>
-                Give your system a name to be able to recognize it.
+                Give your provider a name to be able to recognize it.
                 The description is optional but can be useful to provide more context. 
             </p>
             <p>
-                A system is what the provider owns. For example: an API server, a web site, an SDK, etc.
-                A system may have many components but they are irrelevant to the consumers.
+                A provider may have many components but they are irrelevant to the consumers.
                 As far as the consumer is concerned, the provider is responsible to provide a service that they
                 consume to achieve a goal.
             </p>
@@ -22,7 +21,7 @@
     </div>
 
     <show-hide-component
-        v-for="service of system.services"
+        v-for="service of provider.services"
         title="Service"
         :name="service">
         <service-view :service="service"></service-view>
@@ -30,26 +29,26 @@
 
     <div class="annotated">
         <div class="annotated__controls">
-            <div class="error block" v-if="system.services.length === 0">
+            <div class="error block" v-if="provider.services.length === 0">
                 <p>
-                    At the moment this system does not offer any consumer facing services.
+                    At the moment this provider does not offer any consumer facing services.
                     Therefore it is not possible to define a service level for it.
                 </p>
             </div>
             <div class="button-bar">
-                <button @click="system.addNewService()">
+                <button @click="provider.addNewService()">
                     {{ icon('add') }} 
                     Add New Service
                 </button>
-                <button class="danger" @click="system.remove()">
+                <button class="danger" @click="provider.remove()">
                     {{ icon('remove') }} 
-                    Remove System
+                    Remove Provider
                 </button>
             </div>
         </div>
         <div class="annotated__help">
             <p>
-                The system offers
+                The provider offers
                 <ext-link href="https://blog.alexewerlof.com/p/service">service</ext-link>s
                 which are in turn consumed by the consumers.
             </p>

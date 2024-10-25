@@ -1,5 +1,5 @@
 {
-  "systems": [
+  "providers": [
     {
       "displayName": "Iris",
       "description": "This is what applies the business logic on top of CAPI",

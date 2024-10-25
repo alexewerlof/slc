@@ -2,7 +2,7 @@ import { createApp } from '../vendor/vue.js'
 import StepsComponent from '../components/steps.js'
 import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
-import SystemView from '../views/system-view.js'
+import ProviderView from '../views/provider-view.js'
 import ConsumerView from '../views/consumer-view.js'
 import FailureView from '../views/failure-view.js'
 import RiskView from '../views/risk-view.js'
@@ -31,7 +31,7 @@ export const app = createApp({
         }
     },
     components: {
-        SystemView,
+        ProviderView,
         ConsumerView,
         FailureView,
         RiskView,

@@ -39,13 +39,13 @@
                 <nav>
                     <h2>Provider</h2>
                     <ul>
-                        <li v-for="system of assessment.systems">
-                            <span :title="system.description">
-                                {{ icon('system') }}
-                                {{ system.displayName }}
+                        <li v-for="provider of assessment.providers">
+                            <span :title="provider.description">
+                                {{ icon('provider') }}
+                                {{ provider.displayName }}
                             </span>
                             <ul>
-                                <li v-for="service of system.services">
+                                <li v-for="service of provider.services">
                                     <span :title="service.description">
                                         {{ icon('service') }}
                                         {{ service.displayName }}
@@ -96,7 +96,7 @@
                             The UI is roughly broken into the following steps:
                         </p>
                         <ul>
-                            <li><button @click="currentStep = 1">Provider</button>: Define the systems that provide the services</li>
+                            <li><button @click="currentStep = 1">Provider</button>: Define the service providers</li>
                             <li><button @click="currentStep = 2">Consumers</button>: Define the consumers of the services</li>
                             <li><button @click="currentStep = 3">Failures</button>: Define the failures that threaten the consumption of the services</li>
                             <li><button @click="currentStep = 4">Risks</button>: Define the business impact of failures and sort them accordingly</li>
@@ -116,7 +116,7 @@
                             Our approach is based on the following principles:
                         </p>
                         <ul>
-                            <li><em>No vanity metrics</em>: SLI tie to system reliability from the consumers' perspective. If an anomaly does not lead to a consumer facing failure and business risk, it is out of scope.</li>
+                            <li><em>No vanity metrics</em>: SLI describes reliability from the consumers' perspective. If an anomaly does not lead to a consumer facing failure and business risk, it is out of scope.</li>
                             <li><em>Full ownership</em>: SLOs should tie to real commitments. The best way to implement commitments is to set alerts on the service level objectives</li>
                             <li><em>Proper modeling</em>: have a clear meaning behind every word to build a common language.</li>
                         </ul>
@@ -126,14 +126,15 @@
                         </p>
                         <div class="code block">
                             <code>
-                                <span class="exprs">Provider</span>
+                                <span class="punct">{{ icon('owner') }}</span>
+                                <span class="exprs">Owner</span>
                                 owns 1+
-                                <span class="punct">{{ icon('system') }}</span>
-                                <span class="exprs">System</span>.
+                                <span class="punct">{{ icon('provider') }}</span>
+                                <span class="exprs">Provider</span>(s).
                                 <br>
 
-                                <span class="punct">{{ icon('system') }}</span>
-                                <span class="exprs">System</span>
+                                <span class="punct">{{ icon('provider') }}</span>
+                                <span class="exprs">Provider</span>
                                 offers 1+
                                 <span class="punct">{{ icon('service') }}</span>
                                 <span class="exprs">Service</span>(s).
@@ -195,30 +196,29 @@
                     <div class="annotated">
                         <div class="annotated__controls">
                             <div class="button-bar">
-                                <button @click="assessment.addNewSystem()">
+                                <button @click="assessment.addNewProvider()">
                                     {{ icon('add') }} 
-                                    Add New System
+                                    Add New Provider
                                 </button>
                             </div>        
                         </div>
                         <div class="annotated__help">
                             <p>
-                                Before defining service levels, we first need to identify the systems that provide
-                                those services.
+                                Before defining service levels, we first need to identify the service provider.
                             </p>
                             <p>
-                                You don't need to list all of your systems.
+                                You don't need to list all of your service providers.
                                 As a rule of thumb start with the consumer-facing services
                                 and as you work your way through the UI, you can come back and
-                                add any missing systems.
+                                add any missing service provider.
                             </p>
                         </div>
                     </div>
                     <show-hide-component 
-                        v-for="system of assessment.systems"
-                        title="System"
-                        :name="system">
-                        <system-view :system="system"></system-view>
+                        v-for="provider of assessment.providers"
+                        title="Provider"
+                        :name="provider">
+                        <provider-view :provider="provider"></provider-view>
                     </show-hide-component>
                 </div>
 
@@ -229,8 +229,8 @@
                                 <tr>
                                     <th></th>
                                     <th></th>
-                                    <th v-for="service of assessment.allServices" :title="service.system.description">
-                                        {{ service.system.displayName }}
+                                    <th v-for="service of assessment.allServices" :title="service.provider.description">
+                                        {{ service.provider.displayName }}
                                     </th>
                                 </tr>
                                 <tr>
@@ -264,18 +264,18 @@
                         </div>
                         <div class="annotated__help">
                             <p>
-                                The consumer can be any system, team, or user that consumes the services offered by the system.
-                                In simple words, a consumer has a dependency on the system.
+                                The consumer can be any system, component, or group that consumes the services offered by the service provider.
+                                In simple words, a consumer has a dependency on the service provider.
                                 Examples include: APIs, applications, authetication, etc.
                             </p>
                             <p>
-                                The consumer can itself be a service provider, but in this context it is the consumer of the systems
-                                that were listed in the previous tab.
+                                The consumer can itself be a service provider, but in this context it is the consumer 
+                                of the service that were listed in the previous tab.
                             </p>
                             <p>
                                 There can also be circular dependencies where one team consumes the services of another team but
                                 itself provides some services that are consumed by the other team.
-                                Those services are outside the scope of defining the service levels for the systems that are listed in the systems tab.
+                                Those services are outside the scope of defining the service levels for the service providers that are listed in the providers tab.
                             </p>
                         </div>
                     </div>
@@ -294,8 +294,8 @@
                                 <tr>
                                     <th></th>
                                     <th></th>
-                                    <th v-for="service of assessment.allServices" :title="service.system.description">
-                                        {{ service.system.displayName }}
+                                    <th v-for="service of assessment.allServices" :title="service.provider.description">
+                                        {{ service.provider.displayName }}
                                     </th>
                                 </tr>
                                 <tr>
