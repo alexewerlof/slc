@@ -3,6 +3,7 @@
     justify-content: space-around;
     align-items: center;
     margin-top: var(--gap2);
+    border-top: var(--bthick) solid var(--primary-color);
 }
 
 .steps-component__step {
@@ -11,6 +12,12 @@
     align-items: center;
     flex-direction: column;
     cursor: pointer;
+}
+
+.steps-component__step-tale {
+    background-color: var(--primary-color);
+    width: var(--bthick);
+    height: 1em;
 }
 
 .steps-component__step-number {
