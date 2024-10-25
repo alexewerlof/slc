@@ -82,7 +82,7 @@ export class Provider {
     }
 
     static load(assessment, providerObj) {
-        const newProvider = new Provider(assessment, providerObj.displayName, providerObj.description)
+        const newProvider = new Provider(assessment, providerObj.displayName, providerObj.description, providerObj.type)
         for (const service of providerObj.services) {
             newProvider.addService(Service.load(newProvider, service))
         }
