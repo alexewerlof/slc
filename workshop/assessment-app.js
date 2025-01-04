@@ -23,7 +23,7 @@ export const app = createApp({
         const assessment = Assessment.load(exampleJson)
         const steps = ['Introduction', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary', 'Export']
         return {
-            currentStep: 5,
+            currentStep: 0,
             steps,
             assessment,
             config,
