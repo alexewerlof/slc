@@ -2,16 +2,28 @@
 
     <div class="annotated">
         <div class="annotated__controls">
-            <h2>Consumer Name</h2>
+            
         </div>
         <div class="annotated__controls">
+            <h2>Consumer Name</h2>
             <input type="text" v-model="consumer.displayName">
             <h2>Description</h2>
             <textarea v-model="consumer.description"></textarea>
         </div>
         <div class="annotated__help">
             <p>
-                Give this consumer a name and description to make it easier to identify.
+                <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">
+                    Consumer
+                </ext-link>
+                refers to the entity that consumes services to achieve a goal.
+                <ul>
+                    <li>For internal services, the consumer can be a group of people, a system, or a component.</li>
+                    <li>For external services, the consumer can be a customer, a partner, or a third-party system.</li>
+                </ul>
+            </p>
+            <p>
+                Give this consumer a name and description to make it easier to identify
+                throuout the service level definition.
             </p>
         </div>
 
@@ -25,7 +37,7 @@
         <div class="annotated__help">
             <p>A service consumer can be any of these types:</p>
             <ul>
-                <li><strong>Group</strong>: a group of 1 or more people</li>
+                <li><strong>Group</strong>: a group of 1 or more <em>people</em></li>
                 <li><strong>Component</strong>: something that actually runs and deploys independently (e.g., a database, microservice, etc.)</li>
                 <li><strong>System</strong>: a logical grouping of components</li>
             </ul>

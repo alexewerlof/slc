@@ -1,58 +1,53 @@
-<div>
-    <div class="annotated">
-        <div class="annotated__controls">
-            <h2>Service</h2>
-            <p>{{ failure.service }}</p>
-            <h2>Consumption</h2>
-            <p>{{ failure.consumption }}</p>
-            <h2>Symptom</h2>
-            <input type="text" v-model="failure.symptom">
-        </div>
-        <div class="annotated__help">
-            <p>
-                How would the consumer know that something is broken?
-                We need to distinguish between root cause and symptoms.
-            </p>
+<div class="annotated">
+    <div class="annotated__controls">
+        <h2>Service</h2>
+        <p>{{ failure.service }}</p>
+        <h2>Consumption</h2>
+        <p>{{ failure.consumption }}</p>
+    </div>
+    <div class="annotated__controls">
+        <h2>Symptom</h2>
+        <input type="text" v-model="failure.symptom">
+    </div>
+    <div class="annotated__help">
+        <p>
+            How would the consumer know that something is broken?
+            We need to distinguish between root cause and symptoms.
+        </p>
+        <ol>
+            <li>The symptom is what the {{ failure.consumption.consumer.displayName }} sees.</li>
+            <li>The root cause can happen in {{ failure.service.provider.displayName }} or any other service providers that causes the symptom.</li>
+        </ol>
+        <p>
+            In the context of Service Levels, we're only interested to the <em>symptoms</em>
+            because that is how the consumer perceives the failure.
+        </p>
+        <p>
+            Service Levels are set at the boundaries between the teams.
+            What goes on inside the team is not the consumers' business.
+        </p>
+    </div>
+
+    <div class="annotated__controls">
+        <h2>Consequence</h2>
+        <input type="text" v-model="failure.consequence">
+    </div>
+    <div class="annotated__help">
+        <p>
+            What are the consequence of the failure for the consumer?
             <ol>
-                <li>The symptom is what the {{ failure.consumption.consumer.displayName }} sees.</li>
-                <li>The root cause is {{ failure.service.provider.displayName }} or any other service providers that causes the symptom.</li>
+                <li>The consequence is <em>how</em> that symptom affects the {{ failure.consumption.consumer.displayName }} to {{ failure.consumption.displayName }}.</li>
+                <li>The symptom is <em>what</em> tells the {{ failure.consumption.consumer.displayName }} that something is wrong</li>
             </ol>
-            <p>
-                Service Levels are set at the boundaries between the teams.
-                What goes on inside the team is not the consumers' business.
-            </p>
-        </div>
+        </p>
+    </div>
 
-        <div class="annotated__controls">
-            <h2>Consequence</h2>
-            <input type="text" v-model="failure.consequence">
+    <div class="annotated__controls">
+        <div class="button-bar">
+            <button class="danger" @click="failure.remove()">
+                {{ icon('remove') }} 
+                Remove Failure
+            </button>
         </div>
-        <div class="annotated__help">
-            <p>
-                What is the consequence of the failure happening?
-                <ol>
-                    <li>The consequence is <em>how</em> that symptom affects the {{ failure.consumption.consumer.displayName }} to {{ failure.consumption.displayName }}.</li>
-                    <li>The symptom is <em>what</em> tells the {{ failure.consumption.consumer.displayName }} that something is wrong</li>
-                </ol>
-            </p>
-        </div>
-
-        <div class="annotated__controls">
-            <div class="button-bar">
-                <button @click="failure.service.addNewFailure(failure.consumption)">
-                    {{ icon('add') }} 
-                    Add New Failure
-                </button>
-                <button class="danger" @click="failure.remove()">
-                    {{ icon('remove') }} 
-                    Remove Failure
-                </button>
-            </div>
-        </div>
-        <div class="annotated__help">
-            <p>
-                Define a new failure for {{ failure.consumption }} ⇸ {{ failure.service }}.
-            </p>
-
     </div>
 </div>

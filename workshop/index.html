@@ -323,7 +323,11 @@
                         </div>
                         <div class="annotated__help">
                             <p>
-                                Failures threaten the consumption of a service.
+                                <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">
+                                    Failures
+                                </ext-link>
+                                threaten the consumption of a service.
+                                "What could go wrong" is a key component to define the level of the service.
                             </p>
                         </div>
                     </div>
@@ -343,7 +347,8 @@
                                 <p>
                                     To identify service failures, first you need to declare which consumption
                                     depends on this service.
-                                    That is is because the failures are tied to the consumption.
+                                    That is is because the failures are tied to the consumption
+                                    and how the consumer perceives the service.
                                 </p>
                                 <p>
                                     You can do that in the "Consumers" tab.
@@ -356,6 +361,22 @@
                             :name="failure">
                             <failure-view :failure="failure"></failure-view>
                         </show-hide-component>
+                        <div class="annotated">
+                            <div class="annotated__controls">
+                                <h2>More Failures</h2>
+                                <div v-for="consumption of service.consumptions">
+                                    <p>
+                                        <strong>Consumer:</strong> {{ consumption.consumer }}
+                                    </p>
+                                    <div class="button-bar">
+                                        <button @click="service.addNewFailure(consumption)">
+                                            {{ icon('add') }} 
+                                            Add New Failure for {{ consumption.displayName }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </show-hide-component>
                 </div>
 
