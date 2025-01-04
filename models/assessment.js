@@ -27,24 +27,6 @@ export class Assessment {
         return this.allServices.flatMap(service => service.metrics)
     }
 
-    get possibleLikelihoods() {
-        return Failure.possibleLikelihoods
-    }
-
-    get possibleImpactLevels() {
-        return Failure.possibleImpactLevels
-    }
-
-    getRisks(likelihood, impactLevel) {
-        if (!Failure.possibleLikelihoods.includes(likelihood)) {
-            throw new RangeError(`Expected likelihood to be one of ${Failure.possibleLikelihoods}. Got ${likelihood}`)
-        }
-        if (!Failure.possibleImpactLevels.includes(impactLevel)) {
-            throw new RangeError(`Expected impactLevel to be one of ${Failure.possibleImpactLevels}. Got ${impactLevel}`)
-        }
-        return this.allFailures.filter(failure => failure.likelihood === likelihood && failure.impactLevel === impactLevel)
-    }
-
     getDependencyCount(consumption, service) {
         if (!isInstance(consumption, Consumption)) {
             throw new Error(`Expected an instance of Consumption. Got ${consumption}`)

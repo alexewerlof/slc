@@ -16,7 +16,6 @@ export class Failure {
         symptom = '',
         consequence = '',
         businessImpact = '',
-        likelihood = config.likelihood.default,
         impactLevel = config.impactLevel.default,
     ) {
         if (!isInstance(service, Service)) {
@@ -30,12 +29,7 @@ export class Failure {
         this.symptom = symptom
         this.consequence = consequence
         this.businessImpact = businessImpact
-        this.likelihood = clamp(likelihood, config.likelihood.min, config.likelihood.max)
         this.impactLevel = clamp(impactLevel, config.impactLevel.min, config.impactLevel.max)
-    }
-
-    get priority() {
-        return this.impactLevel * 100 + this.likelihood
     }
 
     get metrics() {
@@ -57,7 +51,6 @@ export class Failure {
             symptom: this.symptom,
             consequence: this.consequence,
             businessImpact: this.businessImpact,
-            likelihood: this.likelihood,
             impactLevel: this.impactLevel,
         })
     }
@@ -73,7 +66,6 @@ export class Failure {
             symptom: this.symptom,
             consequence: this.consequence,
             businessImpact: this.businessImpact,
-            likelihood: this.likelihood,
             impactLevel: this.impactLevel,
         }
     }
@@ -86,7 +78,6 @@ export class Failure {
             failureObj.symptom,
             failureObj.consequence,
             failureObj.businessImpact,
-            failureObj.likelihood,
             failureObj.impactLevel
         )
         return failure

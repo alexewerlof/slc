@@ -67,10 +67,6 @@ export class Metric {
         }
     }
 
-    get priority() {
-        return Math.min(...this.linkedFailures.map(failure => failure.priority))
-    }
-
     toString() {
         return `${ this.service } ${metricIcon} ${this.displayName}`
     }

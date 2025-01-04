@@ -45,7 +45,7 @@ export class Service {
     }
 
     get failuresByRisk() {
-        return this.failures.sort((f1, f2) => f2.priority - f1.priority)
+        return this.failures.sort((f1, f2) => f2.impactLevel - f1.impactLevel)
     }
 
     addFailure(failure) {
@@ -88,6 +88,14 @@ export class Service {
             throw new Error(`Expected an instance of Consumption. Got ${consumption}`)
         }
         return this.failures.filter(f => f.consumption === consumption)
+    }
+
+    getConsumptionFailureMaxImpactLevel(consumption) {
+        const failures = this.getConsumptionFailures(consumption)
+        if (failures.length === 0) {
+            return 0
+        }
+        return Math.max(...failures.map(f => f.impactLevel))
     }
 
     addConsumption(consumption) {

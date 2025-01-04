@@ -16,7 +16,6 @@
               "symptom": "Can't set the temperature",
               "consequence": "The user cannot set their desired temperature",
               "businessImpact": "The frustrated owner may discourage others from buying our products",
-              "likelihood": 20,
               "impactLevel": 50
             },
             {
@@ -25,7 +24,6 @@
               "symptom": "Can't read the temperature from the car",
               "consequence": "The user cannot decide whether to use remote climate control or not",
               "businessImpact": "They may contact customer support",
-              "likelihood": 80,
               "impactLevel": 10
             }
           ],
@@ -70,7 +68,6 @@
               "symptom": "Cannot see the lock status",
               "consequence": "The user may have to physically walk to the car to check it and that's not always possible",
               "businessImpact": "Frustrated user may call customer support or discourage others from buying our product",
-              "likelihood": 10,
               "impactLevel": 30
             },
             {
@@ -79,7 +76,6 @@
               "symptom": "Can't unlock the car",
               "consequence": "The user may have to use a key",
               "businessImpact": "The user may call customer support",
-              "likelihood": 50,
               "impactLevel": 10
             },
             {
@@ -88,7 +84,6 @@
               "symptom": "Can't lock the car",
               "consequence": "Thieves may get in the car before the user gets to lock it",
               "businessImpact": "The user may take significant financial damage and take us to court",
-              "likelihood": 10,
               "impactLevel": 100
             }
           ],
@@ -141,7 +136,6 @@
               "symptom": "The car image cannot be shown in the app",
               "consequence": "The user may get confused",
               "businessImpact": "User may call customer support",
-              "likelihood": 20,
               "impactLevel": 10
             },
             {
@@ -150,7 +144,6 @@
               "symptom": "The car image cannot be shown in the app",
               "consequence": "The user may get confused",
               "businessImpact": "User may call customer support",
-              "likelihood": 20,
               "impactLevel": 10
             },
             {
@@ -159,7 +152,6 @@
               "symptom": "Image is missing",
               "consequence": "User will get confused and leave the site",
               "businessImpact": "Loss of potential customer",
-              "likelihood": 50,
               "impactLevel": 30
             }
           ],
@@ -213,7 +205,6 @@
               "symptom": "The user may be unable to look up key information",
               "consequence": "The user may be unsatisfied and either call support or not buy the car",
               "businessImpact": "Prospect may call customer support or sales agents or not buy the car",
-              "likelihood": 20,
               "impactLevel": 50
             }
           ],
@@ -249,7 +240,6 @@
               "symptom": "Cannot retrieve the contract",
               "consequence": "User may get frustrated",
               "businessImpact": "The customer may call customer support",
-              "likelihood": 10,
               "impactLevel": 10
             },
             {
@@ -258,7 +248,6 @@
               "symptom": "Fetching wrong contract",
               "consequence": "User may get confused. In the worse case they may end up paying the wrong amount.",
               "businessImpact": "In the worse case they may end up paying the wrong amount.",
-              "likelihood": 10,
               "impactLevel": 80
             }
           ],
@@ -301,7 +290,6 @@
               "symptom": "Wrong car specs are shown to the user",
               "consequence": "The user may make incorrect purchase decision. They may take us to court if the website info is legally binding.",
               "businessImpact": "They may take us to court if the website info is legally binding.",
-              "likelihood": 20,
               "impactLevel": 80
             }
           ],

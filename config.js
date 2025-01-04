@@ -273,14 +273,8 @@ export const config = fz({
         step: 1,
         default: 12,
     }),
-    likelihood: fz({
-        min: 0,
-        max: 100,
-        step: 1,
-        default: 50,
-    }),
     impactLevel: fz({
-        min: 0,
+        min: 1,
         max: 100,
         step: 1,
         default: 50,

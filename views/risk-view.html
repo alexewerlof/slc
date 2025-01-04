@@ -55,39 +55,22 @@
                 When thinking about the business impact, think about the money, time, and resources that are lost when this failure occurs.
             </p>
         </div>
-    </div>
-    
-    <div class="annotated">
         <div class="annotated__controls">
-            <h2>Impact Level</h2>
+            <h3>Impact Level: {{ failure.impactLevel }}</h3>
             <label>
-                {{ failure.impactLevel }}
-                <input type="range" min="0" max="100" v-model.number="failure.impactLevel">
+                <input type="range"
+                    :min="config.impactLevel.min"
+                    :max="config.impactLevel.max"
+                    :step="config.impactLevel.step"
+                    v-model.number="failure.impactLevel">
             </label>
-            <h2>Likelihood</h2>
-            <label>
-                {{ failure.likelihood }}
-                <input type="range" min="0" max="100" v-model.number="failure.likelihood">
-            </label>
-            <h2>Priority</h2>
-            <p>{{ failure.priority }}</p>
         </div>
         <div class="annotated__help">
             <p>
-                Risk = likelihood &times; impact
+                How can you quantify the negative impact of this failure on the business?
             </p>
             <p>
-                What is the negative impact of this failure?
-                We use this setting to sort the metrics by the priority of the risks they monitor.
-            </p>
-            <p>
-                Don't give too much thought to the likelihood because:
-                <ol>
-                    <li>It's hard to predict the future.</li>
-                    <li>What seems very unlikely today can become likely tomorrow as the code evolves</li>
-                    <li>What seems very likely today can become unlikely tomorrow as the service reliability improves</li>
-                </ol>
-                If you're unsure, just leave it at the default value.
+                We use this setting to prioritize metrics (and in turn the SLI) based on the risks they monitor.
             </p>
         </div>
     </div>
