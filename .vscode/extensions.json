@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "ritwickdey.liveserver"
+        "ritwickdey.liveserver",
+        "denoland.vscode-deno"
     ]
 }
