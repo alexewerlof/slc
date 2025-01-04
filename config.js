@@ -273,6 +273,18 @@ export const config = fz({
         step: 1,
         default: 12,
     }),
+    likelihood: fz({
+        min: 0,
+        max: 100,
+        step: 1,
+        default: 50,
+    }),
+    impactLevel: fz({
+        min: 0,
+        max: 100,
+        step: 1,
+        default: 50,
+    }),
     notablePercentiles: [0.1, 0.5, 1, 5, 10, 20, 25, 50, 75, 80, 90, 95, 99, 99.5, 99.9],
     simulator: {
         dataCountPerDay: {

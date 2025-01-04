@@ -4,36 +4,20 @@ import { Service } from './service.js'
 import { Consumption } from './consumption.js'
 import { osloObj } from '../lib/oslo.js'
 import { icon } from '../lib/icons.js'
+import { clamp } from '../lib/math.js'
 
 const failureIcon = icon('failure')
 
 // If a certain service fails, what activities will it impact and how?
 export class Failure {
-
-    static possibleImpactLevels = [
-        'Insignificant',
-        'Minor',
-        'Moderate',
-        'Major',
-        'Catastrophic',
-    ]
-
-    static possibleLikelihoods = [
-        'Rare',
-        'Unlikely',
-        'Possible',
-        'Likely',
-        'Certain',
-    ]
-
     constructor(
         service,
         consumption,
         symptom = '',
         consequence = '',
         businessImpact = '',
-        likelihood = Failure.possibleLikelihoods[0],
-        impactLevel = Failure.possibleImpactLevels[0],
+        likelihood = config.likelihood.default,
+        impactLevel = config.impactLevel.default,
     ) {
         if (!isInstance(service, Service)) {
             throw new Error(`Expected a Service instance. Got ${service}`)
@@ -46,44 +30,12 @@ export class Failure {
         this.symptom = symptom
         this.consequence = consequence
         this.businessImpact = businessImpact
-        this.likelihood = likelihood
-        this.impactLevel = impactLevel
-    }
-
-    set likelihood(val) {
-        if (!Failure.possibleLikelihoods.includes(val)) {
-            throw new Error(`Expected likelihood to be one of ${Failure.possibleLikelihoods}. Got ${val}`)
-        }
-        this._likelihood = val
-    }
-
-    get likelihood() {
-        return this._likelihood
-    }
-
-    set impactLevel(val) {
-        if (!Failure.possibleImpactLevels.includes(val)) {
-            throw new Error(`Expected impactLevel to be one of ${Failure.possibleImpactLevels}. Got ${val}`)
-        }
-        this._impactLevel = val
-    }
-
-    get impactLevel() {
-        return this._impactLevel
+        this.likelihood = clamp(likelihood, config.likelihood.min, config.likelihood.max)
+        this.impactLevel = clamp(impactLevel, config.impactLevel.min, config.impactLevel.max)
     }
 
     get priority() {
-        const likelihoodIndex = Failure.possibleLikelihoods.indexOf(this.likelihood)
-        if (likelihoodIndex === -1) {
-            throw new RangeError(`Expected likelihood to be one of ${Failure.possibleLikelihoods}. Got ${this.likelihood}`)
-        }
-        const impactLevelIndex = Failure.possibleImpactLevels.indexOf(this.impactLevel)
-        if (impactLevelIndex === -1) {
-            throw new RangeError(`Expected impactLevel to be one of ${Failure.possibleImpactLevels}. Got ${this.impactLevel}`)
-        }
-        const likelihoodValue = Failure.possibleLikelihoods.length - likelihoodIndex
-        const impactLevelValue = Failure.possibleImpactLevels.length - impactLevelIndex
-        return likelihoodValue * impactLevelValue
+        return this.impactLevel * 100 + this.likelihood
     }
 
     get metrics() {

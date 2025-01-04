@@ -60,19 +60,15 @@
     <div class="annotated">
         <div class="annotated__controls">
             <h2>Impact Level</h2>
-            <select v-model="failure.impactLevel">
-                <option v-for="impactLevel of failure.constructor.possibleImpactLevels"
-                    :value="impactLevel">
-                    {{ impactLevel }}
-                </option>
-            </select>
+            <label>
+                {{ failure.impactLevel }}
+                <input type="range" min="0" max="100" v-model.number="failure.impactLevel">
+            </label>
             <h2>Likelihood</h2>
-            <select v-model="failure.likelihood">
-                <option v-for="likelihood of failure.constructor.possibleLikelihoods"
-                    :value="likelihood">
-                    {{ likelihood }}
-                </option>
-            </select>
+            <label>
+                {{ failure.likelihood }}
+                <input type="range" min="0" max="100" v-model.number="failure.likelihood">
+            </label>
             <h2>Priority</h2>
             <p>{{ failure.priority }}</p>
         </div>
