@@ -6,7 +6,6 @@
 - [ ] Add in-browser LLM for the workshop
 - [ ] Support calendar-bound windows
 - [ ] Add some metrics to the example.json
-- [ ] The likelihood select box should go to the failure page
 - [ ] Allow directly saving the JSON export
 - [ ] Allow multiple consequences
 
