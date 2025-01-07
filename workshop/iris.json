@@ -14,8 +14,7 @@
               "symptom": "SSR fails due to timeout",
               "consequence": "Older version of the article is served from CDN",
               "businessImpact": "",
-              "likelihood": "Possible",
-              "impactLevel": "Moderate"
+              "impactLevel": 50
             },
             {
               "consumerIndex": 0,
@@ -23,8 +22,7 @@
               "symptom": "some content is missing",
               "consequence": "The reader may get confused or misinformed",
               "businessImpact": "",
-              "likelihood": "Possible",
-              "impactLevel": "Moderate"
+              "impactLevel": 50
             }
           ],
           "metrics": []
@@ -39,8 +37,7 @@
               "symptom": "Front page is slow",
               "consequence": "Readers get frustrated or leave",
               "businessImpact": "",
-              "likelihood": "Possible",
-              "impactLevel": "Moderate"
+              "impactLevel": 50
             },
             {
               "consumerIndex": 1,
@@ -48,8 +45,7 @@
               "symptom": "Front page is broken",
               "consequence": "Readers lose trust",
               "businessImpact": "",
-              "likelihood": "Possible",
-              "impactLevel": "Moderate"
+              "impactLevel": 50
             },
             {
               "consumerIndex": 1,
@@ -57,8 +53,7 @@
               "symptom": "Front page dot not loat",
               "consequence": "Readers lose trust",
               "businessImpact": "",
-              "likelihood": "Possible",
-              "impactLevel": "Moderate"
+              "impactLevel": 50
             }
           ],
           "metrics": []
@@ -79,8 +74,7 @@
               "symptom": "Config is malformed",
               "consequence": "Cannot apply the config",
               "businessImpact": "",
-              "likelihood": "Possible",
-              "impactLevel": "Moderate"
+              "impactLevel": 50
             },
             {
               "consumerIndex": 1,
@@ -88,8 +82,7 @@
               "symptom": "Config values are wrong",
               "consequence": "The front end may crash",
               "businessImpact": "",
-              "likelihood": "Possible",
-              "impactLevel": "Moderate"
+              "impactLevel": 50
             },
             {
               "consumerIndex": 0,
@@ -97,8 +90,7 @@
               "symptom": "Misconfiguration",
               "consequence": "A/B tests don't apply",
               "businessImpact": "",
-              "likelihood": "Possible",
-              "impactLevel": "Moderate"
+              "impactLevel": 50
             }
           ],
           "metrics": []
