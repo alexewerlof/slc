@@ -57,8 +57,8 @@ export class Service {
         return failure
     }
 
-    addNewFailure(consumption, symptom, consequence, businessImpact, likelihood, impactLevel) {
-        return this.addFailure(new Failure(this, consumption, symptom, consequence, businessImpact, likelihood, impactLevel))
+    addNewFailure(consumption, symptom, consequence, businessImpact, impactLevel) {
+        return this.addFailure(new Failure(this, consumption, symptom, consequence, businessImpact, impactLevel))
     }
 
     removeFailure(failure) {
