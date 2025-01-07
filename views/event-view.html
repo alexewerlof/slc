@@ -1,0 +1,159 @@
+<div>
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>Description</h2>
+            <p>{{ metric.description }}</p>
+        </div>
+
+        <div class="annotated__controls">
+            <h2>Budgeting</h2>
+            <div class="block">
+                <p>
+                    <label>
+                        <input
+                            type="radio"
+                            v-model="metric.isTimeBased"
+                            :value="false">
+                        Event-Based -> Event Unit
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input
+                            type="radio"
+                            v-model="metric.isTimeBased"
+                            :value="true">
+                        Time-Based -> Time slot length
+                    </label>
+                </p>
+            </div>
+        </div>
+        <div class="annotated__help">
+            <p>
+                How is failure or success perceived from the point of view of the consumers?
+                This choice impacts the so-called "budgeting method":
+            </p>
+            <p>
+                SLIs can either be either:
+                <ext-link href="https://blog.alexewerlof.com/p/time-based-vs-event-based">
+                    event-based or time-based
+                </ext-link>.
+            </p>
+            <table>
+                <caption>Comparing SLI Types</caption>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Event-Based</th>
+                        <th>Time-Based</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Use</th>
+                        <td>When consumers perceive reliability by events</td>
+                        <td>When consumers perceive reliability by time</td>
+                    </tr>
+                    <tr>
+                        <th>Counts</th>
+                        <td>Good events</td>
+                        <td>Good timeslices</td>
+                    </tr>
+                    <tr>
+                        <th>Accuracy</th>
+                        <td>More accurately adjust to the amount of load</td>
+                        <td>More forgiving towards the negative impact of failed events</td>
+                    </tr>
+                    <tr>
+                        <th>Advantage</th>
+                        <td>Auto-adjusts to changes (spikes and drops) in the load</td>
+                        <td>Predictable error budget</td>
+                    </tr>
+                    <tr>
+                        <th>Formula</th>
+                        <td>
+                            <math>
+                                <mrow>
+                                    <mfrac>
+                                        <mrow><mi>Good events</mi></mrow>
+                                        <mrow><mi>Valid events</mi></mrow>
+                                    </mfrac>
+                                    <mrow><mo>&times;</mo><mn>100</mn></mrow>
+                                </mrow>
+                            </math>
+                        </td>
+                        <td>
+                            <math>
+                                <mrow>
+                                    <mfrac>
+                                        <mrow><mi>Good timeslices</mi></mrow>
+                                        <mrow><mi>All timeslices</mi></mrow>
+                                    </mfrac>
+                                    <mrow><mo>&times;</mo><mn>100</mn></mrow>
+                                </mrow>
+                            </math>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="annotated__controls">
+            <h3>Data Point Type</h3>
+            <p>
+                <label>
+                    <input type="radio" v-model="metric.isNumeric" :value="false">
+                    Boolean
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input type="radio" v-model="metric.isNumeric" :value="true">
+                    Numeric
+                </label>
+            </p>
+        </div>
+        <div class="annotated__help">
+            <p>
+                What is the type of each data point in your metric?
+            </p>
+            <p>
+                For example, if you are measuring the number of requests, you are collecting numeric data points.
+            </p>
+            <p>
+                If you are measuring the availability of a service, you are collecting boolean data points.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="annotated" v-if="metric.isNumeric">
+        <div class="annotated__controls">
+            <h4>Data Point Unit</h4>
+            <input type="text" v-model="metric.numericUnit">
+        </div>
+        <div class="annotated__help">
+            <p>
+                What is the unit of measurement?
+            </p>
+            <p>
+                For example, if you are measuring the number of requests, the unit is "requests".
+            </p>
+            <p>
+                If you are measuring request latency, the unit may be "milliseconds" or "seconds".
+            </p>
+        </div>
+    </div>
+
+    <condition-view :condition="metric.condition"></condition-view>
+
+    <div class="annotated">
+        <div class="annotated__controls">
+            <div class="button-bar">
+                <button class="danger" @click="metric.remove()">
+                    {{ icon('remove') }} 
+                    Remove Metric
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

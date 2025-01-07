@@ -428,44 +428,29 @@
                 </div>
 
                 <div v-if="currentStep === 5">
-                    <div class="annotated">
-                        <div class="annotated__controls">
-                        </div>
-                        <div class="annotated__help">
-                            <p>
-                                In this page, you define what events you want to track
-                                for each risk.
-                                Each event identifies one or more failures.
-                            </p>
-                        </div>
-                    </div>
-                    <show-hide-component 
-                        v-for="service of assessment.allServices"
-                        title="Service"
-                        :name="service">
-                        <service-metric-view :service="service"></service-metric-view>
+                    <p>
+                        In this page, you define what events you want to track for each risk.
+                        Each event identifies one or more failures.
+                    </p>
 
-                    <div class="annotated">
-                        <div class="annotated__controls">
-                        </div>
-                        <div class="annotated__help">
-                            <p>
-                                Metrics are used to measure when a success or failure event happens.
-                            </p>
-                        </div>
-                    </div>
-                    <show-hide-component 
+                    <service-metric-view
                         v-for="service of assessment.allServices"
-                        title="Service"
-                        :name="service">
-                        <service-metric-view :service="service"></service-metric-view>
+                        :service="service"></service-metric-view>
                 </div>
 
                 <div v-if="currentStep === 6">
-                    <summary-view :assessment="assessment"></summary-view>
+                    <show-hide-component 
+                        v-for="metric of assessment.allMetrics"
+                        title="Metric"
+                        :name="metric">
+                        <event-view :metric="metric"></event-view>
                 </div>
 
                 <div v-if="currentStep === 7">
+                    <summary-view :assessment="assessment"></summary-view>
+                </div>
+
+                <div v-if="currentStep === 8">
                     <div class="block">
                         <div class="button-bar">
                             <button @click="exportToJson()">

@@ -1,66 +1,39 @@
 <div>
+    <div class="block-both">
+        <h1>Service: {{ service }}</h1>
 
-    <div class="annotated">
-        <div class="annotated__controls">
-            <h2>Service</h2>
-            <p>{{ service }}</p>
-            <h2>Failures</h2>
-            <div v-if="service.failures.length === 0" class="error block">
-                <p>
-                    You have not identified any failures for this service.
-                    Make sure that there is a consumption for this service and you
-                    have identified the symptoms for the failures.
-                </p>
-            </div>    
+        <h2>Failures</h2>
+        <div v-if="service.failures.length === 0" class="error block">
+            <p>
+                You have not identified any failures for this service.
+                Make sure that there is a consumption for this service and you
+                have identified the symptoms for the failures.
+            </p>
         </div>
+        <table v-if="service.failures.length">
+            <thead>
+                <tr>
+                    <th>Consumer</th>
+                    <th>Consumption</th>
+                    <th>Symptom</th>
+                    <th>Consequence</th>
+                    <th>Business Impact</th>
+                    <th>Impact Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="failure of service.failures">
+                    <td>{{ failure.consumption.consumer }}</td>
+                    <td>{{ failure.consumption.displayName }}</td>
+                    <td>{{ failure.symptom }}</td>
+                    <td>{{ failure.consequence }}</td>
+                    <td>{{ failure.businessImpact }}</td>
+                    <td>{{ failure.impactLevel }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-        <div v-for="failure of service.failures" class="annotated">
-            <div class="annotated__controls">
-                <p>{{ failure.symptom }}</p>
-            </div>
 
-            <div class="annotated__help">
-                <code>
-                    <span class="punct">{{ icon('because') }}</span>
-                    When
-                    <span title="Consumer" class="exprs">
-                        {{ failure.consumption.consumer.displayName }}
-                    </span>
-                    <br>
-                    &nbsp;
-                    <span class="punct">{{ icon('because') }}</span>
-                    Is trying to
-                    <span title="Consumption" class="exprs">
-                        {{ failure.consumption.displayName }}
-                    </span>
-                    <br>
-                    &nbsp;&nbsp;
-                    <span class="punct">{{ icon('because') }}</span>
-                    With the consequence of
-                    <span title="Consequence" class="exprs">
-                        {{ failure.consequence }}
-                    </span>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;
-                    <span class="punct">{{ icon('because') }}</span>
-                    Leading to
-                    <span title="Business Impact" class="exprs">
-                        {{ failure.businessImpact }}
-                    </span>
-                    <span class="punct"> (</span>
-                    <span title="Impact Level" class="exprs">
-                        {{ failure.impactLevel }}
-                    </span>
-                    impact<span class="punct">, </span>
-                    <span title="Likelihood" class="exprs">
-                        {{ failure.likelihood }}
-                    </span>
-                    likelihood<span class="punct">)</span>
-                </code>
-            </div>
-        </div>
-    </div>
-    
     <show-hide-component
         v-for="metric in service.metrics"
         title="Metric"

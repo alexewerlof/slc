@@ -4,6 +4,7 @@ import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
 import ProviderView from '../views/provider-view.js'
 import ConsumerView from '../views/consumer-view.js'
+import EventView from '../views/event-view.js'
 import FailureView from '../views/failure-view.js'
 import RiskView from '../views/risk-view.js'
 import ServiceMetricView from '../views/service-metric-view.js'
@@ -21,9 +22,9 @@ const exampleJson = await loadJson('example.json')
 export const app = createApp({
     data() {
         const assessment = Assessment.load(exampleJson)
-        const steps = ['Introduction', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary', 'Export']
+        const steps = ['Introduction', 'Provider', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Events', 'Summary', 'Export']
         return {
-            currentStep: 0,
+            currentStep: 6,
             steps,
             assessment,
             config,
@@ -33,6 +34,7 @@ export const app = createApp({
     components: {
         ProviderView,
         ConsumerView,
+        EventView,
         FailureView,
         RiskView,
         ServiceMetricView,
