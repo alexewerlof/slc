@@ -393,7 +393,7 @@ export const config = fz({
         // ▢◻▣▷◇◈○◌◯◎◉⬡＋－🔎︎
         workshop: '⯐',
         feedback: '🗩',
-        scope: '::',
+        scope: '⸬',
         edit: '✎',
         owner: '✹',
         provider: '▢',
