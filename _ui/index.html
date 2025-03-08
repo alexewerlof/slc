@@ -8,9 +8,12 @@
 </head>
 <body>
     <div id="app">
-        <header>
-            Header
-        </header>
+        <header-component>
+            <div class="announcement" v-if="showAnnouncement">
+                This page is just a demo of UI elements
+                <button @click="showAnnouncement = false" type="button">Dismiss</button>
+            </div>
+        </header-component>
         <div class="container">
             <div class="annotated">
                 <div class="annotated__full-width">
