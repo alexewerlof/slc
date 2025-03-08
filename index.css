@@ -12,7 +12,7 @@ html {
 }
 
 body {
-    background-color: var(--background-color);
+    background-color: var(--background-darker);
     color: var(--foreground-color);
     font-family: var(--body-font-family);
     margin: 0;
@@ -74,7 +74,10 @@ body {
 
     article {
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
+        gap: 1em;
+        align-items: flex-start;
+        padding: 0 1em;
     }
 
     article section {
@@ -88,7 +91,6 @@ body {
 
 section {
     box-sizing: content-box;
-    padding: 1em;
 }
 
 header {

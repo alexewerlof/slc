@@ -1,8 +1,13 @@
 fieldset {
-    border: var(--bthick) solid var(--divider-color);
+    border: var(--bthick) solid var(--ui-border);
     border-radius: var(--bradius);
     padding: var(--gap);
     margin: var(--gap) 0;
+    background-color: var(--background-color);
+}
+
+fieldset legend {
+    background-color: var(--background-color);
 }
 
 input[type=range] {
@@ -18,7 +23,7 @@ input[type=range] {
 input[type=range]::-webkit-slider-runnable-track {
     border: 1px solid var(--ui-border);
     transition: border-color var(--animation-speed) ease-in-out;
-    background-color: var(--background-lighter);
+    background-color: var(--background-darker);
     height: 100%;
 }
 
@@ -48,7 +53,7 @@ input[type=search], input[type=text], input[type=number], select, textarea {
     font-size: inherit;
     border: 1px solid var(--ui-border);
     border-radius: var(--bradius);
-    background-color: var(--background-lighter);
+    background-color: var(--background-darker);
     color: inherit;
     width: 100%;
     box-sizing: border-box;
