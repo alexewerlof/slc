@@ -59,7 +59,7 @@ export const config = fz({
         ]),
     }),
     eventUnit: fz({
-        default: 'events',
+        default: 'requests',
         presets: fz([
             {
                 eventUnit: 'events',
@@ -104,7 +104,7 @@ export const config = fz({
         ]),
     }),
     metricName: fz({
-        default: 'metric condition',
+        default: 'response_latency',
     }),
     metricUnit: fz({
         default: '',
