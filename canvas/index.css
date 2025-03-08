@@ -1,0 +1,72 @@
+/* Reset some default styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+#toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px; /* Adjust as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    background-color: var(--foreground-color);
+}
+
+#toolbar-buttons {
+    background-color: var(--background-color);
+}
+
+#main-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px; /* Same as toolbar height */
+    height: calc(100vh - 50px); /* Full height minus toolbar height */
+}
+
+#properties {
+    width: 200px; /* Adjust as needed */
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#chat {
+    width: 300px; /* Adjust as needed */
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#canvas {
+    flex-grow: 1;
+    background-color: var(--foreground-color);
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+#lines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+#lines .line {
+    stroke: blue;
+    fill: transparent;
+}
+
+#canvas .shape {
+    background-color: red;
+    display: block;
+    width: 100px;
+    position: absolute;
+}

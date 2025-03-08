@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
+    <script>
+    window.dataLayer ||= []
+    function gtag(){dataLayer.push(arguments)}
+    gtag('js', new Date());gtag('config', 'G-J0S6RM2D7G');
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="./index.css">
+    <meta name="description" content="A simple utility for facilitating Service Level Workshops.">
+    <meta property="og:title" content="Service Level Workshop">
+    <meta property="og:description" content="A simple utility for facilitating Service Level Workshops.">
+    <meta property="og:image" content="https://slc.alexewerlof.com/img/icon.png">
+    <meta property="og:url" content="https://slc.alexewerlof.com">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/png" href="../img/icon.png">
+    <title>Canvas</title>
+</head>
+
+<body>
+    <noscript>
+        <p>This web application requires JavaScript to work.</p>
+    </noscript>
+    <div id="app" v-cloak>
+        <div id="toolbar">
+            <div id="toolbar-buttons">
+                <button>Owner</button>
+                <button>Provider</button>
+                <button>Service</button>
+                <button>Consumer</button>
+                <button>Stakeholder</button>
+                <button>Failure</button>
+                <button>Metric</button>
+                <label>
+                    <input type="checkbox" v-model="isPropsVisible">
+                    Properties
+                </label>
+                <label>
+                    <input type="checkbox" v-model="isChatVisible">
+                    Chat
+                </label>
+            </div>
+        </div>
+        <div id="main-container">
+            <div id="properties" v-if="isPropsVisible">Properties</div>
+            <div id="canvas">
+                <svg id="lines" width="100%" height="100%">
+                    <path class="line" :d="line(shapes[0], shapes[1])" />
+                </svg>
+                <div v-for="shape in shapes"
+                    :class="shapeClass(shape)"
+                    :style="shapeStyle(shape)"
+                    >{{ shape.title }}
+                </div>
+            </div>
+            <div id="chat" v-if="isChatVisible">Some chat here</div>
+        </div>
+        <feedback-blob-component prefill="Canvas"></feedback-blob-component>
+    </div>
+    <script type="module" src="index.js" defer async></script>
+</body>
+
+</html>
