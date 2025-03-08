@@ -20,21 +20,47 @@
                     <form>
                         <fieldset>
                             <legend>Form legend</legend>
-                            <label for="input1">Text Input</label>
-                            <input type="text" id="input1" name="input1">
-                            <label for="input2">Number Input</label>
-                            <input type="number" id="input2" name="input2" value="123456.789">
-                            <label for="input3">Search Input</label>
-                            <input type="search" id="input3" name="input3" value="Synthetic Availability">
-                            <label for="input4">Input 4</label>
-                            <select id="input4" name="input4">
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
-                            <label for="input5">Input 5</label>
-                            <textarea id="input5" name="input5">Some longer text that may span across multiple rows.This is a text area after all.</textarea>
-                            <div>
+                            <div class="block">block</div>
+                            <div class="block code">
+                                This is a code block
+                                <label>Label</label>
+                                <code>
+                                    <span class="funct">funct</span>
+                                    <span class="punct">(</span>
+                                    <span class="exprs">"SLI"</span>
+                                    <span class="punct">,</span>
+                                    <span class="const">98</span>
+                                    <span class="punct">)</span>
+                                </code>
+                            </div>
+                            <div class="block info">block info</div>
+                            <div class="block warning">block warning</div>
+                            <div class="block error">block error</div>
+                            <div class="input-group">
+                                <label for="input1">Text Input</label>
+                                <input type="text" id="input1" name="input1">
+                            </div>
+                            <div class="input-group">
+                                <label for="input2">Number Input</label>
+                                <input type="number" id="input2" name="input2" value="123456.789">
+                            </div>
+                            <div class="input-group">
+                                <label for="input3">Search Input</label>
+                                <input type="search" id="input3" name="input3" value="Synthetic Availability">
+                            </div>
+                            <div class="input-group">
+                                <label for="input4">Input 4</label>
+                                <select id="input4" name="input4">
+                                    <option value="1">Option 1</option>
+                                    <option value="2">Option 2</option>
+                                    <option value="3">Option 3</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="input5">Input 5</label>
+                                <textarea id="input5" name="input5">Some longer text that may span across multiple rows.This is a text area after all.</textarea>
+                            </div>
+                            <div class="input-group">
                                 <label>
                                     <input type="checkbox">
                                     Checkbox
@@ -52,7 +78,7 @@
                                     Checkbox checked disabled
                                 </label>
                             </div>
-                            <div>
+                            <div class="input-group">
                                 <label>
                                     <input type="radio" name="input7"> Radio 1
                                 </label>
@@ -66,11 +92,24 @@
                                     <input type="radio" name="input7" disabled> Radio Disabled
                                 </label>
                             </div>
-                            <label for="input8">Rnage Input</label>
-                            <input type="range" id="input8" name="input8">
-                            <label for="input9">Number Input</label>
-                            <input type="number" id="input9" name="input9">
-                            <button type="submit">Submit</button>
+                            <div class="input-group">
+                                <label for="input8">Rnage Input</label>
+                                <input type="range" id="input8" name="input8">
+                            </div>
+                            <div class="input-group">
+                                <label for="input9">Number Input</label>
+                                <input type="number" id="input9" name="input9">
+                            </div>
+                            <div class="input-group">
+                                <label for="input10">
+                                    Search
+                                    <div class="subtle-hint">This is an input and button pair</div>
+                                </label>
+                                <div class="input-button-pair">
+                                    <input type="search" id="input10">
+                                    <button type="submit">Submit</button>
+                                </div>
+                            </div>
                         </fieldset>
                     </form>
                     <div class="button-bar">
