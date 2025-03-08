@@ -93,17 +93,6 @@ section {
     box-sizing: content-box;
 }
 
-header {
-    color: var(--primary-color);
-    text-align: center;
-}
-
-header .announcement {
-    background-color: var(--secondary-color);
-    color: var(--background-color);
-    padding: 0.5em;
-}
-
 .logo {
     height: 1em;
     position: relative;

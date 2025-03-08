@@ -31,27 +31,12 @@
     </noscript>
 
     <div id="app" v-cloak>
-        <header>
-            <transition>
-                <div class="announcement" v-if="showAnnouncement">
-                    <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
-                    <button @click="showAnnouncement = false" type="button">Dismiss</button>
-                </div>
-            </transition>
-            <a href="/">
-                <h1>
-                    <img src="img/icon.svg" alt="Service Level Calculator Logo" class="logo" />
-                    Service Level Calculator
-                </h1>
-            </a>
-            <ul class="top-nav only-mobile">
-                <li><a href="#sli-title">SLI</a></li>
-                <li><a href="#slo-title">SLO</a></li>
-                <li><a href="#error-budget-title">Error Budget</a></li>
-                <li><a href="#alert-title">Alerting</a></li>
-                <li><a href="#share-title">Share</a></li>
-            </ul>
-        </header>
+        <header-component>
+            <div class="announcement" v-if="showAnnouncement">
+                <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
+                <button @click="showAnnouncement = false" type="button">Dismiss</button>
+            </div>
+        </header-component>
 
         <article>
             <!------------------------ SLI ------------------------>

@@ -1,0 +1,10 @@
+header {
+    color: var(--primary-color);
+    text-align: center;
+}
+
+header .announcement {
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    padding: 0.5em;
+}
