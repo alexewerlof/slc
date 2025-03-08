@@ -57,8 +57,7 @@ input[type=search], input[type=text], input[type=number], select, textarea {
     color: inherit;
     width: 100%;
     box-sizing: border-box;
-    transition: background-color var(--animation-speed) ease-in-out,
-                border-color var(--animation-speed) ease-in-out;
+    transition: border-color var(--animation-speed) ease-in-out;
 }
 
 input[type=search]:hover, input[type=text]:hover, input[type=number]:hover, select:hover, textarea:hover,
@@ -68,8 +67,7 @@ table input[type=search], table input[type=text], table input[type=number], tabl
 
 
 input[type=search]:focus, input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
-    background-color: var(--secondary-color);
-    color: var(--background-color);
+    border-color: var(--secondary-color);
 }
 
 input[type=search]:focus-visible, [type=text]:focus-visible, input[type=number]:focus-visible, select:focus-visible, textarea:focus-visible {

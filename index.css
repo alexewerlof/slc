@@ -124,7 +124,7 @@ header h1 {
     padding: 0 1em;
 }
 
-h1, h2, h3, h4, h5, h6, th, legend, caption {
+h1, h2, h3, h4, h5, h6, th, legend, caption, label {
     font-family: var(--title-font-family);
     font-weight: 400;
 }
