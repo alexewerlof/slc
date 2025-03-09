@@ -34,6 +34,7 @@
     color: var(--brand-purple);
     overflow: auto;
     font-family: var(--code-font-family);
+    position: relative; /* for the button to show properly */
 }
 
 .block.code label {
@@ -41,7 +42,7 @@
 }
 
 .block.code button {
-    opacity: 0.5;
+    opacity: 0.8;
     background-color: transparent;
     color: var(--primary-color);
     border: none;
@@ -51,6 +52,7 @@
     border-top-right-radius: 0;
     border-top-left-radius: 0;
     border-bottom-right-radius: 0;
+    font-size: 1em;
 }
 
 .block.code button:hover, .block.code button:focus {
