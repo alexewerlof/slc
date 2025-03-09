@@ -12,7 +12,7 @@ html {
 }
 
 body {
-    background-color: var(--background-darker);
+    background-color: var(--background-color);
     color: var(--foreground-color);
     font-family: var(--body-font-family);
     margin: 0;
@@ -215,4 +215,13 @@ dialog p {
     bottom: 0;
     left: 0;
     max-width: 440px;
+}
+
+.surface {
+    background-color: var(--background-color);
+    border: var(--bthick) solid var(--divider-color);
+    padding: var(--gap2);
+    border-radius: var(--bradius3);
+    box-shadow: inset 0 0 var(--gap) var(--bthick) var(--divider-color),
+        0 0 var(--gap2) var(--bthick) rgba(0,0,0);
 }

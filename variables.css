@@ -6,7 +6,7 @@
     --background-color: #001426;
     --background-darker: #000C17;
     --background-lighter: #001B33;
-    --divider-color: #374b5d;
+    --divider-color: #183a57;
     --disabled-color: #374b5d;
     --ui-border: #183a57;
     --foreground-color: #FFF5E6;
@@ -17,8 +17,10 @@
     --brand-pink: #F2699E;
     --brand-purple: #b469f2;
     --gap: 0.5rem;
-    --gap2: 1rem;
-    --gap3: 1.5rem;
-    --bradius: 0.2rem;
+    --gap2: calc(var(--gap) * 2);
+    --gap3: calc(var(--gap) * 3);
+    --bradius: 2px;
+    --bradius2: calc(var(--bradius) * 2);
+    --bradius3: calc(var(--bradius) * 3);
     --bthick: 1px;
 }

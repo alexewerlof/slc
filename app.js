@@ -42,8 +42,6 @@ export const app = createApp({
             showCookiePopup,
             // Show the short window alert
             shortWindowVisible: false,
-            // Show boundary edit boxes
-            showBounds: true,
             // The text shown in the toast notification
             toastCaption: '',
             // The title of the SLI
@@ -101,11 +99,6 @@ export const app = createApp({
         upperThreshold(newVal) {
             if (newVal < this.lowerThreshold) {
                 this.lowerThreshold = newVal
-            }
-        },
-        showBounds(newVal) {
-            if (!newVal && this.isBounded) {
-                this.showBounds = true
             }
         },
     },
