@@ -148,8 +148,7 @@ a, a:hover, a:active {
 }
 
 .input-group {
-    margin-top: var(--gap);
-    margin-bottom: var(--gap);
+    margin: var(--gap);
 }
 
 .input-button-pair {
