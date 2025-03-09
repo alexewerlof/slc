@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Alata&family=Roboto&family=RobotoMono&display=swap');
 @import url('variables.css');
 @import url('vue-specific.css');
+@import url('block.css');
 @import url('inputs.css');
 @import url('code.css');
 @import url('toast.css');
@@ -24,46 +25,10 @@ body {
     background-size: auto 50vh;
 }
 
-.block {
-    display: block;
-    margin: var(--gap2) 0;
-}
-
-.block-h {
-    display: block;
-    margin: var(--gap) 0;
-}
-
-.block-v {
-    display: block;
-    margin: 0 var(--gap);
-}
-
-.block-both {
-    display: block;
-    margin: var(--gap) var(--gap);
-}
-
-.block p {
-    margin-block: 0.25em 0;
-}
-
-.info.block {
-    padding: var(--gap);
-    background-color: var(--secondary-color);
-    color: var(--background-color);
-}
-
-.warning.block {
-    padding: var(--gap);
-    background-color: var(--primary-color);
-    color: var(--background-color);
-}
-
-.error.block {
-    padding: var(--gap);
-    background-color: var(--brand-red);
-    color: var(--background-color);
+@media screen and (max-width: 999px) {
+    section {
+        margin: var(--gap);
+    }
 }
 
 @media screen and (min-width: 1000px) {

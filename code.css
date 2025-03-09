@@ -1,31 +1,7 @@
 /* Colors for a very simple manually annotated code highlighter */
 
 code {
-    font-family: 'Roboto Mono', monospace;
-}
-
-.code.block {
-    background-color: var(--background-darker);
-    padding: var(--gap);
-    position: relative;
-    overflow: auto;
-}
-
-.block.code button {
-    opacity: 0.5;
-    background-color: transparent;
-    color: var(--primary-color);
-    border: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.block.code button:hover, .block.code button:focus {
-    opacity: 1;
+    font-family: var(--code-font-family);
 }
 
 code label {
