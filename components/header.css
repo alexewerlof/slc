@@ -1,10 +1,40 @@
 header {
-    color: var(--primary-color);
-    text-align: center;
+    margin-bottom: var(--gap3);
+    border-bottom: 1px solid var(--divider-color);
+    box-shadow: 0 0 var(--gap2) 0 var(--divider-color),
+        inset 0 0 var(--gap2) 0 var(--divider-color);
+}
+
+header h1 {
+    display: inline-block;
+    margin: 0;
+    font-weight: 400;
+    font-size: 2em;
+}
+
+header .logo {
+    height: 1em;
+    position: relative;
+    top: 0.1em;
 }
 
 header .announcement {
+    text-align: center;
     background-color: var(--secondary-color);
     color: var(--background-color);
     padding: 0.5em;
+}
+
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    margin: 0;
+    padding: 1em;
+    text-align: center;
+}
+
+.top-nav li {
+    display: inline-block;
+    padding: 0 1em;
 }

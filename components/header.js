@@ -5,5 +5,5 @@ export default {
     template: await loadComponent(import.meta.url),
     components: {
         ExtLink,
-    }
+    },
 }

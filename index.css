@@ -58,37 +58,6 @@ section {
     box-sizing: content-box;
 }
 
-.logo {
-    height: 1em;
-    position: relative;
-    top: 0.1em;
-}
-
-header h1 {
-    display: inline-block;
-    color: inherit;
-    margin: 0;
-    font-weight: 400;
-    font-size: 2em;
-}
-
-.top-nav {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    border-top: 0.15em solid var(--background-lighter);
-    border-bottom: 0.15em solid var(--background-lighter);
-    margin: 0;
-    padding: 1em;
-    background-color: var(--background-color);
-    text-align: center;
-}
-
-.top-nav li {
-    display: inline-block;
-    padding: 0 1em;
-}
-
 h1, h2, h3, h4, h5, h6, th, legend, caption, label {
     font-family: var(--title-font-family);
     font-weight: 400;
