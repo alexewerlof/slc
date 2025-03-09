@@ -8,6 +8,7 @@ fieldset {
 
 fieldset legend {
     padding-inline: 0;
+    padding: 0 var(--gap);
     color: var(--primary-color);
 }
 
