@@ -41,7 +41,7 @@
         <article>
             <!------------------------ SLI ------------------------>
             <section class="surface">
-                <h1 id="sli-title">
+                <h2 id="sli-title">
                     SLI
                     <help-component>
                         <p>
@@ -79,7 +79,7 @@
                             Common SLIs include latency, availability, yield, durability, correctness, etc.
                         </p>
                     </help-component>
-                </h1>
+                </h2>
                 <div class="info block">
                     🎉Tip: <ext-link href="templates/index.html">Use Templates</ext-link>
                 </div>
@@ -507,58 +507,59 @@
             <!------------------------ SLO ------------------------>
             <section class="surface">
                 
-                    <h1 id="slo-title">
-                        SLO
-                        <help-component>
-                            <p>
-                                Service Level Objective (SLO) is the target percentage of
-                                good {{ sloWindow.eventUnitNorm }}
-                                out of total {{ sloWindow.eventUnitNorm }}
-                                in {{ sloWindow }}.
-                            </p>
-                            <p>
-                                Using the two sliders below you can fine tune the SLO to your needs.
-                                The first slider is for the integer part of the percentage ({{ percL10n(sloInt) }}).
-                                The second slider is for the fractional part of the percentage ({{ percL10n(sloFrac) }}).
-                            </p>
-                            <table>
-                                <caption>Typical SLO values</caption>
-                                <thead>
-                                    <tr>
-                                        <th>Informal Name</th>
-                                        <th>SLO Value</th>
-                                        <th aria-label="try button"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="p in config.slo.presets">
-                                        <td>{{ p.title }}</td>
-                                        <td>{{percL10n(p.slo)}}</td>
-                                        <td><button type="button" @click="slo = p.slo">Try!</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </help-component>
-                    </h1>
-                    <div v-if="slo > 99.9" class="info block">
+                <h2 id="slo-title">
+                    SLO
+                    <help-component>
                         <p>
-                            Note: Just be mindful of the price tag for this high service level <em>objective</em>!
+                            Service Level Objective (SLO) is the target percentage of
+                            good {{ sloWindow.eventUnitNorm }}
+                            out of total {{ sloWindow.eventUnitNorm }}
+                            in {{ sloWindow }}.
                         </p>
+                        <p>
+                            Using the two sliders below you can fine tune the SLO to your needs.
+                            The first slider is for the integer part of the percentage ({{ percL10n(sloInt) }}).
+                            The second slider is for the fractional part of the percentage ({{ percL10n(sloFrac) }}).
+                        </p>
+                        <table>
+                            <caption>Typical SLO values</caption>
+                            <thead>
+                                <tr>
+                                    <th>Informal Name</th>
+                                    <th>SLO Value</th>
+                                    <th aria-label="try button"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="p in config.slo.presets">
+                                    <td>{{ p.title }}</td>
+                                    <td>{{percL10n(p.slo)}}</td>
+                                    <td><button type="button" @click="slo = p.slo">Try!</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </help-component>
+                </h2>
 
-                        <p>
-                            Everyone wants the highest possible number but
-                            <ext-link href="https://blog.alexewerlof.com/p/10x9">
-                                not everyone is willing to pay the price.
-                            </ext-link>
-                        </p>
-                    </div>
-                    <div v-if="slo < 70" class="info block">
-                        <p>
-                            Note: this is an unusually low service level objective.
-                            Typically service level <em>objective</em> is above {{ percL10n(90) }} with some rare exceptions.
-                            Please check the <a href="#error-budget-title">Error budget</a> for implications of your chosen SLO.
-                        </p>
-                    </div>
+                <div v-if="slo > 99.9" class="info block">
+                    <p>
+                        Note: Just be mindful of the price tag for this high service level <em>objective</em>!
+                    </p>
+
+                    <p>
+                        Everyone wants the highest possible number but
+                        <ext-link href="https://blog.alexewerlof.com/p/10x9">
+                            not everyone is willing to pay the price.
+                        </ext-link>
+                    </p>
+                </div>
+                <div v-if="slo < 70" class="info block">
+                    <p>
+                        Note: this is an unusually low service level objective.
+                        Typically service level <em>objective</em> is above {{ percL10n(90) }} with some rare exceptions.
+                        Please check the <a href="#error-budget-title">Error budget</a> for implications of your chosen SLO.
+                    </p>
+                </div>
                 <fieldset>
                     <legend>Value: {{ percL10n(slo) }}</legend>
                     <div class="input-group">
@@ -800,7 +801,7 @@
                     </div>
 
                     <!------------------------ Error budget ------------------------>
-                    <h1 id="error-budget-title">
+                    <h2 id="error-budget-title">
                         Error budget:
                         <label for="slo-int-input">
                             {{ percL10n(errorBudgetPerc) }}
@@ -887,7 +888,7 @@
                                 </tbody>
                             </table>
                         </help-component>
-                    </h1>
+                    </h2>
                     <div class="warning block" v-if="errorBudget.eventCount === 0" aria-colcount="warning block">
                         <p>
                             Warning: The error budget is 0 based on your estimated number of valids {{ sloWindow.eventUnitNorm }}.
@@ -995,142 +996,142 @@
 
             <!------------------------ Alert ------------------------>
             <section class="surface">
-                    <h1 id="alert-title">
-                        Alerting
-                        <help-component>
+                <h2 id="alert-title">
+                    Alerting
+                    <help-component>
+                        <p>
+                            What is the point of setting SLI/SLO if we are not going to take application
+                            when the SLO is violated?
+                        </p>
+                        <p>
+                            Alerting on error budgets enable us to be on top of the reliability of our system.
+                            When using service levels, the alert triggers on the rate of consuming the error budget.
+                        </p>
+                        <p>
+                            When setting an alert, the burn rate decides how quickly the alert reacts
+                            to errors.
+                        </p>
+                        <ul>
+                            <li>
+                                Too fast and it will lead to false positives (alerting unnecessarily)
+                                and alert fatigue (too many alerts).
+                            </li>
+                            <li>
+                                Too slow and the error burget will be burned before you know it.
+                            </li>
+                        </ul>
+                        <p>
+                            Google SRE Workbook goes through
+                            <ext-link href="https://sre.google/workbook/alerting-on-slos/">
+                                6 alerting strategies based on SLOs
+                            </ext-link>.
+                        </p>
+                    </help-component>
+                </h2>
+
+                <fieldset>
+                    <!-- Error Budget Burn Rate -->
+                    <legend>Burn rate</legend>
+                    <div class="input-group">
+                        <label for="burn-rate-input">
+                            Rate: {{ burnRate }}x
+                            <help-component>
+                                <p>
+                                    Burn rate is the rate at which the error budget is consumed.
+                                    It is the ratio of the error budget to the SLO window.
+                                </p>
+                                <p>
+                                    A burn rate of <button @click="burnRate = 1">1x</button> means that the error budget will be consumed during the
+                                    SLO window (accepted).
+                                </p>
+                                <p>
+                                    A burn rate of <button @click="burnRate = 2">2x</button> means that the error budget will be consumed in half the
+                                    SLO window. This is not acceptable because at this rate, the SLO will be
+                                    violated before the end of the SLO window.
+                                </p>
+                                <p>
+                                    You have selected a burn rate of {{ burnRate }}x.
+                                    This means the error budget ({{ errorBudget.eventCountL10n }} failed {{ errorBudget.eventUnitNorm }}) will be consumed in
+                                    <time>{{ errorBudgetBurn.humanTime }}</time>
+                                    instead of being spread across {{ sloWindow.humanTime }}.
+                                </p>
                             <p>
-                                What is the point of setting SLI/SLO if we are not going to take application
-                                when the SLO is violated?
+                                If the error budget continues to burn at this rate throughout the SLO window,
+                                there will be {{ sloWindowBudgetBurn }}.
                             </p>
                             <p>
-                                Alerting on error budgets enable us to be on top of the reliability of our system.
-                                When using service levels, the alert triggers on the rate of consuming the error budget.
-                            </p>
-                            <p>
-                                When setting an alert, the burn rate decides how quickly the alert reacts
-                                to errors.
-                            </p>
-                            <ul>
-                                <li>
-                                    Too fast and it will lead to false positives (alerting unnecessarily)
-                                    and alert fatigue (too many alerts).
-                                </li>
-                                <li>
-                                    Too slow and the error burget will be burned before you know it.
-                                </li>
-                            </ul>
-                            <p>
-                                Google SRE Workbook goes through
+                                Google SRE Workbook goes through 6 alerting strategies and
                                 <ext-link href="https://sre.google/workbook/alerting-on-slos/">
-                                    6 alerting strategies based on SLOs
-                                </ext-link>.
+                                    recommends
+                                </ext-link>:
+                            </p>
+                            <table>
+                                <thead>
+                                    <th>Burn Rate</th>
+                                    <th>Error Budget</th>
+                                    <th>Long-Window</th>
+                                    <th v-if="shortWindowVisible">Short-Window</th>
+                                    <th>Action</th>
+                                    <th aria-label="try button"></th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>14.4x</td>
+                                        <td>{{ percL10n(2) }} Consumed</td>
+                                        <td>1 hour</td>
+                                        <td v-if="shortWindowVisible">5 minutes</td>
+                                        <td>Page</td>
+                                        <td>
+                                            <button type="button" @click="burnRate = 14.4, longWindowPerc = 2, shortWindowDivider = 12">
+                                                Try!
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>6x</td>
+                                        <td>{{ percL10n(5) }} Consumed</td>
+                                        <td>6 hours</td>
+                                        <td v-if="shortWindowVisible">30 minutes</td>
+                                        <td>Page</td>
+                                        <td>
+                                            <button type="button" @click="burnRate = 6, longWindowPerc = 5, shortWindowDivider = 12">
+                                                Try!
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1x</td>
+                                        <td>{{ percL10n(10) }} Consumed</td>
+                                        <td>3 days</td>
+                                        <td v-if="shortWindowVisible">6 hours</td>
+                                        <td>Ticket</td>
+                                        <td>
+                                            <button type="button" @click="burnRate = 1, longWindowPerc = 10, shortWindowDivider = 12">
+                                                Try!
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>
+                                Note: The above values for Long-Window and Short-Window are based on a 1-month SLO window.
+                                You can see your actual values in the comments below Long-Window and Short-Window.
                             </p>
                         </help-component>
-                    </h1>
-
-                    <fieldset>
-                        <!-- Error Budget Burn Rate -->
-                        <legend>Burn rate</legend>
-                        <div class="input-group">
-                            <label for="burn-rate-input">
-                                Rate: {{ burnRate }}x
-                                <help-component>
-                                    <p>
-                                        Burn rate is the rate at which the error budget is consumed.
-                                        It is the ratio of the error budget to the SLO window.
-                                    </p>
-                                    <p>
-                                        A burn rate of <button @click="burnRate = 1">1x</button> means that the error budget will be consumed during the
-                                        SLO window (accepted).
-                                    </p>
-                                    <p>
-                                        A burn rate of <button @click="burnRate = 2">2x</button> means that the error budget will be consumed in half the
-                                        SLO window. This is not acceptable because at this rate, the SLO will be
-                                        violated before the end of the SLO window.
-                                    </p>
-                                    <p>
-                                        You have selected a burn rate of {{ burnRate }}x.
-                                        This means the error budget ({{ errorBudget.eventCountL10n }} failed {{ errorBudget.eventUnitNorm }}) will be consumed in
-                                        <time>{{ errorBudgetBurn.humanTime }}</time>
-                                        instead of being spread across {{ sloWindow.humanTime }}.
-                                    </p>
-                                <p>
-                                    If the error budget continues to burn at this rate throughout the SLO window,
-                                    there will be {{ sloWindowBudgetBurn }}.
-                                </p>
-                                <p>
-                                    Google SRE Workbook goes through 6 alerting strategies and
-                                    <ext-link href="https://sre.google/workbook/alerting-on-slos/">
-                                        recommends
-                                    </ext-link>:
-                                </p>
-                                <table>
-                                    <thead>
-                                        <th>Burn Rate</th>
-                                        <th>Error Budget</th>
-                                        <th>Long-Window</th>
-                                        <th v-if="shortWindowVisible">Short-Window</th>
-                                        <th>Action</th>
-                                        <th aria-label="try button"></th>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>14.4x</td>
-                                            <td>{{ percL10n(2) }} Consumed</td>
-                                            <td>1 hour</td>
-                                            <td v-if="shortWindowVisible">5 minutes</td>
-                                            <td>Page</td>
-                                            <td>
-                                                <button type="button" @click="burnRate = 14.4, longWindowPerc = 2, shortWindowDivider = 12">
-                                                    Try!
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>6x</td>
-                                            <td>{{ percL10n(5) }} Consumed</td>
-                                            <td>6 hours</td>
-                                            <td v-if="shortWindowVisible">30 minutes</td>
-                                            <td>Page</td>
-                                            <td>
-                                                <button type="button" @click="burnRate = 6, longWindowPerc = 5, shortWindowDivider = 12">
-                                                    Try!
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1x</td>
-                                            <td>{{ percL10n(10) }} Consumed</td>
-                                            <td>3 days</td>
-                                            <td v-if="shortWindowVisible">6 hours</td>
-                                            <td>Ticket</td>
-                                            <td>
-                                                <button type="button" @click="burnRate = 1, longWindowPerc = 10, shortWindowDivider = 12">
-                                                    Try!
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <p>
-                                    Note: The above values for Long-Window and Short-Window are based on a 1-month SLO window.
-                                    You can see your actual values in the comments below Long-Window and Short-Window.
-                                </p>
-                            </help-component>
-                            <div v-if="burnRate === 1" class="subtle-hint">
-                                Error budget is burning at the rate allowed by SLO
-                            </div>
-                            <div v-if="burnRate > 1" class="subtle-hint">
-                                Error budget is burning faster than allowed by SLO
-                            </div>
+                        <div v-if="burnRate === 1" class="subtle-hint">
+                            Error budget is burning at the rate allowed by SLO
+                        </div>
+                        <div v-if="burnRate > 1" class="subtle-hint">
+                            Error budget is burning faster than allowed by SLO
+                        </div>
                         </label>
-                        <input
-                            id="burn-rate-input"
-                            type="range"
-                            :min="config.burnRate.min"
-                            :max="config.burnRate.max"
-                            :step="config.burnRate.step"
-                            v-model.number="burnRate">
+                    <input
+                        id="burn-rate-input"
+                        type="range"
+                        :min="config.burnRate.min"
+                        :max="config.burnRate.max"
+                        :step="config.burnRate.step"
+                        v-model.number="burnRate">
                     </div>
                 </fieldset>
                 <!-- Burn Chart Component -->

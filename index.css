@@ -105,6 +105,7 @@ h1 {
 
 h2 {
     font-size: 1.5em;
+    color: var(--primary-color);
 }
 
 h3 {
