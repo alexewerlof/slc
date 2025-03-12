@@ -12,6 +12,10 @@ fieldset legend {
     color: var(--primary-color);
 }
 
+fieldset fieldset {
+    margin: var(--gap);
+}
+
 input[type=range] {
     --webkit-appearance: none;
     appearance: none;
