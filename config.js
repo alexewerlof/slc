@@ -107,7 +107,7 @@ export const config = fz({
         default: 'response_latency',
     }),
     metricUnit: fz({
-        default: '',
+        default: 'ms',
         placeholder: 'e.g. ms, errors, items, etc.',
     }),
     lowerBound: fz({
