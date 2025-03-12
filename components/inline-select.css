@@ -5,6 +5,7 @@
     display: inline-block;
     border: var(--bthick) solid var(--ui-border);
     margin: 0;
+    border-radius: var(--bradius);
 }
 
 .inline-select__button {
