@@ -320,31 +320,31 @@
                                 v-model="metricName">
                         </div>
 
-                        <div class="input-group">
-                            <label for="sli-metric-unit">
-                                Unit
-                                <help-component>
-                                    <p>
-                                        This is the unit of the metric (
-                                        <label for="sli-metric-name">
-                                            <code>{{ metricName }}</code>
-                                        </label>) not to be confused
-                                        with the unit of the events (
-                                        <label for="sli-event-unit">
-                                            <code>{{ sloWindow.eventUnitNorm }}</code>
-                                        </label>).
-                                    </p>
-                                </help-component>
-                                <div class="subtle-hint">The unit of each data point</div>
-                            </label>
-                            <input
-                                id="sli-metric-unit"
-                                type="text"
-                                v-model="metricUnit"
-                                :placeholder="config.metricUnit.placeholder">
-                        </div>
                         <fieldset>
                             <legend>Data points</legend>
+                            <div class="input-group">
+                                <label for="sli-metric-unit">
+                                    Unit
+                                    <help-component>
+                                        <p>
+                                            This is the unit of the metric (
+                                            <label for="sli-metric-name">
+                                                <code>{{ metricName }}</code>
+                                            </label>) not to be confused
+                                            with the unit of the events (
+                                            <label for="sli-event-unit">
+                                                <code>{{ sloWindow.eventUnitNorm }}</code>
+                                            </label>).
+                                        </p>
+                                    </help-component>
+                                    <div class="subtle-hint">For each data point in {{ metricName }}</div>
+                                </label>
+                                <input
+                                    id="sli-metric-unit"
+                                    type="text"
+                                    v-model="metricUnit"
+                                    :placeholder="config.metricUnit.placeholder">
+                            </div>
                             <div class="input-group">
                                 <label for="lower-bound-type">
                                     Lower Bound
