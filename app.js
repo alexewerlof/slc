@@ -7,6 +7,7 @@ import ExtLink from './components/ext-link.js'
 import FeedbackBlobComponent from './components/feedback-blob.js'
 import HeaderComponent from './components/header.js'
 import FooterComponent from './components/footer.js'
+import CookiePopupComponent from './components/cookie-popup.js'
 import InlineSelectComponent from './components/inline-select.js'
 import HelpComponent from './components/help.js'
 import SLFractionComponent from './components/sl-fraction.js'
@@ -22,16 +23,6 @@ import { Budget } from './lib/budget.js'
 
 export const app = createApp({
     data() {
-        let showCookiePopup = true
-
-        try {
-            if (localStorage.getItem('showCookiePopup') === 'false') {
-                showCookiePopup = false
-            }
-        } catch (e) {
-            // ignore
-        }
-
         return {
             // Expose the config to the UI
             config,
@@ -69,8 +60,6 @@ export const app = createApp({
             },
             // Show the announcement banner
             showAnnouncement: true,
-            // Show the cookie popup (use localStorage to remember the user's choice)
-            showCookiePopup,
             // Show the short window alert
             shortWindowVisible: false,
             // The text shown in the toast notification
@@ -134,6 +123,7 @@ export const app = createApp({
         ExtLink,
         FeedbackBlobComponent,
         HeaderComponent,
+        CookiePopupComponent,
         FooterComponent,
         HelpComponent,
         InlineSelectComponent,
@@ -238,15 +228,6 @@ export const app = createApp({
             } catch (e) {
                 this.toastCaption = `Failed to load state ${e}`
                 console.error(e)
-            }
-        },
-        
-        hideCookiePopup() {
-            this.showCookiePopup = false
-            try {
-                localStorage.setItem('showCookiePopup', 'false')
-            } catch (e) {
-                // ignore
             }
         },
 
