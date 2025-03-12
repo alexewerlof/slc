@@ -7,6 +7,7 @@ import ExtLink from './components/ext-link.js'
 import FeedbackBlobComponent from './components/feedback-blob.js'
 import HeaderComponent from './components/header.js'
 import FooterComponent from './components/footer.js'
+import MultiChoiceComponent from './components/multi-choice.js'
 import HelpComponent from './components/help.js'
 import SLFractionComponent from './components/sl-fraction.js'
 import { setTitle } from './lib/header.js'
@@ -121,6 +122,7 @@ export const app = createApp({
         HeaderComponent,
         FooterComponent,
         HelpComponent,
+        MultiChoiceComponent,
         SLFractionComponent,
     },
     methods: {

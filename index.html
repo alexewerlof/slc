@@ -109,89 +109,78 @@
                         </div>
                     </fieldset>
                     <fieldset>
-                        <legend>Type</legend>
+                        <legend>Basics</legend>
                         <div>
-                            <help-component>
-                                <p>
-                                    SLIs can either be either:
-                                    <ext-link href="https://blog.alexewerlof.com/p/time-based-vs-event-based">
-                                        event-based or time-based
-                                    </ext-link>.
-                                </p>
-                                <table>
-                                    <caption>Comparing SLI Types</caption>
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Event-Based</th>
-                                            <th>Time-Based</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Use</td>
-                                            <td>When consumers perceive reliability by events</td>
-                                            <td>When consumers perceive reliability by time</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Counts</td>
-                                            <td>Good events</td>
-                                            <td>Good timeslices</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Advantage</td>
-                                            <td>More accurately adjust to the amount of load</td>
-                                            <td>More forgiving towards the negative impact of failed events</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Formula</td>
-                                            <td>
-                                                <math>
-                                                    <mrow>
-                                                        <mfrac>
-                                                            <mrow><mi>Good events</mi></mrow>
-                                                            <mrow><mi>Valid events</mi></mrow>
-                                                        </mfrac>
-                                                        <mrow><mo>×</mo><mn>100</mn></mrow>
-                                                    </mrow>
-                                                </math>
-                                            </td>
-                                            <td>
-                                                <math>
-                                                    <mrow>
-                                                        <mfrac>
-                                                            <mrow><mi>Good timeslices</mi></mrow>
-                                                            <mrow><mi>All timeslices</mi></mrow>
-                                                        </mfrac>
-                                                        <mrow><mo>×</mo><mn>100</mn></mrow>
-                                                    </mrow>
-                                                </math>
-                                        </tr>
-                                    </tbody>
-
-                                </table>
-                            </help-component>
                         </div>
-
+                        
                         <div class="input-group">
-                            <p>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        v-model="isTimeBased"
-                                        :value="false">
-                                    Event-Based
-                                </label>
-                            </p>
-                            <p>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        v-model="isTimeBased"
-                                        :value="true">
-                                    Time-Based
-                                </label>
-                            </p>
+                            <label>
+                                Type
+                                <help-component>
+                                    <p>
+                                        SLIs can either be either:
+                                        <ext-link href="https://blog.alexewerlof.com/p/time-based-vs-event-based">
+                                            event-based or time-based
+                                        </ext-link>.
+                                    </p>
+                                    <table>
+                                        <caption>Comparing SLI Types</caption>
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Event-Based</th>
+                                                <th>Time-Based</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Use</td>
+                                                <td>When consumers perceive reliability by events</td>
+                                                <td>When consumers perceive reliability by time</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Counts</td>
+                                                <td>Good events</td>
+                                                <td>Good timeslices</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Advantage</td>
+                                                <td>More accurately adjust to the amount of load</td>
+                                                <td>More forgiving towards the negative impact of failed events</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Formula</td>
+                                                <td>
+                                                    <math>
+                                                        <mrow>
+                                                            <mfrac>
+                                                                <mrow><mi>Good events</mi></mrow>
+                                                                <mrow><mi>Valid events</mi></mrow>
+                                                            </mfrac>
+                                                            <mrow><mo>×</mo><mn>100</mn></mrow>
+                                                        </mrow>
+                                                    </math>
+                                                </td>
+                                                <td>
+                                                    <math>
+                                                        <mrow>
+                                                            <mfrac>
+                                                                <mrow><mi>Good timeslices</mi></mrow>
+                                                                <mrow><mi>All timeslices</mi></mrow>
+                                                            </mfrac>
+                                                            <mrow><mo>×</mo><mn>100</mn></mrow>
+                                                        </mrow>
+                                                    </math>
+                                            </tr>
+                                        </tbody>
+        
+                                    </table>
+                                </help-component>
+                            </label>
+                            <multi-choice-component v-model="isTimeBased" :options="[
+                                { title: 'Event-based', value: false },
+                                { title: 'Time-based', value: true },
+                            ]"></multi-choice-component>
                         </div>
 
                         <div v-if="isTimeBased" class="input-group">
