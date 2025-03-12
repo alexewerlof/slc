@@ -109,9 +109,7 @@
                         </div>
                     </fieldset>
                     <fieldset>
-                        <legend>Basics</legend>
-                        <div>
-                        </div>
+                        <legend>Budgeting</legend>
                         
                         <div class="input-group">
                             <label>
@@ -345,105 +343,105 @@
                                 v-model="metricUnit"
                                 :placeholder="config.metricUnit.placeholder">
                         </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Data points</legend>
-                        <div class="input-group">
-                            <label for="lower-bound-type">
-                                Lower Bound
-                                <help-component>
+                        <fieldset>
+                            <legend>Data points</legend>
+                            <div class="input-group">
+                                <label for="lower-bound-type">
+                                    Lower Bound
+                                    <help-component>
+                                        <p>
+                                            <ext-link href="https://blog.alexewerlof.com/p/sli-good">
+                                                Good
+                                            </ext-link>
+                                            values can be bound.
+                                        </p>
+                                        <p>
+                                            The actual
+                                            <label for="lower-threshold-input">Lower Threshold (<code>$LT</code>)</label>
+                                            is part of the SLO definition.
+                                        </p>
+                                        <p>
+                                            Using a parameterized SLI allows
+                                            <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
+                                                Multi-Tierd SLOs
+                                            </ext-link>
+                                            where different expectations have different commitments.
+                                        </p>
+                                    </help-component>
+                                    <div class="subtle-hint">
+                                        Minimum {{ metricName }} for good {{ sloWindow.eventUnitNorm }}
+                                    </div>
+                                </label>
+                                <div class="warning block" v-if="lowerBound && hasComparators(metricName)">
                                     <p>
-                                        <ext-link href="https://blog.alexewerlof.com/p/sli-good">
-                                            Good
-                                        </ext-link>
-                                        values can be bound.
+                                        There seems to be a comparator in the definition of metric already:
+                                        <label for="sli-metric-name">
+                                            <code>{{ metricName }}</code>
+                                        </label>.
                                     </p>
                                     <p>
-                                        The actual
-                                        <label for="lower-threshold-input">Lower Threshold (<code>$LT</code>)</label>
-                                        is part of the SLO definition.
+                                        Having another bound makes the formula harder to read.
+                                        Please use only one way to set the boundaries.
                                     </p>
-                                    <p>
-                                        Using a parameterized SLI allows
-                                        <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
-                                            Multi-Tierd SLOs
-                                        </ext-link>
-                                        where different expectations have different commitments.
-                                    </p>
-                                </help-component>
-                                <div class="subtle-hint">
-                                    Minimum {{ metricName }} for good {{ sloWindow.eventUnitNorm }}
                                 </div>
-                            </label>
-                            <div class="warning block" v-if="lowerBound && hasComparators(metricName)">
-                                <p>
-                                    There seems to be a comparator in the definition of metric already:
-                                    <label for="sli-metric-name">
-                                        <code>{{ metricName }}</code>
-                                    </label>.
-                                </p>
-                                <p>
-                                    Having another bound makes the formula harder to read.
-                                    Please use only one way to set the boundaries.
-                                </p>
+                                <select
+                                    id="lower-bound-type"
+                                    v-model="lowerBound">
+                                    <option v-for="v of config.lowerBound.possibleValues"
+                                        :value="v">
+                                        {{ boundCaption(metricName, v, '$LT') }}
+                                    </option>
+                                </select>
                             </div>
-                            <select
-                                id="lower-bound-type"
-                                v-model="lowerBound">
-                                <option v-for="v of config.lowerBound.possibleValues"
-                                    :value="v">
-                                    {{ boundCaption(metricName, v, '$LT') }}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label for="upper-bound-type">
-                                Upper Bound
-                                <help-component>
+                            <div class="input-group">
+                                <label for="upper-bound-type">
+                                    Upper Bound
+                                    <help-component>
+                                        <p>
+                                            <ext-link href="https://blog.alexewerlof.com/p/sli-good">
+                                                Good
+                                            </ext-link>
+                                            values can be bound.
+                                        </p>
+                                        <p>
+                                            The actual
+                                            <label for="upper-threshold-input">Upper Threshold (<code>$UT</code>)</label>
+                                            is part of the SLO definition.
+                                        </p>
+                                        <p>
+                                            Using a parameterized SLI allows
+                                            <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
+                                                Multi-Tierd SLOs
+                                            </ext-link>
+                                            where different expectations have different commitments.
+                                        </p>
+                                    </help-component>
+                                    <div class="subtle-hint">
+                                        Maximum {{ metricName }} for good {{ sloWindow.eventUnitNorm }}
+                                    </div>
+                                </label>
+                                <div class="warning block" v-if="upperBound && hasComparators(metricName)">
                                     <p>
-                                        <ext-link href="https://blog.alexewerlof.com/p/sli-good">
-                                            Good
-                                        </ext-link>
-                                        values can be bound.
+                                        There seems to be a comparator in the definition of metric already:
+                                        <label for="sli-metric-name">
+                                            <code>{{ metricName }}</code>
+                                        </label>.
                                     </p>
                                     <p>
-                                        The actual
-                                        <label for="upper-threshold-input">Upper Threshold (<code>$UT</code>)</label>
-                                        is part of the SLO definition.
+                                        Having another bound makes the formula harder to read.
+                                        Please use only one way to set the boundaries.
                                     </p>
-                                    <p>
-                                        Using a parameterized SLI allows
-                                        <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
-                                            Multi-Tierd SLOs
-                                        </ext-link>
-                                        where different expectations have different commitments.
-                                    </p>
-                                </help-component>
-                                <div class="subtle-hint">
-                                    Maximum {{ metricName }} for good {{ sloWindow.eventUnitNorm }}
                                 </div>
-                            </label>
-                            <div class="warning block" v-if="upperBound && hasComparators(metricName)">
-                                <p>
-                                    There seems to be a comparator in the definition of metric already:
-                                    <label for="sli-metric-name">
-                                        <code>{{ metricName }}</code>
-                                    </label>.
-                                </p>
-                                <p>
-                                    Having another bound makes the formula harder to read.
-                                    Please use only one way to set the boundaries.
-                                </p>
+                                <select
+                                    id="upper-bound-type"
+                                    v-model="upperBound">
+                                    <option v-for="v of config.upperBound.possibleValues"
+                                        :value="v">
+                                        {{ boundCaption(metricName, v, '$UT') }}
+                                    </option>
+                                </select>
                             </div>
-                            <select
-                                id="upper-bound-type"
-                                v-model="upperBound">
-                                <option v-for="v of config.upperBound.possibleValues"
-                                    :value="v">
-                                    {{ boundCaption(metricName, v, '$UT') }}
-                                </option>
-                            </select>
-                        </div>
+                        </fieldset>
                     </fieldset>
                     <!-- Service Level Formula -->
                     <h4>
