@@ -25,6 +25,13 @@ body {
     background-size: auto 50vh;
 }
 
+.announcement {
+    text-align: center;
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    padding: 0.5em;
+}
+
 @media screen and (max-width: 999px) {
     section {
         margin: var(--gap);

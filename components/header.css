@@ -9,20 +9,13 @@ header h1 {
     display: inline-block;
     margin: 0;
     font-weight: 400;
-    font-size: 2em;
+    font-size: 1.8em;
 }
 
 header .logo {
     height: 1em;
     position: relative;
     top: 0.1em;
-}
-
-header .announcement {
-    text-align: center;
-    background-color: var(--secondary-color);
-    color: var(--background-color);
-    padding: 0.5em;
 }
 
 .top-nav {
