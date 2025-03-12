@@ -32,19 +32,12 @@
     </noscript>
 
     <main id="app" v-cloak>
-        <header>
-            <a href="/">
-                <h1>
-                    <img src="../img/icon.svg" alt="Service Level Templates Logo" class="logo" />
-                    Service Level Templates
-                </h1>
-            </a>
-        </header>
+        <header-component></header-component>
     
         <!------------------------ Templates ------------------------>
         <article>
-            <section>
-                <h2>
+            <section class="surface">
+                <div class="input-group">
                     <label for="template-filter">Filter</label>
                     <help-component>
                         <p>
@@ -55,10 +48,13 @@
                             If you have an idea for a template, you can make a PR.
                         </p>
                     </help-component>
-                </h2>
-                <input id="template-filter" type="search" v-model="templateFilter" placeholder="Search for an template">
-                <div class="search-results__count" v-if="filteredTemplates.length">
-                    {{ filteredTemplates.length }} templates <button @click="templateFilter = ''">clear</button>
+                    <div class="input-button-pair">
+                        <input id="template-filter" type="search" v-model="templateFilter" placeholder="Search for an template">
+                        <button @click="templateFilter = ''">clear</button>
+                    </div>
+                    <div class="search-results__count" v-if="filteredTemplates.length">
+                        <div class="subtle-hint">{{ filteredTemplates.length }} templates</div>
+                    </div>
                 </div>
                 <ol class="search-results" v-if="filteredTemplates.length">
                     <li class="search-result"

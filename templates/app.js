@@ -1,6 +1,7 @@
 import { createApp } from '../vendor/vue.js'
 import HelpComponent from '../components/help.js'
 import ExtLink from '../components/ext-link.js'
+import HeaderComponent from '../components/header.js'
 import FooterComponent from '../components/footer.js'
 import SLFractionComponent from '../components/sl-fraction.js'
 import { searchTemplates } from './templates.js'
@@ -38,6 +39,7 @@ export const app = createApp({
     components: {
         HelpComponent,
         ExtLink,
+        HeaderComponent,
         FooterComponent,
         SLFractionComponent,
     },
