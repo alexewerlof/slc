@@ -92,7 +92,7 @@
                                 Title
                                 <div class="subtle-hint">Make your SLI easier to recognize</div>
                             </label>
-                            <input id="sli-title-input" type="text" v-model="title" :placeholder="config.title.placeholder">
+                            <input id="sli-title-input" type="text" v-model="indicator.title" :placeholder="config.title.placeholder">
                         </div>
 
                         <div class="input-group">
@@ -104,7 +104,7 @@
                                 id="sli-description-input"
                                 rows="2"
                                 type="text"
-                                v-model="description"
+                                v-model="indicator.description"
                                 :placeholder="config.description.placeholder"></textarea>
                         </div>
                     </fieldset>
@@ -175,16 +175,16 @@
                                     </table>
                                 </help-component>
                             </label>
-                            <inline-select-component v-model="isTimeBased" :options="[
+                            <inline-select-component v-model="indicator.isTimeBased" :options="[
                                 { title: 'Event-based', value: false },
                                 { title: 'Time-based', value: true },
                             ]"></inline-select-component>
                         </div>
 
-                        <div v-if="isTimeBased" class="input-group">
+                        <div v-if="indicator.isTimeBased" class="input-group">
                             <!-- SLI timeslice -->
                             <label for="sli-event-unit">
-                                Timeslice: {{ timeslice }}
+                                Timeslice: {{ indicator.timeslice }}
                                 <help-component>
                                     <p>
                                         Time-based SLIs aggregate metric data over a timeslice
@@ -232,9 +232,9 @@
                                 :max="config.timeslice.max"
                                 :step="config.timeslice.step"
                                 placeholder="60"
-                                v-model.number="timeslice">
+                                v-model.number="indicator.timeslice">
                         </div>
-                        <div v-if="!isTimeBased" class="input-group">
+                        <div v-if="!indicator.isTimeBased" class="input-group">
                             <label for="sli-event-unit">
                                 Valid events
                                 <help-component>
@@ -280,7 +280,7 @@
                                             <tr v-for="p of config.eventUnit.presets">
                                                 <td>{{ p.eventUnit }}</td>
                                                 <td>{{ p.useCase }}</td>
-                                                <td><button type="button" @click="eventUnit = p.eventUnit">Try!</button></td>
+                                                <td><button type="button" @click="indicator.eventUnit = p.eventUnit">Try!</button></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -290,7 +290,7 @@
                             <input
                                 id="sli-event-unit"
                                 type="text"
-                                v-model="eventUnit"
+                                v-model="indicator.eventUnit"
                             >
                         </div>
                     </fieldset>
@@ -317,7 +317,7 @@
                             <input
                                 id="sli-metric-name"
                                 type="text"
-                                v-model="metricName">
+                                v-model="indicator.metricName">
                         </div>
 
                         <fieldset>
@@ -329,7 +329,7 @@
                                         <p>
                                             This is the unit of the metric (
                                             <label for="sli-metric-name">
-                                                <code>{{ metricName }}</code>
+                                                <code>{{ indicator.metricName }}</code>
                                             </label>) not to be confused
                                             with the unit of the events (
                                             <label for="sli-event-unit">
@@ -337,12 +337,12 @@
                                             </label>).
                                         </p>
                                     </help-component>
-                                    <div class="subtle-hint">For each data point in {{ metricName }}</div>
+                                    <div class="subtle-hint">For each data point in {{ indicator.metricName }}</div>
                                 </label>
                                 <input
                                     id="sli-metric-unit"
                                     type="text"
-                                    v-model="metricUnit"
+                                    v-model="indicator.metricUnit"
                                     :placeholder="config.metricUnit.placeholder">
                             </div>
                             <div class="input-group">
@@ -369,14 +369,14 @@
                                         </p>
                                     </help-component>
                                     <div class="subtle-hint">
-                                        Minimum {{ metricName }} for good {{ sloWindow.eventUnitNorm }}
+                                        Minimum {{ indicator.metricName }} for good {{ sloWindow.eventUnitNorm }}
                                     </div>
                                 </label>
-                                <div class="warning block" v-if="lowerBound && hasComparators(metricName)">
+                                <div class="warning block" v-if="indicator.lowerBound && hasComparators(indicator.metricName)">
                                     <p>
                                         There seems to be a comparator in the definition of metric already:
                                         <label for="sli-metric-name">
-                                            <code>{{ metricName }}</code>
+                                            <code>{{ indicator.metricName }}</code>
                                         </label>.
                                     </p>
                                     <p>
@@ -386,10 +386,10 @@
                                 </div>
                                 <select
                                     id="lower-bound-type"
-                                    v-model="lowerBound">
+                                    v-model="indicator.lowerBound">
                                     <option v-for="v of config.lowerBound.possibleValues"
                                         :value="v">
-                                        {{ boundCaption(metricName, v, '$LT') }}
+                                        {{ boundCaption(indicator.metricName, v, '$LT') }}
                                     </option>
                                 </select>
                             </div>
@@ -417,14 +417,14 @@
                                         </p>
                                     </help-component>
                                     <div class="subtle-hint">
-                                        Maximum {{ metricName }} for good {{ sloWindow.eventUnitNorm }}
+                                        Maximum {{ indicator.metricName }} for good {{ sloWindow.eventUnitNorm }}
                                     </div>
                                 </label>
-                                <div class="warning block" v-if="upperBound && hasComparators(metricName)">
+                                <div class="warning block" v-if="indicator.upperBound && hasComparators(indicator.metricName)">
                                     <p>
                                         There seems to be a comparator in the definition of metric already:
                                         <label for="sli-metric-name">
-                                            <code>{{ metricName }}</code>
+                                            <code>{{ indicator.metricName }}</code>
                                         </label>.
                                     </p>
                                     <p>
@@ -434,10 +434,10 @@
                                 </div>
                                 <select
                                     id="upper-bound-type"
-                                    v-model="upperBound">
+                                    v-model="indicator.upperBound">
                                     <option v-for="v of config.upperBound.possibleValues"
                                         :value="v">
-                                        {{ boundCaption(metricName, v, '$UT') }}
+                                        {{ boundCaption(indicator.metricName, v, '$UT') }}
                                     </option>
                                 </select>
                             </div>
@@ -480,12 +480,12 @@
                         <div id="sli-formula-code">
                             <s-l-fraction-component
                                 :event-unit="sloWindow.eventUnitNorm"
-                                :lower-bound="lowerBound"
+                                :lower-bound="indicator.lowerBound"
                                 lower-threshold="$LT"
-                                :metric-name="metricName"
-                                :upper-bound="upperBound"
+                                :metric-name="indicator.metricName"
+                                :upper-bound="indicator.upperBound"
                                 upper-threshold="$UT"
-                                :eventUnit="eventUnit"
+                                :eventUnit="indicator.eventUnit"
                                 time-period="SLO Window"
                                 time-label-id="slo-window-unit-multiplier"></s-l-fraction-component>
                         </div>
@@ -680,19 +680,19 @@
                             >
                         </div>
                     </fieldset>
-                    <fieldset v-if="isBounded">
+                    <fieldset v-if="indicator.isBounded">
                         <legend>Thredholds</legend>
-                        <div class="input-group" v-if="lowerBound">
+                        <div class="input-group" v-if="indicator.lowerBound">
                             <label for="lower-threshold-input">$LT
-                                <span v-if="metricUnit">
-                                    (<code>{{ metricUnit }}</code>)
+                                <span v-if="indicator.metricUnit">
+                                    (<code>{{ indicator.metricUnit }}</code>)
                                 </span>
                                 <help-component>
                                     <p>
                                         The lower threshold (LT) defines the minimum possible values
-                                        for the {{ metricName }}
-                                        <span v-if="metricUnit">
-                                            (in <label for="sli-metric-unit"><code>{{ metricUnit }}</code></label>)
+                                        for the {{ indicator.metricName }}
+                                        <span v-if="indicator.metricUnit">
+                                            (in <label for="sli-metric-unit"><code>{{ indicator.metricUnit }}</code></label>)
                                         </span>
                                         to indicate good {{ sloWindow.eventUnitNorm }}.
                                     </p>
@@ -704,7 +704,7 @@
                                     </p>
                                 </help-component>
                                 <div class="subtle-hint">
-                                    Minimum {{ metricName }} for good {{ sloWindow.eventUnitNorm }}
+                                    Minimum {{ indicator.metricName }} for good {{ sloWindow.eventUnitNorm }}
                                 </div>
                             </label>
                             <input type="number"
@@ -715,17 +715,17 @@
                                 :step="config.lowerThreshold.step">
                         </div>
 
-                        <div class="input-group" v-if="upperBound">
+                        <div class="input-group" v-if="indicator.upperBound">
                             <label for="upper-threshold-input">$UT
-                                <span v-if="metricUnit">
-                                    (<code>{{ metricUnit }}</code>)
+                                <span v-if="indicator.metricUnit">
+                                    (<code>{{ indicator.metricUnit }}</code>)
                                 </span>
                                 <help-component>
                                     <p>
                                         The upper threshold (UT) defines the maximum possible values
-                                        for the {{ metricName }}
-                                        <span v-if="metricUnit">
-                                            (in <label for="sli-metric-unit"><code>{{ metricUnit }}</code></label>)
+                                        for the {{ indicator.metricName }}
+                                        <span v-if="indicator.metricUnit">
+                                            (in <label for="sli-metric-unit"><code>{{ indicator.metricUnit }}</code></label>)
                                         </span>
                                         to indicate good {{ sloWindow.eventUnitNorm }}.
                                     </p>
@@ -737,7 +737,7 @@
                                     </p>
                                 </help-component>
                                 <div class="subtle-hint">
-                                    Maximum {{ metricName }} for good {{ sloWindow.eventUnitNorm }}
+                                    Maximum {{ indicator.metricName }} for good {{ sloWindow.eventUnitNorm }}
                                 </div>
                             </label>
                             <input type="number"
@@ -776,13 +776,13 @@
                             <div id="sli-formula-code">
                                 <s-l-fraction-component
                                     :event-unit="sloWindow.eventUnitNorm"
-                                    :lower-bound="lowerBound"
+                                    :lower-bound="indicator.lowerBound"
                                     :lower-threshold="lowerThreshold"
-                                    :metric-name="metricName"
-                                    :metric-unit="metricUnit"
-                                    :upper-bound="upperBound"
+                                    :metric-name="indicator.metricName"
+                                    :metric-unit="indicator.metricUnit"
+                                    :upper-bound="indicator.upperBound"
                                     :upper-threshold="upperThreshold"
-                                    :eventUnit="eventUnit"
+                                    :eventUnit="indicator.eventUnit"
                                     :time-period="sloWindow.humanSec"
                                     time-label-id="slo-window-unit-multiplier"></s-l-fraction-component>
                             </div>
@@ -891,16 +891,16 @@
                         </error-budget-component>
                         <fieldset>
                             <legend>Error cost</legend>
-                            <div v-if="!isTimeBased" class="input-group">
+                            <div v-if="!indicator.isTimeBased" class="input-group">
                                 <label for="estimated-valid-events-input">
                                     Expected
                                     <help-component>
                                         Here you can enter the numbers for your expected load and see
-                                        how many {{ eventUnit }} are allowed to fail during the SLO window
+                                        how many {{ indicator.eventUnit }} are allowed to fail during the SLO window
                                         while still being within the error budget.
                                     </help-component>
                                     <div class="subtle-hint">
-                                        Number of {{ eventUnit }}
+                                        Number of {{ indicator.eventUnit }}
                                         in
                                         {{ sloWindow.humanTime }}
                                     </div>
@@ -1390,13 +1390,13 @@
                         <div id="alert-formula-code">
                             <s-l-fraction-component
                                 :event-unit="sloWindow.eventUnitNorm"
-                                :lower-bound="lowerBound"
+                                :lower-bound="indicator.lowerBound"
                                 :lower-threshold="lowerThreshold"
-                                :metric-name="metricName"
-                                :metric-unit="metricUnit"
-                                :upper-bound="upperBound"
+                                :metric-name="indicator.metricName"
+                                :metric-unit="indicator.metricUnit"
+                                :upper-bound="indicator.upperBound"
                                 :upper-threshold="upperThreshold"
-                                :eventUnit="eventUnit"
+                                :eventUnit="indicator.eventUnit"
                                 :time-period="alertLongWindow.humanSec"
                                 time-label-id="alert-error-budget-perc"></s-l-fraction-component>
                             <code>
@@ -1414,13 +1414,13 @@
                                 <s-l-fraction-component
                                     v-if="shortWindowVisible"
                                     :event-unit="sloWindow.eventUnitNorm"
-                                    :lower-bound="lowerBound"
+                                    :lower-bound="indicator.lowerBound"
                                     :lower-threshold="lowerThreshold"
-                                    :metric-name="metricName"
-                                    :metric-unit="metricUnit"
-                                    :upper-bound="upperBound"
+                                    :metric-name="indicator.metricName"
+                                    :metric-unit="indicator.metricUnit"
+                                    :upper-bound="indicator.upperBound"
                                     :upper-threshold="upperThreshold"
-                                    :eventUnit="eventUnit"
+                                    :eventUnit="indicator.eventUnit"
                                     :time-period="alertShortWindow.humanSec"
                                     time-label-id="alert-short-window-divider-input"></s-l-fraction-component>
                                 <div>

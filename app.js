@@ -37,6 +37,36 @@ export const app = createApp({
             config,
             // For sharing and loading state to and from URL
             urlVer: config.urlVer,
+            // The SLI object
+            indicator: {
+                // The title of the SLI
+                title: config.title.default,
+                // The description of the SLI
+                description: config.description.default,
+                // definition of valid events for event-based SLIs
+                eventUnit: config.eventUnit.default,
+                // length of timeslice for time based SLIs. When it is negative, it indicates event based SLIs
+                timeslice: config.timeslice.default,
+                // the metric that indicates whether an event or timeslice is good
+                metricName: config.metricName.default,
+                // The unit of the metric that is used to identify good events
+                metricUnit: config.metricUnit.default,
+                // The type of lower bound for the metric values that indicate a good event
+                lowerBound: config.lowerBound.default,
+                // The type of upper bound for the metric values that indicate a good event
+                upperBound: config.upperBound.default,
+                // whether the SLI is time-based or event-based
+                get isTimeBased() {
+                    return this.timeslice > 0
+                },
+                set isTimeBased(newIsTimeBased) {
+                    this.timeslice = newIsTimeBased ? Math.abs(this.timeslice) : -Math.abs(this.timeslice)
+                },
+                // Is there any bound
+                isBounded() {
+                    return Boolean(this.lowerBound || this.upperBound)
+                },
+            },
             // Show the announcement banner
             showAnnouncement: true,
             // Show the cookie popup (use localStorage to remember the user's choice)
@@ -45,26 +75,10 @@ export const app = createApp({
             shortWindowVisible: false,
             // The text shown in the toast notification
             toastCaption: '',
-            // The title of the SLI
-            title: config.title.default,
-            // The description of the SLI
-            description: config.description.default,
-            // length of timeslice for time based SLIs. When it is negative, it indicates event based SLIs
-            timeslice: config.timeslice.default,
-            // the metric that indicates whether an event or timeslice is good
-            metricName: config.metricName.default,
-            // The unit of the metric that is used to identify good events
-            metricUnit: config.metricUnit.default,
-            // The type of lower bound for the metric values that indicate a good event
-            lowerBound: config.lowerBound.default,
             // Lower bound threshold
             lowerThreshold: config.lowerThreshold.default,
-            // The type of upper bound for the metric values that indicate a good event
-            upperBound: config.upperBound.default,
             // Upper bound threshold
             upperThreshold: config.upperThreshold.default,
-            // definition of valid events for event-based SLIs
-            eventUnit: config.eventUnit.default,
             // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
             slo: config.slo.default,
             // The length of the SLO window in days
@@ -159,23 +173,23 @@ export const app = createApp({
                 if (inRangePosInt(newState.timeslice, config.timeslice.min, config.timeslice.max)) {
                     this.timeslice = newState.timeslice
                 } else {
-                    this.isTimeBased = false
+                    this.indicator.isTimeBased = false
                 }
             
                 if (isStr(newState.metricName)) {
-                    this.metricName = newState.metricName
+                    this.indicator.metricName = newState.metricName
                 }
 
                 if (isStr(newState.metricUnit)) {
-                    this.metricUnit = newState.metricUnit
+                    this.indicator.metricUnit = newState.metricUnit
                 }
 
                 if (config.lowerBound.possibleValues.includes(newState.lowerBound)) {
-                    this.lowerBound = newState.lowerBound
+                    this.indicator.lowerBound = newState.lowerBound
                 }
 
                 if (config.upperBound.possibleValues.includes(newState.upperBound)) {
-                    this.upperBound = newState.upperBound
+                    this.indicator.upperBound = newState.upperBound
                 }
                 
                 if (inRange(newState.lowerThreshold, config.lowerThreshold.min, config.lowerThreshold.max)) {
@@ -187,7 +201,7 @@ export const app = createApp({
                 }
             
                 if (isStr(newState.eventUnit)) {
-                    this.eventUnit = newState.eventUnit
+                    this.indicator.eventUnit = newState.eventUnit
                 }
             
                 if (inRange(newState.slo, config.slo.min, config.slo.max)) {
@@ -250,23 +264,9 @@ export const app = createApp({
         sloWindow() {
             return new Window(
                 daysToSeconds(this.windowDays),
-                this.eventUnit,
-                this.timeslice,
+                this.indicator.eventUnit,
+                this.indicator.timeslice,
             )
-        },
-
-        // whether the SLI is time-based or event-based
-        isTimeBased: {
-            get() {
-                return this.timeslice > 0
-            },
-            set(newIsTimeBased) {
-                this.timeslice = newIsTimeBased ? Math.abs(this.timeslice) : -Math.abs(this.timeslice)
-            }
-        },
-
-        isBounded() {
-            return Boolean(this.lowerBound || this.upperBound)
         },
 
         sloInt: {
@@ -281,11 +281,11 @@ export const app = createApp({
         },
 
         lowerThresholdMax() {
-            return this.upperBound ? this.upperThreshold : config.lowerThreshold.max
+            return this.indicator.upperBound ? this.upperThreshold : config.lowerThreshold.max
         },
 
         upperThresholdMin() {
-            return this.lowerBound ? this.lowerThreshold : config.upperThreshold.min
+            return this.indicator.lowerBound ? this.lowerThreshold : config.upperThreshold.min
         },
 
         sloFrac: {
