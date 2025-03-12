@@ -127,7 +127,6 @@ dialog p {
 }
 
 .surface {
-    background-color: var(--background-color);
     border: var(--bthick) solid var(--divider-color);
     padding: var(--gap2);
     border-radius: var(--bradius3);
