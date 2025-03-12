@@ -32,39 +32,6 @@ body {
     padding: 0.5em;
 }
 
-@media screen and (max-width: 999px) {
-    section {
-        margin: var(--gap);
-    }
-}
-
-@media screen and (min-width: 1000px) {
-    body {
-        /* No time for branding! It'll be too crowded */
-        background-image: none;
-    }
-
-    article {
-        display: flex;
-        justify-content: space-evenly;
-        gap: 1em;
-        align-items: flex-start;
-        padding: 0 1em;
-    }
-
-    article section {
-        flex: 1;
-    }
-
-    .only-mobile {
-        display: none;
-    }
-}
-
-section {
-    box-sizing: content-box;
-}
-
 h1, h2, h3, h4, h5, h6, th, legend, caption, label {
     font-family: var(--title-font-family);
     font-weight: 400;

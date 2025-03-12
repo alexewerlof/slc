@@ -1,8 +1,12 @@
 header {
     margin-bottom: var(--gap3);
     border-bottom: 1px solid var(--divider-color);
-    box-shadow: 0 0 var(--gap2) 0 var(--divider-color),
-        inset 0 0 var(--gap2) 0 var(--divider-color);
+    background-color: var(--background-darker);
+    box-shadow: inset 0 0 var(--gap2) 0 var(--divider-color);
+}
+
+header .container {
+    padding: var(--gap2);
 }
 
 header h1 {
