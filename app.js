@@ -166,6 +166,10 @@ export const app = createApp({
                     this.metricName = newState.metricName
                 }
 
+                if (isStr(newState.metricUnit)) {
+                    this.metricUnit = newState.metricUnit
+                }
+
                 if (config.lowerBound.possibleValues.includes(newState.lowerBound)) {
                     this.lowerBound = newState.lowerBound
                 }
