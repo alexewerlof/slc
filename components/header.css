@@ -1,5 +1,5 @@
 header {
-    margin-bottom: var(--gap3);
+    margin-bottom: var(--gap2);
     border-bottom: 1px solid var(--divider-color);
     background-color: var(--background-darker);
     box-shadow: inset 0 0 var(--gap2) 0 var(--divider-color);
