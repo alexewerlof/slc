@@ -1,0 +1,11 @@
+<div class="multi-choice">
+    <div class="multi-choice__buttons">
+        <button v-for="option in options"
+            @click="$emit('update:modelValue', option.value)"
+            :class="[
+                'button--large',
+                'multi-choice__button',
+                modelValue === option.value ? '' : 'multi-choice__button--inactive'
+            ]">{{ option.title }}</button>
+    </div>
+</div>

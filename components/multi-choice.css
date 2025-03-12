@@ -1,0 +1,17 @@
+.multi-choice {
+}
+
+.multi-choice__buttons {
+    display: inline-block;
+    border: var(--bthick) solid var(--ui-border);
+    margin: 0;
+}
+
+.multi-choice__button {
+}
+
+.multi-choice__button--inactive {
+    background-color: inherit;
+    color: inherit;
+    border: none;
+}

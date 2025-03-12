@@ -50,7 +50,7 @@
                             </div>
                             <div class="input-group">
                                 <label for="input2">Number Input</label>
-                                <input type="number" id="input2" name="input2" value="123456.789">
+                                <input type="number" id="input2" name="input2" value="123456">
                             </div>
                             <div class="input-group">
                                 <label for="input3">Search Input</label>
@@ -120,6 +120,16 @@
                             </div>
                         </fieldset>
                     </form>
+                    <fieldset>
+                        <legend>Custom Components</legend>
+                        <div class="input-group">
+                            <label for="multi-choice">
+                                This is a multi-choice {{ multiChoiceValue }} (type: {{ typeof multiChoiceValue}})
+                                <div class="subtle-hint">Similar to a radio group</div>
+                            </label>
+                            <multi-choice-component v-model="multiChoiceValue" :options="multipleChoices"></multi-choice-component>
+                        </div>
+                    </fieldset>
                     <div class="button-bar">
                         <button>Button 1</button>
                         <button>Button 2</button>

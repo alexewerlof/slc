@@ -140,7 +140,7 @@ button:hover {
     filter: brightness(115%);
 }
 
-button.large, .button-bar button {
+button.large, .button-bar button, .button--large {
     padding: var(--gap) var(--gap2);
 }
 
