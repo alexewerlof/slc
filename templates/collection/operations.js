@@ -12,7 +12,7 @@ export default [
         tags: [ ...commonTags, 'MTTR' ],
     },
     {
-        title: 'Time To Acknolwledge',
+        title: 'Time To Acknowledge',
         description: 'The percentage of high priority incidents that were acknowledged sufficiently fast.',
         eventUnit: 'SEV1 incidents',
         metricName: 'time_to_acknowledge',
