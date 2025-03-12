@@ -123,11 +123,11 @@
                     <fieldset>
                         <legend>Custom Components</legend>
                         <div class="input-group">
-                            <label for="multi-choice">
-                                This is a multi-choice {{ multiChoiceValue }} (type: {{ typeof multiChoiceValue}})
+                            <label for="inline-select">
+                                This is a inline-select {{ inlineSelectValue }} (type: {{ typeof inlineSelectValue}})
                                 <div class="subtle-hint">Similar to a radio group</div>
                             </label>
-                            <multi-choice-component v-model="multiChoiceValue" :options="multipleChoices"></multi-choice-component>
+                            <inline-select-component v-model="inlineSelectValue" :options="inlineSelectOptions"></inline-select-component>
                         </div>
                     </fieldset>
                     <div class="button-bar">

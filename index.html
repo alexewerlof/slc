@@ -177,10 +177,10 @@
                                     </table>
                                 </help-component>
                             </label>
-                            <multi-choice-component v-model="isTimeBased" :options="[
+                            <inline-select-component v-model="isTimeBased" :options="[
                                 { title: 'Event-based', value: false },
                                 { title: 'Time-based', value: true },
-                            ]"></multi-choice-component>
+                            ]"></inline-select-component>
                         </div>
 
                         <div v-if="isTimeBased" class="input-group">

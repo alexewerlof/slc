@@ -2,7 +2,7 @@ import { loadComponent } from '../lib/fetch-template.js'
 
 /**
  * Use it like this in the parent:
- * <multi-choice v-model="..." options="[...]"></multi-choice>
+ * <inline-select-component v-model="..." options="[...]"></inline-select-component>
  */
 export default {
     template: await loadComponent(import.meta.url),
