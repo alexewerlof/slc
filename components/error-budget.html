@@ -6,10 +6,6 @@
         bad
         <label for="sli-event-unit">{{ errorBudget.eventUnitNorm }}</label>
         are allowed
-        <span v-if="errorBudget.cost">
-            costing
-            <label for="bad-event-cost-input">{{ errorBudget.costL10n }}</label>
-        </span>
     </div>
 
     <div class="error-budget-component__fill--bad" :style="errorBudgetFillWidth"></div>

@@ -212,49 +212,6 @@ export const config = fz({
         step: 1,
         default: 1_000_000,
     }),
-    badEventCost: fz({
-        min: 0,
-        max: 1000_000_000,
-        step: 0.01,
-        default: 0,
-    }),
-    badEventCurrency: fz({
-        default: 'USD',
-        presets: fz([
-            {
-                currency: 'SEK',
-                description: 'Swedish Krona',
-            },
-            {
-                currency: 'EUR',
-                description: 'Euros',
-            },
-            {
-                currency: 'USD',
-                description: 'US Dollars',
-            },
-            {
-                currency: 'GBP',
-                description: 'British Pounds',
-            },
-            {
-                currency: 'JPY',
-                description: 'Japanese Yen',
-            },
-            {
-                currency: 'CNY',
-                description: 'Chinese Yuan',
-            },
-            {
-                currency: '😟',
-                description: 'Sad customers',
-            },
-            {
-                currency: '🤬',
-                description: 'Curses in frustration',
-            }
-        ]),
-    }),
     burnRate: fz({
         min: 1,
         max: 100,

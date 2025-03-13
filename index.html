@@ -290,8 +290,29 @@
                             <input
                                 id="sli-event-unit"
                                 type="text"
-                                v-model="indicator.eventUnit"
-                            >
+                                v-model="indicator.eventUnit">
+                        </div>
+                        <div v-if="!indicator.isTimeBased" class="input-group">
+                            <label for="estimated-valid-events-input">
+                                Expected
+                                <help-component>
+                                    Here you can enter the numbers for your expected load and see
+                                    how many {{ indicator.eventUnit }} are allowed to fail during the SLO window
+                                    while still being within the error budget.
+                                </help-component>
+                                <div class="subtle-hint">
+                                    Number of {{ indicator.eventUnit }}
+                                    in
+                                    the SLO Window
+                                </div>
+                            </label>
+                            <input
+                                type="number"
+                                v-model.number="estimatedValidEvents"
+                                id="estimated-valid-events-input"
+                                :min="config.estimatedValidEvents.min"
+                                :max="config.estimatedValidEvents.max"
+                                :step="config.estimatedValidEvents.step">
                         </div>
                     </fieldset>
                     <fieldset>
@@ -889,98 +910,6 @@
                             :good-event-count="goodEventCount"
                             :valid-event-count="validEventCount">
                         </error-budget-component>
-                        <fieldset>
-                            <legend>Error cost</legend>
-                            <div v-if="!indicator.isTimeBased" class="input-group">
-                                <label for="estimated-valid-events-input">
-                                    Expected
-                                    <help-component>
-                                        Here you can enter the numbers for your expected load and see
-                                        how many {{ indicator.eventUnit }} are allowed to fail during the SLO window
-                                        while still being within the error budget.
-                                    </help-component>
-                                    <div class="subtle-hint">
-                                        Number of {{ indicator.eventUnit }}
-                                        in
-                                        {{ objective.window.humanTime }}
-                                    </div>
-                                </label>
-                                <input
-                                    type="number"
-                                    v-model.number="estimatedValidEvents"
-                                    id="estimated-valid-events-input"
-                                    :min="config.estimatedValidEvents.min"
-                                    :max="config.estimatedValidEvents.max"
-                                    :step="config.estimatedValidEvents.step">
-                            </div>
-                            
-                            <div class="input-group">
-                                <label for="bad-event-cost-input">
-                                    Average cost
-                                    <help-component>
-                                        <p>
-                                            How much does a bad
-                                            <label for="sli-event-unit">
-                                                <code>{{ indicator.eventUnitNorm }}</code>
-                                            </label>
-                                            cost the business or your team?
-                                        </p>
-                                        <p>
-                                            This cost will be used to put a tangible number on various windows and events.
-                                            It might be hard to put a number on failures especially if some resilience patterns are part of the architecture.
-                                        </p>
-                                        <p>
-                                            There are many ways to make the failures cheaper.
-                                            In a future article, we will discuss all patterns of reliability and how to make errors cheap.
-                                            In the mean time check out the following techniques:
-                                        </p>
-                                        <ul>
-                                            <li>
-                                                <ext-link href="https://blog.alexewerlof.com/p/fallback">Fallback</ext-link>
-                                            </li>
-                                            <li>
-                                                <ext-link href="https://blog.alexewerlof.com/p/failover">Failover</ext-link>
-                                            </li>
-                                        </ul>
-                                    </help-component>
-                                    <div class="subtle-hint">For each of the failed {{ indicator.eventUnitNorm }}</div>
-                                </label>
-                                <input type="number"
-                                    id="bad-event-cost-input"
-                                    v-model.number="badEventCost"
-                                    :min="config.badEventCost.min"
-                                    :max="config.badEventCost.max"
-                                    :step="config.badEventCost.step">
-                            </div>
-
-                            <div class="input-group">
-                                <label for="bad-event-currency-input">
-                                    Currency
-                                    <help-component>
-                                        <p>
-                                            You can set the currency to see how much it costs to violate the SLO.
-                                            If you can't put a currency on the errors, feel free to get creative.
-                                        </p>
-                                        <table>
-                                            <caption>Typical Currencies</caption>
-                                            <tr>
-                                                <th>Abbreviation</th>
-                                                <th>Description</th>
-                                                <th></th>
-                                            </tr>
-                                            <tr v-for="p of config.badEventCurrency.presets">
-                                                <td>{{ p.currency }}</td>
-                                                <td>{{ p.description }}</td>
-                                                <td><button type="button" @click="badEventCurrency = p.currency">Try!</button></td>
-                                        </table>
-                                    </help-component>
-                                </label>
-                                <input
-                                    id="bad-event-currency-input"
-                                    type="text"
-                                    v-model="badEventCurrency">
-                            </div>
-                    </fieldset>
                 </section>
 
                 <!------------------------ Alert ------------------------>

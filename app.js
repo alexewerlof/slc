@@ -139,10 +139,6 @@ export const app = createApp({
             alert,
             // For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events
             estimatedValidEvents: config.estimatedValidEvents.default,
-            // The cost of a bad event
-            badEventCost: config.badEventCost.default,
-            // The unit of the bad event cost
-            badEventCurrency: config.badEventCurrency.default,
         }
     },
     watch: {
@@ -266,14 +262,6 @@ export const app = createApp({
                     this.estimatedValidEvents = newState.estimatedValidEvents
                 }
             
-                if (inRange(newState.badEventCost, config.badEventCost.min, config.badEventCost.max)) {
-                    this.badEventCost = newState.badEventCost
-                }
-            
-                if (isStr(newState.badEventCurrency)) {
-                    this.badEventCurrency = newState.badEventCurrency
-                }
-            
                 if (inRange(newState.burnRate, config.burnRate.min, config.burnRate.max)) {
                     this.burnRate = newState.burnRate
                 }
@@ -320,8 +308,7 @@ export const app = createApp({
 
         errorBudget() {
             const { sec } = this.objective.window
-            const eventCost = this.badEventCost || 0
-            return new Budget(this.indicator, sec, this.badEventCount, eventCost, this.badEventCurrency)
+            return new Budget(this.indicator, sec, this.badEventCount)
         },
 
         // Time to burn the entire error budget at the given burnRate
@@ -344,10 +331,9 @@ export const app = createApp({
         // If nothing is done to stop the failures, there'll be burnRate times more errors by the end of the SLO window
         sloWindowBudgetBurn() {
             const { sec } = this.objective.window
-            const eventCost = this.badEventCost || 0
             const burnedEventAtThisRate = Math.ceil(this.badEventCount * this.alert.burnRate)
             const eventCount = Math.min(this.validEventCount, burnedEventAtThisRate)
-            return new Budget(this.indicator, sec, eventCount, eventCost, this.badEventCurrency)
+            return new Budget(this.indicator, sec, eventCount)
         },
 
         shareUrl() {
