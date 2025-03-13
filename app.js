@@ -13,7 +13,7 @@ import HelpComponent from './components/help.js'
 import SLFractionComponent from './components/sl-fraction.js'
 import { setTitle } from './lib/header.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
-import { daysToSeconds, humanTimeSlices } from './lib/time.js'
+import { daysToSeconds, humanTimeSlices, secondsToDays } from './lib/time.js'
 import { Window } from './lib/window.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from './lib/fmt.js'
 import { inRange, inRangePosInt, isNum, isStr } from './lib/validation.js'
@@ -56,7 +56,7 @@ export const app = createApp({
             },
         }
 
-        const selectedSlo = {
+        const objective = {
             indicator,
             // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
             target: config.slo.default,
@@ -79,8 +79,17 @@ export const app = createApp({
             get errorBudget() {
                 return toFixed(100 - this.target)
             },
+            get windowDays() {
+                return secondsToDays(this.window.sec)
+            },
             // The length of the SLO window in days
-            windowDays: config.windowDays.default,
+            set windowDays(days) {
+                this.window.sec = daysToSeconds(days)
+            },
+            window: new Window(
+                indicator,
+                daysToSeconds(config.windowDays.default),
+            ),
             // Lower bound threshold
             lowerThreshold: config.lowerThreshold.default,
             // Upper bound threshold
@@ -109,7 +118,7 @@ export const app = createApp({
             // SLI
             indicator,
             // SLO
-            selectedSlo,
+            objective,
             // Alert burn rate: the rate at which the error budget is consumed
             burnRate: config.burnRate.default,
             // Long window alert: percentage of the SLO window
@@ -187,7 +196,7 @@ export const app = createApp({
             const newBadEventCount = clamp(this.badEventCount + amount, 1, this.validEventCount)
             const newGoodEventCount = this.validEventCount - newBadEventCount
             const newSLO = toFixed(newGoodEventCount / this.validEventCount * 100)
-            this.selectedSlo.target = clamp(newSLO, config.slo.min, config.slo.max)
+            this.objective.target = clamp(newSLO, config.slo.min, config.slo.max)
         },
         
         loadState(newState) {
@@ -228,19 +237,19 @@ export const app = createApp({
                 }
 
                 if (inRange(newState.lowerThreshold, config.lowerThreshold.min, config.lowerThreshold.max)) {
-                    this.selectedSlo.lowerThreshold = newState.lowerThreshold
+                    this.objective.lowerThreshold = newState.lowerThreshold
                 }
                 
                 if (inRange(newState.upperThreshold, config.upperThreshold.min, config.upperThreshold.max)) {
-                    this.selectedSlo.upperThreshold = newState.upperThreshold
+                    this.objective.upperThreshold = newState.upperThreshold
                 }
             
                 if (inRange(newState.slo, config.slo.min, config.slo.max)) {
-                    this.selectedSlo.target = newState.slo
+                    this.objective.target = newState.slo
                 }
             
                 if (inRangePosInt(newState.windowDays, config.windowDays.min, config.windowDays.max)) {
-                    this.selectedSlo.windowDays = newState.windowDays
+                    this.objective.windowDays = newState.windowDays
                 }
             
                 if (inRangePosInt(newState.estimatedValidEvents, config.estimatedValidEvents.min, config.estimatedValidEvents.max)) {
@@ -283,17 +292,9 @@ export const app = createApp({
         },
     },
     computed: {
-        sloWindow() {
-            return new Window(
-                daysToSeconds(this.selectedSlo.windowDays),
-                this.indicator.eventUnit,
-                this.indicator.timeslice,
-            )
-        },
-
         validEventCount() {
             if (this.indicator.isTimeBased) {
-                return this.sloWindow.countTimeslices
+                return this.objective.window.countTimeslices
             } else {
                 return this.estimatedValidEvents || config.estimatedValidEvents.min
             }
@@ -304,13 +305,13 @@ export const app = createApp({
         },
 
         badEventCount() {
-            return Math.floor(percent(this.selectedSlo.errorBudget, this.validEventCount))
+            return Math.floor(percent(this.objective.errorBudget, this.validEventCount))
         },
 
         errorBudget() {
-            const { sec, eventUnit, timeslice } = this.sloWindow
+            const { sec } = this.objective.window
             const eventCost = this.badEventCost || 0
-            return new Budget(sec, eventUnit, timeslice, this.badEventCount, eventCost, this.badEventCurrency)
+            return new Budget(this.indicator, sec, this.badEventCount, eventCost, this.badEventCurrency)
         },
 
         // Time to burn the entire error budget at the given burnRate
@@ -320,11 +321,11 @@ export const app = createApp({
 
         // If nothing is done to stop the failures, there'll be burnRate times more errors by the end of the SLO window
         sloWindowBudgetBurn() {
-            const { sec, eventUnit, timeslice } = this.sloWindow
+            const { sec } = this.objective.window
             const eventCost = this.badEventCost || 0
             const burnedEventAtThisRate = Math.ceil(this.badEventCount * this.burnRate)
             const eventCount = Math.min(this.validEventCount, burnedEventAtThisRate)
-            return new Budget(sec, eventUnit, timeslice, eventCount, eventCost, this.badEventCurrency)
+            return new Budget(this.indicator, sec, eventCount, eventCost, this.badEventCurrency)
         },
 
         alertLongWindow() {

@@ -503,12 +503,12 @@
                                 Service Level Objective (SLO) is the target percentage of
                                 good {{ indicator.eventUnitNorm }}
                                 out of total {{ indicator.eventUnitNorm }}
-                                in {{ sloWindow }}.
+                                in {{ objective.window }}.
                             </p>
                             <p>
                                 Using the two sliders below you can fine tune the SLO to your needs.
-                                The first slider is for the integer part of the percentage ({{ percL10n(selectedSlo.targetInt) }}).
-                                The second slider is for the fractional part of the percentage ({{ percL10n(selectedSlo.targetFrac) }}).
+                                The first slider is for the integer part of the percentage ({{ percL10n(objective.targetInt) }}).
+                                The second slider is for the fractional part of the percentage ({{ percL10n(objective.targetFrac) }}).
                             </p>
                             <table>
                                 <caption>Typical SLO targets</caption>
@@ -523,14 +523,14 @@
                                     <tr v-for="p in config.slo.presets">
                                         <td>{{ p.title }}</td>
                                         <td>{{percL10n(p.slo)}}</td>
-                                        <td><button type="button" @click="selectedSlo.target = p.slo">Try!</button></td>
+                                        <td><button type="button" @click="objective.target = p.slo">Try!</button></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </help-component>
                     </h2>
 
-                    <div v-if="selectedSlo.target > 99.9" class="info block">
+                    <div v-if="objective.target > 99.9" class="info block">
                         <p>
                             Note: Just be mindful of the price tag for this high service level <em>objective</em>!
                         </p>
@@ -542,7 +542,7 @@
                             </ext-link>
                         </p>
                     </div>
-                    <div v-if="selectedSlo.target < 70" class="info block">
+                    <div v-if="objective.target < 70" class="info block">
                         <p>
                             Note: this is an unusually low service level objective.
                             Typically service level <em>objective</em> is above {{ percL10n(90) }} with some rare exceptions.
@@ -550,22 +550,22 @@
                         </p>
                     </div>
                     <fieldset>
-                        <legend>Value: {{ percL10n(selectedSlo.target) }}</legend>
+                        <legend>Value: {{ percL10n(objective.target) }}</legend>
                         <div class="input-group">
                             <label for="slo-int-input">
-                                Integer: {{ percL10n(selectedSlo.targetInt) }}
+                                Integer: {{ percL10n(objective.targetInt) }}
                             </label>
                             <input
                                 id="slo-int-input"
                                 type="range"
                                 :min="config.slo.min"
                                 max="99"
-                                v-model.number="selectedSlo.targetInt"
+                                v-model.number="objective.targetInt"
                             >
                         </div>
                         <div class="input-group">
                             <label for="slo-frac-input">
-                                Fraction: {{ percL10n(selectedSlo.targetFrac) }}
+                                Fraction: {{ percL10n(objective.targetFrac) }}
                                 <help-component>
                                     <p>
                                         This slider allows fine tuning the SLO.
@@ -575,7 +575,7 @@
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>{{ selectedSlo.targetInt }}.XYZ</th>
+                                                <th>{{ objective.targetInt }}.XYZ</th>
                                                 <th>Subtract</th>
                                                 <th>Add</th>
                                             </tr>
@@ -583,22 +583,22 @@
                                         <tbody>
                                             <tr>
                                                 <th>X</th>
-                                                <td><button type="button" @click="selectedSlo.changeTarget(-0.1)">{{ percL10n(-0.1) }}</button></td>
-                                                <td><button type="button" @click="selectedSlo.changeTarget(0.1)">{{ percL10n(+0.1) }}</button></td>
+                                                <td><button type="button" @click="objective.changeTarget(-0.1)">{{ percL10n(-0.1) }}</button></td>
+                                                <td><button type="button" @click="objective.changeTarget(0.1)">{{ percL10n(+0.1) }}</button></td>
                                             </tr>
                                             <tr>
                                                 <th>Y</th>
-                                                <td><button type="button" @click="selectedSlo.changeTarget(-0.01)">{{ percL10n(-0.01) }}</button></td>
-                                                <td><button type="button" @click="selectedSlo.changeTarget(0.01)">{{ percL10n(+0.01) }}</button></td>
+                                                <td><button type="button" @click="objective.changeTarget(-0.01)">{{ percL10n(-0.01) }}</button></td>
+                                                <td><button type="button" @click="objective.changeTarget(0.01)">{{ percL10n(+0.01) }}</button></td>
                                             </tr>
                                             <tr>
                                                 <th>Z</th>
-                                                <td><button type="button" @click="selectedSlo.changeTarget(-0.001)">{{ percL10n(-0.001) }}</button></td>
-                                                <td><button type="button" @click="selectedSlo.changeTarget(0.001)">{{ percL10n(+0.001) }}</button></td>
+                                                <td><button type="button" @click="objective.changeTarget(-0.001)">{{ percL10n(-0.001) }}</button></td>
+                                                <td><button type="button" @click="objective.changeTarget(0.001)">{{ percL10n(+0.001) }}</button></td>
                                             </tr>
                                             <tr>
                                                 <th>XYZ</th>
-                                                <td colspan="2"><button type="button" @click="selectedSlo.targetFrac = 0">reset</button></td>
+                                                <td colspan="2"><button type="button" @click="objective.targetFrac = 0">reset</button></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -610,7 +610,7 @@
                                 min="0"
                                 max="0.999"
                                 step="0.001"
-                                v-model.number="selectedSlo.targetFrac"
+                                v-model.number="objective.targetFrac"
                             >
                         </div>
                     </fieldset>
@@ -620,7 +620,7 @@
                         <legend>Window</legend>
                         <div class="input-group">
                             <label for="slo-window-unit-multiplier">
-                                {{ selectedSlo.windowDays }} days
+                                {{ objective.windowDays }} days
                                 <help-component>
                                     <p>
                                         The SLO window (also known as the
@@ -667,7 +667,7 @@
                                         </tbody>
                                     </table>
                                 </help-component>
-                                <div class="subtle-hint">{{ sloWindow }}</div>
+                                <div class="subtle-hint">{{ objective.window }}</div>
                             </label>
 
                             <input
@@ -675,7 +675,7 @@
                                 :min="config.windowDays.min"
                                 :max="config.windowDays.max"
                                 :step="config.windowDays.step"
-                                v-model.number="selectedSlo.windowDays"
+                                v-model.number="objective.windowDays"
                                 id="slo-window-unit-multiplier"
                             >
                         </div>
@@ -709,9 +709,9 @@
                             </label>
                             <input type="number"
                                 id="lower-threshold-input"
-                                v-model.number="selectedSlo.lowerThreshold"
+                                v-model.number="objective.lowerThreshold"
                                 :min="config.lowerThreshold.min"
-                                :max="selectedSlo.lowerThresholdMax"
+                                :max="objective.lowerThresholdMax"
                                 :step="config.lowerThreshold.step">
                         </div>
 
@@ -742,12 +742,12 @@
                             </label>
                             <input type="number"
                                 id="upper-threshold-input"
-                                v-model.number="selectedSlo.upperThreshold"
-                                :min="selectedSlo.upperThresholdMin"
+                                v-model.number="objective.upperThreshold"
+                                :min="objective.upperThresholdMin"
                                 :max="config.upperThreshold.max"
                                 :step="config.upperThreshold.step">
                         </div>
-                        <div class="error block" v-if="(this.indicator.lowerBound && this.indicator.upperBound) && (selectedSlo.upperThreshold <= selectedSlo.lowerThreshold)">
+                        <div class="error block" v-if="(this.indicator.lowerBound && this.indicator.upperBound) && (objective.upperThreshold <= objective.lowerThreshold)">
                             <p>
                                 The upper threshold must be greater than the lower threshold.
                             </p>
@@ -777,13 +777,13 @@
                                 <s-l-fraction-component
                                     :event-unit="indicator.eventUnitNorm"
                                     :lower-bound="indicator.lowerBound"
-                                    :lower-threshold="selectedSlo.lowerThreshold"
+                                    :lower-threshold="objective.lowerThreshold"
                                     :metric-name="indicator.metricName"
                                     :metric-unit="indicator.metricUnit"
                                     :upper-bound="indicator.upperBound"
-                                    :upper-threshold="selectedSlo.upperThreshold"
+                                    :upper-threshold="objective.upperThreshold"
                                     :eventUnit="indicator.eventUnit"
-                                    :time-period="sloWindow.humanSec"
+                                    :time-period="objective.window.humanSec"
                                     time-label-id="slo-window-unit-multiplier"></s-l-fraction-component>
                             </div>
                             <button @click="copy('sli-formula-code', 'sli-formula')" type="button" title="Copy to clipboard">⎘</button>
@@ -793,7 +793,7 @@
                         <h2 id="error-budget-title">
                             Error budget:
                             <label for="slo-int-input">
-                                {{ percL10n(selectedSlo.errorBudget) }}
+                                {{ percL10n(objective.errorBudget) }}
                             </label>
                             <help-component>
                                 <p>
@@ -833,9 +833,9 @@
                                                 <mo>=</mo>
                                                 <mn>{{ percL10n(100) }}</mn>
                                                 <mo>-</mo>
-                                                <mi>{{ percL10n(selectedSlo.target) }}</mi>
+                                                <mi>{{ percL10n(objective.target) }}</mi>
                                                 <mo>=</mo>
-                                                <mn>{{ percL10n(selectedSlo.errorBudget) }}</mn>
+                                                <mn>{{ percL10n(objective.errorBudget) }}</mn>
                                             </mtd>
                                         </mtr>
                                     </mtable>
@@ -885,7 +885,7 @@
                         </div>
                         <error-budget-component
                             :error-budget="errorBudget"
-                            :error-budget-perc="selectedSlo.errorBudget"
+                            :error-budget-perc="objective.errorBudget"
                             :good-event-count="goodEventCount"
                             :valid-event-count="validEventCount">
                         </error-budget-component>
@@ -902,7 +902,7 @@
                                     <div class="subtle-hint">
                                         Number of {{ indicator.eventUnit }}
                                         in
-                                        {{ sloWindow.humanTime }}
+                                        {{ objective.window.humanTime }}
                                     </div>
                                 </label>
                                 <input
@@ -1042,7 +1042,7 @@
                                         You have selected a burn rate of {{ burnRate }}x.
                                         This means the error budget ({{ errorBudget.eventCountL10n }} failed {{ errorBudget.eventUnitNorm }}) will be consumed in
                                         <time>{{ errorBudgetBurn.humanTime }}</time>
-                                        instead of being spread across {{ sloWindow.humanTime }}.
+                                        instead of being spread across {{ objective.window.humanTime }}.
                                     </p>
                                 <p>
                                     If the error budget continues to burn at this rate throughout the SLO window,
@@ -1149,7 +1149,7 @@
                                         Based on your setup, the alert will trigger after we have consumed
                                         {{ percL10n(longWindowPerc) }} of the entire time allotted for the error budget
                                         (or SLO compliance window) which is
-                                        <time>{{ sloWindow.humanTime }}</time>.
+                                        <time>{{ objective.window.humanTime }}</time>.
                                     </p>
                                     <math>
                                         <mrow>
@@ -1157,7 +1157,7 @@
                                             <mo>=</mo>
                                             <mn class="const">{{ percL10n(longWindowPerc) }}</mn>
                                             <mo class="funct">&times;</mo>
-                                            <mn class="const">{{ sloWindow.humanSec }}</mn>
+                                            <mn class="const">{{ objective.window.humanSec }}</mn>
                                             <mo class="punct">=</mo>
                                             <mn class="const">{{ alertLongWindow.humanSec }}</mn>
                                         </mrow>
@@ -1213,13 +1213,13 @@
                             </div>
                             <div v-if="longWindowPerc > 33" class="warning block">
                                 <p>
-                                    Warning: Remember that the alert will trigger after {{ percL10n(longWindowPerc) }} of the error budget is consumed! That error budget is for {{ sloWindow.humanTime }}.
+                                    Warning: Remember that the alert will trigger after {{ percL10n(longWindowPerc) }} of the error budget is consumed! That error budget is for {{ objective.window.humanTime }}.
                                 </p>
                                 <p>
                                     Based on your setting an alert burns {{ percL10n(longWindowPerc) }} just to trigger. Then it needs some time to resolve too.
                                 </p>
                                 <p>
-                                    How many alerts like this can you have in {{ sloWindow.humanTime }} before the
+                                    How many alerts like this can you have in {{ objective.window.humanTime }} before the
                                     entire error budget is consumed?
                                 </p>
                             </div>
@@ -1312,7 +1312,7 @@
                                     </mrow>
                                 </math>
                                 <p>
-                                    Converted to time based on the current window ({{ sloWindow.humanTime }}):
+                                    Converted to time based on the current window ({{ objective.window.humanTime }}):
                                 </p>
                                 <math>
                                     <mrow>
@@ -1323,7 +1323,7 @@
                                         <mo>=</mo>
                                         <mn>{{ percL10n(alertShortWindowPerc) }}</mn>
                                         <mo>&times;</mo>
-                                        <mn>{{ sloWindow.humanSec }}</mn>
+                                        <mn>{{ objective.window.humanSec }}</mn>
                                         <mo>=</mo>
                                         <mn>{{ alertShortWindow.humanSec }}</mn>
                                     </mrow>
@@ -1379,7 +1379,7 @@
                                 This is a pseudo-code for trigerring alerts based on the
                                 SLI metric in relation to the desired SLO (
                                     <label for="slo-int-input">
-                                        <code class="const">{{ percL10n(selectedSlo.target) }}</code>
+                                        <code class="const">{{ percL10n(objective.target) }}</code>
                                     </label>
                                 ).
                                 You need to translate it to your observability and/or alerting tool.
@@ -1391,11 +1391,11 @@
                             <s-l-fraction-component
                                 :event-unit="indicator.eventUnitNorm"
                                 :lower-bound="indicator.lowerBound"
-                                :lower-threshold="selectedSlo.lowerThreshold"
+                                :lower-threshold="objective.lowerThreshold"
                                 :metric-name="indicator.metricName"
                                 :metric-unit="indicator.metricUnit"
                                 :upper-bound="indicator.upperBound"
-                                :upper-threshold="selectedSlo.upperThreshold"
+                                :upper-threshold="objective.upperThreshold"
                                 :eventUnit="indicator.eventUnit"
                                 :time-period="alertLongWindow.humanSec"
                                 time-label-id="alert-error-budget-perc"></s-l-fraction-component>
@@ -1403,7 +1403,7 @@
                                 <span class="punct"> ≤ </span>
                                 <label for="slo-int-input">
                                     <span class="const">
-                                        {{ percL10n(selectedSlo.target) }}
+                                        {{ percL10n(objective.target) }}
                                     </span>
                                 </label>
                             </code>
@@ -1415,11 +1415,11 @@
                                     v-if="useShortWindow"
                                     :event-unit="indicator.eventUnitNorm"
                                     :lower-bound="indicator.lowerBound"
-                                    :lower-threshold="selectedSlo.lowerThreshold"
+                                    :lower-threshold="objective.lowerThreshold"
                                     :metric-name="indicator.metricName"
                                     :metric-unit="indicator.metricUnit"
                                     :upper-bound="indicator.upperBound"
-                                    :upper-threshold="selectedSlo.upperThreshold"
+                                    :upper-threshold="objective.upperThreshold"
                                     :eventUnit="indicator.eventUnit"
                                     :time-period="alertShortWindow.humanSec"
                                     time-label-id="alert-short-window-divider-input"></s-l-fraction-component>
@@ -1428,7 +1428,7 @@
                                         <span class="punct"> ≤ </span>
                                         <label for="slo-int-input">
                                             <span class="const">
-                                                {{ percL10n(selectedSlo.target) }}
+                                                {{ percL10n(objective.target) }}
                                             </span>
                                         </label>
                                     </code>
