@@ -20,7 +20,7 @@ export default {
     props: {
         longWindowPerc: Number,
         shortWindowDivider: Number,
-        shortWindowVisible: Boolean,
+        useShortWindow: Boolean,
         alertLongWindow: Object,
         alertShortWindow: Object,
         errorBudgetBurn: Object,

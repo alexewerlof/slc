@@ -67,7 +67,7 @@
                     <th>Burn Rate</th>
                     <th>Error Budget</th>
                     <th>Long-Window</th>
-                    <th v-if="shortWindowVisible">Short-Window</th>
+                    <th v-if="useShortWindow">Short-Window</th>
                     <th>Action</th>
                     <th aria-label="try button"></th>
                 </thead>
@@ -76,7 +76,7 @@
                         <td>14.4x</td>
                         <td>{{ percL10n(2) }} Consumed</td>
                         <td>1 hour</td>
-                        <td v-if="shortWindowVisible">5 minutes</td>
+                        <td v-if="useShortWindow">5 minutes</td>
                         <td>Page</td>
                         <td>
                             <button type="button" @click="alert.burnRate = 14.4, alert.longWindowPerc = 2, alert.shortWindowDivider = 12">
@@ -88,7 +88,7 @@
                         <td>6x</td>
                         <td>{{ percL10n(5) }} Consumed</td>
                         <td>6 hours</td>
-                        <td v-if="shortWindowVisible">30 minutes</td>
+                        <td v-if="useShortWindow">30 minutes</td>
                         <td>Page</td>
                         <td>
                             <button type="button" @click="alert.burnRate = 6, alert.longWindowPerc = 5, alert.shortWindowDivider = 12">
@@ -100,7 +100,7 @@
                         <td>1x</td>
                         <td>{{ percL10n(10) }} Consumed</td>
                         <td>3 days</td>
-                        <td v-if="shortWindowVisible">6 hours</td>
+                        <td v-if="useShortWindow">6 hours</td>
                         <td>Ticket</td>
                         <td>
                             <button type="button" @click="alert.burnRate = 1, alert.longWindowPerc = 10, alert.shortWindowDivider = 12">
@@ -236,7 +236,7 @@
                     <input
                         id="show-short-window-alert"
                         type="checkbox"
-                        v-model="shortWindowVisible"
+                        v-model="useShortWindow"
                     >
                     Use Short-Window Alert
                 </label>        

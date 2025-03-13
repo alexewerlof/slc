@@ -47,7 +47,7 @@
         <tspan>in the last {{ alertLongWindow.humanTime }}</tspan>
         <tspan v-if="alertLongWindow.cost">costing at least {{ alertLongWindow.costL10n }}</tspan>
     </burn-event-component>
-    <burn-event-component v-if="shortWindowVisible"
+    <burn-event-component v-if="useShortWindow"
         :width="width"
         :height="height"
         :x="shortWindowX"

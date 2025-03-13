@@ -511,11 +511,11 @@
                                 The second slider is for the fractional part of the percentage ({{ percL10n(sloFrac) }}).
                             </p>
                             <table>
-                                <caption>Typical SLO values</caption>
+                                <caption>Typical SLO targets</caption>
                                 <thead>
                                     <tr>
                                         <th>Informal Name</th>
-                                        <th>SLO Value</th>
+                                        <th>SLO Target</th>
                                         <th aria-label="try button"></th>
                                     </tr>
                                 </thead>
@@ -523,14 +523,14 @@
                                     <tr v-for="p in config.slo.presets">
                                         <td>{{ p.title }}</td>
                                         <td>{{percL10n(p.slo)}}</td>
-                                        <td><button type="button" @click="slo = p.slo">Try!</button></td>
+                                        <td><button type="button" @click="selectedSlo.target = p.slo">Try!</button></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </help-component>
                     </h2>
 
-                    <div v-if="slo > 99.9" class="info block">
+                    <div v-if="selectedSlo.target > 99.9" class="info block">
                         <p>
                             Note: Just be mindful of the price tag for this high service level <em>objective</em>!
                         </p>
@@ -542,7 +542,7 @@
                             </ext-link>
                         </p>
                     </div>
-                    <div v-if="slo < 70" class="info block">
+                    <div v-if="selectedSlo.target < 70" class="info block">
                         <p>
                             Note: this is an unusually low service level objective.
                             Typically service level <em>objective</em> is above {{ percL10n(90) }} with some rare exceptions.
@@ -550,7 +550,7 @@
                         </p>
                     </div>
                     <fieldset>
-                        <legend>Value: {{ percL10n(slo) }}</legend>
+                        <legend>Value: {{ percL10n(selectedSlo.target) }}</legend>
                         <div class="input-group">
                             <label for="slo-int-input">
                                 Integer: {{ percL10n(sloInt) }}
@@ -620,7 +620,7 @@
                         <legend>Window</legend>
                         <div class="input-group">
                             <label for="slo-window-unit-multiplier">
-                                {{ windowDays }} days
+                                {{ selectedSlo.windowDays }} days
                                 <help-component>
                                     <p>
                                         The SLO window (also known as the
@@ -675,7 +675,7 @@
                                 :min="config.windowDays.min"
                                 :max="config.windowDays.max"
                                 :step="config.windowDays.step"
-                                v-model.number="windowDays"
+                                v-model.number="selectedSlo.windowDays"
                                 id="slo-window-unit-multiplier"
                             >
                         </div>
@@ -709,7 +709,7 @@
                             </label>
                             <input type="number"
                                 id="lower-threshold-input"
-                                v-model.number="lowerThreshold"
+                                v-model.number="selectedSlo.lowerThreshold"
                                 :min="config.lowerThreshold.min"
                                 :max="lowerThresholdMax"
                                 :step="config.lowerThreshold.step">
@@ -742,12 +742,12 @@
                             </label>
                             <input type="number"
                                 id="upper-threshold-input"
-                                v-model.number="upperThreshold"
+                                v-model.number="selectedSlo.upperThreshold"
                                 :min="upperThresholdMin"
                                 :max="config.upperThreshold.max"
                                 :step="config.upperThreshold.step">
                         </div>
-                        <div class="warning block" v-if="upperThreshold <= lowerThreshold">
+                        <div class="warning block" v-if="selectedSlo.upperThreshold <= selectedSlo.lowerThreshold">
                             <p>
                                 The upper threshold must be greater than the lower threshold.
                             </p>
@@ -777,11 +777,11 @@
                                 <s-l-fraction-component
                                     :event-unit="sloWindow.eventUnitNorm"
                                     :lower-bound="indicator.lowerBound"
-                                    :lower-threshold="lowerThreshold"
+                                    :lower-threshold="selectedSlo.lowerThreshold"
                                     :metric-name="indicator.metricName"
                                     :metric-unit="indicator.metricUnit"
                                     :upper-bound="indicator.upperBound"
-                                    :upper-threshold="upperThreshold"
+                                    :upper-threshold="selectedSlo.upperThreshold"
                                     :eventUnit="indicator.eventUnit"
                                     :time-period="sloWindow.humanSec"
                                     time-label-id="slo-window-unit-multiplier"></s-l-fraction-component>
@@ -833,7 +833,7 @@
                                                 <mo>=</mo>
                                                 <mn>{{ percL10n(100) }}</mn>
                                                 <mo>-</mo>
-                                                <mi>{{ percL10n(slo) }}</mi>
+                                                <mi>{{ percL10n(selectedSlo.target) }}</mi>
                                                 <mo>=</mo>
                                                 <mn>{{ percL10n(errorBudgetPerc) }}</mn>
                                             </mtd>
@@ -1059,7 +1059,7 @@
                                         <th>Burn Rate</th>
                                         <th>Error Budget</th>
                                         <th>Long-Window</th>
-                                        <th v-if="shortWindowVisible">Short-Window</th>
+                                        <th v-if="useShortWindow">Short-Window</th>
                                         <th>Action</th>
                                         <th aria-label="try button"></th>
                                     </thead>
@@ -1068,7 +1068,7 @@
                                             <td>14.4x</td>
                                             <td>{{ percL10n(2) }} Consumed</td>
                                             <td>1 hour</td>
-                                            <td v-if="shortWindowVisible">5 minutes</td>
+                                            <td v-if="useShortWindow">5 minutes</td>
                                             <td>Page</td>
                                             <td>
                                                 <button type="button" @click="burnRate = 14.4, longWindowPerc = 2, shortWindowDivider = 12">
@@ -1080,7 +1080,7 @@
                                             <td>6x</td>
                                             <td>{{ percL10n(5) }} Consumed</td>
                                             <td>6 hours</td>
-                                            <td v-if="shortWindowVisible">30 minutes</td>
+                                            <td v-if="useShortWindow">30 minutes</td>
                                             <td>Page</td>
                                             <td>
                                                 <button type="button" @click="burnRate = 6, longWindowPerc = 5, shortWindowDivider = 12">
@@ -1092,7 +1092,7 @@
                                             <td>1x</td>
                                             <td>{{ percL10n(10) }} Consumed</td>
                                             <td>3 days</td>
-                                            <td v-if="shortWindowVisible">6 hours</td>
+                                            <td v-if="useShortWindow">6 hours</td>
                                             <td>Ticket</td>
                                             <td>
                                                 <button type="button" @click="burnRate = 1, longWindowPerc = 10, shortWindowDivider = 12">
@@ -1248,7 +1248,7 @@
                                 <input
                                     id="show-short-window-alert"
                                     type="checkbox"
-                                    v-model="shortWindowVisible"
+                                    v-model="useShortWindow"
                                 >
                                 Use Short-Window Alert
                             </label>
@@ -1267,7 +1267,7 @@
                                 </p>
                             </help-component>
                         </div>
-                        <div v-if="shortWindowVisible" class="input-group">
+                        <div v-if="useShortWindow" class="input-group">
                             <label for="alert-short-window-divider-input">
                                 Ratio: 1/{{ shortWindowDivider }}
                                 <help-component>
@@ -1369,7 +1369,7 @@
                         :alert-long-window="alertLongWindow"
                         :alert-short-window="alertShortWindow"
                         :short-window-divider="shortWindowDivider"
-                        :short-window-visible="shortWindowVisible"
+                        :use-short-window="useShortWindow"
                         :error-budget-burn="errorBudgetBurn"></alert-chart-component>
                     <!-- Long Window Alert Policy -->
                     <h4>
@@ -1379,7 +1379,7 @@
                                 This is a pseudo-code for trigerring alerts based on the
                                 SLI metric in relation to the desired SLO (
                                     <label for="slo-int-input">
-                                        <code class="const">{{ percL10n(slo) }}</code>
+                                        <code class="const">{{ percL10n(selectedSlo.target) }}</code>
                                     </label>
                                 ).
                                 You need to translate it to your observability and/or alerting tool.
@@ -1391,11 +1391,11 @@
                             <s-l-fraction-component
                                 :event-unit="sloWindow.eventUnitNorm"
                                 :lower-bound="indicator.lowerBound"
-                                :lower-threshold="lowerThreshold"
+                                :lower-threshold="selectedSlo.lowerThreshold"
                                 :metric-name="indicator.metricName"
                                 :metric-unit="indicator.metricUnit"
                                 :upper-bound="indicator.upperBound"
-                                :upper-threshold="upperThreshold"
+                                :upper-threshold="selectedSlo.upperThreshold"
                                 :eventUnit="indicator.eventUnit"
                                 :time-period="alertLongWindow.humanSec"
                                 time-label-id="alert-error-budget-perc"></s-l-fraction-component>
@@ -1403,23 +1403,23 @@
                                 <span class="punct"> ≤ </span>
                                 <label for="slo-int-input">
                                     <span class="const">
-                                        {{ percL10n(slo) }}
+                                        {{ percL10n(selectedSlo.target) }}
                                     </span>
                                 </label>
                             </code>
-                            <code v-if="shortWindowVisible">
+                            <code v-if="useShortWindow">
                                 <br>
                                 <span class="punct">&&</span>
                                 <br>
                                 <s-l-fraction-component
-                                    v-if="shortWindowVisible"
+                                    v-if="useShortWindow"
                                     :event-unit="sloWindow.eventUnitNorm"
                                     :lower-bound="indicator.lowerBound"
-                                    :lower-threshold="lowerThreshold"
+                                    :lower-threshold="selectedSlo.lowerThreshold"
                                     :metric-name="indicator.metricName"
                                     :metric-unit="indicator.metricUnit"
                                     :upper-bound="indicator.upperBound"
-                                    :upper-threshold="upperThreshold"
+                                    :upper-threshold="selectedSlo.upperThreshold"
                                     :eventUnit="indicator.eventUnit"
                                     :time-period="alertShortWindow.humanSec"
                                     time-label-id="alert-short-window-divider-input"></s-l-fraction-component>
@@ -1428,7 +1428,7 @@
                                         <span class="punct"> ≤ </span>
                                         <label for="slo-int-input">
                                             <span class="const">
-                                                {{ percL10n(slo) }}
+                                                {{ percL10n(selectedSlo.target) }}
                                             </span>
                                         </label>
                                     </code>

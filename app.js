@@ -29,6 +29,11 @@ export const app = createApp({
             // For sharing and loading state to and from URL
             urlVer: config.urlVer,
             // The SLI object
+            // Show the announcement banner
+            showAnnouncement: true,
+            // The text shown in the toast notification
+            toastCaption: '',
+            // SLI
             indicator: {
                 // The title of the SLI
                 title: config.title.default,
@@ -58,43 +63,46 @@ export const app = createApp({
                     return Boolean(this.lowerBound || this.upperBound)
                 },
             },
-            // Show the announcement banner
-            showAnnouncement: true,
-            // Show the short window alert
-            shortWindowVisible: false,
-            // The text shown in the toast notification
-            toastCaption: '',
-            // Lower bound threshold
-            lowerThreshold: config.lowerThreshold.default,
-            // Upper bound threshold
-            upperThreshold: config.upperThreshold.default,
-            // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
-            slo: config.slo.default,
-            // The length of the SLO window in days
-            windowDays: config.windowDays.default,
-            // For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events
-            estimatedValidEvents: config.estimatedValidEvents.default,
-            // The cost of a bad event
-            badEventCost: config.badEventCost.default,
-            // The unit of the bad event cost
-            badEventCurrency: config.badEventCurrency.default,
+            // SLO
+            selectedSlo: {
+                // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
+                target: config.slo.default,
+                // The length of the SLO window in days
+                windowDays: config.windowDays.default,
+                // Lower bound threshold
+                lowerThreshold: config.lowerThreshold.default,
+                // Upper bound threshold
+                upperThreshold: config.upperThreshold.default,
+            },
             // Alert burn rate: the rate at which the error budget is consumed
             burnRate: config.burnRate.default,
             // Long window alert: percentage of the SLO window
             longWindowPerc: config.longWindowPerc.default,
             // Short window alert: the fraction of the long window
             shortWindowDivider: config.shortWindowDivider.default,
+            // Show the short window alert
+            useShortWindow: false,
+            // For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events
+            estimatedValidEvents: config.estimatedValidEvents.default,
+            // The cost of a bad event
+            badEventCost: config.badEventCost.default,
+            // The unit of the bad event cost
+            badEventCurrency: config.badEventCurrency.default,
         }
     },
     watch: {
+        /* TODO:
         windowDays(newVal, oldVal) {
             if (newVal !== oldVal) {
                 this.estimatedValidEvents = Math.round(this.estimatedValidEvents * newVal / oldVal)
             }
         },
+        */
         title(newTitle) {
             setTitle(document, newTitle)
         },
+        /** TODO
+         * 
         lowerThreshold(newVal) {
             if (newVal > this.upperThreshold) {
                 this.upperThreshold = newVal
@@ -105,6 +113,7 @@ export const app = createApp({
                 this.lowerThreshold = newVal
             }
         },
+        */
     },
     mounted() {
         this.loadState(urlToState(window.location.href))
@@ -138,7 +147,7 @@ export const app = createApp({
         percL10n,
         
         changeSLO(amount) {
-            this.slo = clamp(toFixed(this.slo + amount), config.slo.min, config.slo.max)
+            this.selectedSlo.target = clamp(toFixed(this.selectedSlo.target + amount), config.slo.min, config.slo.max)
         },
 
         changeErrorBudget(amount) {
@@ -146,7 +155,7 @@ export const app = createApp({
             const newBadEventCount = clamp(this.badEventCount + amount, 1, this.validEventCount)
             const newGoodEventCount = this.validEventCount - newBadEventCount
             const newSLO = toFixed(newGoodEventCount / this.validEventCount * 100)
-            this.slo = clamp(newSLO, config.slo.min, config.slo.max)
+            this.selectedSlo.target = clamp(newSLO, config.slo.min, config.slo.max)
         },
         
         loadState(newState) {
@@ -183,11 +192,11 @@ export const app = createApp({
                 }
                 
                 if (inRange(newState.lowerThreshold, config.lowerThreshold.min, config.lowerThreshold.max)) {
-                    this.lowerThreshold = newState.lowerThreshold
+                    this.selectedSlo.lowerThreshold = newState.lowerThreshold
                 }
                 
                 if (inRange(newState.upperThreshold, config.upperThreshold.min, config.upperThreshold.max)) {
-                    this.upperThreshold = newState.upperThreshold
+                    this.selectedSlo.upperThreshold = newState.upperThreshold
                 }
             
                 if (isStr(newState.eventUnit)) {
@@ -195,11 +204,11 @@ export const app = createApp({
                 }
             
                 if (inRange(newState.slo, config.slo.min, config.slo.max)) {
-                    this.slo = newState.slo
+                    this.selectedSlo.target = newState.slo
                 }
             
                 if (inRangePosInt(newState.windowDays, config.windowDays.min, config.windowDays.max)) {
-                    this.windowDays = newState.windowDays
+                    this.selectedSlo.windowDays = newState.windowDays
                 }
             
                 if (inRangePosInt(newState.estimatedValidEvents, config.estimatedValidEvents.min, config.estimatedValidEvents.max)) {
@@ -244,7 +253,7 @@ export const app = createApp({
     computed: {
         sloWindow() {
             return new Window(
-                daysToSeconds(this.windowDays),
+                daysToSeconds(this.selectedSlo.windowDays),
                 this.indicator.eventUnit,
                 this.indicator.timeslice,
             )
@@ -252,36 +261,36 @@ export const app = createApp({
 
         sloInt: {
             get() {
-                return Math.floor(this.slo)
+                return Math.floor(this.selectedSlo.target)
             },
             set(newIntStr) {
                 const newInt = Number(newIntStr)
-                const sloFrac = this.slo % 1
-                this.slo = toFixed(newInt + sloFrac)
+                const sloFrac = this.selectedSlo.target % 1
+                this.selectedSlo.target = toFixed(newInt + sloFrac)
             }
         },
 
         lowerThresholdMax() {
-            return this.indicator.upperBound ? this.upperThreshold : config.lowerThreshold.max
+            return this.indicator.upperBound ? this.selectedSlo.upperThreshold : config.lowerThreshold.max
         },
 
         upperThresholdMin() {
-            return this.indicator.lowerBound ? this.lowerThreshold : config.upperThreshold.min
+            return this.indicator.lowerBound ? this.selectedSlo.lowerThreshold : config.upperThreshold.min
         },
 
         sloFrac: {
             get() {
-                return toFixed(this.slo % 1)
+                return toFixed(this.selectedSlo.target % 1)
             },
             set(newFracStr) {
                 const newFrac = Number(newFracStr)
-                const sloInt = Math.floor(this.slo)
-                this.slo = toFixed(sloInt + newFrac)
+                const sloInt = Math.floor(this.selectedSlo.target)
+                this.selectedSlo.target = toFixed(sloInt + newFrac)
             }
         },
 
         errorBudgetPerc() {
-            return toFixed(100 - this.slo)
+            return toFixed(100 - this.selectedSlo.target)
         },
 
         validEventCount() {
