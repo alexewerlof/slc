@@ -583,18 +583,18 @@
                                         <tbody>
                                             <tr>
                                                 <th>X</th>
-                                                <td><button type="button" @click="changeSLO(-0.1)">{{ percL10n(-0.1) }}</button></td>
-                                                <td><button type="button" @click="changeSLO(0.1)">{{ percL10n(+0.1) }}</button></td>
+                                                <td><button type="button" @click="selectedSlo.changeTarget(-0.1)">{{ percL10n(-0.1) }}</button></td>
+                                                <td><button type="button" @click="selectedSlo.changeTarget(0.1)">{{ percL10n(+0.1) }}</button></td>
                                             </tr>
                                             <tr>
                                                 <th>Y</th>
-                                                <td><button type="button" @click="changeSLO(-0.01)">{{ percL10n(-0.01) }}</button></td>
-                                                <td><button type="button" @click="changeSLO(0.01)">{{ percL10n(+0.01) }}</button></td>
+                                                <td><button type="button" @click="selectedSlo.changeTarget(-0.01)">{{ percL10n(-0.01) }}</button></td>
+                                                <td><button type="button" @click="selectedSlo.changeTarget(0.01)">{{ percL10n(+0.01) }}</button></td>
                                             </tr>
                                             <tr>
                                                 <th>Z</th>
-                                                <td><button type="button" @click="changeSLO(-0.001)">{{ percL10n(-0.001) }}</button></td>
-                                                <td><button type="button" @click="changeSLO(0.001)">{{ percL10n(+0.001) }}</button></td>
+                                                <td><button type="button" @click="selectedSlo.changeTarget(-0.001)">{{ percL10n(-0.001) }}</button></td>
+                                                <td><button type="button" @click="selectedSlo.changeTarget(0.001)">{{ percL10n(+0.001) }}</button></td>
                                             </tr>
                                             <tr>
                                                 <th>XYZ</th>

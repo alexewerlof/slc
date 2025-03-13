@@ -73,6 +73,10 @@ export const app = createApp({
                 lowerThreshold: config.lowerThreshold.default,
                 // Upper bound threshold
                 upperThreshold: config.upperThreshold.default,
+                // Allows fine tuning the target by adding or removing a small amount
+                changeTarget(amount) {
+                    this.target = clamp(toFixed(this.selectedSlo.target + amount), config.slo.min, config.slo.max)
+                },
             },
             // Alert burn rate: the rate at which the error budget is consumed
             burnRate: config.burnRate.default,
@@ -145,10 +149,6 @@ export const app = createApp({
         numL10n,
         percentToRatio,
         percL10n,
-        
-        changeSLO(amount) {
-            this.selectedSlo.target = clamp(toFixed(this.selectedSlo.target + amount), config.slo.min, config.slo.max)
-        },
 
         changeErrorBudget(amount) {
             // Event based
