@@ -293,7 +293,7 @@
                                 v-model="indicator.eventUnit">
                         </div>
                         <div v-if="!indicator.isTimeBased" class="input-group">
-                            <label for="estimated-valid-events-input">
+                            <label for="expected-total-events-input">
                                 Expected
                                 <help-component>
                                     Here you can enter the numbers for your expected load and see
@@ -308,11 +308,11 @@
                             </label>
                             <input
                                 type="number"
-                                v-model.number="estimatedValidEvents"
-                                id="estimated-valid-events-input"
-                                :min="config.estimatedValidEvents.min"
-                                :max="config.estimatedValidEvents.max"
-                                :step="config.estimatedValidEvents.step">
+                                v-model.number="expectedTotalEvents"
+                                id="expected-total-events-input"
+                                :min="config.expectedTotalEvents.min"
+                                :max="config.expectedTotalEvents.max"
+                                :step="config.expectedTotalEvents.step">
                         </div>
                     </fieldset>
                     <fieldset>

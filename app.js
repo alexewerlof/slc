@@ -138,14 +138,14 @@ export const app = createApp({
             // Alert
             alert,
             // For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events
-            estimatedValidEvents: config.estimatedValidEvents.default,
+            expectedTotalEvents: config.expectedTotalEvents.default,
         }
     },
     watch: {
         /* TODO:
         windowDays(newVal, oldVal) {
             if (newVal !== oldVal) {
-                this.estimatedValidEvents = Math.round(this.estimatedValidEvents * newVal / oldVal)
+                this.expectedTotalEvents = Math.round(this.expectedTotalEvents * newVal / oldVal)
             }
         },
         */
@@ -258,8 +258,8 @@ export const app = createApp({
                     this.objective.windowDays = newState.windowDays
                 }
             
-                if (inRangePosInt(newState.estimatedValidEvents, config.estimatedValidEvents.min, config.estimatedValidEvents.max)) {
-                    this.estimatedValidEvents = newState.estimatedValidEvents
+                if (inRangePosInt(newState.expectedTotalEvents, config.expectedTotalEvents.min, config.expectedTotalEvents.max)) {
+                    this.expectedTotalEvents = newState.expectedTotalEvents
                 }
             
                 if (inRange(newState.burnRate, config.burnRate.min, config.burnRate.max)) {
@@ -294,7 +294,7 @@ export const app = createApp({
             if (this.indicator.isTimeBased) {
                 return this.objective.window.countTimeslices
             } else {
-                return this.estimatedValidEvents || config.estimatedValidEvents.min
+                return this.expectedTotalEvents || config.expectedTotalEvents.min
             }
         },
 

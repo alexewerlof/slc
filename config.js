@@ -206,7 +206,7 @@ export const config = fz({
             },
         ]),
     }),
-    estimatedValidEvents: fz({
+    expectedTotalEvents: fz({
         min: 1,
         max: 1_000_000_000,
         step: 1,
