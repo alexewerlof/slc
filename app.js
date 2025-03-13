@@ -23,6 +23,73 @@ import { Budget } from './lib/budget.js'
 
 export const app = createApp({
     data() {
+        const indicator = {
+            // The title of the SLI
+            title: config.title.default,
+            // The description of the SLI
+            description: config.description.default,
+            // definition of valid events for event-based SLIs
+            eventUnit: config.eventUnit.default,
+            // length of timeslice for time based SLIs. When it is negative, it indicates event based SLIs
+            timeslice: config.timeslice.default,
+            // the metric that indicates whether an event or timeslice is good
+            metricName: config.metricName.default,
+            // The unit of the metric that is used to identify good events
+            metricUnit: config.metricUnit.default,
+            // The type of lower bound for the metric values that indicate a good event
+            lowerBound: config.lowerBound.default,
+            // The type of upper bound for the metric values that indicate a good event
+            upperBound: config.upperBound.default,
+            // whether the SLI is time-based or event-based
+            get isTimeBased() {
+                return this.timeslice > 0
+            },
+            set isTimeBased(newIsTimeBased) {
+                this.timeslice = newIsTimeBased ? Math.abs(this.timeslice) : -Math.abs(this.timeslice)
+            },
+            // Is there any bound
+            isBounded() {
+                return Boolean(this.lowerBound || this.upperBound)
+            },
+        }
+
+        const selectedSlo = {
+            indicator,
+            // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
+            target: config.slo.default,
+            get targetInt() {
+                return Math.floor(this.target)
+            },
+            set targetInt(newIntStr) {
+                const newInt = Number(newIntStr)
+                const currTargetFrac = this.target % 1
+                this.target = toFixed(newInt + currTargetFrac)
+            },
+            get targetFrac() {
+                return toFixed(this.target % 1)
+            },
+            set targetFrac(newFracStr) {
+                const newFrac = Number(newFracStr)
+                const currTargetInt = Math.floor(this.target)
+                this.target = toFixed(currTargetInt + newFrac)
+            },
+            // The length of the SLO window in days
+            windowDays: config.windowDays.default,
+            // Lower bound threshold
+            lowerThreshold: config.lowerThreshold.default,
+            // Upper bound threshold
+            upperThreshold: config.upperThreshold.default,
+            // Allows fine tuning the target by adding or removing a small amount
+            changeTarget(amount) {
+                this.target = clamp(toFixed(this.target + amount), config.slo.min, config.slo.max)
+            },
+            lowerThresholdMax() {
+                return this.indicator.upperBound ? this.upperThreshold : config.lowerThreshold.max
+            },
+            upperThresholdMin() {
+                return this.indicator.lowerBound ? this.lowerThreshold : config.upperThreshold.min
+            },
+        }
         return {
             // Expose the config to the UI
             config,
@@ -34,66 +101,9 @@ export const app = createApp({
             // The text shown in the toast notification
             toastCaption: '',
             // SLI
-            indicator: {
-                // The title of the SLI
-                title: config.title.default,
-                // The description of the SLI
-                description: config.description.default,
-                // definition of valid events for event-based SLIs
-                eventUnit: config.eventUnit.default,
-                // length of timeslice for time based SLIs. When it is negative, it indicates event based SLIs
-                timeslice: config.timeslice.default,
-                // the metric that indicates whether an event or timeslice is good
-                metricName: config.metricName.default,
-                // The unit of the metric that is used to identify good events
-                metricUnit: config.metricUnit.default,
-                // The type of lower bound for the metric values that indicate a good event
-                lowerBound: config.lowerBound.default,
-                // The type of upper bound for the metric values that indicate a good event
-                upperBound: config.upperBound.default,
-                // whether the SLI is time-based or event-based
-                get isTimeBased() {
-                    return this.timeslice > 0
-                },
-                set isTimeBased(newIsTimeBased) {
-                    this.timeslice = newIsTimeBased ? Math.abs(this.timeslice) : -Math.abs(this.timeslice)
-                },
-                // Is there any bound
-                isBounded() {
-                    return Boolean(this.lowerBound || this.upperBound)
-                },
-            },
+            indicator,
             // SLO
-            selectedSlo: {
-                // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
-                target: config.slo.default,
-                get targetInt() {
-                    return Math.floor(this.target)
-                },
-                set targetInt(newIntStr) {
-                    const newInt = Number(newIntStr)
-                    const currTargetFrac = this.target % 1
-                    this.target = toFixed(newInt + currTargetFrac)
-                },
-                get targetFrac() {
-                    return toFixed(this.target % 1)
-                },
-                set targetFrac(newFracStr) {
-                    const newFrac = Number(newFracStr)
-                    const currTargetInt = Math.floor(this.target)
-                    this.target = toFixed(currTargetInt + newFrac)
-                },
-                // The length of the SLO window in days
-                windowDays: config.windowDays.default,
-                // Lower bound threshold
-                lowerThreshold: config.lowerThreshold.default,
-                // Upper bound threshold
-                upperThreshold: config.upperThreshold.default,
-                // Allows fine tuning the target by adding or removing a small amount
-                changeTarget(amount) {
-                    this.target = clamp(toFixed(this.target + amount), config.slo.min, config.slo.max)
-                },
-            },
+            selectedSlo,
             // Alert burn rate: the rate at which the error budget is consumed
             burnRate: config.burnRate.default,
             // Long window alert: percentage of the SLO window
@@ -273,14 +283,6 @@ export const app = createApp({
                 this.indicator.eventUnit,
                 this.indicator.timeslice,
             )
-        },
-
-        lowerThresholdMax() {
-            return this.indicator.upperBound ? this.selectedSlo.upperThreshold : config.lowerThreshold.max
-        },
-
-        upperThresholdMin() {
-            return this.indicator.lowerBound ? this.selectedSlo.lowerThreshold : config.upperThreshold.min
         },
 
         errorBudgetPerc() {

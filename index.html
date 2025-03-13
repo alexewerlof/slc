@@ -711,7 +711,7 @@
                                 id="lower-threshold-input"
                                 v-model.number="selectedSlo.lowerThreshold"
                                 :min="config.lowerThreshold.min"
-                                :max="lowerThresholdMax"
+                                :max="selectedSlo.lowerThresholdMax"
                                 :step="config.lowerThreshold.step">
                         </div>
 
@@ -743,11 +743,11 @@
                             <input type="number"
                                 id="upper-threshold-input"
                                 v-model.number="selectedSlo.upperThreshold"
-                                :min="upperThresholdMin"
+                                :min="selectedSlo.upperThresholdMin"
                                 :max="config.upperThreshold.max"
                                 :step="config.upperThreshold.step">
                         </div>
-                        <div class="warning block" v-if="selectedSlo.upperThreshold <= selectedSlo.lowerThreshold">
+                        <div class="error block" v-if="(this.indicator.lowerBound && this.indicator.upperBound) && (selectedSlo.upperThreshold <= selectedSlo.lowerThreshold)">
                             <p>
                                 The upper threshold must be greater than the lower threshold.
                             </p>
