@@ -105,6 +105,16 @@ export const app = createApp({
                 return this.indicator.lowerBound ? this.lowerThreshold : config.upperThreshold.min
             },
         }
+        const alert = {
+            // Alert burn rate: the rate at which the error budget is consumed
+            burnRate: config.burnRate.default,
+            // Long window alert: percentage of the SLO window
+            longWindowPerc: config.longWindowPerc.default,
+            // Short window alert: the fraction of the long window
+            shortWindowDivider: config.shortWindowDivider.default,
+            // Show the short window alert
+            useShortWindow: false,
+        }
         return {
             // Expose the config to the UI
             config,
@@ -119,14 +129,8 @@ export const app = createApp({
             indicator,
             // SLO
             objective,
-            // Alert burn rate: the rate at which the error budget is consumed
-            burnRate: config.burnRate.default,
-            // Long window alert: percentage of the SLO window
-            longWindowPerc: config.longWindowPerc.default,
-            // Short window alert: the fraction of the long window
-            shortWindowDivider: config.shortWindowDivider.default,
-            // Show the short window alert
-            useShortWindow: false,
+            // Alert
+            alert,
             // For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events
             estimatedValidEvents: config.estimatedValidEvents.default,
             // The cost of a bad event
@@ -316,29 +320,29 @@ export const app = createApp({
 
         // Time to burn the entire error budget at the given burnRate
         errorBudgetBurn() {
-            return this.errorBudget.shrinkSec(100 / this.burnRate)
+            return this.errorBudget.shrinkSec(100 / this.alert.burnRate)
         },
 
         // If nothing is done to stop the failures, there'll be burnRate times more errors by the end of the SLO window
         sloWindowBudgetBurn() {
             const { sec } = this.objective.window
             const eventCost = this.badEventCost || 0
-            const burnedEventAtThisRate = Math.ceil(this.badEventCount * this.burnRate)
+            const burnedEventAtThisRate = Math.ceil(this.badEventCount * this.alert.burnRate)
             const eventCount = Math.min(this.validEventCount, burnedEventAtThisRate)
             return new Budget(this.indicator, sec, eventCount, eventCost, this.badEventCurrency)
         },
 
         alertLongWindow() {
-            return this.errorBudgetBurn.shrink(this.longWindowPerc)
+            return this.errorBudgetBurn.shrink(this.alert.longWindowPerc)
         },
 
         alertTTRWindow() {
-            return this.errorBudgetBurn.shrink(100 - this.longWindowPerc)
+            return this.errorBudgetBurn.shrink(100 - this.alert.longWindowPerc)
         },
 
         // As a percentage of the error budget
         alertShortWindowPerc() {
-            return toFixed(this.longWindowPerc / this.shortWindowDivider)
+            return toFixed(this.alert.longWindowPerc / this.alert.shortWindowDivider)
         },
 
         alertShortWindow() {
