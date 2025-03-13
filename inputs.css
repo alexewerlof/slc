@@ -10,6 +10,7 @@ fieldset legend {
     padding-inline: 0;
     padding: 0 var(--gap);
     color: var(--primary-color);
+    text-shadow: 0 0 var(--gap) var(--background-darker);
 }
 
 fieldset fieldset {
