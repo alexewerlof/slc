@@ -67,6 +67,22 @@ export const app = createApp({
             selectedSlo: {
                 // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
                 target: config.slo.default,
+                get targetInt() {
+                    return Math.floor(this.target)
+                },
+                set targetInt(newIntStr) {
+                    const newInt = Number(newIntStr)
+                    const currTargetFrac = this.target % 1
+                    this.target = toFixed(newInt + currTargetFrac)
+                },
+                get targetFrac() {
+                    return toFixed(this.target % 1)
+                },
+                set targetFrac(newFracStr) {
+                    const newFrac = Number(newFracStr)
+                    const currTargetInt = Math.floor(this.target)
+                    this.target = toFixed(currTargetInt + newFrac)
+                },
                 // The length of the SLO window in days
                 windowDays: config.windowDays.default,
                 // Lower bound threshold
@@ -75,7 +91,7 @@ export const app = createApp({
                 upperThreshold: config.upperThreshold.default,
                 // Allows fine tuning the target by adding or removing a small amount
                 changeTarget(amount) {
-                    this.target = clamp(toFixed(this.selectedSlo.target + amount), config.slo.min, config.slo.max)
+                    this.target = clamp(toFixed(this.target + amount), config.slo.min, config.slo.max)
                 },
             },
             // Alert burn rate: the rate at which the error budget is consumed
@@ -259,34 +275,12 @@ export const app = createApp({
             )
         },
 
-        sloInt: {
-            get() {
-                return Math.floor(this.selectedSlo.target)
-            },
-            set(newIntStr) {
-                const newInt = Number(newIntStr)
-                const sloFrac = this.selectedSlo.target % 1
-                this.selectedSlo.target = toFixed(newInt + sloFrac)
-            }
-        },
-
         lowerThresholdMax() {
             return this.indicator.upperBound ? this.selectedSlo.upperThreshold : config.lowerThreshold.max
         },
 
         upperThresholdMin() {
             return this.indicator.lowerBound ? this.selectedSlo.lowerThreshold : config.upperThreshold.min
-        },
-
-        sloFrac: {
-            get() {
-                return toFixed(this.selectedSlo.target % 1)
-            },
-            set(newFracStr) {
-                const newFrac = Number(newFracStr)
-                const sloInt = Math.floor(this.selectedSlo.target)
-                this.selectedSlo.target = toFixed(sloInt + newFrac)
-            }
         },
 
         errorBudgetPerc() {

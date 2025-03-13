@@ -507,8 +507,8 @@
                             </p>
                             <p>
                                 Using the two sliders below you can fine tune the SLO to your needs.
-                                The first slider is for the integer part of the percentage ({{ percL10n(sloInt) }}).
-                                The second slider is for the fractional part of the percentage ({{ percL10n(sloFrac) }}).
+                                The first slider is for the integer part of the percentage ({{ percL10n(selectedSlo.targetInt) }}).
+                                The second slider is for the fractional part of the percentage ({{ percL10n(selectedSlo.targetFrac) }}).
                             </p>
                             <table>
                                 <caption>Typical SLO targets</caption>
@@ -553,19 +553,19 @@
                         <legend>Value: {{ percL10n(selectedSlo.target) }}</legend>
                         <div class="input-group">
                             <label for="slo-int-input">
-                                Integer: {{ percL10n(sloInt) }}
+                                Integer: {{ percL10n(selectedSlo.targetInt) }}
                             </label>
                             <input
                                 id="slo-int-input"
                                 type="range"
                                 :min="config.slo.min"
                                 max="99"
-                                v-model.number="sloInt"
+                                v-model.number="selectedSlo.targetInt"
                             >
                         </div>
                         <div class="input-group">
                             <label for="slo-frac-input">
-                                Fraction: {{ percL10n(sloFrac) }}
+                                Fraction: {{ percL10n(selectedSlo.targetFrac) }}
                                 <help-component>
                                     <p>
                                         This slider allows fine tuning the SLO.
@@ -575,7 +575,7 @@
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>{{ sloInt }}.XYZ</th>
+                                                <th>{{ selectedSlo.targetInt }}.XYZ</th>
                                                 <th>Subtract</th>
                                                 <th>Add</th>
                                             </tr>
@@ -598,7 +598,7 @@
                                             </tr>
                                             <tr>
                                                 <th>XYZ</th>
-                                                <td colspan="2"><button type="button" @click="sloFrac = 0">reset</button></td>
+                                                <td colspan="2"><button type="button" @click="selectedSlo.targetFrac = 0">reset</button></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -610,7 +610,7 @@
                                 min="0"
                                 max="0.999"
                                 step="0.001"
-                                v-model.number="sloFrac"
+                                v-model.number="selectedSlo.targetFrac"
                             >
                         </div>
                     </fieldset>
