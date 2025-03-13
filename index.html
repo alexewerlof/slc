@@ -793,7 +793,7 @@
                         <h2 id="error-budget-title">
                             Error budget:
                             <label for="slo-int-input">
-                                {{ percL10n(errorBudgetPerc) }}
+                                {{ percL10n(selectedSlo.errorBudget) }}
                             </label>
                             <help-component>
                                 <p>
@@ -835,7 +835,7 @@
                                                 <mo>-</mo>
                                                 <mi>{{ percL10n(selectedSlo.target) }}</mi>
                                                 <mo>=</mo>
-                                                <mn>{{ percL10n(errorBudgetPerc) }}</mn>
+                                                <mn>{{ percL10n(selectedSlo.errorBudget) }}</mn>
                                             </mtd>
                                         </mtr>
                                     </mtable>
@@ -885,7 +885,7 @@
                         </div>
                         <error-budget-component
                             :error-budget="errorBudget"
-                            :error-budget-perc="errorBudgetPerc"
+                            :error-budget-perc="selectedSlo.errorBudget"
                             :good-event-count="goodEventCount"
                             :valid-event-count="validEventCount">
                         </error-budget-component>

@@ -73,6 +73,9 @@ export const app = createApp({
                 const currTargetInt = Math.floor(this.target)
                 this.target = toFixed(currTargetInt + newFrac)
             },
+            get errorBudget() {
+                return toFixed(100 - this.target)
+            },
             // The length of the SLO window in days
             windowDays: config.windowDays.default,
             // Lower bound threshold
@@ -285,10 +288,6 @@ export const app = createApp({
             )
         },
 
-        errorBudgetPerc() {
-            return toFixed(100 - this.selectedSlo.target)
-        },
-
         validEventCount() {
             if (this.indicator.isTimeBased) {
                 return this.sloWindow.countTimeslices
@@ -302,7 +301,7 @@ export const app = createApp({
         },
 
         badEventCount() {
-            return Math.floor(percent(this.errorBudgetPerc, this.validEventCount))
+            return Math.floor(percent(this.selectedSlo.errorBudget, this.validEventCount))
         },
 
         errorBudget() {
