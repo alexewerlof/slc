@@ -6,6 +6,7 @@
     border: var(--bthick) solid var(--ui-border);
     margin: 0;
     border-radius: var(--bradius);
+    box-shadow: 0 0 var(--gap) var(--bthick) var(--background-darker);
 }
 
 .inline-select__button {

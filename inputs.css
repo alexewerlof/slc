@@ -25,6 +25,7 @@ input[type=range] {
     outline: none;
     margin: var(--gap) auto;
     cursor: ew-resize;
+    box-shadow: 0 0 var(--gap) var(--bthick) var(--background-darker);
 }
 
 input[type=range]::-webkit-slider-runnable-track {
