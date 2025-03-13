@@ -27,7 +27,7 @@ input[type=range] {
 }
 
 input[type=range]::-webkit-slider-runnable-track {
-    border: 1px solid var(--ui-border);
+    border: var(--bthick) solid var(--ui-border);
     transition: border-color var(--animation-speed) ease-in-out;
     background-color: var(--background-darker);
     height: 100%;
@@ -57,7 +57,7 @@ input[type=search], input[type=text], input[type=number], select, textarea {
     padding: var(--gap);
     font-family: inherit;
     font-size: inherit;
-    border: 1px solid var(--ui-border);
+    border: var(--bthick) solid var(--ui-border);
     border-radius: var(--bradius);
     background-color: var(--background-darker);
     color: inherit;
@@ -89,7 +89,7 @@ input[type=radio] {
     width: 1em;
     height: 1em;
     border-radius: 50%;
-    border: 1px solid var(--secondary-color);
+    border: var(--bthick) solid var(--secondary-color);
     background-color: var(--background-lighter);
     transition: background-color var(--animation-speed) ease-in-out;
 }
@@ -124,7 +124,7 @@ textarea {
 button {
     background-color: var(--secondary-color);
     color: var(--background-color);
-    border: 1px solid currentColor;
+    border: var(--bthick) solid currentColor;
     border-radius: var(--bradius);
     cursor: pointer;
     transition: background-color var(--animation-speed);
@@ -172,7 +172,7 @@ a, a:hover, a:active {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     margin: 0;
-    border: 1px solid var(--ui-border);
+    border: var(--bthick) solid var(--ui-border);
 }
 
 label {
