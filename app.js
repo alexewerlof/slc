@@ -105,6 +105,7 @@ export const app = createApp({
                 return this.indicator.lowerBound ? this.lowerThreshold : config.upperThreshold.min
             },
         }
+        
         const alert = {
             // Alert burn rate: the rate at which the error budget is consumed
             burnRate: config.burnRate.default,
@@ -114,7 +115,12 @@ export const app = createApp({
             shortWindowDivider: config.shortWindowDivider.default,
             // Show the short window alert
             useShortWindow: false,
+            // As a percentage of the error budget
+            get shortWindowPerc() {
+                return toFixed(this.longWindowPerc / this.shortWindowDivider)
+            },
         }
+
         return {
             // Expose the config to the UI
             config,
@@ -323,15 +329,6 @@ export const app = createApp({
             return this.errorBudget.shrinkSec(100 / this.alert.burnRate)
         },
 
-        // If nothing is done to stop the failures, there'll be burnRate times more errors by the end of the SLO window
-        sloWindowBudgetBurn() {
-            const { sec } = this.objective.window
-            const eventCost = this.badEventCost || 0
-            const burnedEventAtThisRate = Math.ceil(this.badEventCount * this.alert.burnRate)
-            const eventCount = Math.min(this.validEventCount, burnedEventAtThisRate)
-            return new Budget(this.indicator, sec, eventCount, eventCost, this.badEventCurrency)
-        },
-
         alertLongWindow() {
             return this.errorBudgetBurn.shrink(this.alert.longWindowPerc)
         },
@@ -340,13 +337,17 @@ export const app = createApp({
             return this.errorBudgetBurn.shrink(100 - this.alert.longWindowPerc)
         },
 
-        // As a percentage of the error budget
-        alertShortWindowPerc() {
-            return toFixed(this.alert.longWindowPerc / this.alert.shortWindowDivider)
+        alertShortWindow() {
+            return this.errorBudgetBurn.shrink(this.alert.shortWindowPerc)
         },
 
-        alertShortWindow() {
-            return this.errorBudgetBurn.shrink(this.alertShortWindowPerc)
+        // If nothing is done to stop the failures, there'll be burnRate times more errors by the end of the SLO window
+        sloWindowBudgetBurn() {
+            const { sec } = this.objective.window
+            const eventCost = this.badEventCost || 0
+            const burnedEventAtThisRate = Math.ceil(this.badEventCount * this.alert.burnRate)
+            const eventCount = Math.min(this.validEventCount, burnedEventAtThisRate)
+            return new Budget(this.indicator, sec, eventCount, eventCost, this.badEventCurrency)
         },
 
         shareUrl() {
