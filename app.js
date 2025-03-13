@@ -13,7 +13,7 @@ import HelpComponent from './components/help.js'
 import SLFractionComponent from './components/sl-fraction.js'
 import { setTitle } from './lib/header.js'
 import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
-import { daysToSeconds } from './lib/time.js'
+import { daysToSeconds, humanTimeSlices } from './lib/time.js'
 import { Window } from './lib/window.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from './lib/fmt.js'
 import { inRange, inRangePosInt, isNum, isStr } from './lib/validation.js'
@@ -46,6 +46,9 @@ export const app = createApp({
             },
             set isTimeBased(newIsTimeBased) {
                 this.timeslice = newIsTimeBased ? Math.abs(this.timeslice) : -Math.abs(this.timeslice)
+            },
+            get eventUnitNorm() {
+                    return this.isTimeBased ? humanTimeSlices(this.timeslice) : this.eventUnit
             },
             // Is there any bound
             isBounded() {

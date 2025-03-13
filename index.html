@@ -303,14 +303,14 @@
                                 <help-component>
                                     <p>
                                         <ext-link href="https://blog.alexewerlof.com/p/sli-good">
-                                            What are good {{ sloWindow.eventUnitNorm }}
+                                            What are good {{ indicator.eventUnitNorm }}
                                         </ext-link>
                                         from consumer's perspective?
-                                        How do good {{ sloWindow.eventUnitNorm }} look like?
+                                        How do good {{ indicator.eventUnitNorm }} look like?
                                     </p>
                                     <p>
                                         What is the metric that you can measure to identify the
-                                        good {{ sloWindow.eventUnitNorm }} from all the valid {{ sloWindow.eventUnitNorm }}?
+                                        good {{ indicator.eventUnitNorm }} from all the valid {{ indicator.eventUnitNorm }}?
                                     </p>
                                 </help-component>
                             </label>
@@ -333,7 +333,7 @@
                                             </label>) not to be confused
                                             with the unit of the events (
                                             <label for="sli-event-unit">
-                                                <code>{{ sloWindow.eventUnitNorm }}</code>
+                                                <code>{{ indicator.eventUnitNorm }}</code>
                                             </label>).
                                         </p>
                                     </help-component>
@@ -369,7 +369,7 @@
                                         </p>
                                     </help-component>
                                     <div class="subtle-hint">
-                                        Minimum {{ indicator.metricName }} for good {{ sloWindow.eventUnitNorm }}
+                                        Minimum {{ indicator.metricName }} for good {{ indicator.eventUnitNorm }}
                                     </div>
                                 </label>
                                 <div class="warning block" v-if="indicator.lowerBound && hasComparators(indicator.metricName)">
@@ -417,7 +417,7 @@
                                         </p>
                                     </help-component>
                                     <div class="subtle-hint">
-                                        Maximum {{ indicator.metricName }} for good {{ sloWindow.eventUnitNorm }}
+                                        Maximum {{ indicator.metricName }} for good {{ indicator.eventUnitNorm }}
                                     </div>
                                 </label>
                                 <div class="warning block" v-if="indicator.upperBound && hasComparators(indicator.metricName)">
@@ -462,10 +462,10 @@
                                     <mo>=</mo>
                                     <mfrac>
                                         <mrow>
-                                            <mi>Good {{ sloWindow.eventUnitNorm }}</mi>
+                                            <mi>Good {{ indicator.eventUnitNorm }}</mi>
                                         </mrow>
                                         <mrow>
-                                            <mi>Valid {{ sloWindow.eventUnitNorm }}</mi>
+                                            <mi>Valid {{ indicator.eventUnitNorm }}</mi>
                                         </mrow>
                                     </mfrac>
                                     <mrow>
@@ -479,7 +479,7 @@
                     <div class="code block">
                         <div id="sli-formula-code">
                             <s-l-fraction-component
-                                :event-unit="sloWindow.eventUnitNorm"
+                                :event-unit="indicator.eventUnitNorm"
                                 :lower-bound="indicator.lowerBound"
                                 lower-threshold="$LT"
                                 :metric-name="indicator.metricName"
@@ -501,8 +501,8 @@
                         <help-component>
                             <p>
                                 Service Level Objective (SLO) is the target percentage of
-                                good {{ sloWindow.eventUnitNorm }}
-                                out of total {{ sloWindow.eventUnitNorm }}
+                                good {{ indicator.eventUnitNorm }}
+                                out of total {{ indicator.eventUnitNorm }}
                                 in {{ sloWindow }}.
                             </p>
                             <p>
@@ -645,7 +645,7 @@
                                     </p>
                                     <p>
                                         You can play with different ranges to see how a given SLO translates to different
-                                        good {{ sloWindow.eventUnitNorm }} and how it impacts the error budget.
+                                        good {{ indicator.eventUnitNorm }} and how it impacts the error budget.
                                     </p>
                                     <table>
                                         <caption>Typical compliance periods</caption>
@@ -694,7 +694,7 @@
                                         <span v-if="indicator.metricUnit">
                                             (in <label for="sli-metric-unit"><code>{{ indicator.metricUnit }}</code></label>)
                                         </span>
-                                        to indicate good {{ sloWindow.eventUnitNorm }}.
+                                        to indicate good {{ indicator.eventUnitNorm }}.
                                     </p>
                                     <p>
                                         LT is part of the SLO definition and for example allows for
@@ -704,7 +704,7 @@
                                     </p>
                                 </help-component>
                                 <div class="subtle-hint">
-                                    Minimum {{ indicator.metricName }} for good {{ sloWindow.eventUnitNorm }}
+                                    Minimum {{ indicator.metricName }} for good {{ indicator.eventUnitNorm }}
                                 </div>
                             </label>
                             <input type="number"
@@ -727,7 +727,7 @@
                                         <span v-if="indicator.metricUnit">
                                             (in <label for="sli-metric-unit"><code>{{ indicator.metricUnit }}</code></label>)
                                         </span>
-                                        to indicate good {{ sloWindow.eventUnitNorm }}.
+                                        to indicate good {{ indicator.eventUnitNorm }}.
                                     </p>
                                     <p>
                                         UT is part of the SLO definition and for example allows for
@@ -737,7 +737,7 @@
                                     </p>
                                 </help-component>
                                 <div class="subtle-hint">
-                                    Maximum {{ indicator.metricName }} for good {{ sloWindow.eventUnitNorm }}
+                                    Maximum {{ indicator.metricName }} for good {{ indicator.eventUnitNorm }}
                                 </div>
                             </label>
                             <input type="number"
@@ -762,7 +762,7 @@
                                         Service Level Status (SLS)
                                     </ext-link>
                                     is the percentage of good
-                                    {{ sloWindow.eventUnitNorm }} in a given time.
+                                    {{ indicator.eventUnitNorm }} in a given time.
                                 </p>
                                 <p>
                                     SLS is the status of the Service Level and directly relates to SLO.
@@ -775,7 +775,7 @@
                         <div class="code block">
                             <div id="sli-formula-code">
                                 <s-l-fraction-component
-                                    :event-unit="sloWindow.eventUnitNorm"
+                                    :event-unit="indicator.eventUnitNorm"
                                     :lower-bound="indicator.lowerBound"
                                     :lower-threshold="selectedSlo.lowerThreshold"
                                     :metric-name="indicator.metricName"
@@ -810,7 +810,7 @@
                                 </p>
                                 <p>
                                     Error budget is the complement of SLO.
-                                    It is the percentage of bad {{ sloWindow.eventUnitNorm }} that you can have
+                                    It is the percentage of bad {{ indicator.eventUnitNorm }} that you can have
                                     before you violate the SLO.
                                 </p>
                                 <math>
@@ -880,7 +880,7 @@
                         </h2>
                         <div class="warning block" v-if="errorBudget.eventCount === 0" aria-colcount="warning block">
                             <p>
-                                Warning: The error budget is 0 based on your estimated number of valids {{ sloWindow.eventUnitNorm }}.
+                                Warning: The error budget is 0 based on your estimated number of valids {{ indicator.eventUnitNorm }}.
                             </p>
                         </div>
                         <error-budget-component
@@ -921,7 +921,7 @@
                                         <p>
                                             How much does a bad
                                             <label for="sli-event-unit">
-                                                <code>{{ sloWindow.eventUnitNorm }}</code>
+                                                <code>{{ indicator.eventUnitNorm }}</code>
                                             </label>
                                             cost the business or your team?
                                         </p>
@@ -943,7 +943,7 @@
                                             </li>
                                         </ul>
                                     </help-component>
-                                    <div class="subtle-hint">For each of the failed {{ sloWindow.eventUnitNorm }}</div>
+                                    <div class="subtle-hint">For each of the failed {{ indicator.eventUnitNorm }}</div>
                                 </label>
                                 <input type="number"
                                     id="bad-event-cost-input"
@@ -1231,7 +1231,7 @@
                             </div>
                             <div class="error block" v-if="alertLongWindow.eventCount === 0" class="error block">
                                 <p>
-                                    Error: Division by zero! Long alert Window is too short for enough valid {{ sloWindow.eventUnitNorm }} to be counted.
+                                    Error: Division by zero! Long alert Window is too short for enough valid {{ indicator.eventUnitNorm }} to be counted.
                                 </p>
                             </div>
                             <input
@@ -1389,7 +1389,7 @@
                     <div class="code block">
                         <div id="alert-formula-code">
                             <s-l-fraction-component
-                                :event-unit="sloWindow.eventUnitNorm"
+                                :event-unit="indicator.eventUnitNorm"
                                 :lower-bound="indicator.lowerBound"
                                 :lower-threshold="selectedSlo.lowerThreshold"
                                 :metric-name="indicator.metricName"
@@ -1413,7 +1413,7 @@
                                 <br>
                                 <s-l-fraction-component
                                     v-if="useShortWindow"
-                                    :event-unit="sloWindow.eventUnitNorm"
+                                    :event-unit="indicator.eventUnitNorm"
                                     :lower-bound="indicator.lowerBound"
                                     :lower-threshold="selectedSlo.lowerThreshold"
                                     :metric-name="indicator.metricName"
