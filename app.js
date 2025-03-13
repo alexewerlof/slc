@@ -196,7 +196,7 @@ export const app = createApp({
             
                 // Unit is a bit special. It can be the event name or a timeslice length in seconds
                 if (inRangePosInt(newState.timeslice, config.timeslice.min, config.timeslice.max)) {
-                    this.timeslice = newState.timeslice
+                    this.indicator.timeslice = newState.timeslice
                 } else {
                     this.indicator.isTimeBased = false
                 }
@@ -217,16 +217,16 @@ export const app = createApp({
                     this.indicator.upperBound = newState.upperBound
                 }
                 
+                if (isStr(newState.eventUnit)) {
+                    this.indicator.eventUnit = newState.eventUnit
+                }
+
                 if (inRange(newState.lowerThreshold, config.lowerThreshold.min, config.lowerThreshold.max)) {
                     this.selectedSlo.lowerThreshold = newState.lowerThreshold
                 }
                 
                 if (inRange(newState.upperThreshold, config.upperThreshold.min, config.upperThreshold.max)) {
                     this.selectedSlo.upperThreshold = newState.upperThreshold
-                }
-            
-                if (isStr(newState.eventUnit)) {
-                    this.indicator.eventUnit = newState.eventUnit
                 }
             
                 if (inRange(newState.slo, config.slo.min, config.slo.max)) {
