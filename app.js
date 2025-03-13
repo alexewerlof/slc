@@ -290,7 +290,7 @@ export const app = createApp({
         },
 
         validEventCount() {
-            if (this.sloWindow.isTimeBased) {
+            if (this.indicator.isTimeBased) {
                 return this.sloWindow.countTimeslices
             } else {
                 return this.estimatedValidEvents || config.estimatedValidEvents.min
