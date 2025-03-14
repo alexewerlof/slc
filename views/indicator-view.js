@@ -1,13 +1,15 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
-import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
+import { boundCaption, hasComparators, numL10n, percL10n } from '../lib/fmt.js'
 import BoundView from './bound-view.js'
 import ObjectiveView from './objective-view.js'
 import ShowHideComponent from '../components/show-hide.js'
 import { Indicator } from '../models/indicator.js'
 import ExtLink from '../components/ext-link.js'
 import { icon } from '../lib/icons.js'
+import HelpComponent from '../components/help.js'
+import SLFractionComponent from '../components/sl-fraction.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -27,11 +29,14 @@ export default {
         percL10n,
         numL10n,
         boundCaption,
+        hasComparators,
     },
     components: {
         ExtLink,
         BoundView,
         ObjectiveView,
         ShowHideComponent,
+        HelpComponent,
+        SLFractionComponent,
     },
 }
