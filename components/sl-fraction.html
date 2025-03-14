@@ -2,38 +2,38 @@
     <span class="funct">Percentage_of</span>
     <span>&nbsp;</span>
     <label for="sli-event-unit">
-        <span class="exprs">{{ eventUnit }}</span>
+        <span class="exprs">{{ indicator.eventUnit }}</span>
     </label>
     <span>&nbsp;</span>
     <span class="funct">where</span>
     <span>&nbsp;</span>
-    <span v-if="lowerBound">
+    <span v-if="indicator.lowerBound">
         <label for="lower-threshold-input" title="Lower Threshold">
-            <span class="const">{{ lowerThreshold }}</span>
+            <span class="const">{{ objective?.lowerThreshold || '$LT' }}</span>
         </label>
         <label for="sli-metric-unit">
-            <span class="exprs">{{ metricUnit }}</span>
+            <span class="exprs">{{ indicator.metricUnit }}</span>
         </label>
         <label for="lower-bound-type">
             <span>&nbsp;</span>
-            <span class="punct">{{ entity2symbolNorm(lowerBound) }}</span>
+            <span class="punct">{{ entity2symbolNorm(indicator.lowerBound) }}</span>
             <span>&nbsp;</span>
         </label>
     </span>
     
-    <label for="sli-metric-name"><span class="exprs">{{ metricName }}</span></label>
+    <label for="sli-metric-name"><span class="exprs">{{ indicator.metricName }}</span></label>
     
-    <span v-if="upperBound">
+    <span v-if="indicator.upperBound">
         <label for="upper-bound-type">
             <span>&nbsp;</span>
-            <span class="punct">{{ entity2symbolNorm(upperBound) }}</span>
+            <span class="punct">{{ entity2symbolNorm(indicator.upperBound) }}</span>
             <span>&nbsp;</span>
         </label>
         <label for="upper-threshold-input" title="Upper Threshold">
-            <span class="const">{{ upperThreshold }}</span>
+            <span class="const">{{ objective?.upperThreshold || '$UT' }}</span>
         </label>
         <label for="sli-metric-unit">
-            <span class="exprs">{{ metricUnit }}</span>
+            <span class="exprs">{{ indicator.metricUnit }}</span>
         </label>
     </span>
     <span>&nbsp;</span>

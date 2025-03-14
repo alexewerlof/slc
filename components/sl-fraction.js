@@ -8,16 +8,13 @@ It is tightly coupled to the current labels that exist in the UI.
 export default {
     template: await loadComponent(import.meta.url, true),
     props: {
-        eventUnit: String,
-        lowerBound: String,
-        lowerThreshold: String,
-        metricName: String,
-        metricUnit: String,
-        upperBound: String,
-        upperThreshold: String,
-        eventUnit: String,
+        indicator: Object,
+        objective: Object,
         timePeriod: String,
-        timeLabelId: String,
+        timeLabelId: String,        
+    },
+    mount() {
+        console.log('TODO:200', this.indicator)
     },
     methods: {
         entity2symbolNorm,

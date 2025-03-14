@@ -6,6 +6,10 @@ import { percL10n } from '../lib/fmt.js'
 import ExtLink from '../components/ext-link.js'
 import ShowHideComponent from '../components/show-hide.js'
 import { icon } from '../lib/icons.js'
+import HelpComponent from '../components/help.js'
+import AlertChartComponent from '../components/alert-chart.js'
+import BurnRateComponent from '../components/burn-rate.js'
+import SLFractionComponent from '../components/sl-fraction.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -27,5 +31,9 @@ export default {
     components: {
         ExtLink,
         ShowHideComponent,
+        HelpComponent,
+        AlertChartComponent,
+        BurnRateComponent,
+        SLFractionComponent,
     },
 }
