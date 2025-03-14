@@ -50,31 +50,6 @@ export const app = createApp({
             alert,
         }
     },
-    watch: {
-        /* TODO:
-        windowDays(newVal, oldVal) {
-            if (newVal !== oldVal) {
-                this.expectedTotalEvents = Math.round(this.expectedTotalEvents * newVal / oldVal)
-            }
-        },
-        */
-        title(newTitle) {
-            setTitle(document, newTitle)
-        },
-        /** TODO
-         * 
-        lowerThreshold(newVal) {
-            if (newVal > this.upperThreshold) {
-                this.upperThreshold = newVal
-            }
-        },
-        upperThreshold(newVal) {
-            if (newVal < this.lowerThreshold) {
-                this.lowerThreshold = newVal
-            }
-        },
-        */
-    },
     mounted() {
         this.loadState(urlToState(window.location.href))
         this.$nextTick(() => {
