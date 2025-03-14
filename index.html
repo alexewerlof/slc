@@ -850,28 +850,28 @@
                                     <tbody>
                                         <tr>
                                             <th>{{ numL10n(1) }}</th>
-                                            <td><button type="button" @click="changeErrorBudget(-1)">{{ numL10n(-1) }}</button></td>
-                                            <td><button type="button" @click="changeErrorBudget(1)">{{ numL10n(1) }}</button></td>
+                                            <td><button type="button" @click="objective.changeErrorBudget(-1)">{{ numL10n(-1) }}</button></td>
+                                            <td><button type="button" @click="objective.changeErrorBudget(1)">{{ numL10n(1) }}</button></td>
                                         </tr>
                                         <tr>
                                             <th>{{ numL10n(10) }}</th>
-                                            <td><button type="button" @click="changeErrorBudget(-10)">{{ numL10n(-10) }}</button></td>
-                                            <td><button type="button" @click="changeErrorBudget(10)">{{ numL10n(10) }}</button></td>
+                                            <td><button type="button" @click="objective.changeErrorBudget(-10)">{{ numL10n(-10) }}</button></td>
+                                            <td><button type="button" @click="objective.changeErrorBudget(10)">{{ numL10n(10) }}</button></td>
                                         </tr>
                                         <tr>
                                             <th>{{ numL10n(100) }}</th>
-                                            <td><button type="button" @click="changeErrorBudget(-100)">{{ numL10n(-100) }}</button></td>
-                                            <td><button type="button" @click="changeErrorBudget(100)">{{ numL10n(100) }}</button></td>
+                                            <td><button type="button" @click="objective.changeErrorBudget(-100)">{{ numL10n(-100) }}</button></td>
+                                            <td><button type="button" @click="objective.changeErrorBudget(100)">{{ numL10n(100) }}</button></td>
                                         </tr>
                                         <tr>
                                             <th>{{ numL10n(1000) }}</th>
-                                            <td><button type="button" @click="changeErrorBudget(-1000)">{{ numL10n(-1000) }}</button></td>
-                                            <td><button type="button" @click="changeErrorBudget(1000)">{{ numL10n(1000) }}</button></td>
+                                            <td><button type="button" @click="objective.changeErrorBudget(-1000)">{{ numL10n(-1000) }}</button></td>
+                                            <td><button type="button" @click="objective.changeErrorBudget(1000)">{{ numL10n(1000) }}</button></td>
                                         </tr>
                                         <tr>
                                             <th>{{ numL10n(10000) }}</th>
-                                            <td><button type="button" @click="changeErrorBudget(-10000)">{{ numL10n(-10000) }}</button></td>
-                                            <td><button type="button" @click="changeErrorBudget(10000)">{{ numL10n(10000) }}</button></td>
+                                            <td><button type="button" @click="objective.changeErrorBudget(-10000)">{{ numL10n(-10000) }}</button></td>
+                                            <td><button type="button" @click="objective.changeErrorBudget(10000)">{{ numL10n(10000) }}</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -896,7 +896,7 @@
                                 </label>
                                 <input
                                     type="number"
-                                    v-model.number="expectedTotalEvents"
+                                    v-model.number="objective.expectedTotalEvents"
                                     id="expected-total-events-input"
                                     :min="config.expectedTotalEvents.min"
                                     :max="config.expectedTotalEvents.max"
@@ -904,17 +904,17 @@
                             </div>
                         </fieldset>
 
-                        <div class="warning block" v-if="failureWindow.eventCount === 0" aria-colcount="warning block">
+                        <div class="warning block" v-if="objective.failureWindow.eventCount === 0" aria-colcount="warning block">
                             <p>
                                 Warning: The allowed failures is 0 based on your estimated number of valid {{ indicator.eventUnitNorm }}.
                             </p>
                         </div>
 
                         <error-budget-component
-                            :failure-window="failureWindow"
+                            :failure-window="objective.failureWindow"
                             :error-budget-perc="objective.errorBudget"
-                            :good-event-count="goodEventCount"
-                            :valid-event-count="validEventCount">
+                            :good-event-count="objective.goodEventCount"
+                            :valid-event-count="objective.validEventCount">
                         </error-budget-component>
 
                 </section>
@@ -976,7 +976,7 @@
                                     </p>
                                     <p>
                                         You have selected a burn rate of {{ alert.burnRate }}x.
-                                        This means the error budget ({{ failureWindow.eventCountL10n }} failed {{ failureWindow.eventUnitNorm }}) will be consumed in
+                                        This means the error budget ({{ objective.failureWindow.eventCountL10n }} failed {{ objective.failureWindow.eventUnitNorm }}) will be consumed in
                                         <time>{{ errorBudgetBurn.humanTime }}</time>
                                         instead of being spread across {{ objective.window.humanTime }}.
                                     </p>
@@ -1306,7 +1306,7 @@
                         :alert-short-window="alertShortWindow"
                         :short-window-divider="alert.shortWindowDivider"
                         :use-short-window="alert.useShortWindow"
-                        :error-budget-burn="errorBudgetBurn"></alert-chart-component>
+                        :failure-window="objective.failureWindow"></alert-chart-component>
                     <!-- Long Window Alert Policy -->
                     <h4>
                         Alert Policy

@@ -104,6 +104,32 @@ export const app = createApp({
             upperThresholdMin() {
                 return this.indicator.lowerBound ? this.lowerThreshold : config.upperThreshold.min
             },
+            // For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events
+            expectedTotalEvents: config.expectedTotalEvents.default,
+            get validEventCount() {
+                if (this.indicator.isTimeBased) {
+                    return this.window.countTimeslices
+                } else {
+                    return this.expectedTotalEvents || config.expectedTotalEvents.min
+                }
+            },
+            get goodEventCount() {
+                return Math.floor(percent(this.target, this.validEventCount))
+            },
+            get badEventCount() {
+                return this.validEventCount - this.goodEventCount
+            },
+            changeErrorBudget(amount) {
+                // Event based
+                const newBadEventCount = clamp(this.badEventCount + amount, 1, this.validEventCount)
+                const newGoodEventCount = this.validEventCount - newBadEventCount
+                const newSLO = toFixed(newGoodEventCount / this.validEventCount * 100)
+                this.target = clamp(newSLO, config.slo.min, config.slo.max)
+            },    
+            get failureWindow() {
+                const { sec } = this.window
+                return new FailureWindow(this.indicator, sec, this.badEventCount)
+            },
         }
         
         const alert = {
@@ -137,8 +163,6 @@ export const app = createApp({
             objective,
             // Alert
             alert,
-            // For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events
-            expectedTotalEvents: config.expectedTotalEvents.default,
         }
     },
     watch: {
@@ -196,14 +220,6 @@ export const app = createApp({
         numL10n,
         percentToRatio,
         percL10n,
-
-        changeErrorBudget(amount) {
-            // Event based
-            const newBadEventCount = clamp(this.badEventCount + amount, 1, this.validEventCount)
-            const newGoodEventCount = this.validEventCount - newBadEventCount
-            const newSLO = toFixed(newGoodEventCount / this.validEventCount * 100)
-            this.objective.target = clamp(newSLO, config.slo.min, config.slo.max)
-        },
         
         loadState(newState) {
             try {
@@ -259,7 +275,7 @@ export const app = createApp({
                 }
             
                 if (inRangePosInt(newState.expectedTotalEvents, config.expectedTotalEvents.min, config.expectedTotalEvents.max)) {
-                    this.expectedTotalEvents = newState.expectedTotalEvents
+                    this.objective.expectedTotalEvents = newState.expectedTotalEvents
                 }
             
                 if (inRange(newState.burnRate, config.burnRate.min, config.burnRate.max)) {
@@ -290,30 +306,16 @@ export const app = createApp({
         },
     },
     computed: {
-        validEventCount() {
-            if (this.indicator.isTimeBased) {
-                return this.objective.window.countTimeslices
-            } else {
-                return this.expectedTotalEvents || config.expectedTotalEvents.min
-            }
-        },
-
-        goodEventCount() {
-            return Math.floor(percent(this.objective.target, this.validEventCount))
-        },
-
-        badEventCount() {
-            return this.validEventCount - this.goodEventCount
-        },
-
-        failureWindow() {
+        // If nothing is done to stop the failures, there'll be burnRate times more errors by the end of the SLO window
+        sloWindowBudgetBurn() {
             const { sec } = this.objective.window
-            return new FailureWindow(this.indicator, sec, this.badEventCount)
+            const burnedEventAtThisRate = Math.ceil(this.objective.badEventCount * this.alert.burnRate)
+            const eventCount = Math.min(this.objective.validEventCount, burnedEventAtThisRate)
+            return new FailureWindow(this.indicator, sec, eventCount)
         },
-
-        // Time to burn the entire error budget at the given burnRate
+        // Burn the entire error budget at the given burnRate
         errorBudgetBurn() {
-            return this.failureWindow.shrinkSec(100 / this.alert.burnRate)
+            return this.objective.failureWindow.shrinkSec(100 / this.alert.burnRate)
         },
 
         alertLongWindow() {
@@ -326,14 +328,6 @@ export const app = createApp({
 
         alertShortWindow() {
             return this.errorBudgetBurn.shrink(this.alert.shortWindowPerc)
-        },
-
-        // If nothing is done to stop the failures, there'll be burnRate times more errors by the end of the SLO window
-        sloWindowBudgetBurn() {
-            const { sec } = this.objective.window
-            const burnedEventAtThisRate = Math.ceil(this.badEventCount * this.alert.burnRate)
-            const eventCount = Math.min(this.validEventCount, burnedEventAtThisRate)
-            return new FailureWindow(this.indicator, sec, eventCount)
         },
 
         shareUrl() {

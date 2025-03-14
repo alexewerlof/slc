@@ -30,8 +30,8 @@
         color="--brand-red"
         offset="1">
         <tspan>Error Budget Exhausted</tspan>
-        <tspan>{{ errorBudgetBurn.eventCountL10n }} {{ errorBudgetBurn.eventUnitNorm }} failed</tspan>
-        <tspan>in {{ errorBudgetBurn.humanTime }}</tspan>
+        <tspan>{{ failureWindow.eventCountL10n }} {{ failureWindow.eventUnitNorm }} failed</tspan>
+        <tspan>in {{ failureWindow.humanTime }}</tspan>
     </burn-event-component>
     <burn-event-component
         :width="width"
