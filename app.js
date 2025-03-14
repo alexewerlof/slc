@@ -12,161 +12,22 @@ import InlineSelectComponent from './components/inline-select.js'
 import HelpComponent from './components/help.js'
 import SLFractionComponent from './components/sl-fraction.js'
 import { setTitle } from './lib/header.js'
-import { percent, percentToRatio, toFixed, clamp } from './lib/math.js'
-import { daysToSeconds, humanTimeSlices, secondsToDays } from './lib/time.js'
-import { Window } from './lib/window.js'
+import { percentToRatio } from './lib/math.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from './lib/fmt.js'
-import { inRange, inRangePosInt, isNum, isStr } from './lib/validation.js'
+import { inRange, inRangePosInt, isStr } from './lib/validation.js'
 import { trackEvent } from './lib/ga-utils.js'
 import { copyElementTextToClipboard, stateToUrl, urlToState } from './lib/share.js'
-import { FailureWindow } from './lib/failure-window.js'
+import { Indicator } from './models/indicator.js'
+import { Objective } from './models/objective.js'
+import { Alert } from './models/alert.js'
 
 export const app = createApp({
     data() {
-        const indicator = {
-            // The title of the SLI
-            title: config.title.default,
-            // The description of the SLI
-            description: config.description.default,
-            // definition of valid events for event-based SLIs
-            eventUnit: config.eventUnit.default,
-            // length of timeslice for time based SLIs. When it is negative, it indicates event based SLIs
-            timeslice: config.timeslice.default,
-            // the metric that indicates whether an event or timeslice is good
-            metricName: config.metricName.default,
-            // The unit of the metric that is used to identify good events
-            metricUnit: config.metricUnit.default,
-            // The type of lower bound for the metric values that indicate a good event
-            lowerBound: config.lowerBound.default,
-            // The type of upper bound for the metric values that indicate a good event
-            upperBound: config.upperBound.default,
-            // whether the SLI is time-based or event-based
-            get isTimeBased() {
-                return this.timeslice > 0
-            },
-            set isTimeBased(newIsTimeBased) {
-                this.timeslice = newIsTimeBased ? Math.abs(this.timeslice) : -Math.abs(this.timeslice)
-            },
-            get eventUnitNorm() {
-                    return this.isTimeBased ? humanTimeSlices(this.timeslice) : this.eventUnit
-            },
-            // Is there any bound
-            isBounded() {
-                return Boolean(this.lowerBound || this.upperBound)
-            },
-        }
+        const indicator = new Indicator()
 
-        const objective = {
-            indicator,
-            // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
-            target: config.slo.default,
-            get targetInt() {
-                return Math.floor(this.target)
-            },
-            set targetInt(newIntStr) {
-                const newInt = Number(newIntStr)
-                const currTargetFrac = this.target % 1
-                this.target = toFixed(newInt + currTargetFrac)
-            },
-            get targetFrac() {
-                return toFixed(this.target % 1)
-            },
-            set targetFrac(newFracStr) {
-                const newFrac = Number(newFracStr)
-                const currTargetInt = Math.floor(this.target)
-                this.target = toFixed(currTargetInt + newFrac)
-            },
-            get errorBudget() {
-                return toFixed(100 - this.target)
-            },
-            get windowDays() {
-                return secondsToDays(this.window.sec)
-            },
-            // The length of the SLO window in days
-            set windowDays(days) {
-                this.window.sec = daysToSeconds(days)
-            },
-            window: new Window(
-                indicator,
-                daysToSeconds(config.windowDays.default),
-            ),
-            // Lower bound threshold
-            lowerThreshold: config.lowerThreshold.default,
-            // Upper bound threshold
-            upperThreshold: config.upperThreshold.default,
-            // Allows fine tuning the target by adding or removing a small amount
-            changeTarget(amount) {
-                this.target = clamp(toFixed(this.target + amount), config.slo.min, config.slo.max)
-            },
-            lowerThresholdMax() {
-                return this.indicator.upperBound ? this.upperThreshold : config.lowerThreshold.max
-            },
-            upperThresholdMin() {
-                return this.indicator.lowerBound ? this.lowerThreshold : config.upperThreshold.min
-            },
-            // For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events
-            expectedTotalEvents: config.expectedTotalEvents.default,
-            get validEventCount() {
-                if (this.indicator.isTimeBased) {
-                    return this.window.countTimeslices
-                } else {
-                    return this.expectedTotalEvents || config.expectedTotalEvents.min
-                }
-            },
-            get goodEventCount() {
-                return Math.floor(percent(this.target, this.validEventCount))
-            },
-            get badEventCount() {
-                return this.validEventCount - this.goodEventCount
-            },
-            changeErrorBudget(amount) {
-                // Event based
-                const newBadEventCount = clamp(this.badEventCount + amount, 1, this.validEventCount)
-                const newGoodEventCount = this.validEventCount - newBadEventCount
-                const newSLO = toFixed(newGoodEventCount / this.validEventCount * 100)
-                this.target = clamp(newSLO, config.slo.min, config.slo.max)
-            },    
-            get failureWindow() {
-                const { sec } = this.window
-                return new FailureWindow(this.indicator, sec, this.badEventCount)
-            },
-        }
+        const objective = new Objective(indicator)
         
-        const alert = {
-            objective,
-            // Alert burn rate: the rate at which the error budget is consumed
-            burnRate: config.burnRate.default,
-            // Long window alert: percentage of the SLO window
-            longWindowPerc: config.longWindowPerc.default,
-            // Short window alert: the fraction of the long window
-            shortWindowDivider: config.shortWindowDivider.default,
-            // Show the short window alert
-            useShortWindow: false,
-            // As a percentage of the error budget
-            get shortWindowPerc() {
-                return toFixed(this.longWindowPerc / this.shortWindowDivider)
-            },
-            // If nothing is done to stop the failures, there'll be burnRate times more errors by the end of the SLO window
-            get sloWindowBudgetBurn() {
-                const { sec } = this.objective.window
-                const burnedEventAtThisRate = Math.ceil(this.objective.badEventCount * this.burnRate)
-                const eventCount = Math.min(this.objective.validEventCount, burnedEventAtThisRate)
-                return new FailureWindow(this.objective.indicator, sec, eventCount)
-            },
-            // Burn the entire error budget at the given burnRate
-            get errorBudgetBurn() {
-                return this.objective.failureWindow.shrinkSec(100 / this.burnRate)
-            },
-            get longFailureWindow() {
-                return this.errorBudgetBurn.shrink(this.longWindowPerc)
-            },
-            get shortFailureWindow() {
-                return this.errorBudgetBurn.shrink(this.shortWindowPerc)
-            },
-            get alertTTRWindow() {
-                return this.errorBudgetBurn.shrink(100 - this.longWindowPerc)
-            },
-        }
+        const alert = new Alert(objective)
 
         return {
             // Expose the config to the UI

@@ -1,8 +1,5 @@
 import { config } from '../config.js'
 import { humanTimeSlices } from '../lib/time.js'
-import { badFormula, Bound, goodFormula } from './bound.js'
-import { Objective } from './objective.js'
-import { isInstance, isPosInt, isStr } from '../lib/validation.js'
 
 /*
 SLI budgeting method:
@@ -24,72 +21,34 @@ Metric data points impact its condition for good||bad:
 */
 
 export class Indicator {
-    constructor(
-        eventUnitOrTimeslice,
-        metricName = config.metricName.default,
-        metricUnit = config.metricUnit.default,
-    ) {
-        if (isStr(eventUnitOrTimeslice)) {
-            this.eventUnit = eventUnitOrTimeslice
-            this.isTimeBased = false
-        } else {
-            if (!isPosInt(eventUnitOrTimeslice)) {
-                throw new TypeError(`Indicator: eventUnitOrTimeslice must be a positive integer. Got ${ eventUnitOrTimeslice } (${ typeof eventUnitOrTimeslice })`)
-            }
-            this.timeSliceLength = eventUnitOrTimeslice
-            this.isTimeBased = true
-        }
-        this.metricName = metricName
-        this.metricUnit = metricUnit
-        this.timeSliceLength = 0
-        this.objectives = []
-        this.bound = new Bound(this)
-        if (!isInstance(this.bound, Bound)) {
-            throw new TypeError(`Indicator: bound must be an instance of Bound. Got ${ bound }`)
-        }
+    // The title of the SLI
+    title = config.title.default
+    // The description of the SLI
+    description = config.description.default
+    // definition of valid events for event-based SLIs
+    eventUnit = config.eventUnit.default
+    // length of timeslice for time based SLIs. When it is negative, it indicates event based SLIs
+    timeslice = config.timeslice.default
+    // the metric that indicates whether an event or timeslice is good
+    metricName = config.metricName.default
+    // The unit of the metric that is used to identify good events
+    metricUnit = config.metricUnit.default
+    // The type of lower bound for the metric values that indicate a good event
+    lowerBound = config.lowerBound.default
+    // The type of upper bound for the metric values that indicate a good event
+    upperBound = config.upperBound.default
+    // whether the SLI is time-based or event-based
+    get isTimeBased() {
+        return this.timeslice > 0
     }
-
-    get good() {
-        return goodFormula(this)
+    set isTimeBased(newIsTimeBased) {
+        this.timeslice = newIsTimeBased ? Math.abs(this.timeslice) : -Math.abs(this.timeslice)
     }
-
-    get bad() {
-        return badFormula(this)
-    }
-
-    get valid() {
-        return `all ${ this.eventUnitNorm }`
-    }
-
-    addObjective(objective) {
-        if(!isInstance(objective, Objective)) {
-            throw new TypeError(`Indicator: objective must be an instance of Objective. Got ${ objective }`)
-        }
-        objective.indicator = this
-        this.objectives.push(objective)
-        return objective
-    }
-
-    addNewObjective() {
-        return this.addObjective(new Objective(this))
-    }
-
-    removeObjective(index) {
-        this.objectives.splice(index, 1)
-    }
-
     get eventUnitNorm() {
-        if (this.isEventBased) {
-            return this.eventUnit || config.eventUnit.default
-        }
-        return humanTimeSlices(this.timeSliceLength)
+            return this.isTimeBased ? humanTimeSlices(this.timeslice) : this.eventUnit
     }
-
-    get isEventBased() {
-        return !this.isTimeBased
-    }
-
-    toString() {
-        return this.eventUnitNorm + ' where ' + this.good
+    // Is there any bound
+    isBounded() {
+        return Boolean(this.lowerBound || this.upperBound)
     }
 }
