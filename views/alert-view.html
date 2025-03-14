@@ -394,3 +394,7 @@
     </div>
     <button @click="copy('alert-formula-code', 'alert-formula')" type="button" title="Copy to clipboard">⎘</button>
 </div>
+
+<div class="code block">
+    <pre><code>{{JSON.stringify(alert.toJSON(), null, 2)}}</code></pre>
+</div>

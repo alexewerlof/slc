@@ -1,5 +1,5 @@
 import { icon } from '../lib/icons.js'
-import { osloMetadata, osloObj } from '../lib/oslo.js'
+import { metadataObj, crdObj } from '../lib/crd.js'
 import { isInstance } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
 
@@ -37,7 +37,7 @@ export class Consumption {
     }
 
     toJSON() {
-        return osloObj('Consumption', osloMetadata(undefined, this.displayName), {
+        return crdObj('Consumption', metadataObj(undefined, this.displayName), {
             description: this.description,
         })
     }

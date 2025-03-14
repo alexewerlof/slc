@@ -43,4 +43,17 @@ export class Alert {
     get alertTTRWindow() {
         return this.errorBudgetBurn.shrink(100 - this.longWindowPerc)
     }
+
+    toJSON() {
+        const ret = {
+            burnRate: this.burnRate,
+            longWindowPerc: this.longWindowPerc,
+        }
+
+        if (this.useShortWindow) {
+            ret.shortWindowDivider = this.shortWindowDivider
+        }
+
+        return ret
+    }
 }

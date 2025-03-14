@@ -55,4 +55,17 @@ export class Indicator {
     get isRanged() {
         return Boolean(this.lowerBound) && Boolean(this.upperBound)
     }
+
+    toJSON() {
+      return {
+        title: this.title,
+        description: this.description,
+        eventUnit: this.eventUnit,
+        timeslice: this.timeslice,
+        metricName: this.metricName,
+        metricUnit: this.metricUnit,
+        lowerBound: this.lowerBound,
+        upperBound: this.upperBound,
+      }
+    }
 }

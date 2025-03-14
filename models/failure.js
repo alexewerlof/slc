@@ -2,7 +2,7 @@ import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
 import { Service } from './service.js'
 import { Consumption } from './consumption.js'
-import { osloObj } from '../lib/oslo.js'
+import { crdObj } from '../lib/crd.js'
 import { icon } from '../lib/icons.js'
 import { clamp } from '../lib/math.js'
 
@@ -45,7 +45,7 @@ export class Failure {
     }
 
     toJSON() {
-        return osloObj('Failure', undefined, {
+        return crdObj('Failure', undefined, {
             // service: this.service,
             // consumption: this.consumption,
             symptom: this.symptom,

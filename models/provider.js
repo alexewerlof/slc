@@ -1,7 +1,7 @@
 import { Service } from './service.js'
 import { isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
-import { osloMetadata, osloObj } from '../lib/oslo.js'
+import { metadataObj, crdObj } from '../lib/crd.js'
 
 export class Provider {
     static possibleTypes = ['System', 'Component', 'Group']
@@ -62,7 +62,7 @@ export class Provider {
     }
 
     toJSON() {
-        return osloObj('Provider', osloMetadata(undefined, this.displayName), {
+        return crdObj('Provider', metadataObj(undefined, this.displayName), {
             description: this.description,
             services: this.services,
         })

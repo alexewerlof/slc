@@ -10,6 +10,7 @@ import ExtLink from '../components/ext-link.js'
 import { icon } from '../lib/icons.js'
 import HelpComponent from '../components/help.js'
 import SLFractionComponent from '../components/sl-fraction.js'
+import InlineSelectComponent from '../components/inline-select.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -38,5 +39,6 @@ export default {
         ShowHideComponent,
         HelpComponent,
         SLFractionComponent,
+        InlineSelectComponent,
     },
 }

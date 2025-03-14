@@ -1,6 +1,6 @@
 import { namify } from '../lib/fmt.js'
 import { icon } from '../lib/icons.js'
-import { osloMetadata, osloObj } from '../lib/oslo.js'
+import { metadataObj, crdObj } from '../lib/crd.js'
 import { isInstance } from '../lib/validation.js'
 import { Consumption } from './consumption.js'
 import { Failure } from './failure.js'
@@ -147,7 +147,7 @@ export class Service {
     }
 
     toJSON() {
-        return osloObj('Service', osloMetadata(
+        return crdObj('Service', metadataObj(
             namify(this.provider.displayName, this.displayName),
             this.displayName,
         ), {

@@ -85,4 +85,14 @@ export class Objective {
         const { sec } = this.window
         return new FailureWindow(this.indicator, sec, this.badEventCount)
     }
+
+    toJSON() {
+        return {
+            target: this.target,
+            lowerThreshold: this.lowerThreshold,
+            upperThreshold: this.upperThreshold,
+            expectedTotalEvents: this.expectedTotalEvents,
+            windowDays: this.windowDays,
+        }
+    }
 }
