@@ -299,11 +299,11 @@ export const app = createApp({
         },
 
         goodEventCount() {
-            return this.validEventCount - this.badEventCount
+            return Math.floor(percent(this.objective.target, this.validEventCount))
         },
 
         badEventCount() {
-            return Math.floor(percent(this.objective.errorBudget, this.validEventCount))
+            return this.validEventCount - this.goodEventCount
         },
 
         errorBudget() {
