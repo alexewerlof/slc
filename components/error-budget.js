@@ -14,7 +14,7 @@ export default {
         numL10n,
     },
     props: {
-        errorBudget: Object,
+        failureWindow: Object,
         errorBudgetPerc: Number,
         goodEventCount: Number,
         validEventCount: Number,

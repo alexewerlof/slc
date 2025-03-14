@@ -19,7 +19,7 @@ import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '
 import { inRange, inRangePosInt, isNum, isStr } from './lib/validation.js'
 import { trackEvent } from './lib/ga-utils.js'
 import { copyElementTextToClipboard, stateToUrl, urlToState } from './lib/share.js'
-import { Budget } from './lib/budget.js'
+import { FailureWindow } from './lib/failure-window.js'
 
 export const app = createApp({
     data() {
@@ -306,14 +306,14 @@ export const app = createApp({
             return this.validEventCount - this.goodEventCount
         },
 
-        errorBudget() {
+        failureWindow() {
             const { sec } = this.objective.window
-            return new Budget(this.indicator, sec, this.badEventCount)
+            return new FailureWindow(this.indicator, sec, this.badEventCount)
         },
 
         // Time to burn the entire error budget at the given burnRate
         errorBudgetBurn() {
-            return this.errorBudget.shrinkSec(100 / this.alert.burnRate)
+            return this.failureWindow.shrinkSec(100 / this.alert.burnRate)
         },
 
         alertLongWindow() {
@@ -333,7 +333,7 @@ export const app = createApp({
             const { sec } = this.objective.window
             const burnedEventAtThisRate = Math.ceil(this.badEventCount * this.alert.burnRate)
             const eventCount = Math.min(this.validEventCount, burnedEventAtThisRate)
-            return new Budget(this.indicator, sec, eventCount)
+            return new FailureWindow(this.indicator, sec, eventCount)
         },
 
         shareUrl() {

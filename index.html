@@ -904,14 +904,14 @@
                             </div>
                         </fieldset>
 
-                        <div class="warning block" v-if="errorBudget.eventCount === 0" aria-colcount="warning block">
+                        <div class="warning block" v-if="failureWindow.eventCount === 0" aria-colcount="warning block">
                             <p>
                                 Warning: The allowed failures is 0 based on your estimated number of valid {{ indicator.eventUnitNorm }}.
                             </p>
                         </div>
 
                         <error-budget-component
-                            :error-budget="errorBudget"
+                            :failure-window="failureWindow"
                             :error-budget-perc="objective.errorBudget"
                             :good-event-count="goodEventCount"
                             :valid-event-count="validEventCount">
@@ -976,7 +976,7 @@
                                     </p>
                                     <p>
                                         You have selected a burn rate of {{ alert.burnRate }}x.
-                                        This means the error budget ({{ errorBudget.eventCountL10n }} failed {{ errorBudget.eventUnitNorm }}) will be consumed in
+                                        This means the error budget ({{ failureWindow.eventCountL10n }} failed {{ failureWindow.eventUnitNorm }}) will be consumed in
                                         <time>{{ errorBudgetBurn.humanTime }}</time>
                                         instead of being spread across {{ objective.window.humanTime }}.
                                     </p>
