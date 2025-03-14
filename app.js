@@ -20,6 +20,7 @@ import { copyElementTextToClipboard, stateToUrl, urlToState } from './lib/share.
 import { Indicator } from './models/indicator.js'
 import { Objective } from './models/objective.js'
 import { Alert } from './models/alert.js'
+import ObjectiveViewComponent from './views/objective-view.js'
 import AlertViewComponent from './views/alert-view.js'
 
 export const app = createApp({
@@ -84,6 +85,7 @@ export const app = createApp({
         })
     },
     components: {
+        ObjectiveViewComponent,
         AlertViewComponent,
         AlertChartComponent,
         BurnRateComponent,

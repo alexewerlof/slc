@@ -9,7 +9,7 @@
     <span>&nbsp;</span>
     <span v-if="indicator.lowerBound">
         <label for="lower-threshold-input" title="Lower Threshold">
-            <span class="const">{{ objective?.lowerThreshold || '$LT' }}</span>
+            <span class="const">{{ objective?.lowerThreshold ?? '$LT' }}</span>
         </label>
         <label for="sli-metric-unit">
             <span class="exprs">{{ indicator.metricUnit }}</span>
@@ -30,7 +30,7 @@
             <span>&nbsp;</span>
         </label>
         <label for="upper-threshold-input" title="Upper Threshold">
-            <span class="const">{{ objective?.upperThreshold || '$UT' }}</span>
+            <span class="const">{{ objective?.upperThreshold ?? '$UT' }}</span>
         </label>
         <label for="sli-metric-unit">
             <span class="exprs">{{ indicator.metricUnit }}</span>

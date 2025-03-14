@@ -48,7 +48,11 @@ export class Indicator {
             return this.isTimeBased ? humanTimeSlices(this.timeslice) : this.eventUnit
     }
     // Is there any bound
-    isBounded() {
-        return Boolean(this.lowerBound || this.upperBound)
+    get isBounded() {
+        return Boolean(this.lowerBound) || Boolean(this.upperBound)
+    }
+    // Are both bounds needed
+    get isRanged() {
+        return Boolean(this.lowerBound) && Boolean(this.upperBound)
     }
 }
