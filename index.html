@@ -977,12 +977,12 @@
                                     <p>
                                         You have selected a burn rate of {{ alert.burnRate }}x.
                                         This means the error budget ({{ objective.failureWindow.eventCountL10n }} failed {{ objective.failureWindow.eventUnitNorm }}) will be consumed in
-                                        <time>{{ errorBudgetBurn.humanTime }}</time>
+                                        <time>{{ alert.errorBudgetBurn.humanTime }}</time>
                                         instead of being spread across {{ objective.window.humanTime }}.
                                     </p>
                                 <p>
                                     If the error budget continues to burn at this rate throughout the SLO window,
-                                    there will be {{ sloWindowBudgetBurn }}.
+                                    there will be {{ alert.sloWindowBudgetBurn }}.
                                 </p>
                                 <p>
                                     Google SRE Workbook goes through 6 alerting strategies and
@@ -1060,11 +1060,7 @@
                         </div>
                     </fieldset>
                     <!-- Burn Chart Component -->
-                    <burn-rate-component
-                        :burn-rate="alert.burnRate"
-                        :error-budget-burn="errorBudgetBurn"
-                        :slo-window-budget-burn="sloWindowBudgetBurn">
-                    </burn-rate-component>
+                    <burn-rate-component :alert="alert"></burn-rate-component>
                     <!-- Long Window Alert -->
                     <fieldset>
                         <legend>Alert Triggers</legend>
@@ -1095,12 +1091,12 @@
                                             <mo class="funct">&times;</mo>
                                             <mn class="const">{{ objective.window.humanSec }}</mn>
                                             <mo class="punct">=</mo>
-                                            <mn class="const">{{ alertLongWindow.humanSec }}</mn>
+                                            <mn class="const">{{ alert.longFailureWindow.humanSec }}</mn>
                                         </mrow>
                                     </math>
                                     <p>
                                         Which is
-                                        <time>{{ alertLongWindow.humanTime }}</time>.
+                                        <time>{{ alert.longFailureWindow.humanTime }}</time>.
                                     </p>
                                     <p>
                                         Assuming that the entire error budget was available at the begining of the incident,
@@ -1113,16 +1109,16 @@
                                                 <ms>max</ms>
                                             </msub>
                                             <mo>=</mo>
-                                            <mn>{{ errorBudgetBurn.humanSec }}</mn>
+                                            <mn>{{ alert.errorBudgetBurn.humanSec }}</mn>
                                             <mo>-</mo>
-                                            <mn>{{ alertLongWindow.humanSec }}</mn>
+                                            <mn>{{ alert.longFailureWindow.humanSec }}</mn>
                                             <mo>=</mo>
-                                            <mn>{{ alertTTRWindow.humanSec }}</mn>
+                                            <mn>{{ alert.alertTTRWindow.humanSec }}</mn>
                                         </mrow>
                                     </math>
                                     <p>
                                         Which is 
-                                        <time>{{ alertTTRWindow.humanTime }}</time>.
+                                        <time>{{ alert.alertTTRWindow.humanTime }}</time>.
                                     </p>
                                     <p>
                                         Remember that this is the best case scenario.
@@ -1135,13 +1131,13 @@
                                     at or above {{ alert.burnRate }}x
                                 </div>
                             </label>
-                            <div v-if="alertLongWindow.sec < 600" class="warning block">
+                            <div v-if="alert.longFailureWindow.sec < 600" class="warning block">
                                 <p>
                                     Warning: The alert is too "jumpy" and will trigger too often.
                                     This may lead to alert fatigue or even worse: ignoring the alerts.
                                 </p>
                             </div>
-                            <div v-if="alertTTRWindow.sec < 3600" class="info block">
+                            <div v-if="alert.alertTTRWindow.sec < 3600" class="info block">
                                 <p>
                                     Note: The time to resolve (TTR) is too short for a human to react.
                                     It is strongly recommended to automate the incident resolution instead of relying on human response to alerts.
@@ -1159,13 +1155,13 @@
                                     entire error budget is consumed?
                                 </p>
                             </div>
-                            <div v-if="alertLongWindow.sec <= 60" class="warning block">
+                            <div v-if="alert.longFailureWindow.sec <= 60" class="warning block">
                                 <p>
                                     Warning: Long alert Window is too short at this burn rate ({{ alert.burnRate }}x) 
                                     which may lead to alert fatigue.
                                 </p>
                             </div>
-                            <div class="error block" v-if="alertLongWindow.eventCount === 0" class="error block">
+                            <div class="error block" v-if="alert.longFailureWindow.eventCount === 0" class="error block">
                                 <p>
                                     Error: Division by zero! Long alert Window is too short for enough valid {{ indicator.eventUnitNorm }} to be counted.
                                 </p>
@@ -1261,7 +1257,7 @@
                                         <mo>&times;</mo>
                                         <mn>{{ objective.window.humanSec }}</mn>
                                         <mo>=</mo>
-                                        <mn>{{ alertShortWindow.humanSec }}</mn>
+                                        <mn>{{ alert.shortFailureWindow.humanSec }}</mn>
                                     </mrow>
                                 </math>
                                 <p>
@@ -1270,7 +1266,7 @@
                                     <label for="burn-rate-input">{{ alert.burnRate }}</label>x burn rate
                                     in the past
                                     <label for="alert-short-window-divider-input">
-                                        <time>{{ alertShortWindow.humanTime }}</time>
+                                        <time>{{ alert.shortFailureWindow.humanTime }}</time>
                                     </label>.
                                 </p>        
                             </help-component>
@@ -1279,13 +1275,13 @@
                                 of long window
                             </div>
                         </label>
-                        <div v-if="alertShortWindow.sec <= 60" class="warning block">
+                        <div v-if="alert.shortFailureWindow.sec <= 60" class="warning block">
                             <p>
                                 Warning: Short alert Window is too short at this burn rate ({{ alert.burnRate }}x) 
                                 which may lead to alert fatigue.
                             </p>
                         </div>
-                        <div v-if="alertShortWindow.eventCount === 0" class="error block">
+                        <div v-if="alert.shortFailureWindow.eventCount === 0" class="error block">
                             <p>
                                 Error: Short alert Window is too short for enough valid events to be counted.
                             </p>
@@ -1300,13 +1296,7 @@
                         >
                     </fieldset>
                     <!-- Burn Chart Component -->
-                    <alert-chart-component
-                        :long-window-perc="alert.longWindowPerc"
-                        :alert-long-window="alertLongWindow"
-                        :alert-short-window="alertShortWindow"
-                        :short-window-divider="alert.shortWindowDivider"
-                        :use-short-window="alert.useShortWindow"
-                        :failure-window="objective.failureWindow"></alert-chart-component>
+                    <alert-chart-component :alert="alert"></alert-chart-component>
                     <!-- Long Window Alert Policy -->
                     <h4>
                         Alert Policy
@@ -1333,7 +1323,7 @@
                                 :upper-bound="indicator.upperBound"
                                 :upper-threshold="objective.upperThreshold"
                                 :eventUnit="indicator.eventUnit"
-                                :time-period="alertLongWindow.humanSec"
+                                :time-period="alert.longFailureWindow.humanSec"
                                 time-label-id="alert-error-budget-perc"></s-l-fraction-component>
                             <code>
                                 <span class="punct"> ≤ </span>
@@ -1357,7 +1347,7 @@
                                     :upper-bound="indicator.upperBound"
                                     :upper-threshold="objective.upperThreshold"
                                     :eventUnit="indicator.eventUnit"
-                                    :time-period="alertShortWindow.humanSec"
+                                    :time-period="alert.shortFailureWindow.humanSec"
                                     time-label-id="alert-short-window-divider-input"></s-l-fraction-component>
                                 <div>
                                     <code>

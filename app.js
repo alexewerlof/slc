@@ -133,6 +133,7 @@ export const app = createApp({
         }
         
         const alert = {
+            objective,
             // Alert burn rate: the rate at which the error budget is consumed
             burnRate: config.burnRate.default,
             // Long window alert: percentage of the SLO window
@@ -144,6 +145,26 @@ export const app = createApp({
             // As a percentage of the error budget
             get shortWindowPerc() {
                 return toFixed(this.longWindowPerc / this.shortWindowDivider)
+            },
+            // If nothing is done to stop the failures, there'll be burnRate times more errors by the end of the SLO window
+            get sloWindowBudgetBurn() {
+                const { sec } = this.objective.window
+                const burnedEventAtThisRate = Math.ceil(this.objective.badEventCount * this.burnRate)
+                const eventCount = Math.min(this.objective.validEventCount, burnedEventAtThisRate)
+                return new FailureWindow(this.objective.indicator, sec, eventCount)
+            },
+            // Burn the entire error budget at the given burnRate
+            get errorBudgetBurn() {
+                return this.objective.failureWindow.shrinkSec(100 / this.burnRate)
+            },
+            get longFailureWindow() {
+                return this.errorBudgetBurn.shrink(this.longWindowPerc)
+            },
+            get shortFailureWindow() {
+                return this.errorBudgetBurn.shrink(this.shortWindowPerc)
+            },
+            get alertTTRWindow() {
+                return this.errorBudgetBurn.shrink(100 - this.longWindowPerc)
             },
         }
 
@@ -306,30 +327,6 @@ export const app = createApp({
         },
     },
     computed: {
-        // If nothing is done to stop the failures, there'll be burnRate times more errors by the end of the SLO window
-        sloWindowBudgetBurn() {
-            const { sec } = this.objective.window
-            const burnedEventAtThisRate = Math.ceil(this.objective.badEventCount * this.alert.burnRate)
-            const eventCount = Math.min(this.objective.validEventCount, burnedEventAtThisRate)
-            return new FailureWindow(this.indicator, sec, eventCount)
-        },
-        // Burn the entire error budget at the given burnRate
-        errorBudgetBurn() {
-            return this.objective.failureWindow.shrinkSec(100 / this.alert.burnRate)
-        },
-
-        alertLongWindow() {
-            return this.errorBudgetBurn.shrink(this.alert.longWindowPerc)
-        },
-
-        alertTTRWindow() {
-            return this.errorBudgetBurn.shrink(100 - this.alert.longWindowPerc)
-        },
-
-        alertShortWindow() {
-            return this.errorBudgetBurn.shrink(this.alert.shortWindowPerc)
-        },
-
         shareUrl() {
             try {
                 const url = new URL(window.location.pathname, window.location.origin)

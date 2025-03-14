@@ -18,12 +18,7 @@ export default {
         }
     },
     props: {
-        longWindowPerc: Number,
-        shortWindowDivider: Number,
-        useShortWindow: Boolean,
-        alertLongWindow: Object,
-        alertShortWindow: Object,
-        failureWindow: Object,
+        alert: Object,
     },
     components: {
         burnEventComponent,
@@ -50,12 +45,32 @@ export default {
             return this.height - this.margin.bottom
         },
         longWindowX() {
-            return this.margin.left + (this.rangeX * this.longWindowPerc / 100)
+            return this.margin.left + (this.rangeX * this.alert.longWindowPerc / 100)
         },
         shortWindowX() {
-            const shortWindowPerc = this.longWindowPerc / this.shortWindowDivider
-            return this.longWindowX - (this.rangeX * shortWindowPerc / 100)
+            return this.longWindowX - (this.rangeX * this.alert.shortWindowPerc / 100)
         },
+        errorBudgetTextLines() {
+            const { failureWindow } = this.alert.objective
+            return [
+                `${ failureWindow.eventCountL10n } ${ failureWindow.eventUnitNorm } failed`,
+                `in ${ failureWindow.humanTime }`,
+            ]
+        },
+        longWindowTextLines() {
+            const { longFailureWindow } = this.alert
+            return [
+                `When at least ${ longFailureWindow.eventCountL10n } ${ longFailureWindow.eventUnitNorm } failed`,
+                `in the last ${ longFailureWindow.humanTime }`,
+            ]
+        },
+        shortWindowTextLines() {
+            const { shortFailureWindow } = this.alert
+            return [
+                `When at least ${ shortFailureWindow.eventCountL10n } ${ shortFailureWindow.eventUnitNorm } failed`,
+                `in the last ${ shortFailureWindow.humanTime }`,
+            ]
+        }
     },
     methods: {
         toggle() {

@@ -28,10 +28,9 @@
         :y1="margin.top"
         :y2="height - margin.bottom"
         color="--brand-red"
-        offset="1">
-        <tspan>Error Budget Exhausted</tspan>
-        <tspan>{{ failureWindow.eventCountL10n }} {{ failureWindow.eventUnitNorm }} failed</tspan>
-        <tspan>in {{ failureWindow.humanTime }}</tspan>
+        offset="1"
+        title="Error Budget Exhausted"
+        :text-lines="errorBudgetTextLines">
     </burn-event-component>
     <burn-event-component
         :width="width"
@@ -40,21 +39,19 @@
         :y1="margin.top"
         :y2="height - margin.bottom"
         color="--brand-green"
-        offset="3">
-        <tspan>Alert Triggers</tspan>
-        <tspan>When at least {{ alertLongWindow.eventCountL10n }} {{ alertLongWindow.eventUnitNorm }} failed</tspan>
-        <tspan>in the last {{ alertLongWindow.humanTime }}</tspan>
+        offset="3"
+        title="Alert Triggers"
+        :text-lines="longWindowTextLines">
     </burn-event-component>
-    <burn-event-component v-if="useShortWindow"
+    <burn-event-component v-if="alert.useShortWindow"
         :width="width"
         :height="height"
         :x="shortWindowX"
         :y1="margin.top"
         :y2="height - margin.bottom"
         color="--brand-purple"
-        offset="2">
-        <tspan>Short Window</tspan>
-        <tspan>When at least {{ alertShortWindow.eventCountL10n }} {{ alertShortWindow.eventUnitNorm }} failed</tspan>
-        <tspan>in the last {{ alertShortWindow.humanTime }}</tspan>
+        offset="2"
+        title="Short Window"
+        :text-lines="shortWindowTextLines">
     </burn-event-component>
 </svg>

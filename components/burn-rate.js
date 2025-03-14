@@ -5,6 +5,11 @@ import horizontalAxisComponent from './horizontal-axis.js'
 
 export default {
     template: await loadComponent(import.meta.url),
+    components: {
+        burnEventComponent,
+        verticalAxisComponent,
+        horizontalAxisComponent,
+    },
     data() {
         return {
             width: 500,
@@ -18,14 +23,7 @@ export default {
         }
     },
     props: {
-        burnRate: Number,
-        errorBudgetBurn: Object,
-        sloWindowBudgetBurn: Object,
-    },
-    components: {
-        burnEventComponent,
-        verticalAxisComponent,
-        horizontalAxisComponent,
+        alert: Object,
     },
     computed: {
         viewBox() {
@@ -47,10 +45,20 @@ export default {
             return this.height - this.margin.bottom
         },
         burnedX() {
-            // the ratio of the error budget from the total SLO window
-            const errorBudgetRatio = 1 / this.burnRate
-            return this.rangeX * errorBudgetRatio + this.margin.left
+            return this.rangeX / this.alert.burnRate + this.margin.left
         },
+        endOfCompliancePeriodTextLines() {
+            return [
+                `${this.alert.sloWindowBudgetBurn.eventCountL10n } failed ${ this.alert.errorBudgetBurn.eventUnitNorm }`,
+                `in ${ this.alert.sloWindowBudgetBurn.humanTime }`,
+            ]
+        },
+        errorBudgetExhaustedTextLines() {
+            return [
+                `${ this.alert.errorBudgetBurn.eventCountL10n } failed ${ this.alert.errorBudgetBurn.eventUnitNorm }`,
+                `in ${ this.alert.errorBudgetBurn.humanTime }`,
+            ]
+        }
     },
     methods: {
         toggle() {

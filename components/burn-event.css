@@ -1,20 +1,24 @@
-.event line {
+.burn-event line {
     stroke: var(--foreground-color);
     stroke-width: 1px;
 }
 
-.event text {
+.burn-event text {
     font-family: var(--body-font-family);
     fill: var(--foreground-color);
-    font-size: 0.9rem;
     alignment-baseline: middle;
-    text-shadow: 0px 0px 3px var(--background-color);
+    text-shadow: 0px 0px 3px var(--background-darker);
 }
 
-.event tspan:not(:first-child) {
+.burn-event tspan {
     font-size: 0.8em;
 }
 
-.event .burn-event-arrow {
+.burn-event__title {
+    font-size: 1rem;
+    font-family: var(--title-font-family);
+}
+
+.burn-event__arrow {
     fill: var(--foreground-color);
 }

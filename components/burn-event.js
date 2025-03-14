@@ -6,6 +6,30 @@ const arrowHeight = 5
 
 export default {
     template: await loadComponent(import.meta.url),
+    props: {
+        width: Number,
+        height: Number,
+        x: Number,
+        y1: Number,
+        y2: Number,
+        offset: Number,
+        // Name of a css variable as defined in variables.css
+        color: String,
+        title: {
+            type: String,
+            default: 'Missing title',
+        },
+        // New prop for array of strings
+        textLines: {
+            type: Array,
+            default: () => ['Missing textLines'],
+            validator: (value) => Array.isArray(value) && value.every(item => typeof item === 'string')
+        },
+        thickness: {
+            type: Number,
+            default: 1,
+        },
+    },
     computed: {
         isTitleOnRight() {
             return this.x < (this.width / 2)
@@ -37,24 +61,6 @@ export default {
             return {
                 fill: `var(${ this.color })`,
             }
-        },
-        /** Return the text content of tspan children */
-        tspans() {
-            return this.$slots.default().filter(node => node.type === 'tspan').map(node => node.children)
-        },
-    },
-    props: {
-        width: Number,
-        height: Number,
-        x: Number,
-        y1: Number,
-        y2: Number,
-        offset: Number,
-        // Name of a css variable as defined in variables.css
-        color: String,
-        thickness: {
-            type: Number,
-            default: 1,
         },
     },
 }
