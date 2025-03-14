@@ -13,8 +13,6 @@ export class Objective {
     lowerThreshold = config.lowerThreshold.default
     // Upper bound threshold
     upperThreshold = config.upperThreshold.default
-    // For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events
-    expectedTotalEvents = config.expectedTotalEvents.default
     constructor(indicator) {
         if (!isInstance(indicator, Indicator )) {
             throw new TypeError(`Expected an instance of Indicator. Got ${indicator}`)
@@ -47,6 +45,12 @@ export class Objective {
     get windowDays() {
         return secondsToDays(this.window.sec)
     }
+    get expectedTotalEvents() {
+        return Math.round(this.indicator.expectedDailyEvents * this.windowDays) || config.expectedTotalEvents.min
+    }
+    set expectedTotalEvents(value) {
+        this.indicator.expectedDailyEvents = Math.round(value / this.windowDays)
+    }
     // The length of the SLO window in days
     set windowDays(days) {
         this.window.sec = daysToSeconds(days)
@@ -65,7 +69,7 @@ export class Objective {
         if (this.indicator.isTimeBased) {
             return this.window.countTimeslices
         } else {
-            return this.expectedTotalEvents || config.expectedTotalEvents.min
+            return this.expectedTotalEvents
         }
     }
     get goodEventCount() {
@@ -91,7 +95,6 @@ export class Objective {
             target: this.target,
             lowerThreshold: this.lowerThreshold,
             upperThreshold: this.upperThreshold,
-            expectedTotalEvents: this.expectedTotalEvents,
             windowDays: this.windowDays,
         }
     }

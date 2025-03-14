@@ -1,5 +1,6 @@
 import { config } from '../config.js'
 import { humanTimeSlices } from '../lib/time.js'
+import { inRange } from '../lib/validation.js'
 
 /*
 SLI budgeting method:
@@ -39,7 +40,16 @@ export class Indicator {
     upperBound = config.upperBound.default
     // Does this SLI use timeslots or events?
     isTimeBased = false
-    // whether the SLI is time-based or event-based
+    // For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events
+    _expectedDailyEvents = config.expectedDailyEvents.default
+    get expectedDailyEvents() {
+        return this._expectedDailyEvents
+    }
+    set expectedDailyEvents(value) {
+        const { min, max } = config.expectedDailyEvents
+        this._expectedDailyEvents = inRange(value, min, max) ? value : config.expectedDailyEvents.default
+    }
+    // Return the right unit regardless if it's a time-based or event-based indicator
     get eventUnitNorm() {
         return this.isTimeBased ? humanTimeSlices(this.timeslice) : this.eventUnit || 'events'
     }
@@ -60,6 +70,7 @@ export class Indicator {
             metricUnit: this.metricUnit,
             lowerBound: this.lowerBound,
             upperBound: this.upperBound,
+            expectedDailyEvents: this.expectedDailyEvents,
         }
         if (this.isTimeBased) {
             ret.timeslice = this.timeslice

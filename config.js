@@ -206,11 +206,11 @@ export const config = fz({
             },
         ]),
     }),
-    expectedTotalEvents: fz({
+    expectedDailyEvents: fz({
         min: 1,
         max: 1_000_000_000,
         step: 1,
-        default: 1_000_000,
+        default: 10_000,
     }),
     burnRate: fz({
         min: 1,

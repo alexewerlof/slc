@@ -204,6 +204,27 @@
             id="sli-event-unit"
             type="text"
             v-model="indicator.eventUnit">
+
+    </div>
+    <div v-if="!indicator.isTimeBased" class="input-group">
+        <label for="expected-daily-events-input">
+            Daily Events
+            <help-component>
+                Here you can enter the numbers for your expected load and see
+                how many {{ indicator.eventUnit }} are allowed to fail during the SLO window
+                while still being within the error budget.
+            </help-component>
+            <div class="subtle-hint">
+                Average expected {{ indicator.eventUnit }} in one day
+            </div>
+        </label>
+        <input
+            type="number"
+            v-model.number="indicator.expectedDailyEvents"
+            id="expected-daily-events-input"
+            :min="config.expectedDailyEvents.min"
+            :max="config.expectedDailyEvents.max"
+            :step="config.expectedDailyEvents.step">
     </div>
 </fieldset>
 <fieldset>

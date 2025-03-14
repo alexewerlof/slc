@@ -341,32 +341,6 @@
     </help-component>
 </h2>
 
-<fieldset v-if="!objective.indicator.isTimeBased">
-    <legend>Estimate</legend>
-    <div class="input-group">
-        <label for="expected-total-events-input">
-            Expected
-            <help-component>
-                Here you can enter the numbers for your expected load and see
-                how many {{ objective.indicator.eventUnit }} are allowed to fail during the SLO window
-                while still being within the error budget.
-            </help-component>
-            <div class="subtle-hint">
-                Number of {{ objective.indicator.eventUnit }}
-                in
-                the {{ objective.window.humanTime }}
-            </div>
-        </label>
-        <input
-            type="number"
-            v-model.number="objective.expectedTotalEvents"
-            id="expected-total-events-input"
-            :min="config.expectedTotalEvents.min"
-            :max="config.expectedTotalEvents.max"
-            :step="config.expectedTotalEvents.step">
-    </div>
-</fieldset>
-
 <div class="warning block" v-if="objective.failureWindow.eventCount === 0" aria-colcount="warning block">
     <p>
         Warning: The allowed failures is 0 based on your estimated number of valid {{ objective.indicator.eventUnitNorm }}.
