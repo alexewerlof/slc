@@ -13,20 +13,6 @@ export class Objective {
     _lowerThreshold = config.lowerThreshold.default
     // Upper bound threshold
     _upperThreshold = config.upperThreshold.default
-    get lowerThreshold() {
-        return this._lowerThreshold
-    }
-    set lowerThreshold(value) {
-        const { min, max } = config.lowerThreshold
-        this._lowerThreshold = inRange(value, min, max) ? value : config.lowerThreshold.default
-    }
-    get upperThreshold() {
-        return this._upperThreshold
-    }
-    set upperThreshold(value) {
-        const { min, max } = config.upperThreshold
-        this._upperThreshold = inRange(value, min, max) ? value : config.upperThreshold.default
-    }
     constructor(indicator) {
         if (!isInstance(indicator, Indicator )) {
             throw new TypeError(`Expected an instance of Indicator. Got ${indicator}`)
@@ -36,6 +22,26 @@ export class Objective {
             indicator,
             daysToSeconds(config.windowDays.default),
         )
+    }
+    get lowerThreshold() {
+        return this._lowerThreshold
+    }
+    set lowerThreshold(value) {
+        const { min, max } = config.lowerThreshold
+        this._lowerThreshold = inRange(value, min, Math.min(max, this.upperThreshold)) ? value : config.lowerThreshold.default
+    }
+    get upperThreshold() {
+        return this._upperThreshold
+    }
+    set upperThreshold(value) {
+        const { min, max } = config.upperThreshold
+        this._upperThreshold = inRange(value, Math.max(min, this.lowerThreshold), max) ? value : config.upperThreshold.default
+    }
+    get lowerThresholdMax() {
+        return this.indicator.upperBound ? this.upperThreshold : config.lowerThreshold.max
+    }
+    get upperThresholdMin() {
+        return this.indicator.lowerBound ? this.lowerThreshold : config.upperThreshold.min
     }
     get targetInt() {
         return Math.floor(this.target)
@@ -72,12 +78,6 @@ export class Objective {
     // Allows fine tuning the target by adding or removing a small amount
     changeTarget(amount) {
         this.target = clamp(toFixed(this.target + amount), config.slo.min, config.slo.max)
-    }
-    get lowerThresholdMax() {
-        return this.indicator.upperBound ? this.upperThreshold : config.lowerThreshold.max
-    }
-    get upperThresholdMin() {
-        return this.indicator.lowerBound ? this.lowerThreshold : config.upperThreshold.min
     }
     get validEventCount() {
         if (this.indicator.isTimeBased) {
