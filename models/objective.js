@@ -2,7 +2,7 @@ import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
 import { clamp, percent, toFixed } from '../lib/math.js'
 import { daysToSeconds, secondsToDays } from '../lib/time.js'
-import { isInstance } from '../lib/validation.js'
+import { inRange, isInstance } from '../lib/validation.js'
 import { Window } from '../lib/window.js'
 import { Indicator } from './indicator.js'
 
@@ -10,9 +10,23 @@ export class Objective {
     // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
     target = config.slo.default
     // Lower bound threshold
-    lowerThreshold = config.lowerThreshold.default
+    _lowerThreshold = config.lowerThreshold.default
     // Upper bound threshold
-    upperThreshold = config.upperThreshold.default
+    _upperThreshold = config.upperThreshold.default
+    get lowerThreshold() {
+        return this._lowerThreshold
+    }
+    set lowerThreshold(value) {
+        const { min, max } = config.lowerThreshold
+        this._lowerThreshold = inRange(value, min, max) ? value : config.lowerThreshold.default
+    }
+    get upperThreshold() {
+        return this._upperThreshold
+    }
+    set upperThreshold(value) {
+        const { min, max } = config.upperThreshold
+        this._upperThreshold = inRange(value, min, max) ? value : config.upperThreshold.default
+    }
     constructor(indicator) {
         if (!isInstance(indicator, Indicator )) {
             throw new TypeError(`Expected an instance of Indicator. Got ${indicator}`)
