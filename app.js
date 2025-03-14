@@ -51,7 +51,6 @@ export const app = createApp({
         }
     },
     mounted() {
-        this.loadState(urlToState(window.location.href))
         this.$nextTick(() => {
             const hash = window.location.hash;
             if (hash) {
@@ -83,81 +82,6 @@ export const app = createApp({
         numL10n,
         percentToRatio,
         percL10n,
-        
-        loadState(newState) {
-            try {
-                if (isStr(newState.title)) {
-                    this.indicator.title = newState.title
-                }
-            
-                if (isStr(newState.description)) {
-                    this.indicator.description = newState.description
-                }
-            
-                // Unit is a bit special. It can be the event name or a timeslice length in seconds
-                if (inRangePosInt(newState.timeslice, config.timeslice.min, config.timeslice.max)) {
-                    this.indicator.timeslice = newState.timeslice
-                } else {
-                    this.indicator.isTimeBased = false
-                }
-            
-                if (isStr(newState.metricName)) {
-                    this.indicator.metricName = newState.metricName
-                }
-
-                if (isStr(newState.metricUnit)) {
-                    this.indicator.metricUnit = newState.metricUnit
-                }
-
-                if (config.lowerBound.possibleValues.includes(newState.lowerBound)) {
-                    this.indicator.lowerBound = newState.lowerBound
-                }
-
-                if (config.upperBound.possibleValues.includes(newState.upperBound)) {
-                    this.indicator.upperBound = newState.upperBound
-                }
-                
-                if (isStr(newState.eventUnit)) {
-                    this.indicator.eventUnit = newState.eventUnit
-                }
-
-                if (inRange(newState.lowerThreshold, config.lowerThreshold.min, config.lowerThreshold.max)) {
-                    this.objective.lowerThreshold = newState.lowerThreshold
-                }
-                
-                if (inRange(newState.upperThreshold, config.upperThreshold.min, config.upperThreshold.max)) {
-                    this.objective.upperThreshold = newState.upperThreshold
-                }
-            
-                if (inRange(newState.slo, config.slo.min, config.slo.max)) {
-                    this.objective.target = newState.slo
-                }
-            
-                if (inRangePosInt(newState.windowDays, config.windowDays.min, config.windowDays.max)) {
-                    this.objective.windowDays = newState.windowDays
-                }
-            
-                if (inRangePosInt(newState.expectedTotalEvents, config.expectedTotalEvents.min, config.expectedTotalEvents.max)) {
-                    this.objective.expectedTotalEvents = newState.expectedTotalEvents
-                }
-            
-                if (inRange(newState.burnRate, config.burnRate.min, config.burnRate.max)) {
-                    this.alert.burnRate = newState.burnRate
-                }
-            
-                if (inRange(newState.longWindowPerc, config.longWindowPerc.min, config.longWindowPerc.max)) {
-                    this.alert.longWindowPerc = newState.longWindowPerc
-                }
-            
-                if (inRange(newState.shortWindowDivider, config.shortWindowDivider.min, config.shortWindowDivider.max)) {
-                    this.alert.shortWindowDivider = newState.shortWindowDivider
-                }
-            } catch (e) {
-                this.toastCaption = `Failed to load state ${e}`
-                console.error(e)
-            }
-        },
-
         async copy(elementId, label) {
             try {
                 await copyElementTextToClipboard(elementId)
