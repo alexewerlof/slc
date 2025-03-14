@@ -37,15 +37,11 @@ export class Indicator {
     lowerBound = config.lowerBound.default
     // The type of upper bound for the metric values that indicate a good event
     upperBound = config.upperBound.default
+    // Does this SLI use timeslots or events?
+    isTimeBased = false
     // whether the SLI is time-based or event-based
-    get isTimeBased() {
-        return this.timeslice > 0
-    }
-    set isTimeBased(newIsTimeBased) {
-        this.timeslice = newIsTimeBased ? Math.abs(this.timeslice) : -Math.abs(this.timeslice)
-    }
     get eventUnitNorm() {
-            return this.isTimeBased ? humanTimeSlices(this.timeslice) : this.eventUnit
+        return this.isTimeBased ? humanTimeSlices(this.timeslice) : this.eventUnit || 'events'
     }
     // Is there any bound
     get isBounded() {
@@ -57,15 +53,19 @@ export class Indicator {
     }
 
     toJSON() {
-      return {
-        title: this.title,
-        description: this.description,
-        eventUnit: this.eventUnit,
-        timeslice: this.timeslice,
-        metricName: this.metricName,
-        metricUnit: this.metricUnit,
-        lowerBound: this.lowerBound,
-        upperBound: this.upperBound,
-      }
+        const ret = {
+            title: this.title,
+            description: this.description,
+            metricName: this.metricName,
+            metricUnit: this.metricUnit,
+            lowerBound: this.lowerBound,
+            upperBound: this.upperBound,
+        }
+        if (this.isTimeBased) {
+            ret.timeslice = this.timeslice
+        } else {
+            ret.eventUnit = this.eventUnit
+        }
+        return ret
     }
 }
