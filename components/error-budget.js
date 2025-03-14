@@ -1,12 +1,13 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { numL10n } from '../lib/fmt.js'
+import { isObj } from '../lib/validation.js'
 
 export default {
     template: await loadComponent(import.meta.url),
     computed: {
         errorBudgetGridTemplateColumns() {
             return {
-                'grid-template-columns': `${this.errorBudgetPerc}% auto`,
+                'grid-template-columns': `${this.objective.errorBudget}% auto`,
             }
         }
     },
@@ -14,9 +15,9 @@ export default {
         numL10n,
     },
     props: {
-        failureWindow: Object,
-        errorBudgetPerc: Number,
-        goodEventCount: Number,
-        validEventCount: Number,
+        objective: {
+            type: Object,
+            validator: (value) => isObj(value),
+        }
     },
 }

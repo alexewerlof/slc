@@ -910,12 +910,7 @@
                             </p>
                         </div>
 
-                        <error-budget-component
-                            :failure-window="objective.failureWindow"
-                            :error-budget-perc="objective.errorBudget"
-                            :good-event-count="objective.goodEventCount"
-                            :valid-event-count="objective.validEventCount">
-                        </error-budget-component>
+                        <error-budget-component :objective="objective"></error-budget-component>
 
                 </section>
 
