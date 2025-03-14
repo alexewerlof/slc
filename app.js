@@ -112,11 +112,11 @@ export const app = createApp({
         loadState(newState) {
             try {
                 if (isStr(newState.title)) {
-                    this.title = newState.title
+                    this.indicator.title = newState.title
                 }
             
                 if (isStr(newState.description)) {
-                    this.description = newState.description
+                    this.indicator.description = newState.description
                 }
             
                 // Unit is a bit special. It can be the event name or a timeslice length in seconds
@@ -167,15 +167,15 @@ export const app = createApp({
                 }
             
                 if (inRange(newState.burnRate, config.burnRate.min, config.burnRate.max)) {
-                    this.burnRate = newState.burnRate
+                    this.alert.burnRate = newState.burnRate
                 }
             
                 if (inRange(newState.longWindowPerc, config.longWindowPerc.min, config.longWindowPerc.max)) {
-                    this.longWindowPerc = newState.longWindowPerc
+                    this.alert.longWindowPerc = newState.longWindowPerc
                 }
             
                 if (inRange(newState.shortWindowDivider, config.shortWindowDivider.min, config.shortWindowDivider.max)) {
-                    this.shortWindowDivider = newState.shortWindowDivider
+                    this.alert.shortWindowDivider = newState.shortWindowDivider
                 }
             } catch (e) {
                 this.toastCaption = `Failed to load state ${e}`
