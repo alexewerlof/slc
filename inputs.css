@@ -119,8 +119,8 @@ textarea {
     margin: 1em 0;
 }
 
-.button-bar button + button {
-    margin-left: 0.5em;
+button + button {
+    margin-left: 0.5rem;
 }
 
 button {
@@ -130,10 +130,7 @@ button {
     border-radius: var(--bradius);
     cursor: pointer;
     transition: background-color var(--animation-speed);
-}
-
-button.danger {
-    background-color: var(--brand-red);
+    padding: var(--gap) var(--gap2);
 }
 
 button[disabled] {
@@ -146,8 +143,21 @@ button:hover {
     filter: brightness(115%);
 }
 
-button.large, .button-bar button, .button--large {
-    padding: var(--gap) var(--gap2);
+.button--small {
+    padding: 1px var(--gap);
+}
+
+.button--large {
+    font-size: 1.5rem;
+    padding: var(--gap2);
+}
+
+.button--cta {
+    background-color: var(--primary-color);
+}
+
+.button--danger {
+    background-color: var(--brand-red);
 }
 
 a, a:hover, a:active {

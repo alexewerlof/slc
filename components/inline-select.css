@@ -12,6 +12,10 @@
 .inline-select__button {
 }
 
+.inline-select__buttons button + button {
+    margin-left: 0;
+}
+
 .inline-select__button--inactive {
     background-color: inherit;
     color: inherit;

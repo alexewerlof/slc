@@ -14,6 +14,11 @@
                 <button @click="showAnnouncement = false" type="button">Dismiss</button>
             </div>
         </header-component>
+        <hero-component file-name="subtle-prism.svg">
+            <h1>Header 1</h1>
+            <h2>Header 2</h2>
+            <p>Some text for the hero component that can go here and show properly</p>
+        </hero-component>
         <div class="surface">
             <p>
                 This is a nice surface
@@ -133,6 +138,29 @@
                             <inline-select-component v-model="inlineSelectValue" :options="inlineSelectOptions"></inline-select-component>
                         </div>
                     </fieldset>
+                    <h2>buttons</h2>
+                    <h3>Small</h3>
+                    <div>
+                        <button class="button--small">Button 1</button>
+                        <button class="button--small">Button 2</button>
+                        <button class="button--small">Button 3</button>
+                        <button class="button--small" disabled>Disabled</button>
+                    </div>
+                    <h3>Regular</h3>
+                    <div>
+                        <button>Button 1</button>
+                        <button>Button 2</button>
+                        <button>Button 3</button>
+                        <button disabled>Disabled</button>
+                    </div>
+                    <h3>Large</h3>
+                    <div>
+                        <button class="button--large">Button 1</button>
+                        <button class="button--large">Button 2</button>
+                        <button class="button--large">Button 3</button>
+                        <button class="button--large" disabled>Disabled</button>
+                    </div>
+                    <h2>Button Bar</h2>
                     <div class="button-bar">
                         <button>Button 1</button>
                         <button>Button 2</button>
@@ -140,10 +168,16 @@
                         <button disabled>Disabled</button>
                     </div>
                     <div class="button-bar">
-                        <button class="danger">Button 1 Danger</button>
-                        <button class="danger">Button 2 Danger</button>
-                        <button class="danger">Button 3 Danger</button>
-                        <button class="danger" disabled>Disabled  Danger</button>
+                        <button class="button--cta">Button 1 CTA</button>
+                        <button class="button--cta">Button 2 CTA</button>
+                        <button class="button--cta">Button 3 CTA</button>
+                        <button class="button--cta" disabled>Disabled CTA</button>
+                    </div>
+                    <div class="button-bar">
+                        <button class="button--danger">Button 1 Danger</button>
+                        <button class="button--danger">Button 2 Danger</button>
+                        <button class="button--danger">Button 3 Danger</button>
+                        <button class="button--danger" disabled>Disabled Danger</button>
                     </div>
                 </div>
                 <div class="annotated__help">

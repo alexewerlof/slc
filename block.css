@@ -1,6 +1,6 @@
 .block {
     display: block;
-    margin: var(--gap2) 0;
+    margin: var(--gap);
     border-style: solid;
     border-width: var(--bthick) var(--bthick) var(--bthick) var(--gap);
     background-color: rgb(from currentColor r g b / 0.09);

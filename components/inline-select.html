@@ -3,7 +3,6 @@
         <button v-for="option in options"
             @click="$emit('update:modelValue', option.value)"
             :class="[
-                'button--large',
                 'inline-select__button',
                 modelValue === option.value ? '' : 'inline-select__button--inactive'
             ]">{{ option.title }}</button>

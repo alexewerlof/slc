@@ -3,6 +3,8 @@ import { config } from '../config.js'
 import HeaderComponent from '../components/header.js'
 import FooterComponent from '../components/footer.js'
 import InlineSelectComponent from '../components/inline-select.js'
+import HeroComponent from '../components/hero.js'
+import HelpComponent from '../components/help.js'
 
 const app = createApp({
     data() {
@@ -32,8 +34,10 @@ const app = createApp({
         }
     },
     components: {
-        HeaderComponent,
         FooterComponent,
+        HeaderComponent,
+        HelpComponent,
+        HeroComponent,
         InlineSelectComponent,
     }
 })
