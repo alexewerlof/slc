@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date()); gtag('config', 'G-J0S6RM2D7G');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#FFBC52">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../index.css">
+    <meta name="description" content="A simple Service Level Calculator that complies with Google SRE books.">
+    <meta property="og:title" content="Service Level Calculator">
+    <meta property="og:description" content="A simple Service Level Calculator that complies with Google SRE books.">
+    <meta property="og:image" content="https://slc.alexewerlof.com/img/icon.png">
+    <meta property="og:url" content="https://slc.alexewerlof.com">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/svg" href="img/icon.svg">
+    <link rel="manifest" href="manifest.json">
+    <title>Service Level Calculator</title>
+</head>
+
+<body>
+    <noscript>
+        <p>This web application requires JavaScript to work.</p>
+    </noscript>
+
+    <div id="app" v-cloak>
+        <transition>
+            <div class="announcement" v-if="showAnnouncement">
+                <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
+                <button @click="showAnnouncement = false" type="button">Dismiss</button>
+            </div>
+        </transition>
+        <header-component></header-component>
+
+        <div class="container">
+            <hero-component file-name="subtle-prism.svg">
+                <article>
+                    <section>
+                        <h1>Master Service Reliability With Confidence</h1>
+                        <p>
+                            Transform how your engineering teams identify meaningful SLIs, set reasonable SLOs,
+                            and build a culture of accountability.
+                        </p>
+                        <button>Try It Free →</button>
+                    </section>
+                </article>
+            </hero-component>
+
+            <article>
+                <section>
+                    <h2>Your Path to Service Level Excellence</h2>
+                    <p>
+                        In today's digital landscape, reliability isn't just a technical metric—it's a business imperative. SLO
+                        Navigator empowers engineering teams and leaders to speak the same language when it comes to service
+                        reliability.
+                    </p>
+                </section>
+            </article>
+
+            <article>
+                <section>
+                    <h2>Why Engineering Leaders Choose SLO Navigator</h2>
+                    <p>
+                        "SLO Navigator helped us transform abstract reliability concepts into concrete, actionable metrics
+                        across our entire engineering organization."
+                        — Engineering Director at a Fortune 500 Company
+                        [Top tech companies' logos]
+                    </p>
+                </section>
+            </article>
+            
+            <article class="stretch">
+                <section class="surface">
+                    <h2>SLO Calculator</h2>
+                    <p>
+                        Convert metrics to actionable insights
+                        Easily transform your metrics into Service Level Indicators, create intelligent alerting rules based on
+                        SLOs, and visualize error budgets with intuitive diagrams.
+                    </p>
+                    <button>Calculate SLOs →</button>
+                </section>
+                <section class="surface">
+                    <h2>Uptime Visualizer</h2>
+                    <ul>
+                        <li>Model uptime scenarios in real-time</li>
+                        <li>Interactively model different reliability scenarios with our dynamic uptime calculator.</li>
+                        <li>Make informed decisions about appropriate availability targets for your specific service needs.</li>
+                    </ul>
+                    <button>Visualize Uptime →</button>
+                </section>
+                <section class="surface">
+                    <h2>Powerful Features for Reliability Engineering</h2>
+                    <ul>
+                        <li>Interactive Workshop Tool</li>
+                        <li>Find meaningful SLIs that actually matter</li>
+                        <li>Transform abstract concepts into measurable indicators with our guided workshop approach.</li>
+                        <li>Collaborate with your team to identify the metrics that truly represent your service quality.</li>
+                    </ul>
+                    <button>Try Workshop →</button>
+                </section>
+            </article>
+
+            <article>
+                <section>
+                    
+                    <h2>Built for Engineering Leaders, Loved by Teams</h2>
+                    <p>SLO Navigator bridges the gap between technical metrics and business outcomes, helping:</p>
+                    <ul>
+                        <li>Engineering Leaders: Foster a culture of accountability and data-driven decisions</li>
+                        <li>DevOps & SRE Teams: Identify meaningful metrics and set reasonable expectations</li>
+                        <li>CTOs & Technical Executives: Implement consistent reliability standards across all services</li>
+                    </ul>
+                    
+                    
+                    <h2>How It Works</h2>
+                    
+                    <ol>
+                        <li>Define your service boundaries and critical user journeys</li>
+                        <li>Discover meaningful indicators that align with business objectives</li>
+                        <li>Design appropriate SLOs that balance innovation and reliability</li>
+                        <li>Deploy alerting rules based on error budgets</li>
+                    </ol>
+                    
+                    
+                    <h2>Seamless Integration Into Your Workflow</h2>
+                    <ul>
+                        <li><em>Export Configuration:</em> Save your work as YAML or JSON for offline processing</li>
+                        <li><em>Import Existing Data:</em> Quickly upload your current configurations</li>
+                        <li><em>Extensive Resources:</em> Access our library of educational content explaining complex topics in
+                            approachable ways</li>
+                    </ul>
+                        
+                    <button>Start Using SLO Navigator →</button>
+                        
+                    <h2>Knowledge Hub</h2>
+                    
+                    <p>Demystify complex reliability concepts with our extensive library of educational resources.</p>
+                    <ul>
+                        <li>Understanding Error Budgets</li>
+                        <li>The Art of Setting Realistic SLOs</li>
+                        <li>SLIs That Actually Matter to Users</li>
+                    </ul>
+                    <button>More Resources →</button>
+
+                    <div class="surface">
+                        <h2>Start Improving Service Reliability Today</h2>
+                        <p>Take the guesswork out of reliability engineering with our completely free tools.</p>
+                        <button>Try SLO Navigator Free →</button>
+                    </div>
+                </section>
+            </article>
+
+        <footer-component></footer-component>
+        <feedback-blob-component prefill="SLC"></feedback-blob-component>
+    </div>
+
+    <script type="module" src="index.js" defer async></script>
+</body>
+
+</html>

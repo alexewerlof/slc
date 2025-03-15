@@ -27,6 +27,10 @@
     }
 }
 
+article.stretch {
+    align-items: stretch;
+}
+
 section {
     box-sizing: content-box;
 }
