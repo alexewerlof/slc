@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date()); gtag('config', 'G-J0S6RM2D7G');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#FFBC52">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="uptime.css">
+    <meta name="description" content="A simple Service Level Calculator that complies with Google SRE books.">
+    <meta property="og:title" content="Service Level Calculator">
+    <meta property="og:description" content="A simple Service Level Calculator that complies with Google SRE books.">
+    <meta property="og:image" content="https://slc.alexewerlof.com/img/icon.png">
+    <meta property="og:url" content="https://slc.alexewerlof.com">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/svg" href="/img/icon.svg">
+    <link rel="manifest" href="manifest.json">
+    <title>Service Level Calculator</title>
+</head>
+
+<body>
+    <noscript>
+        <p>This web application requires JavaScript to work.</p>
+    </noscript>
+
+    <div id="app" v-cloak>
+        <transition>
+            <div class="announcement" v-if="showAnnouncement">
+                <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
+                <button @click="showAnnouncement = false" type="button">Dismiss</button>
+            </div>
+        </transition>
+        <header-component></header-component>
+
+        <div class="container">
+            <article class="stretch">
+                <section class="surface">
+                    <!-- SLI timeslice -->
+                    <h2>SLI</h2>
+                    <fieldset>
+                        <legend>Timeslice</legend>
+                        <div class="input-group">
+                            <label for="sli-event-unit">
+                                Length: {{ indicator.timeslice }}
+                                <help-component>
+                                    <p>
+                                        Time-based SLIs aggregate metric data over a timeslice
+                                        to mark it as success or failure.
+                                    </p>
+                                    <p>
+                                        This can also reduce the resolution of the data.
+                                        For example, probing an endpoint every 60 seconds to see if it is available,
+                                        assumes that the endpoint is available for the entire 60 seconds.
+                                    </p>
+                                    <p>
+                                        Another common example is to compare the average of data points with a desired
+                                        valud. Averages hide the spikes and valleys in the data.
+                                        It is better to use
+                                        <ext-link href="https://github.com/alexewerlof/percentile">percentiles</ext-link>
+                                        instead.
+                                    </p>
+                                    <p>
+                                        Another example is percentiles. When calculating the 99th percentile of the
+                                        latency every 5 minutes, the aggregation window is 5 x 60 = 300 seconds.
+                                    </p>
+                                    <table>
+                                        <caption>Typical timeslice lengths</caption>
+                                        <thead>
+                                            <tr>
+                                                <th>Timeslice</th>
+                                                <th>Seconds</th>
+                                                <th aria-label="try button"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="p in config.timeslice.presets">
+                                                <td>{{ p.title }}</td>
+                                                <td>{{ p.seconds }}</td>
+                                                <td><button type="button" class="button--small" @click="indicator.timeslice = p.seconds">Try!</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </help-component>
+                            </label>
+                            <div class="subtle-hint">{{ humanTime(indicator.timeslice) }}</div>
+                            <input
+                                id="sli-event-unit"
+                                type="range"
+                                :min="config.timeslice.min"
+                                :max="config.timeslice.max"
+                                :step="config.timeslice.step"
+                                placeholder="60"
+                                v-model.number="indicator.timeslice">
+                        </div>
+                    </fieldset>
+                    <h2>SLO</h2>
+                    <objective-view-component :objective="objective"></objective-view-component>
+                </section>
+                <section class="surface">
+                    <h2>Your Error Budget</h2>
+                    <error-budget-component :objective="objective"></error-budget-component>
+                    <h2>Common SLO windows</h2>
+                    <table class="common-slo-windows">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Period</th>
+                                <th colspan="3" class="common-slo-windows__count-header">
+                                    {{ indicator.eventUnitNorm }}
+                                </th>
+                                <th rowspan="2">Days</th>
+                                <th rowspan="2" class="common-slo-windows__downtime">Downtime</th>
+                            </tr>
+                            <tr>
+                                <th>Total</th>
+                                <th>Good</th>
+                                <th>Bad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="common-slo-windows__your-config">
+                                <td>Your config</td>
+                                <td class="common-slo-windows__total">{{ numL10n(objective.validEventCount) }}</td>
+                                <td class="common-slo-windows__good">{{ numL10n(objective.goodEventCount) }}</td>
+                                <td class="common-slo-windows__bad">{{ numL10n(objective.badEventCount) }}</td>
+                                <td>{{ numL10n(objective.windowDays) }}</td>
+                                <td>{{ timesliceToHumanTime(objective.badEventCount) }}</td>
+                            </tr>
+                            <tr v-for="row of table">
+                                <td>{{ row.title }}</td>
+                                <td class="common-slo-windows__total">{{ numL10n(row.objective.validEventCount) }}</td>
+                                <td class="common-slo-windows__good">{{ numL10n(row.objective.goodEventCount) }}</td>
+                                <td class="common-slo-windows__bad">{{ numL10n(row.objective.badEventCount) }}</td>
+                                <td>{{ numL10n(row.objective.windowDays) }}</td>
+                                <td>{{ timesliceToHumanTime(row.objective.badEventCount) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </article>
+        </div>
+
+        <footer-component></footer-component>
+        <feedback-blob-component prefill="SLC"></feedback-blob-component>
+    </div>
+
+    <script type="module" src="index.js" defer async></script>
+</body>
+
+</html>

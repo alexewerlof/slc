@@ -1,0 +1,23 @@
+.common-slo-windows__count-header {
+    width: 40%;
+}
+
+.common-slo-windows__downtime {
+    width: 25%;
+}
+
+.common-slo-windows__total {
+    color: var(--primary-color);
+}
+
+.common-slo-windows__good {
+    color: var(--brand-green);
+}
+
+.common-slo-windows__bad {
+    color: var(--brand-red);
+}
+
+.common-slo-windows__your-config {
+    font-weight: bold;
+}

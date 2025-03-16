@@ -1,0 +1,17 @@
+{
+    "name": "Uptime Calculator",
+    "short_name": "Uptime Calculator",
+    "description": "A simple Uptime Calculator for time-based SLIs",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#001426",
+    "theme_color": "#FFBC52",
+    "id": "1.4",
+    "icons": [
+        {
+            "src": "/img/icon.png",
+            "sizes": "500x500",
+            "type": "image/png"
+        }
+    ]
+}
