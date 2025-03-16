@@ -119,9 +119,9 @@
                                 <th rowspan="2" class="common-slo-windows__downtime">Downtime</th>
                             </tr>
                             <tr>
-                                <th>Total</th>
-                                <th>Good</th>
-                                <th>Bad</th>
+                                <th class="common-slo-windows__total">Total</th>
+                                <th class="common-slo-windows__good">Good</th>
+                                <th class="common-slo-windows__bad">Bad</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -131,7 +131,7 @@
                                 <td class="common-slo-windows__good">{{ numL10n(objective.goodEventCount) }}</td>
                                 <td class="common-slo-windows__bad">{{ numL10n(objective.badEventCount) }}</td>
                                 <td>{{ numL10n(objective.windowDays) }}</td>
-                                <td>{{ timesliceToHumanTime(objective.badEventCount) }}</td>
+                                <td class="common-slo-windows__downtime">{{ timesliceToHumanTime(objective.badEventCount) }}</td>
                             </tr>
                             <tr v-for="row of table">
                                 <td>{{ row.title }}</td>
@@ -139,7 +139,7 @@
                                 <td class="common-slo-windows__good">{{ numL10n(row.objective.goodEventCount) }}</td>
                                 <td class="common-slo-windows__bad">{{ numL10n(row.objective.badEventCount) }}</td>
                                 <td>{{ numL10n(row.objective.windowDays) }}</td>
-                                <td>{{ timesliceToHumanTime(row.objective.badEventCount) }}</td>
+                                <td class="common-slo-windows__downtime">{{ timesliceToHumanTime(row.objective.badEventCount) }}</td>
                             </tr>
                         </tbody>
                     </table>

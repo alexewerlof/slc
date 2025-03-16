@@ -4,6 +4,7 @@
 
 .common-slo-windows__downtime {
     width: 25%;
+    color: var(--brand-red);
 }
 
 .common-slo-windows__total {
@@ -20,4 +21,5 @@
 
 .common-slo-windows__your-config {
     font-weight: bold;
+    font-style: italic;
 }
