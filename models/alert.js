@@ -1,7 +1,7 @@
 import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
 import { toFixed } from '../lib/math.js'
-import { isInstance } from '../lib/validation.js'
+import { inRange, isInstance } from '../lib/validation.js'
 import { Objective } from './objective.js'
 
 export class Alert {
@@ -44,7 +44,7 @@ export class Alert {
         return this.errorBudgetBurn.shrink(100 - this.longWindowPerc)
     }
 
-    toJSON() {
+    save() {
         const ret = {
             burnRate: this.burnRate,
             longWindowPerc: this.longWindowPerc,
@@ -55,5 +55,40 @@ export class Alert {
         }
 
         return ret
+    }
+
+    static load(data, objective) {
+        if (!isObj(data)) {
+            throw new TypeError(`Alert.load(): Expected a data object. Got ${data}`)
+        }
+        const alert = new Alert(objective)
+
+        if (isNum(data.burnRate)) {
+            if (inRange(data.burnRate, config.burnRate.min, config.burnRate.max)) {
+                alert.burnRate = data.burnRate
+            } else {
+                alert.burnRate = config.burnRate.default
+            }
+        }
+
+        if (isNum(data.longWindowPerc)) {
+            if (inRange(data.longWindowPerc, config.longWindowPerc.min, config.longWindowPerc.max)) {
+                alert.longWindowPerc = data.longWindowPerc
+            } else {
+                alert.longWindowPerc = config.longWindowPerc.default
+            }
+        }
+
+        alert.useShortWindow = isNum(data.shortWindowDivider)
+
+        if (useShortWindow) {
+            if (inRange(data.shortWindowDivider, config.shortWindowDivider.min, config.shortWindowDivider.max)) {
+                alert.shortWindowDivider = data.shortWindowDivider
+            } else {
+                alert.shortWindowDivider = config.shortWindowDivider.default
+            }
+        }
+
+        return alert
     }
 }
