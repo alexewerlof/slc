@@ -95,7 +95,7 @@ export class Indicator {
 
     static load(data) {
         if (!isObj(data)) {
-            throw new TypeError(`load(): Expected a data object. Got ${data}`)
+            throw new TypeError(`Indicator.load(): Expected a data object. Got ${data}`)
         }
         const indicator = new Indicator()
 
