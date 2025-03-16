@@ -2,7 +2,7 @@ import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
 import { clamp, percent, toFixed } from '../lib/math.js'
 import { daysToSeconds, secondsToDays } from '../lib/time.js'
-import { inRange, isInstance } from '../lib/validation.js'
+import { inRange, isInstance, isNum, isObj, isPosInt } from '../lib/validation.js'
 import { Window } from '../lib/window.js'
 import { Indicator } from './indicator.js'
 
@@ -104,12 +104,46 @@ export class Objective {
         return new FailureWindow(this.indicator, sec, this.badEventCount)
     }
 
-    toJSON() {
-        return {
+    save() {
+        const ret = {
             target: this.target,
-            lowerThreshold: this.lowerThreshold,
-            upperThreshold: this.upperThreshold,
             windowDays: this.windowDays,
         }
+        if (this.indicator.lowerBound) {
+            ret.lowerThreshold = this.lowerThreshold
+        }
+        if (this.indicator.upperBound) {
+            ret.upperThreshold = this.upperThreshold
+        }
+        return ret
+    }
+
+    static load(data, indicator) {
+        if (!isObj(data)) {
+            throw new TypeError(`Objective.load(): Expected a data object. Got ${data}`)
+        }
+        const objective = new Objective(indicator)
+
+        if (isPosInt(data.target)) {
+            objective.target = data.target
+        }
+
+        if (isPosInt(data.windowDays)) {
+            objective.windowDays = data.windowDays
+        }
+
+        if (objective.indicator.lowerBound) {
+            if (isNum(data.lowerThreshold)) {
+                objective.lowerThreshold = data.lowerThreshold
+            }
+        }
+
+        if (objective.indicator.upperBound) {
+            if (isNum(data.upperThreshold)) {
+                objective.upperThreshold = data.upperThreshold
+            }
+        }
+
+        return objective;
     }
 }
