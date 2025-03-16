@@ -28,33 +28,3 @@
     padding: var(--gap);
     color: var(--brand-red);
 }
-
-.block.code {
-    padding: var(--gap);
-    color: var(--brand-purple);
-    overflow: auto;
-    font-family: var(--code-font-family);
-    position: relative; /* for the button to show properly */
-}
-
-.block.code label {
-    font-family: var(--code-font-family);
-}
-
-.block.code button {
-    opacity: 0.8;
-    background-color: transparent;
-    color: var(--primary-color);
-    border: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-    border-bottom-right-radius: 0;
-    font-size: 1em;
-}
-
-.block.code button:hover, .block.code button:focus {
-    opacity: 1;
-}
