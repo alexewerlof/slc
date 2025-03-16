@@ -15,7 +15,6 @@
         justify-content: space-evenly;
         gap: 1em;
         align-items: flex-start;
-        padding: 0 1em;
     }
 
     article section {
@@ -25,6 +24,10 @@
     .only-mobile {
         display: none;
     }
+}
+
+article {
+    padding: var(--gap2);
 }
 
 article.stretch {
