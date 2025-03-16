@@ -51,22 +51,22 @@
                     <tbody>
                         <tr>
                             <th>X</th>
-                            <td><button type="button" @click="objective.changeTarget(-0.1)">{{ percL10n(-0.1) }}</button></td>
-                            <td><button type="button" @click="objective.changeTarget(0.1)">{{ percL10n(+0.1) }}</button></td>
+                            <td><button type="button" class="button--small" @click="objective.changeTarget(-0.1)">{{ percL10n(-0.1) }}</button></td>
+                            <td><button type="button" class="button--small" @click="objective.changeTarget(0.1)">{{ percL10n(+0.1) }}</button></td>
                         </tr>
                         <tr>
                             <th>Y</th>
-                            <td><button type="button" @click="objective.changeTarget(-0.01)">{{ percL10n(-0.01) }}</button></td>
-                            <td><button type="button" @click="objective.changeTarget(0.01)">{{ percL10n(+0.01) }}</button></td>
+                            <td><button type="button" class="button--small" @click="objective.changeTarget(-0.01)">{{ percL10n(-0.01) }}</button></td>
+                            <td><button type="button" class="button--small" @click="objective.changeTarget(0.01)">{{ percL10n(+0.01) }}</button></td>
                         </tr>
                         <tr>
                             <th>Z</th>
-                            <td><button type="button" @click="objective.changeTarget(-0.001)">{{ percL10n(-0.001) }}</button></td>
-                            <td><button type="button" @click="objective.changeTarget(0.001)">{{ percL10n(+0.001) }}</button></td>
+                            <td><button type="button" class="button--small" @click="objective.changeTarget(-0.001)">{{ percL10n(-0.001) }}</button></td>
+                            <td><button type="button" class="button--small" @click="objective.changeTarget(0.001)">{{ percL10n(+0.001) }}</button></td>
                         </tr>
                         <tr>
                             <th>XYZ</th>
-                            <td colspan="2"><button type="button" @click="objective.targetFrac = 0">reset</button></td>
+                            <td colspan="2"><button type="button" class="button--small" @click="objective.targetFrac = 0">reset</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -130,7 +130,7 @@
                             <td>{{ p.title }}</td>
                             <td>{{ p.days }}</td>
                             <td>{{ p.useCase }}</td>
-                            <td><button type="button" @click="objective.windowDays=p.days">Try!</button></td>
+                            <td><button type="button" class="button--small" @click="objective.windowDays=p.days">Try!</button></td>
                         </tr>
                     </tbody>
                 </table>
