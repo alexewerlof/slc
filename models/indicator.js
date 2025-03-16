@@ -1,6 +1,6 @@
 import { config } from '../config.js'
 import { humanTimeSlices } from '../lib/time.js'
-import { inRange } from '../lib/validation.js'
+import { inRange, isObj, isPosInt, isStr } from '../lib/validation.js'
 
 /*
 SLI budgeting method:
@@ -62,15 +62,28 @@ export class Indicator {
         return Boolean(this.lowerBound) && Boolean(this.upperBound)
     }
 
-    toJSON() {
-        const ret = {
-            title: this.title,
-            description: this.description,
-            metricName: this.metricName,
-            metricUnit: this.metricUnit,
-            lowerBound: this.lowerBound,
-            upperBound: this.upperBound,
-            expectedDailyEvents: this.expectedDailyEvents,
+    save() {
+        const ret = {}
+        if (this.title) {
+            ret.displayName = this.title
+        }
+        if (this.description) {
+            ret.description = this.description
+        }
+        if (this.metricName) {
+            ret.metricName = this.metricName
+        }
+        if (this.metricUnit) {
+            ret.metricUnit = this.metricUnit
+        }
+        if (this.expectedDailyEvents) {
+            ret.expectedDailyEvents = this.expectedDailyEvents
+        }
+        if (this.lowerBound) {
+            ret.lowerBound = this.lowerBound
+        }
+        if (this.upperBound) {
+            ret.upperBound = this.upperBound
         }
         if (this.isTimeBased) {
             ret.timeslice = this.timeslice
@@ -78,5 +91,56 @@ export class Indicator {
             ret.eventUnit = this.eventUnit
         }
         return ret
+    }
+
+    static load(data) {
+        if (!isObj(data)) {
+            throw new TypeError(`load(): Expected a data object. Got ${data}`)
+        }
+        const indicator = new Indicator()
+
+        if (isStr(data.displayName)) {
+            indicator.title = data.displayName
+        }
+
+        if (isStr(data.description)) {
+            indicator.description = data.description
+        }
+
+        if (isStr(data.metricName)) {
+            indicator.metricName = data.metricName
+        }
+
+        if (isStr(data.metricUnit)) {
+            indicator.metricUnit = data.metricUnit
+        }
+
+        if (isStr(data.lowerBound)) {
+            if (!config.lowerBound.possibleValues.includes(data.lowerBound)) {
+                throw new RangeError(`load(): "lowerBound" must be one of ${config.lowerBound.possibleValues}. Got ${data.lowerBound}`)
+            }
+            indicator.lowerBound = data.lowerBound
+        }
+
+        if (isStr(data.upperBound)) {
+            if (!config.upperBound.possibleValues.includes(data.upperBound)) {
+                throw new RangeError(`load(): "upperBound" must be one of ${config.upperBound.possibleValues}. Got ${data.upperBound}`)
+            }
+            indicator.upperBound = data.upperBound
+        }
+
+        if (isPosInt(data.timeslice)) {
+            indicator.isTimeBased = data.isTimeBased
+            indicator.timeslice = data.timeslice
+        } else {
+            indicator.isTimeBased = false
+            indicator.eventUnit = data.eventUnit || config.eventUnit.default
+        }
+
+        if (isPosInt(data.expectedDailyEvents)) {
+            indicator.expectedDailyEvents = data.expectedDailyEvents
+        }
+
+        return indicator
     }
 }
