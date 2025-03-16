@@ -132,7 +132,7 @@
                         <tr v-for="p in config.timeslice.presets">
                             <td>{{ p.title }}</td>
                             <td>{{ p.seconds }}</td>
-                            <td><button type="button" @click="indicator.timeslice = p.seconds">Try!</button></td>
+                            <td><button type="button" class="button--small" @click="indicator.timeslice = p.seconds">Try!</button></td>
                         </tr>
                     </tbody>
                 </table>
