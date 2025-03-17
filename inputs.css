@@ -188,8 +188,6 @@ a, a:hover, a:active {
 }
 
 label {
-    -webkit-user-select: none; /* Added to support Safari and Safari on iOS */
-    user-select: none;
     cursor: pointer;
 }
 
