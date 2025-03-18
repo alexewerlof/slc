@@ -22,6 +22,36 @@
     <div class="input-group">
         <label for="slo-int-input">
             Integer: {{ percL10n(objective.targetInt) }}
+            <help-component>
+                <p>
+                    Service Level Objective (SLO) is the target percentage of
+                    good {{ objective.indicator.eventUnitNorm }}
+                    out of total {{ objective.indicator.eventUnitNorm }}
+                    in {{ objective.window }}.
+                </p>
+                <p>
+                    Using the two sliders below you can fine tune the SLO to your needs.
+                    The first slider is for the integer part of the percentage ({{ percL10n(objective.targetInt) }}).
+                    The second slider is for the fractional part of the percentage ({{ percL10n(objective.targetFrac) }}).
+                </p>
+                <table>
+                    <caption>Typical SLO targets</caption>
+                    <thead>
+                        <tr>
+                            <th>Informal Name</th>
+                            <th>SLO Target</th>
+                            <th aria-label="try button"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="p in config.slo.presets">
+                            <td>{{ p.title }}</td>
+                            <td>{{percL10n(p.slo)}}</td>
+                            <td><button type="button" @click="objective.target = p.slo">Try!</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </help-component>
         </label>
         <input
             id="slo-int-input"
