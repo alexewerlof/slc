@@ -45,7 +45,7 @@
                 🎉Tip: <ext-link href="../templates/index.html">Use Templates</ext-link>
             </div>
             
-            <indicator-view-component :indicator="indicator"></indicator-view-component>
+            <indicator-view-component :indicator="calculator.indicator"></indicator-view-component>
         </section>
 
         <!------------------------ SLO ------------------------>
@@ -63,10 +63,10 @@
                 </help-component>
             </h2>
 
-            <objective-view-component :objective="objective"></objective-view-component>
+            <objective-view-component :objective="calculator.objective"></objective-view-component>
             <!------------------------ Error Budget ------------------------>
             <h2 id="error-budget-title">Error</h2>
-            <error-budget-component :objective="objective"></error-budget-component>
+            <error-budget-component :objective="calculator.objective"></error-budget-component>
 
         </section>
 
@@ -104,7 +104,7 @@
                     </p>
                 </help-component>
             </h2>
-            <alert-view-component :alert="alert"></alert-view-component>
+            <alert-view-component :alert="calculator.alert"></alert-view-component>
         </section>
     </article>
 </div>

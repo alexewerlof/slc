@@ -1,6 +1,7 @@
 import { config } from '../config.js'
 import { humanTimeSlices } from '../lib/time.js'
-import { inRange, isObj, isPosInt, isStr } from '../lib/validation.js'
+import { inRange, isInstance, isObj, isPosInt, isStr } from '../lib/validation.js'
+import { Objective } from './objective.js'
 
 /*
 SLI budgeting method:
@@ -40,6 +41,8 @@ export class Indicator {
     upperBound = config.upperBound.default
     // Does this SLI use timeslots or events?
     isTimeBased = false
+    // List of SLOs attached to this SLI
+    objectives = []
     // For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events
     _expectedDailyEvents = config.expectedDailyEvents.default
     get expectedDailyEvents() {
@@ -61,7 +64,28 @@ export class Indicator {
     get isRanged() {
         return Boolean(this.lowerBound) && Boolean(this.upperBound)
     }
-
+    addObjective(objective) {
+        if (!isInstance(objective, Objective)) {
+            throw new TypeError(`Indicator.addObjective(): Expected an instance of Objective. Got ${objective}`)
+        }
+        objective.indicator = this
+        this.objectives.push(objective)
+        return objective
+    }
+    addNewObjective() {
+        return this.addObjective(new Objective(this))
+    }
+    removeObjective(objective) {
+        if (!isInstance(objective, Objective)) {
+            throw new TypeError(`Indicator.removeObjective(): Expected an instance of Objective. Got ${objective}`)
+        }
+        const idx = this.objectives.indexOf(objective)
+        if (idx === -1) {
+            return new RangeError(`Indicator.removeObjective(): Objective not found: ${objective}`)
+        }
+        this.objectives.splice(idx, 1)
+        return true
+    }
     save() {
         const ret = {}
         if (this.title) {

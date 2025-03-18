@@ -3,8 +3,15 @@ import { Indicator } from './indicator.js'
 export class Calculator {
     indicators = []
     _indicatorIdx = -1
+    _objectiveIdx = -1
+    _alertIdx = -1
     constructor() {
         this.addNewIndicator()
+        this._indicatorIdx = 0
+        this.indicator.addNewObjective()
+        this._objectiveIdx = 0
+        this.objective.addNewAlert()
+        this._alertIdx = 0
     }
     get indicator() {
         return this.indicators[this._indicatorIdx]
@@ -33,5 +40,17 @@ export class Calculator {
         this.addIndicator(newIndicator)
         this._selectedIndicatorIdx = this.indicators.length - 1
         return newIndicator
+    }
+    get objectives() {
+        return this.indicator.objectives
+    }
+    get objective() {
+        return this.objectives[this._objectiveIdx]
+    }
+    get alerts() {
+        return this.objective.alerts
+    }
+    get alert() {
+        return this.objective.alerts[this._alertIdx]
     }
 }

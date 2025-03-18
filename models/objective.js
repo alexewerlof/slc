@@ -4,6 +4,7 @@ import { clamp, percent, toFixed } from '../lib/math.js'
 import { daysToSeconds, secondsToDays } from '../lib/time.js'
 import { inRange, isInstance, isNum, isObj, isPosInt } from '../lib/validation.js'
 import { Window } from '../lib/window.js'
+import { Alert } from './alert.js'
 import { Indicator } from './indicator.js'
 
 export class Objective {
@@ -11,6 +12,8 @@ export class Objective {
     target = config.slo.default
     // Lower bound threshold
     _lowerThreshold = config.lowerThreshold.default
+    // List of alerts attached to this SLO
+    alerts = []
     // Upper bound threshold
     _upperThreshold = config.upperThreshold.default
     constructor(indicator) {
@@ -22,6 +25,27 @@ export class Objective {
             indicator,
             daysToSeconds(config.windowDays.default),
         )
+    }
+    addAlert(alert) {
+        if (!isInstance(alert, Alert)) {
+            throw new TypeError(`Objective.addAlert(): Expected an instance of Alert. Got ${alert}`)
+        }
+        alert.objective = this
+        this.alerts.push(alert)
+        return alert
+    }
+    addNewAlert() {
+        return this.addAlert(new Alert(this))
+    }
+    removeAlert(alert) {
+        if (!isInstance(alert, Alert)) {
+            throw new TypeError(`Objective.removeAlert(): Expected an instance of Alert. Got ${alert}`)
+        }
+        const idx = this.alerts.indexOf(alert)
+        if (idx === -1) {
+            throw new RangeError(`Objective.removeAlert(): Alert not found: ${alert}`)
+        }
+        this.alerts.splice(idx, 1)
     }
     get lowerThreshold() {
         return this._lowerThreshold
