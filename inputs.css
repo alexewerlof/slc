@@ -116,7 +116,7 @@ textarea {
 .button-bar {
     display: flex;
     justify-content: left;
-    margin: 1em 0;
+    margin: var(--gap);
 }
 
 button + button {
