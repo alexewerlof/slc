@@ -49,8 +49,8 @@
                     <p>So all you have to do is to copy the following link. Whenever that link is clicked, it opens the app in the exact state when you copied it.</p>
                 </help-component>
             </h1>
-            <code-block-component title="Copy this share URL">
-                <code><a id="share-url" :href="shareUrl" style="overflow-wrap: break-word;">{{ shareUrl }}</a></code>
+            <code-block-component title="State">
+                {{ calculator.save() }}
             </code-block-component>
         </section>
 

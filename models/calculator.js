@@ -53,4 +53,8 @@ export class Calculator {
     get alert() {
         return this.objective.alerts[this._alertIdx]
     }
+    save() {
+        // Save the calculator to a file
+        return this.indicators.map(indicator => indicator.save())
+    }
 }
