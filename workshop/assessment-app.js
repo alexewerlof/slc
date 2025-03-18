@@ -11,7 +11,7 @@ import ServiceMetricView from '../views/service-metric-view.js'
 import SummaryView from '../views/summary-view.js'
 import { Assessment } from '../models/assessment.js'
 import { config } from '../config.js'
-import { copyElementTextToClipboard, loadJson, readTextFile } from '../lib/share.js'
+import { loadJson, readTextFile } from '../lib/share.js'
 import FeedbackBlobComponent from '../components/feedback-blob.js'
 import FooterComponent from '../components/footer.js'
 import HeroComponent from '../components/hero.js'
@@ -74,9 +74,5 @@ export const app = createApp({
         clickInput(id) {
             document.getElementById(id).click()
         },
-
-        async copy(elementId) {
-            return await copyElementTextToClipboard(elementId)
-        }
     }
 })

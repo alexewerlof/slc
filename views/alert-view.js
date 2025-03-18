@@ -10,6 +10,7 @@ import HelpComponent from '../components/help.js'
 import AlertChartComponent from '../components/alert-chart.js'
 import BurnRateComponent from '../components/burn-rate.js'
 import SLFractionComponent from '../components/sl-fraction.js'
+import CodeBlockComponent from '../components/code-block.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -35,5 +36,6 @@ export default {
         AlertChartComponent,
         BurnRateComponent,
         SLFractionComponent,
+        CodeBlockComponent,
     },
 }

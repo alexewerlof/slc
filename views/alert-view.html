@@ -356,45 +356,42 @@
         </p>
     </help-component>
 </h4>
-<div class="code-block">
-    <div id="alert-formula-code">
+<code-block-component title="Alert When:">
+    <s-l-fraction-component
+        :indicator="alert.objective.indicator"
+        :objective="alert.objective"
+        :time-period="alert.longFailureWindow.humanSec"
+        time-label-id="alert-error-budget-perc"></s-l-fraction-component>
+    <code>
+        <span class="punct"> ≤ </span>
+        <label for="slo-int-input">
+            <span class="const">
+                {{ percL10n(alert.objective.target) }}
+            </span>
+        </label>
+    </code>
+    <code v-if="alert.useShortWindow">
+        <br>
+        <span class="punct">&&</span>
+        <br>
         <s-l-fraction-component
             :indicator="alert.objective.indicator"
             :objective="alert.objective"
-            :time-period="alert.longFailureWindow.humanSec"
-            time-label-id="alert-error-budget-perc"></s-l-fraction-component>
-        <code>
-            <span class="punct"> ≤ </span>
-            <label for="slo-int-input">
-                <span class="const">
-                    {{ percL10n(alert.objective.target) }}
-                </span>
-            </label>
-        </code>
-        <code v-if="alert.useShortWindow">
-            <br>
-            <span class="punct">&&</span>
-            <br>
-            <s-l-fraction-component
-                :indicator="alert.objective.indicator"
-                :objective="alert.objective"
-                :time-period="alert.shortFailureWindow.humanSec"
-                time-label-id="alert-short-window-divider-input"></s-l-fraction-component>
-            <div>
-                <code>
-                    <span class="punct"> ≤ </span>
-                    <label for="slo-int-input">
-                        <span class="const">
-                            {{ percL10n(alert.objective.target) }}
-                        </span>
-                    </label>
-                </code>
-            </div>
-        </code>
-    </div>
-    <button @click="copy('alert-formula-code', 'alert-formula')" type="button" title="Copy to clipboard">⎘</button>
-</div>
+            :time-period="alert.shortFailureWindow.humanSec"
+            time-label-id="alert-short-window-divider-input"></s-l-fraction-component>
+        <div>
+            <code>
+                <span class="punct"> ≤ </span>
+                <label for="slo-int-input">
+                    <span class="const">
+                        {{ percL10n(alert.objective.target) }}
+                    </span>
+                </label>
+            </code>
+        </div>
+    </code>
+</code-block-component>
 
-<div class="code-block">
-    <pre><code>{{JSON.stringify(alert.save(), null, 2)}}</code></pre>
-</div>
+<code-block-component>
+    {{JSON.stringify(alert.save(), null, 2)}}
+</code-block-component>

@@ -9,13 +9,10 @@ import FailureView from '../views/failure-view.js'
 import RiskView from '../views/risk-view.js'
 import ServiceMetricView from '../views/service-metric-view.js'
 import SummaryView from '../views/summary-view.js'
-import { Assessment } from '../models/assessment.js'
-import { config } from '../config.js'
-import { copyElementTextToClipboard, loadJson, readTextFile } from '../lib/share.js'
+import { loadJson } from '../lib/share.js'
 import FeedbackBlobComponent from '../components/feedback-blob.js'
 import FooterComponent from '../components/footer.js'
 import HeroComponent from '../components/hero.js'
-import { icon } from '../lib/icons.js'
 
 const exampleJson = await loadJson('../workshop/example.json')
 

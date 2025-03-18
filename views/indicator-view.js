@@ -11,6 +11,7 @@ import { icon } from '../lib/icons.js'
 import HelpComponent from '../components/help.js'
 import SLFractionComponent from '../components/sl-fraction.js'
 import InlineSelectComponent from '../components/inline-select.js'
+import CodeBlockComponent from '../components/code-block.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -40,5 +41,6 @@ export default {
         HelpComponent,
         SLFractionComponent,
         InlineSelectComponent,
+        CodeBlockComponent,
     },
 }

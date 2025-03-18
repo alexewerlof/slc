@@ -1,0 +1,38 @@
+.code-block {
+    overflow: auto;
+    position: relative; /* for the button to show properly */
+    background-color: var(--background-darker);
+    border: var(--brand-purple) solid var(--bthick);
+    border-radius: var(--bradius);
+    box-shadow: 0 0 var(--gap) var(--background-darker);
+}
+
+.code-block label {
+    font-family: var(--code-font-family);
+}
+
+.code-block button:hover, .code-block button:focus {
+    opacity: 1;
+}
+
+.code-block__top-bar {
+    padding: var(--gap);
+    border-bottom: var(--bthick) solid var(--brand-purple);
+    display: flex;
+}
+
+.code-block__title {
+    flex-grow: 1;
+    font-family: var(--code-font-family);
+    color: var(--brand-purple);
+}
+
+.code-block__buttons button {
+    background-color: var(--brand-purple);
+}
+
+.code-block__code-container {
+    padding: var(--gap);
+    font-family: var(--code-font-family);
+    color: var(--brand-purple);
+}

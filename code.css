@@ -62,37 +62,3 @@ ms {
 mtd {
     text-align: left;
 }
-
-.code-block {
-    padding: var(--gap);
-    color: var(--brand-purple);
-    overflow: auto;
-    font-family: var(--code-font-family);
-    position: relative; /* for the button to show properly */
-    background-color: var(--background-darker);
-    border: var(--brand-purple) solid var(--bthick);
-    border-radius: var(--bradius);
-    box-shadow: 0 0 var(--gap) var(--background-darker);
-}
-
-.code-block label {
-    font-family: var(--code-font-family);
-}
-
-.code-block button {
-    opacity: 0.8;
-    background-color: transparent;
-    color: var(--primary-color);
-    border: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-    border-bottom-right-radius: 0;
-    font-size: 1em;
-}
-
-.code-block button:hover, .code-block button:focus {
-    opacity: 1;
-}

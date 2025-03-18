@@ -8,12 +8,12 @@ import CookiePopupComponent from '../components/cookie-popup.js'
 import HelpComponent from '../components/help.js'
 import { percentToRatio } from '../lib/math.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '../lib/fmt.js'
-import { trackEvent } from '../lib/ga-utils.js'
-import { copyElementTextToClipboard, stateToUrl } from '../lib/share.js'
+import { stateToUrl } from '../lib/share.js'
 import { Indicator } from '../models/indicator.js'
 import { Objective } from '../models/objective.js'
 import { Alert } from '../models/alert.js'
 import CalculatorViewComponent from '../views/calculator-view.js'
+import CodeBlockComponent from '../components/code-block.js'
 import { Calculator } from '../models/calculator.js'
 
 export const app = createApp({
@@ -55,6 +55,7 @@ export const app = createApp({
         FooterComponent,
         HeaderComponent,
         HelpComponent,
+        CodeBlockComponent,
     },
     methods: {
         boundCaption,
@@ -63,15 +64,6 @@ export const app = createApp({
         numL10n,
         percentToRatio,
         percL10n,
-        async copy(elementId, label) {
-            try {
-                await copyElementTextToClipboard(elementId)
-                this.toastCaption = 'Copied to clipboard!'
-                trackEvent('copy', 'button', label)
-            } catch(err) {
-                // ignore
-            }
-        },
     },
     computed: {
         shareUrl() {

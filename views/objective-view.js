@@ -11,6 +11,7 @@ import HelpComponent from '../components/help.js'
 import ErrorBudgetComponent from '../components/error-budget.js'
 import SLFractionComponent from '../components/sl-fraction.js'
 import { icon } from '../lib/icons.js'
+import CodeBlockComponent from '../components/code-block.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
@@ -38,5 +39,6 @@ export default {
         HelpComponent,
         ErrorBudgetComponent,
         SLFractionComponent,
+        CodeBlockComponent,
     },
 }
