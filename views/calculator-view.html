@@ -1,0 +1,110 @@
+<div class="container">
+    <article>
+        <!------------------------ SLI ------------------------>
+        <section class="surface">
+            <h2 id="sli-title">
+                SLI
+                <help-component>
+                    <p>
+                        In simple words <ext-link href="https://blog.alexewerlof.com/p/sli">Service Level Indicators
+                        </ext-link> are the metrics that represent how the reliability
+                        is perceived by the consumers of the service. They are normalized to be a number between
+                        0 and 100 using this formula:
+                    </p>
+                    <math>
+                        <mrow>
+                            <mi>SLI</mi>
+                            <mo>=</mo>
+                            <mfrac>
+                                <mrow>
+                                    <mi>Good</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>Valid</mi>
+                                </mrow>
+                            </mfrac>
+                            <mrow>
+                                <mo>&times;</mo>
+                                <mn>100</mn>
+                            </mrow>
+                        </mrow>
+                    </math>
+                    <p>
+                        You can read more about the definition of
+                        <ext-link href="https://blog.alexewerlof.com/p/sli-good">Good</ext-link>
+                        and
+                        <ext-link href="https://blog.alexewerlof.com/p/valid-vs-total">Valid</ext-link>
+                        .
+                    </p>
+                    <p>
+                        Common SLIs include latency, availability, yield, durability, correctness, etc.
+                    </p>
+                </help-component>
+            </h2>
+            <div class="info block">
+                🎉Tip: <ext-link href="../templates/index.html">Use Templates</ext-link>
+            </div>
+            
+            <indicator-view-component :indicator="indicator"></indicator-view-component>
+        </section>
+
+        <!------------------------ SLO ------------------------>
+        <section class="surface">
+            <h2 id="slo-title">
+                SLO
+                <help-component>
+                    <p>
+                        <ext-link href="https://blog.alexewerlof.com/p/slo">SLO</ext-link>
+                        (Service Level Objective) is a promise towards the consumers.
+                        They set expectations and shape the
+                        <ext-link href="https://blog.alexewerlof.com/p/nfr">NFR</ext-link>
+                        (non-functional requirements).
+                    </p>
+                </help-component>
+            </h2>
+
+            <objective-view-component :objective="objective"></objective-view-component>
+            <!------------------------ Error Budget ------------------------>
+            <h2 id="error-budget-title">Error</h2>
+            <error-budget-component :objective="objective"></error-budget-component>
+
+        </section>
+
+        <!------------------------ Alert ------------------------>
+        <section class="surface">
+            <h2 id="alert-title">
+                Alerting
+                <help-component>
+                    <p>
+                        What is the point of setting SLI/SLO if we are not going to take application
+                        when the SLO is violated?
+                    </p>
+                    <p>
+                        Alerting on error budgets enable us to be on top of the reliability of our system.
+                        When using service levels, the alert triggers on the rate of consuming the error budget.
+                    </p>
+                    <p>
+                        When setting an alert, the burn rate decides how quickly the alert reacts
+                        to errors.
+                    </p>
+                    <ul>
+                        <li>
+                            Too fast and it will lead to false positives (alerting unnecessarily)
+                            and alert fatigue (too many alerts).
+                        </li>
+                        <li>
+                            Too slow and the error burget will be burned before you know it.
+                        </li>
+                    </ul>
+                    <p>
+                        Google SRE Workbook goes through
+                        <ext-link href="https://sre.google/workbook/alerting-on-slos/">
+                            6 alerting strategies based on SLOs
+                        </ext-link>.
+                    </p>
+                </help-component>
+            </h2>
+            <alert-view-component :alert="alert"></alert-view-component>
+        </section>
+    </article>
+</div>

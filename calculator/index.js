@@ -1,16 +1,11 @@
 import { createApp } from '../vendor/vue.js'
 import { config } from '../config.js'
-import AlertChartComponent from '../components/alert-chart.js'
-import BurnRateComponent from '../components/burn-rate.js'
-import ErrorBudgetComponent from '../components/error-budget.js'
 import ExtLink from '../components/ext-link.js'
 import FeedbackBlobComponent from '../components/feedback-blob.js'
 import HeaderComponent from '../components/header.js'
 import FooterComponent from '../components/footer.js'
 import CookiePopupComponent from '../components/cookie-popup.js'
-import InlineSelectComponent from '../components/inline-select.js'
 import HelpComponent from '../components/help.js'
-import SLFractionComponent from '../components/sl-fraction.js'
 import { percentToRatio } from '../lib/math.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '../lib/fmt.js'
 import { trackEvent } from '../lib/ga-utils.js'
@@ -18,9 +13,8 @@ import { copyElementTextToClipboard, stateToUrl } from '../lib/share.js'
 import { Indicator } from '../models/indicator.js'
 import { Objective } from '../models/objective.js'
 import { Alert } from '../models/alert.js'
-import IndicatorViewComponent from '../views/indicator-view.js'
-import ObjectiveViewComponent from '../views/objective-view.js'
-import AlertViewComponent from '../views/alert-view.js'
+import CalculatorViewComponent from '../views/calculator-view.js'
+import { Calculator } from '../models/calculator.js'
 
 export const app = createApp({
     data() {
@@ -40,12 +34,8 @@ export const app = createApp({
             showAnnouncement: true,
             // The text shown in the toast notification
             toastCaption: '',
-            // SLI
-            indicator,
-            // SLO
-            objective,
-            // Alert
-            alert,
+            // The calculator view state
+            calculator: new Calculator(),
         }
     },
     mounted() {
@@ -58,20 +48,13 @@ export const app = createApp({
         })
     },
     components: {
-        IndicatorViewComponent,
-        ObjectiveViewComponent,
-        AlertViewComponent,
-        AlertChartComponent,
-        BurnRateComponent,
-        ErrorBudgetComponent,
+        CalculatorViewComponent,
+        CookiePopupComponent,
         ExtLink,
         FeedbackBlobComponent,
-        HeaderComponent,
-        CookiePopupComponent,
         FooterComponent,
+        HeaderComponent,
         HelpComponent,
-        InlineSelectComponent,
-        SLFractionComponent,
     },
     methods: {
         boundCaption,
