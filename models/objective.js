@@ -139,6 +139,9 @@ export class Objective {
         if (this.indicator.upperBound) {
             ret.upperThreshold = this.upperThreshold
         }
+        if (this.alerts.length) {
+            ret.alerts = this.alerts.map(alert => alert.save())
+        }
         return ret
     }
 
@@ -165,6 +168,12 @@ export class Objective {
         if (objective.indicator.upperBound) {
             if (isNum(data.upperThreshold)) {
                 objective.upperThreshold = data.upperThreshold
+            }
+        }
+
+        if (Array.isArray(data.alerts)) {
+            for (const alertData of data.alerts) {
+                objective.addAlert(Alert.load(alertData, objective))
             }
         }
 

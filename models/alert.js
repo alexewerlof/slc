@@ -1,7 +1,7 @@
 import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
 import { toFixed } from '../lib/math.js'
-import { inRange, isInstance } from '../lib/validation.js'
+import { inRange, isInstance, isNum, isObj } from '../lib/validation.js'
 import { Objective } from './objective.js'
 
 export class Alert {
@@ -81,7 +81,7 @@ export class Alert {
 
         alert.useShortWindow = isNum(data.shortWindowDivider)
 
-        if (useShortWindow) {
+        if (alert.useShortWindow) {
             if (inRange(data.shortWindowDivider, config.shortWindowDivider.min, config.shortWindowDivider.max)) {
                 alert.shortWindowDivider = data.shortWindowDivider
             } else {

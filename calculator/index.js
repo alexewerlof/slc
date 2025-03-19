@@ -18,12 +18,6 @@ import { Calculator } from '../models/calculator.js'
 
 export const app = createApp({
     data() {
-        const indicator = new Indicator()
-
-        const objective = new Objective(indicator)
-        
-        const alert = new Alert(objective)
-
         return {
             // Expose the config to the UI
             config,
@@ -35,7 +29,30 @@ export const app = createApp({
             // The text shown in the toast notification
             toastCaption: '',
             // The calculator view state
-            calculator: new Calculator(),
+            calculator: Calculator.load([
+                {
+                    "metricName": "response_latency",
+                    "metricUnit": "ms",
+                    "expectedDailyEvents": 10000,
+                    "lowerBound": "gt",
+                    "upperBound": "le",
+                    "timeslice": 60,
+                    "objectives": [
+                    {
+                        "target": 99,
+                        "windowDays": 30,
+                        "lowerThreshold": 5,
+                        "upperThreshold": 2000,
+                        "alerts": [
+                        {
+                            "burnRate": 6,
+                            "longWindowPerc": 17.6
+                        }
+                        ]
+                    }
+                    ]
+                }
+            ]),
         }
     },
     mounted() {

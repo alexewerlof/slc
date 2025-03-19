@@ -114,6 +114,9 @@ export class Indicator {
         } else {
             ret.eventUnit = this.eventUnit
         }
+        if (this.objectives.length) {
+            ret.objectives = this.objectives.map(obj => obj.save())
+        }
         return ret
     }
 
@@ -163,6 +166,12 @@ export class Indicator {
 
         if (isPosInt(data.expectedDailyEvents)) {
             indicator.expectedDailyEvents = data.expectedDailyEvents
+        }
+
+        if (Array.isArray(data.objectives)) {
+            for (const objectiveData of data.objectives) {
+                indicator.addObjective(Objective.load(objectiveData, indicator))
+            }
         }
 
         return indicator

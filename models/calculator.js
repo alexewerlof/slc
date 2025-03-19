@@ -48,13 +48,23 @@ export class Calculator {
         return this.objectives[this._objectiveIdx]
     }
     get alerts() {
-        return this.objective.alerts
+        return this.objective?.alerts
     }
     get alert() {
-        return this.objective.alerts[this._alertIdx]
+        return this.objective?.alerts[this._alertIdx]
     }
     save() {
         // Save the calculator to a file
         return this.indicators.map(indicator => indicator.save())
+    }
+    static load(indicatorsData) {
+        const ret = new Calculator()
+        if (!Array.isArray(indicatorsData)) {
+            throw new TypeError('Expected an array of indicators data')
+        }
+        for (const indicatorData of indicatorsData) {
+            ret.addIndicator(Indicator.load(indicatorData))
+        }
+        return ret
     }
 }
