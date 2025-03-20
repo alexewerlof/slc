@@ -1,20 +1,23 @@
-import { createApp } from '../vendor/vue.js'
-import { config } from '../config.js'
-import ExtLink from '../components/ext-link.js'
-import FeedbackBlobComponent from '../components/feedback-blob.js'
-import HeaderComponent from '../components/header.js'
-import FooterComponent from '../components/footer.js'
-import CookiePopupComponent from '../components/cookie-popup.js'
-import HelpComponent from '../components/help.js'
-import { percentToRatio } from '../lib/math.js'
-import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '../lib/fmt.js'
-import { stateToUrl } from '../lib/share.js'
-import { Indicator } from '../models/indicator.js'
-import { Objective } from '../models/objective.js'
-import { Alert } from '../models/alert.js'
-import CalculatorViewComponent from '../views/calculator-view.js'
-import CodeBlockComponent from '../components/code-block.js'
-import { Calculator } from '../models/calculator.js'
+import { createApp } from "../vendor/vue.js";
+import { config } from "../config.js";
+import ExtLink from "../components/ext-link.js";
+import FeedbackBlobComponent from "../components/feedback-blob.js";
+import HeaderComponent from "../components/header.js";
+import FooterComponent from "../components/footer.js";
+import CookiePopupComponent from "../components/cookie-popup.js";
+import HelpComponent from "../components/help.js";
+import { percentToRatio } from "../lib/math.js";
+import {
+    boundCaption,
+    entity2symbol,
+    hasComparators,
+    numL10n,
+    percL10n,
+} from "../lib/fmt.js";
+import { stateToUrl } from "../lib/share.js";
+import CalculatorViewComponent from "../views/calculator-view.js";
+import CodeBlockComponent from "../components/code-block.js";
+import { Calculator } from "../models/calculator.js";
 
 export const app = createApp({
     data() {
@@ -27,7 +30,7 @@ export const app = createApp({
             // Show the announcement banner
             showAnnouncement: true,
             // The text shown in the toast notification
-            toastCaption: '',
+            toastCaption: "",
             // The calculator view state
             calculator: Calculator.load({
                 urlVer: 3,
@@ -46,13 +49,13 @@ export const app = createApp({
                             "upperThreshold": 2000,
                             "alerts": [{
                                 "burnRate": 6,
-                                "longWindowPerc": 17.6
-                            }]
-                        }]
-                    }]
+                                "longWindowPerc": 17.6,
+                            }],
+                        }],
+                    }],
                 },
             }),
-        }
+        };
     },
     mounted() {
         this.$nextTick(() => {
@@ -61,7 +64,7 @@ export const app = createApp({
                 const element = document.querySelector(hash);
                 if (element) element.scrollIntoView();
             }
-        })
+        });
     },
     components: {
         CalculatorViewComponent,
@@ -84,14 +87,17 @@ export const app = createApp({
     computed: {
         shareUrl() {
             try {
-                const url = new URL(window.location.pathname, window.location.origin)
-                return stateToUrl(url, this.calculator.save()).toString()
+                const url = new URL(
+                    window.location.pathname,
+                    window.location.origin,
+                );
+                return stateToUrl(url, this.calculator.save()).toString();
             } catch (e) {
-                console.error('Could not create shareurl', e)
-                return null
+                console.error("Could not create shareurl", e);
+                return null;
             }
         },
-    }
-})
+    },
+});
 
-app.mount('#app')
+app.mount("#app");
