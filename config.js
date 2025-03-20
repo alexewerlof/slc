@@ -9,7 +9,7 @@ function fz(obj) {
 // The config is immutable at runtime and any effort to change it will have no effect
 export const config = fz({
     // This version will be changed when the URL parameters change
-    urlVer: 2,
+    urlVer: 3,
     title: fz({
         default: '',
         placeholder: 'My SLI',

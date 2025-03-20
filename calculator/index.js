@@ -29,30 +29,29 @@ export const app = createApp({
             // The text shown in the toast notification
             toastCaption: '',
             // The calculator view state
-            calculator: Calculator.load([
-                {
-                    "metricName": "response_latency",
-                    "metricUnit": "ms",
-                    "expectedDailyEvents": 10000,
-                    "lowerBound": "gt",
-                    "upperBound": "le",
-                    "timeslice": 60,
-                    "objectives": [
-                    {
-                        "target": 99,
-                        "windowDays": 30,
-                        "lowerThreshold": 5,
-                        "upperThreshold": 2000,
-                        "alerts": [
-                        {
-                            "burnRate": 6,
-                            "longWindowPerc": 17.6
-                        }
-                        ]
-                    }
-                    ]
-                }
-            ]),
+            calculator: Calculator.load({
+                urlVer: 3,
+                state: {
+                    indicators: [{
+                        "metricName": "response_latency",
+                        "metricUnit": "ms",
+                        "expectedDailyEvents": 10000,
+                        "lowerBound": "gt",
+                        "upperBound": "le",
+                        "timeslice": 60,
+                        "objectives": [{
+                            "target": 99,
+                            "windowDays": 30,
+                            "lowerThreshold": 5,
+                            "upperThreshold": 2000,
+                            "alerts": [{
+                                "burnRate": 6,
+                                "longWindowPerc": 17.6
+                            }]
+                        }]
+                    }]
+                },
+            }),
         }
     },
     mounted() {
@@ -86,7 +85,7 @@ export const app = createApp({
         shareUrl() {
             try {
                 const url = new URL(window.location.pathname, window.location.origin)
-                return stateToUrl(url, this).toString()
+                return stateToUrl(url, this.calculator.save()).toString()
             } catch (e) {
                 console.error('Could not create shareurl', e)
                 return null

@@ -57,12 +57,12 @@ export class Calculator {
         // Save the calculator to a file
         return this.indicators.map(indicator => indicator.save())
     }
-    static load(indicatorsData) {
+    static load(data) {
         const ret = new Calculator()
-        if (!Array.isArray(indicatorsData)) {
-            throw new TypeError('Expected an array of indicators data')
+        if (!Array.isArray(data?.state?.indicators)) {
+            throw new TypeError(`Expected an array of indicators in the state. State: ${JSON.stringify(state, null, 2)}, ${JSON.stringify(state.indicators, null, 2)}`)
         }
-        for (const indicatorData of indicatorsData) {
+        for (const indicatorData of data.state.indicators) {
             ret.addIndicator(Indicator.load(indicatorData))
         }
         return ret
