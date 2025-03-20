@@ -1,6 +1,23 @@
 {
     "configurations": [
         {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Debug Deno Test",
+            "program": "${file}",
+            "runtimeExecutable": "deno",
+            "runtimeArgs": [
+                "test",
+                "--inspect-brk",
+                "--allow-all"
+            ],
+            "attachSimplePort": 9229,
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": ["<node_internals>/**"]
+        },
+        {
             "type": "pwa-msedge",
             "name": "Launch Microsoft Edge",
             "request": "launch",
