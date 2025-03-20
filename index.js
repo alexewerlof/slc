@@ -17,7 +17,8 @@ export const app = createApp({
         // Previously the calculator was sitting at the root of the site. If urlVer is present, redirect to the calculator
         if (url.searchParams.has("urlVer")) {
             const { origin, search } = url;
-            window.location.href = `${origin}/calculator/index.html${search}`;
+            window.location.href =
+                `${origin}/app/calculator/index.html${search}`;
         }
     },
 });
