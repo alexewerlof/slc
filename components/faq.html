@@ -1,0 +1,12 @@
+<div class="faq-component">
+    <h3 @click="toggle()" class="faq-component__question">
+        <span v-if="isVisible">&blacktriangle;</span>
+        <span v-else>&blacktriangledown;</span>
+        {{ question }}
+    </h3>
+    <transition>
+        <div v-show="isVisible" class="faq-component__answer">
+            <slot></slot>
+        </div>
+    </transition>
+</div>

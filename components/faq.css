@@ -1,0 +1,16 @@
+.faq-component {
+    border-top: var(--bthick) solid var(--divider-color);
+}
+
+.faq-component__question {
+    cursor: pointer;
+}
+
+.faq-component__question:hover {
+    background-color: var(--background-lighter);
+}
+
+.faq-component__answer {
+    padding: var(--gap3);
+    padding-top: 0;
+}
