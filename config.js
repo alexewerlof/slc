@@ -2,12 +2,13 @@ function fz(obj) {
     if (Array.isArray(obj)) {
         return Object.freeze(obj.map(fz))
     }
-    
+
     return Object.freeze(obj)
 }
 
 // The config is immutable at runtime and any effort to change it will have no effect
 export const config = fz({
+    appName: 'SLC',
     // This version will be changed when the URL parameters change
     urlVer: 3,
     title: fz({
@@ -169,7 +170,7 @@ export const config = fz({
             },
             {
                 title: 'Five nines',
-                slo: 99.999
+                slo: 99.999,
             },
         ]),
     }),
@@ -317,7 +318,7 @@ export const config = fz({
                 {
                     name: 'Crazy Bounce',
                     values: [100, 2, 2, 2, 5, 2, 2, 2, 100],
-                }
+                },
             ],
         },
     },
@@ -339,11 +340,11 @@ export const config = fz({
     metricEffort: fz({
         default: 'Easy',
         possibleValues: fz([
-            'Easy',      // We already get that out of the box
-            'Medium',    // Some observability needs to be set up
-            'Hard',      // New code needs to be written
+            'Easy', // We already get that out of the box
+            'Medium', // Some observability needs to be set up
+            'Hard', // New code needs to be written
             'Very Hard', // A rough approximation can be made with significant effort
-            'Impossible',// It's not possible to measure accurately
+            'Impossible', // It's not possible to measure accurately
         ]),
     }),
     icons: fz({
