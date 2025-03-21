@@ -1,4 +1,6 @@
 {
-    "liveServer.settings.multiRootWorkspaceName": "sla-calculator",
-    "liveServer.settings.port": 5501
+  "liveServer.settings.multiRootWorkspaceName": "sla-calculator",
+  "liveServer.settings.port": 5501,
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "editor.detectIndentation": true
 }
