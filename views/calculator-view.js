@@ -26,14 +26,13 @@ export default {
     computed: {
         config() {
             return config
-        }
+        },
     },
     methods: {
-        percL10n,
-        icon,
         boundCaption,
         entity2symbol,
         hasComparators,
+        icon,
         numL10n,
         percentToRatio,
         percL10n,
