@@ -1,4 +1,4 @@
-const commonTags = [ 'ops', 'operations' ]
+const commonTags = ['ops', 'operations']
 
 export default [
     {
@@ -9,16 +9,16 @@ export default [
         metricUnit: 'min',
         upperBound: 'le',
         upperThreshold: 30,
-        tags: [ ...commonTags, 'MTTR' ],
+        tags: [...commonTags, 'MTTR'],
     },
     {
-        title: 'Time To Acknolwledge',
+        title: 'Time To Acknowledge',
         description: 'The percentage of high priority incidents that were acknowledged sufficiently fast.',
         eventUnit: 'SEV1 incidents',
         metricName: 'time_to_acknowledge',
         metricUnit: 'min',
         upperBound: 'le',
         upperThreshold: 5,
-        tags: [ ...commonTags, 'MTTA' ],
+        tags: [...commonTags, 'MTTA'],
     },
 ]
