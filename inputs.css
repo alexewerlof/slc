@@ -17,7 +17,7 @@ fieldset fieldset {
     margin: var(--gap);
 }
 
-input[type=range] {
+input[type='range'] {
     --webkit-appearance: none;
     appearance: none;
     width: 100%;
@@ -28,19 +28,19 @@ input[type=range] {
     box-shadow: 0 0 var(--gap) var(--bthick) var(--background-darker);
 }
 
-input[type=range]::-webkit-slider-runnable-track {
+input[type='range']::-webkit-slider-runnable-track {
     border: var(--bthick) solid var(--ui-border);
     transition: border-color var(--animation-speed) ease-in-out;
     background-color: var(--background-darker);
     height: 100%;
 }
 
-input[type=range]:hover::-webkit-slider-runnable-track,
-input[type=range]:focus::-webkit-slider-runnable-track {
+input[type='range']:hover::-webkit-slider-runnable-track,
+input[type='range']:focus::-webkit-slider-runnable-track {
     border-color: var(--secondary-color);
 }
 
-input[type=range]::-webkit-slider-thumb {
+input[type='range']::-webkit-slider-thumb {
     --webkit-appearance: none;
     appearance: none;
     width: 0.2em;
@@ -49,13 +49,13 @@ input[type=range]::-webkit-slider-thumb {
     transition: height var(--animation-speed) ease-in-out, margin-top var(--animation-speed) ease-in-out;
 }
 
-input[type=range]:hover::-webkit-slider-thumb,
-input[type=range]:focus::-webkit-slider-thumb {
+input[type='range']:hover::-webkit-slider-thumb,
+input[type='range']:focus::-webkit-slider-thumb {
     margin-top: -0.5em;
     height: 200%;
 }
 
-input[type=search], input[type=text], input[type=number], select, textarea {
+input[type='search'], input[type='text'], input[type='number'], select, textarea {
     padding: var(--gap);
     font-family: inherit;
     font-size: inherit;
@@ -69,21 +69,32 @@ input[type=search], input[type=text], input[type=number], select, textarea {
     transition: border-color var(--animation-speed) ease-in-out;
 }
 
-input[type=search]:hover, input[type=text]:hover, input[type=number]:hover, select:hover, textarea:hover,
-table input[type=search], table input[type=text], table input[type=number], table select, table textarea {
+input[type='search']:hover,
+input[type='text']:hover,
+input[type='number']:hover,
+select:hover,
+textarea:hover,
+table input[type='search'],
+table input[type='text'],
+table input[type='number'],
+table select,
+table textarea {
     border-color: var(--secondary-color);
 }
 
-
-input[type=search]:focus, input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
+input[type='search']:focus, input[type='text']:focus, input[type='number']:focus, select:focus, textarea:focus {
     border-color: var(--secondary-color);
 }
 
-input[type=search]:focus-visible, [type=text]:focus-visible, input[type=number]:focus-visible, select:focus-visible, textarea:focus-visible {
+input[type='search']:focus-visible,
+[type='text']:focus-visible,
+input[type='number']:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
     outline: none;
 }
 
-input[type=radio] {
+input[type='radio'] {
     --webkit-appearance: none;
     --moz-appearance: none;
     appearance: none;
@@ -96,16 +107,16 @@ input[type=radio] {
     transition: background-color var(--animation-speed) ease-in-out;
 }
 
-input[type=radio]:disabled {
+input[type='radio']:disabled {
     border-color: var(--disabled-color);
     cursor: not-allowed;
 }
 
-input[type=radio]:checked {
+input[type='radio']:checked {
     background-color: var(--secondary-color);
 }
 
-input[type=checkbox]:disabled {
+input[type='checkbox']:disabled {
     cursor: not-allowed;
 }
 
@@ -115,7 +126,7 @@ textarea {
 
 .button-bar {
     display: flex;
-    justify-content: left;
+    justify-content: right;
     margin: var(--gap);
 }
 
@@ -124,6 +135,16 @@ button + button {
 }
 
 button {
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    border: var(--bthick) solid currentColor;
+    border-radius: var(--bradius);
+    cursor: pointer;
+    transition: background-color var(--animation-speed);
+    padding: var(--gap) var(--gap2);
+}
+
+a.button {
     background-color: var(--secondary-color);
     color: var(--background-color);
     border: var(--bthick) solid currentColor;
@@ -170,8 +191,8 @@ a, a:hover, a:active {
 
 .input-button-pair {
     display: flex;
-  }
-  
+}
+
 .input-button-pair input {
     flex: 1;
     border-top-right-radius: 0;
@@ -179,7 +200,7 @@ a, a:hover, a:active {
     margin: 0;
     border-right: none;
 }
-  
+
 .input-button-pair button {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;

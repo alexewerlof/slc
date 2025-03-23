@@ -1,159 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
+        <script>
+            window.dataLayer = window.dataLayer || []
+            function gtag() {
+                dataLayer.push(arguments)
+            }
+            gtag('js', new Date())
+            gtag('config', 'G-J0S6RM2D7G')
+        </script>
 
-<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date()); gtag('config', 'G-J0S6RM2D7G');
-    </script>
+        <meta charset="UTF-8">
+        <meta name="theme-color" content="#FFBC52">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="index.css">
+        <meta name="description" content="A simple Service Level Calculator that complies with Google SRE books.">
+        <meta property="og:title" content="Service Level Calculator">
+        <meta
+            property="og:description"
+            content="A simple Service Level Calculator that complies with Google SRE books."
+        >
+        <meta property="og:image" content="https://slc.alexewerlof.com/img/icon.png">
+        <meta property="og:url" content="https://slc.alexewerlof.com">
+        <meta property="og:type" content="website">
+        <link rel="icon" type="image/svg" href="img/icon.svg">
+        <title>Service Level Calculator</title>
+    </head>
 
-    <meta charset="UTF-8">
-    <meta name="theme-color" content="#FFBC52">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style.css">
-    <meta name="description" content="A simple Service Level Calculator that complies with Google SRE books.">
-    <meta property="og:title" content="Service Level Calculator">
-    <meta property="og:description" content="A simple Service Level Calculator that complies with Google SRE books.">
-    <meta property="og:image" content="https://slc.alexewerlof.com/img/icon.png">
-    <meta property="og:url" content="https://slc.alexewerlof.com">
-    <meta property="og:type" content="website">
-    <link rel="icon" type="image/svg" href="img/icon.svg">
-    <title>Service Level Calculator</title>
-</head>
+    <body>
+        <noscript>
+            <p>This web application requires JavaScript to work.</p>
+        </noscript>
 
-<body>
-    <noscript>
-        <p>This web application requires JavaScript to work.</p>
-    </noscript>
-
-    <div id="app" v-cloak>
-        <div class="container">
+        <div id="app" v-cloak>
             <hero-component file-name="subtle-prism.svg">
                 <article>
                     <section>
-                        <img src="/img/icon.svg" width="300">
-                        <h1>Master Service Reliability With Confidence</h1>
-                        <p>
-                            Transform how your engineering teams identify meaningful SLIs, set reasonable SLOs,
-                            and build a culture of accountability.
-                        </p>
-                        <button class="button--large button--cta">Try It Free →</button>
+                        <div class="container">
+                            <div class="app-logo">
+                                <img src="/img/icon.svg" width="300">
+                            </div>
+                            <h2>Master Service Reliability With Confidence</h2>
+                            <ul class="benefit-list">
+                                <li>Transform how your engineering teams identify meaningful SLIs</li>
+                                <li>Set reasonable SLOs and tie them to business objectives</li>
+                                <li>Fine tune alerts that matter while reducing alert fatigue</li>
+                                <li>Build a culture of accountability and ownership</li>
+                                <li>Learn complex concepts with interactive diagrams and ample help and articles</li>
+                            </ul>
+                            <div class="button-bar">
+                                <button class="button--large button--cta" @click="gotoApp('calculator', 'hero_cta')">
+                                    Try It Free →
+                                </button>
+                            </div>
+                        </div>
                     </section>
                 </article>
             </hero-component>
 
-            <article>
+            <article class="container">
                 <section>
-                    <h2>Your Path to Service Level Excellence</h2>
+                    <h2>Apps</h2>
                     <p>
-                        In today's digital landscape, reliability isn't just a technical metric—it's a business imperative. SLO
-                        Navigator empowers engineering teams and leaders to speak the same language when it comes to service
-                        reliability.
+                        This site is the landing page for a suit of open source apps that improves your understanding
+                        and implementation of Service Levels as a tool to measure and improve reliability.
                     </p>
                 </section>
             </article>
 
-            <article>
-                <section>
-                    <h2>Why Engineering Leaders Choose SLO Navigator</h2>
-                    <p>
-                        "SLO Navigator helped us transform abstract reliability concepts into concrete, actionable metrics
-                        across our entire engineering organization."
-                        — Engineering Director at a Fortune 500 Company
-                        [Top tech companies' logos]
-                    </p>
-                </section>
-            </article>
-            
-            <article class="stretch">
+            <article class="container stretch">
                 <section class="surface">
-                    <h2>SLO Calculator</h2>
+                    <h2>Calculator</h2>
                     <p>
-                        Convert metrics to actionable insights
-                        Easily transform your metrics into Service Level Indicators, create intelligent alerting rules based on
-                        SLOs, and visualize error budgets with intuitive diagrams.
+                        The calculator takes the guesswork out of setting reasonable SLOs. It also helps you save your
+                        work in JSON for offline analysis or load it for tweaking in a slick UI.
                     </p>
-                    <button>Calculate SLOs →</button>
+                    <ul>
+                        <li>Convert metrics to SLIs</li>
+                        <li>Fine tune SLOs</li>
+                        <li>See the alerting rules tied to those SLOs</li>
+                    </ul>
+                    <button @click="gotoApp('calculator', 'landing_panel')">Calculate SLOs →</button>
                 </section>
                 <section class="surface">
                     <h2>Uptime Visualizer</h2>
+                    <p>
+                        This is a more advanced version of what you get from other tools with visualizations and
+                        flexibility to tweak your timeslices.
+                    </p>
                     <ul>
                         <li>Model uptime scenarios in real-time</li>
                         <li>Interactively model different reliability scenarios with our dynamic uptime calculator.</li>
-                        <li>Make informed decisions about appropriate availability targets for your specific service needs.</li>
+                        <li>
+                            Make informed decisions about appropriate availability targets for your specific service
+                            needs.
+                        </li>
                     </ul>
-                    <button>Visualize Uptime →</button>
+                    <button @click="gotoApp('uptime', 'landing_panel')">Visualize Uptime →</button>
                 </section>
                 <section class="surface">
-                    <h2>Powerful Features for Reliability Engineering</h2>
+                    <h2>Workshop</h2>
+                    <p>
+                        After running these workshops for tens of teams and tweaking it to perfection, I've created a
+                        tool that eliminates me from the loop using AI.
+                    </p>
                     <ul>
                         <li>Interactive Workshop Tool</li>
-                        <li>Find meaningful SLIs that actually matter</li>
-                        <li>Transform abstract concepts into measurable indicators with our guided workshop approach.</li>
-                        <li>Collaborate with your team to identify the metrics that truly represent your service quality.</li>
+                        <li>Identify services and business risks</li>
+                        <li>
+                            Find meaningful reliability metrics that actually matter to your consumers, stakeholders,
+                            and business continuity
+                        </li>
                     </ul>
-                    <button>Try Workshop →</button>
+                    <button disabled>Try Workshop →</button>
                 </section>
             </article>
 
-            <article>
+            <article class="container">
                 <section>
-                    
-                    <h2>Built for Engineering Leaders, Loved by Teams</h2>
-                    <p>SLO Navigator bridges the gap between technical metrics and business outcomes, helping:</p>
-                    <ul>
-                        <li>Engineering Leaders: Foster a culture of accountability and data-driven decisions</li>
-                        <li>DevOps & SRE Teams: Identify meaningful metrics and set reasonable expectations</li>
-                        <li>CTOs & Technical Executives: Implement consistent reliability standards across all services</li>
-                    </ul>
-                    
-                    
-                    <h2>How It Works</h2>
-                    
-                    <ol>
-                        <li>Define your service boundaries and critical user journeys</li>
-                        <li>Discover meaningful indicators that align with business objectives</li>
-                        <li>Design appropriate SLOs that balance innovation and reliability</li>
-                        <li>Deploy alerting rules based on error budgets</li>
-                    </ol>
-                    
-                    
-                    <h2>Seamless Integration Into Your Workflow</h2>
-                    <ul>
-                        <li><em>Export Configuration:</em> Save your work as YAML or JSON for offline processing</li>
-                        <li><em>Import Existing Data:</em> Quickly upload your current configurations</li>
-                        <li><em>Extensive Resources:</em> Access our library of educational content explaining complex topics in
-                            approachable ways</li>
-                    </ul>
-                        
-                    <button>Start Using SLO Navigator →</button>
-                        
-                    <h2>Knowledge Hub</h2>
-                    
-                    <p>Demystify complex reliability concepts with our extensive library of educational resources.</p>
-                    <ul>
-                        <li>Understanding Error Budgets</li>
-                        <li>The Art of Setting Realistic SLOs</li>
-                        <li>SLIs That Actually Matter to Users</li>
-                    </ul>
-                    <button>More Resources →</button>
-
+                    <h2>Price</h2>
+                    <p>
+                        We have three payment plans<span class="star"></span>:
+                    </p>
                     <div class="surface">
-                        <h2>Start Improving Service Reliability Today</h2>
-                        <p>Take the guesswork out of reliability engineering with our completely free tools.</p>
-                        <button>Try SLO Navigator Free →</button>
+                        <table class="price-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Beginner</th>
+                                    <th>Pro</th>
+                                    <th>Enterprise</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>SLIs</td>
+                                    <td>5</td>
+                                    <td>15</td>
+                                    <td rowspan="6">Call Sales<span class="star"></span></td>
+                                </tr>
+                                <tr>
+                                    <th>SLOs</th>
+                                    <td>7</td>
+                                    <td>30</td>
+                                </tr>
+                                <tr>
+                                    <th>Alerting rules</th>
+                                    <td>12</td>
+                                    <td>50</td>
+                                </tr>
+                                <tr>
+                                    <th>Knowledge base</th>
+                                    <td>None</td>
+                                    <td>Limited</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        OpenSLO support
+                                        <span class="subtle-hint">(upcoming)</span>
+                                    </th>
+                                    <td>-</td>
+                                    <td>5/mo</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        AI
+                                        <span class="subtle-hint">(upcoming)</span>
+                                    </th>
+                                    <td>-</td>
+                                    <td>100 Tokens</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+                    <p>
+                        <span class="star"> Just joking! 😄 Everything is free as in beer and speech.</span>
+                    </p>
+                    <p>
+                        The <ext-link href="https://github.com/alexewerlof/slc">source code</ext-link> is also available
+                        for security audit or hosting from your own local infrastructure.
+                    </p>
+
+                    <h2>Support My Work</h2>
+                    <p>
+                        Designing, creating and maintaining these apps has taken
+                        <ext-link href="https://github.com/alexewerlof/slc/graphs/contributors"
+                        >hundreds of hours since July 2023</ext-link>. I pull these hours from my private time,
+                        weekends, and sometimes take vacation days to work on them. It also costs money to serve this
+                        app to you and I pay that from my own pocket. No complains though. I do my little part in
+                        lifting our community.
+                    </p>
+                    <p>
+                        To support my work, you can subscribe to
+                        <ext-link href="https://blog.alexewerlof.com/">my newsletter</ext-link>. This also gives you
+                        full access to my online book on this topic:
+                        <ext-link href="https://blog.alexewerlof.com/p/rem">Reliability Engineering Mindset</ext-link>.
+                        <br />
+                        <em>
+                            Right now, you can get 20% off via
+                            <ext-link href="https://blog.alexewerlof.com/protipsdiscount">this link</ext-link>. If you
+                            feel like it, you can save 50% using a
+                            <ext-link href="https://blog.alexewerlof.com/d8f4bfde">group subscription</ext-link>.
+                        </em>
+                    </p>
                 </section>
             </article>
 
-        <footer-component></footer-component>
-        <feedback-blob-component prefill="SLC"></feedback-blob-component>
-    </div>
+            <article class="container">
+                <section>
+                    <img
+                        src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3452d780-9929-4d4e-8f33-424fac497169_4300x4500.png"
+                        width="100%"
+                    >
+                </section>
+            </article>
 
-    <script type="module" src="index.js" defer async></script>
-</body>
+            <footer-component></footer-component>
+            <feedback-blob-component prefill="SLC"></feedback-blob-component>
+        </div>
 
+        <script type="module" src="index.js" defer async></script>
+    </body>
 </html>

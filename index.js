@@ -1,8 +1,9 @@
-import { createApp } from "../vendor/vue.js";
-import HeaderComponent from "../components/header.js";
-import FooterComponent from "../components/footer.js";
-import ExtLink from "../components/ext-link.js";
-import HeroComponent from "../components/hero.js";
+import { createApp } from './vendor/vue.js'
+import HeaderComponent from './components/header.js'
+import FooterComponent from './components/footer.js'
+import ExtLink from './components/ext-link.js'
+import HeroComponent from './components/hero.js'
+import { addUTM } from './lib/utm.js'
 
 export const app = createApp({
     components: {
@@ -11,16 +12,30 @@ export const app = createApp({
         ExtLink,
         HeroComponent,
     },
-    data() {},
+    methods: {
+        gotoApp(appName, term) {
+            appName = appName.toLowerCase()
+            if (!['calculator', 'uptime'].includes(appName)) {
+                throw new RangeError(`Unknown app: ${appName}`)
+            }
+            const appURL = new URL(`/app/${appName}/index.html`, globalThis.location.origin)
+            const appURLWithUTM = addUTM(appURL, {
+                source: 'web',
+                medium: 'web',
+                campaign: 'landing_page',
+                term,
+            })
+            globalThis.location.href = appURLWithUTM.toString()
+        },
+    },
     mounted() {
-        const url = new URL(window.location.href);
+        const url = new URL(globalThis.location.href)
         // Previously the calculator was sitting at the root of the site. If urlVer is present, redirect to the calculator
-        if (url.searchParams.has("urlVer")) {
-            const { origin, search } = url;
-            window.location.href =
-                `${origin}/app/calculator/index.html${search}`;
+        if (url.searchParams.has('urlVer')) {
+            const { origin, search } = url
+            globalThis.location = `${origin}/app/calculator/index.html${search}`
         }
     },
-});
+})
 
-app.mount("#app");
+app.mount('#app')

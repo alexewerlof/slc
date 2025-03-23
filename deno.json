@@ -1,0 +1,13 @@
+{
+    "fmt": {
+        "exclude": [
+            "vendor/"
+        ],
+        "indentWidth": 4,
+        "lineWidth": 120,
+        "proseWrap": "always",
+        "semiColons": false,
+        "singleQuote": true,
+        "useTabs": false
+    }
+}

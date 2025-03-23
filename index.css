@@ -1,0 +1,32 @@
+html, body {
+    font-size: 22px;
+}
+
+ul.benefit-list {
+    list-style: '✓';
+}
+
+.benefit-list li {
+    padding: 0.3em;
+}
+
+.app-logo {
+    text-align: center;
+}
+
+.price-table {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.price-table th:not(:first-child) {
+    width: 18%;
+}
+
+.star {
+    color: var(--brand-red);
+}
+
+.star::before {
+    content: '*';
+}
