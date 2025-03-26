@@ -1,6 +1,13 @@
 {
     "configurations": [
         {
+            "name": "Debug in Chrome",
+            "request": "launch",
+            "type": "chrome",
+            "url": "http://localhost:5501",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
             "type": "pwa-node",
             "request": "launch",
             "name": "Debug Deno Test",
