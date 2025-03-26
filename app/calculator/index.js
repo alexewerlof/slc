@@ -1,23 +1,17 @@
-import { createApp } from "../../vendor/vue.js";
-import { config } from "../../config.js";
-import ExtLink from "../../components/ext-link.js";
-import FeedbackBlobComponent from "../../components/feedback-blob.js";
-import HeaderComponent from "../../components/header.js";
-import FooterComponent from "../../components/footer.js";
-import CookiePopupComponent from "../../components/cookie-popup.js";
-import HelpComponent from "../../components/help.js";
-import { percentToRatio } from "../../lib/math.js";
-import {
-    boundCaption,
-    entity2symbol,
-    hasComparators,
-    numL10n,
-    percL10n,
-} from "../../lib/fmt.js";
-import { stateToUrl } from "../../lib/share.js";
-import CalculatorViewComponent from "../../views/calculator-view.js";
-import CodeBlockComponent from "../../components/code-block.js";
-import { Calculator } from "../../models/calculator.js";
+import { createApp } from '../../vendor/vue.js'
+import { config } from '../../config.js'
+import ExtLink from '../../components/ext-link.js'
+import FeedbackBlobComponent from '../../components/feedback-blob.js'
+import HeaderComponent from '../../components/header.js'
+import FooterComponent from '../../components/footer.js'
+import CookiePopupComponent from '../../components/cookie-popup.js'
+import HelpComponent from '../../components/help.js'
+import { percentToRatio } from '../../lib/math.js'
+import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '../../lib/fmt.js'
+import { stateToUrl } from '../../lib/share.js'
+import CalculatorViewComponent from '../../views/calculator-view.js'
+import CodeBlockComponent from '../../components/code-block.js'
+import { Calculator } from '../../models/calculator.js'
 
 export const app = createApp({
     data() {
@@ -30,41 +24,42 @@ export const app = createApp({
             // Show the announcement banner
             showAnnouncement: true,
             // The text shown in the toast notification
-            toastCaption: "",
+            toastCaption: '',
             // The calculator view state
             calculator: Calculator.load({
                 urlVer: 3,
                 state: {
                     indicators: [{
-                        "metricName": "response_latency",
-                        "metricUnit": "ms",
-                        "expectedDailyEvents": 10000,
-                        "lowerBound": "gt",
-                        "upperBound": "le",
-                        "timeslice": 60,
-                        "objectives": [{
-                            "target": 99,
-                            "windowDays": 30,
-                            "lowerThreshold": 5,
-                            "upperThreshold": 2000,
-                            "alerts": [{
-                                "burnRate": 6,
-                                "longWindowPerc": 17.6,
+                        'metricName': 'response_latency1',
+                        'metricUnit': 'ms',
+                        'expectedDailyEvents': 8000,
+                        'lowerBound': 'gt',
+                        'upperBound': 'le',
+                        'timeslice': 60,
+                        'objectives': [{
+                            'target': 99,
+                            'windowDays': 30,
+                            'lowerThreshold': 5,
+                            'upperThreshold': 2000,
+                            'alerts': [{
+                                'burnRate': 6,
+                                'longWindowPerc': 17.6,
                             }],
                         }],
                     }],
                 },
             }),
-        };
+            state: 'Press update',
+        }
     },
     mounted() {
         this.$nextTick(() => {
-            const hash = window.location.hash;
+            const hash = window.location.hash
             if (hash) {
-                const element = document.querySelector(hash);
-                if (element) element.scrollIntoView();
+                const element = document.querySelector(hash)
+                if (element) element.scrollIntoView()
             }
-        });
+        })
     },
     components: {
         CalculatorViewComponent,
@@ -83,6 +78,9 @@ export const app = createApp({
         numL10n,
         percentToRatio,
         percL10n,
+        updateState() {
+            this.state = this.calculator.save()
+        },
     },
     computed: {
         shareUrl() {
@@ -90,14 +88,14 @@ export const app = createApp({
                 const url = new URL(
                     window.location.pathname,
                     window.location.origin,
-                );
-                return stateToUrl(url, this.calculator.save()).toString();
+                )
+                return stateToUrl(url, this.calculator.save()).toString()
             } catch (e) {
-                console.error("Could not create shareurl", e);
-                return null;
+                console.error('Could not create shareurl', e)
+                return null
             }
         },
     },
-});
+})
 
-app.mount("#app");
+app.mount('#app')

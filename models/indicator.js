@@ -64,6 +64,7 @@ export class Indicator {
     get isRanged() {
         return Boolean(this.lowerBound) && Boolean(this.upperBound)
     }
+
     addObjective(objective) {
         if (!isInstance(objective, Objective)) {
             throw new TypeError(`Indicator.addObjective(): Expected an instance of Objective. Got ${objective}`)
@@ -115,7 +116,7 @@ export class Indicator {
             ret.eventUnit = this.eventUnit
         }
         if (this.objectives.length) {
-            ret.objectives = this.objectives.map(obj => obj.save())
+            ret.objectives = this.objectives.map((obj) => obj.save())
         }
         return ret
     }
@@ -144,20 +145,24 @@ export class Indicator {
 
         if (isStr(data.lowerBound)) {
             if (!config.lowerBound.possibleValues.includes(data.lowerBound)) {
-                throw new RangeError(`load(): "lowerBound" must be one of ${config.lowerBound.possibleValues}. Got ${data.lowerBound}`)
+                throw new RangeError(
+                    `load(): "lowerBound" must be one of ${config.lowerBound.possibleValues}. Got ${data.lowerBound}`,
+                )
             }
             indicator.lowerBound = data.lowerBound
         }
 
         if (isStr(data.upperBound)) {
             if (!config.upperBound.possibleValues.includes(data.upperBound)) {
-                throw new RangeError(`load(): "upperBound" must be one of ${config.upperBound.possibleValues}. Got ${data.upperBound}`)
+                throw new RangeError(
+                    `load(): "upperBound" must be one of ${config.upperBound.possibleValues}. Got ${data.upperBound}`,
+                )
             }
             indicator.upperBound = data.upperBound
         }
 
         if (isPosInt(data.timeslice)) {
-            indicator.isTimeBased = data.isTimeBased
+            indicator.isTimeBased = true
             indicator.timeslice = data.timeslice
         } else {
             indicator.isTimeBased = false
@@ -175,5 +180,15 @@ export class Indicator {
         }
 
         return indicator
+    }
+
+    toString() {
+        if (this.title.trim()) {
+            return this.title
+        }
+        if (this.metricName.trim()) {
+            return this.metricName
+        }
+        return 'Indicator'
     }
 }

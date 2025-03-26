@@ -1,5 +1,6 @@
 import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
+import { percL10n } from '../lib/fmt.js'
 import { toFixed } from '../lib/math.js'
 import { inRange, isInstance, isNum, isObj } from '../lib/validation.js'
 import { Objective } from './objective.js'
@@ -15,7 +16,7 @@ export class Alert {
     useShortWindow = false
     // As a percentage of the error budget
     constructor(objective) {
-        if(!isInstance(objective, Objective)) {
+        if (!isInstance(objective, Objective)) {
             throw new TypeError(`Expected an instance of Objective. Got ${objective}`)
         }
         this.objective = objective
@@ -90,5 +91,9 @@ export class Alert {
         }
 
         return alert
+    }
+
+    toString() {
+        return `${percL10n(this.longWindowPerc)} at ${this.burnRate}x`
     }
 }

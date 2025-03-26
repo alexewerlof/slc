@@ -1,69 +1,89 @@
 import { Indicator } from './indicator.js'
+import { nextIndex } from '../lib/math.js'
 
 export class Calculator {
     indicators = []
-    _indicatorIdx = -1
-    _objectiveIdx = -1
-    _alertIdx = -1
+    indicatorIdx = -1
+    objectiveIdx = -1
+    alertIdx = -1
     constructor() {
-        this.addNewIndicator()
-        this._indicatorIdx = 0
-        this.indicator.addNewObjective()
-        this._objectiveIdx = 0
-        this.objective.addNewAlert()
-        this._alertIdx = 0
     }
     get indicator() {
-        return this.indicators[this._indicatorIdx]
+        return this.indicators[this.indicatorIdx]
     }
     set indicator(indicator) {
         const idx = this.indicators.indexOf(indicator)
         if (idx === -1) {
-            throw new RangeError(`UptimeApp.selectedIndicator(): Indicator not found: ${indicator}`)
+            throw new RangeError(`Indicator not found: ${indicator}`)
         }
-        this._indicatorIdx = idx
+        this.indicatorIdx = idx
     }
     removeSelectedIndicator() {
-        if (this._indicatorIdx === -1) {
-            throw new RangeError(`UptimeApp.removeIndicator(): Indicator not found: ${indicator}`)
-        }
-        this.indicators.splice(this._indicatorIdx, 1)
-        this._selectedIndicatorIdx = nextIndex(this.indicators, idx)
+        this.indicatorIdx = nextIndex(this.indicators, this.indicatorIdx)
     }
     addIndicator(indicator) {
-        indicator.app = this
         this.indicators.push(indicator)
+        this.indicatorIdx = this.indicators.length - 1
+        this.objectiveIdx = -1
+        this.alertIdx = -1
         return indicator
     }
     addNewIndicator() {
-        const newIndicator = new Indicator(this)
-        this.addIndicator(newIndicator)
-        this._selectedIndicatorIdx = this.indicators.length - 1
-        return newIndicator
+        return this.addIndicator(new Indicator(this))
+    }
+    removeSelectedObjective() {
+        this.objectiveIdx = nextIndex(this.objectives, this.objectiveIdx)
+    }
+    removeSelectedAlert() {
+        this.alertIdx = nextIndex(this.alerts, this.alertIdx)
+    }
+    addNewObjective() {
+        const ret = this.indicator?.addNewObjective()
+        this.objectiveIdx = this.objectives.length - 1
+        this.alertIdx = -1
+        return ret
+    }
+    addNewAlert() {
+        const ret = this.objective?.addNewAlert()
+        this.alertIdx = this.alerts.length - 1
+        return ret
     }
     get objectives() {
-        return this.indicator.objectives
+        return this.indicator?.objectives
     }
     get objective() {
-        return this.objectives[this._objectiveIdx]
+        return this.objectives?.[this.objectiveIdx]
     }
     get alerts() {
         return this.objective?.alerts
     }
     get alert() {
-        return this.objective?.alerts[this._alertIdx]
+        return this.objective?.alerts?.[this.alertIdx]
     }
     save() {
         // Save the calculator to a file
-        return this.indicators.map(indicator => indicator.save())
+        return this.indicators.map((indicator) => indicator.save())
     }
     static load(data) {
         const ret = new Calculator()
         if (!Array.isArray(data?.state?.indicators)) {
-            throw new TypeError(`Expected an array of indicators in the state. State: ${JSON.stringify(state, null, 2)}, ${JSON.stringify(state.indicators, null, 2)}`)
+            throw new TypeError(
+                `Expected an array of indicators in the state. State: ${JSON.stringify(state, null, 2)}, ${
+                    JSON.stringify(state.indicators, null, 2)
+                }`,
+            )
         }
         for (const indicatorData of data.state.indicators) {
             ret.addIndicator(Indicator.load(indicatorData))
+        }
+        if (ret.indicators.length) {
+            ret.indicatorIdx = 0
+            if (ret.indicator.objectives.length) {
+                ret.objectiveIdx = 0
+                if (ret.objective.alerts.length) {
+                    ret.alertIdx = 0
+                }
+            }
         }
         return ret
     }

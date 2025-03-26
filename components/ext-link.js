@@ -24,8 +24,15 @@ export default {
         },
     },
     computed: {
+        hrefUrl() {
+            try {
+                return new URL(this.href)
+            } catch (error) {
+                return new URL(this.href, globalThis.location.origin)
+            }
+        },
         enrichedHref() {
-            const ret = addUTM(this.href, {
+            const ret = addUTM(this.hrefUrl, {
                 source: this.source,
                 medium: this.medium,
                 campaign: this.campaign,

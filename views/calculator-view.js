@@ -15,13 +15,15 @@ import SLFractionComponent from '../components/sl-fraction.js'
 import CodeBlockComponent from '../components/code-block.js'
 import { Calculator } from '../models/calculator.js'
 import { percentToRatio } from '../lib/math.js'
+import { isInstance } from '../lib/validation.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
-    data() {
-        return {
-            calculator: new Calculator(),
-        }
+    props: {
+        calculator: {
+            type: Object,
+            validator: (value) => isInstance(value, Calculator),
+        },
     },
     computed: {
         config() {

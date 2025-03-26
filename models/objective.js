@@ -1,5 +1,6 @@
 import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
+import { percL10n } from '../lib/fmt.js'
 import { clamp, percent, toFixed } from '../lib/math.js'
 import { daysToSeconds, secondsToDays } from '../lib/time.js'
 import { inRange, isInstance, isNum, isObj, isPosInt } from '../lib/validation.js'
@@ -17,7 +18,7 @@ export class Objective {
     // Upper bound threshold
     _upperThreshold = config.upperThreshold.default
     constructor(indicator) {
-        if (!isInstance(indicator, Indicator )) {
+        if (!isInstance(indicator, Indicator)) {
             throw new TypeError(`Expected an instance of Indicator. Got ${indicator}`)
         }
         this.indicator = indicator
@@ -52,14 +53,18 @@ export class Objective {
     }
     set lowerThreshold(value) {
         const { min, max } = config.lowerThreshold
-        this._lowerThreshold = inRange(value, min, Math.min(max, this.upperThreshold)) ? value : config.lowerThreshold.default
+        this._lowerThreshold = inRange(value, min, Math.min(max, this.upperThreshold))
+            ? value
+            : config.lowerThreshold.default
     }
     get upperThreshold() {
         return this._upperThreshold
     }
     set upperThreshold(value) {
         const { min, max } = config.upperThreshold
-        this._upperThreshold = inRange(value, Math.max(min, this.lowerThreshold), max) ? value : config.upperThreshold.default
+        this._upperThreshold = inRange(value, Math.max(min, this.lowerThreshold), max)
+            ? value
+            : config.upperThreshold.default
     }
     get lowerThresholdMax() {
         return this.indicator.upperBound ? this.upperThreshold : config.lowerThreshold.max
@@ -122,7 +127,7 @@ export class Objective {
         const newGoodEventCount = this.validEventCount - newBadEventCount
         const newSLO = toFixed(newGoodEventCount / this.validEventCount * 100)
         this.target = clamp(newSLO, config.slo.min, config.slo.max)
-    }    
+    }
     get failureWindow() {
         const { sec } = this.window
         return new FailureWindow(this.indicator, sec, this.badEventCount)
@@ -140,7 +145,7 @@ export class Objective {
             ret.upperThreshold = this.upperThreshold
         }
         if (this.alerts.length) {
-            ret.alerts = this.alerts.map(alert => alert.save())
+            ret.alerts = this.alerts.map((alert) => alert.save())
         }
         return ret
     }
@@ -177,6 +182,10 @@ export class Objective {
             }
         }
 
-        return objective;
+        return objective
+    }
+
+    toString() {
+        return `${percL10n(this.target)} over ${this.windowDays} days`
     }
 }

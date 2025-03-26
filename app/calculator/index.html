@@ -1,69 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
+        <script>
+            window.dataLayer = window.dataLayer || []
+            function gtag() {
+                dataLayer.push(arguments)
+            }
+            gtag('js', new Date())
+            gtag('config', 'G-J0S6RM2D7G')
+        </script>
 
-<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());gtag('config', 'G-J0S6RM2D7G');
-    </script>
+        <meta charset="UTF-8">
+        <meta name="theme-color" content="#FFBC52">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../style.css">
+        <meta name="description" content="A simple Service Level Calculator that complies with Google SRE books.">
+        <meta property="og:title" content="Service Level Calculator">
+        <meta
+            property="og:description"
+            content="A simple Service Level Calculator that complies with Google SRE books."
+        >
+        <meta property="og:image" content="https://slc.alexewerlof.com/img/icon.png">
+        <meta property="og:url" content="https://slc.alexewerlof.com">
+        <meta property="og:type" content="website">
+        <link rel="icon" type="image/svg" href="/img/icon.svg">
+        <link rel="manifest" href="manifest.json">
+        <title>Service Level Calculator</title>
+    </head>
 
-    <meta charset="UTF-8">
-    <meta name="theme-color" content="#FFBC52">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../style.css">
-    <meta name="description" content="A simple Service Level Calculator that complies with Google SRE books.">
-    <meta property="og:title" content="Service Level Calculator">
-    <meta property="og:description" content="A simple Service Level Calculator that complies with Google SRE books.">
-    <meta property="og:image" content="https://slc.alexewerlof.com/img/icon.png">
-    <meta property="og:url" content="https://slc.alexewerlof.com">
-    <meta property="og:type" content="website">
-    <link rel="icon" type="image/svg" href="/img/icon.svg">
-    <link rel="manifest" href="manifest.json">
-    <title>Service Level Calculator</title>
-</head>
+    <body>
+        <noscript>
+            <p>This web application requires JavaScript to work.</p>
+        </noscript>
 
-<body>
-    <noscript>
-        <p>This web application requires JavaScript to work.</p>
-    </noscript>
+        <div id="app" v-cloak>
+            <transition>
+                <div class="announcement" v-if="showAnnouncement">
+                    <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
+                    <button class="button--small" @click="showAnnouncement = false" type="button">Dismiss</button>
+                </div>
+            </transition>
+            <header-component></header-component>
 
-    <div id="app" v-cloak>
-        <transition>
-            <div class="announcement" v-if="showAnnouncement">
-                <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
-                <button class="button--small" @click="showAnnouncement = false" type="button">Dismiss</button>
-            </div>
-        </transition>
-        <header-component></header-component>
+            <calculator-view-component :calculator="calculator"></calculator-view-component>
 
-        <calculator-view-component :calculator="calculator"></calculator-view-component>
+            <section v-if="shareUrl">
+                <h1 id="share-title">
+                    Share
+                    <help-component>
+                        <p>This app completely runs in the browser and has no backend.</p>
+                        <p>
+                            So all you have to do is to copy the following link. Whenever that link is clicked, it opens
+                            the app in the exact state when you copied it.
+                        </p>
+                    </help-component>
+                </h1>
+                <button @click="updateState">Update</button>
+                <code-block-component title="State">
+                    <pre>{{ state }}</pre>
+                </code-block-component>
+            </section>
 
-        <section v-if="shareUrl">
-            <h1 id="share-title">Share
-                <help-component
-                >
-                    <p>This app completely runs in the browser and has no backend.</p>
-                    <p>So all you have to do is to copy the following link. Whenever that link is clicked, it opens the app in the exact state when you copied it.</p>
-                </help-component>
-            </h1>
-            <code-block-component title="State">
-                <pre>{{ calculator.save() }}</pre>
-            </code-block-component>
-        </section>
+            <!-- Toast Notification -->
+            <div v-if="toastCaption" class="toast" @animationend="this.toastCaption = ''">{{ toastCaption }}</div>
 
-        <!-- Toast Notification -->
-        <div v-if="toastCaption" class="toast" @animationend="this.toastCaption = ''">{{ toastCaption }}</div>
+            <cookie-popup-component></cookie-popup-component>
 
-        <cookie-popup-component></cookie-popup-component>
+            <footer-component></footer-component>
+            <feedback-blob-component prefill="SLC"></feedback-blob-component>
+        </div>
 
-        <footer-component></footer-component>
-        <feedback-blob-component prefill="SLC"></feedback-blob-component>
-    </div>
-
-    <script type="module" src="index.js" defer async></script>
-</body>
-
+        <script type="module" src="index.js" defer async></script>
+    </body>
 </html>
