@@ -23,6 +23,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: auto 50vh;
+    line-height: 1.5;
 }
 
 .announcement {
@@ -110,7 +111,6 @@ td button {
     border: var(--bthick) solid var(--divider-color);
     padding: var(--gap2);
     border-radius: var(--bradius3);
-    box-shadow: inset 0 0 var(--gap) var(--bthick) var(--divider-color),
-        0 0 var(--gap2) var(--bthick) rgba(0,0,0);
+    box-shadow: inset 0 0 var(--gap) var(--bthick) var(--divider-color), 0 0 var(--gap2) var(--bthick) rgba(0, 0, 0);
     backdrop-filter: blur(var(--bradius));
 }
