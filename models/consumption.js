@@ -1,5 +1,5 @@
 import { icon } from '../lib/icons.js'
-import { metadataObj, crdObj } from '../lib/crd.js'
+import { crdObj, metadataObj } from '../lib/crd.js'
 import { isInstance } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
 
@@ -25,7 +25,7 @@ export class Consumption {
 
     get dependencyCount() {
         // TODO: this is not the most performant algorithm
-        return this.consumer.assessment.allFailures.filter(failure => failure.consumption === this).length
+        return this.consumer.assessment.allFailures.filter((failure) => failure.consumption === this).length
     }
 
     remove() {

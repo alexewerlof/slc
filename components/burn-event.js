@@ -23,7 +23,7 @@ export default {
         textLines: {
             type: Array,
             default: () => ['Missing textLines'],
-            validator: (value) => Array.isArray(value) && value.every(item => typeof item === 'string')
+            validator: (value) => Array.isArray(value) && value.every((item) => typeof item === 'string'),
         },
         thickness: {
             type: Number,
@@ -35,7 +35,7 @@ export default {
             return this.x < (this.width / 2)
         },
         textAnchor() {
-            return this.isTitleOnRight ? 'start': 'end'
+            return this.isTitleOnRight ? 'start' : 'end'
         },
         titleX() {
             return this.x + (this.isTitleOnRight ? titleDistance : -titleDistance)
@@ -53,13 +53,13 @@ export default {
         },
         lineStyle() {
             return {
-                stroke: `var(${ this.color })`,
+                stroke: `var(${this.color})`,
                 strokeWidth: `${this.thickness}px`,
             }
         },
         textStyle() {
             return {
-                fill: `var(${ this.color })`,
+                fill: `var(${this.color})`,
             }
         },
     },

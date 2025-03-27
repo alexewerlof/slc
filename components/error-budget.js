@@ -15,7 +15,7 @@ export default {
             return {
                 'grid-template-columns': `${this.objective.errorBudget}% auto`,
             }
-        }
+        },
     },
     methods: {
         numL10n,
@@ -25,6 +25,6 @@ export default {
         objective: {
             type: Object,
             validator: (value) => isObj(value),
-        }
+        },
     },
 }

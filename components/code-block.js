@@ -10,7 +10,7 @@ export default {
             try {
                 const textToCopy = this.$refs.codeRef.innerText
                 await navigator.clipboard.writeText(textToCopy)
-            } catch(err) {
+            } catch (err) {
                 // ignore
             }
         },

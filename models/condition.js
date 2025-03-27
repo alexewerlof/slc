@@ -32,18 +32,18 @@ export class Condition {
 
     get conditionObject() {
         switch (this.type) {
-        case 'boolean-true':
-            return {
-                eq: true
-            }
-        case 'boolean-false':
-            return {
-                eq: false
-            }
-        case 'numeric-point-EQ':
-            return {
-                eq: this.pointValue
-            }
+            case 'boolean-true':
+                return {
+                    eq: true,
+                }
+            case 'boolean-false':
+                return {
+                    eq: false,
+                }
+            case 'numeric-point-EQ':
+                return {
+                    eq: this.pointValue,
+                }
         }
     }
 
@@ -64,7 +64,7 @@ export class Condition {
 
         if (this.metric.isBoolean) {
             return {
-                eq: this.booleanValue
+                eq: this.booleanValue,
             }
         }
 

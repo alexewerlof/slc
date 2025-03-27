@@ -1,4 +1,4 @@
-import { metadataObj, crdObj } from '../lib/crd.js'
+import { crdObj, metadataObj } from '../lib/crd.js'
 import { isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { Consumption } from './consumption.js'
@@ -76,7 +76,7 @@ export class Consumer {
             displayName: this.displayName,
             description: this.description,
             type: this.type,
-            consumptions: this.consumptions.map(consumption => consumption.save())
+            consumptions: this.consumptions.map((consumption) => consumption.save()),
         }
     }
 

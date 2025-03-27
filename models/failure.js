@@ -33,7 +33,7 @@ export class Failure {
     }
 
     get metrics() {
-        return this.service.metrics.filter(metric => metric.isFailureLinked(this))
+        return this.service.metrics.filter((metric) => metric.isFailureLinked(this))
     }
 
     remove() {
@@ -78,7 +78,7 @@ export class Failure {
             failureObj.symptom,
             failureObj.consequence,
             failureObj.businessImpact,
-            failureObj.impactLevel
+            failureObj.impactLevel,
         )
         return failure
     }

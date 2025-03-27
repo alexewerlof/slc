@@ -13,12 +13,12 @@ export default {
     computed: {
         config() {
             return config
-        }
+        },
     },
     props: {
         consumer: {
             type: Object,
-            validator: v => isInstance(v, Consumer),
+            validator: (v) => isInstance(v, Consumer),
         },
     },
     methods: {

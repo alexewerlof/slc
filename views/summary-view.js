@@ -13,12 +13,12 @@ export default {
     computed: {
         config() {
             return config
-        }
+        },
     },
     props: {
         assessment: {
             type: Object,
-            validator: v => isInstance(v, Assessment),
+            validator: (v) => isInstance(v, Assessment),
         },
     },
     methods: {

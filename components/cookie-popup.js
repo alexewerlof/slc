@@ -22,21 +22,21 @@ export default {
     },
     mounted() {
         if (this.isVisible) {
-            this.$refs.cookieDialog.showModal(); // Use .show() for non-modal
+            this.$refs.cookieDialog.showModal() // Use .show() for non-modal
         }
     },
     methods: {
         hide() {
-            this.$refs.cookieDialog.close();
-            this.isVisible = false;
+            this.$refs.cookieDialog.close()
+            this.isVisible = false
             try {
                 localStorage.setItem(localStorageKeyName, 'false')
             } catch (e) {
                 // ignore
             }
-        }
+        },
     },
     components: {
         ExtLink,
-    }
+    },
 }

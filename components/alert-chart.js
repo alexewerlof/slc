@@ -14,7 +14,7 @@ export default {
                 right: 5,
                 top: 10,
                 bottom: 20,
-            }
+            },
         }
     },
     props: {
@@ -53,28 +53,28 @@ export default {
         errorBudgetTextLines() {
             const { failureWindow } = this.alert.objective
             return [
-                `${ failureWindow.eventCountL10n } ${ failureWindow.eventUnitNorm } failed`,
-                `in ${ failureWindow.humanTime }`,
+                `${failureWindow.eventCountL10n} ${failureWindow.eventUnitNorm} failed`,
+                `in ${failureWindow.humanTime}`,
             ]
         },
         longWindowTextLines() {
             const { longFailureWindow } = this.alert
             return [
-                `When at least ${ longFailureWindow.eventCountL10n } ${ longFailureWindow.eventUnitNorm } failed`,
-                `in the last ${ longFailureWindow.humanTime }`,
+                `When at least ${longFailureWindow.eventCountL10n} ${longFailureWindow.eventUnitNorm} failed`,
+                `in the last ${longFailureWindow.humanTime}`,
             ]
         },
         shortWindowTextLines() {
             const { shortFailureWindow } = this.alert
             return [
-                `When at least ${ shortFailureWindow.eventCountL10n } ${ shortFailureWindow.eventUnitNorm } failed`,
-                `in the last ${ shortFailureWindow.humanTime }`,
+                `When at least ${shortFailureWindow.eventCountL10n} ${shortFailureWindow.eventUnitNorm} failed`,
+                `in the last ${shortFailureWindow.humanTime}`,
             ]
-        }
+        },
     },
     methods: {
         toggle() {
             this.visible = !this.visible
         },
-    }
+    },
 }

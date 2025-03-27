@@ -1,4 +1,4 @@
-const commonTags = [ 'frontend', 'web' ]
+const commonTags = ['frontend', 'web']
 
 export default [
     {
@@ -10,18 +10,19 @@ export default [
         metricUnit: 'ms',
         upperBound: 'le',
         upperThreshold: 800,
-        tags: [ ...commonTags ],
+        tags: [...commonTags],
     },
     {
         // https://web.dev/articles/fcp
         title: 'Latency: First Contentful Paint (FCP)',
-        description: 'The percentage of page renders where the time from when the page starts loading to when any part of the page content is rendered on screen was sufficiently fast.',
+        description:
+            'The percentage of page renders where the time from when the page starts loading to when any part of the page content is rendered on screen was sufficiently fast.',
         eventUnit: 'page renders',
         metricName: 'FCP',
         metricUnit: 'ms',
         upperBound: 'le',
         upperThreshold: 1000,
-        tags: [ ...commonTags],
+        tags: [...commonTags],
     },
     {
         // https://web.dev/articles/lcp
@@ -32,7 +33,7 @@ export default [
         metricUnit: 'ms',
         upperBound: 'le',
         upperThreshold: 2500,
-        tags: [ ...commonTags],
+        tags: [...commonTags],
     },
     {
         // https://web.dev/articles/cls
@@ -43,29 +44,31 @@ export default [
         metricUnit: 'shifts',
         upperBound: 'le',
         upperThreshold: 0.1,
-        tags: [ ...commonTags],
+        tags: [...commonTags],
     },
     {
         // First Input Delay (FID)
         title: 'Latency: First Input Delay (FID)',
-        description: 'The percentage of page renders where the time from when the page starts loading to when the user first interacts with the page was sufficiently fast.',
+        description:
+            'The percentage of page renders where the time from when the page starts loading to when the user first interacts with the page was sufficiently fast.',
         eventUnit: 'page renders',
         metricName: 'FID',
         metricUnit: 'ms',
         upperBound: 'le',
         upperThreshold: 100,
-        tags: [ ...commonTags],
+        tags: [...commonTags],
     },
     {
         // Interaction to Next Paint (INP)
         title: 'Latency: Interaction to Next Paint (INP)',
-        description: 'The percentage of page renders where the time from when the user first interacts with the page to when the next paint is rendered on screen was sufficiently fast.',
+        description:
+            'The percentage of page renders where the time from when the user first interacts with the page to when the next paint is rendered on screen was sufficiently fast.',
         eventUnit: 'page renders',
         metricName: 'INP',
         metricUnit: 'ms',
         upperBound: 'le',
         upperThreshold: 200,
-        tags: [ ...commonTags],
+        tags: [...commonTags],
     },
     {
         title: 'Availability: Real User Monitoring (RUM)',
@@ -75,6 +78,6 @@ export default [
         metricUnit: 'errors',
         upperBound: 'le',
         upperThreshold: 0,
-        tags: [ ...commonTags, 'payment', 'rum', 'mobile', 'web', 'frontend', 'mobile' ],
-    }
+        tags: [...commonTags, 'payment', 'rum', 'mobile', 'web', 'frontend', 'mobile'],
+    },
 ]

@@ -10,21 +10,21 @@ export class Assessment {
         this.providers = []
         this.consumers = []
     }
-    
+
     get allServices() {
-        return this.providers.flatMap(provider => provider.services)
+        return this.providers.flatMap((provider) => provider.services)
     }
-    
+
     get allConsumptions() {
-        return this.consumers.flatMap(consumer => consumer.consumptions)
+        return this.consumers.flatMap((consumer) => consumer.consumptions)
     }
 
     get allFailures() {
-        return this.allServices.flatMap(service => service.failures)
+        return this.allServices.flatMap((service) => service.failures)
     }
 
     get allMetrics() {
-        return this.allServices.flatMap(service => service.metrics)
+        return this.allServices.flatMap((service) => service.metrics)
     }
 
     getDependencyCount(consumption, service) {
@@ -45,7 +45,7 @@ export class Assessment {
         this.providers.push(provider)
         return provider
     }
-    
+
     addNewProvider(title, description) {
         return this.addProvider(new Provider(this, title, description))
     }
@@ -70,7 +70,7 @@ export class Assessment {
         this.consumers.push(consumer)
         return consumer
     }
-    
+
     addNewConsumer(title, description) {
         return this.addConsumer(new Consumer(this, title, description))
     }
@@ -90,14 +90,14 @@ export class Assessment {
     toJSON() {
         return {
             providers: this.providers,
-            consumers: this.consumers
+            consumers: this.consumers,
         }
     }
 
     save() {
         return {
-            providers: this.providers.map(provider => provider.save()),
-            consumers: this.consumers.map(consumer => consumer.save()),
+            providers: this.providers.map((provider) => provider.save()),
+            consumers: this.consumers.map((consumer) => consumer.save()),
         }
     }
 
@@ -112,5 +112,4 @@ export class Assessment {
 
         return newAssessment
     }
-
 }

@@ -1,7 +1,9 @@
 {
     "fmt": {
         "exclude": [
-            "vendor/"
+            "vendor/",
+            "**/*.md",
+            "**/*.html"
         ],
         "indentWidth": 4,
         "lineWidth": 120,

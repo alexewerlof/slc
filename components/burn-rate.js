@@ -19,7 +19,7 @@ export default {
                 right: 5,
                 top: 10,
                 bottom: 20,
-            }
+            },
         }
     },
     props: {
@@ -49,20 +49,20 @@ export default {
         },
         endOfCompliancePeriodTextLines() {
             return [
-                `${this.alert.sloWindowBudgetBurn.eventCountL10n } failed ${ this.alert.errorBudgetBurn.eventUnitNorm }`,
-                `in ${ this.alert.sloWindowBudgetBurn.humanTime }`,
+                `${this.alert.sloWindowBudgetBurn.eventCountL10n} failed ${this.alert.errorBudgetBurn.eventUnitNorm}`,
+                `in ${this.alert.sloWindowBudgetBurn.humanTime}`,
             ]
         },
         errorBudgetExhaustedTextLines() {
             return [
-                `${ this.alert.errorBudgetBurn.eventCountL10n } failed ${ this.alert.errorBudgetBurn.eventUnitNorm }`,
-                `in ${ this.alert.errorBudgetBurn.humanTime }`,
+                `${this.alert.errorBudgetBurn.eventCountL10n} failed ${this.alert.errorBudgetBurn.eventUnitNorm}`,
+                `in ${this.alert.errorBudgetBurn.humanTime}`,
             ]
-        }
+        },
     },
     methods: {
         toggle() {
             this.visible = !this.visible
         },
-    }
+    },
 }

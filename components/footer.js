@@ -5,10 +5,10 @@ export default {
     template: await loadComponent(import.meta.url),
     data() {
         return {
-            year: new Date().getFullYear()
+            year: new Date().getFullYear(),
         }
     },
     components: {
         ExtLink,
-    }
+    },
 }

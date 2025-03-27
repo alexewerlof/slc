@@ -1,11 +1,11 @@
-import { createApp } from "../../vendor/vue.js";
-import { config } from "../../config.js";
-import HeaderComponent from "../../components/header.js";
-import FooterComponent from "../../components/footer.js";
-import InlineSelectComponent from "../../components/inline-select.js";
-import HeroComponent from "../../components/hero.js";
-import HelpComponent from "../../components/help.js";
-import CodeBlockComponent from "../../components/code-block.js";
+import { createApp } from '../../vendor/vue.js'
+import { config } from '../../config.js'
+import HeaderComponent from '../../components/header.js'
+import FooterComponent from '../../components/footer.js'
+import InlineSelectComponent from '../../components/inline-select.js'
+import HeroComponent from '../../components/hero.js'
+import HelpComponent from '../../components/help.js'
+import CodeBlockComponent from '../../components/code-block.js'
 
 const app = createApp({
     data() {
@@ -16,23 +16,23 @@ const app = createApp({
             inlineSelectValue: true,
             inlineSelectOptions: [
                 {
-                    title: "This",
+                    title: 'This',
                     value: 1,
                 },
                 {
-                    title: "That",
+                    title: 'That',
                     value: true,
                 },
                 {
-                    title: "Some",
-                    value: "Hello",
+                    title: 'Some',
+                    value: 'Hello',
                 },
                 {
-                    title: "Thing",
+                    title: 'Thing',
                     value: false,
                 },
             ],
-        };
+        }
     },
     components: {
         FooterComponent,
@@ -42,6 +42,6 @@ const app = createApp({
         InlineSelectComponent,
         CodeBlockComponent,
     },
-});
+})
 
-app.mount("#app");
+app.mount('#app')

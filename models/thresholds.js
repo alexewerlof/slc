@@ -10,22 +10,28 @@ export class Thresholds {
         upper = config.upperThreshold.default,
     ) {
         if (!(slo instanceof Objective)) {
-            throw new TypeError(`Thresholds: slo must be an instance of Objective. Got ${ slo }`)
+            throw new TypeError(`Thresholds: slo must be an instance of Objective. Got ${slo}`)
         }
         this.objective = slo
 
         if (!inRange(lower, config.lowerThreshold.min, config.lowerThreshold.max)) {
-            throw new RangeError(`Objective: lowerThreshold must be a number between ${ config.lowerThreshold.min } and ${ config.lowerThreshold.max }. Got ${ lower }`)
+            throw new RangeError(
+                `Objective: lowerThreshold must be a number between ${config.lowerThreshold.min} and ${config.lowerThreshold.max}. Got ${lower}`,
+            )
         }
         this._lower = lower
-        
+
         if (!inRange(upper, config.upperThreshold.min, config.upperThreshold.max)) {
-            throw new RangeError(`Objective: upperThreshold must be a number between ${ config.upperThreshold.min } and ${ config.upperThreshold.max }. Got ${ upper }`)
+            throw new RangeError(
+                `Objective: upperThreshold must be a number between ${config.upperThreshold.min} and ${config.upperThreshold.max}. Got ${upper}`,
+            )
         }
         this._upper = upper
-        
+
         if (this.lower > this.upper) {
-            throw new RangeError(`Objective: lowerThreshold must be less than upperThreshold. Got lowerThreshold=${ lower } and upperThreshold=${ upper }`)
+            throw new RangeError(
+                `Objective: lowerThreshold must be less than upperThreshold. Got lowerThreshold=${lower} and upperThreshold=${upper}`,
+            )
         }
 
         this.equalTo = '$ET'
@@ -68,5 +74,4 @@ export class Thresholds {
             this.lower = this._upper
         }
     }
-
 }

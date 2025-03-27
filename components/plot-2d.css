@@ -15,7 +15,7 @@
     fill: none;
 }
 
-.plot-2d__axis path{
+.plot-2d__axis path {
     stroke: var(--foreground-color);
     stroke-width: 1.2;
     fill: none;

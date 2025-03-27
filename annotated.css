@@ -26,11 +26,11 @@
         grid-column: 1 / span 2;
         background: var(--background-color);
     }
-    
+
     .annotated__controls {
         grid-column: 1;
     }
-    
+
     .annotated__help {
         grid-column: 2;
         padding-bottom: 5em;

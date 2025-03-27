@@ -1,5 +1,5 @@
 import { numL10n } from '../lib/fmt.js'
-import { daysToSeconds, countTimeslices, humanSec, humanTime, humanTimeSlices } from '../lib/time.js'
+import { countTimeslices, daysToSeconds, humanSec, humanTime, humanTimeSlices } from '../lib/time.js'
 import { isInstance, isNum } from '../lib/validation.js'
 import { Objective } from './objective.js'
 
@@ -12,15 +12,15 @@ export class TimeWindow {
     sec
     constructor(objective, sec) {
         if (!isInstance(objective, Objective)) {
-            throw new TypeError(`TimeWindow: objective must be an instance of Objective. Got ${ objective }`)
+            throw new TypeError(`TimeWindow: objective must be an instance of Objective. Got ${objective}`)
         }
         this.objective = objective
 
         if (!isNum(sec)) {
-            throw new TypeError(`TimeWindow: sec must be a number. Got ${ sec }`)
+            throw new TypeError(`TimeWindow: sec must be a number. Got ${sec}`)
         }
         if (sec < 0) {
-            throw new RangeError(`TimeWindow: sec must be positive. Got ${ sec }`)
+            throw new RangeError(`TimeWindow: sec must be positive. Got ${sec}`)
         }
         this.sec = sec
     }
@@ -49,13 +49,13 @@ export class TimeWindow {
     }
 
     get humanTimeSec() {
-        return `${ this.humanTime } (${ this.humanSec })`
+        return `${this.humanTime} (${this.humanSec})`
     }
 
     toString() {
-        let ret = `${ this.humanTime } (${ this.humanSec }`
+        let ret = `${this.humanTime} (${this.humanSec}`
         if (this.objective.isTimeBased) {
-            ret += ` = ${ numL10n(this.countTimeslices) } ${ this.objective.indicator.eventUnitNorm }`
+            ret += ` = ${numL10n(this.countTimeslices)} ${this.objective.indicator.eventUnitNorm}`
         }
         ret += ')'
         return ret

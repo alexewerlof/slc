@@ -12,12 +12,12 @@ export default {
     computed: {
         config() {
             return config
-        }
+        },
     },
     props: {
         metric: {
             type: Object,
-            validator: v => isInstance(v, Metric),
+            validator: (v) => isInstance(v, Metric),
         },
     },
     methods: {

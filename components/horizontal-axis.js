@@ -16,5 +16,5 @@ export default {
                 [this.x2 - 5, this.y + 3],
             )
         },
-    }
+    },
 }

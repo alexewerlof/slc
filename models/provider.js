@@ -1,7 +1,7 @@
 import { Service } from './service.js'
 import { isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
-import { metadataObj, crdObj } from '../lib/crd.js'
+import { crdObj, metadataObj } from '../lib/crd.js'
 
 export class Provider {
     static possibleTypes = ['System', 'Component', 'Group']
@@ -71,13 +71,13 @@ export class Provider {
     get ref() {
         return this.assessment.systems.indexOf(this)
     }
-    
+
     save() {
         return {
             displayName: this.displayName,
             description: this.description,
             type: this.type,
-            services: this.services.map(service => service.save()),
+            services: this.services.map((service) => service.save()),
         }
     }
 

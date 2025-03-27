@@ -8,7 +8,7 @@ export default {
             return {
                 'grid-template-columns': `${this.badPerc}% auto`,
             }
-        }
+        },
     },
     props: {
         badPerc: Number,

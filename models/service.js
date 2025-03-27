@@ -1,6 +1,6 @@
 import { namify } from '../lib/fmt.js'
 import { icon } from '../lib/icons.js'
-import { metadataObj, crdObj } from '../lib/crd.js'
+import { crdObj, metadataObj } from '../lib/crd.js'
 import { isInstance } from '../lib/validation.js'
 import { Consumption } from './consumption.js'
 import { Failure } from './failure.js'
@@ -36,7 +36,7 @@ export class Service {
     }
 
     get consumptions() {
-        const set = new Set(this.failures.map(failure => failure.consumption))
+        const set = new Set(this.failures.map((failure) => failure.consumption))
         return Array.from(set)
     }
 
@@ -80,14 +80,14 @@ export class Service {
         if (!isInstance(consumption, Consumption)) {
             throw new Error(`Expected an instance of Consumption. Got ${consumption}`)
         }
-        return this.failures.some(f => f.consumption === consumption)
+        return this.failures.some((f) => f.consumption === consumption)
     }
 
     getConsumptionFailures(consumption) {
         if (!isInstance(consumption, Consumption)) {
             throw new Error(`Expected an instance of Consumption. Got ${consumption}`)
         }
-        return this.failures.filter(f => f.consumption === consumption)
+        return this.failures.filter((f) => f.consumption === consumption)
     }
 
     getConsumptionFailureMaxImpactLevel(consumption) {
@@ -95,7 +95,7 @@ export class Service {
         if (failures.length === 0) {
             return 0
         }
-        return Math.max(...failures.map(f => f.impactLevel))
+        return Math.max(...failures.map((f) => f.impactLevel))
     }
 
     addConsumption(consumption) {
@@ -147,14 +147,18 @@ export class Service {
     }
 
     toJSON() {
-        return crdObj('Service', metadataObj(
-            namify(this.provider.displayName, this.displayName),
-            this.displayName,
-        ), {
-            description: this.description,
-            failures: this.failures,
-            metrics: this.metrics,
-        })
+        return crdObj(
+            'Service',
+            metadataObj(
+                namify(this.provider.displayName, this.displayName),
+                this.displayName,
+            ),
+            {
+                description: this.description,
+                failures: this.failures,
+                metrics: this.metrics,
+            },
+        )
     }
 
     get ref() {
@@ -166,8 +170,8 @@ export class Service {
             displayName: this.displayName,
             description: this.description,
             type: this.type,
-            failures: this.failures.map(failure => failure.save()),
-            metrics: this.metrics.map(metric => metric.save()),
+            failures: this.failures.map((failure) => failure.save()),
+            metrics: this.metrics.map((metric) => metric.save()),
         }
     }
 

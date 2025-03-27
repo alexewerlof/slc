@@ -12,6 +12,6 @@ export default {
                 ret.backgroundImage = `url('/img/${this.fileName}')`
             }
             return ret
-        }
-    }
+        },
+    },
 }

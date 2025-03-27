@@ -1,4 +1,4 @@
-const commonTags = [ 'ai', 'genai', 'generative ai' ]
+const commonTags = ['ai', 'genai', 'generative ai']
 
 export default [
     {
@@ -9,15 +9,15 @@ export default [
         metricUnit: 'errors',
         upperBound: 'le',
         upperThreshold: 0,
-        tags: [ ...commonTags, 'server', 'chat' ],
+        tags: [...commonTags, 'server', 'chat'],
     },
     {
         title: 'Availability: Flagged responses',
         description: 'Measure the number of responses that were not flagged by the user as inappropriate or incorrect',
         eventUnit: 'assistant messages',
         metricName: 'message.flagged == false',
-        tags: [ ...commonTags, 'quality' ],
-    },  
+        tags: [...commonTags, 'quality'],
+    },
     {
         title: 'Availability: Response retries',
         description: 'Measure the number of time the user had to retry sending a thread in order to get a response',
@@ -26,7 +26,7 @@ export default [
         metricUnit: 'retries',
         upperBound: 'lt',
         upperThreshold: 2,
-        tags: [ ...commonTags, 'quality' ],
+        tags: [...commonTags, 'quality'],
     },
     {
         title: 'Throughput: Prompt processing efficiency',
@@ -35,17 +35,18 @@ export default [
         metricName: 'queries served per machine',
         lowerBound: 'gt',
         lowerThreshold: 300,
-        tags: [ ...commonTags, 'quality', 'utilization' ],
+        tags: [...commonTags, 'quality', 'utilization'],
     },
     {
         title: 'Throughput: Token per second',
-        description: 'Normalize the amount of time it took to generate a response based on its length in number of tokens. Measure the time it takes to generate a complete response based on the number of tokens. TPS = tokens / second is calculated as the number of tokens generated per second by dividing the number of tokens by the time it took to generate the response.',
+        description:
+            'Normalize the amount of time it took to generate a response based on its length in number of tokens. Measure the time it takes to generate a complete response based on the number of tokens. TPS = tokens / second is calculated as the number of tokens generated per second by dividing the number of tokens by the time it took to generate the response.',
         eventUnit: 'complete responses',
         metricName: 'TPS',
         metricUnit: 'tokens/s',
         lowerBound: 'gt',
         lowerThreshold: 0.5,
-        tags: [ ...commonTags, 'quality', 'text' ],
+        tags: [...commonTags, 'quality', 'text'],
     },
     {
         title: 'Latency: Time to First Token',
@@ -55,11 +56,12 @@ export default [
         metricUnit: 'ms',
         upperBound: 'lt',
         upperThreshold: 1000,
-        tags: [ ...commonTags, 'quality', 'text' ],
+        tags: [...commonTags, 'quality', 'text'],
     },
     {
         title: 'Throughput: Response token length',
-        description: 'Ensure that the response is long enough (to be useful) but not too long (due to cost). This is to protect the model from attacks that cause it to generate too long responses which will be expensive for the business. We use the response token length for the calculation.',
+        description:
+            'Ensure that the response is long enough (to be useful) but not too long (due to cost). This is to protect the model from attacks that cause it to generate too long responses which will be expensive for the business. We use the response token length for the calculation.',
         timeslice: 300,
         metricName: 'response tokens',
         metricUnit: 'tokens',
@@ -67,7 +69,7 @@ export default [
         lowerThreshold: 50,
         upperBound: 'le',
         upperThreshold: 4000,
-        tags: [ ...commonTags, 'quality' ],
+        tags: [...commonTags, 'quality'],
     },
     {
         title: 'Latency: Time to generate complete response',
@@ -77,7 +79,7 @@ export default [
         metricUnit: 'ms',
         upperBound: 'le',
         upperThreshold: 15000,
-        tags: [ ...commonTags, 'quality', 'text' ],
+        tags: [...commonTags, 'quality', 'text'],
     },
     {
         title: 'Latency: Time to respond a video generation request',
@@ -87,7 +89,7 @@ export default [
         metricUnit: 's',
         upperBound: 'lt',
         upperThreshold: 120,
-        tags: [ ...commonTags, 'quality', 'image generation'],
+        tags: [...commonTags, 'quality', 'image generation'],
     },
     {
         title: 'Latency: Time to respond an image request',
@@ -97,20 +99,21 @@ export default [
         metricUnit: 's',
         upperBound: 'lt',
         upperThreshold: 400,
-        tags: [ ...commonTags, 'quality', 'video generation' ],
+        tags: [...commonTags, 'quality', 'video generation'],
     },
     {
         title: 'Correctness: Chat length',
-        description: 'Chat length as measured by number of messages in a conversation can indicate engagement or struggle to get a quality answer. We only need to alert on the latter.',
+        description:
+            'Chat length as measured by number of messages in a conversation can indicate engagement or struggle to get a quality answer. We only need to alert on the latter.',
         eventUnit: 'chat sessions',
         metricName: 'no message is flagged as inappropriate or incorrect',
-        tags: [ ...commonTags, 'quality', 'chat' ],
+        tags: [...commonTags, 'quality', 'chat'],
     },
     {
         title: 'Correctness: User feedback',
         description: 'Measure the quality of output based on the user feedback',
         eventUnit: 'assistant messages',
         metricName: 'no user thumb down feedback',
-        tags: [ ...commonTags, 'quality' ],
+        tags: [...commonTags, 'quality'],
     },
 ]

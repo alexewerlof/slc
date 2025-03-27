@@ -1,5 +1,5 @@
 import { loadComponent } from '../lib/fetch-template.js'
-import { id } from '../lib/fp.js';
+import { id } from '../lib/fp.js'
 import { Plot2dD3 } from '../lib/plot-2d-d3.js'
 
 export default {
@@ -16,7 +16,7 @@ export default {
                 this.labelRenderX,
                 this.labelRenderY,
             ),
-        };
+        }
     },
     props: {
         points: {
@@ -34,17 +34,17 @@ export default {
         padding: {
             type: Array,
             default: [0, 0, 0, 0], // top, right, bottom, left
-            validator: (val) => val.length === 4 && val.every(v => typeof v === 'number'),
+            validator: (val) => val.length === 4 && val.every((v) => typeof v === 'number'),
         },
         xExtent: {
             type: Array,
             default: [0, 1],
-            validator: (val) => val.length === 2 && val.every(v => typeof v === 'number') && val[0] < val[1],
+            validator: (val) => val.length === 2 && val.every((v) => typeof v === 'number') && val[0] < val[1],
         },
         yExtent: {
             type: Array,
             default: [0, 1],
-            validator: (val) => val.length === 2 && val.every(v => typeof v === 'number') && val[0] < val[1],
+            validator: (val) => val.length === 2 && val.every((v) => typeof v === 'number') && val[0] < val[1],
         },
         isBarChart: {
             type: Boolean,
@@ -61,7 +61,7 @@ export default {
         guides: {
             type: Array,
             default: () => [],
-            validator: (val) => val.every(v => typeof v.y === 'number' && typeof v.label === 'string'),
+            validator: (val) => val.every((v) => typeof v.y === 'number' && typeof v.label === 'string'),
         },
         labelRenderX: {
             type: Function,
@@ -106,4 +106,3 @@ export default {
         },
     },
 }
-

@@ -7,7 +7,7 @@ import { Condition } from './condition.js'
 const metricIcon = icon('metric')
 
 export class Metric {
-    constructor(service, displayName = '', description = '', isBoolean = false, numericUnit = '' ) {
+    constructor(service, displayName = '', description = '', isBoolean = false, numericUnit = '') {
         if (!isInstance(service, Service)) {
             throw new Error(`Expected an instance of Service. Got ${service}`)
         }
@@ -68,7 +68,7 @@ export class Metric {
     }
 
     toString() {
-        return `${ this.service } ${metricIcon} ${this.displayName}`
+        return `${this.service} ${metricIcon} ${this.displayName}`
     }
 
     remove() {
@@ -89,14 +89,14 @@ export class Metric {
             description: this.description,
             isNumeric: this.isNumeric,
             numericUnit: this.numericUnit,
-            linkedFailuresIndex: this.linkedFailures.map(failure => failure.index),
+            linkedFailuresIndex: this.linkedFailures.map((failure) => failure.index),
         }
     }
 
     static load(service, metricObj) {
         const { displayName, description, isBoolean, numericUnit, linkedFailuresIndex } = metricObj
         const newMetric = new Metric(service, displayName, description, isBoolean, numericUnit)
-        
+
         for (const failureIndex of linkedFailuresIndex) {
             newMetric.linkFailure(service.failures[failureIndex])
         }

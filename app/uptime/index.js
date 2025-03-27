@@ -1,16 +1,16 @@
-import { createApp } from "../../vendor/vue.js";
-import HeaderComponent from "../../components/header.js";
-import FooterComponent from "../../components/footer.js";
-import ExtLink from "../../components/ext-link.js";
-import HeroComponent from "../../components/hero.js";
-import ErrorBudgetComponent from "../../components/error-budget.js";
-import HelpComponent from "../../components/help.js";
-import { Indicator } from "../../models/indicator.js";
-import { Objective } from "../../models/objective.js";
-import ObjectiveViewComponent from "../../views/objective-view.js";
-import { config } from "../../config.js";
-import { numL10n } from "../../lib/fmt.js";
-import { humanTime } from "../../lib/time.js";
+import { createApp } from '../../vendor/vue.js'
+import HeaderComponent from '../../components/header.js'
+import FooterComponent from '../../components/footer.js'
+import ExtLink from '../../components/ext-link.js'
+import HeroComponent from '../../components/hero.js'
+import ErrorBudgetComponent from '../../components/error-budget.js'
+import HelpComponent from '../../components/help.js'
+import { Indicator } from '../../models/indicator.js'
+import { Objective } from '../../models/objective.js'
+import ObjectiveViewComponent from '../../views/objective-view.js'
+import { config } from '../../config.js'
+import { numL10n } from '../../lib/fmt.js'
+import { humanTime } from '../../lib/time.js'
 
 export const app = createApp({
     components: {
@@ -26,49 +26,49 @@ export const app = createApp({
         numL10n,
         humanTime,
         timesliceToHumanTime(count) {
-            return humanTime(this.indicator.timeslice * count, true);
+            return humanTime(this.indicator.timeslice * count, true)
         },
     },
     data() {
-        const indicator = new Indicator();
-        indicator.isTimeBased = true;
-        indicator.timeslice = 60;
-        indicator.lowerBound = "";
-        indicator.upperBound = "";
-        const objective = new Objective(indicator);
-        const objective30 = new Objective(indicator);
-        objective30.windowDays = 30;
+        const indicator = new Indicator()
+        indicator.isTimeBased = true
+        indicator.timeslice = 60
+        indicator.lowerBound = ''
+        indicator.upperBound = ''
+        const objective = new Objective(indicator)
+        const objective30 = new Objective(indicator)
+        objective30.windowDays = 30
         const customWindowDays = {
-            "Week": 7,
-            "2-weeks": 14,
-            "Month": 30,
-            "2-Months": 60,
-            "Quarter": 90,
-            "Half-year": 180,
-            "Year": 365,
-        };
+            'Week': 7,
+            '2-weeks': 14,
+            'Month': 30,
+            '2-Months': 60,
+            'Quarter': 90,
+            'Half-year': 180,
+            'Year': 365,
+        }
         const table = Object.entries(customWindowDays).map(
             ([title, windowDays]) => {
-                const objective = new Objective(indicator);
-                objective.windowDays = windowDays;
+                const objective = new Objective(indicator)
+                objective.windowDays = windowDays
                 return {
                     title,
                     objective,
-                };
+                }
             },
-        );
+        )
         return {
             config,
             indicator,
             objective,
             table,
-        };
+        }
     },
     watch: {
-        "objective.target"(target) {
-            this.table.forEach(({ objective }) => objective.target = target);
+        'objective.target'(target) {
+            this.table.forEach(({ objective }) => objective.target = target)
         },
     },
-});
+})
 
-app.mount("#app");
+app.mount('#app')

@@ -21,7 +21,11 @@ export class Bound {
 
     set lowerBound(val) {
         if (!config.lowerBound.possibleValues.includes(val)) {
-            throw new RangeError(`Indicator: lowerBound must be one of ${config.lowerBound.possibleValues.join(', ')}. Got ${val} (${typeof val})`)
+            throw new RangeError(
+                `Indicator: lowerBound must be one of ${
+                    config.lowerBound.possibleValues.join(', ')
+                }. Got ${val} (${typeof val})`,
+            )
         }
         this._lowerBound = val
     }
@@ -32,7 +36,11 @@ export class Bound {
 
     set upperBound(val) {
         if (!config.upperBound.possibleValues.includes(val)) {
-            throw new RangeError(`Indicator: upperBound must be one of ${config.upperBound.possibleValues.join(', ')}. Got ${val} (${typeof val})`)
+            throw new RangeError(
+                `Indicator: upperBound must be one of ${
+                    config.upperBound.possibleValues.join(', ')
+                }. Got ${val} (${typeof val})`,
+            )
         }
         this._upperBound = val
     }

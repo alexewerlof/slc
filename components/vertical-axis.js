@@ -18,5 +18,5 @@ export default {
                 [this.x - height, this.y1 + width],
             )
         },
-    }
+    },
 }

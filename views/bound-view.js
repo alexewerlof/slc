@@ -12,12 +12,12 @@ export default {
     computed: {
         config() {
             return config
-        }
+        },
     },
     props: {
         bound: {
             type: Object,
-            validator: v => isInstance(v, Bound),
+            validator: (v) => isInstance(v, Bound),
         },
     },
     methods: {
