@@ -6,6 +6,7 @@ import InlineSelectComponent from '../../components/inline-select.js'
 import HeroComponent from '../../components/hero.js'
 import HelpComponent from '../../components/help.js'
 import CodeBlockComponent from '../../components/code-block.js'
+import TooltipComponent from '../../components/tooltip.js'
 
 const app = createApp({
     data() {
@@ -35,12 +36,13 @@ const app = createApp({
         }
     },
     components: {
+        CodeBlockComponent,
         FooterComponent,
         HeaderComponent,
         HelpComponent,
         HeroComponent,
         InlineSelectComponent,
-        CodeBlockComponent,
+        TooltipComponent,
     },
 })
 
