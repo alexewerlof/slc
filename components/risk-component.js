@@ -3,7 +3,7 @@ import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
 import { percL10n } from '../lib/fmt.js'
 import { ExtLink } from './ext-link.js'
-import { Failure } from '../models/failure.js'
+import { Failure } from './failure.js'
 import { icon } from '../lib/icons.js'
 
 export const RiskComponent = {

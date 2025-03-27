@@ -4,7 +4,7 @@ import { config } from '../config.js'
 import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
 import { ShowHideComponent } from './show-hide-component.js'
 import { ExtLink } from './ext-link.js'
-import { Failure } from '../models/failure.js'
+import { Failure } from './failure.js'
 import { icon } from '../lib/icons.js'
 
 export const FailureComponent = {

@@ -1,6 +1,6 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
-import { Service } from '../models/service.js'
+import { Service } from './service.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
 import { MetricComponent } from './metric-component.js'

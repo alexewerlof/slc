@@ -1,6 +1,6 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
-import { Provider } from '../models/provider.js'
+import { Provider } from './provider.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
 import ServiceComponent from './service-component.js'

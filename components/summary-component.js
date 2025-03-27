@@ -1,6 +1,6 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
-import { Assessment } from '../models/assessment.js'
+import { Assessment } from './assessment.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
 import { ServiceComponent } from './service-component.js'

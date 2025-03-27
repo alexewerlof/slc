@@ -12,7 +12,7 @@ import { BurnRateComponent } from './burn-rate-component.js'
 import { ErrorBudgetComponent } from './error-budget-component.js'
 import { InlineSelectComponent } from './inline-select-component.js'
 import { CodeBlockComponent } from './code-block-component.js'
-import { Calculator } from '../models/calculator.js'
+import { Calculator } from './calculator.js'
 import { percentToRatio } from '../lib/math.js'
 import { isInstance } from '../lib/validation.js'
 

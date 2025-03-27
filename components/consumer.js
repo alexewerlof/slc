@@ -1,4 +1,3 @@
-import { crdObj, metadataObj } from '../lib/crd.js'
 import { isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { Consumption } from './consumption.js'

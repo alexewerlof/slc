@@ -1,6 +1,6 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
-import { Alert } from '../models/alert.js'
+import { Alert } from './alert.js'
 import { config } from '../config.js'
 import { percL10n } from '../lib/fmt.js'
 import { ExtLink } from './ext-link.js'

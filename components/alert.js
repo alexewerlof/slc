@@ -2,7 +2,7 @@ import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
 import { entity2symbolNorm, percL10n } from '../lib/fmt.js'
 import { toFixed } from '../lib/math.js'
-import { inRange, isInstance, isNum, isObj } from '../lib/validation.js'
+import { inRange, isInstance, isObj } from '../lib/validation.js'
 import { Objective } from './objective.js'
 
 export class Alert {

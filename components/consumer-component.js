@@ -1,6 +1,6 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
-import { Consumer } from '../models/consumer.js'
+import { Consumer } from './consumer.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
 import { ShowHideComponent } from './show-hide-component.js'

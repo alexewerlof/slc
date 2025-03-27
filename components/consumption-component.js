@@ -5,7 +5,7 @@ import { numL10n, percL10n } from '../lib/fmt.js'
 import { IndicatorComponent } from './indicator-component.js'
 import { ShowHideComponent } from './show-hide-component.js'
 import { ExtLink } from './ext-link.js'
-import { Consumption } from '../models/consumption.js'
+import { Consumption } from './consumption.js'
 import { icon } from '../lib/icons.js'
 
 export const ConsumptionComponent = {

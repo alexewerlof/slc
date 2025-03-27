@@ -1,6 +1,6 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
-import { Formula } from '../models/formula.js'
+import { Formula } from './formula.js'
 
 /*
 This is just a convenience component to

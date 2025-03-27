@@ -1,9 +1,8 @@
 import { Provider } from './provider.js'
-import { Consumer } from '../models/consumer.js'
+import { Consumer } from './consumer.js'
 import { isInstance } from '../lib/validation.js'
 import { Service } from './service.js'
 import { Consumption } from './consumption.js'
-import { Failure } from './failure.js'
 
 export class Assessment {
     constructor() {
