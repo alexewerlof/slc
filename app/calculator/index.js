@@ -54,7 +54,7 @@ export const app = createApp({
     },
     mounted() {
         this.$nextTick(() => {
-            const hash = window.location.hash
+            const hash = globalThis.location.hash
             if (hash) {
                 const element = document.querySelector(hash)
                 if (element) element.scrollIntoView()
@@ -86,8 +86,8 @@ export const app = createApp({
         shareUrl() {
             try {
                 const url = new URL(
-                    window.location.pathname,
-                    window.location.origin,
+                    globalThis.location.pathname,
+                    globalThis.location.origin,
                 )
                 return stateToUrl(url, this.calculator.save()).toString()
             } catch (e) {
