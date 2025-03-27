@@ -48,6 +48,27 @@ export class Calculator {
         this.alertIdx = this.alerts.length - 1
         return ret
     }
+    addRecommendedAlerts() {
+        if (this.objective) {
+            const alert1 = this.objective.addNewAlert()
+            const alert2 = this.objective.addNewAlert()
+            const alert3 = this.objective.addNewAlert()
+
+            alert1.burnRate = 1
+            alert1.longWindowPerc = 10
+            alert1.useShortWindow = true
+
+            alert2.burnRate = 6
+            alert2.longWindowPerc = 5
+            alert2.useShortWindow = true
+
+            alert3.burnRate = 14.4
+            alert3.longWindowPerc = 2
+            alert3.useShortWindow = true
+
+            this.alertIdx = this.alerts.length - 1
+        }
+    }
     get objectives() {
         return this.indicator?.objectives
     }

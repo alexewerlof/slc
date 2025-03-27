@@ -160,8 +160,9 @@
                     </select>
                 </div>
 
-                <div class="button-bar">
+                <div class="button-bar" v-if="calculator.objective">
                     <button @click="calculator.addNewAlert()">Add New</button>
+                    <button @click="calculator.addRecommendedAlerts()">Add Recommended</button>
                     <button
                         v-if="calculator.alerts?.length"
                         @click="calculator.removeSelectedAlert()"
