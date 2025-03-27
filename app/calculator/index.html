@@ -46,7 +46,7 @@
 
             <calculator-view-component :calculator="calculator"></calculator-view-component>
 
-            <section v-if="shareUrl">
+            <div class="mar-gap pad-gap">
                 <h1 id="share-title">
                     Share
                     <help-component>
@@ -57,11 +57,13 @@
                         </p>
                     </help-component>
                 </h1>
-                <button @click="updateState">Update</button>
+                <div class="button-bar">
+                    <button @click="updateState">Update</button>
+                </div>
                 <code-block-component title="State">
                     <pre>{{ state }}</pre>
                 </code-block-component>
-            </section>
+            </div>
 
             <!-- Toast Notification -->
             <div v-if="toastCaption" class="toast" @animationend="this.toastCaption = ''">{{ toastCaption }}</div>
