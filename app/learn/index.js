@@ -5,7 +5,7 @@ import { HeaderComponent } from '../../components/header.js'
 import { FooterComponent } from '../../components/footer.js'
 import { CookiePopupComponent } from '../../components/cookie-popup.js'
 import { HelpComponent } from '../../components/help.js'
-import { CalculatorViewComponent } from '../../views/calculator-component.js'
+import { CalculatorViewComponent } from '../../components/calculator-component.js'
 import { CodeBlockComponent } from '../../components/code-block.js'
 import { FaqComponent } from '../../components/faq.js'
 
