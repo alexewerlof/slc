@@ -2,8 +2,9 @@ import { loadComponent } from '../lib/fetch-template.js'
 import { config } from '../config.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '../lib/fmt.js'
 import { icon } from '../lib/icons.js'
-import AlertViewComponent from '../views/alert-view.js'
-import IndicatorViewComponent from '../views/indicator-view.js'
+import AlertComponent from '../views/alert-view.js'
+import IndicatorComponent from '../views/indicator-view.js'
+import ObjectiveComponent from '../views/objective-view.js'
 import { ExtLink } from '../components/ext-link.js'
 import { HelpComponent } from '../components/help.js'
 import { AlertChartComponent } from '../components/alert-chart.js'
@@ -11,7 +12,6 @@ import { BurnRateComponent } from '../components/burn-rate.js'
 import { ErrorBudgetComponent } from '../components/error-budget.js'
 import { InlineSelectComponent } from '../components/inline-select.js'
 import { CodeBlockComponent } from '../components/code-block.js'
-import ObjectiveViewComponent from '../views/objective-view.js'
 import { Calculator } from '../models/calculator.js'
 import { percentToRatio } from '../lib/math.js'
 import { isInstance } from '../lib/validation.js'
@@ -40,14 +40,14 @@ export default {
     },
     components: {
         AlertChartComponent,
-        AlertViewComponent,
+        AlertComponent,
         BurnRateComponent,
         ErrorBudgetComponent,
         ExtLink,
         HelpComponent,
-        IndicatorViewComponent,
+        IndicatorComponent,
         InlineSelectComponent,
-        ObjectiveViewComponent,
+        ObjectiveComponent,
         CodeBlockComponent,
     },
 }

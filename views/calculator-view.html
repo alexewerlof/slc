@@ -63,10 +63,10 @@
                 </div>
             </fieldset>
 
-            <indicator-view-component
+            <indicator-component
                 v-if="calculator.indicator"
                 :indicator="calculator.indicator"
-            ></indicator-view-component>
+            ></indicator-component>
         </section>
 
         <!------------------------ SLO ------------------------>
@@ -105,10 +105,10 @@
                 </div>
             </fieldset>
 
-            <objective-view-component
+            <objective-component
                 v-if="calculator.objective"
                 :objective="calculator.objective"
-            ></objective-view-component>
+            ></objective-component>
             <!------------------------ Error Budget ------------------------>
             <h2 id="error-budget-title">Error</h2>
             <error-budget-component
@@ -173,7 +173,7 @@
                 </div>
             </fieldset>
 
-            <alert-view-component v-if="calculator.alert" :alert="calculator.alert"></alert-view-component>
+            <alert-component v-if="calculator.alert" :alert="calculator.alert"></alert-component>
         </section>
     </article>
 </div>

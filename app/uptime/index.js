@@ -7,7 +7,7 @@ import { ErrorBudgetComponent } from '../../components/error-budget.js'
 import { HelpComponent } from '../../components/help.js'
 import { Indicator } from '../../models/indicator.js'
 import { Objective } from '../../models/objective.js'
-import ObjectiveViewComponent from '../../views/objective-view.js'
+import ObjectiveComponent from '../../views/objective-view.js'
 import { config } from '../../config.js'
 import { numL10n } from '../../lib/fmt.js'
 import { humanTime } from '../../lib/time.js'
@@ -19,7 +19,7 @@ export const app = createApp({
         ExtLink,
         HeroComponent,
         ErrorBudgetComponent,
-        ObjectiveViewComponent,
+        ObjectiveComponent,
         HelpComponent,
     },
     methods: {
