@@ -16,9 +16,6 @@ import { HeroComponent } from '../../components/hero.js'
 
 const exampleJson = await loadJson('../workshop/example.json')
 
-function layout(shapes) {
-}
-
 function flatten(workshopData) {
     const shapes = []
     workshopData.providers.forEach((provider, providerIndex) => {
