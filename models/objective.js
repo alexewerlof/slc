@@ -95,15 +95,15 @@ export class Objective {
     get windowDays() {
         return secondsToDays(this.window.sec)
     }
+    // The length of the SLO window in days
+    set windowDays(days) {
+        this.window.sec = daysToSeconds(days)
+    }
     get expectedTotalEvents() {
         return Math.round(this.indicator.expectedDailyEvents * this.windowDays) || config.expectedTotalEvents.min
     }
     set expectedTotalEvents(value) {
         this.indicator.expectedDailyEvents = Math.round(value / this.windowDays)
-    }
-    // The length of the SLO window in days
-    set windowDays(days) {
-        this.window.sec = daysToSeconds(days)
     }
     // Allows fine tuning the target by adding or removing a small amount
     changeTarget(amount) {
