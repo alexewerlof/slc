@@ -1,5 +1,3 @@
-import feedbackBlob from './components/feedback-blob.js'
-
 function fz(obj) {
     if (Array.isArray(obj)) {
         return Object.freeze(obj.map(fz))
