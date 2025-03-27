@@ -1,7 +1,7 @@
 import { loadComponent } from '../lib/fetch-template.js'
-import { BurnEventComponent } from './burn-event.js'
-import { VerticalAxisComponent } from './vertical-axis.js'
-import { HorizontalAxisComponent } from './horizontal-axis.js'
+import { BurnEventComponent } from './burn-event-component.js'
+import { VerticalAxisComponent } from './vertical-axis-component.js'
+import { HorizontalAxisComponent } from './horizontal-axis-component.js'
 
 export const BurnRateComponent = {
     template: await loadComponent(import.meta.url),

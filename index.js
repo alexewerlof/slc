@@ -1,8 +1,8 @@
 import { createApp } from './vendor/vue.js'
-import { HeaderComponent } from './components/header.js'
-import { FooterComponent } from './components/footer.js'
+import { HeaderComponent } from './components/header-component.js'
+import { FooterComponent } from './components/footer-component.js'
 import { ExtLink } from './components/ext-link.js'
-import { HeroComponent } from './components/hero.js'
+import { HeroComponent } from './components/hero-component.js'
 import { addUTM } from './lib/utm.js'
 
 export const app = createApp({

@@ -5,12 +5,12 @@ import { boundCaption, hasComparators, numL10n, percL10n } from '../lib/fmt.js'
 import { ObjectiveComponent } from './objective-component.js'
 import { Indicator } from '../models/indicator.js'
 import { icon } from '../lib/icons.js'
-import { ShowHideComponent } from '../components/show-hide.js'
-import { ExtLink } from '../components/ext-link.js'
-import { HelpComponent } from '../components/help.js'
-import { InlineSelectComponent } from '../components/inline-select.js'
-import { CodeBlockComponent } from '../components/code-block.js'
-import { FormulaComponent } from '../components/formula.js'
+import { ShowHideComponent } from './show-hide-component.js'
+import { ExtLink } from './ext-link.js'
+import { HelpComponent } from './help-component.js'
+import { InlineSelectComponent } from './inline-select-component.js'
+import { CodeBlockComponent } from './code-block-component.js'
+import { FormulaComponent } from './formula-component.js'
 
 export const IndicatorComponent = {
     template: await loadComponent(import.meta.url, true),

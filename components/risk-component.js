@@ -2,7 +2,7 @@ import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
 import { percL10n } from '../lib/fmt.js'
-import { ExtLink } from '../components/ext-link.js'
+import { ExtLink } from './ext-link.js'
 import { Failure } from '../models/failure.js'
 import { icon } from '../lib/icons.js'
 

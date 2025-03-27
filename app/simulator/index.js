@@ -1,6 +1,6 @@
 import { createApp } from '../../vendor/vue.js'
-import plot2dComponent from '../../components/plot-2d.js'
-import tabsComponent from '../../components/tabs.js'
+import { Plot2dComponent } from '../../components/plot-2d-component.js'
+import { TabsComponent } from '../../components/tabs-component.js'
 import { createBuckets, generateData } from '../../lib/buckets.js'
 import { analyzeData, createIncidentBuckets, overwriteData, percentileIndex } from '../../lib/data.js'
 import { config } from '../../config.js'
@@ -16,8 +16,8 @@ const percentageColor = d3.scaleLinear()
 
 const app = createApp({
     components: {
-        plot2dComponent,
-        tabsComponent,
+        Plot2dComponent,
+        TabsComponent,
     },
     data() {
         return {

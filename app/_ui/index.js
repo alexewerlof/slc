@@ -1,12 +1,12 @@
 import { createApp } from '../../vendor/vue.js'
 import { config } from '../../config.js'
-import { HeaderComponent } from '../../components/header.js'
-import { FooterComponent } from '../../components/footer.js'
-import { InlineSelectComponent } from '../../components/inline-select.js'
-import { HeroComponent } from '../../components/hero.js'
-import { HelpComponent } from '../../components/help.js'
-import { CodeBlockComponent } from '../../components/code-block.js'
-import { TooltipComponent } from '../../components/tooltip.js'
+import { HeaderComponent } from '../../components/header-component.js'
+import { FooterComponent } from '../../components/footer-component.js'
+import { InlineSelectComponent } from '../../components/inline-select-component.js'
+import { HeroComponent } from '../../components/hero-component.js'
+import { HelpComponent } from '../../components/help-component.js'
+import { CodeBlockComponent } from '../../components/code-block-component.js'
+import { TooltipComponent } from '../../components/tooltip-component.js'
 
 const app = createApp({
     data() {

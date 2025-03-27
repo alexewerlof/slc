@@ -4,8 +4,8 @@ import { Provider } from '../models/provider.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
 import ServiceComponent from './service-component.js'
-import { ShowHideComponent } from '../components/show-hide.js'
-import { ExtLink } from '../components/ext-link.js'
+import { ShowHideComponent } from './show-hide-component.js'
+import { ExtLink } from './ext-link.js'
 import { icon } from '../lib/icons.js'
 
 export const ProviderComponent = {

@@ -4,8 +4,8 @@ import { Service } from '../models/service.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
 import { MetricComponent } from './metric-component.js'
-import { ShowHideComponent } from '../components/show-hide.js'
-import { ExtLink } from '../components/ext-link.js'
+import { ShowHideComponent } from './show-hide-component.js'
+import { ExtLink } from './ext-link.js'
 import { icon } from '../lib/icons.js'
 
 export const ServiceMetricComponent = {
