@@ -31,6 +31,7 @@ export const app = createApp({
     },
     data() {
         const indicator = new Indicator()
+        indicator.metricName = 'system is up'
         indicator.isTimeBased = true
         indicator.timeslice = 60
         indicator.lowerBound = ''
