@@ -1,3 +1,5 @@
+import feedbackBlob from './components/feedback-blob.js'
+
 function fz(obj) {
     if (Array.isArray(obj)) {
         return Object.freeze(obj.map(fz))
@@ -355,6 +357,10 @@ export const config = fz({
             'Very Hard', // A rough approximation can be made with significant effort
             'Impossible', // It's not possible to measure accurately
         ]),
+    }),
+    feedbackBlob: fz({
+        baseUrl:
+            'https://docs.google.com/forms/d/e/1FAIpQLSc-CQudkQ9WLVmryi7Idlwv03M7s0Sy6DMlENzhUJesKb3kmg/viewform?usp=pp_url',
     }),
     icons: fz({
         // ▢◻▣▷◇◈○◌◯◎◉⬡＋－🔎︎
