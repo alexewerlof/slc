@@ -37,8 +37,6 @@ export const app = createApp({
         indicator.lowerBound = ''
         indicator.upperBound = ''
         const objective = new Objective(indicator)
-        const objective30 = new Objective(indicator)
-        objective30.windowDays = 30
         const customWindowDays = {
             'Week': 7,
             '2-weeks': 14,
