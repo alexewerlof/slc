@@ -1,6 +1,5 @@
 .block {
     display: block;
-    margin: var(--gap);
     border-style: solid;
     border-width: var(--bthick) var(--bthick) var(--bthick) var(--gap);
     background-color: rgb(from currentColor r g b / 0.09);
@@ -8,6 +7,8 @@
     box-sizing: border-box;
     padding: var(--gap);
     box-shadow: 0 0 var(--gap) black;
+    margin-top: var(--gap);
+    margin-bottom: var(--gap);
 }
 
 .block p {
@@ -15,16 +16,13 @@
 }
 
 .block.info {
-    padding: var(--gap);
     color: var(--secondary-color);
 }
 
 .block.warning {
-    padding: var(--gap);
     color: var(--primary-color);
 }
 
 .block.error {
-    padding: var(--gap);
     color: var(--brand-red);
 }

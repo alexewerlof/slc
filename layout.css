@@ -75,3 +75,59 @@ section {
     padding: var(--gap);
     overflow: auto; /* Ensure content doesn't overflow */
 }
+
+.pad-gap {
+    padding: var(--gap);
+}
+
+.v-pad-gap {
+    padding-left: var(--gap);
+    padding-right: var(--gap);
+}
+
+.h-pad-gap {
+    padding-top: var(--gap);
+    padding-bottom: var(--gap);
+}
+
+.pad-gap2 {
+    padding: var(--gap2);
+}
+
+.v-pad-gap2 {
+    padding-left: var(--gap2);
+    padding-right: var(--gap2);
+}
+
+.h-pad-gap2 {
+    padding-top: var(--gap2);
+    padding-bottom: var(--gap2);
+}
+
+.mar-gap {
+    margin: var(--gap);
+}
+
+.v-mar-gap {
+    margin-left: var(--gap);
+    margin-right: var(--gap);
+}
+
+.h-mar-gap {
+    margin-top: var(--gap);
+    margin-bottom: var(--gap);
+}
+
+.mar-gap2 {
+    margin: var(--gap2);
+}
+
+.v-mar-gap2 {
+    margin-left: var(--gap2);
+    margin-right: var(--gap2);
+}
+
+.h-mar-gap2 {
+    margin-top: var(--gap2);
+    margin-bottom: var(--gap2);
+}
