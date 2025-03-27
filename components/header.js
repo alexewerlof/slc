@@ -1,7 +1,7 @@
 import { loadComponent } from '../lib/fetch-template.js'
-import ExtLink from './ext-link.js'
+import { ExtLink } from './ext-link.js'
 
-export default {
+export const HeaderComponent = {
     template: await loadComponent(import.meta.url),
     components: {
         ExtLink,

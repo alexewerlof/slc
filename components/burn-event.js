@@ -4,7 +4,7 @@ import { arrToPolygonPoints } from '../lib/svg.js'
 const titleDistance = 8
 const arrowHeight = 5
 
-export default {
+export const BurnEventComponent = {
     template: await loadComponent(import.meta.url),
     props: {
         width: Number,

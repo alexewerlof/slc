@@ -1,10 +1,10 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
 import { isObj } from '../lib/validation.js'
-import HelpComponent from '../components/help.js'
-import ExtLink from '../components/ext-link.js'
+import { HelpComponent } from './help.js'
+import { ExtLink } from './ext-link.js'
 
-export default {
+export const ErrorBudgetComponent = {
     template: await loadComponent(import.meta.url),
     components: {
         HelpComponent,

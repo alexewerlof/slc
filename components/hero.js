@@ -1,6 +1,6 @@
 import { loadComponent } from '../lib/fetch-template.js'
 
-export default {
+export const HeroComponent = {
     template: await loadComponent(import.meta.url),
     props: {
         fileName: String,

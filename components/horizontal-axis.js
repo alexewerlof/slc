@@ -1,7 +1,7 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { arrToPolygonPoints } from '../lib/svg.js'
 
-export default {
+export const HorizontalAxisComponent = {
     template: await loadComponent(import.meta.url, true),
     props: {
         x1: Number,

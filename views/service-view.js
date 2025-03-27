@@ -4,8 +4,8 @@ import { Service } from '../models/service.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
 import IndicatorView from './indicator-view.js'
-import ShowHideComponent from '../components/show-hide.js'
-import ExtLink from '../components/ext-link.js'
+import { ShowHideComponent } from '../components/show-hide.js'
+import { ExtLink } from '../components/ext-link.js'
 import { icon } from '../lib/icons.js'
 
 export default {

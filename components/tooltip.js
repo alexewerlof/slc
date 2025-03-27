@@ -1,5 +1,5 @@
 import { loadComponent } from '../lib/fetch-template.js'
 
-export default {
+export const TooltipComponent = {
     template: await loadComponent(import.meta.url),
 }

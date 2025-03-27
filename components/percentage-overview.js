@@ -1,7 +1,6 @@
 import { loadComponent } from '../lib/fetch-template.js'
-import { numL10n } from '../lib/fmt.js'
 
-export default {
+export const PercentageOverviewComponent = {
     template: await loadComponent(import.meta.url),
     computed: {
         style() {

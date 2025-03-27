@@ -3,8 +3,8 @@ import { isInstance } from '../lib/validation.js'
 import { Bound } from '../models/bound.js'
 import { config } from '../config.js'
 import { boundCaption, percL10n } from '../lib/fmt.js'
-import ExtLink from '../components/ext-link.js'
-import ShowHideComponent from '../components/show-hide.js'
+import { ExtLink } from '../components/ext-link.js'
+import { ShowHideComponent } from '../components/show-hide.js'
 import { icon } from '../lib/icons.js'
 
 export default {

@@ -1,6 +1,6 @@
 import { loadComponent } from '../lib/fetch-template.js'
 
-export default {
+export const HelpComponent = {
     template: await loadComponent(import.meta.url),
     data() {
         return {

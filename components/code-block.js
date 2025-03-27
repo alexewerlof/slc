@@ -1,6 +1,6 @@
 import { loadComponent } from '../lib/fetch-template.js'
 
-export default {
+export const CodeBlockComponent = {
     template: await loadComponent(import.meta.url),
     props: {
         title: String,

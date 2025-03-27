@@ -4,7 +4,7 @@ import { loadComponent } from '../lib/fetch-template.js'
  * Use it like this in the parent:
  * <tabs-component v-model:selected-tab="selectedTab"></tabs-component>
  */
-export default {
+export const TabsComponent = {
     template: await loadComponent(import.meta.url),
     props: {
         selectedTab: String,

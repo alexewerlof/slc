@@ -2,7 +2,7 @@ import { config } from '../config.js'
 import { loadComponent } from '../lib/fetch-template.js'
 import { icon } from '../lib/icons.js'
 
-export default {
+export const FeedbackBlobComponent = {
     template: await loadComponent(import.meta.url),
     methods: {
         icon,
