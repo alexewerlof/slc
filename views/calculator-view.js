@@ -2,9 +2,9 @@ import { loadComponent } from '../lib/fetch-template.js'
 import { config } from '../config.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '../lib/fmt.js'
 import { icon } from '../lib/icons.js'
-import AlertComponent from '../views/alert-view.js'
-import IndicatorComponent from '../views/indicator-view.js'
-import ObjectiveComponent from '../views/objective-view.js'
+import { AlertComponent } from '../views/alert-view.js'
+import { IndicatorComponent } from '../views/indicator-view.js'
+import { ObjectiveComponent } from '../views/objective-view.js'
 import { ExtLink } from '../components/ext-link.js'
 import { HelpComponent } from '../components/help.js'
 import { AlertChartComponent } from '../components/alert-chart.js'
@@ -16,7 +16,7 @@ import { Calculator } from '../models/calculator.js'
 import { percentToRatio } from '../lib/math.js'
 import { isInstance } from '../lib/validation.js'
 
-export default {
+export const CalculatorComponent = {
     template: await loadComponent(import.meta.url, true),
     props: {
         calculator: {

@@ -3,12 +3,12 @@ import { isInstance } from '../lib/validation.js'
 import { Service } from '../models/service.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
-import IndicatorView from './indicator-view.js'
+import { IndicatorComponent } from './indicator-view.js'
 import { ShowHideComponent } from '../components/show-hide.js'
 import { ExtLink } from '../components/ext-link.js'
 import { icon } from '../lib/icons.js'
 
-export default {
+export const ServiceComponent = {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {
@@ -28,7 +28,7 @@ export default {
     },
     components: {
         ExtLink,
-        IndicatorView,
+        IndicatorComponent,
         ShowHideComponent,
     },
 }

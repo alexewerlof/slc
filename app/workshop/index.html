@@ -218,7 +218,7 @@
                         v-for="provider of assessment.providers"
                         title="Provider"
                         :name="provider">
-                        <provider-view :provider="provider"></provider-view>
+                        <provider-component :provider="provider"></provider-component>
                     </show-hide-component>
                 </div>
 
@@ -283,7 +283,7 @@
                         v-for="consumer of assessment.consumers"
                         title="Consumer"
                         :name="consumer">
-                        <consumer-view :consumer="consumer"></consumer-view>
+                        <consumer-component :consumer="consumer"></consumer-component>
                     </show-hide-component>
                 </div>
 
@@ -359,7 +359,7 @@
                             v-for="failure of service.failures"
                             title="Failure"
                             :name="failure">
-                            <failure-view :failure="failure"></failure-view>
+                            <failure-component :failure="failure"></failure-component>
                         </show-hide-component>
                         <div class="annotated">
                             <div class="annotated__controls">
@@ -424,7 +424,7 @@
                         v-for="failure of assessment.allFailures"
                         title="Risk"
                         :name="`${failure.consequence} ${icon('impact')} ${failure.businessImpact}`">
-                        <risk-view :failure="failure"></risk-view>
+                        <risk-component :failure="failure"></risk-component>
                 </div>
 
                 <div v-if="currentStep === 5">
@@ -433,9 +433,9 @@
                         Each event identifies one or more failures.
                     </p>
 
-                    <service-metric-view
+                    <service-metric-component
                         v-for="service of assessment.allServices"
-                        :service="service"></service-metric-view>
+                        :service="service"></service-metric-component>
                 </div>
 
                 <div v-if="currentStep === 6">
@@ -443,11 +443,11 @@
                         v-for="metric of assessment.allMetrics"
                         title="Metric"
                         :name="metric">
-                        <event-view :metric="metric"></event-view>
+                        <event-component :metric="metric"></event-component>
                 </div>
 
                 <div v-if="currentStep === 7">
-                    <summary-view :assessment="assessment"></summary-view>
+                    <summary-component :assessment="assessment"></summary-component>
                 </div>
 
                 <div v-if="currentStep === 8">

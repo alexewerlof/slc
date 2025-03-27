@@ -2,13 +2,13 @@ import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
-import IndicatorView from './indicator-view.js'
+import { IndicatorComponent } from './indicator-view.js'
 import { ShowHideComponent } from '../components/show-hide.js'
 import { ExtLink } from '../components/ext-link.js'
 import { Consumption } from '../models/consumption.js'
 import { icon } from '../lib/icons.js'
 
-export default {
+export const ConsumptionComponent = {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {
@@ -28,7 +28,7 @@ export default {
     },
     components: {
         ExtLink,
-        IndicatorView,
+        IndicatorComponent,
         ShowHideComponent,
     },
 }

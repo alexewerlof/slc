@@ -3,7 +3,6 @@ import { isInstance } from '../lib/validation.js'
 import { Objective } from '../models/objective.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
-import AlertView from './alert-view.js'
 import { icon } from '../lib/icons.js'
 import { PercentageOverviewComponent } from '../components/percentage-overview.js'
 import { ShowHideComponent } from '../components/show-hide.js'
@@ -13,7 +12,7 @@ import { ErrorBudgetComponent } from '../components/error-budget.js'
 import { CodeBlockComponent } from '../components/code-block.js'
 import { FormulaComponent } from '../components/formula.js'
 
-export default {
+export const ObjectiveComponent = {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {
@@ -32,7 +31,6 @@ export default {
         numL10n,
     },
     components: {
-        AlertView,
         CodeBlockComponent,
         ErrorBudgetComponent,
         ExtLink,

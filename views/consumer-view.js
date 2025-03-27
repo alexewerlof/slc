@@ -5,10 +5,10 @@ import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
 import { ShowHideComponent } from '../components/show-hide.js'
 import { ExtLink } from '../components/ext-link.js'
-import ConsumptionView from './consumption-view.js'
+import { ConsumptionComponent } from './consumption-view.js'
 import { icon } from '../lib/icons.js'
 
-export default {
+export const ConsumerComponent = {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {
@@ -28,7 +28,7 @@ export default {
     },
     components: {
         ExtLink,
-        ConsumptionView,
+        ConsumptionComponent,
         ShowHideComponent,
     },
 }

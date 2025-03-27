@@ -10,7 +10,7 @@ import { CodeBlockComponent } from '../../components/code-block.js'
 import { percentToRatio } from '../../lib/math.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '../../lib/fmt.js'
 import { stateToUrl } from '../../lib/share.js'
-import CalculatorComponent from '../../views/calculator-view.js'
+import { CalculatorComponent } from '../../views/calculator-view.js'
 import { Calculator } from '../../models/calculator.js'
 
 export const app = createApp({

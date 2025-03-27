@@ -7,7 +7,7 @@ import { ExtLink } from '../components/ext-link.js'
 import { icon } from '../lib/icons.js'
 import { Condition } from '../models/condition.js'
 
-export default {
+export const ConditionComponent = {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {

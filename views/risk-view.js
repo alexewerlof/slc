@@ -6,7 +6,7 @@ import { ExtLink } from '../components/ext-link.js'
 import { Failure } from '../models/failure.js'
 import { icon } from '../lib/icons.js'
 
-export default {
+export const RiskComponent = {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {

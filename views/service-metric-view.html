@@ -38,8 +38,8 @@
         v-for="metric in service.metrics"
         title="Metric"
         :name="metric">
-        <metric-view
-            :metric="metric"></metric-view>
+        <metric-component
+            :metric="metric"></metric-component>
     </show-hide-component>
 
     <div class="annotated" v-if="service.failures.length">

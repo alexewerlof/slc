@@ -12,7 +12,7 @@ import { BurnRateComponent } from '../components/burn-rate.js'
 import { CodeBlockComponent } from '../components/code-block.js'
 import { FormulaComponent } from '../components/formula.js'
 
-export default {
+export const AlertComponent = {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {

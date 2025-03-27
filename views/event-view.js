@@ -5,9 +5,9 @@ import { percL10n } from '../lib/fmt.js'
 import { ExtLink } from '../components/ext-link.js'
 import { Metric } from '../models/metric.js'
 import { icon } from '../lib/icons.js'
-import ConditionView from './condition-view.js'
+import { ConditionComponent } from './condition-view.js'
 
-export default {
+export const EventComponent = {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {
@@ -26,6 +26,6 @@ export default {
     },
     components: {
         ExtLink,
-        ConditionView,
+        ConditionComponent,
     },
 }

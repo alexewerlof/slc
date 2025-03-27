@@ -1,18 +1,18 @@
 import { createApp } from '../../vendor/vue.js'
-import StepsComponent from '../../components/steps.js'
-import ShowHideComponent from '../../components/show-hide.js'
-import ExtLink from '../../components/ext-link.js'
-import ProviderView from '../../views/provider-view.js'
-import ConsumerView from '../../views/consumer-view.js'
-import EventView from '../../views/event-view.js'
-import FailureView from '../../views/failure-view.js'
-import RiskView from '../../views/risk-view.js'
-import ServiceMetricView from '../../views/service-metric-view.js'
-import SummaryView from '../../views/summary-view.js'
 import { loadJson } from '../../lib/share.js'
-import FeedbackBlobComponent from '../../components/feedback-blob.js'
-import FooterComponent from '../../components/footer.js'
-import HeroComponent from '../../components/hero.js'
+import { StepsComponent } from '../../components/steps.js'
+import { ShowHideComponent } from '../../components/show-hide.js'
+import { ExtLink } from '../../components/ext-link.js'
+import { ProviderComponent } from '../../views/provider-view.js'
+import { ConsumerComponent } from '../../views/consumer-view.js'
+import { EventComponent } from '../../views/event-view.js'
+import { FailureComponent } from '../../views/failure-view.js'
+import { RiskComponent } from '../../views/risk-view.js'
+import { ServiceMetricComponent } from '../../views/service-metric-view.js'
+import { SummaryComponent } from '../../views/summary-view.js'
+import { FeedbackBlobComponent } from '../../components/feedback-blob.js'
+import { FooterComponent } from '../../components/footer.js'
+import { HeroComponent } from '../../components/hero.js'
 
 const exampleJson = await loadJson('../workshop/example.json')
 
@@ -49,13 +49,13 @@ const app = createApp({
         }
     },
     components: {
-        ProviderView,
-        ConsumerView,
-        EventView,
-        FailureView,
-        RiskView,
-        ServiceMetricView,
-        SummaryView,
+        ProviderComponent,
+        ConsumerComponent,
+        EventComponent,
+        FailureComponent,
+        RiskComponent,
+        ServiceMetricComponent,
+        SummaryComponent,
         FeedbackBlobComponent,
         FooterComponent,
         HeroComponent,
