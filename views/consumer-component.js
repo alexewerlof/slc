@@ -1,14 +1,14 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
+import { Consumer } from '../models/consumer.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
-import { IndicatorComponent } from './indicator-view.js'
 import { ShowHideComponent } from '../components/show-hide.js'
 import { ExtLink } from '../components/ext-link.js'
-import { Consumption } from '../models/consumption.js'
+import { ConsumptionComponent } from './consumption-component.js'
 import { icon } from '../lib/icons.js'
 
-export const ConsumptionComponent = {
+export const ConsumerComponent = {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {
@@ -16,9 +16,9 @@ export const ConsumptionComponent = {
         },
     },
     props: {
-        consumption: {
+        consumer: {
             type: Object,
-            validator: (v) => isInstance(v, Consumption),
+            validator: (v) => isInstance(v, Consumer),
         },
     },
     methods: {
@@ -28,7 +28,7 @@ export const ConsumptionComponent = {
     },
     components: {
         ExtLink,
-        IndicatorComponent,
+        ConsumptionComponent,
         ShowHideComponent,
     },
 }

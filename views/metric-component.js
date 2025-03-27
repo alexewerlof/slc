@@ -1,14 +1,13 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
-import { Consumer } from '../models/consumer.js'
 import { config } from '../config.js'
-import { numL10n, percL10n } from '../lib/fmt.js'
-import { ShowHideComponent } from '../components/show-hide.js'
+import { percL10n } from '../lib/fmt.js'
 import { ExtLink } from '../components/ext-link.js'
-import { ConsumptionComponent } from './consumption-view.js'
+import { Metric } from '../models/metric.js'
 import { icon } from '../lib/icons.js'
+import { ConditionComponent } from './condition-component.js'
 
-export const ConsumerComponent = {
+export const MetricComponent = {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {
@@ -16,19 +15,17 @@ export const ConsumerComponent = {
         },
     },
     props: {
-        consumer: {
+        metric: {
             type: Object,
-            validator: (v) => isInstance(v, Consumer),
+            validator: (v) => isInstance(v, Metric),
         },
     },
     methods: {
         icon,
         percL10n,
-        numL10n,
     },
     components: {
         ExtLink,
-        ConsumptionComponent,
-        ShowHideComponent,
+        ConditionComponent,
     },
 }

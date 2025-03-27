@@ -1,14 +1,14 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
-import { Service } from '../models/service.js'
+import { Assessment } from '../models/assessment.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
-import { MetricComponent } from './metric-view.js'
+import { ServiceComponent } from './service-component.js'
 import { ShowHideComponent } from '../components/show-hide.js'
 import { ExtLink } from '../components/ext-link.js'
 import { icon } from '../lib/icons.js'
 
-export const ServiceMetricComponent = {
+export const SummaryComponent = {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {
@@ -16,9 +16,9 @@ export const ServiceMetricComponent = {
         },
     },
     props: {
-        service: {
+        assessment: {
             type: Object,
-            validator: (v) => isInstance(v, Service),
+            validator: (v) => isInstance(v, Assessment),
         },
     },
     methods: {
@@ -28,7 +28,7 @@ export const ServiceMetricComponent = {
     },
     components: {
         ExtLink,
-        MetricComponent,
+        ServiceComponent,
         ShowHideComponent,
     },
 }
