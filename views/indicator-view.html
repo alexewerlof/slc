@@ -5,7 +5,12 @@
             Title
             <div class="subtle-hint">Make your SLI easier to recognize</div>
         </label>
-        <input id="sli-title-input" type="text" v-model="indicator.title" :placeholder="config.title.placeholder">
+        <input id="sli-title-input"
+            type="text"
+            v-model="indicator.title"
+            :minlength="config.title.minLength"
+            :maxlength="config.title.maxLength"
+            :placeholder="config.title.placeholder">
     </div>
 
     <div class="input-group">
@@ -18,6 +23,8 @@
             rows="2"
             type="text"
             v-model="indicator.description"
+            :minlength="config.description.minLength"
+            :maxlength="config.description.maxLength"
             :placeholder="config.description.placeholder"></textarea>
     </div>
 </fieldset>
@@ -250,7 +257,10 @@
         <input
             id="sli-metric-name"
             type="text"
-            v-model="indicator.metricName">
+            v-model="indicator.metricName"
+            :minlength="config.metricName.minLength"
+            :maxlength="config.metricName.maxLength"
+            :placeholder="config.metricName.placeholder">
     </div>
 
     <fieldset>
@@ -276,6 +286,8 @@
                 id="sli-metric-unit"
                 type="text"
                 v-model="indicator.metricUnit"
+                :minlength="config.metricUnit.minLength"
+                :maxlength="config.metricUnit.maxLength"
                 :placeholder="config.metricUnit.placeholder">
         </div>
         <div class="input-group">

@@ -64,30 +64,24 @@ export class Alert {
         }
         const alert = new Alert(objective)
 
-        if (isNum(data.burnRate)) {
-            if (inRange(data.burnRate, config.burnRate.min, config.burnRate.max)) {
-                alert.burnRate = data.burnRate
-            } else {
-                alert.burnRate = config.burnRate.default
-            }
+        if (inRange(data.burnRate, config.burnRate.min, config.burnRate.max)) {
+            alert.burnRate = data.burnRate
+        } else {
+            alert.burnRate = config.burnRate.default
         }
 
-        if (isNum(data.longWindowPerc)) {
-            if (inRange(data.longWindowPerc, config.longWindowPerc.min, config.longWindowPerc.max)) {
-                alert.longWindowPerc = data.longWindowPerc
-            } else {
-                alert.longWindowPerc = config.longWindowPerc.default
-            }
+        if (inRange(data.longWindowPerc, config.longWindowPerc.min, config.longWindowPerc.max)) {
+            alert.longWindowPerc = data.longWindowPerc
+        } else {
+            alert.longWindowPerc = config.longWindowPerc.default
         }
 
-        alert.useShortWindow = isNum(data.shortWindowDivider)
-
-        if (alert.useShortWindow) {
-            if (inRange(data.shortWindowDivider, config.shortWindowDivider.min, config.shortWindowDivider.max)) {
-                alert.shortWindowDivider = data.shortWindowDivider
-            } else {
-                alert.shortWindowDivider = config.shortWindowDivider.default
-            }
+        if (inRange(data.shortWindowDivider, config.shortWindowDivider.min, config.shortWindowDivider.max)) {
+            alert.shortWindowDivider = data.shortWindowDivider
+            alert.useShortWindow = true
+        } else {
+            alert.shortWindowDivider = config.shortWindowDivider.default
+            alert.useShortWindow = false
         }
 
         return alert

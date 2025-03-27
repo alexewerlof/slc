@@ -12,12 +12,16 @@ export const config = fz({
     // This version will be changed when the URL parameters change
     urlVer: 3,
     title: fz({
+        minLength: 10,
+        maxLength: 100,
         default: '',
-        placeholder: 'My SLI',
+        placeholder: 'Availability, Latency, Success Rate, etc.',
     }),
     description: fz({
+        minLength: 0,
+        maxLength: 500,
         default: '',
-        placeholder: 'Description for my SLI',
+        placeholder: 'What is the purpose of this indicator and how is it measured?',
     }),
     timeslice: fz({
         min: 1,
@@ -105,11 +109,16 @@ export const config = fz({
         ]),
     }),
     metricName: fz({
-        default: 'response_latency',
+        default: '',
+        placeholder: 'e.g. response_latency, error_rate, items_processed',
+        minLength: 3,
+        maxLength: 300,
     }),
     metricUnit: fz({
-        default: 'ms',
+        default: '',
         placeholder: 'e.g. ms, errors, items, etc.',
+        minLength: 1,
+        maxLength: 100,
     }),
     lowerBound: fz({
         possibleValues: fz(['', 'gt', 'ge']),

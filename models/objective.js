@@ -157,23 +157,31 @@ export class Objective {
         }
         const objective = new Objective(indicator)
 
-        if (isPosInt(data.target)) {
+        if (inRange(data.target, config.slo.min, config.slo.max)) {
             objective.target = data.target
+        } else {
+            objective.target = config.slo.default
         }
 
-        if (isPosInt(data.windowDays)) {
+        if (inRange(data.windowDays, config.windowDays.min, config.windowDays.max)) {
             objective.windowDays = data.windowDays
+        } else {
+            objective.windowDays = config.windowDays.default
         }
 
         if (objective.indicator.lowerBound) {
-            if (isNum(data.lowerThreshold)) {
+            if (inRange(data.lowerThreshold, config.lowerThreshold.min, config.lowerThreshold.max)) {
                 objective.lowerThreshold = data.lowerThreshold
+            } else {
+                objective.lowerThreshold = config.lowerThreshold.default
             }
         }
 
         if (objective.indicator.upperBound) {
-            if (isNum(data.upperThreshold)) {
+            if (inRange(data.upperThreshold, config.upperThreshold.min, config.upperThreshold.max)) {
                 objective.upperThreshold = data.upperThreshold
+            } else {
+                objective.upperThreshold = config.upperThreshold.default
             }
         }
 

@@ -1,7 +1,7 @@
 import { config } from '../config.js'
 import { entity2symbolNorm } from '../lib/fmt.js'
 import { humanTimeSlices } from '../lib/time.js'
-import { inRange, isInstance, isObj, isPosInt, isStr } from '../lib/validation.js'
+import { inRange, isInstance, isObj, isPosInt, isStr, isStrLen } from '../lib/validation.js'
 import { Formula } from './formula.js'
 import { Objective } from './objective.js'
 
@@ -129,19 +129,19 @@ export class Indicator {
         }
         const indicator = new Indicator()
 
-        if (isStr(data.displayName)) {
+        if (isStrLen(data.displayName, config.title.minLength, config.title.maxLength)) {
             indicator.title = data.displayName
         }
 
-        if (isStr(data.description)) {
+        if (isStrLen(data.description, config.description.minLength, config.description.maxLength)) {
             indicator.description = data.description
         }
 
-        if (isStr(data.metricName)) {
+        if (isStrLen(data.metricName, config.metricName.minLength, config.metricName.maxLength)) {
             indicator.metricName = data.metricName
         }
 
-        if (isStr(data.metricUnit)) {
+        if (isStrLen(data.metricUnit, config.metricUnit.minLength, config.metricUnit.maxLength)) {
             indicator.metricUnit = data.metricUnit
         }
 

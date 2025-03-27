@@ -221,3 +221,11 @@ label.spaced + label.spaced {
     font-size: smaller;
     font-family: var(--body-font-family);
 }
+
+input[type='search']:invalid,
+input[type='text']:invalid,
+input[type='number']:invalid,
+select:invalid,
+textarea:invalid {
+    border-color: var(--brand-red);
+}
