@@ -356,38 +356,7 @@
         </p>
     </help-component>
 </h4>
+
 <code-block-component title="Alert When:">
-    <s-l-fraction-component
-        :indicator="alert.objective.indicator"
-        :objective="alert.objective"
-        :time-period="alert.longFailureWindow.humanSec"
-        time-label-id="alert-error-budget-perc"></s-l-fraction-component>
-    <code>
-        <span class="punct"> ≤ </span>
-        <label for="slo-int-input">
-            <span class="const">
-                {{ percL10n(alert.objective.target) }}
-            </span>
-        </label>
-    </code>
-    <code v-if="alert.useShortWindow">
-        <br>
-        <span class="punct">&&</span>
-        <br>
-        <s-l-fraction-component
-            :indicator="alert.objective.indicator"
-            :objective="alert.objective"
-            :time-period="alert.shortFailureWindow.humanSec"
-            time-label-id="alert-short-window-divider-input"></s-l-fraction-component>
-        <div>
-            <code>
-                <span class="punct"> ≤ </span>
-                <label for="slo-int-input">
-                    <span class="const">
-                        {{ percL10n(alert.objective.target) }}
-                    </span>
-                </label>
-            </code>
-        </div>
-    </code>
+    <formula-component :formula="alert.formula"></formula-component>
 </code-block-component>

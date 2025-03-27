@@ -9,20 +9,20 @@ import { icon } from '../lib/icons.js'
 import HelpComponent from '../components/help.js'
 import AlertChartComponent from '../components/alert-chart.js'
 import BurnRateComponent from '../components/burn-rate.js'
-import SLFractionComponent from '../components/sl-fraction.js'
 import CodeBlockComponent from '../components/code-block.js'
+import FormulaComponent from '../components/formula.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {
             return config
-        }
+        },
     },
     props: {
         alert: {
             type: Object,
-            validator: v => isInstance(v, Alert),
+            validator: (v) => isInstance(v, Alert),
         },
     },
     methods: {
@@ -30,12 +30,12 @@ export default {
         icon,
     },
     components: {
-        ExtLink,
-        ShowHideComponent,
-        HelpComponent,
         AlertChartComponent,
         BurnRateComponent,
-        SLFractionComponent,
         CodeBlockComponent,
+        ExtLink,
+        FormulaComponent,
+        HelpComponent,
+        ShowHideComponent,
     },
 }

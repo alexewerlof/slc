@@ -1,8 +1,9 @@
 import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
-import { percL10n } from '../lib/fmt.js'
+import { entity2symbolNorm, percL10n } from '../lib/fmt.js'
 import { toFixed } from '../lib/math.js'
 import { inRange, isInstance, isNum, isObj } from '../lib/validation.js'
+import { Formula } from './formula.js'
 import { Objective } from './objective.js'
 
 export class Alert {
@@ -91,6 +92,38 @@ export class Alert {
         }
 
         return alert
+    }
+
+    get formula() {
+        const ret = this.objective.formula.clone()
+        ret.pop()
+
+        ret.addExpr(this.longFailureWindow.humanSec, 'alert-error-budget-perc')
+        ret.addSpace()
+
+        ret.addPunct(entity2symbolNorm('le'))
+        ret.addSpace()
+        ret.addExpr(percL10n(this.objective.target), 'slo-int-input')
+
+        if (!this.useShortWindow) {
+            return ret
+        }
+
+        ret.addBreak()
+        ret.addPunct('&&')
+        ret.addBreak()
+
+        ret.merge(this.objective.formula)
+        ret.pop()
+
+        ret.addExpr(this.shortFailureWindow.humanSec, 'alert-short-window-divider-input')
+        ret.addSpace()
+
+        ret.addPunct(entity2symbolNorm('le'))
+        ret.addSpace()
+        ret.addExpr(percL10n(this.objective.target), 'slo-int-input')
+
+        return ret
     }
 
     toString() {

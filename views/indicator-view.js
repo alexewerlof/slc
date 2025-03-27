@@ -9,21 +9,21 @@ import { Indicator } from '../models/indicator.js'
 import ExtLink from '../components/ext-link.js'
 import { icon } from '../lib/icons.js'
 import HelpComponent from '../components/help.js'
-import SLFractionComponent from '../components/sl-fraction.js'
 import InlineSelectComponent from '../components/inline-select.js'
 import CodeBlockComponent from '../components/code-block.js'
+import FormulaComponent from '../components/formula.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {
             return config
-        }
+        },
     },
     props: {
         indicator: {
             type: Object,
-            validator: v => isInstance(v, Indicator),
+            validator: (v) => isInstance(v, Indicator),
         },
     },
     methods: {
@@ -34,13 +34,13 @@ export default {
         hasComparators,
     },
     components: {
-        ExtLink,
         BoundView,
+        CodeBlockComponent,
+        ExtLink,
+        FormulaComponent,
+        HelpComponent,
+        InlineSelectComponent,
         ObjectiveView,
         ShowHideComponent,
-        HelpComponent,
-        SLFractionComponent,
-        InlineSelectComponent,
-        CodeBlockComponent,
     },
 }

@@ -1,6 +1,8 @@
 import { config } from '../config.js'
+import { entity2symbolNorm } from '../lib/fmt.js'
 import { humanTimeSlices } from '../lib/time.js'
 import { inRange, isInstance, isObj, isPosInt, isStr } from '../lib/validation.js'
+import { Formula } from './formula.js'
 import { Objective } from './objective.js'
 
 /*
@@ -180,6 +182,41 @@ export class Indicator {
         }
 
         return indicator
+    }
+
+    get formula() {
+        const ret = new Formula()
+
+        ret.addFunct('Percentage_of')
+        ret.addSpace()
+        ret.addExpr(this.eventUnitNorm, 'sli-event-unit')
+        ret.addSpace()
+        ret.addFunct('where')
+        ret.addSpace()
+
+        if (this.lowerBound) {
+            ret.addConst('$LT', 'lower-threshold-input')
+            ret.addSpace()
+            ret.addPunct(entity2symbolNorm(this.lowerBound), 'lower-bound-type')
+            ret.addSpace()
+        }
+
+        ret.addExpr(this.metricName, 'sli-metric-name')
+
+        if (this.upperBound) {
+            ret.addSpace()
+            ret.addPunct(entity2symbolNorm(this.upperBound), 'upper-bound-type')
+            ret.addSpace()
+            ret.addConst('$UT', 'upper-threshold-input')
+        }
+
+        ret.addSpace()
+        ret.addFunct('during')
+        ret.addSpace()
+
+        ret.addConst('$Window', 'slo-window-unit-multiplier')
+
+        return ret
     }
 
     toString() {

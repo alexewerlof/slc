@@ -301,11 +301,7 @@
         </p>
     </help-component>
 </h4>
-<code-block-component title="SLO:">
-    <s-l-fraction-component
-        :indicator="objective.indicator"
-        :objective="objective"
-        :time-period="objective.window.humanSec"
-        time-label-id="slo-window-unit-multiplier"
-    ></s-l-fraction-component>
+
+<code-block-component title="Service Level Objective">
+    <formula-component :formula="objective.formula"></formula-component>
 </code-block-component>

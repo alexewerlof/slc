@@ -1,11 +1,12 @@
 import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
-import { percL10n } from '../lib/fmt.js'
+import { entity2symbolNorm, percL10n } from '../lib/fmt.js'
 import { clamp, percent, toFixed } from '../lib/math.js'
 import { daysToSeconds, secondsToDays } from '../lib/time.js'
 import { inRange, isInstance, isNum, isObj, isPosInt } from '../lib/validation.js'
 import { Window } from '../lib/window.js'
 import { Alert } from './alert.js'
+import { Formula } from './formula.js'
 import { Indicator } from './indicator.js'
 
 export class Objective {
@@ -183,6 +184,43 @@ export class Objective {
         }
 
         return objective
+    }
+
+    get formula() {
+        const ret = new Formula()
+
+        ret.addFunct('Percentage_of')
+        ret.addSpace()
+        ret.addExpr(this.indicator.eventUnitNorm, 'sli-event-unit')
+        ret.addSpace()
+        ret.addFunct('where')
+        ret.addSpace()
+
+        if (this.indicator.lowerBound) {
+            ret.addExpr(this.lowerThreshold, 'lower-threshold-input')
+            ret.addExpr(this.indicator.metricUnit, 'sli-metric-unit')
+            ret.addSpace()
+            ret.addPunct(entity2symbolNorm(this.indicator.lowerBound), 'lower-bound-type')
+            ret.addSpace()
+        }
+
+        ret.addExpr(this.indicator.metricName, 'sli-metric-name')
+
+        if (this.indicator.upperBound) {
+            ret.addSpace()
+            ret.addPunct(entity2symbolNorm(this.indicator.upperBound), 'upper-bound-type')
+            ret.addSpace()
+            ret.addExpr(this.upperThreshold, 'upper-threshold-input')
+            ret.addExpr(this.indicator.metricUnit, 'sli-metric-unit')
+        }
+
+        ret.addSpace()
+        ret.addFunct('during')
+        ret.addSpace()
+
+        ret.addExpr(this.window.humanSec, 'slo-window-unit-multiplier')
+
+        return ret
     }
 
     toString() {

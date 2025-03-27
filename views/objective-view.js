@@ -9,21 +9,21 @@ import ShowHideComponent from '../components/show-hide.js'
 import ExtLink from '../components/ext-link.js'
 import HelpComponent from '../components/help.js'
 import ErrorBudgetComponent from '../components/error-budget.js'
-import SLFractionComponent from '../components/sl-fraction.js'
 import { icon } from '../lib/icons.js'
 import CodeBlockComponent from '../components/code-block.js'
+import FormulaComponent from '../components/formula.js'
 
 export default {
     template: await loadComponent(import.meta.url, true),
     computed: {
         config() {
             return config
-        }
+        },
     },
     props: {
         objective: {
             type: Object,
-            validator: v => isInstance(v, Objective),
+            validator: (v) => isInstance(v, Objective),
         },
     },
     methods: {
@@ -33,12 +33,12 @@ export default {
     },
     components: {
         AlertView,
+        CodeBlockComponent,
+        ErrorBudgetComponent,
         ExtLink,
+        FormulaComponent,
+        HelpComponent,
         PercentageOverviewComponent,
         ShowHideComponent,
-        HelpComponent,
-        ErrorBudgetComponent,
-        SLFractionComponent,
-        CodeBlockComponent,
     },
 }

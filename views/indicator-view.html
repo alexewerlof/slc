@@ -409,9 +409,7 @@
         </math>
     </help-component>
 </h4>
-<code-block-component title="Normalized SLI:">
-    <s-l-fraction-component
-        :indicator="indicator"
-        time-period="SLO Window"
-        time-label-id="slo-window-unit-multiplier"></s-l-fraction-component>
+
+<code-block-component title="Service Level Status">
+    <formula-component :formula="indicator.formula">x</formula-component>
 </code-block-component>

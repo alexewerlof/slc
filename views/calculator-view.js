@@ -11,7 +11,6 @@ import ErrorBudgetComponent from '../components/error-budget.js'
 import IndicatorViewComponent from '../views/indicator-view.js'
 import InlineSelectComponent from '../components/inline-select.js'
 import ObjectiveViewComponent from '../views/objective-view.js'
-import SLFractionComponent from '../components/sl-fraction.js'
 import CodeBlockComponent from '../components/code-block.js'
 import { Calculator } from '../models/calculator.js'
 import { percentToRatio } from '../lib/math.js'
@@ -49,7 +48,6 @@ export default {
         IndicatorViewComponent,
         InlineSelectComponent,
         ObjectiveViewComponent,
-        SLFractionComponent,
         CodeBlockComponent,
     },
 }

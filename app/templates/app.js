@@ -3,7 +3,6 @@ import HelpComponent from '../../components/help.js'
 import ExtLink from '../../components/ext-link.js'
 import HeaderComponent from '../../components/header.js'
 import FooterComponent from '../../components/footer.js'
-import SLFractionComponent from '../../components/sl-fraction.js'
 import { searchTemplates } from './templates.js'
 import { isNum } from '../../lib/validation.js'
 import { humanTimeSlices } from '../../lib/time.js'
@@ -41,6 +40,5 @@ export const app = createApp({
         ExtLink,
         HeaderComponent,
         FooterComponent,
-        SLFractionComponent,
     },
 })
