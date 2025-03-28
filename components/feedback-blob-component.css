@@ -1,4 +1,4 @@
-.feedback-blob {
+.feedback-blob-component {
     position: fixed;
     bottom: var(--gap2);
     right: var(--gap2);
@@ -12,7 +12,7 @@
     transition: transform 200ms ease, box-shadow 200ms ease;
 }
 
-.feedback-blob:hover {
+.feedback-blob-component:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     color: var(--background-color);

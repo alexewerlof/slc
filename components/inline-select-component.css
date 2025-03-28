@@ -1,6 +1,4 @@
-.inline-select {}
-
-.inline-select__buttons {
+.inline-select-component__buttons {
     display: inline-block;
     border: var(--bthick) solid var(--ui-border);
     margin: 0;
@@ -8,13 +6,11 @@
     box-shadow: 0 0 var(--gap) var(--bthick) var(--background-darker);
 }
 
-.inline-select__button {}
-
-.inline-select__buttons button + button {
+.inline-select-component__buttons button + button {
     margin-left: 0;
 }
 
-.inline-select__button--inactive {
+.inline-select-component__button--inactive {
     background-color: inherit;
     color: inherit;
     border: none;

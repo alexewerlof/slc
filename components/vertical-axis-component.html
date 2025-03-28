@@ -6,12 +6,12 @@
         :y1="y1"
         :y2="y2" />
     <text
-        class="axis-title axis-title--vertical"
+        class="axis__title axis__title--vertical"
         :x="x - 12"
         :y="y1 + 12">
         <slot></slot>
     </text>
     <polygon
-        class="axis-arrow"
+        class="axis__arrow"
         :points="arrowPoints" />
 </g>

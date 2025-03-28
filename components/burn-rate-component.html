@@ -1,4 +1,4 @@
-<svg v-bind:viewBox="viewBox" xmlns="http://www.w3.org/2000/svg">
+<svg v-bind:viewBox="viewBox" xmlns="http://www.w3.org/2000/svg" class="burn-rate-component">
     <horizontal-axis-component
         :x1="leftX"
         :x2="rightX"
@@ -14,7 +14,7 @@
     <!-- burn line -->
     <g>
         <line
-            class="burn-line"
+            class="burn-rate-component__burn-line"
             :x1="leftX"
             :x2="burnedX"
             :y1="bottomY"

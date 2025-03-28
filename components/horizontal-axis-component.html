@@ -7,12 +7,12 @@
         :y2="y" />
     <!-- horizontal axis title -->        
     <text
-        class="axis-title axis-title--horizontal"
+        class="axis__title axis__title--horizontal"
         :x="x2"
         :y="y + 18">
         <slot></slot>
     </text>
     <polygon
-        class="axis-arrow"
+        class="axis__arrow"
         :points="arrowPoints" />
 </g>

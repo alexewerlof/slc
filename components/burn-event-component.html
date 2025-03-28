@@ -1,4 +1,4 @@
-<g class="burn-event">
+<g class="burn-event-component">
     <line
         :x1="x"
         :x2="x"
@@ -11,13 +11,13 @@
         :text-anchor="textAnchor"
         :style="textStyle"
         >
-        <tspan class="burn-event__title">{{ title }}</tspan>
+        <tspan class="burn-event-component__title">{{ title }}</tspan>
         <tspan v-for="textLine of textLines"
             :x="titleX"
             dy="1.3em">{{ textLine }}</tspan>
     </text>
     <polygon
-        class="burn-event__arrow"
+        class="burn-event-component__arrow"
         :style="textStyle"
         :points="arrowPoints" />
 </g>

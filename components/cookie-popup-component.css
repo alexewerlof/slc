@@ -1,4 +1,4 @@
-.cookie-popup {
+.cookie-popup-component {
     max-width: 440px;
     padding: var(--gap);
     font-size: 1rem;
@@ -12,7 +12,7 @@
     inset: auto auto var(--gap3) var(--gap3);
 }
 
-.cookie-popup p {
+.cookie-popup-component p {
     margin-block: 0;
     padding: 0.5em 0;
 }

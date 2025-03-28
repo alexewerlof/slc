@@ -1,4 +1,4 @@
-footer {
+.footer-component {
     border-top: var(--bthick) solid var(--divider-color);
     padding: 4em 0;
     text-align: center;
@@ -7,6 +7,6 @@ footer {
     color: var(--primary-color);
 }
 
-.footer__logo {
+.footer-component__logo {
     width: 10em;
 }

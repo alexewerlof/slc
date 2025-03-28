@@ -22,7 +22,7 @@ header .logo {
     top: 0.1em;
 }
 
-.top-nav {
+.header-component__top-nav {
     position: sticky;
     top: 0;
     z-index: 1;
@@ -31,7 +31,7 @@ header .logo {
     text-align: center;
 }
 
-.top-nav li {
+.header-component__top-nav li {
     display: inline-block;
     padding: 0 1em;
 }

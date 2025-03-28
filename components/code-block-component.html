@@ -1,11 +1,11 @@
-<div class="code-block">
-    <div class="code-block__top-bar">
-        <div class="code-block__title">{{ title }}</div>
-        <div class="code-block__buttons">
+<div class="code-block-component">
+    <div class="code-block-component__top-bar">
+        <div class="code-block-component__title">{{ title }}</div>
+        <div class="code-block-component__buttons">
             <button class="button--small" type="button" @click="copy">Copy</button>
         </div>
     </div>
-    <div class="code-block__code-container" ref="codeRef">
+    <div class="code-block-component__code-container" ref="codeRef">
         <code><slot></slot></code>
     </div>
 </div>

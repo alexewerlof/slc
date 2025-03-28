@@ -1,11 +1,11 @@
-.tooltip {
+.tooltip-component {
     position: relative;
     display: inline-block;
     cursor: help;
     user-select: none;
 }
 
-.tooltip__icon {
+.tooltip-component__icon {
     border: var(--bthick) solid currentColor;
     background-color: rgb(from currentColor r g b / 0.2);
     border-radius: 50%;
@@ -16,7 +16,7 @@
     justify-content: center;
 }
 
-.tooltip .tooltiptext {
+.tooltip-component__text {
     position: absolute;
     visibility: hidden;
     opacity: 0;
@@ -33,7 +33,7 @@
     margin-left: -0.5em;
 }
 
-.tooltip:hover .tooltiptext {
+.tooltip-component:hover .tooltip-component__text {
     visibility: visible;
     opacity: 1;
 }

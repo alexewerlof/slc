@@ -3,25 +3,25 @@
     stroke-width: 2px;
 }
 
-.axis-arrow {
+.axis__arrow {
     fill: var(--primary-color);
 }
 
-.axis-title {
+.axis__title {
     font-family: var(--title-font-family);
     fill: var(--primary-color);
     font-size: 1.2rem;
 }
 
-.axis-title--horizontal {
+.axis__title--horizontal {
     text-anchor: end;
 }
 
-.axis-title--vertical {
+.axis__title--vertical {
     writing-mode: tb;
 }
 
-.burn-line {
+.burn-rate-component__burn-line {
     stroke: var(--brand-red);
     stroke-width: 1px;
     stroke-dasharray: 4px 2px;
