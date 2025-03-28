@@ -1,26 +1,3 @@
-.axis {
-    stroke: var(--primary-color);
-    stroke-width: 2px;
-}
-
-.axis__arrow {
-    fill: var(--primary-color);
-}
-
-.axis__title {
-    font-family: var(--title-font-family);
-    fill: var(--primary-color);
-    font-size: 1.2rem;
-}
-
-.axis__title--horizontal {
-    text-anchor: end;
-}
-
-.axis__title--vertical {
-    writing-mode: tb;
-}
-
 .burn-rate-component__burn-line {
     stroke: var(--brand-red);
     stroke-width: 1px;

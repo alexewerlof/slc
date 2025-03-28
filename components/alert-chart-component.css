@@ -1,26 +1,3 @@
-.axis {
-    stroke: var(--primary-color);
-    stroke-width: 2px;
-}
-
-.axis-arrow {
-    fill: var(--primary-color);
-}
-
-.axis-title {
-    font-family: var(--title-font-family);
-    fill: var(--primary-color);
-    font-size: 1.2rem;
-}
-
-.axis-title--horizontal {
-    text-anchor: end;
-}
-
-.axis-title--vertical {
-    writing-mode: tb;
-}
-
 .alert-chart-component__burn-line {
     stroke: var(--brand-red);
     stroke-width: 1px;

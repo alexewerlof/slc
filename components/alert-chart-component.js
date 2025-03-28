@@ -1,7 +1,6 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { BurnEventComponent } from './burn-event-component.js'
-import { VerticalAxisComponent } from './vertical-axis-component.js'
-import { HorizontalAxisComponent } from './horizontal-axis-component.js'
+import { AxisComponent } from './axis-component.js'
 
 export const AlertChartComponent = {
     template: await loadComponent(import.meta.url),
@@ -22,8 +21,7 @@ export const AlertChartComponent = {
     },
     components: {
         BurnEventComponent,
-        VerticalAxisComponent,
-        HorizontalAxisComponent,
+        AxisComponent,
     },
     computed: {
         viewBox() {

@@ -1,17 +1,13 @@
 <svg v-bind:viewBox="viewBox" xmlns="http://www.w3.org/2000/svg" class="alert-chart-component">
     <!-- horizontal axis -->
-    <horizontal-axis-component
-        :x1="leftX"
-        :x2="rightX"
-        :y="bottomY">
-        Time
-    </horizontal-axis-component>
-    <vertical-axis-component
-        :x="leftX"
-        :y1="topY"
-        :y2="bottomY">
-        Failures
-    </vertical-axis-component>
+    <axis-component
+        :topY="topY"
+        :rightX="rightX"
+        :bottomY="bottomY"
+        :leftX="leftX"
+        x-label="Time"
+        y-label="Failures">
+    </axis-component>
     <!-- burn line -->
     <g>
         <line
