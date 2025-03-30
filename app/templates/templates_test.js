@@ -1,5 +1,5 @@
 import { assert, test } from '../../vendor/deno.js'
-import { inRange, inRangePosInt, isDef, isStr } from '../../lib/validation.js'
+import { inRange, inRangePosInt, isArr, isDef, isStr } from '../../lib/validation.js'
 import { config } from '../../config.js'
 import { templates } from './templates.js'
 
@@ -85,7 +85,7 @@ for (const template of templates) {
         if (isDef(eventUnit)) {
             assert(isStr(eventUnit), `invalid "eventUnit" field: ${eventUnit}`)
         }
-        assert(Array.isArray(tags), `invalid "tags" field: ${tags}`)
+        assert(isArr(tags), `invalid "tags" field: ${tags}`)
         for (const tag of tags) {
             assert(isStr(tag), `invalid "tag" in the tags array: ${tag}`)
         }

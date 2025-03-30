@@ -1,5 +1,6 @@
 import { Indicator } from './indicator.js'
 import { nextIndex } from '../lib/math.js'
+import { isArr } from '../lib/validation.js'
 
 export class Calculator {
     indicators = []
@@ -87,7 +88,7 @@ export class Calculator {
     }
     static load(data) {
         const ret = new Calculator()
-        if (!Array.isArray(data?.state?.indicators)) {
+        if (!isArr(data?.state?.indicators)) {
             throw new TypeError(
                 `Expected an array of indicators in the state. State: ${JSON.stringify(state, null, 2)}, ${
                     JSON.stringify(state.indicators, null, 2)

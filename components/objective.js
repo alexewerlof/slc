@@ -3,7 +3,7 @@ import { FailureWindow } from '../lib/failure-window.js'
 import { entity2symbolNorm, percL10n } from '../lib/fmt.js'
 import { clamp, percent, toFixed } from '../lib/math.js'
 import { daysToSeconds, secondsToDays } from '../lib/time.js'
-import { inRange, isInstance, isObj } from '../lib/validation.js'
+import { inRange, isArr, isInstance, isObj } from '../lib/validation.js'
 import { Window } from '../lib/window.js'
 import { Alert } from './alert.js'
 import { Formula } from './formula.js'
@@ -185,7 +185,7 @@ export class Objective {
             }
         }
 
-        if (Array.isArray(data.alerts)) {
+        if (isArr(data.alerts)) {
             for (const alertData of data.alerts) {
                 objective.addAlert(Alert.load(alertData, objective))
             }

@@ -1,5 +1,6 @@
 import { loadComponent } from '../lib/fetch-template.js'
 import { arrToPolygonPoints } from '../lib/svg.js'
+import { isArr } from '../lib/validation.js'
 
 const titleDistance = 8
 const arrowHeight = 5
@@ -23,7 +24,7 @@ export const BurnEventComponent = {
         textLines: {
             type: Array,
             default: () => ['Missing textLines'],
-            validator: (value) => Array.isArray(value) && value.every((item) => typeof item === 'string'),
+            validator: (value) => isArr(value) && value.every((item) => typeof item === 'string'),
         },
         thickness: {
             type: Number,
