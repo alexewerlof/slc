@@ -1,7 +1,7 @@
 import { config } from '../config.js'
 import { entity2symbolNorm } from '../lib/fmt.js'
 import { humanTimeSlices } from '../lib/time.js'
-import { inRange, isInstance, isObj, isPosInt, isStr, isStrLen } from '../lib/validation.js'
+import { inRange, isArr, isDef, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Formula } from './formula.js'
 import { Objective } from './objective.js'
 
@@ -25,44 +25,155 @@ Metric data points impact its condition for good||bad:
 */
 
 export class Indicator {
-    // The title of the SLI
-    title = config.title.default
-    // The description of the SLI
+    /** @type {string} The title of the SLI */
+    title = config.displayName.default
+
+    /** @type {string} The description of the SLI */
     description = config.description.default
-    // definition of valid events for event-based SLIs
+
+    /** @type {string} Definition of valid events for event-based SLIs */
     eventUnit = config.eventUnit.default
-    // length of timeslice for time based SLIs. When it is negative, it indicates event based SLIs
+
+    /** @type {number} Length of timeslice for time-based SLIs */
     timeslice = config.timeslice.default
-    // the metric that indicates whether an event or timeslice is good
+
+    /** @type {string} The metric that indicates whether an event or timeslice is good */
     metricName = config.metricName.default
-    // The unit of the metric that is used to identify good events
+
+    /** @type {string} The unit of the metric that is used to identify good events */
     metricUnit = config.metricUnit.default
-    // The type of lower bound for the metric values that indicate a good event
+
+    /** @type {string} The type of lower bound for the metric values that indicate a good event */
     lowerBound = config.lowerBound.default
-    // The type of upper bound for the metric values that indicate a good event
+
+    /** @type {string} The type of upper bound for the metric values that indicate a good event */
     upperBound = config.upperBound.default
-    // Does this SLI use timeslots or events?
+
+    /** @type {boolean} Does this SLI use timeslots or events? */
     isTimeBased = false
-    // List of SLOs attached to this SLI
+
+    /** @type {Array<Objective>} List of SLOs attached to this SLI */
     objectives = []
-    // For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events
+    /** @private @type {number} For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events*/
     _expectedDailyEvents = config.expectedDailyEvents.default
+    constructor(options) {
+        if (!isDef(options)) {
+            return
+        }
+
+        if (!isObj(options)) {
+            throw new TypeError(`option should be an object. Got ${options} (${typeof options})`)
+        }
+
+        const {
+            displayName,
+            description,
+            metricName,
+            metricUnit,
+            lowerBound,
+            upperBound,
+            timeslice,
+            eventUnit,
+            expectedDailyEvents,
+            objectives,
+        } = options
+
+        if (isDef(displayName)) {
+            if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
+                throw new Error(`Invalid displayName: ${displayName} (${typeof displayName})`)
+            }
+            this.title = displayName
+        }
+
+        if (isDef(description)) {
+            if (!isStrLen(description, config.description.minLength, config.description.maxLength)) {
+                throw new Error(`Invalid description: ${description} (${typeof description})`)
+            }
+            this.description = description
+        }
+
+        if (isDef(metricName)) {
+            if (!isStrLen(metricName, config.metricName.minLength, config.metricName.maxLength)) {
+                throw new Error(`Invalid metricName: ${metricName} ${typeof metricName}`)
+            }
+            this.metricName = metricName
+        }
+
+        if (isDef(metricUnit)) {
+            if (!isStrLen(metricUnit, config.metricUnit.minLength, config.metricUnit.maxLength)) {
+                throw new Error(`Invalid metricUnit: ${metricUnit} (${typeof metricUnit})`)
+            }
+            this.metricUnit = metricUnit
+        }
+
+        if (isDef(lowerBound)) {
+            if (!config.lowerBound.possibleValues.includes(lowerBound)) {
+                throw new RangeError(`Invalid lowerBound: ${lowerBound} (${typeof lowerBound})`)
+            }
+            this.lowerBound = lowerBound
+        }
+
+        if (isDef(upperBound)) {
+            if (!config.upperBound.possibleValues.includes(upperBound)) {
+                throw new RangeError(`Invalid upperBound: ${upperBound} (${typeof upperBound})`)
+            }
+            this.upperBound = upperBound
+        }
+
+        if (isDef(timeslice)) {
+            if (!inRange(timeslice, config.timeslice.min, config.timeslice.max)) {
+                throw new RangeError(`Invalid timeslice: ${timeslice} (${typeof timeslice})`)
+            }
+            this.isTimeBased = true
+            this.timeslice = timeslice
+        }
+
+        if (isDef(eventUnit)) {
+            if (isStrLen(eventUnit, config.eventUnit.minLength, config.eventUnit.maxLength)) {
+                throw new Error(`Invalid eventUnit: ${eventUnit} (${typeof eventUnit})`)
+            }
+            this.eventUnit = eventUnit
+        }
+
+        if (isDef(expectedDailyEvents)) {
+            if (!inRange(expectedDailyEvents, config.expectedDailyEvents.min, config.expectedDailyEvents.max)) {
+                throw new Error(`Invalid expectedDailyEvents: ${expectedDailyEvents} (${typeof expectedDailyEvents})`)
+            }
+            this.expectedDailyEvents = expectedDailyEvents
+        }
+
+        if (isDef(objectives)) {
+            if (!isArr(objectives)) {
+                throw new TypeError(`Invalid objectives array: ${objectives} (${typeof objectives})`)
+            }
+            for (const objectiveData of objectives) {
+                this.addObjective(Objective.load(objectiveData, this))
+            }
+        }
+
+        return this
+    }
+
     get expectedDailyEvents() {
         return this._expectedDailyEvents
     }
+
     set expectedDailyEvents(value) {
         const { min, max } = config.expectedDailyEvents
         this._expectedDailyEvents = inRange(value, min, max) ? value : config.expectedDailyEvents.default
     }
-    // Return the right unit regardless if it's a time-based or event-based indicator
+
+    /** Return the right unit regardless if it's a time-based or event-based indicator */
     get eventUnitNorm() {
         return this.isTimeBased ? humanTimeSlices(this.timeslice) : this.eventUnit || 'events'
     }
-    // Is there any bound
+
+    /** @type {boolean} Is there any bound */
     get isBounded() {
         return Boolean(this.lowerBound) || Boolean(this.upperBound)
     }
-    // Are both bounds needed
+
+    /** @type {boolean} Are both bounds needed */
     get isRanged() {
         return Boolean(this.lowerBound) && Boolean(this.upperBound)
     }
@@ -75,9 +186,11 @@ export class Indicator {
         this.objectives.push(objective)
         return objective
     }
+
     addNewObjective() {
         return this.addObjective(new Objective(this))
     }
+
     removeObjective(objective) {
         if (!isInstance(objective, Objective)) {
             throw new TypeError(`Indicator.removeObjective(): Expected an instance of Objective. Got ${objective}`)
@@ -89,6 +202,7 @@ export class Indicator {
         this.objectives.splice(idx, 1)
         return true
     }
+
     save() {
         const ret = {}
         if (this.title) {
@@ -124,64 +238,7 @@ export class Indicator {
     }
 
     static load(data) {
-        if (!isObj(data)) {
-            throw new TypeError(`Indicator.load(): Expected a data object. Got ${data}`)
-        }
-        const indicator = new Indicator()
-
-        if (isStrLen(data.displayName, config.title.minLength, config.title.maxLength)) {
-            indicator.title = data.displayName
-        }
-
-        if (isStrLen(data.description, config.description.minLength, config.description.maxLength)) {
-            indicator.description = data.description
-        }
-
-        if (isStrLen(data.metricName, config.metricName.minLength, config.metricName.maxLength)) {
-            indicator.metricName = data.metricName
-        }
-
-        if (isStrLen(data.metricUnit, config.metricUnit.minLength, config.metricUnit.maxLength)) {
-            indicator.metricUnit = data.metricUnit
-        }
-
-        if (isStr(data.lowerBound)) {
-            if (!config.lowerBound.possibleValues.includes(data.lowerBound)) {
-                throw new RangeError(
-                    `load(): "lowerBound" must be one of ${config.lowerBound.possibleValues}. Got ${data.lowerBound}`,
-                )
-            }
-            indicator.lowerBound = data.lowerBound
-        }
-
-        if (isStr(data.upperBound)) {
-            if (!config.upperBound.possibleValues.includes(data.upperBound)) {
-                throw new RangeError(
-                    `load(): "upperBound" must be one of ${config.upperBound.possibleValues}. Got ${data.upperBound}`,
-                )
-            }
-            indicator.upperBound = data.upperBound
-        }
-
-        if (isPosInt(data.timeslice)) {
-            indicator.isTimeBased = true
-            indicator.timeslice = data.timeslice
-        } else {
-            indicator.isTimeBased = false
-            indicator.eventUnit = data.eventUnit || config.eventUnit.default
-        }
-
-        if (isPosInt(data.expectedDailyEvents)) {
-            indicator.expectedDailyEvents = data.expectedDailyEvents
-        }
-
-        if (Array.isArray(data.objectives)) {
-            for (const objectiveData of data.objectives) {
-                indicator.addObjective(Objective.load(objectiveData, indicator))
-            }
-        }
-
-        return indicator
+        return new Indicator(data)
     }
 
     get formula() {
