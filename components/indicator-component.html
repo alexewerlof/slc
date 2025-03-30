@@ -8,9 +8,9 @@
         <input id="sli-title-input"
             type="text"
             v-model="indicator.title"
-            :minlength="config.title.minLength"
-            :maxlength="config.title.maxLength"
-            :placeholder="config.title.placeholder">
+            :minlength="config.displayName.minLength"
+            :maxlength="config.displayName.maxLength"
+            :placeholder="config.displayName.placeholder">
     </div>
 
     <div class="input-group">
@@ -210,6 +210,8 @@
         <input
             id="sli-event-unit"
             type="text"
+            :minlength="config.eventUnit.minLength"
+            :maxlength="config.eventUnit.maxLength"
             v-model="indicator.eventUnit">
 
     </div>

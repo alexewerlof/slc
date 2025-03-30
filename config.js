@@ -11,7 +11,7 @@ export const config = fz({
     appName: 'SLC',
     // This version will be changed when the URL parameters change
     urlVer: 3,
-    title: fz({
+    displayName: fz({
         minLength: 10,
         maxLength: 100,
         default: '',
@@ -64,7 +64,9 @@ export const config = fz({
         ]),
     }),
     eventUnit: fz({
-        default: 'requests',
+        default: 'events',
+        minLength: 1,
+        maxLength: 200,
         presets: fz([
             {
                 eventUnit: 'events',
