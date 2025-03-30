@@ -134,7 +134,7 @@ export const config = fz({
     }),
     upperBound: fz({
         possibleValues: fz(['', 'lt', 'le']),
-        default: 'le',
+        default: '',
     }),
     upperThreshold: fz({
         min: -1_000_000_000,
