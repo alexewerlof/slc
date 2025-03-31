@@ -146,12 +146,10 @@ export class Indicator {
             if (!isArr(objectives)) {
                 throw new TypeError(`Invalid objectives array: ${objectives} (${typeof objectives})`)
             }
-            for (const objectiveData of objectives) {
-                this.addObjective(Objective.load(objectiveData, this))
+            for (const objectiveOptions of objectives) {
+                this.addObjective(new Objective(this, objectiveOptions))
             }
         }
-
-        return this
     }
 
     get expectedDailyEvents() {
@@ -235,10 +233,6 @@ export class Indicator {
             ret.objectives = this.objectives.map((obj) => obj.save())
         }
         return ret
-    }
-
-    static load(data) {
-        return new Indicator(data)
     }
 
     get formula() {

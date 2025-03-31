@@ -1,13 +1,73 @@
 import { Indicator } from './indicator.js'
 import { nextIndex } from '../lib/math.js'
-import { isArr } from '../lib/validation.js'
+import { isArr, isDef, isObj } from '../lib/validation.js'
 
 export class Calculator {
     indicators = []
-    indicatorIdx = -1
-    objectiveIdx = -1
-    alertIdx = -1
-    constructor() {
+    _indicatorIdx = -1
+    _objectiveIdx = -1
+    _alertIdx = -1
+
+    get indicatorIdx() {
+        return this._indicatorIdx
+    }
+
+    set indicatorIdx(value) {
+        this._indicatorIdx = value
+        if (this.indicator?.objectives?.length) {
+            this.objectiveIdx = 0
+        }
+    }
+
+    get objectiveIdx() {
+        return this._objectiveIdx
+    }
+
+    set objectiveIdx(value) {
+        this._objectiveIdx = value
+        if (this.objective?.alerts?.length) {
+            this.alertIdx = 0
+        }
+    }
+
+    get alertIdx() {
+        return this._alertIdx
+    }
+
+    set alertIdx(value) {
+        this._alertIdx = value
+    }
+
+    constructor(options) {
+        if (!options) {
+            return
+        }
+
+        if (!isObj(options)) {
+            throw new TypeError(`Invalid options: ${options} (${typeof options})`)
+        }
+
+        const {
+            indicators,
+        } = options
+
+        if (isDef(indicators)) {
+            if (!isArr(indicators)) {
+                throw new TypeError(`Invalid indicators: ${indicators} (${typeof indicators})`)
+            }
+            for (const indicatorOptions of indicators) {
+                this.addIndicator(new Indicator(indicatorOptions))
+            }
+            if (this.indicators.length) {
+                this.indicatorIdx = 0
+                if (this.indicator.objectives.length) {
+                    this.objectiveIdx = 0
+                    if (this.objective.alerts.length) {
+                        this.alertIdx = 0
+                    }
+                }
+            }
+        }
     }
     get indicator() {
         return this.indicators[this.indicatorIdx]
@@ -30,7 +90,7 @@ export class Calculator {
         return indicator
     }
     addNewIndicator() {
-        return this.addIndicator(new Indicator(this))
+        return this.addIndicator(new Indicator())
     }
     removeSelectedObjective() {
         this.objectiveIdx = nextIndex(this.objectives, this.objectiveIdx)
@@ -85,28 +145,5 @@ export class Calculator {
     save() {
         // Save the calculator to a file
         return this.indicators.map((indicator) => indicator.save())
-    }
-    static load(data) {
-        const ret = new Calculator()
-        if (!isArr(data?.state?.indicators)) {
-            throw new TypeError(
-                `Expected an array of indicators in the state. State: ${JSON.stringify(state, null, 2)}, ${
-                    JSON.stringify(state.indicators, null, 2)
-                }`,
-            )
-        }
-        for (const indicatorData of data.state.indicators) {
-            ret.addIndicator(Indicator.load(indicatorData))
-        }
-        if (ret.indicators.length) {
-            ret.indicatorIdx = 0
-            if (ret.indicator.objectives.length) {
-                ret.objectiveIdx = 0
-                if (ret.objective.alerts.length) {
-                    ret.alertIdx = 0
-                }
-            }
-        }
-        return ret
     }
 }

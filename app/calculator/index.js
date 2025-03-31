@@ -26,28 +26,25 @@ export const app = createApp({
             // The text shown in the toast notification
             toastCaption: '',
             // The calculator view state
-            calculator: Calculator.load({
-                urlVer: 3,
-                state: {
-                    indicators: [{
-                        'metricName': 'response_latency1',
-                        'metricUnit': 'ms',
-                        'expectedDailyEvents': 8000,
-                        'lowerBound': 'gt',
-                        'upperBound': 'le',
-                        'timeslice': 60,
-                        'objectives': [{
-                            'target': 99,
-                            'windowDays': 30,
-                            'lowerThreshold': 5,
-                            'upperThreshold': 2000,
-                            'alerts': [{
-                                'burnRate': 6,
-                                'longWindowPerc': 17.6,
-                            }],
+            calculator: new Calculator({
+                indicators: [{
+                    metricName: 'response_latency1',
+                    metricUnit: 'ms',
+                    expectedDailyEvents: 8000,
+                    lowerBound: 'gt',
+                    upperBound: 'le',
+                    timeslice: 60,
+                    objectives: [{
+                        target: 99,
+                        windowDays: 30,
+                        lowerThreshold: 5,
+                        upperThreshold: 2000,
+                        alerts: [{
+                            burnRate: 6,
+                            longWindowPerc: 17.6,
                         }],
                     }],
-                },
+                }],
             }),
             state: 'Press update',
         }
