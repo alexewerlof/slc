@@ -45,7 +45,7 @@
                 <legend>Indicator ({{ calculator.indicators.length }})</legend>
                 <div class="input-group" v-if="calculator.indicators.length">
                     <label for="indicator-selector">Select</label>
-                    <select v-model="calculator.indicatorIdx" id="indicator-selector">
+                    <select v-model="calculator.selIndicatorIdx" id="indicator-selector">
                         <option v-for="(indicator, i) of calculator.indicators" :value="i">{{ indicator }}</option>
                     </select>
                 </div>
@@ -64,8 +64,8 @@
             </fieldset>
 
             <indicator-component
-                v-if="calculator.indicator"
-                :indicator="calculator.indicator"
+                v-if="calculator.selIndicator"
+                :indicator="calculator.selIndicator"
             ></indicator-component>
         </section>
 
@@ -88,7 +88,7 @@
                 <legend>Objective ({{ calculator.objectives?.length }})</legend>
                 <div class="input-group" v-if="calculator.objectives?.length">
                     <label for="objective-selector">Select</label>
-                    <select v-model="calculator.objectiveIdx" id="objective-selector">
+                    <select v-model="calculator.selObjectiveIdx" id="objective-selector">
                         <option v-for="(objective, i) of calculator.objectives" :value="i">{{ objective }}</option>
                     </select>
                 </div>
@@ -106,14 +106,14 @@
             </fieldset>
 
             <objective-component
-                v-if="calculator.objective"
-                :objective="calculator.objective"
+                v-if="calculator.selObjective"
+                :objective="calculator.selObjective"
             ></objective-component>
             <!------------------------ Error Budget ------------------------>
             <h2 id="error-budget-title">Error</h2>
             <error-budget-component
-                v-if="calculator.objective"
-                :objective="calculator.objective"
+                v-if="calculator.selObjective"
+                :objective="calculator.selObjective"
             ></error-budget-component>
         </section>
 
@@ -155,12 +155,12 @@
                 <legend>Alert ({{ calculator.alerts?.length }})</legend>
                 <div class="input-group" v-if="calculator.alerts?.length">
                     <label for="alert-selector">Select</label>
-                    <select v-model="calculator.alertIdx" id="alert-selector">
+                    <select v-model="calculator.selAlertIdx" id="alert-selector">
                         <option v-for="(alert, i) of calculator.alerts" :value="i">{{ alert }}</option>
                     </select>
                 </div>
 
-                <div class="button-bar" v-if="calculator.objective">
+                <div class="button-bar" v-if="calculator.selObjective">
                     <button @click="calculator.addNewAlert()">Add New</button>
                     <button @click="calculator.addRecommendedAlerts()">Add Recommended</button>
                     <button
@@ -173,7 +173,7 @@
                 </div>
             </fieldset>
 
-            <alert-component v-if="calculator.alert" :alert="calculator.alert"></alert-component>
+            <alert-component v-if="calculator.selAlert" :alert="calculator.selAlert"></alert-component>
         </section>
     </article>
 </div>

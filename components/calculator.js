@@ -4,38 +4,38 @@ import { isArr, isDef, isObj } from '../lib/validation.js'
 
 export class Calculator {
     indicators = []
-    _indicatorIdx = -1
-    _objectiveIdx = -1
-    _alertIdx = -1
+    _selIndicatorIdx = -1
+    _selObjectiveIdx = -1
+    _selAlertIdx = -1
 
-    get indicatorIdx() {
-        return this._indicatorIdx
+    get selIndicatorIdx() {
+        return this._selIndicatorIdx
     }
 
-    set indicatorIdx(value) {
-        this._indicatorIdx = value
-        if (this.indicator?.objectives?.length) {
+    set selIndicatorIdx(value) {
+        this._selIndicatorIdx = value
+        if (this.selIndicator?.objectives?.length) {
             this.objectiveIdx = 0
         }
     }
 
-    get objectiveIdx() {
-        return this._objectiveIdx
+    get selObjectiveIdx() {
+        return this._selObjectiveIdx
     }
 
-    set objectiveIdx(value) {
-        this._objectiveIdx = value
-        if (this.objective?.alerts?.length) {
-            this.alertIdx = 0
+    set selObjectiveIdx(value) {
+        this._selObjectiveIdx = value
+        if (this.selObjective?.alerts?.length) {
+            this.selAlertIdx = 0
         }
     }
 
-    get alertIdx() {
-        return this._alertIdx
+    get selAlertIdx() {
+        return this._selAlertIdx
     }
 
-    set alertIdx(value) {
-        this._alertIdx = value
+    set selAlertIdx(value) {
+        this._selAlertIdx = value
     }
 
     constructor(options) {
@@ -59,61 +59,61 @@ export class Calculator {
                 this.addIndicator(new Indicator(indicatorOptions))
             }
             if (this.indicators.length) {
-                this.indicatorIdx = 0
-                if (this.indicator.objectives.length) {
-                    this.objectiveIdx = 0
-                    if (this.objective.alerts.length) {
-                        this.alertIdx = 0
+                this.selIndicatorIdx = 0
+                if (this.selIndicator.objectives.length) {
+                    this.selObjectiveIdx = 0
+                    if (this.selObjective.alerts.length) {
+                        this.selAlertIdx = 0
                     }
                 }
             }
         }
     }
-    get indicator() {
-        return this.indicators[this.indicatorIdx]
+    get selIndicator() {
+        return this.indicators[this.selIndicatorIdx]
     }
-    set indicator(indicator) {
+    set selIndicator(indicator) {
         const idx = this.indicators.indexOf(indicator)
         if (idx === -1) {
             throw new RangeError(`Indicator not found: ${indicator}`)
         }
-        this.indicatorIdx = idx
+        this.selIndicatorIdx = idx
     }
     removeSelectedIndicator() {
-        this.indicatorIdx = nextIndex(this.indicators, this.indicatorIdx)
+        this.selIndicatorIdx = nextIndex(this.indicators, this.selIndicatorIdx)
     }
     addIndicator(indicator) {
         this.indicators.push(indicator)
-        this.indicatorIdx = this.indicators.length - 1
-        this.objectiveIdx = -1
-        this.alertIdx = -1
+        this.selIndicatorIdx = this.indicators.length - 1
+        this.selObjectiveIdx = -1
+        this.selAlertIdx = -1
         return indicator
     }
     addNewIndicator() {
         return this.addIndicator(new Indicator())
     }
     removeSelectedObjective() {
-        this.objectiveIdx = nextIndex(this.objectives, this.objectiveIdx)
+        this.selObjectiveIdx = nextIndex(this.objectives, this.selObjectiveIdx)
     }
     removeSelectedAlert() {
-        this.alertIdx = nextIndex(this.alerts, this.alertIdx)
+        this.selAlertIdx = nextIndex(this.alerts, this.selAlertIdx)
     }
     addNewObjective() {
-        const ret = this.indicator?.addNewObjective()
-        this.objectiveIdx = this.objectives.length - 1
-        this.alertIdx = -1
+        const ret = this.selIndicator?.addNewObjective()
+        this.selObjectiveIdx = this.objectives.length - 1
+        this.selAlertIdx = -1
         return ret
     }
     addNewAlert() {
-        const ret = this.objective?.addNewAlert()
-        this.alertIdx = this.alerts.length - 1
+        const ret = this.selObjective?.addNewAlert()
+        this.selAlertIdx = this.alerts.length - 1
         return ret
     }
     addRecommendedAlerts() {
-        if (this.objective) {
-            const alert1 = this.objective.addNewAlert()
-            const alert2 = this.objective.addNewAlert()
-            const alert3 = this.objective.addNewAlert()
+        if (this.selObjective) {
+            const alert1 = this.selObjective.addNewAlert()
+            const alert2 = this.selObjective.addNewAlert()
+            const alert3 = this.selObjective.addNewAlert()
 
             alert1.burnRate = 1
             alert1.longWindowPerc = 10
@@ -127,20 +127,20 @@ export class Calculator {
             alert3.longWindowPerc = 2
             alert3.useShortWindow = true
 
-            this.alertIdx = this.alerts.length - 1
+            this.selAlertIdx = this.alerts.length - 1
         }
     }
     get objectives() {
-        return this.indicator?.objectives
+        return this.selIndicator?.objectives
     }
-    get objective() {
-        return this.objectives?.[this.objectiveIdx]
+    get selObjective() {
+        return this.objectives?.[this.selObjectiveIdx]
     }
     get alerts() {
-        return this.objective?.alerts
+        return this.selObjective?.alerts
     }
-    get alert() {
-        return this.objective?.alerts?.[this.alertIdx]
+    get selAlert() {
+        return this.selObjective?.alerts?.[this.selAlertIdx]
     }
     save() {
         // Save the calculator to a file
