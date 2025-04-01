@@ -15,6 +15,27 @@ import { Calculator } from '../../components/calculator.js'
 
 export const app = createApp({
     data() {
+        const calculator = new Calculator({
+            indicators: [{
+                metricName: 'response_latency1',
+                metricUnit: 'ms',
+                expectedDailyEvents: 8000,
+                lowerBound: 'gt',
+                upperBound: 'le',
+                timeslice: 60,
+                objectives: [{
+                    target: 99,
+                    windowDays: 30,
+                    lowerThreshold: 5,
+                    upperThreshold: 2000,
+                    alerts: [{
+                        burnRate: 6,
+                        longWindowPerc: 17.6,
+                    }],
+                }],
+            }],
+        })
+
         return {
             // Expose the config to the UI
             config,
@@ -26,26 +47,7 @@ export const app = createApp({
             // The text shown in the toast notification
             toastCaption: '',
             // The calculator view state
-            calculator: new Calculator({
-                indicators: [{
-                    metricName: 'response_latency1',
-                    metricUnit: 'ms',
-                    expectedDailyEvents: 8000,
-                    lowerBound: 'gt',
-                    upperBound: 'le',
-                    timeslice: 60,
-                    objectives: [{
-                        target: 99,
-                        windowDays: 30,
-                        lowerThreshold: 5,
-                        upperThreshold: 2000,
-                        alerts: [{
-                            burnRate: 6,
-                            longWindowPerc: 17.6,
-                        }],
-                    }],
-                }],
-            }),
+            calculator,
             state: 'Press update',
         }
     },
