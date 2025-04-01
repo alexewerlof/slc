@@ -1,7 +1,7 @@
 import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
 import { entity2symbolNorm, percL10n } from '../lib/fmt.js'
-import { clamp, percent, toFixed } from '../lib/math.js'
+import { clamp, percent, rmItemGetNext, toFixed } from '../lib/math.js'
 import { daysToSeconds, secondsToDays } from '../lib/time.js'
 import { inRange, isArr, isDef, isInstance, isObj } from '../lib/validation.js'
 import { Window } from '../lib/window.js'
@@ -12,12 +12,19 @@ import { Indicator } from './indicator.js'
 export class Objective {
     /** The SLO percentage. It is also read/written by the sloInt and sloFrac computed  properties */
     target = config.slo.default
+
     /** Lower bound threshold */
     _lowerThreshold = config.lowerThreshold.default
-    /** List of alerts attached to this SLO */
-    alerts = []
+
     /** Upper bound threshold */
     _upperThreshold = config.upperThreshold.default
+
+    /** {@type {Alert[]}} List of alerts attached to this SLO */
+    alerts = []
+
+    /** @type {Alert|undefined} the selected objective in UI */
+    selAlert = undefined
+
     constructor(indicator, options) {
         if (!isInstance(indicator, Indicator)) {
             throw new TypeError(`Expected an instance of Indicator. Got ${indicator}`)
@@ -98,6 +105,7 @@ export class Objective {
         }
         alert.objective = this
         this.alerts.push(alert)
+        this.selAlert = alert
         return alert
     }
 
@@ -105,15 +113,46 @@ export class Objective {
         return this.addAlert(new Alert(this))
     }
 
+    addRecommendedAlerts() {
+        this.addAlert(
+            new Alert(this, {
+                burnRate: 1,
+                longWindowPerc: 10,
+                shortWindowDivider: 12,
+                useShortWindow: true,
+            }),
+        )
+        this.addAlert(
+            new Alert(this, {
+                burnRate: 6,
+                longWindowPerc: 5,
+                shortWindowDivider: 12,
+                useShortWindow: true,
+            }),
+        )
+        this.addAlert(
+            new Alert(this, {
+                burnRate: 14.4,
+                longWindowPerc: 2,
+                shortWindowDivider: 12,
+                useShortWindow: true,
+            }),
+        )
+    }
+
     removeAlert(alert) {
         if (!isInstance(alert, Alert)) {
-            throw new TypeError(`Objective.removeAlert(): Expected an instance of Alert. Got ${alert}`)
+            throw new TypeError(`Expected an instance of Alert. Got ${alert}`)
         }
-        const idx = this.alerts.indexOf(alert)
-        if (idx === -1) {
-            throw new RangeError(`Objective.removeAlert(): Alert not found: ${alert}`)
+        if (!this.alerts.includes(alert)) {
+            throw new Error(`Alert does not belong to this objective: ${alert}`)
         }
-        this.alerts.splice(idx, 1)
+        this.selAlert = rmItemGetNext(this.alerts, alert)
+        alert.objective = undefined
+    }
+
+    removeSelectedAlert() {
+        return this.removeAlert(this.selAlert)
     }
 
     get lowerThreshold() {

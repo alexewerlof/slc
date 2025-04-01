@@ -1,5 +1,6 @@
 import { config } from '../config.js'
 import { entity2symbolNorm } from '../lib/fmt.js'
+import { rmItemGetNext } from '../lib/math.js'
 import { humanTimeSlices } from '../lib/time.js'
 import { inRange, isArr, isDef, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Formula } from './formula.js'
@@ -52,10 +53,15 @@ export class Indicator {
     /** @type {boolean} Does this SLI use timeslots or events? */
     isTimeBased = false
 
-    /** @type {Array<Objective>} List of SLOs attached to this SLI */
+    /** @type {Objective[]} List of SLOs attached to this SLI */
     objectives = []
+
+    /** @type {Objective|undefined} the selected objective in UI */
+    selObjective = undefined
+
     /** @private @type {number} For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events*/
     _expectedDailyEvents = config.expectedDailyEvents.default
+
     constructor(options) {
         if (!isDef(options)) {
             return
@@ -178,10 +184,11 @@ export class Indicator {
 
     addObjective(objective) {
         if (!isInstance(objective, Objective)) {
-            throw new TypeError(`Indicator.addObjective(): Expected an instance of Objective. Got ${objective}`)
+            throw new TypeError(`Expected an instance of Objective. Got ${objective}`)
         }
         objective.indicator = this
         this.objectives.push(objective)
+        this.selObjective = objective
         return objective
     }
 
@@ -191,14 +198,17 @@ export class Indicator {
 
     removeObjective(objective) {
         if (!isInstance(objective, Objective)) {
-            throw new TypeError(`Indicator.removeObjective(): Expected an instance of Objective. Got ${objective}`)
+            throw new TypeError(`Expected an instance of Objective. Got ${objective}`)
         }
-        const idx = this.objectives.indexOf(objective)
-        if (idx === -1) {
-            return new RangeError(`Indicator.removeObjective(): Objective not found: ${objective}`)
+        if (!this.objectives.includes(objective)) {
+            throw new Error(`Objective does not belong to this indicator: ${objective}`)
         }
-        this.objectives.splice(idx, 1)
-        return true
+        this.selObjective = rmItemGetNext(this.objectives, this.selObjective)
+        objective.indicator = undefined
+    }
+
+    removeSelectedObjective() {
+        return this.removeObjective(this.selObjective)
     }
 
     save() {
@@ -277,6 +287,6 @@ export class Indicator {
         if (this.metricName.trim()) {
             return this.metricName
         }
-        return 'Indicator'
+        return 'Indicator without title or metric'
     }
 }

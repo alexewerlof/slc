@@ -45,8 +45,8 @@
                 <legend>Indicator ({{ calculator.indicators.length }})</legend>
                 <div class="input-group" v-if="calculator.indicators.length">
                     <label for="indicator-selector">Select</label>
-                    <select v-model="calculator.selIndicatorIdx" id="indicator-selector">
-                        <option v-for="(indicator, i) of calculator.indicators" :value="i">{{ indicator }}</option>
+                    <select v-model="calculator.selIndicator" id="indicator-selector">
+                        <option v-for="indicator of calculator.indicators" :value="indicator">{{ indicator }}</option>
                     </select>
                 </div>
 
@@ -54,7 +54,7 @@
                     <button @click="calculator.addNewIndicator()">Add Empty</button>
                     <button disabled>Add From Template</button>
                     <button
-                        v-if="calculator.indicators.length"
+                        v-if="calculator.selIndicator"
                         @click="calculator.removeSelectedIndicator()"
                         class="button--danger"
                     >
@@ -85,35 +85,36 @@
             </h2>
 
             <fieldset>
-                <legend>Objective ({{ calculator.objectives?.length }})</legend>
-                <div class="input-group" v-if="calculator.objectives?.length">
+                <legend>Objective ({{ calculator.selIndicator?.objectives.length || 0 }})</legend>
+                <div class="input-group" v-if="calculator.selIndicator?.objectives.length">
                     <label for="objective-selector">Select</label>
-                    <select v-model="calculator.selObjectiveIdx" id="objective-selector">
-                        <option v-for="(objective, i) of calculator.objectives" :value="i">{{ objective }}</option>
+                    <select v-model="calculator.selIndicator.selObjective" id="objective-selector">
+                        <option v-for="objective of calculator.selIndicator.objectives" :value="objective">{{ objective }}</option>
                     </select>
                 </div>
 
-                <div class="button-bar">
-                    <button @click="calculator.addNewObjective()">Add New</button>
+                <div 
+                    v-if="calculator.selIndicator"
+                    class="button-bar">
+                    <button @click="calculator.selIndicator.addNewObjective()">Add New</button>
                     <button
-                        v-if="calculator.objectives?.length"
-                        @click="calculator.removeSelectedObjective()"
-                        class="button--danger"
-                    >
+                        v-if="calculator.selIndicator.selObjective"
+                        @click="calculator.selIndicator.removeSelectedObjective()"
+                        class="button--danger">
                         Remove
                     </button>
                 </div>
             </fieldset>
 
             <objective-component
-                v-if="calculator.selObjective"
-                :objective="calculator.selObjective"
+                v-if="calculator.selIndicator?.selObjective"
+                :objective="calculator.selIndicator.selObjective"
             ></objective-component>
             <!------------------------ Error Budget ------------------------>
             <h2 id="error-budget-title">Error</h2>
             <error-budget-component
-                v-if="calculator.selObjective"
-                :objective="calculator.selObjective"
+                v-if="calculator.selIndicator?.selObjective"
+                :objective="calculator.selIndicator.selObjective"
             ></error-budget-component>
         </section>
 
@@ -152,20 +153,20 @@
             </h2>
 
             <fieldset>
-                <legend>Alert ({{ calculator.alerts?.length }})</legend>
-                <div class="input-group" v-if="calculator.alerts?.length">
+                <legend>Alert ({{ calculator.selIndicator?.selObjective?.alerts?.length || 0 }})</legend>
+                <div class="input-group" v-if="calculator.selIndicator?.selObjective?.alerts.length">
                     <label for="alert-selector">Select</label>
-                    <select v-model="calculator.selAlertIdx" id="alert-selector">
-                        <option v-for="(alert, i) of calculator.alerts" :value="i">{{ alert }}</option>
+                    <select v-model="calculator.selIndicator.selObjective.selAlert" id="alert-selector">
+                        <option v-for="alert of calculator.selIndicator.selObjective.alerts" :value="alert">{{ alert }}</option>
                     </select>
                 </div>
 
-                <div class="button-bar" v-if="calculator.selObjective">
-                    <button @click="calculator.addNewAlert()">Add New</button>
-                    <button @click="calculator.addRecommendedAlerts()">Add Recommended</button>
+                <div class="button-bar" v-if="calculator.selIndicator?.selObjective">
+                    <button @click="calculator.selIndicator.selObjective.addNewAlert()">Add New</button>
+                    <button @click="calculator.selIndicator.selObjective.addRecommendedAlerts()">Add Recommended</button>
                     <button
-                        v-if="calculator.alerts?.length"
-                        @click="calculator.removeSelectedAlert()"
+                        v-if="calculator.selIndicator?.selObjective?.selAlert"
+                        @click="calculator.selIndicator.selObjective.removeSelectedAlert()"
                         class="button--danger"
                     >
                         Remove
@@ -173,7 +174,9 @@
                 </div>
             </fieldset>
 
-            <alert-component v-if="calculator.selAlert" :alert="calculator.selAlert"></alert-component>
+            <alert-component
+                v-if="calculator.selIndicator?.selObjective?.selAlert"
+                :alert="calculator.selIndicator.selObjective.selAlert"></alert-component>
         </section>
     </article>
 </div>
