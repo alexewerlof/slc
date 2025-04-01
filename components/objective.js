@@ -10,13 +10,13 @@ import { Formula } from './formula.js'
 import { Indicator } from './indicator.js'
 
 export class Objective {
-    // The SLO percentage. It is also read/written by the sloInt and sloFrac computed properties
+    /** The SLO percentage. It is also read/written by the sloInt and sloFrac computed  properties */
     target = config.slo.default
-    // Lower bound threshold
+    /** Lower bound threshold */
     _lowerThreshold = config.lowerThreshold.default
-    // List of alerts attached to this SLO
+    /** List of alerts attached to this SLO */
     alerts = []
-    // Upper bound threshold
+    /** Upper bound threshold */
     _upperThreshold = config.upperThreshold.default
     constructor(indicator, options) {
         if (!isInstance(indicator, Indicator)) {
