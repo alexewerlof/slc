@@ -36,3 +36,7 @@
     font-family: var(--code-font-family);
     color: var(--brand-purple);
 }
+
+.code-block-component__code {
+    overflow-wrap: break-word;
+}
