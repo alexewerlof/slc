@@ -125,70 +125,68 @@
                             The UI in this app is built using the following mental model:
                         </p>
                         <code-block-component>
-                            <code>
-                                <span class="punct">{{ icon('owner') }}</span>
-                                <span class="exprs">Owner</span>
-                                owns 1+
-                                <span class="punct">{{ icon('provider') }}</span>
-                                <span class="exprs">Provider</span>(s).
-                                <br>
+                            <span class="punct">{{ icon('owner') }}</span>
+                            <span class="exprs">Owner</span>
+                            owns 1+
+                            <span class="punct">{{ icon('provider') }}</span>
+                            <span class="exprs">Provider</span>(s).
+                            <br>
 
-                                <span class="punct">{{ icon('provider') }}</span>
-                                <span class="exprs">Provider</span>
-                                offers 1+
-                                <span class="punct">{{ icon('service') }}</span>
-                                <span class="exprs">Service</span>(s).
-                                <br>
+                            <span class="punct">{{ icon('provider') }}</span>
+                            <span class="exprs">Provider</span>
+                            offers 1+
+                            <span class="punct">{{ icon('service') }}</span>
+                            <span class="exprs">Service</span>(s).
+                            <br>
 
-                                <span class="punct">{{ icon('consumer') }}</span>
-                                <span class="exprs">Consumer</span>
-                                has 1+
-                                <span class="punct">{{ icon('consumption') }}</span>
-                                <span class="exprs">Consumption</span>(s).
-                                to achieve a goal
-                                <br>
+                            <span class="punct">{{ icon('consumer') }}</span>
+                            <span class="exprs">Consumer</span>
+                            has 1+
+                            <span class="punct">{{ icon('consumption') }}</span>
+                            <span class="exprs">Consumption</span>(s).
+                            to achieve a goal
+                            <br>
 
-                                <span class="punct">{{ icon('consumption') }}</span>
-                                <span class="exprs">Consumption</span>
-                                depends on 1+
-                                <span class="punct">{{ icon('service') }}</span>
-                                <span class="exprs">Service</span>(s).
-                                <br>
+                            <span class="punct">{{ icon('consumption') }}</span>
+                            <span class="exprs">Consumption</span>
+                            depends on 1+
+                            <span class="punct">{{ icon('service') }}</span>
+                            <span class="exprs">Service</span>(s).
+                            <br>
 
-                                Each
-                                <span class="punct">{{ icon('consumption') }}</span>
-                                <span class="exprs">Consumption</span>
-                                -
-                                <span class="punct">{{ icon('service') }}</span>
-                                <span class="exprs">Service</span>
-                                pair has 1+
-                                <span class="punct">{{ icon('failure') }}</span>
-                                <span class="exprs">Failure</span>(s).
-                                <br>
+                            Each
+                            <span class="punct">{{ icon('consumption') }}</span>
+                            <span class="exprs">Consumption</span>
+                            -
+                            <span class="punct">{{ icon('service') }}</span>
+                            <span class="exprs">Service</span>
+                            pair has 1+
+                            <span class="punct">{{ icon('failure') }}</span>
+                            <span class="exprs">Failure</span>(s).
+                            <br>
 
-                                <span class="punct">{{ icon('failure') }}</span>
-                                <span class="exprs">Failure</span>
-                                has
-                                <span class="punct">{{ icon('consequence') }}</span>
-                                <span class="exprs">Consequences</span>(s).
-                                <br>
+                            <span class="punct">{{ icon('failure') }}</span>
+                            <span class="exprs">Failure</span>
+                            has
+                            <span class="punct">{{ icon('consequence') }}</span>
+                            <span class="exprs">Consequences</span>(s).
+                            <br>
 
-                                <span class="punct">{{ icon('risk') }}</span>
-                                <span class="exprs">Risk</span>
-                                associates a
-                                <span class="punct">{{ icon('consequence') }}</span>
-                                <span class="exprs">Consequences</span>
-                                to a business
-                                <span class="punct">{{ icon('impact') }}</span>
-                                <span class="exprs">Impact</span>.
-                                <br>
+                            <span class="punct">{{ icon('risk') }}</span>
+                            <span class="exprs">Risk</span>
+                            associates a
+                            <span class="punct">{{ icon('consequence') }}</span>
+                            <span class="exprs">Consequences</span>
+                            to a business
+                            <span class="punct">{{ icon('impact') }}</span>
+                            <span class="exprs">Impact</span>.
+                            <br>
 
-                                <span class="punct">{{ icon('metric') }}</span>
-                                <span class="exprs">Metric</span>
-                                measures 1+
-                                <span class="punct">{{ icon('failure') }}</span>
-                                <span class="exprs">Failure</span>(s).
-                            </code>
+                            <span class="punct">{{ icon('metric') }}</span>
+                            <span class="exprs">Metric</span>
+                            measures 1+
+                            <span class="punct">{{ icon('failure') }}</span>
+                            <span class="exprs">Failure</span>(s).
                         </code-block-component>
                     </section>
                 </div>
