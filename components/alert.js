@@ -6,15 +6,15 @@ import { inRange, isDef, isInstance, isObj } from '../lib/validation.js'
 import { Objective } from './objective.js'
 
 export class Alert {
-    // Alert burn rate: the rate at which the error budget is consumed
+    /** Alert burn rate: the rate above which the error budget is consumed */
     burnRate = config.burnRate.default
-    // Long window alert = percentage of the SLO windo
+    /** Long window alert = percentage of the SLO window */
     longWindowPerc = config.longWindowPerc.default
-    // Short window alert = the fraction of the long windo
+    /** Short window alert = the fraction of the long window */
     shortWindowDivider = config.shortWindowDivider.default
-    // Show the short window alert
+    /** Show the short window alert */
     useShortWindow = false
-    // As a percentage of the error budget
+
     constructor(objective, options) {
         if (!isInstance(objective, Objective)) {
             throw new TypeError(`Expected an instance of Objective. Got ${objective}`)
