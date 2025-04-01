@@ -1,5 +1,5 @@
 import { numL10n } from '../lib/fmt.js'
-import { countTimeslices, daysToSeconds, humanSec, humanTime, humanTimeSlices } from '../lib/time.js'
+import { countTimeslices, daysToSeconds, humanSec, humanTime } from '../lib/time.js'
 import { isInstance, isNum } from '../lib/validation.js'
 import { Objective } from './objective.js'
 
