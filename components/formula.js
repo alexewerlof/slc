@@ -38,4 +38,7 @@ export class Formula {
         }
         this.components.push(...formula.components)
     }
+    toString() {
+        return this.components.map(({ text }) => text).join('')
+    }
 }
