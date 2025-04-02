@@ -65,7 +65,7 @@ export const config = fz({
     }),
     eventUnit: fz({
         default: 'events',
-        minLength: 1,
+        minLength: 0,
         maxLength: 200,
         presets: fz([
             {
@@ -119,7 +119,7 @@ export const config = fz({
     metricUnit: fz({
         default: '',
         placeholder: 'e.g. ms, errors, items, etc.',
-        minLength: 1,
+        minLength: 0,
         maxLength: 100,
     }),
     lowerBound: fz({
