@@ -12,6 +12,7 @@ import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '
 import { stateToUrl } from '../../lib/share.js'
 import { CalculatorComponent } from '../../components/calculator-component.js'
 import { Calculator } from '../../components/calculator.js'
+import { AnnouncementComponent } from '../../components/announcement-component.js'
 
 export const app = createApp({
     data() {
@@ -41,9 +42,6 @@ export const app = createApp({
             config,
             // For sharing and loading state to and from URL
             urlVer: config.urlVer,
-            // The SLI object
-            // Show the announcement banner
-            showAnnouncement: true,
             // The text shown in the toast notification
             toastCaption: '',
             // The calculator view state
@@ -56,19 +54,22 @@ export const app = createApp({
             const hash = globalThis.location.hash
             if (hash) {
                 const element = document.querySelector(hash)
-                if (element) element.scrollIntoView()
+                if (element) {
+                    element.scrollIntoView()
+                }
             }
         })
     },
     components: {
+        AnnouncementComponent,
         CalculatorComponent,
+        CodeBlockComponent,
         CookiePopupComponent,
         ExtLink,
         FeedbackBlobComponent,
         FooterComponent,
         HeaderComponent,
         HelpComponent,
-        CodeBlockComponent,
     },
     methods: {
         boundCaption,

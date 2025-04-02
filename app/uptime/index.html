@@ -32,12 +32,6 @@
     </noscript>
 
     <div id="app" v-cloak>
-        <transition>
-            <div class="announcement" v-if="showAnnouncement">
-                <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
-                <button @click="showAnnouncement = false" type="button">Dismiss</button>
-            </div>
-        </transition>
         <header-component></header-component>
 
         <div class="container">

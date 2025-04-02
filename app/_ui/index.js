@@ -7,35 +7,37 @@ import { HeroComponent } from '../../components/hero-component.js'
 import { HelpComponent } from '../../components/help-component.js'
 import { CodeBlockComponent } from '../../components/code-block-component.js'
 import { TooltipComponent } from '../../components/tooltip-component.js'
+import { AnnouncementComponent } from '../../components/announcement-component.js'
 
 const app = createApp({
     data() {
+        const inlineSelectOptions = [
+            {
+                title: 'This',
+                value: 1,
+            },
+            {
+                title: 'That',
+                value: true,
+            },
+            {
+                title: 'Some',
+                value: 'Hello',
+            },
+            {
+                title: 'Thing',
+                value: false,
+            },
+        ]
         return {
             // Expose the config to the UI
             config,
-            showAnnouncement: true,
-            inlineSelectValue: true,
-            inlineSelectOptions: [
-                {
-                    title: 'This',
-                    value: 1,
-                },
-                {
-                    title: 'That',
-                    value: true,
-                },
-                {
-                    title: 'Some',
-                    value: 'Hello',
-                },
-                {
-                    title: 'Thing',
-                    value: false,
-                },
-            ],
+            inlineSelectOptions,
+            inlineSelectValue: inlineSelectOptions[0].value,
         }
     },
     components: {
+        AnnouncementComponent,
         CodeBlockComponent,
         FooterComponent,
         HeaderComponent,

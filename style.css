@@ -26,13 +26,6 @@ body {
     line-height: 1.5;
 }
 
-.announcement {
-    text-align: center;
-    background-color: var(--secondary-color);
-    color: var(--background-color);
-    padding: 0.5em;
-}
-
 h1, h2, h3, h4, h5, h6, th, legend, caption, label {
     font-family: var(--title-font-family);
     font-weight: 400;

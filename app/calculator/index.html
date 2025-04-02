@@ -36,12 +36,9 @@
         </noscript>
 
         <div id="app" v-cloak>
-            <transition>
-                <div class="announcement" v-if="showAnnouncement">
-                    <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
-                    <button class="button--small" @click="showAnnouncement = false" type="button">Dismiss</button>
-                </div>
-            </transition>
+            <announcement-component>
+                <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
+            </announcement-component>
             <header-component></header-component>
 
             <calculator-component :calculator="calculator"></calculator-component>
