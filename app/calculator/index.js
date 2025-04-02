@@ -42,8 +42,6 @@ export const app = createApp({
             config,
             // For sharing and loading state to and from URL
             urlVer: config.urlVer,
-            // The text shown in the toast notification
-            toastCaption: '',
             // The calculator view state
             calculator,
             state: 'Press update',
