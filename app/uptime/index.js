@@ -40,6 +40,7 @@ export const app = createApp({
         const customWindowDays = {
             'Week': 7,
             '2-weeks': 14,
+            '4-weeks': 28,
             'Month': 30,
             '2-Months': 60,
             'Quarter': 90,

@@ -106,10 +106,10 @@
                         <thead>
                             <tr>
                                 <th rowspan="2">Period</th>
+                                <th rowspan="2">Days</th>
                                 <th colspan="3" class="common-slo-windows__count-header">
                                     {{ indicator.eventUnitNorm }}
                                 </th>
-                                <th rowspan="2">Days</th>
                                 <th rowspan="2" class="common-slo-windows__downtime">Downtime</th>
                             </tr>
                             <tr>
@@ -121,18 +121,18 @@
                         <tbody>
                             <tr class="common-slo-windows__your-config">
                                 <td>Your config</td>
+                                <td>{{ numL10n(objective.windowDays) }}</td>
                                 <td class="common-slo-windows__total">{{ numL10n(objective.validEventCount) }}</td>
                                 <td class="common-slo-windows__good">{{ numL10n(objective.goodEventCount) }}</td>
                                 <td class="common-slo-windows__bad">{{ numL10n(objective.badEventCount) }}</td>
-                                <td>{{ numL10n(objective.windowDays) }}</td>
                                 <td class="common-slo-windows__downtime">{{ timesliceToHumanTime(objective.badEventCount) }}</td>
                             </tr>
                             <tr v-for="row of table">
                                 <td>{{ row.title }}</td>
+                                <td>{{ numL10n(row.objective.windowDays) }}</td>
                                 <td class="common-slo-windows__total">{{ numL10n(row.objective.validEventCount) }}</td>
                                 <td class="common-slo-windows__good">{{ numL10n(row.objective.goodEventCount) }}</td>
                                 <td class="common-slo-windows__bad">{{ numL10n(row.objective.badEventCount) }}</td>
-                                <td>{{ numL10n(row.objective.windowDays) }}</td>
                                 <td class="common-slo-windows__downtime">{{ timesliceToHumanTime(row.objective.badEventCount) }}</td>
                             </tr>
                         </tbody>
