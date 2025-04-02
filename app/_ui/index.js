@@ -8,6 +8,7 @@ import { HelpComponent } from '../../components/help-component.js'
 import { CodeBlockComponent } from '../../components/code-block-component.js'
 import { TooltipComponent } from '../../components/tooltip-component.js'
 import { AnnouncementComponent } from '../../components/announcement-component.js'
+import { showToast } from '../../lib/toast.js'
 
 const app = createApp({
     data() {
@@ -45,6 +46,11 @@ const app = createApp({
         HeroComponent,
         InlineSelectComponent,
         TooltipComponent,
+    },
+    methods: {
+        clicked(name) {
+            showToast(`Clicked ${name}`)
+        },
     },
 })
 

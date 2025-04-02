@@ -150,27 +150,27 @@
                             <inline-select-component v-model="inlineSelectValue" :options="inlineSelectOptions"></inline-select-component>
                         </div>
                     </fieldset>
-                    <h2>buttons</h2>
+                    <h2>Buttons</h2>
                     <h3>Small</h3>
                     <div>
-                        <button class="button--small">Button 1</button>
-                        <button class="button--small">Button 2</button>
-                        <button class="button--small">Button 3</button>
-                        <button class="button--small" disabled>Disabled</button>
+                        <button @click="clicked('Small')" class="button--small">Button 1</button>
+                        <button @click="clicked('Small')" class="button--small">Button 2</button>
+                        <button @click="clicked('Small')" class="button--small">Button 3</button>
+                        <button @click="clicked('Small')" class="button--small" disabled>Disabled</button>
                     </div>
                     <h3>Regular</h3>
                     <div>
-                        <button>Button 1</button>
-                        <button>Button 2</button>
-                        <button>Button 3</button>
-                        <button disabled>Disabled</button>
+                        <button @click="clicked('Normal')">Button 1</button>
+                        <button @click="clicked('Normal')">Button 2</button>
+                        <button @click="clicked('Normal')">Button 3</button>
+                        <button @click="clicked('Normal')" disabled>Disabled</button>
                     </div>
                     <h3>Large</h3>
                     <div>
-                        <button class="button--large">Button 1</button>
-                        <button class="button--large">Button 2</button>
-                        <button class="button--large">Button 3</button>
-                        <button class="button--large" disabled>Disabled</button>
+                        <button @click="clicked('Large')" class="button--large">Button 1</button>
+                        <button @click="clicked('Large')" class="button--large">Button 2</button>
+                        <button @click="clicked('Large')" class="button--large">Button 3</button>
+                        <button @click="clicked('Large')" class="button--large" disabled>Disabled</button>
                     </div>
                     <h2>Button Bar</h2>
                     <div class="button-bar">
