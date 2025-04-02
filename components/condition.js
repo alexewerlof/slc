@@ -44,6 +44,8 @@ export class Condition {
                 return {
                     eq: this.pointValue,
                 }
+            default:
+                throw new TypeError(`Condition: unknown condition type ${this.type}`)
         }
     }
 
@@ -69,7 +71,7 @@ export class Condition {
         }
 
         if (this.metric.isNumeric) {
-            if (this.conditionType = 'range') {
+            if (this.conditionType === 'range') {
                 return {
                     gt: this.gt,
                     lt: this.lt,

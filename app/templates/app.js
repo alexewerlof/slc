@@ -23,7 +23,7 @@ export const app = createApp({
     },
     methods: {
         slcUrl(template) {
-            const url = new URL('./index.html', window.location.origin)
+            const url = new URL('./index.html', globalThis.location.origin)
             const { urlVer } = config
             return stateToUrl(url, { urlVer, ...template }).toString()
         },

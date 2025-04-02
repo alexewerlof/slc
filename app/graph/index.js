@@ -5,12 +5,6 @@ const {
     select,
     line,
     curveBasis,
-    forceSimulation,
-    forceLink,
-    forceManyBody,
-    forceCenter,
-    drag,
-    event,
 } = d3
 
 function processData(data) {
@@ -44,7 +38,7 @@ function processData(data) {
     }
 }
 
-const { providers, services, consumers, consumptions } = processData(
+const { providers, services, consumers: _consumers, consumptions } = processData(
     await loadJson('../workshop/example.json'),
 )
 
@@ -117,8 +111,8 @@ svg.append('g')
     .data(services)
     .enter().append('circle')
     .classed('entity--service', true)
-    .attr('cx', (service, i) => area2D.xScale(i + 4))
-    .attr('cy', (d) => area2D.yScale(3))
+    .attr('cx', (_service, i) => area2D.xScale(i + 4))
+    .attr('cy', (_d) => area2D.yScale(3))
     .attr('r', config.entityRadius)
 
 // Draw the circles for consumptions
@@ -128,7 +122,7 @@ svg.append('g')
     .enter().append('circle')
     .classed('entity--consumption', true)
     .attr('cx', area2D.xScale(3))
-    .attr('cy', (consumption, i) => area2D.yScale(i + 4))
+    .attr('cy', (_consumption, i) => area2D.yScale(i + 4))
     .attr('r', config.entityRadius)
 
 // Calculate the horizontal position for each provider

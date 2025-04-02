@@ -27,7 +27,7 @@ export const ExtLink = {
         hrefUrl() {
             try {
                 return new URL(this.href)
-            } catch (error) {
+            } catch (_err) {
                 return new URL(this.href, globalThis.location.origin)
             }
         },

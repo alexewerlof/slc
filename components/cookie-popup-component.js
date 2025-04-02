@@ -12,7 +12,7 @@ export const CookiePopupComponent = {
             if (localStorage.getItem(localStorageKeyName) === 'false') {
                 isVisible = false
             }
-        } catch (e) {
+        } catch (_err) {
             // ignore
         }
 
@@ -31,7 +31,7 @@ export const CookiePopupComponent = {
             this.isVisible = false
             try {
                 localStorage.setItem(localStorageKeyName, 'false')
-            } catch (e) {
+            } catch (_err) {
                 // ignore
             }
         },

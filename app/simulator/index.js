@@ -96,7 +96,7 @@ const app = createApp({
             const ret = []
             ret.push([0, this.min])
             let sum = 0
-            for (let bucket of this.buckets) {
+            for (const bucket of this.buckets) {
                 sum += bucket.probability
                 ret.push([
                     Math.round(percent(sum, this.dataCount)),
@@ -116,7 +116,7 @@ const app = createApp({
         probabilityGuides() {
             const ret = []
 
-            for (let bucket of this.buckets) {
+            for (const bucket of this.buckets) {
                 ret.push({
                     x: bucket.min,
                     label: bucket.min,
@@ -206,7 +206,7 @@ const app = createApp({
 
             const isGood = createIsGood(this.sliDefinition, this.sloDefinition)
 
-            for (let dataPoint of this.metricData) {
+            for (const dataPoint of this.metricData) {
                 if (isGood(dataPoint)) {
                     stats.good++
                 } else {
@@ -226,7 +226,7 @@ const app = createApp({
             return slsValues.map((value, i) => [i, value])
         },
         slsRange() {
-            let min = d3.min(this.slsPoints.map(([x, y]) => y))
+            let min = d3.min(this.slsPoints.map(([, y]) => y))
             if (min > this.slo.value) {
                 min = this.slo.value
             }
@@ -260,7 +260,7 @@ const app = createApp({
             ]
         },
         burnRateYExtent() {
-            const maxBurnRate = d3.max(this.burnRatePoints.map(([x, y]) => y))
+            const maxBurnRate = d3.max(this.burnRatePoints.map(([, y]) => y))
             return [0, Math.max(maxBurnRate, 14.4)]
         },
         accumulatedFailure() {

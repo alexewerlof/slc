@@ -11,5 +11,12 @@
         "semiColons": false,
         "singleQuote": true,
         "useTabs": false
+    },
+    "lint": {
+        "exclude": [
+            "vendor/",
+            "**/*.md",
+            "**/*.html"
+        ]
     }
 }

@@ -4,7 +4,7 @@ import { config } from '../../config.js'
 import { templates } from './templates.js'
 
 for (const template of templates) {
-    test(`Template: ${template.title}`, (t) => {
+    test(`Template: ${template.title}`, () => {
         const {
             title,
             description,
