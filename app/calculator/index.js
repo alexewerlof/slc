@@ -11,12 +11,12 @@ import { percentToRatio } from '../../lib/math.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '../../lib/fmt.js'
 import { stateToUrl } from '../../lib/share.js'
 import { CalculatorComponent } from '../../components/calculator-component.js'
-import { Calculator } from '../../components/calculator.js'
 import { AnnouncementComponent } from '../../components/announcement-component.js'
+import { makeCalculator } from '../../components/calculator.js'
 
 export const app = createApp({
     data() {
-        const calculator = new Calculator({
+        const calculator = makeCalculator(globalThis.location.href, {
             indicators: [{
                 metricName: 'response_latency1',
                 metricUnit: 'ms',

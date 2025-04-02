@@ -135,7 +135,7 @@ export class Indicator {
         }
 
         if (isDef(eventUnit)) {
-            if (isStrLen(eventUnit, config.eventUnit.minLength, config.eventUnit.maxLength)) {
+            if (!isStrLen(eventUnit, config.eventUnit.minLength, config.eventUnit.maxLength)) {
                 throw new Error(`Invalid eventUnit: ${eventUnit} (${typeof eventUnit})`)
             }
             this.eventUnit = eventUnit

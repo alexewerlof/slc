@@ -1,6 +1,7 @@
 import { Indicator } from './indicator.js'
 import { rmItemGetNext } from '../lib/math.js'
 import { isArr, isDef, isInstance, isObj } from '../lib/validation.js'
+import { urlToState } from '../lib/share.js'
 
 export class Calculator {
     /** @type {Indicator[]} List of indicators managed by this calculator */
@@ -64,5 +65,14 @@ export class Calculator {
     save() {
         // Save the calculator to a file
         return { indicators: this.indicators.map((indicator) => indicator.save()) }
+    }
+}
+
+export function makeCalculator(urlStr, fallbackState) {
+    try {
+        return new Calculator(urlToState(urlStr).state)
+    } catch (e) {
+        console.error('Error loading calculator state:', e)
+        return new Calculator(fallbackState)
     }
 }
