@@ -39,7 +39,15 @@
             <announcement-component>
                 <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
             </announcement-component>
-            <header-component></header-component>
+            <header-component title="Service Level Calculator">
+                <ul class="header-component__top-nav only-mobile">
+                    <li><a href="#sli-title">SLI</a></li>
+                    <li><a href="#slo-title">SLO</a></li>
+                    <li><a href="#error-budget-title">Error Budget</a></li>
+                    <li><a href="#alert-title">Alerting</a></li>
+                    <li><a href="#share-title">Share</a></li>
+                </ul>
+            </header-component>
 
             <calculator-component :calculator="calculator"></calculator-component>
 

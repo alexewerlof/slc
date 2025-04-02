@@ -1,17 +1,11 @@
-<header>
-    <div class="container">
-        <a href="/">
-            <h1>
-                <img src="/img/icon.svg" alt="Service Level Calculator Logo" class="logo" />
-                Service Level Calculator
-            </h1>
+<header class="header-component">
+    <div class="header-component__contents container">
+        <a href="/" tooltip="Home page">
+            <img src="/img/icon.svg" alt="Service Level Calculator Logo" class="header-component__logo" />
         </a>
-        <ul class="header-component__top-nav only-mobile">
-            <li><a href="#sli-title">SLI</a></li>
-            <li><a href="#slo-title">SLO</a></li>
-            <li><a href="#error-budget-title">Error Budget</a></li>
-            <li><a href="#alert-title">Alerting</a></li>
-            <li><a href="#share-title">Share</a></li>
-        </ul>
+        <h1 class="header-component__title">
+            {{ title}}
+        </h1>
+        <slot></slot>
     </div>
 </header>

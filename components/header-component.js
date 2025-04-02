@@ -6,4 +6,10 @@ export const HeaderComponent = {
     components: {
         ExtLink,
     },
+    props: {
+        title: {
+            type: String,
+            default: 'Missing title',
+        },
+    },
 }
