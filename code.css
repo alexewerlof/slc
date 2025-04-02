@@ -4,6 +4,10 @@ code {
     font-family: var(--code-font-family);
 }
 
+pre {
+    margin: 0;
+}
+
 code label {
     -webkit-user-select: auto; /* Added to support Safari and Safari on iOS */
     user-select: auto;
