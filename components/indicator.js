@@ -25,6 +25,21 @@ Metric data points impact its condition for good||bad:
   - point: ==, !=
 */
 
+/**
+ * Represents the options used to configure an Indicator instance.
+ * @typedef {Object} IndicatorOptions
+ * @property {string} [displayName] The display name (title) of the indicator.
+ * @property {string} [description] A brief description of the indicator.
+ * @property {string} [metricName] The name of the metric used to evaluate the indicator.
+ * @property {string} [metricUnit] The unit of the metric used to evaluate the indicator.
+ * @property {string} [lowerBound] The type of lower bound for the metric values that indicate a good event.
+ * @property {string} [upperBound] The type of upper bound for the metric values that indicate a good event.
+ * @property {number} [timeslice] The length of each timeslice for time-based indicators.
+ * @property {string} [eventUnit] The unit of valid events for event-based indicators.
+ * @property {number} [expectedDailyEvents] The expected number of valid events per day for event-based indicators.
+ * @property {Objective[]} [objectives] A list of objectives associated with the indicator.
+ */
+
 export class Indicator {
     /** @type {string} The title of the SLI */
     title = config.displayName.default
@@ -62,6 +77,10 @@ export class Indicator {
     /** @private @type {number} For event based error budgets, this number holds the total valid events so we can compute the amount of allowed bad events*/
     _expectedDailyEvents = config.expectedDailyEvents.default
 
+    /**
+     * Creates a new Indicator object (SLI).
+     * @param {IndicatorOptions | undefined} options
+     */
     constructor(options) {
         if (isDef(options)) {
             this.init(options)
