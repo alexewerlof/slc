@@ -1,6 +1,9 @@
 import { loadComponent } from '../lib/fetch-template.js'
-import { id } from '../lib/fp.js'
 import { Plot2dD3 } from '../lib/plot-2d-d3.js'
+
+function id(x) {
+    return x
+}
 
 export const Plot2DComponent = {
     template: await loadComponent(import.meta.url),
