@@ -13,6 +13,7 @@ import { stateToUrl } from '../../lib/share.js'
 import { CalculatorComponent } from '../../components/calculator-component.js'
 import { AnnouncementComponent } from '../../components/announcement-component.js'
 import { makeCalculator } from '../../components/calculator.js'
+import { attachBeforeUnloadHandler } from '../../lib/browser.js'
 
 export const app = createApp({
     data() {
@@ -48,6 +49,9 @@ export const app = createApp({
         }
     },
     mounted() {
+        setTimeout(() => {
+            attachBeforeUnloadHandler(globalThis)
+        }, 60000)
         this.$nextTick(() => {
             const hash = globalThis.location.hash
             if (hash) {
