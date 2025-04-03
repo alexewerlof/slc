@@ -1,8 +1,9 @@
 fieldset {
     border: var(--bthick) solid var(--divider-color);
     border-radius: var(--bradius);
-    padding: var(--gap);
-    margin: var(--gap) 0;
+    padding: var(--gap2);
+    padding-top: 0;
+    margin: 0;
     box-shadow: inset 0 0 var(--gap) var(--bthick) var(--background-darker);
 }
 
@@ -13,8 +14,8 @@ fieldset legend {
     text-shadow: 0 0 var(--gap) var(--background-darker);
 }
 
-fieldset fieldset {
-    margin: var(--gap);
+fieldset + fieldset {
+    margin-top: var(--gap);
 }
 
 input[type='range'] {
@@ -186,7 +187,11 @@ a, a:hover, a:active {
 }
 
 .input-group {
-    margin: var(--gap);
+    margin: 0;
+}
+
+.input-group + .input-group {
+    margin-top: var(--gap);
 }
 
 .input-button-pair {
