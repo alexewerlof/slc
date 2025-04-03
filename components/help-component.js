@@ -12,7 +12,10 @@ export const HelpComponent = {
             type: String,
             default: 'learn more',
         },
-        visible: Boolean,
+        visible: {
+            type: Boolean,
+            default: false,
+        },
     },
     methods: {
         toggle() {
