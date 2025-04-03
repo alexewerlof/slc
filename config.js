@@ -230,6 +230,28 @@ export const config = fz({
         step: 0.1,
         default: 6,
     }),
+    alert: fz({
+        presets: fz([
+            {
+                burnRate: 1,
+                longWindowPerc: 10,
+                shortWindowDivider: 12,
+                useShortWindow: true,
+            },
+            {
+                burnRate: 6,
+                longWindowPerc: 5,
+                shortWindowDivider: 12,
+                useShortWindow: true,
+            },
+            {
+                burnRate: 14.4,
+                longWindowPerc: 2,
+                shortWindowDivider: 12,
+                useShortWindow: true,
+            },
+        ]),
+    }),
     longWindowPerc: fz({
         min: 0.1,
         max: 99,

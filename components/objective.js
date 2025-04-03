@@ -114,30 +114,11 @@ export class Objective {
     }
 
     addRecommendedAlerts() {
-        this.addAlert(
-            new Alert(this, {
-                burnRate: 1,
-                longWindowPerc: 10,
-                shortWindowDivider: 12,
-                useShortWindow: true,
-            }),
-        )
-        this.addAlert(
-            new Alert(this, {
-                burnRate: 6,
-                longWindowPerc: 5,
-                shortWindowDivider: 12,
-                useShortWindow: true,
-            }),
-        )
-        this.addAlert(
-            new Alert(this, {
-                burnRate: 14.4,
-                longWindowPerc: 2,
-                shortWindowDivider: 12,
-                useShortWindow: true,
-            }),
-        )
+        for (const preset of config.alert.presets) {
+            this.addAlert(
+                new Alert(this, preset),
+            )
+        }
     }
 
     removeAlert(alert) {
