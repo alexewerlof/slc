@@ -7,7 +7,7 @@ import { Objective } from './objective.js'
 
 export class Alert {
     /** Alert burn rate: the rate above which the error budget is consumed */
-    burnRate = config.burnRate.default
+    burnRate = config.alert.burnRate.default
     /** Long window alert = percentage of the SLO window */
     longWindowPerc = config.longWindowPerc.default
     /** Short window alert = the fraction of the long window */
@@ -39,7 +39,7 @@ export class Alert {
         } = options
 
         if (isDef(burnRate)) {
-            if (!inRange(burnRate, config.burnRate.min, config.burnRate.max)) {
+            if (!inRange(burnRate, config.alert.burnRate.min, config.alert.burnRate.max)) {
                 throw new Error(`Invalid burnRage: ${burnRate} (${typeof burnRate})`)
             }
             this.burnRate = burnRate

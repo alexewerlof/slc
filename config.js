@@ -224,12 +224,6 @@ export const config = fz({
         step: 1,
         default: 10_000,
     }),
-    burnRate: fz({
-        min: 1,
-        max: 100,
-        step: 0.1,
-        default: 6,
-    }),
     alert: fz({
         presets: fz([
             {
@@ -251,6 +245,12 @@ export const config = fz({
                 useShortWindow: true,
             },
         ]),
+        burnRate: fz({
+            min: 1,
+            max: 100,
+            step: 0.1,
+            default: 8,
+        }),
     }),
     longWindowPerc: fz({
         min: 0.1,
