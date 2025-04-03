@@ -63,10 +63,12 @@ export class Indicator {
     _expectedDailyEvents = config.expectedDailyEvents.default
 
     constructor(options) {
-        if (!isDef(options)) {
-            return
+        if (isDef(options)) {
+            this.init(options)
         }
+    }
 
+    init(options) {
         if (!isObj(options)) {
             throw new TypeError(`option should be an object. Got ${options} (${typeof options})`)
         }
@@ -156,6 +158,8 @@ export class Indicator {
                 this.addObjective(new Objective(this, objectiveOptions))
             }
         }
+
+        return this
     }
 
     get expectedDailyEvents() {

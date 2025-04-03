@@ -37,10 +37,12 @@ export class Objective {
             daysToSeconds(config.windowDays.default),
         )
 
-        if (!isDef(options)) {
-            return
+        if (isDef(options)) {
+            this.init(options)
         }
+    }
 
+    init(options) {
         if (!isObj(options)) {
             throw new TypeError(`Invalid options object: ${options} ${typeof options}`)
         }
@@ -97,6 +99,8 @@ export class Objective {
                 this.addAlert(new Alert(this, alertOptions))
             }
         }
+
+        return this
     }
 
     addAlert(alert) {

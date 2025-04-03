@@ -22,10 +22,12 @@ export class Alert {
 
         this.objective = objective
 
-        if (!isDef(options)) {
-            return
+        if (isDef(options)) {
+            this.init(options)
         }
+    }
 
+    init(options) {
         if (!isObj(options)) {
             throw new TypeError(`Invalid options: ${options} (${typeof options})`)
         }
@@ -59,6 +61,8 @@ export class Alert {
         } else {
             this.useShortWindow = false
         }
+
+        return this
     }
 
     get shortWindowPerc() {
