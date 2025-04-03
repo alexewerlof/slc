@@ -70,9 +70,13 @@ export class Calculator {
 
 export function makeCalculator(urlStr, fallbackState) {
     try {
-        return new Calculator(urlToState(urlStr).state)
+        const url = new URL(urlStr)
+        if (!url.searchParams.has('urlVer') || !url.searchParams.has('target')) {
+            throw new Error('No state found in URL')
+        }
+        return new Calculator(urlToState(url).state)
     } catch (e) {
-        console.error('Error loading calculator state:', e)
+        console.info('Using fallback state because of failure to load it from URL:', e)
         return new Calculator(fallbackState)
     }
 }
