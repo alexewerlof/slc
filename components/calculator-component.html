@@ -65,11 +65,8 @@
                 </fieldset>
             </div>
 
-            <div class="surface">
-                <indicator-component
-                    v-if="calculator.selIndicator"
-                    :indicator="calculator.selIndicator"
-                ></indicator-component>
+            <div class="surface" v-if="calculator.selIndicator">
+                <indicator-component :indicator="calculator.selIndicator"></indicator-component>
             </div>
         </section>
 
@@ -112,17 +109,11 @@
                 </fieldset>
             </div>
 
-            <div class="surface">
-                <objective-component
-                    v-if="calculator.selIndicator?.selObjective"
-                    :objective="calculator.selIndicator.selObjective"
-                ></objective-component>
+            <div class="surface" v-if="calculator.selIndicator?.selObjective">
+                <objective-component :objective="calculator.selIndicator.selObjective"></objective-component>
                 <!------------------------ Error Budget ------------------------>
                 <h2 id="error-budget-title">Error</h2>
-                <error-budget-component
-                    v-if="calculator.selIndicator?.selObjective"
-                    :objective="calculator.selIndicator.selObjective"
-                ></error-budget-component>
+                <error-budget-component :objective="calculator.selIndicator.selObjective"></error-budget-component>
             </div>
         </section>
 
@@ -184,10 +175,8 @@
                 </fieldset>
             </div>
 
-            <div class="surface">
-                <alert-component
-                    v-if="calculator.selIndicator?.selObjective?.selAlert"
-                    :alert="calculator.selIndicator.selObjective.selAlert"></alert-component>
+            <div class="surface" v-if="calculator.selIndicator?.selObjective?.selAlert">
+                <alert-component :alert="calculator.selIndicator.selObjective.selAlert"></alert-component>
             </div>
         </section>
     </article>
