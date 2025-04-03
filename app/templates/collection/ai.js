@@ -1,4 +1,4 @@
-const commonTags = ['ai', 'genai', 'generative ai']
+const commonTags = ['ai', 'genai']
 
 export default [
     {
