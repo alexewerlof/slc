@@ -251,18 +251,18 @@ export const config = fz({
             step: 0.1,
             default: 8,
         }),
-    }),
-    longWindowPerc: fz({
-        min: 0.1,
-        max: 99,
-        step: 0.1,
-        default: 5,
-    }),
-    shortWindowDivider: fz({
-        min: 2,
-        max: 20,
-        step: 1,
-        default: 12,
+        longWindowPerc: fz({
+            min: 0.1,
+            max: 99,
+            step: 0.1,
+            default: 5,
+        }),
+        shortWindowDivider: fz({
+            min: 2,
+            max: 20,
+            step: 1,
+            default: 12,
+        }),
     }),
     impactLevel: fz({
         min: 1,

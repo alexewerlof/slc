@@ -9,9 +9,9 @@ export class Alert {
     /** Alert burn rate: the rate above which the error budget is consumed */
     burnRate = config.alert.burnRate.default
     /** Long window alert = percentage of the SLO window */
-    longWindowPerc = config.longWindowPerc.default
+    longWindowPerc = config.alert.longWindowPerc.default
     /** Short window alert = the fraction of the long window */
-    shortWindowDivider = config.shortWindowDivider.default
+    shortWindowDivider = config.alert.shortWindowDivider.default
     /** Show the short window alert */
     useShortWindow = false
 
@@ -46,14 +46,16 @@ export class Alert {
         }
 
         if (isDef(longWindowPerc)) {
-            if (!inRange(longWindowPerc, config.longWindowPerc.min, config.longWindowPerc.max)) {
+            if (!inRange(longWindowPerc, config.alert.longWindowPerc.min, config.alert.longWindowPerc.max)) {
                 throw new Error(`Invalid longWindowPerc: ${longWindowPerc} (${typeof longWindowPerc})`)
             }
             this.longWindowPerc = longWindowPerc
         }
 
         if (isDef(shortWindowDivider)) {
-            if (!inRange(shortWindowDivider, config.shortWindowDivider.min, config.shortWindowDivider.max)) {
+            if (
+                !inRange(shortWindowDivider, config.alert.shortWindowDivider.min, config.alert.shortWindowDivider.max)
+            ) {
                 throw new Error(`Invalid shortWindowDivider: ${shortWindowDivider} (${typeof shortWindowDivider})`)
             }
             this.useShortWindow = true

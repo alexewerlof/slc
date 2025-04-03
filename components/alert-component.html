@@ -181,9 +181,9 @@
         <input
             id="alert-error-budget-perc"
             type="range"
-            :min="config.longWindowPerc.min"
-            :max="config.longWindowPerc.max"
-            :step="config.longWindowPerc.step"
+            :min="config.alert.longWindowPerc.min"
+            :max="config.alert.longWindowPerc.max"
+            :step="config.alert.longWindowPerc.step"
             v-model.number="alert.longWindowPerc"
         >
     </div>
@@ -224,8 +224,8 @@
                     But you can play with different dividers to see how they impact
                     the detection time of the alert.
                 </p>
-                <p v-if="alert.shortWindowDivider !== config.shortWindowDivider.default">
-                    <button type="button" @click="alert.shortWindowDivider = config.shortWindowDivider.default">Reset to 1/{{ config.shortWindowDivider.default }}</button>
+                <p v-if="alert.shortWindowDivider !== config.alert.shortWindowDivider.default">
+                    <button type="button" @click="alert.shortWindowDivider = config.alert.shortWindowDivider.default">Reset to 1/{{ config.alert.shortWindowDivider.default }}</button>
                 </p>
                 <p>
                     Long-Window alert triggers after consuming {{ alert.longWindowPerc }}%
@@ -301,9 +301,9 @@
     <input
         id="alert-short-window-divider-input"
         type="range"
-        :min="config.shortWindowDivider.min"
-        :max="config.shortWindowDivider.max"
-        :step="config.shortWindowDivider.step"
+        :min="config.alert.shortWindowDivider.min"
+        :max="config.alert.shortWindowDivider.max"
+        :step="config.alert.shortWindowDivider.step"
         v-model.number="alert.shortWindowDivider"
     >
 </fieldset>
