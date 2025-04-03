@@ -8,6 +8,7 @@ import { isNum } from '../../lib/validation.js'
 import { humanTimeSlices } from '../../lib/time.js'
 import { stateToUrl } from '../../lib/share.js'
 import { config } from '../../config.js'
+import { CodeBlockComponent } from '../../components/code-block-component.js'
 
 export const app = createApp({
     data() {
@@ -23,7 +24,7 @@ export const app = createApp({
     },
     methods: {
         slcUrl(template) {
-            const url = new URL('./index.html', globalThis.location.origin)
+            const url = new URL('../calculator/index.html', globalThis.location.origin)
             const { urlVer } = config
             return stateToUrl(url, { urlVer, ...template }).toString()
         },
@@ -40,6 +41,7 @@ export const app = createApp({
         ExtLink,
         HeaderComponent,
         FooterComponent,
+        CodeBlockComponent,
     },
 })
 
