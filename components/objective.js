@@ -91,7 +91,7 @@ export class Objective {
             this.upperThreshold = upperThreshold
         }
 
-        if (isDef(alert)) {
+        if (isDef(alerts)) {
             if (!isArr(alerts)) {
                 throw new TypeError(`Invalid alerts array: ${alerts} (${typeof alerts})`)
             }
