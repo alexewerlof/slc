@@ -10,11 +10,11 @@
                     It is the ratio of the error budget to the SLO window.
                 </p>
                 <p>
-                    A burn rate of <button @click="alert.burnRate = 1">1x</button> means that the error budget will be consumed during the
+                    A burn rate of <button @click="alert.burnRate = 1" class="button--small">1x</button> means that the error budget will be consumed during the
                     SLO window (accepted).
                 </p>
                 <p>
-                    A burn rate of <button @click="alert.burnRate = 2">2x</button> means that the error budget will be consumed in half the
+                    A burn rate of <button @click="alert.burnRate = 2" class="button--small">2x</button> means that the error budget will be consumed in half the
                     SLO window. This is not acceptable because at this rate, the SLO will be
                     violated before the end of the SLO window.
                 </p>
@@ -37,48 +37,16 @@
             <table>
                 <thead>
                     <th>Burn Rate</th>
-                    <th>Error Budget</th>
                     <th>Long-Window</th>
-                    <th v-if="alert.useShortWindow">Short-Window</th>
-                    <th>Action</th>
-                    <th aria-label="try button"></th>
+                    <th>Short-Window</th>
+                    <th></th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>14.4x</td>
-                        <td>{{ percL10n(2) }} Consumed</td>
-                        <td>1 hour</td>
-                        <td v-if="alert.useShortWindow">5 minutes</td>
-                        <td>Page</td>
-                        <td>
-                            <button type="button" @click="alert.burnRate = 14.4, alert.longWindowPerc = 2, alert.shortWindowDivider = 12">
-                                Try!
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>6x</td>
-                        <td>{{ percL10n(5) }} Consumed</td>
-                        <td>6 hours</td>
-                        <td v-if="alert.useShortWindow">30 minutes</td>
-                        <td>Page</td>
-                        <td>
-                            <button type="button" @click="alert.burnRate = 6, alert.longWindowPerc = 5, alert.shortWindowDivider = 12">
-                                Try!
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1x</td>
-                        <td>{{ percL10n(10) }} Consumed</td>
-                        <td>3 days</td>
-                        <td v-if="alert.useShortWindow">6 hours</td>
-                        <td>Ticket</td>
-                        <td>
-                            <button type="button" @click="alert.burnRate = 1, alert.longWindowPerc = 10, alert.shortWindowDivider = 12">
-                                Try!
-                            </button>
-                        </td>
+                    <tr v-for="preset of config.alert.presets">
+                        <td>{{ preset.burnRate }}x</td>
+                        <td>{{ percL10n(preset.longWindowPerc) }} Consumed</td>
+                        <td>1/{{ preset.shortWindowDivider }} of {{ percL10n(preset.longWindowPerc) }}</td>
+                        <td><button type="button" class="button--small" @click="alert.init(preset)">Try</button></td>
                     </tr>
                 </tbody>
             </table>
