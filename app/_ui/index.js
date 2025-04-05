@@ -24,10 +24,12 @@ const app = createApp({
             {
                 title: 'Some',
                 value: 'Hello',
+                disabled: true,
             },
             {
                 title: 'Thing',
                 value: false,
+                disabled: false,
             },
         ]
         return {

@@ -9,7 +9,7 @@ export const InlineSelectComponent = {
     props: {
         // The value should match one of the values in the array of options
         modelValue: null,
-        // Each element has `title: string` and `value` properties
+        // Each element has `title: string`, `value`, and optionaly `disabled` properties
         options: Array,
     },
     emits: ['update:value'],

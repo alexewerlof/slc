@@ -2,6 +2,8 @@
     <div class="inline-select-component__buttons">
         <button v-for="option in options"
             @click="$emit('update:modelValue', option.value)"
+            :disabled="option.disabled"
+            :key="option.value"
             :class="[
                 'inline-select-component__button',
                 modelValue === option.value ? '' : 'inline-select-component__button--inactive'
