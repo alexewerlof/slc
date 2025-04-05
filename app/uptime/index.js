@@ -1,27 +1,12 @@
 import { createApp } from '../../vendor/vue.js'
-import { HeaderComponent } from '../../components/header-component.js'
-import { FooterComponent } from '../../components/footer-component.js'
-import { ExtLink } from '../../components/ext-link.js'
-import { HeroComponent } from '../../components/hero-component.js'
-import { ErrorBudgetComponent } from '../../components/error-budget-component.js'
-import { HelpComponent } from '../../components/help-component.js'
 import { Indicator } from '../../components/indicator.js'
 import { Objective } from '../../components/objective.js'
-import { ObjectiveComponent } from '../../components/objective-component.js'
 import { config } from '../../config.js'
 import { numL10n } from '../../lib/fmt.js'
 import { humanTime } from '../../lib/time.js'
+import { addComponents } from '../../lib/fetch-template.js'
 
 export const app = createApp({
-    components: {
-        HeaderComponent,
-        FooterComponent,
-        ExtLink,
-        HeroComponent,
-        ErrorBudgetComponent,
-        ObjectiveComponent,
-        HelpComponent,
-    },
     methods: {
         numL10n,
         humanTime,
@@ -71,4 +56,5 @@ export const app = createApp({
     },
 })
 
+addComponents(app)
 app.mount('#app')

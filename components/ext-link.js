@@ -1,5 +1,4 @@
 import { config } from '../config.js'
-import { loadComponent } from '../lib/fetch-template.js'
 import { addUTM } from '../lib/utm.js'
 
 /*
@@ -7,8 +6,7 @@ This is just a convenience component to
 shorten the code for external links and
 reduce the risk of typo errors.
 */
-export const ExtLink = {
-    template: await loadComponent(import.meta.url, true),
+export default {
     props: {
         href: String,
         source: {

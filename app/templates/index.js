@@ -1,14 +1,8 @@
 import { createApp } from '../../vendor/vue.js'
-import { HelpComponent } from '../../components/help-component.js'
-import { ExtLink } from '../../components/ext-link.js'
-import { HeaderComponent } from '../../components/header-component.js'
-import { FooterComponent } from '../../components/footer-component.js'
 import { groups, importAllGroups } from '../../collection/index.js'
 import { stateToUrl } from '../../lib/share.js'
 import { config } from '../../config.js'
-import { CodeBlockComponent } from '../../components/code-block-component.js'
-import { InlineSelectComponent } from '../../components/inline-select-component.js'
-import { FormulaComponent } from '../../components/formula-component.js'
+import { addComponents } from '../../lib/fetch-template.js'
 
 const items = await importAllGroups()
 
@@ -90,15 +84,7 @@ export const app = createApp({
             return stateToUrl(url, { urlVer, ...template }).toString()
         },
     },
-    components: {
-        HelpComponent,
-        ExtLink,
-        HeaderComponent,
-        FooterComponent,
-        CodeBlockComponent,
-        InlineSelectComponent,
-        FormulaComponent,
-    },
 })
 
+addComponents(app)
 app.mount('#app')

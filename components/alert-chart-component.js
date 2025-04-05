@@ -1,9 +1,4 @@
-import { loadComponent } from '../lib/fetch-template.js'
-import { BurnEventComponent } from './burn-event-component.js'
-import { AxisComponent } from './axis-component.js'
-
-export const AlertChartComponent = {
-    template: await loadComponent(import.meta.url),
+export default {
     data() {
         return {
             width: 500,
@@ -18,10 +13,6 @@ export const AlertChartComponent = {
     },
     props: {
         alert: Object,
-    },
-    components: {
-        BurnEventComponent,
-        AxisComponent,
     },
     computed: {
         viewBox() {

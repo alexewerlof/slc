@@ -1,19 +1,11 @@
 import { createApp } from '../../vendor/vue.js'
 import { config } from '../../config.js'
-import { ExtLink } from '../../components/ext-link.js'
-import { FeedbackBlobComponent } from '../../components/feedback-blob-component.js'
-import { HeaderComponent } from '../../components/header-component.js'
-import { FooterComponent } from '../../components/footer-component.js'
-import { CookiePopupComponent } from '../../components/cookie-popup-component.js'
-import { HelpComponent } from '../../components/help-component.js'
-import { CodeBlockComponent } from '../../components/code-block-component.js'
 import { percentToRatio } from '../../lib/math.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '../../lib/fmt.js'
 import { stateToUrl } from '../../lib/share.js'
-import { CalculatorComponent } from '../../components/calculator-component.js'
-import { AnnouncementComponent } from '../../components/announcement-component.js'
 import { makeCalculator } from '../../components/calculator.js'
 import { attachBeforeUnloadHandler } from '../../lib/browser.js'
+import { addComponents } from '../../lib/fetch-template.js'
 
 export const app = createApp({
     data() {
@@ -62,17 +54,6 @@ export const app = createApp({
             }
         })
     },
-    components: {
-        AnnouncementComponent,
-        CalculatorComponent,
-        CodeBlockComponent,
-        CookiePopupComponent,
-        ExtLink,
-        FeedbackBlobComponent,
-        FooterComponent,
-        HeaderComponent,
-        HelpComponent,
-    },
     methods: {
         boundCaption,
         entity2symbol,
@@ -100,4 +81,5 @@ export const app = createApp({
     },
 })
 
+addComponents(app)
 app.mount('#app')

@@ -1,10 +1,6 @@
-import { loadComponent } from '../lib/fetch-template.js'
-import { ExtLink } from './ext-link.js'
-
 const localStorageKeyName = 'showCookiePopup'
 
-export const CookiePopupComponent = {
-    template: await loadComponent(import.meta.url),
+export default {
     data() {
         let isVisible = true
 
@@ -35,8 +31,5 @@ export const CookiePopupComponent = {
                 // ignore
             }
         },
-    },
-    components: {
-        ExtLink,
     },
 }

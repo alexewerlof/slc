@@ -1,8 +1,6 @@
-import { loadComponent } from '../lib/fetch-template.js'
 import { showToast } from '../lib/toast.js'
 
-export const CodeBlockComponent = {
-    template: await loadComponent(import.meta.url),
+export default {
     props: {
         title: String,
     },

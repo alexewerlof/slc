@@ -1,7 +1,4 @@
-import { loadComponent } from '../lib/fetch-template.js'
-
-export const FAQComponent = {
-    template: await loadComponent(import.meta.url),
+export default {
     data() {
         return {
             isVisible: this.visible,

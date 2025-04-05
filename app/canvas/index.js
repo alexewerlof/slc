@@ -1,18 +1,6 @@
 import { createApp } from '../../vendor/vue.js'
 import { loadJson } from '../../lib/share.js'
-import { StepsComponent } from '../../components/steps-component.js'
-import { ShowHideComponent } from '../../components/show-hide-component.js'
-import { ExtLink } from '../../components/ext-link.js'
-import { ProviderComponent } from '../../components/provider-component.js'
-import { ConsumerComponent } from '../../components/consumer-component.js'
-import { EventComponent } from '../../components/event-component.js'
-import { FailureComponent } from '../../components/failure-component.js'
-import { RiskComponent } from '../../components/risk-component.js'
-import { ServiceMetricComponent } from '../../components/service-metric-component.js'
-import { SummaryComponent } from '../../components/summary-component.js'
-import { FeedbackBlobComponent } from '../../components/feedback-blob-component.js'
-import { FooterComponent } from '../../components/footer-component.js'
-import { HeroComponent } from '../../components/hero-component.js'
+import { addComponents } from '../../lib/fetch-template.js'
 
 const exampleJson = await loadJson('../workshop/example.json')
 
@@ -45,21 +33,6 @@ const app = createApp({
             isPropsVisible: true,
         }
     },
-    components: {
-        ProviderComponent,
-        ConsumerComponent,
-        EventComponent,
-        FailureComponent,
-        RiskComponent,
-        ServiceMetricComponent,
-        SummaryComponent,
-        FeedbackBlobComponent,
-        FooterComponent,
-        HeroComponent,
-        StepsComponent,
-        ShowHideComponent,
-        ExtLink,
-    },
     computed: {
         shapes() {
             return flatten(this.data)
@@ -89,4 +62,5 @@ const app = createApp({
     },
 })
 
+addComponents(app)
 app.mount('#app')

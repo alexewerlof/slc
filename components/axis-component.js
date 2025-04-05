@@ -1,8 +1,6 @@
-import { loadComponent } from '../lib/fetch-template.js'
 import { arrToPolygonPoints } from '../lib/svg.js'
 
-export const AxisComponent = {
-    template: await loadComponent(import.meta.url),
+export default {
     props: {
         topY: Number,
         rightX: Number,

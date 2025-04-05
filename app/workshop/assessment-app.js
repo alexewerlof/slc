@@ -1,20 +1,7 @@
 import { config } from '../../config.js'
 import { loadJson, readTextFile } from '../../lib/share.js'
 import { createApp } from '../../vendor/vue.js'
-import { StepsComponent } from '../../components/steps-component.js'
-import { ShowHideComponent } from '../../components/show-hide-component.js'
-import { ExtLink } from '../../components/ext-link.js'
-import { ProviderComponent } from '../../components/provider-component.js'
-import { ConsumerComponent } from '../../components/consumer-component.js'
-import { EventComponent } from '../../components/event-component.js'
-import { FailureComponent } from '../../components/failure-component.js'
-import { RiskComponent } from '../../components/risk-component.js'
-import { ServiceMetricComponent } from '../../components/service-metric-component.js'
-import { SummaryComponent } from '../../components/summary-component.js'
 import { Assessment } from '../../components/assessment.js'
-import { FeedbackBlobComponent } from '../../components/feedback-blob-component.js'
-import { FooterComponent } from '../../components/footer-component.js'
-import { HeroComponent } from '../../components/hero-component.js'
 import { icon } from '../../lib/icons.js'
 
 const exampleJson = await loadJson('example.json')
@@ -40,21 +27,6 @@ export const app = createApp({
             config,
             exportedCode: '-',
         }
-    },
-    components: {
-        ProviderComponent,
-        ConsumerComponent,
-        EventComponent,
-        FailureComponent,
-        RiskComponent,
-        ServiceMetricComponent,
-        SummaryComponent,
-        FeedbackBlobComponent,
-        FooterComponent,
-        HeroComponent,
-        StepsComponent,
-        ShowHideComponent,
-        ExtLink,
     },
     methods: {
         icon,

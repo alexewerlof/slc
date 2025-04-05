@@ -1,12 +1,10 @@
-import { loadComponent } from '../lib/fetch-template.js'
 import { arrToPolygonPoints } from '../lib/svg.js'
 import { isArr } from '../lib/validation.js'
 
 const titleDistance = 8
 const arrowHeight = 5
 
-export const BurnEventComponent = {
-    template: await loadComponent(import.meta.url),
+export default {
     props: {
         width: Number,
         height: Number,

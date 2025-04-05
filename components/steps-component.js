@@ -1,11 +1,8 @@
-import { loadComponent } from '../lib/fetch-template.js'
-
 /**
  * Use it like this in the parent:
  * <tabs-component v-model:current-step="currentStep"></tabs-component>
  */
-export const StepsComponent = {
-    template: await loadComponent(import.meta.url),
+export default {
     props: {
         currentStep: String,
         steps: Array,

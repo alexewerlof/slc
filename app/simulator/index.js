@@ -1,6 +1,4 @@
 import { createApp } from '../../vendor/vue.js'
-import { Plot2DComponent } from '../../components/plot-2d-component.js'
-import { TabsComponent } from '../../components/tabs-component.js'
 import { createBuckets, generateData } from '../../lib/buckets.js'
 import { analyzeData, createIncidentBuckets, overwriteData, percentileIndex } from '../../lib/data.js'
 import { config } from '../../config.js'
@@ -9,16 +7,13 @@ import { boundTypeToOperator, calculateSlsMetric, createIsGood } from '../../lib
 import { isNum } from '../../lib/validation.js'
 import { percent } from '../../lib/math.js'
 import { percL10n } from '../../lib/fmt.js'
+import { addComponents } from '../../lib/fetch-template.js'
 
 const percentageColor = d3.scaleLinear()
     .domain([config.slider.min, config.slider.max])
     .range(['#F86262', '#1BC554'])
 
 const app = createApp({
-    components: {
-        Plot2DComponent,
-        TabsComponent,
-    },
     data() {
         return {
             config,
@@ -398,4 +393,5 @@ const app = createApp({
     },
 })
 
+addComponents(app)
 app.mount('#app')

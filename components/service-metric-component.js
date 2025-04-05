@@ -1,15 +1,10 @@
-import { loadComponent } from '../lib/fetch-template.js'
 import { isInstance } from '../lib/validation.js'
 import { Service } from './service.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
-import { MetricComponent } from './metric-component.js'
-import { ShowHideComponent } from './show-hide-component.js'
-import { ExtLink } from './ext-link.js'
 import { icon } from '../lib/icons.js'
 
-export const ServiceMetricComponent = {
-    template: await loadComponent(import.meta.url, true),
+export default {
     computed: {
         config() {
             return config
@@ -25,10 +20,5 @@ export const ServiceMetricComponent = {
         icon,
         percL10n,
         numL10n,
-    },
-    components: {
-        ExtLink,
-        MetricComponent,
-        ShowHideComponent,
     },
 }

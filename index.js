@@ -1,17 +1,8 @@
 import { createApp } from './vendor/vue.js'
-import { HeaderComponent } from './components/header-component.js'
-import { FooterComponent } from './components/footer-component.js'
-import { ExtLink } from './components/ext-link.js'
-import { HeroComponent } from './components/hero-component.js'
 import { addUTM } from './lib/utm.js'
+import { addComponents } from './lib/fetch-template.js'
 
 export const app = createApp({
-    components: {
-        HeaderComponent,
-        FooterComponent,
-        ExtLink,
-        HeroComponent,
-    },
     methods: {
         gotoApp(appName, term) {
             appName = appName.toLowerCase()
@@ -38,4 +29,5 @@ export const app = createApp({
     },
 })
 
+addComponents(app)
 app.mount('#app')

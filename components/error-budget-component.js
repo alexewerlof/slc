@@ -1,15 +1,7 @@
-import { loadComponent } from '../lib/fetch-template.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
 import { isObj } from '../lib/validation.js'
-import { HelpComponent } from './help-component.js'
-import { ExtLink } from './ext-link.js'
 
-export const ErrorBudgetComponent = {
-    template: await loadComponent(import.meta.url),
-    components: {
-        HelpComponent,
-        ExtLink,
-    },
+export default {
     computed: {
         errorBudgetGridTemplateColumns() {
             return {
