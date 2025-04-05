@@ -1,27 +1,28 @@
 export const groups = [
-    'ai',
-    'api',
-    'cache',
-    'data',
-    'frontend',
-    'operations',
-    'queue',
+    'API',
+    'Cache',
+    'Data',
+    'GenAI',
+    'Frontend',
+    'Operations',
+    'Queue',
 ]
 
-function byTitle(template1, template2) {
-    return template1.title.localeCompare(template2.title)
+async function importIndicators(group) {
+    const indicaotrs = await import(`./${group.toLowerCase()}.js`)
+    return indicaotrs.default.map((indicator) => {
+        const category = indicator.title.split(':')[0].trim()
+
+        return {
+            indicator,
+            group,
+            category,
+        }
+    })
 }
 
-async function importTemplate(group) {
-    const module = await import(`./${group}.js`)
-    return module.default.map((template) => ({
-        ...template,
-        group,
-    }))
-}
-
-export async function importAllTemplates() {
-    const templatePromises = groups.map(importTemplate)
+export async function importAllGroups() {
+    const templatePromises = groups.map(importIndicators)
     const templatesArray = await Promise.all(templatePromises)
-    return templatesArray.flat().sort(byTitle)
+    return templatesArray.flat()
 }

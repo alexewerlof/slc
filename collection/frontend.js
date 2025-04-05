@@ -1,74 +1,69 @@
+import { Indicator } from '../components/indicator.js'
+
 export default [
-    {
+    new Indicator({
         // https://web.dev/articles/ttfb
-        title: 'Latency: Time To First Byte (TTFB)',
+        displayName: 'Latency: Time To First Byte (TTFB)',
         description: 'The percentage of requests where the time to first byte was sufficiently fast.',
         eventUnit: 'connections',
         metricName: 'TTFB',
         metricUnit: 'ms',
         upperBound: 'le',
-        upperThreshold: 800,
-    },
-    {
+    }),
+    new Indicator({
         // https://web.dev/articles/fcp
-        title: 'Latency: First Contentful Paint (FCP)',
+        displayName: 'Latency: First Contentful Paint (FCP)',
         description:
             'The percentage of page renders where the time from when the page starts loading to when any part of the page content is rendered on screen was sufficiently fast.',
         eventUnit: 'page renders',
         metricName: 'FCP',
         metricUnit: 'ms',
         upperBound: 'le',
-        upperThreshold: 1000,
-    },
-    {
+    }),
+    new Indicator({
         // https://web.dev/articles/lcp
-        title: 'Latency: Largest Contentful Paint (LCP)',
+        displayName: 'Latency: Largest Contentful Paint (LCP)',
         description: 'Percentage of requests with an acceptable LCP (Largest Contentful Paint)',
         eventUnit: 'paints',
         metricName: 'LCP',
         metricUnit: 'ms',
         upperBound: 'le',
-        upperThreshold: 2500,
-    },
-    {
+    }),
+    new Indicator({
         // https://web.dev/articles/cls
-        title: 'Latency: Cumulative Layout Shift (CLS)',
+        displayName: 'Latency: Cumulative Layout Shift (CLS)',
         description: 'Percentage of requests with an acceptably low CLS (Cumulative Layout Shift)',
         eventUnit: 'shifts',
         metricName: 'CLS',
         metricUnit: 'shifts',
         upperBound: 'le',
-        upperThreshold: 0.1,
-    },
-    {
+    }),
+    new Indicator({
         // First Input Delay (FID)
-        title: 'Latency: First Input Delay (FID)',
+        displayName: 'Latency: First Input Delay (FID)',
         description:
             'The percentage of page renders where the time from when the page starts loading to when the user first interacts with the page was sufficiently fast.',
         eventUnit: 'page renders',
         metricName: 'FID',
         metricUnit: 'ms',
         upperBound: 'le',
-        upperThreshold: 100,
-    },
-    {
+    }),
+    new Indicator({
         // Interaction to Next Paint (INP)
-        title: 'Latency: Interaction to Next Paint (INP)',
+        displayName: 'Latency: Interaction to Next Paint (INP)',
         description:
             'The percentage of page renders where the time from when the user first interacts with the page to when the next paint is rendered on screen was sufficiently fast.',
         eventUnit: 'page renders',
         metricName: 'INP',
         metricUnit: 'ms',
         upperBound: 'le',
-        upperThreshold: 200,
-    },
-    {
-        title: 'Availability: Real User Monitoring (RUM)',
+    }),
+    new Indicator({
+        displayName: 'Availability: Real User Monitoring (RUM)',
         description: 'The percentage of purchase flows that performed without any critical errors',
         eventUnit: 'purchase flows',
         metricName: 'flow.errorCount.critical',
         metricUnit: 'errors',
         upperBound: 'le',
-        upperThreshold: 0,
-    },
+    }),
 ]

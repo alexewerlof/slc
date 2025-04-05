@@ -41,39 +41,35 @@
                     <h2>Filter</h2>
                     <div class="input-group">
                         <label>Service (group)</label>
-                        <inline-select-component v-model="selectedGroup" :options="groups"></inline-select-component>
+                        <inline-select-component v-model="selectedGroup" :options="groupOptions"></inline-select-component>
                     </div>
                     <div class="input-group" v-if="selectedGroup && categoryOptions.length > 2">
                         <label>Indicator (sub-group)</label>
                         <inline-select-component v-model="selectedCategory" :options="categoryOptions"></inline-select-component>
                     </div>
-                    <div class="subtle-hint">{{ filteredPresets.length }} results</div>
+                    <div class="subtle-hint">{{ filteredItems.length }} results</div>
                 </div>
-                <ol class="search-results" v-if="filteredPresets.length">
+                <ol class="search-results" v-if="filteredItems.length">
                     <li class="search-result"
-                        v-for="preset in filteredPresets">
+                        v-for="item in filteredItems">
                         <article>
                             <section>
                                 <h3 class="search-result__title">
                                     <ext-link :href="slcUrl(template)">
-                                        {{ preset.indicator.title }}
+                                        {{ item.indicator }}
                                     </ext-link>
                                 </h3>
                                 <p class="search-result__type">
                                     <span>Unit: </span>
-                                    <span>{{ preset.indicator.eventUnitNorm }}</span>
-                                </p>
-                                <p class="search-result__type">
-                                    <span>Service Type: </span>
-                                    <span>{{ preset.group }}</span>
+                                    <span>{{ item.indicator.eventUnitNorm }}</span>
                                 </p>
                                 <p>
-                                    {{ preset.indicator.description }}
+                                    {{ item.indicator.description }}
                                 </p>        
                             </section>
                             <section>
                                 <code-block-component title="Service Level Status">
-                                    <formula-component :formula="preset.objective.formula"></formula-component>
+                                    <formula-component :formula="item.indicator.formula"></formula-component>
                                 </code-block-component>
                             </section>
                         </article>
