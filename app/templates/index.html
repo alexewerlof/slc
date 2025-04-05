@@ -40,12 +40,12 @@
                 <div class="surface">
                     <h2>Filter</h2>
                     <div class="input-group">
-                        <label>Service</label>
+                        <label>Service (group)</label>
                         <inline-select-component v-model="selectedGroup" :options="groups"></inline-select-component>
                     </div>
-                    <div class="input-group">
-                        <label>Indicator</label>
-                        <inline-select-component v-model="selectedCategory" :options="categories"></inline-select-component>
+                    <div class="input-group" v-if="selectedGroup && categoryOptions.length > 2">
+                        <label>Indicator (sub-group)</label>
+                        <inline-select-component v-model="selectedCategory" :options="categoryOptions"></inline-select-component>
                     </div>
                     <div class="subtle-hint">{{ filteredPresets.length }} results</div>
                 </div>

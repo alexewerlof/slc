@@ -55,9 +55,9 @@ const presets = templates.map((template) => {
 
     return {
         category,
+        group,
         indicator,
         objective,
-        group,
     }
 })
 
@@ -72,30 +72,59 @@ export const app = createApp({
             value: undefined,
         })
 
-        const categories = [...categorySet].map((category) => ({
-            title: category,
-            value: category,
-        }))
-        categories.unshift({
-            title: 'All',
-            value: undefined,
-        })
-
         return {
             presets,
             // Search terms for filtering the templates
             groups,
             selectedGroup: groups[0].value,
-            categories,
-            selectedCategory: categories[0].value,
+            selectedCategory: undefined,
         }
     },
+    watch: {
+        selectedGroup() {
+            this.selectedCategory = undefined
+        },
+    },
     computed: {
-        filteredPresets() {
-            let results = [...presets]
-            if (this.selectedGroup) {
-                results = results.filter((preset) => preset.group === this.selectedGroup)
+        categoryOptions() {
+            if (!this.selectedGroup) {
+                throw new Error('No category selected')
             }
+            const filteredByGroup = this.filteredByGroup
+            const categoryCount = Object.create(null)
+
+            for (const preset of filteredByGroup) {
+                const { category } = preset
+                if (!categoryCount[category]) {
+                    categoryCount[category] = 0
+                }
+                categoryCount[category]++
+            }
+
+            const ret = [{
+                title: `All (${filteredByGroup.length})`,
+                value: undefined,
+            }]
+
+            for (const [category, count] of Object.entries(categoryCount)) {
+                ret.push({
+                    title: count <= 1 ? category : `${category} (${count})`,
+                    value: category,
+                })
+            }
+
+            return ret
+        },
+
+        filteredByGroup() {
+            if (this.selectedGroup) {
+                return this.presets.filter((preset) => preset.group === this.selectedGroup)
+            }
+            return this.presets
+        },
+
+        filteredPresets() {
+            let results = this.filteredByGroup
 
             if (this.selectedCategory) {
                 results = results.filter((preset) => preset.category === this.selectedCategory)
