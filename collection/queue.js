@@ -1,5 +1,3 @@
-const commonTags = ['async', 'queue']
-
 export default [
     {
         title: 'Throughput: Worker Efficiency',
@@ -10,7 +8,6 @@ export default [
         metricUnit: 'messages',
         upperBound: 'le',
         upperThreshold: 100,
-        tags: [...commonTags],
     },
     {
         title: 'Throughput: Queue length',
@@ -20,7 +17,6 @@ export default [
         metricName: 'processed_messages / waiting_messages',
         lowerBound: 'gt',
         lowerThreshold: 0.8,
-        tags: [...commonTags],
     },
     {
         title: 'Throughput: Dead letter queue',
@@ -30,6 +26,5 @@ export default [
         metricName: 'dead_letter_queue.length',
         lowerBound: 'gt',
         lowerThreshold: 0,
-        tags: [...commonTags],
     },
 ]

@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="index.css">
     <meta name="description" content="A diverse range of Service Level Indicator examples">
     <meta property="og:title" content="Service Level Templates">
@@ -21,7 +21,7 @@
     <meta property="og:image" content="https://slc.alexewerlof.com/img/icon.png">
     <meta property="og:url" content="https://slc.alexewerlof.com">
     <meta property="og:type" content="website">
-    <link rel="icon" type="image/svg" href="../img/icon.svg">
+    <link rel="icon" type="image/svg" href="/img/icon.svg">
     <link rel="manifest" href="./manifest.json">
     <title>Service Level Templates</title>
 </head>
@@ -36,53 +36,44 @@
     
         <!------------------------ Templates ------------------------>
         <article>
-            <section class="surface">
-                <div class="input-group">
-                    <label for="template-filter">Filter</label>
-                    <help-component>
-                        <p>
-                            You can load a template to kick start setting your service level objectives and start tweaking it for your needs.
-                        </p>
-                        <p>
-                            These templates come from the workshops I run across different teams.
-                            If you have an idea for a template, you can make a PR.
-                        </p>
-                    </help-component>
-                    <div class="input-button-pair">
-                        <input id="template-filter" type="search" v-model="templateFilter" placeholder="Search for an template">
-                        <button @click="templateFilter = ''">clear</button>
+            <section>
+                <div class="surface">
+                    <h2>Filter</h2>
+                    <div class="input-group">
+                        <label>Service</label>
+                        <inline-select-component v-model="selectedGroup" :options="groups"></inline-select-component>
                     </div>
-                    <div class="search-results__count" v-if="filteredTemplates.length">
-                        <div class="subtle-hint">{{ filteredTemplates.length }} templates</div>
+                    <div class="input-group">
+                        <label>Indicator</label>
+                        <inline-select-component v-model="selectedCategory" :options="categories"></inline-select-component>
                     </div>
+                    <div class="subtle-hint">{{ filteredPresets.length }} results</div>
                 </div>
-                <ol class="search-results" v-if="filteredTemplates.length">
+                <ol class="search-results" v-if="filteredPresets.length">
                     <li class="search-result"
-                        v-for="template in filteredTemplates"
-                        :key="template.title">
+                        v-for="preset in filteredPresets">
                         <article>
                             <section>
                                 <h3 class="search-result__title">
                                     <ext-link :href="slcUrl(template)">
-                                        {{ template.title }}
+                                        {{ preset.indicator.title }}
                                     </ext-link>
                                 </h3>
                                 <p class="search-result__type">
-                                    <span title="Type">{{ templateType(template) }}: </span>
-                                    <span title="Event unit">{{ templateUnit(template) }}</span>
+                                    <span>Unit: </span>
+                                    <span>{{ preset.indicator.eventUnitNorm }}</span>
                                 </p>
-                                <ul class="search-result__tags">
-                                    <li v-for="tag in template.tags" @click="templateFilter = tag">
-                                        <button>{{ tag }}</button>
-                                    </li>
-                                </ul>
+                                <p class="search-result__type">
+                                    <span>Service Type: </span>
+                                    <span>{{ preset.group }}</span>
+                                </p>
                                 <p>
-                                    {{ template.description }}
+                                    {{ preset.indicator.description }}
                                 </p>        
                             </section>
                             <section>
-                                <code-block-component>
-                                    missing
+                                <code-block-component title="Service Level Indicator">
+                                    <formula-component :formula="preset.objective.formula"></formula-component>
                                 </code-block-component>
                             </section>
                         </article>

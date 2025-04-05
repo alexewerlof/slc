@@ -1,5 +1,3 @@
-const commonTags = ['frontend', 'web']
-
 export default [
     {
         // https://web.dev/articles/ttfb
@@ -10,7 +8,6 @@ export default [
         metricUnit: 'ms',
         upperBound: 'le',
         upperThreshold: 800,
-        tags: [...commonTags],
     },
     {
         // https://web.dev/articles/fcp
@@ -22,7 +19,6 @@ export default [
         metricUnit: 'ms',
         upperBound: 'le',
         upperThreshold: 1000,
-        tags: [...commonTags],
     },
     {
         // https://web.dev/articles/lcp
@@ -33,7 +29,6 @@ export default [
         metricUnit: 'ms',
         upperBound: 'le',
         upperThreshold: 2500,
-        tags: [...commonTags],
     },
     {
         // https://web.dev/articles/cls
@@ -44,7 +39,6 @@ export default [
         metricUnit: 'shifts',
         upperBound: 'le',
         upperThreshold: 0.1,
-        tags: [...commonTags],
     },
     {
         // First Input Delay (FID)
@@ -56,7 +50,6 @@ export default [
         metricUnit: 'ms',
         upperBound: 'le',
         upperThreshold: 100,
-        tags: [...commonTags],
     },
     {
         // Interaction to Next Paint (INP)
@@ -68,7 +61,6 @@ export default [
         metricUnit: 'ms',
         upperBound: 'le',
         upperThreshold: 200,
-        tags: [...commonTags],
     },
     {
         title: 'Availability: Real User Monitoring (RUM)',
@@ -78,6 +70,5 @@ export default [
         metricUnit: 'errors',
         upperBound: 'le',
         upperThreshold: 0,
-        tags: [...commonTags, 'payment', 'rum', 'mobile', 'web', 'frontend', 'mobile'],
     },
 ]

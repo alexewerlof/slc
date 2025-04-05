@@ -1,5 +1,3 @@
-const commonTags = ['ai', 'genai']
-
 export default [
     {
         title: 'Availability: Prompt processing failures',
@@ -9,14 +7,12 @@ export default [
         metricUnit: 'errors',
         upperBound: 'le',
         upperThreshold: 0,
-        tags: [...commonTags, 'server', 'chat'],
     },
     {
         title: 'Availability: Flagged responses',
         description: 'Measure the number of responses that were not flagged by the user as inappropriate or incorrect',
         eventUnit: 'assistant messages',
         metricName: 'message.flagged == false',
-        tags: [...commonTags, 'quality'],
     },
     {
         title: 'Availability: Response retries',
@@ -26,7 +22,6 @@ export default [
         metricUnit: 'retries',
         upperBound: 'lt',
         upperThreshold: 2,
-        tags: [...commonTags, 'quality'],
     },
     {
         title: 'Throughput: Prompt processing efficiency',
@@ -35,7 +30,6 @@ export default [
         metricName: 'queries served per machine',
         lowerBound: 'gt',
         lowerThreshold: 300,
-        tags: [...commonTags, 'quality', 'utilization'],
     },
     {
         title: 'Throughput: Token per second',
@@ -46,7 +40,6 @@ export default [
         metricUnit: 'tokens/s',
         lowerBound: 'gt',
         lowerThreshold: 0.5,
-        tags: [...commonTags, 'quality', 'text'],
     },
     {
         title: 'Latency: Time to First Token',
@@ -56,7 +49,6 @@ export default [
         metricUnit: 'ms',
         upperBound: 'lt',
         upperThreshold: 1000,
-        tags: [...commonTags, 'quality', 'text'],
     },
     {
         title: 'Throughput: Response token length',
@@ -69,7 +61,6 @@ export default [
         lowerThreshold: 50,
         upperBound: 'le',
         upperThreshold: 4000,
-        tags: [...commonTags, 'quality'],
     },
     {
         title: 'Latency: Time to generate complete response',
@@ -79,7 +70,6 @@ export default [
         metricUnit: 'ms',
         upperBound: 'le',
         upperThreshold: 15000,
-        tags: [...commonTags, 'quality', 'text'],
     },
     {
         title: 'Latency: Time to respond a video generation request',
@@ -89,7 +79,6 @@ export default [
         metricUnit: 's',
         upperBound: 'lt',
         upperThreshold: 120,
-        tags: [...commonTags, 'quality', 'image generation'],
     },
     {
         title: 'Latency: Time to respond an image request',
@@ -99,7 +88,6 @@ export default [
         metricUnit: 's',
         upperBound: 'lt',
         upperThreshold: 400,
-        tags: [...commonTags, 'quality', 'video generation'],
     },
     {
         title: 'Correctness: Chat length',
@@ -107,13 +95,11 @@ export default [
             'Chat length as measured by number of messages in a conversation can indicate engagement or struggle to get a quality answer. We only need to alert on the latter.',
         eventUnit: 'chat sessions',
         metricName: 'no message is flagged as inappropriate or incorrect',
-        tags: [...commonTags, 'quality', 'chat'],
     },
     {
         title: 'Correctness: User feedback',
         description: 'Measure the quality of output based on the user feedback',
         eventUnit: 'assistant messages',
         metricName: 'no user thumb down feedback',
-        tags: [...commonTags, 'quality'],
     },
 ]

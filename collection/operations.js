@@ -1,5 +1,3 @@
-const commonTags = ['ops', 'operations']
-
 export default [
     {
         title: 'Latency: Incident Handling Speed',
@@ -9,7 +7,6 @@ export default [
         metricUnit: 'min',
         upperBound: 'le',
         upperThreshold: 30,
-        tags: [...commonTags, 'MTTR'],
     },
     {
         title: 'Latency: Time To Acknowledge',
@@ -19,7 +16,6 @@ export default [
         metricUnit: 'min',
         upperBound: 'le',
         upperThreshold: 5,
-        tags: [...commonTags, 'MTTA'],
     },
     {
         title: 'Accuracy: Incident Triage',
@@ -29,7 +25,6 @@ export default [
         metricUnit: 'min',
         upperBound: 'le',
         upperThreshold: 5,
-        tags: [...commonTags, 'MTTT'],
     },
     {
         title: 'Efficiency: Automatic detection',

@@ -18,22 +18,6 @@
     background-color: var(--background-darker);
 }
 
-.search-result__tags {
-    display: inline-block;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.search-result__tags li {
-    display: inline;
-}
-
-.search-result__tags li + li {
-    display: inline;
-    padding-left: 0.1em;
-}
-
 .search-result__type {
     color: var(--secondary-color);
     font-size: 0.8em;

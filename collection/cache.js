@@ -1,5 +1,3 @@
-const commonTags = ['web', 'api', 'cache']
-
 export default [
     {
         title: 'Latency: Cache latency',
@@ -8,14 +6,12 @@ export default [
         metricName: 'response_time',
         upperBound: 'le',
         upperThreshold: 10,
-        tags: [...commonTags],
     },
     {
         title: 'Throughput: Cache hit',
         description: 'The number of requests that were responded via the cache storage instead of going to the origin',
         eventUnit: 'request',
         metricName: 'responded from cache',
-        tags: [...commonTags],
     },
     {
         title: 'Freshness: Cache hit freshness',
@@ -25,7 +21,6 @@ export default [
         upperBound: 'le',
         upperThreshold: 100,
         metricUnit: 'ms',
-        tags: [...commonTags],
     },
     {
         title: 'Consistency: Cache',
@@ -33,6 +28,5 @@ export default [
         eventUnit: 'cache entries',
         metricName: 'cache_entry == origin_entry',
         metricUnit: 'entries',
-        tags: [...commonTags],
     },
 ]
