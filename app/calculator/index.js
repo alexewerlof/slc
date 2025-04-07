@@ -5,7 +5,7 @@ import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '
 import { stateToUrl } from '../../lib/share.js'
 import { makeCalculator } from '../../components/calculator.js'
 import { attachBeforeUnloadHandler } from '../../lib/browser.js'
-import { addComponents } from '../../lib/fetch-template.js'
+import { registerAllComponents } from '../../components/index.js'
 
 export const app = createApp({
     data() {
@@ -81,5 +81,5 @@ export const app = createApp({
     },
 })
 
-addComponents(app)
+registerAllComponents(app)
 app.mount('#app')

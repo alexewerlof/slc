@@ -1,6 +1,6 @@
 import { createApp } from './vendor/vue.js'
 import { addUTM } from './lib/utm.js'
-import { addComponents } from './lib/fetch-template.js'
+import { registerAllComponents } from './components/index.js'
 
 export const app = createApp({
     methods: {
@@ -29,5 +29,5 @@ export const app = createApp({
     },
 })
 
-addComponents(app)
+registerAllComponents(app)
 app.mount('#app')

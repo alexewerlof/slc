@@ -7,7 +7,7 @@ import { boundTypeToOperator, calculateSlsMetric, createIsGood } from '../../lib
 import { isNum } from '../../lib/validation.js'
 import { percent } from '../../lib/math.js'
 import { percL10n } from '../../lib/fmt.js'
-import { addComponents } from '../../lib/fetch-template.js'
+import { registerAllComponents } from '../../components/index.js'
 
 const percentageColor = d3.scaleLinear()
     .domain([config.slider.min, config.slider.max])
@@ -393,5 +393,5 @@ const app = createApp({
     },
 })
 
-addComponents(app)
+registerAllComponents(app)
 app.mount('#app')

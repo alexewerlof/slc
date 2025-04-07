@@ -4,7 +4,7 @@ import { Objective } from '../../components/objective.js'
 import { config } from '../../config.js'
 import { numL10n } from '../../lib/fmt.js'
 import { humanTime } from '../../lib/time.js'
-import { addComponents } from '../../lib/fetch-template.js'
+import { registerAllComponents } from '../../components/index.js'
 
 export const app = createApp({
     methods: {
@@ -56,5 +56,5 @@ export const app = createApp({
     },
 })
 
-addComponents(app)
+registerAllComponents(app)
 app.mount('#app')

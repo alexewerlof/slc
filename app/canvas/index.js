@@ -1,8 +1,8 @@
 import { createApp } from '../../vendor/vue.js'
 import { loadJson } from '../../lib/share.js'
-import { addComponents } from '../../lib/fetch-template.js'
+import { registerAllComponents } from '../../lib/fetch-template.js'
 
-const exampleJson = await loadJson('../workshop/example.json')
+const exampleJson = await loadJson('../../components/index.js')
 
 function flatten(workshopData) {
     const shapes = []
@@ -62,5 +62,5 @@ const app = createApp({
     },
 })
 
-addComponents(app)
+registerAllComponents(app)
 app.mount('#app')

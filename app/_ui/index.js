@@ -1,7 +1,7 @@
 import { createApp } from '../../vendor/vue.js'
 import { config } from '../../config.js'
 import { showToast } from '../../lib/toast.js'
-import { addComponents } from '../../lib/fetch-template.js'
+import { registerAllComponents } from '../../components/index.js'
 
 const app = createApp({
     data() {
@@ -39,5 +39,5 @@ const app = createApp({
     },
 })
 
-addComponents(app)
+registerAllComponents(app)
 app.mount('#app')

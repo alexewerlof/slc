@@ -1,5 +1,5 @@
-import { addComponents } from '../../lib/fetch-template.js'
+import { registerAllComponents } from '../../components/index.js'
 import { app } from './assessment-app.js'
 
-addComponents(app)
+registerAllComponents(app)
 app.mount('#app')
