@@ -1,4 +1,4 @@
-import { addComponent } from '../lib/fetch-template.js'
+import { componentDefinition } from '../lib/fetch-template.js'
 import { isStr } from '../lib/validation.js'
 
 const componentDescriptors = [
@@ -80,6 +80,7 @@ export async function registerAllComponents(app) {
         const [flags, relativeUrlBase] = descriptor.split(':')
         const { loadSync, jsUrlStr, htmlUrlStr, cssUrlStr } = getUrlStrs(flags, relativeUrlBase)
         const name = relativeUrlBase.split('/').pop()
-        await addComponent(app, name, loadSync, jsUrlStr, htmlUrlStr, cssUrlStr)
+
+        app.component(name, await componentDefinition(loadSync, jsUrlStr, htmlUrlStr, cssUrlStr))
     }))
 }
