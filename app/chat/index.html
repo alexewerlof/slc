@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Chat (Beta)</title>
+    <style>
+/* HTML: <div class="loader"></div> */
+
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <header-component title="Chat Beta"></header-component>
+        <div class="container">
+            <div class="surface">
+                <div class="input-group">
+                    <label for="api-key">API Key:</label>
+                    <div class="subtle-hint">
+                        <ext-link href="https://aistudio.google.com/apikey">Get an API key</ext-link>
+                    </div>
+                    <input
+                        type="text"
+                        id="api-key"
+                        v-model="apiKey"
+                        placeholder="Enter your API key here..."
+                        autocomplete="on"
+                    />
+                </div>
+                <chat-thread-component :messages="messages"></chat-thread-component>
+                <div class="input-group" v-if="apiKey">
+                    <div class="input-button-pair">
+                        <input
+                            type="text"
+                            v-model="message"
+                            placeholder="Type your message here..."
+                            @keyup.enter="submitPrompt"
+                            :disabled="isEditDisabled" />
+                        <button @click="submitPrompt">Send</button>
+                    </div>
+                    <loading-animation-component v-if="isEditDisabled"></loading-animation-component>
+                </div>
+            </div>
+        </div>
+        <footer-component></footer-component>
+    </div>
+    <noscript>
+        <p>This web application requires JavaScript to work.</p>
+    </noscript>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module" src="index.js"></script>
+</body>
+</html>
