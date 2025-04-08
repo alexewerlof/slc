@@ -1,4 +1,4 @@
-import { componentDefinition } from '../lib/fetch-template.js'
+import { componentDefinition } from '../lib/component-loader.js'
 import { isStr } from '../lib/validation.js'
 
 const componentDescriptors = [
