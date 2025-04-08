@@ -1,6 +1,6 @@
 import { createApp } from '../../vendor/vue.js'
 import { loadJson } from '../../lib/share.js'
-import { registerAllComponents } from '../../lib/fetch-template.js'
+import { registerAllComponents } from '../../components/index.js'
 
 const exampleJson = await loadJson('../../components/index.js')
 
