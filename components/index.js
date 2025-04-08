@@ -17,14 +17,14 @@ const componentDescriptors = [
     'JHC:./cookie-popup-component',
     'JHC:./error-budget-component',
     'JH:./event-component',
-    'JH:./ext-link',
+    'SJH:./ext-link',
     'JH:./failure-component',
     'JHC:./faq-component',
     'JHC:./feedback-blob-component',
     'JHC:./footer-component',
     'JH:./formula-component',
     'JHC:./header-component',
-    'JHC:./help-component',
+    'SJHC:./help-component',
     'JHC:./hero-component',
     'JH:./indicator-component',
     'JHC:./inline-select-component',
@@ -64,6 +64,7 @@ function getUrlStrs(flags, relativeUrlBase) {
 
     const baseUrlStr = import.meta.resolve(relativeUrlBase)
     return {
+        loadSync: flags.includes('S'),
         jsUrlStr: hasJs ? baseUrlStr + '.js' : undefined,
         htmlUrlStr: hasHtml ? baseUrlStr + '.html' : undefined,
         cssUrlStr: hasCss ? baseUrlStr + '.css' : undefined,
@@ -74,11 +75,11 @@ function getUrlStrs(flags, relativeUrlBase) {
  * Register all components in the Vue application to load asynchronously on-demand.
  * @param {VueApplication} app a reference to the Vue application instance
  */
-export function registerAllComponents(app) {
-    componentDescriptors.forEach((descriptor) => {
+export async function registerAllComponents(app) {
+    await Promise.all(componentDescriptors.map(async (descriptor) => {
         const [flags, relativeUrlBase] = descriptor.split(':')
-        const { jsUrlStr, htmlUrlStr, cssUrlStr } = getUrlStrs(flags, relativeUrlBase)
+        const { loadSync, jsUrlStr, htmlUrlStr, cssUrlStr } = getUrlStrs(flags, relativeUrlBase)
         const name = relativeUrlBase.split('/').pop()
-        addComponent(app, name, jsUrlStr, htmlUrlStr, cssUrlStr)
-    })
+        await addComponent(app, name, loadSync, jsUrlStr, htmlUrlStr, cssUrlStr)
+    }))
 }

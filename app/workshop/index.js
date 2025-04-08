@@ -1,5 +1,5 @@
 import { registerAllComponents } from '../../components/index.js'
 import { app } from './assessment-app.js'
 
-registerAllComponents(app)
+await registerAllComponents(app)
 app.mount('#app')

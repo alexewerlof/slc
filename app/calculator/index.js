@@ -81,5 +81,5 @@ export const app = createApp({
     },
 })
 
-registerAllComponents(app)
+await registerAllComponents(app)
 app.mount('#app')
