@@ -11,4 +11,7 @@ The downside is that we have to manually check and update dependencies but given
 
 # Where?
 
-I use [cdnjs](https://cdnjs.com/libraries) to get the lib in esm format.
+From:
+- [cdnjs](https://cdnjs.com/libraries)
+- Markdown-it [cdnjs](https://cdnjs.cloudflare.com/ajax/libs/markdown-it/13.0.2/markdown-it.js)
+- Vue [jsdeliver](https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.esm-browser.prod.js)

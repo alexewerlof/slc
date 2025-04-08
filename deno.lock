@@ -1,6 +1,13 @@
 {
   "version": "4",
   "remote": {
+    "https://cdn.jsdelivr.net/npm/entities@4.5.0/+esm": "7da8fa90cb0ee6d6cf1d7f7024a547bfec03003c97d2064988d5e4437a60572c",
+    "https://cdn.jsdelivr.net/npm/linkify-it@5.0.0/+esm": "e515457a20e8d64a8708f6b530a37e57ef1c2bea829c66b876354ddb7f9259b1",
+    "https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/+esm": "2c933033ccc59698aa9c742f1240476cf6c3e2be8ea68528cdd944843f6cdbd5",
+    "https://cdn.jsdelivr.net/npm/mdurl@2.0.0/+esm": "cbf3de0e305ade49c3da55475dd357e817a2e620fc6c65355119892fb22a8907",
+    "https://cdn.jsdelivr.net/npm/punycode.js@2.3.1/+esm": "6582e5669e95f6ddb8bcfcdb2637124272f27bd432d7701092b14537d098d7c6",
+    "https://cdn.jsdelivr.net/npm/uc.micro@2.0.0/+esm": "a6b566a9d2788ef16acd66ad76af93914f2ad938ee7500b1704d45af8275f98d",
+    "https://cdn.jsdelivr.net/npm/uc.micro@2.1.0/+esm": "4902a611c1a5fe6b450bb4dd6bf48c3d111b8329ea3594c29a3a8e0b08c002cc",
     "https://deno.land/std@0.224.0/assert/_constants.ts": "a271e8ef5a573f1df8e822a6eb9d09df064ad66a4390f21b3e31f820a38e0975",
     "https://deno.land/std@0.224.0/assert/assert.ts": "09d30564c09de846855b7b071e62b5974b001bb72a4b797958fe0660e7849834",
     "https://deno.land/std@0.224.0/assert/assert_almost_equals.ts": "9e416114322012c9a21fa68e187637ce2d7df25bcbdbfd957cd639e65d3cf293",
