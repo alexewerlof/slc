@@ -384,26 +384,4 @@ export const config = fz({
         baseUrl:
             'https://docs.google.com/forms/d/e/1FAIpQLSc-CQudkQ9WLVmryi7Idlwv03M7s0Sy6DMlENzhUJesKb3kmg/viewform?usp=pp_url',
     }),
-    icons: fz({
-        // ▢◻▣▷◇◈○◌◯◎◉⬡＋－🔎︎
-        workshop: '⯐',
-        feedback: '🗩',
-        scope: '⸬',
-        edit: '✎',
-        owner: '✹',
-        provider: '▢',
-        service: '⬡',
-        consumer: '◇',
-        consumption: '→',
-        failure: '⇸',
-        risk: '⚠',
-        metric: '∡',
-        export: '↧',
-        import: '↥',
-        add: '＋',
-        remove: '－',
-        consequence: '⇒',
-        impact: '⇛',
-        because: '↳',
-    }),
 })
