@@ -88,6 +88,9 @@
 
                 <fieldset>
                     <legend>Objective ({{ calculator.selIndicator?.objectives.length || 0 }})</legend>
+                    <div class="block warning" v-if="!calculator.selIndicator?.objectives.length">
+                        There are no objectives (SLOs) attached to the selected indicator (SLI).
+                    </div>
                     <div class="input-group" v-if="calculator.selIndicator?.objectives.length">
                         <label for="objective-selector">Select</label>
                         <select v-model="calculator.selIndicator.selObjective" id="objective-selector">
@@ -154,6 +157,12 @@
 
                 <fieldset>
                     <legend>Alert ({{ calculator.selIndicator?.selObjective?.alerts?.length || 0 }})</legend>
+                    <div class="block warning" v-if="!calculator.selIndicator?.selObjective">
+                        Please define an objective (SLO) to set alerts.
+                    </div>
+                    <div class="block warning" v-if="calculator.selIndicator?.selObjective && !calculator.selIndicator?.selObjective?.alerts.length">
+                        There are no alerts attached to the selected objective (SLO).
+                    </div>
                     <div class="input-group" v-if="calculator.selIndicator?.selObjective?.alerts.length">
                         <label for="alert-selector">Select</label>
                         <select v-model="calculator.selIndicator.selObjective.selAlert" id="alert-selector">
