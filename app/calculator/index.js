@@ -43,7 +43,7 @@ export const app = createApp({
     mounted() {
         setTimeout(() => {
             attachBeforeUnloadHandler(globalThis)
-        }, 60000)
+        }, 600000)
         this.$nextTick(() => {
             const hash = globalThis.location.hash
             if (hash) {
