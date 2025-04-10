@@ -1,70 +1,82 @@
 import { componentDefinition } from '../lib/component-loader.js'
-import { isStr } from '../lib/validation.js'
+import { isStrLen } from '../lib/validation.js'
 
-const componentDescriptors = [
-    'JHC:./alert-chart-component',
-    'JH:./alert-component',
-    'JHC:./announcement-component',
-    'JHC:./axis-component',
-    'JHC:./burn-event-component',
-    'JHC:./burn-rate-component',
-    'JH:./calculator-component',
-    'JHC:./chat-thread-component',
-    'JHC:./code-block-component',
-    'JH:./condition-component',
-    'JH:./consumer-component',
-    'JH:./consumption-component',
-    'JHC:./cookie-popup-component',
-    'JHC:./error-budget-component',
-    'JH:./event-component',
-    'SJH:./ext-link',
-    'JH:./failure-component',
-    'JHC:./faq-component',
-    'JHC:./feedback-blob-component',
-    'JHC:./footer-component',
-    'JH:./formula-component',
-    'JHC:./header-component',
-    'SJHC:./help-component',
-    'JHC:./hero-component',
-    'JH:./indicator-component',
-    'JHC:./inline-select-component',
-    'HC:./loading-animation-component',
-    'JH:./metric-component',
-    'JH:./objective-component',
-    'JHC:./percentage-overview-component',
-    'JHC:./plot-2d-component',
-    'JH:./provider-component',
-    'JH:./risk-component',
-    'JH:./service-component',
-    'JH:./service-metric-component',
-    'JHC:./show-hide-component',
-    'JHC:./steps-component',
-    'JH:./summary-component',
-    'JHC:./tabs-component',
-    'HC:./tooltip-component',
+const componentSpecifications = [
+    ' AJHC : ./alert-chart-component',
+    ' AJH  : ./alert-component',
+    ' AJHC : ./announcement-component',
+    ' AJHC : ./axis-component',
+    ' AJHC : ./burn-event-component',
+    ' AJHC : ./burn-rate-component',
+    ' AJH  : ./calculator-component',
+    ' AJHC : ./chat-thread-component',
+    ' AJHC : ./code-block-component',
+    ' AJH  : ./condition-component',
+    ' AJH  : ./consumer-component',
+    ' AJH  : ./consumption-component',
+    ' AJHC : ./cookie-popup-component',
+    ' AJHC : ./error-budget-component',
+    ' AJH  : ./event-component',
+    '  JH  : ./ext-link',
+    ' AJH  : ./failure-component',
+    ' AJHC : ./faq-component',
+    ' AJHC : ./feedback-blob-component',
+    ' AJHC : ./footer-component',
+    ' AJH  : ./formula-component',
+    ' AJHC : ./header-component',
+    '  JHC : ./help-component',
+    ' AJHC : ./hero-component',
+    ' AJH  : ./indicator-component',
+    ' AJHC : ./inline-select-component',
+    ' A HC : ./loading-animation-component',
+    ' AJH  : ./metric-component',
+    ' AJH  : ./objective-component',
+    ' AJHC : ./percentage-overview-component',
+    ' AJHC : ./plot-2d-component',
+    ' AJH  : ./provider-component',
+    ' AJH  : ./risk-component',
+    ' AJH  : ./service-component',
+    ' AJH  : ./service-metric-component',
+    ' AJHC : ./show-hide-component',
+    ' AJHC : ./steps-component',
+    ' AJH  : ./summary-component',
+    ' AJHC : ./tabs-component',
+    ' A HC : ./tooltip-component',
 ]
 
-function getUrlStrs(flags, relativeUrlBase) {
-    if (!isStr(flags)) {
+function parseComponentSpec(componentSpec) {
+    const [flags, relativeUrlBase] = componentSpec.split(':').map((s) => s.trim())
+    if (!isStrLen(flags, 1)) {
         throw new Error(`Invalid flags: ${flags}`)
     }
-    if (!isStr(relativeUrlBase)) {
+    if (!isStrLen(relativeUrlBase, 5)) {
         throw new Error(`Invalid relativeUrlBase: ${relativeUrlBase}`)
     }
+    const name = relativeUrlBase.split('/').pop()
+    const nameRegex = /^[a-zA-Z0-9-]+$/
+    if (!isStrLen(name, 3) || !nameRegex.test(name)) {
+        throw new Error(`Invalid component name: ${name}`)
+    }
 
-    flags = flags.toUpperCase()
+    const flagsUpperCase = flags.toUpperCase()
 
-    const hasJs = flags.includes('J')
-    const hasHtml = flags.includes('H')
-    const hasCss = flags.includes('C')
+    return {
+        name,
+        relativeUrlBase,
+        isAsync: flagsUpperCase.includes('A'),
+        hasJs: flagsUpperCase.includes('J'),
+        hasHtml: flagsUpperCase.includes('H'),
+        hasCss: flagsUpperCase.includes('C'),
+    }
+}
 
+function getUrlStrs(relativeUrlBase, hasJs, hasHtml, hasCss) {
     if (!hasJs && !hasHtml && !hasCss) {
-        throw new Error(`Invalid flags: ${flags}`)
+        throw new Error(`Flags don't specify HTML, CSS, or JS: ${flags}`)
     }
 
     const baseUrlStr = import.meta.resolve(relativeUrlBase)
     return {
-        loadSync: flags.includes('S'),
         jsUrlStr: hasJs ? baseUrlStr + '.js' : undefined,
         htmlUrlStr: hasHtml ? baseUrlStr + '.html' : undefined,
         cssUrlStr: hasCss ? baseUrlStr + '.css' : undefined,
@@ -76,11 +88,10 @@ function getUrlStrs(flags, relativeUrlBase) {
  * @param {VueApplication} app a reference to the Vue application instance
  */
 export async function registerAllComponents(app) {
-    await Promise.all(componentDescriptors.map(async (descriptor) => {
-        const [flags, relativeUrlBase] = descriptor.split(':')
-        const { loadSync, jsUrlStr, htmlUrlStr, cssUrlStr } = getUrlStrs(flags, relativeUrlBase)
-        const name = relativeUrlBase.split('/').pop()
+    await Promise.all(componentSpecifications.map(async (componentSpec) => {
+        const { name, isAsync, relativeUrlBase, hasJs, hasHtml, hasCss } = parseComponentSpec(componentSpec)
+        const { jsUrlStr, htmlUrlStr, cssUrlStr } = getUrlStrs(relativeUrlBase, hasJs, hasHtml, hasCss)
 
-        app.component(name, await componentDefinition(loadSync, jsUrlStr, htmlUrlStr, cssUrlStr))
+        app.component(name, await componentDefinition(isAsync, jsUrlStr, htmlUrlStr, cssUrlStr))
     }))
 }
