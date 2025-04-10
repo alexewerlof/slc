@@ -1,10 +1,10 @@
 <nav class="steps-component">
     <div v-for="(label, index) in steps"
         class="steps-component__step"
-        @click="$emit('update:currentStep', index)">
+        @click="$emit('update:modelValue', index)">
         <div class="steps-component__step-tale"></div>
         <div class="steps-component__step-number"
-            :class="{ 'steps-component__step-number--active': currentStep === index }">{{ index }}</div>
+            :class="{ 'steps-component__step-number--active': modelValue === index }">{{ index }}</div>
         <div class="steps-component__step-label">{{ label }}</div>
     </div>
 </nav>

@@ -34,6 +34,8 @@
             <dialog-component v-model:is-visible="isDialogVisible">
                 <p>This is just a simple dialog box. You can also close it with the <kbd>Esc</kbd> key</p>
             </dialog-component>
+            <h2>Current Step: {{ currStep }}</h2>
+            <steps-component v-model="currStep" :steps="stepLabels"></steps-component>
             <h1>Selected Tab: {{ selTabName }}</h1>
             <tabs-component v-model="selTabName" :tab-names="tabNames"></tabs-component>
             <div class="annotated">

@@ -1,11 +1,11 @@
 /**
  * Use it like this in the parent:
- * <tabs-component v-model:current-step="currentStep"></tabs-component>
+ * <tabs-component v-model="modelValue" :steps="<array-of-strings>"></tabs-component>
  */
 export default {
     props: {
-        currentStep: String,
+        modelValue: Number,
         steps: Array,
     },
-    emits: ['update:currentStep'],
+    emits: ['update:modelValue'],
 }

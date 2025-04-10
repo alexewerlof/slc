@@ -25,14 +25,17 @@ const app = createApp({
                 disabled: false,
             },
         ]
+        const stepLabels = ['Washing', 'Chopping', 'Cooking', 'Eating']
         const tabNames = ['First Tab', 'Second Tab', 'Third Tab']
         return {
             // Expose the config to the UI
             config,
             isDialogVisible: false,
-            selTabName: tabNames[0],
             inlineSelectOptions,
             inlineSelectValue: inlineSelectOptions[0].value,
+            currStep: 0,
+            stepLabels,
+            selTabName: tabNames[0],
             tabNames,
         }
     },

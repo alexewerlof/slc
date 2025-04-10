@@ -76,7 +76,7 @@
             <div class="main-content">
                 <header>
                     <steps-component
-                        v-model:current-step="currentStep"
+                        v-model="currentStep"
                         :steps="steps"></steps-component>
                 </header>            
                 <div v-if="currentStep === 0">
