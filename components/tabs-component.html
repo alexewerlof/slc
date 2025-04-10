@@ -1,6 +1,6 @@
 <div class="tabs-component">
     <div v-for="tabName in tabNames"
         class="tabs-component__tab"
-        :class="{ 'tabs-component__tab--active': selectedTab === tabName }"
-        @click="$emit('update:selectedTab', tabName)">{{ tabName }}</div>
+        :class="{ 'tabs-component__tab--active': modelValue === tabName }"
+        @click="$emit('update:modelValue', tabName)">{{ tabName }}</div>
 </div>

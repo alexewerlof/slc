@@ -1,11 +1,11 @@
 /**
  * Use it like this in the parent:
- * <tabs-component v-model:selected-tab="selectedTab"></tabs-component>
+ * <tabs-component v-model="modelValue"></tabs-component>
  */
 export default {
     props: {
-        selectedTab: String,
+        modelValue: String,
         tabNames: Array,
     },
-    emits: ['update:selectedTab'],
+    emits: ['update:modelValue'],
 }

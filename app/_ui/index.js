@@ -25,12 +25,15 @@ const app = createApp({
                 disabled: false,
             },
         ]
+        const tabNames = ['First Tab', 'Second Tab', 'Third Tab']
         return {
             // Expose the config to the UI
             config,
             isDialogVisible: false,
+            selTabName: tabNames[0],
             inlineSelectOptions,
             inlineSelectValue: inlineSelectOptions[0].value,
+            tabNames,
         }
     },
     methods: {
