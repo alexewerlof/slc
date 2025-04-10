@@ -144,6 +144,7 @@ button {
     cursor: pointer;
     transition: background-color var(--animation-speed);
     padding: var(--gap) var(--gap2);
+    margin: 1px; /* To have place for showing focus outline */
 }
 
 a.button {
