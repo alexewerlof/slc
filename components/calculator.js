@@ -63,7 +63,6 @@ export class Calculator {
     }
 
     save() {
-        // Save the calculator to a file
         return { indicators: this.indicators.map((indicator) => indicator.save()) }
     }
 }
