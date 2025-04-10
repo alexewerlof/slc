@@ -15,6 +15,7 @@ const componentSpecifications = [
     ' AJH  : ./consumer-component',
     ' AJH  : ./consumption-component',
     ' AJHC : ./cookie-popup-component',
+    ' AJHC : ./dialog-component',
     ' AJHC : ./error-budget-component',
     ' AJH  : ./event-component',
     '  JH  : ./ext-link',

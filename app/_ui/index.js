@@ -28,6 +28,7 @@ const app = createApp({
         return {
             // Expose the config to the UI
             config,
+            isDialogVisible: false,
             inlineSelectOptions,
             inlineSelectValue: inlineSelectOptions[0].value,
         }

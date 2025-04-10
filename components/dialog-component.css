@@ -1,0 +1,8 @@
+.dialog-component {
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+}
+
+.dialog-component::backdrop {
+    backdrop-filter: blur(var(--bradius));
+}
