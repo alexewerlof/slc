@@ -14,7 +14,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="index.css">
     <meta name="description" content="A diverse range of Service Level Indicator examples">
     <meta property="og:title" content="Service Level Templates">
     <meta property="og:description" content="A diverse range of Service Level Indicator examples">
@@ -37,49 +36,7 @@
         <!------------------------ Templates ------------------------>
         <article>
             <section>
-                <div class="surface">
-                    <h2>Filter</h2>
-                    <div class="input-group">
-                        <label>Service (group)</label>
-                        <inline-select-component v-model="selectedGroup" :options="groupOptions"></inline-select-component>
-                    </div>
-                    <div class="input-group" v-if="selectedGroup && categoryOptions.length > 2">
-                        <label>Indicator (sub-group)</label>
-                        <inline-select-component v-model="selectedCategory" :options="categoryOptions"></inline-select-component>
-                    </div>
-                    <div class="subtle-hint">{{ filteredItems.length }} results</div>
-                </div>
-                <ol class="search-results" v-if="filteredItems.length">
-                    <li class="search-result"
-                        v-for="item in filteredItems">
-                        <article>
-                            <section>
-                                <h3 class="search-result__title">
-                                    <ext-link :href="slcUrl(template)">
-                                        {{ item.indicator }}
-                                    </ext-link>
-                                </h3>
-                                <p class="search-result__type">
-                                    <span>Unit: </span>
-                                    <span>{{ item.indicator.eventUnitNorm }}</span>
-                                </p>
-                                <p>
-                                    {{ item.indicator.description }}
-                                </p>        
-                            </section>
-                            <section>
-                                <code-block-component title="Service Level Status">
-                                    <formula-component :formula="item.indicator.formula"></formula-component>
-                                </code-block-component>
-                            </section>
-                        </article>
-                    </li>
-                </ul>
-                <p>
-                    ⭐ 
-                    <ext-link href="https://github.com/alexewerlof/slc/tree/main/templates/collection">Contribute a template!</ext-link>
-                    🎉
-                </p>
+                <indicator-finger-component @indicator-selected="handleIndicatorSelected"></indicator-finger-component>
             </section>
         </article>
         <footer-component></footer-component>

@@ -1,12 +1,11 @@
-import { createApp } from '../../vendor/vue.js'
-import { groups, importAllGroups } from '../../collection/index.js'
-import { stateToUrl } from '../../lib/share.js'
-import { config } from '../../config.js'
-import { registerAllComponents } from '../../components/index.js'
+import { groups, importAllGroups } from '../collection/index.js'
+import { config } from '../config.js'
+import { stateToUrl } from '../lib/share.js'
 
 const items = await importAllGroups()
 
-export const app = createApp({
+export default {
+    emits: ['indicator-selected'],
     data() {
         const groupOptions = [...groups].map((group) => ({
             title: group,
@@ -83,11 +82,5 @@ export const app = createApp({
             const { urlVer } = config
             return stateToUrl(url, { urlVer, ...template }).toString()
         },
-        handleIndicatorSelected(indicator) {
-            console.log('Selected value:', indicator)
-        },
     },
-})
-
-await registerAllComponents(app)
-app.mount('#app')
+}
