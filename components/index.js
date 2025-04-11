@@ -8,7 +8,7 @@ const componentSpecifications = [
     ' AJHC : ./axis-component',
     ' AJHC : ./burn-event-component',
     ' AJHC : ./burn-rate-component',
-    ' AJH  : ./calculator-component',
+    ' AJHC : ./calculator-component',
     ' AJHC : ./chat-thread-component',
     ' AJHC : ./code-block-component',
     ' AJH  : ./condition-component',
