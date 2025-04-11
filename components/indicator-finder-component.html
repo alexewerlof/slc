@@ -14,7 +14,7 @@
     <ol class="indicator-finder-component__search-results" v-if="filteredItems.length">
         <li class="indicator-finder-component__search-result"
             v-for="item in filteredItems">
-            <button class="button--cta" @click="$emit('indicator-selected', item)">
+            <button class="button--cta" @click="$emit('indicator-selected', item.indicator)">
                 {{ item.indicator.title }}
             </button>
             <p>
