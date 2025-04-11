@@ -28,7 +28,7 @@ const componentSpecifications = [
     '  JHC : ./help-component',
     ' AJHC : ./hero-component',
     ' AJH  : ./indicator-component',
-    ' AJHC : ./indicator-finger-component',
+    ' AJHC : ./indicator-finder-component',
     ' AJHC : ./inline-select-component',
     ' A HC : ./loading-animation-component',
     ' AJH  : ./metric-component',

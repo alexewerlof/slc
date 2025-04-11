@@ -1,0 +1,35 @@
+<div class="indicator-finder-component">
+    <div class="surface">
+        <h2>Filter</h2>
+        <div class="input-group">
+            <label>Service (group)</label>
+            <inline-select-component v-model="selectedGroup" :options="groupOptions"></inline-select-component>
+        </div>
+        <div class="input-group" v-if="selectedGroup && categoryOptions.length > 2">
+            <label>Indicator (sub-group)</label>
+            <inline-select-component v-model="selectedCategory" :options="categoryOptions"></inline-select-component>
+        </div>
+    </div>
+    <div class="pad-gap subtle-hint">{{ filteredItems.length }} results</div>
+    <ol class="indicator-finder-component__search-results" v-if="filteredItems.length">
+        <li class="indicator-finder-component__search-result"
+            v-for="item in filteredItems">
+            <button class="button--cta" @click="$emit('indicator-selected', item)">
+                {{ item.indicator.title }}
+            </button>
+            <p>
+                {{ item.indicator.description }}
+                <br>
+                <span class="subtle-hint">Unit: {{ item.indicator.eventUnitNorm }}</span>
+            </p>
+            <code-block-component title="Service Level Status">
+                <formula-component :formula="item.indicator.formula"></formula-component>
+            </code-block-component>
+        </li>
+    </ul>
+    <p>
+        ⭐ 
+        <ext-link href="https://github.com/alexewerlof/slc/">Contribute a template!</ext-link>
+        🎉
+    </p>
+</div>
