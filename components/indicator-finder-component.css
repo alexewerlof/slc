@@ -1,18 +1,15 @@
+.indicator-finder-component {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+}
+
 .indicator-finder-component__search-results {
     list-style-type: none;
-    padding: 0;
-    margin: 0;
 }
 
-.indicator-finder-component__search-result {
-    padding: var(--gap);
-    border-radius: var(--bradius3);
-}
-
-.indicator-finder-component__search-result:hover {
-    background-color: var(--background-darker);
-}
+.indicator-finder-component__search-result {}
 
 .indicator-finder-component__search-result + .indicator-finder-component__search-result {
-    margin-top: var(--gap4);
+    margin-top: var(--gap2);
 }

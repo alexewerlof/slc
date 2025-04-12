@@ -1,18 +1,19 @@
 <div class="indicator-finder-component">
-    <div class="surface">
-        <h2>Filter</h2>
-        <div class="input-group">
-            <label>Service (group)</label>
-            <inline-select-component v-model="selectedGroup" :options="groupOptions"></inline-select-component>
+    <div>
+        <div class="h-pad-gap">
+            <tabs-component v-model="selectedGroup" :tab-names="groups"></tabs-component>
         </div>
-        <div class="input-group" v-if="selectedGroup && categoryOptions.length > 2">
-            <label>Indicator (sub-group)</label>
-            <inline-select-component v-model="selectedCategory" :options="categoryOptions"></inline-select-component>
+        <div class="h-pad-gap">
+            <div class="input-group" v-if="selectedGroup">
+                <label>Signal</label>
+                <div class="subtle-hint">What does the service consumer care about?</div>
+                <inline-select-component v-model="selectedCategory" :options="categoryOptions"></inline-select-component>
+            </div>
         </div>
     </div>
     <div class="pad-gap subtle-hint">{{ filteredItems.length }} results</div>
-    <ol class="indicator-finder-component__search-results" v-if="filteredItems.length">
-        <li class="indicator-finder-component__search-result"
+    <div class="indicator-finder-component__search-results" v-if="filteredItems.length">
+        <div class="indicator-finder-component__search-result surface"
             v-for="item in filteredItems">
             <button class="button--cta" @click="$emit('indicator-selected', item.indicator)">
                 {{ item.indicator.title }}
@@ -25,8 +26,8 @@
             <code-block-component title="Service Level Status">
                 <formula-component :formula="item.indicator.formula"></formula-component>
             </code-block-component>
-        </li>
-    </ul>
+        </div>
+    </div>
     <p>
         ⭐ 
         <ext-link href="https://github.com/alexewerlof/slc/">Contribute a template!</ext-link>

@@ -1,86 +1,55 @@
 import { groups, importAllGroups } from '../collection/index.js'
-import { config } from '../config.js'
-import { stateToUrl } from '../lib/share.js'
+import { isStr } from '../lib/validation.js'
 
 const items = await importAllGroups()
+
+const ALL_CATEGORIES_LABEL = 'All'
 
 export default {
     emits: ['indicator-selected'],
     data() {
-        const groupOptions = [...groups].map((group) => ({
-            title: group,
-            value: group,
-        }))
-        groupOptions.unshift({
-            title: 'All',
-            value: undefined,
-        })
-
         return {
+            groups,
+            selectedGroup: groups[0],
             // Search terms for filtering the templates
-            groupOptions,
-            selectedGroup: groupOptions[0].value,
-            selectedCategory: undefined,
+            selectedCategory: ALL_CATEGORIES_LABEL,
         }
     },
     watch: {
         selectedGroup() {
-            this.selectedCategory = undefined
+            this.selectedCategory = ALL_CATEGORIES_LABEL
         },
     },
     computed: {
-        categoryOptions() {
-            if (!this.selectedGroup) {
-                throw new Error('No category selected')
+        filteredByGroup() {
+            if (!isStr(this.selectedGroup)) {
+                throw new Error('No group selected')
             }
-            const filteredByGroup = this.filteredByGroup
-            const categoryCount = Object.create(null)
-
-            for (const preset of filteredByGroup) {
-                const { category } = preset
-                if (!categoryCount[category]) {
-                    categoryCount[category] = 0
-                }
-                categoryCount[category]++
-            }
-
-            const ret = [{
-                title: `All (${filteredByGroup.length})`,
-                value: undefined,
-            }]
-
-            for (const [category, count] of Object.entries(categoryCount)) {
-                ret.push({
-                    title: count <= 1 ? category : `${category} (${count})`,
-                    value: category,
-                })
-            }
-
-            return ret
+            return items.filter((item) => item.group === this.selectedGroup)
         },
 
-        filteredByGroup() {
-            if (this.selectedGroup) {
-                return items.filter((item) => item.group === this.selectedGroup)
+        categoryOptions() {
+            const categoryCount = Object.create(null)
+            categoryCount[ALL_CATEGORIES_LABEL] = 0
+            for (const item of this.filteredByGroup) {
+                const { category } = item
+                categoryCount[category] ??= 0
+                categoryCount[category]++
+                categoryCount[ALL_CATEGORIES_LABEL]++
             }
-            return items
+
+            return Object.entries(categoryCount).map(([category, count]) => ({
+                title: `${category} (${count})`,
+                value: category,
+            }))
         },
 
         filteredItems() {
-            let results = this.filteredByGroup
-
-            if (this.selectedCategory) {
-                results = results.filter((item) => item.category === this.selectedCategory)
+            if (this.selectedCategory === ALL_CATEGORIES_LABEL) {
+                return this.filteredByGroup
             }
 
-            return results
-        },
-    },
-    methods: {
-        slcUrl(template) {
-            const url = new URL('app/calculator/index.html', globalThis.location.origin)
-            const { urlVer } = config
-            return stateToUrl(url, { urlVer, ...template }).toString()
+            return this.filteredByGroup.filter((item) => item.category === this.selectedCategory)
         },
     },
 }
