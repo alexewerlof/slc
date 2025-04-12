@@ -181,6 +181,13 @@ export class Indicator {
         return this
     }
 
+    get category() {
+        if (this.title && this.title.includes(':')) {
+            return this.title.split(':')[0].trim()
+        }
+        return undefined
+    }
+
     get expectedDailyEvents() {
         return this._expectedDailyEvents
     }

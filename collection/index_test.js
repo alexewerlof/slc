@@ -1,27 +1,19 @@
-import { assertEquals, test } from '../vendor/deno.js'
-import { isInstance, isStr } from '../lib/validation.js'
-import { config } from '../config.js'
-import { groups, importAllGroups } from './index.js'
 import { Indicator } from '../components/indicator.js'
+import { isInstance } from '../lib/validation.js'
+import { assertEquals, test } from '../vendor/deno.js'
+import { importAllGroups } from './index.js'
 
 test('Indicator Templates', async (t) => {
-    let items
-
-    await t.step('Can load all indicator templates', async () => {
-        items = await importAllGroups()
-        assertEquals(Array.isArray(items), true)
-        assertEquals(items.length > 0, true)
-    })
-
-    for (const { indicator, group, category } of items) {
-        await t.step(`Indicator: ${indicator.title}`, () => {
-            assertEquals(isInstance(indicator, Indicator), true, 'indicator is not an object')
-            assertEquals(groups.includes(group), true, `invalid "group" field: ${group}`)
-            assertEquals(
-                isStr(category, config.displayName.minLength, config.displayName.maxLength),
-                true,
-                `invalid "category" field: ${category}`,
-            )
-        })
+    const groups = await importAllGroups()
+    for (const [groupName, indicators] of Object.entries(groups)) {
+        assertEquals(Array.isArray(indicators), true)
+        for (const indicator of indicators) {
+            await t.step(`Entry in ${groupName} is an instances of Indicator `, () => {
+                assertEquals(isInstance(indicator, Indicator), true)
+            })
+            await t.step(`Indicator in ${groupName} has a category`, () => {
+                assertEquals(indicator.category !== undefined, true)
+            })
+        }
     }
 })

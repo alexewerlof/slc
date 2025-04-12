@@ -1,30 +1,30 @@
 <div class="indicator-finder-component">
     <div>
         <div class="h-pad-gap">
-            <tabs-component v-model="selectedGroup" :tab-names="groups"></tabs-component>
+            <tabs-component v-model="selectedGroupName" :tab-names="groupNames"></tabs-component>
         </div>
         <div class="h-pad-gap">
-            <div class="input-group" v-if="selectedGroup">
+            <div class="input-group" v-if="selectedGroupName">
                 <label>Signal</label>
                 <div class="subtle-hint">What does the service consumer care about?</div>
                 <inline-select-component v-model="selectedCategory" :options="categoryOptions"></inline-select-component>
             </div>
         </div>
     </div>
-    <div class="pad-gap subtle-hint">{{ filteredItems.length }} results</div>
-    <div class="indicator-finder-component__search-results" v-if="filteredItems.length">
+    <div class="pad-gap subtle-hint">{{ indicatorsInCategory.length }} results</div>
+    <div class="indicator-finder-component__search-results" v-if="indicatorsInCategory.length">
         <div class="indicator-finder-component__search-result surface"
-            v-for="item in filteredItems">
-            <button class="button--cta" @click="$emit('indicator-selected', item.indicator)">
-                {{ item.indicator.title }}
+            v-for="indicator in indicatorsInCategory">
+            <button class="button--cta" @click="$emit('indicator-selected', indicator)">
+                {{ indicator.title }}
             </button>
             <p>
-                {{ item.indicator.description }}
+                {{ indicator.description }}
                 <br>
-                <span class="subtle-hint">Unit: {{ item.indicator.eventUnitNorm }}</span>
+                <span class="subtle-hint">Unit: {{ indicator.eventUnitNorm }}</span>
             </p>
             <code-block-component title="Service Level Status">
-                <formula-component :formula="item.indicator.formula"></formula-component>
+                <formula-component :formula="indicator.formula"></formula-component>
             </code-block-component>
         </div>
     </div>

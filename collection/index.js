@@ -1,4 +1,4 @@
-export const groups = [
+const groupNames = [
     'API',
     'Cache',
     'Data',
@@ -8,21 +8,16 @@ export const groups = [
     'Queue',
 ]
 
-async function importIndicators(group) {
-    const indicaotrs = await import(`./${group.toLowerCase()}.js`)
-    return indicaotrs.default.map((indicator) => {
-        const category = indicator.title.split(':')[0].trim()
-
-        return {
-            indicator,
-            group,
-            category,
-        }
-    })
-}
-
 export async function importAllGroups() {
-    const templatePromises = groups.map(importIndicators)
-    const templatesArray = await Promise.all(templatePromises)
-    return templatesArray.flat()
+    const groupModules = await Promise.all(groupNames.map(
+        (groupName) => import(`./${groupName.toLowerCase()}.js`),
+    ))
+
+    const ret = Object.create(null)
+    for (let i = 0; i < groupNames.length; i++) {
+        const groupName = groupNames[i]
+        const groupModule = groupModules[i]
+        ret[groupName] = groupModule.default
+    }
+    return ret
 }

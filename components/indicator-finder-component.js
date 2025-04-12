@@ -1,55 +1,55 @@
-import { groups, importAllGroups } from '../collection/index.js'
+import { importAllGroups } from '../collection/index.js'
 import { isStr } from '../lib/validation.js'
 
-const items = await importAllGroups()
-
 const ALL_CATEGORIES_LABEL = 'All'
+const groups = await importAllGroups()
 
 export default {
     emits: ['indicator-selected'],
     data() {
+        const groupNames = Object.keys(groups)
         return {
             groups,
-            selectedGroup: groups[0],
-            // Search terms for filtering the templates
+            groupNames,
+            selectedGroupName: groupNames[0],
             selectedCategory: ALL_CATEGORIES_LABEL,
         }
     },
     watch: {
-        selectedGroup() {
+        selectedGroupName() {
             this.selectedCategory = ALL_CATEGORIES_LABEL
         },
     },
     computed: {
-        filteredByGroup() {
-            if (!isStr(this.selectedGroup)) {
+        selectedGroup() {
+            if (!isStr(this.selectedGroupName)) {
                 throw new Error('No group selected')
             }
-            return items.filter((item) => item.group === this.selectedGroup)
+            return groups[this.selectedGroupName]
         },
 
         categoryOptions() {
-            const categoryCount = Object.create(null)
-            categoryCount[ALL_CATEGORIES_LABEL] = 0
-            for (const item of this.filteredByGroup) {
-                const { category } = item
-                categoryCount[category] ??= 0
-                categoryCount[category]++
-                categoryCount[ALL_CATEGORIES_LABEL]++
+            const counters = Object.create(null)
+            counters[ALL_CATEGORIES_LABEL] = 0
+            for (const indicator of this.selectedGroup) {
+                const { category } = indicator
+                counters[category] ??= 0
+                counters[category]++
+                counters[ALL_CATEGORIES_LABEL]++
             }
 
-            return Object.entries(categoryCount).map(([category, count]) => ({
+            return Object.entries(counters).map(([category, count]) => ({
                 title: `${category} (${count})`,
                 value: category,
             }))
         },
 
-        filteredItems() {
+        indicatorsInCategory() {
             if (this.selectedCategory === ALL_CATEGORIES_LABEL) {
-                return this.filteredByGroup
+                return this.selectedGroup
             }
 
-            return this.filteredByGroup.filter((item) => item.category === this.selectedCategory)
+            return this.selectedGroup.filter((item) => item.category === this.selectedCategory)
         },
     },
 }
