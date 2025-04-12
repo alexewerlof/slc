@@ -63,6 +63,7 @@
                         </button>
                     </div>
                     <dialog-component v-if="isIndicatorTemplatesVisible"
+                        title="Indicator Templates"
                         v-model:isVisible="isIndicatorTemplatesVisible">
                         <indicator-finder-component @indicator-selected="addIndicatorFromSelector"></indicator-finder-component>
                     </dialog-component>                    
