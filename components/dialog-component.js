@@ -2,6 +2,7 @@ export default {
     data() {
     },
     props: {
+        title: String,
         isVisible: {
             type: Boolean,
             default: false,

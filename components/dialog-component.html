@@ -1,9 +1,11 @@
 <dialog class="dialog-component surface" ref="dialogComponent" @close="$emit('update:isVisible', false)">
     <div class="dialog-component__title-bar">
-        {{ title }} 
+        <div class="dialog-component__title">
+            {{ title }}
+        </div>
+        <div class="dialog-component__close-button">
+            <button @click="close" type="button" class="button--cta button--small">x</button>
+        </div>
     </div>
     <slot></slot>
-    <div class="button-bar">
-        <button @click="close" type="button">Cancel</button>
-    </div>
 </dialog>

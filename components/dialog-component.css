@@ -6,3 +6,15 @@
 .dialog-component::backdrop {
     backdrop-filter: blur(var(--bradius));
 }
+
+.dialog-component__title-bar {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    border-radius: var(--bradius);
+    padding: var(--gap);
+    display: flex;
+}
+
+.dialog-component__title {
+    flex-grow: 1;
+}
