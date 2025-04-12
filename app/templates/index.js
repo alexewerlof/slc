@@ -78,11 +78,6 @@ export const app = createApp({
         },
     },
     methods: {
-        slcUrl(template) {
-            const url = new URL('app/calculator/index.html', globalThis.location.origin)
-            const { urlVer } = config
-            return stateToUrl(url, { urlVer, ...template }).toString()
-        },
         handleIndicatorSelected(indicator) {
             console.log('Selected value:', indicator)
         },
