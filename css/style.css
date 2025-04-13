@@ -101,12 +101,19 @@ td button {
     border-left: 1px solid currentColor;
 }
 
-.surface {
+.surface, .well {
     border: var(--bthick) solid var(--divider-color);
     padding: var(--gap2);
     border-radius: var(--bradius3);
-    box-shadow: inset 0 0 var(--gap) var(--bthick) var(--divider-color), 0 0 var(--gap2) var(--bthick) rgba(0, 0, 0);
     backdrop-filter: blur(var(--bradius));
+}
+
+.surface {
+    box-shadow: inset 0 0 var(--gap) var(--bthick) var(--divider-color), 0 0 var(--gap2) var(--bthick) rgba(0, 0, 0);
+}
+
+.well {
+    box-shadow: 0 0 var(--gap) var(--bthick) var(--divider-color), inset 0 0 var(--gap2) var(--bthick) rgba(0, 0, 0);
 }
 
 * {
