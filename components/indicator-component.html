@@ -1,13 +1,13 @@
 <fieldset>
     <legend>Basics</legend>
     <div class="input-group">
-        <label for="sli-title-input">
-            Title
+        <label for="sli-displayName-input">
+            Display Name
             <div class="subtle-hint">Make your SLI easier to recognize</div>
         </label>
-        <input id="sli-title-input"
+        <input id="sli-displayName-input"
             type="text"
-            v-model="indicator.title"
+            v-model="indicator.displayName"
             :minlength="config.displayName.minLength"
             :maxlength="config.displayName.maxLength"
             :placeholder="config.displayName.placeholder">

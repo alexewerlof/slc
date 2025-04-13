@@ -16,7 +16,7 @@
         <div class="indicator-finder-component__search-result surface"
             v-for="indicator in indicatorsInCategory">
             <button class="button--cta" @click="$emit('indicator-selected', indicator)">
-                {{ indicator.title }}
+                {{ indicator.displayName }}
             </button>
             <p>
                 {{ indicator.description }}

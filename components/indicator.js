@@ -42,7 +42,7 @@ Metric data points impact its condition for good||bad:
 
 export class Indicator {
     /** @type {string} The title of the SLI */
-    title = config.displayName.default
+    displayName = config.displayName.default
 
     /** @type {string} The description of the SLI */
     description = config.description.default
@@ -79,7 +79,7 @@ export class Indicator {
 
     /**
      * Creates a new Indicator object (SLI).
-     * @param {IndicatorOptions | undefined} options
+     * @param {IndicatorOptions} [options] The options used to configure the indicator.
      */
     constructor(options) {
         if (isDef(options)) {
@@ -87,6 +87,10 @@ export class Indicator {
         }
     }
 
+    /**
+     * Initializes the Indicator object with the provided options.
+     * @param {IndicatorOptions} [options] The options used to configure the indicator.
+     */
     init(options) {
         if (!isObj(options)) {
             throw new TypeError(`option should be an object. Got ${options} (${typeof options})`)
@@ -109,7 +113,7 @@ export class Indicator {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
                 throw new Error(`Invalid displayName: ${displayName} (${typeof displayName})`)
             }
-            this.title = displayName
+            this.displayName = displayName
         }
 
         if (isDef(description)) {
@@ -182,8 +186,8 @@ export class Indicator {
     }
 
     get category() {
-        if (this.title && this.title.includes(':')) {
-            return this.title.split(':')[0].trim()
+        if (this.displayName && this.displayName.includes(':')) {
+            return this.displayName.split(':')[0].trim()
         }
         return undefined
     }
@@ -243,8 +247,8 @@ export class Indicator {
 
     save() {
         const ret = {}
-        if (this.title) {
-            ret.displayName = this.title
+        if (this.displayName) {
+            ret.displayName = this.displayName
         }
         if (this.description) {
             ret.description = this.description
@@ -311,8 +315,8 @@ export class Indicator {
     }
 
     toString() {
-        if (this.title.trim()) {
-            return this.title
+        if (this.displayName.trim()) {
+            return this.displayName
         }
         if (this.metricName.trim()) {
             return this.metricName
