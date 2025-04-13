@@ -1,6 +1,8 @@
-<div class="tabs-component">
-    <div v-for="tabName in tabNames"
+<div class="tabs-component button-bar">
+    <button v-for="tabName in tabNames"
+        :key="tabName"
+        type="button"
         class="tabs-component__tab"
-        :class="{ 'tabs-component__tab--active': modelValue === tabName }"
-        @click="$emit('update:modelValue', tabName)">{{ tabName }}</div>
+        :class="{ 'button--cta': modelValue === tabName }"
+        @click="$emit('update:modelValue', tabName)">{{ tabName }}</button>
 </div>
