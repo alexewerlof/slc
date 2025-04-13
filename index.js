@@ -1,12 +1,13 @@
 import { createApp } from './vendor/vue.js'
 import { addUTM } from './lib/utm.js'
 import { registerAllComponents } from './components/index.js'
+import { isInArr } from './lib/validation.js'
 
 export const app = createApp({
     methods: {
         gotoApp(appName, term) {
             appName = appName.toLowerCase()
-            if (!['calculator', 'uptime'].includes(appName)) {
+            if (!isInArr(appName, ['calculator', 'uptime'])) {
                 throw new RangeError(`Unknown app: ${appName}`)
             }
             const appURL = new URL(`/app/${appName}/index.html`, globalThis.location.origin)

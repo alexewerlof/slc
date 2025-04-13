@@ -2,7 +2,7 @@ import { config } from '../config.js'
 import { entity2symbolNorm } from '../lib/fmt.js'
 import { rmItemGetNext } from '../lib/math.js'
 import { humanTimeSlices } from '../lib/time.js'
-import { inRange, isArr, isDef, isInstance, isObj, isStrLen } from '../lib/validation.js'
+import { inRange, isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Formula } from './formula.js'
 import { Objective } from './objective.js'
 
@@ -138,14 +138,14 @@ export class Indicator {
         }
 
         if (isDef(lowerBound)) {
-            if (!config.lowerBound.possibleValues.includes(lowerBound)) {
+            if (!isInArr(lowerBound, config.lowerBound.possibleValues)) {
                 throw new RangeError(`Invalid lowerBound: ${lowerBound} (${typeof lowerBound})`)
             }
             this.lowerBound = lowerBound
         }
 
         if (isDef(upperBound)) {
-            if (!config.upperBound.possibleValues.includes(upperBound)) {
+            if (!isInArr(upperBound, config.upperBound.possibleValues)) {
                 throw new RangeError(`Invalid upperBound: ${upperBound} (${typeof upperBound})`)
             }
             this.upperBound = upperBound
@@ -234,7 +234,7 @@ export class Indicator {
         if (!isInstance(objective, Objective)) {
             throw new TypeError(`Expected an instance of Objective. Got ${objective}`)
         }
-        if (!this.objectives.includes(objective)) {
+        if (!isInArr(objective, this.objectives)) {
             throw new Error(`Objective does not belong to this indicator: ${objective}`)
         }
         this.selObjective = rmItemGetNext(this.objectives, this.selObjective)

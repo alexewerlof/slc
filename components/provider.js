@@ -1,5 +1,5 @@
 import { Service } from './service.js'
-import { isInstance } from '../lib/validation.js'
+import { isInArr, isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { crdObj, metadataObj } from '../lib/crd.js'
 
@@ -18,7 +18,7 @@ export class Provider {
     }
 
     set type(val) {
-        if (!Provider.possibleTypes.includes(val)) {
+        if (!isInArr(val, Provider.possibleTypes)) {
             throw new Error(`Provider.type must be one of ${Provider.possibleTypes}. Got ${val}`)
         }
         this._type = val

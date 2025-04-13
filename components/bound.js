@@ -1,6 +1,6 @@
 import { config } from '../config.js'
 import { entity2symbol, oppositeBound } from '../lib/fmt.js'
-import { isInstance } from '../lib/validation.js'
+import { isInArr, isInstance } from '../lib/validation.js'
 import { Indicator } from './indicator.js'
 
 export class Bound {
@@ -20,7 +20,7 @@ export class Bound {
     }
 
     set lowerBound(val) {
-        if (!config.lowerBound.possibleValues.includes(val)) {
+        if (!isInArr(val, config.lowerBound.possibleValues)) {
             throw new RangeError(
                 `Indicator: lowerBound must be one of ${
                     config.lowerBound.possibleValues.join(', ')
@@ -35,7 +35,7 @@ export class Bound {
     }
 
     set upperBound(val) {
-        if (!config.upperBound.possibleValues.includes(val)) {
+        if (!isInArr(val, config.upperBound.possibleValues)) {
             throw new RangeError(
                 `Indicator: upperBound must be one of ${
                     config.upperBound.possibleValues.join(', ')

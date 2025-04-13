@@ -1,7 +1,7 @@
 import { namify } from '../lib/fmt.js'
 import { icon } from '../lib/icons.js'
 import { crdObj, metadataObj } from '../lib/crd.js'
-import { isInstance } from '../lib/validation.js'
+import { isInArr, isInstance } from '../lib/validation.js'
 import { Consumption } from './consumption.js'
 import { Failure } from './failure.js'
 import { Metric } from './metric.js'
@@ -25,7 +25,7 @@ export class Service {
     }
 
     set type(val) {
-        if (!Service.possibleTypes.includes(val)) {
+        if (!isInArr(val, Service.possibleTypes)) {
             throw new Error(`Service.type must be one of ${Service.possibleTypes}. Got ${val}`)
         }
         this._type = val

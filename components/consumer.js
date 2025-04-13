@@ -1,4 +1,4 @@
-import { isInstance } from '../lib/validation.js'
+import { isInArr, isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { Consumption } from './consumption.js'
 
@@ -19,7 +19,7 @@ export class Consumer {
     }
 
     set type(val) {
-        if (!Consumer.possibleTypes.includes(val)) {
+        if (!isInArr(val, Consumer.possibleTypes)) {
             throw new Error(`Consumer.type must be one of ${Consumer.possibleTypes}. Got ${val}`)
         }
         this._type = val

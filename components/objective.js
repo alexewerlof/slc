@@ -3,7 +3,7 @@ import { FailureWindow } from '../lib/failure-window.js'
 import { entity2symbolNorm, percL10n } from '../lib/fmt.js'
 import { clamp, percent, rmItemGetNext, toFixed } from '../lib/math.js'
 import { daysToSeconds, secondsToDays } from '../lib/time.js'
-import { inRange, isArr, isDef, isInstance, isObj } from '../lib/validation.js'
+import { inRange, isArr, isDef, isInArr, isInstance, isObj } from '../lib/validation.js'
 import { Window } from '../lib/window.js'
 import { Alert } from './alert.js'
 import { Formula } from './formula.js'
@@ -129,7 +129,7 @@ export class Objective {
         if (!isInstance(alert, Alert)) {
             throw new TypeError(`Expected an instance of Alert. Got ${alert}`)
         }
-        if (!this.alerts.includes(alert)) {
+        if (!isInArr(alert, this.alerts)) {
             throw new Error(`Alert does not belong to this objective: ${alert}`)
         }
         this.selAlert = rmItemGetNext(this.alerts, alert)

@@ -1,4 +1,4 @@
-import { isInstance } from '../lib/validation.js'
+import { isInArr, isInstance } from '../lib/validation.js'
 import { Service } from './service.js'
 import { Failure } from './failure.js'
 import { icon } from '../lib/icons.js'
@@ -36,7 +36,7 @@ export class Metric {
         if (!isInstance(failure, Failure)) {
             throw new Error(`Expected an instance of Failure. Got ${failure}`)
         }
-        return this.linkedFailures.includes(failure)
+        return isInArr(failure, this.linkedFailures)
     }
 
     linkFailure(failure) {
