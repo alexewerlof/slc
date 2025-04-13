@@ -130,16 +130,13 @@ textarea {
     justify-content: right;
     flex-wrap: wrap;
     margin: var(--gap);
-}
-
-button + button {
-    margin-left: 0.5rem;
+    gap: var(--gap);
 }
 
 button {
     background-color: var(--secondary-color);
     color: var(--background-color);
-    border: var(--bthick) solid currentColor;
+    border: none;
     border-radius: var(--bradius);
     cursor: pointer;
     transition: background-color var(--animation-speed);
