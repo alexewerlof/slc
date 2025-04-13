@@ -18,7 +18,7 @@ body {
     font-family: var(--body-font-family);
     margin: 0;
     padding: 0;
-    background-image: url('img/bg.svg');
+    background-image: url('/img/bg.svg');
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-attachment: fixed;
