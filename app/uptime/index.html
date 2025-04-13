@@ -14,7 +14,7 @@
     <meta name="theme-color" content="#FFBC52">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="index.html">
+    <link rel="stylesheet" href="index.css">
     <meta name="description" content="A simple Service Level Calculator that complies with Google SRE books.">
     <meta property="og:title" content="Service Level Calculator">
     <meta property="og:description" content="A simple Service Level Calculator that complies with Google SRE books.">
@@ -34,9 +34,9 @@
     <div id="app" v-cloak>
         <header-component title="Uptime Calculator"></header-component>
 
-        <div class="container">
-            <article class="stretch">
-                <section class="surface">
+        <div class="container logo-bg">
+            <div class="uptime-ui">
+                <div class="uptime-ui__left-pane surface">
                     <!-- SLI timeslice -->
                     <h2>SLI</h2>
                     <fieldset>
@@ -97,8 +97,8 @@
                     </fieldset>
                     <h2>SLO</h2>
                     <objective-component :objective="objective"></objective-component>
-                </section>
-                <section class="well logo-bg">
+                </div>
+                <div class="uptime-ui__right-pane well">
                     <h2>Your Error Budget</h2>
                     <error-budget-component :objective="objective"></error-budget-component>
                     <h2>Common SLO windows</h2>
@@ -107,7 +107,7 @@
                             <tr>
                                 <th rowspan="2">Period</th>
                                 <th rowspan="2">Days</th>
-                                <th colspan="3" class="common-slo-windows__count-header">
+                                <th colspan="3">
                                     {{ indicator.eventUnitNorm }}
                                 </th>
                                 <th rowspan="2" class="common-slo-windows__downtime">Downtime</th>
@@ -137,8 +137,8 @@
                             </tr>
                         </tbody>
                     </table>
-                </section>
-            </article>
+                </div>
+            </div>
         </div>
 
         <footer-component></footer-component>
