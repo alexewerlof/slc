@@ -18,7 +18,6 @@ body {
     font-family: var(--body-font-family);
     margin: 0;
     padding: 0;
-    background-image: url('/img/bg.svg');
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -114,6 +113,11 @@ td button {
 
 .well {
     box-shadow: 0 0 var(--gap) var(--bthick) var(--divider-color), inset 0 0 var(--gap2) var(--bthick) rgba(0, 0, 0);
+}
+
+.logo-bg {
+    background-image: url('/img/bg.svg');
+    background-size: contain;
 }
 
 * {
