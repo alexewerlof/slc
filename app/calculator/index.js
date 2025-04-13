@@ -9,26 +9,7 @@ import { registerAllComponents } from '../../components/index.js'
 
 export const app = createApp({
     data() {
-        const calculator = makeCalculator(globalThis.location.href, {
-            indicators: [{
-                metricName: 'response_latency1',
-                metricUnit: 'ms',
-                expectedDailyEvents: 8000,
-                lowerBound: 'gt',
-                upperBound: 'le',
-                timeslice: 60,
-                objectives: [{
-                    target: 99,
-                    windowDays: 30,
-                    lowerThreshold: 5,
-                    upperThreshold: 2000,
-                    alerts: [{
-                        burnRate: 6,
-                        longWindowPerc: 17.6,
-                    }],
-                }],
-            }],
-        })
+        const calculator = makeCalculator(globalThis.location.href)
 
         return {
             // Expose the config to the UI

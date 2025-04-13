@@ -67,15 +67,32 @@ export class Calculator {
     }
 }
 
-export function makeCalculator(urlStr, fallbackState) {
-    try {
-        const url = new URL(urlStr)
-        if (!url.searchParams.has('urlVer') || !url.searchParams.has('target')) {
-            throw new Error('No state found in URL')
+export function makeCalculator(urlStr) {
+    const url = new URL(urlStr)
+    if (url.searchParams.has('urlVer') || url.searchParams.has('target')) {
+        try {
+            return new Calculator(urlToState(url).state)
+        } catch (e) {
+            console.warn('Using default because failed to load from URL:', e)
         }
-        return new Calculator(urlToState(url).state)
-    } catch (e) {
-        console.info('Using fallback state because of failure to load it from URL:', e)
-        return new Calculator(fallbackState)
     }
+    return new Calculator({
+        indicators: [{
+            displayName: 'Latency: Response Latency',
+            metricName: 'response_latency',
+            metricUnit: 'ms',
+            expectedDailyEvents: 10000,
+            upperBound: 'le',
+            timeslice: 60,
+            objectives: [{
+                target: 99,
+                windowDays: 30,
+                upperThreshold: 2000,
+                alerts: [{
+                    burnRate: 6,
+                    longWindowPerc: 5,
+                }],
+            }],
+        }],
+    })
 }
