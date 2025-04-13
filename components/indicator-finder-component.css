@@ -5,7 +5,8 @@
 }
 
 .indicator-finder-component__search-results {
-    list-style-type: none;
+    flex-grow: 1;
+    overflow: auto;
 }
 
 .indicator-finder-component__search-result {}
