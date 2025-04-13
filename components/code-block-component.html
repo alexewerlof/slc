@@ -1,5 +1,5 @@
 <div class="code-block-component">
-    <div class="code-block-component__top-bar">
+    <div v-if="!hideTopBar" class="code-block-component__top-bar">
         <div class="code-block-component__title">{{ title }}</div>
         <div class="code-block-component__buttons">
             <button class="button--small" type="button" @click="copy">Copy</button>

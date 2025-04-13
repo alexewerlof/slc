@@ -2,6 +2,10 @@ import { showToast } from '../lib/toast.js'
 
 export default {
     props: {
+        hideTopBar: {
+            type: Boolean,
+            default: false,
+        },
         title: String,
     },
     methods: {
