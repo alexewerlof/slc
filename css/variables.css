@@ -25,4 +25,7 @@
     --bradius2: calc(var(--bradius) * 2);
     --bradius3: calc(var(--bradius) * 3);
     --bthick: 1px;
+    --bthick2: calc(var(--bthick) * 2);
+    --bthick3: calc(var(--bthick) * 3);
+    --bthick4: calc(var(--bthick) * 4);
 }
