@@ -105,6 +105,19 @@ td button {
     padding: var(--gap2);
     border-radius: var(--bradius3);
     backdrop-filter: blur(var(--bradius));
+    background-image:
+        radial-gradient(
+            farthest-corner at 100% 100%,
+            rgba(from var(--divider-color) r g b / 0.1),
+            rgba(0, 0, 0, 0),
+            rgba(from var(--divider-color) r g b / 0.1)
+        ),
+        linear-gradient(
+        0deg,
+        rgba(from var(--divider-color) r g b / 0.1),
+        rgba(0, 0, 0, 0),
+        rgba(from var(--divider-color) r g b / 0.1)
+    );
 }
 
 .surface {
