@@ -1,5 +1,5 @@
-import { numL10n, percL10n } from '../lib/fmt.js'
-import { isObj } from '../lib/validation.js'
+import { numL10n, percL10n } from '../../lib/fmt.js'
+import { isObj } from '../../lib/validation.js'
 
 export default {
     computed: {

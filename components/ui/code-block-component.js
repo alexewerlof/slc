@@ -1,4 +1,4 @@
-import { showToast } from '../lib/toast.js'
+import { showToast } from '../../lib/toast.js'
 
 export default {
     props: {

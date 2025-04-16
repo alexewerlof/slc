@@ -1,5 +1,5 @@
-import { importAllGroups } from '../collection/index.js'
-import { isStr } from '../lib/validation.js'
+import { importAllGroups } from '../../collection/index.js'
+import { isStr } from '../../lib/validation.js'
 
 const ALL_CATEGORIES_LABEL = 'All'
 const groups = await importAllGroups()

@@ -1,5 +1,5 @@
-import { arrToPolygonPoints } from '../lib/svg.js'
-import { isArr } from '../lib/validation.js'
+import { arrToPolygonPoints } from '../../lib/svg.js'
+import { isArr } from '../../lib/validation.js'
 
 const titleDistance = 8
 const arrowHeight = 5
