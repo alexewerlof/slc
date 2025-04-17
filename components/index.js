@@ -1,5 +1,5 @@
-import { componentDefinition } from '../lib/component-loader.js'
-import { isStr, isStrLen } from '../lib/validation.js'
+import { componentDefinition, getUrlStrs } from '../lib/component-loader.js'
+import { isStrLen } from '../lib/validation.js'
 
 const componentSpecifications = [
     ' AJHC : ./alert/alert-chart-component',
@@ -72,31 +72,16 @@ function parseComponentSpec(componentSpec) {
     }
 }
 
-function getUrlStrs(baseUrlStr, hasJs, hasHtml, hasCss) {
-    if (!isStr(baseUrlStr)) {
-        throw new Error(`Invalid baseUrlStr: ${baseUrlStr}`)
-    }
-    if (!hasJs && !hasHtml && !hasCss) {
-        throw new Error(`Flags don't specify JS (${hasJs}), HTML (${hasHtml}), or CSS (${hasCss})`)
-    }
-
-    return {
-        jsUrlStr: hasJs ? baseUrlStr + '.js' : undefined,
-        htmlUrlStr: hasHtml ? baseUrlStr + '.html' : undefined,
-        cssUrlStr: hasCss ? baseUrlStr + '.css' : undefined,
-    }
-}
-
 /**
  * Register all components in the Vue application to load asynchronously on-demand.
  * @param {VueApplication} app a reference to the Vue application instance
  */
 export async function registerAllComponents(app) {
     await Promise.all(componentSpecifications.map(async (componentSpec) => {
-        const { name, isAsync, relativeUrlBase, hasJs, hasHtml, hasCss } = parseComponentSpec(componentSpec)
+        const { name, isAsync, relativeUrlBase, hasHtml, hasJs, hasCss } = parseComponentSpec(componentSpec)
         const baseUrlStr = import.meta.resolve(relativeUrlBase)
-        const { jsUrlStr, htmlUrlStr, cssUrlStr } = getUrlStrs(baseUrlStr, hasJs, hasHtml, hasCss)
+        const urlStrs = getUrlStrs(baseUrlStr, hasHtml, hasJs, hasCss)
 
-        app.component(name, await componentDefinition(isAsync, jsUrlStr, htmlUrlStr, cssUrlStr))
+        app.component(name, await componentDefinition(isAsync, urlStrs))
     }))
 }
