@@ -1,5 +1,5 @@
 import { componentDefinition } from '../lib/component-loader.js'
-import { isStrLen } from '../lib/validation.js'
+import { isStr, isStrLen } from '../lib/validation.js'
 
 const componentSpecifications = [
     ' AJHC : ./alert/alert-chart-component',
@@ -72,12 +72,14 @@ function parseComponentSpec(componentSpec) {
     }
 }
 
-function getUrlStrs(relativeUrlBase, hasJs, hasHtml, hasCss) {
+function getUrlStrs(baseUrlStr, hasJs, hasHtml, hasCss) {
+    if (!isStr(baseUrlStr)) {
+        throw new Error(`Invalid baseUrlStr: ${baseUrlStr}`)
+    }
     if (!hasJs && !hasHtml && !hasCss) {
-        throw new Error(`Flags don't specify HTML, CSS, or JS: ${flags}`)
+        throw new Error(`Flags don't specify JS (${hasJs}), HTML (${hasHtml}), or CSS (${hasCss})`)
     }
 
-    const baseUrlStr = import.meta.resolve(relativeUrlBase)
     return {
         jsUrlStr: hasJs ? baseUrlStr + '.js' : undefined,
         htmlUrlStr: hasHtml ? baseUrlStr + '.html' : undefined,
@@ -92,7 +94,8 @@ function getUrlStrs(relativeUrlBase, hasJs, hasHtml, hasCss) {
 export async function registerAllComponents(app) {
     await Promise.all(componentSpecifications.map(async (componentSpec) => {
         const { name, isAsync, relativeUrlBase, hasJs, hasHtml, hasCss } = parseComponentSpec(componentSpec)
-        const { jsUrlStr, htmlUrlStr, cssUrlStr } = getUrlStrs(relativeUrlBase, hasJs, hasHtml, hasCss)
+        const baseUrlStr = import.meta.resolve(relativeUrlBase)
+        const { jsUrlStr, htmlUrlStr, cssUrlStr } = getUrlStrs(baseUrlStr, hasJs, hasHtml, hasCss)
 
         app.component(name, await componentDefinition(isAsync, jsUrlStr, htmlUrlStr, cssUrlStr))
     }))
