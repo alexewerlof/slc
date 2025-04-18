@@ -47,17 +47,17 @@
                         <legend>Indicator ({{ calculator.indicators.length }})</legend>
                         <div class="input-group" v-if="calculator.indicators.length">
                             <label for="indicator-selector">Select</label>
-                            <select v-model="calculator.selIndicator" id="indicator-selector">
+                            <select v-model="calculator.indicators.selected" id="indicator-selector">
                                 <option v-for="indicator of calculator.indicators" :value="indicator">{{ indicator }}</option>
                             </select>
                         </div>
 
                         <div class="button-bar">
-                            <button @click="calculator.addNewIndicator()">Add Empty</button>
+                            <button @click="calculator.indicators.addNew()">Add Empty</button>
                             <button @click="isIndicatorTemplatesVisible = true">Add From Template</button>
                             <button
-                                v-if="calculator.selIndicator"
-                                @click="calculator.removeSelectedIndicator()"
+                                v-if="calculator.indicators.selected"
+                                @click="calculator.indicators.removeSelected()"
                                 class="button--danger"
                             >
                                 Remove
@@ -71,8 +71,8 @@
                     </fieldset>
                 </div>
 
-                <div class="well" v-if="calculator.selIndicator">
-                    <indicator-component :indicator="calculator.selIndicator"></indicator-component>
+                <div class="well" v-if="calculator.indicators.selected">
+                    <indicator-component :indicator="calculator.indicators.selected"></indicator-component>
                 </div>
             </div>
         </section>
@@ -95,24 +95,24 @@
                     </h2>
 
                     <fieldset>
-                        <legend>Objective ({{ calculator.selIndicator?.objectives.length || 0 }})</legend>
-                        <div class="block warning" v-if="!calculator.selIndicator?.objectives.length">
+                        <legend>Objective ({{ calculator.indicators.selected?.objectives.length || 0 }})</legend>
+                        <div class="block warning" v-if="!calculator.indicators.selected?.objectives.length">
                             There are no objectives (SLOs) attached to the selected indicator (SLI).
                         </div>
-                        <div class="input-group" v-if="calculator.selIndicator?.objectives.length">
+                        <div class="input-group" v-if="calculator.indicators.selected?.objectives.length">
                             <label for="objective-selector">Select</label>
-                            <select v-model="calculator.selIndicator.selObjective" id="objective-selector">
-                                <option v-for="objective of calculator.selIndicator.objectives" :value="objective">{{ objective }}</option>
+                            <select v-model="calculator.indicators.selected.objectives.selected" id="objective-selector">
+                                <option v-for="objective of calculator.indicators.selected.objectives" :value="objective">{{ objective }}</option>
                             </select>
                         </div>
 
                         <div 
-                            v-if="calculator.selIndicator"
+                            v-if="calculator.indicators.selected"
                             class="button-bar">
-                            <button @click="calculator.selIndicator.addNewObjective()">Add New</button>
+                            <button @click="calculator.indicators.selected.objectives.pushNew()">Add New</button>
                             <button
-                                v-if="calculator.selIndicator.selObjective"
-                                @click="calculator.selIndicator.removeSelectedObjective()"
+                                v-if="calculator.indicators.selected.objectives.selected"
+                                @click="calculator.indicators.selected.objectives.removeSelected()"
                                 class="button--danger">
                                 Remove
                             </button>
@@ -120,11 +120,11 @@
                     </fieldset>
                 </div>
 
-                <div class="well" v-if="calculator.selIndicator?.selObjective">
-                    <objective-component :objective="calculator.selIndicator.selObjective"></objective-component>
+                <div class="well" v-if="calculator.indicators.selected?.objectives.selected">
+                    <objective-component :objective="calculator.indicators.selected.objectives.selected"></objective-component>
                     <!------------------------ Error Budget ------------------------>
                     <h2 id="error-budget-title">Error</h2>
-                    <error-budget-component :objective="calculator.selIndicator.selObjective"></error-budget-component>
+                    <error-budget-component :objective="calculator.indicators.selected.objectives.selected"></error-budget-component>
                 </div>
             </div>
         </section>
@@ -166,26 +166,26 @@
                     </h2>
 
                     <fieldset>
-                        <legend>Alert ({{ calculator.selIndicator?.selObjective?.alerts?.length || 0 }})</legend>
-                        <div class="block warning" v-if="!calculator.selIndicator?.selObjective">
+                        <legend>Alert ({{ calculator.indicators.selected?.objectives.selected?.alerts?.length || 0 }})</legend>
+                        <div class="block warning" v-if="!calculator.indicators.selected?.objectives.selected">
                             Please define an objective (SLO) to set alerts.
                         </div>
-                        <div class="block warning" v-if="calculator.selIndicator?.selObjective && !calculator.selIndicator?.selObjective?.alerts.length">
+                        <div class="block warning" v-if="calculator.indicators.selected?.objectives.selected && !calculator.indicators.selected?.objectives.selected?.alerts.length">
                             There are no alerts attached to the selected objective (SLO).
                         </div>
-                        <div class="input-group" v-if="calculator.selIndicator?.selObjective?.alerts.length">
+                        <div class="input-group" v-if="calculator.indicators.selected?.objectives.selected?.alerts.length">
                             <label for="alert-selector">Select</label>
-                            <select v-model="calculator.selIndicator.selObjective.selAlert" id="alert-selector">
-                                <option v-for="alert of calculator.selIndicator.selObjective.alerts" :value="alert">{{ alert }}</option>
+                            <select v-model="calculator.indicators.selected.objectives.selected.alerts.selected" id="alert-selector">
+                                <option v-for="alert of calculator.indicators.selected.objectives.selected.alerts" :value="alert">{{ alert }}</option>
                             </select>
                         </div>
 
-                        <div class="button-bar" v-if="calculator.selIndicator?.selObjective">
-                            <button @click="calculator.selIndicator.selObjective.addNewAlert()">Add New</button>
-                            <button @click="calculator.selIndicator.selObjective.addRecommendedAlerts()">Add Recommended</button>
+                        <div class="button-bar" v-if="calculator.indicators.selected?.objectives.selected">
+                            <button @click="calculator.indicators.selected.objectives.selected.alerts.pushNew()">Add New</button>
+                            <button @click="addRecommendedAlerts()">Add Recommended</button>
                             <button
-                                v-if="calculator.selIndicator?.selObjective?.selAlert"
-                                @click="calculator.selIndicator.selObjective.removeSelectedAlert()"
+                                v-if="calculator.indicators.selected?.objectives.selected?.alerts.selected"
+                                @click="calculator.indicators.selected.objectives.selected.alerts.removeSelected()"
                                 class="button--danger"
                             >
                                 Remove
@@ -194,8 +194,8 @@
                     </fieldset>
                 </div>
 
-                <div class="well" v-if="calculator.selIndicator?.selObjective?.selAlert">
-                    <alert-component :alert="calculator.selIndicator.selObjective.selAlert"></alert-component>
+                <div class="well" v-if="calculator.indicators.selected?.objectives.selected?.alerts.selected">
+                    <alert-component :alert="calculator.indicators.selected.objectives.selected.alerts.selected"></alert-component>
                 </div>
             </div>
         </section>

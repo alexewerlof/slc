@@ -1,8 +1,8 @@
 import { config } from '../config.js'
 import { entity2symbolNorm } from '../lib/fmt.js'
-import { rmItemGetNext } from '../lib/math.js'
+import { SelectableArray } from '../lib/selectable-array.js'
 import { humanTimeSlices } from '../lib/time.js'
-import { inRange, isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
+import { inRange, isArr, isDef, isInArr, isObj, isStrLen } from '../lib/validation.js'
 import { Formula } from './formula.js'
 import { Objective } from './objective.js'
 
@@ -69,7 +69,7 @@ export class Indicator {
     isTimeBased = false
 
     /** @type {Objective[]} List of SLOs attached to this SLI */
-    objectives = []
+    objectives = new SelectableArray(Objective, this)
 
     /** @type {Objective|undefined} the selected objective in UI */
     selObjective = undefined
@@ -177,9 +177,7 @@ export class Indicator {
             if (!isArr(objectives)) {
                 throw new TypeError(`Invalid objectives array: ${objectives} (${typeof objectives})`)
             }
-            for (const objectiveOptions of objectives) {
-                this.addObjective(new Objective(this, objectiveOptions))
-            }
+            this.objectives.init(objectives)
         }
 
         return this
@@ -214,35 +212,6 @@ export class Indicator {
     /** @type {boolean} Are both bounds needed */
     get isRanged() {
         return Boolean(this.lowerBound) && Boolean(this.upperBound)
-    }
-
-    addObjective(objective) {
-        if (!isInstance(objective, Objective)) {
-            throw new TypeError(`Expected an instance of Objective. Got ${objective}`)
-        }
-        objective.indicator = this
-        this.objectives.push(objective)
-        this.selObjective = objective
-        return objective
-    }
-
-    addNewObjective() {
-        return this.addObjective(new Objective(this))
-    }
-
-    removeObjective(objective) {
-        if (!isInstance(objective, Objective)) {
-            throw new TypeError(`Expected an instance of Objective. Got ${objective}`)
-        }
-        if (!isInArr(objective, this.objectives)) {
-            throw new Error(`Objective does not belong to this indicator: ${objective}`)
-        }
-        this.selObjective = rmItemGetNext(this.objectives, this.selObjective)
-        objective.indicator = undefined
-    }
-
-    removeSelectedObjective() {
-        return this.removeObjective(this.selObjective)
     }
 
     save() {

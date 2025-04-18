@@ -1,9 +1,10 @@
 import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
 import { entity2symbolNorm, percL10n } from '../lib/fmt.js'
-import { clamp, percent, rmItemGetNext, toFixed } from '../lib/math.js'
+import { clamp, percent, toFixed } from '../lib/math.js'
+import { SelectableArray } from '../lib/selectable-array.js'
 import { daysToSeconds, secondsToDays } from '../lib/time.js'
-import { inRange, isArr, isDef, isInArr, isInstance, isObj } from '../lib/validation.js'
+import { inRange, isArr, isDef, isInstance, isObj } from '../lib/validation.js'
 import { Window } from '../lib/window.js'
 import { Alert } from './alert.js'
 import { Formula } from './formula.js'
@@ -20,10 +21,9 @@ export class Objective {
     _upperThreshold = config.upperThreshold.default
 
     /** {@type {Alert[]}} List of alerts attached to this SLO */
-    alerts = []
+    alerts = new SelectableArray(Alert, this)
 
     /** @type {Alert|undefined} the selected objective in UI */
-    selAlert = undefined
 
     constructor(indicator, options) {
         if (!isInstance(indicator, Indicator)) {
@@ -95,49 +95,10 @@ export class Objective {
             if (!isArr(alerts)) {
                 throw new TypeError(`Invalid alerts array: ${alerts} (${typeof alerts})`)
             }
-            for (const alertOptions of alerts) {
-                this.addAlert(new Alert(this, alertOptions))
-            }
+            this.alerts.init(alerts)
         }
 
         return this
-    }
-
-    addAlert(alert) {
-        if (!isInstance(alert, Alert)) {
-            throw new TypeError(`Objective.addAlert(): Expected an instance of Alert. Got ${alert}`)
-        }
-        alert.objective = this
-        this.alerts.push(alert)
-        this.selAlert = alert
-        return alert
-    }
-
-    addNewAlert() {
-        return this.addAlert(new Alert(this))
-    }
-
-    addRecommendedAlerts() {
-        for (const preset of config.alert.presets) {
-            this.addAlert(
-                new Alert(this, preset),
-            )
-        }
-    }
-
-    removeAlert(alert) {
-        if (!isInstance(alert, Alert)) {
-            throw new TypeError(`Expected an instance of Alert. Got ${alert}`)
-        }
-        if (!isInArr(alert, this.alerts)) {
-            throw new Error(`Alert does not belong to this objective: ${alert}`)
-        }
-        this.selAlert = rmItemGetNext(this.alerts, alert)
-        alert.objective = undefined
-    }
-
-    removeSelectedAlert() {
-        return this.removeAlert(this.selAlert)
     }
 
     get lowerThreshold() {

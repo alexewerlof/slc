@@ -22,6 +22,24 @@ export default {
         config() {
             return config
         },
+        indicators() {
+            return this.calculator.indicators
+        },
+        selectedIndicator() {
+            return this.indicators.selected
+        },
+        objectives() {
+            return this.selectedIndicator?.objectives
+        },
+        selectedObjective() {
+            return this.objectives?.selected
+        },
+        alerts() {
+            return this.selectedObjective?.alerts
+        },
+        selectedAlert() {
+            return this.alerts?.selected
+        },
     },
     methods: {
         boundCaption,
@@ -38,7 +56,15 @@ export default {
             this.isIndicatorTemplatesVisible = false
             const options = indicator.save()
             console.log('Adding indicator from selector:', options)
-            return this.calculator.addIndicator(new Indicator(options))
+            return this.calculator.indicators.addNew(options)
+        },
+        addRecommendedAlerts() {
+            if (!this.selectedObjective) {
+                throw new Error('No selected objective')
+            }
+            for (const preset of config.alert.presets) {
+                this.selectedObjective.alerts.pushNew(preset)
+            }
         },
     },
 }
