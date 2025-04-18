@@ -249,13 +249,13 @@ export const config = fz({
             min: 1,
             max: 100,
             step: 0.1,
-            default: 8,
+            default: 7,
         }),
         longWindowPerc: fz({
             min: 0.1,
             max: 99,
             step: 0.1,
-            default: 5,
+            default: 6,
         }),
         shortWindowDivider: fz({
             min: 2,
