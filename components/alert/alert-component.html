@@ -46,7 +46,7 @@
                         <td>{{ preset.burnRate }}x</td>
                         <td>{{ percL10n(preset.longWindowPerc) }} Consumed</td>
                         <td>1/{{ preset.shortWindowDivider }} of {{ percL10n(preset.longWindowPerc) }}</td>
-                        <td><button type="button" class="button--small" @click="alert.init(preset)">Try</button></td>
+                        <td><button type="button" class="button--small" @click="alert.state = preset">Try</button></td>
                     </tr>
                 </tbody>
             </table>

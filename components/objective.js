@@ -38,11 +38,11 @@ export class Objective {
         )
 
         if (isDef(options)) {
-            this.init(options)
+            this.state = options
         }
     }
 
-    save() {
+    get state() {
         const ret = {
             target: this.target,
             windowDays: this.windowDays,
@@ -54,12 +54,12 @@ export class Objective {
             ret.upperThreshold = this.upperThreshold
         }
         if (this.alerts.length) {
-            ret.alerts = this.alerts.map((alert) => alert.save())
+            ret.alerts = this.alerts.map((alert) => alert.state)
         }
         return ret
     }
 
-    init(options) {
+    set state(options) {
         if (!isObj(options)) {
             throw new TypeError(`Invalid options object: ${options} ${typeof options}`)
         }
@@ -112,10 +112,8 @@ export class Objective {
             if (!isArr(alerts)) {
                 throw new TypeError(`Invalid alerts array: ${alerts} (${typeof alerts})`)
             }
-            this.alerts.init(alerts)
+            this.alerts.state = alerts
         }
-
-        return this
     }
 
     get lowerThreshold() {

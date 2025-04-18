@@ -43,7 +43,7 @@ export const app = createApp({
         percentToRatio,
         percL10n,
         updateState() {
-            this.state = this.calculator.save()
+            this.state = this.calculator.state
         },
     },
     computed: {
@@ -53,7 +53,7 @@ export const app = createApp({
                     globalThis.location.pathname,
                     globalThis.location.origin,
                 )
-                return stateToUrl(url, this.calculator.save()).toString()
+                return stateToUrl(url, this.calculator.state).toString()
             } catch (e) {
                 console.error('Could not create shareurl', e)
                 return null

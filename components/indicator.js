@@ -83,11 +83,11 @@ export class Indicator {
      */
     constructor(options) {
         if (isDef(options)) {
-            this.init(options)
+            this.state = options
         }
     }
 
-    save() {
+    get state() {
         const ret = {}
         if (this.displayName) {
             ret.displayName = this.displayName
@@ -116,7 +116,7 @@ export class Indicator {
             ret.eventUnit = this.eventUnit
         }
         if (this.objectives.length) {
-            ret.objectives = this.objectives.map((obj) => obj.save())
+            ret.objectives = this.objectives.map((obj) => obj.state)
         }
         return ret
     }
@@ -125,7 +125,7 @@ export class Indicator {
      * Initializes the Indicator object with the provided options.
      * @param {IndicatorOptions} [options] The options used to configure the indicator.
      */
-    init(options) {
+    set state(options) {
         if (!isObj(options)) {
             throw new TypeError(`option should be an object. Got ${options} (${typeof options})`)
         }
@@ -211,10 +211,8 @@ export class Indicator {
             if (!isArr(objectives)) {
                 throw new TypeError(`Invalid objectives array: ${objectives} (${typeof objectives})`)
             }
-            this.objectives.init(objectives)
+            this.objectives.state = objectives
         }
-
-        return this
     }
 
     get category() {

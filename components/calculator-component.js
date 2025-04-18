@@ -54,9 +54,7 @@ export default {
                 throw new TypeError(`Expected an instance of Indicator. Got ${indicator}`)
             }
             this.isIndicatorTemplatesVisible = false
-            const options = indicator.save()
-            console.log('Adding indicator from selector:', options)
-            return this.calculator.indicators.addNew(options)
+            return this.calculator.indicators.pushNew(indicator.state)
         },
         addRecommendedAlerts() {
             if (!this.selectedObjective) {

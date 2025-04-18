@@ -12,20 +12,20 @@ export class Calculator {
             return
         }
 
-        this.init(options)
+        this.state = options
     }
 
-    save() {
-        return { indicators: this.indicators.map((indicator) => indicator.save()) }
+    get state() {
+        return { indicators: this.indicators.map((indicator) => indicator.state) }
     }
 
-    init(options) {
+    set state(options) {
         if (!isObj(options)) {
             throw new TypeError(`Invalid options: ${options} (${typeof options})`)
         }
 
         if (isDef(options.indicators)) {
-            this.indicators.init(options.indicators)
+            this.indicators.state = options.indicators
         }
     }
 }

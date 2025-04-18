@@ -23,11 +23,11 @@ export class Alert {
         this.objective = objective
 
         if (isDef(options)) {
-            this.init(options)
+            this.state = options
         }
     }
 
-    save() {
+    get state() {
         const ret = {
             burnRate: this.burnRate,
             longWindowPerc: this.longWindowPerc,
@@ -40,7 +40,7 @@ export class Alert {
         return ret
     }
 
-    init(options) {
+    set state(options) {
         if (!isObj(options)) {
             throw new TypeError(`Invalid options: ${options} (${typeof options})`)
         }
@@ -76,8 +76,6 @@ export class Alert {
         } else {
             this.useShortWindow = false
         }
-
-        return this
     }
 
     get shortWindowPerc() {
