@@ -87,6 +87,40 @@ export class Indicator {
         }
     }
 
+    save() {
+        const ret = {}
+        if (this.displayName) {
+            ret.displayName = this.displayName
+        }
+        if (this.description) {
+            ret.description = this.description
+        }
+        if (this.metricName) {
+            ret.metricName = this.metricName
+        }
+        if (this.metricUnit) {
+            ret.metricUnit = this.metricUnit
+        }
+        if (this.expectedDailyEvents) {
+            ret.expectedDailyEvents = this.expectedDailyEvents
+        }
+        if (this.lowerBound) {
+            ret.lowerBound = this.lowerBound
+        }
+        if (this.upperBound) {
+            ret.upperBound = this.upperBound
+        }
+        if (this.isTimeBased) {
+            ret.timeslice = this.timeslice
+        } else {
+            ret.eventUnit = this.eventUnit
+        }
+        if (this.objectives.length) {
+            ret.objectives = this.objectives.map((obj) => obj.save())
+        }
+        return ret
+    }
+
     /**
      * Initializes the Indicator object with the provided options.
      * @param {IndicatorOptions} [options] The options used to configure the indicator.
@@ -212,40 +246,6 @@ export class Indicator {
     /** @type {boolean} Are both bounds needed */
     get isRanged() {
         return Boolean(this.lowerBound) && Boolean(this.upperBound)
-    }
-
-    save() {
-        const ret = {}
-        if (this.displayName) {
-            ret.displayName = this.displayName
-        }
-        if (this.description) {
-            ret.description = this.description
-        }
-        if (this.metricName) {
-            ret.metricName = this.metricName
-        }
-        if (this.metricUnit) {
-            ret.metricUnit = this.metricUnit
-        }
-        if (this.expectedDailyEvents) {
-            ret.expectedDailyEvents = this.expectedDailyEvents
-        }
-        if (this.lowerBound) {
-            ret.lowerBound = this.lowerBound
-        }
-        if (this.upperBound) {
-            ret.upperBound = this.upperBound
-        }
-        if (this.isTimeBased) {
-            ret.timeslice = this.timeslice
-        } else {
-            ret.eventUnit = this.eventUnit
-        }
-        if (this.objectives.length) {
-            ret.objectives = this.objectives.map((obj) => obj.save())
-        }
-        return ret
     }
 
     get formula() {

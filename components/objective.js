@@ -42,6 +42,23 @@ export class Objective {
         }
     }
 
+    save() {
+        const ret = {
+            target: this.target,
+            windowDays: this.windowDays,
+        }
+        if (this.indicator.lowerBound) {
+            ret.lowerThreshold = this.lowerThreshold
+        }
+        if (this.indicator.upperBound) {
+            ret.upperThreshold = this.upperThreshold
+        }
+        if (this.alerts.length) {
+            ret.alerts = this.alerts.map((alert) => alert.save())
+        }
+        return ret
+    }
+
     init(options) {
         if (!isObj(options)) {
             throw new TypeError(`Invalid options object: ${options} ${typeof options}`)
@@ -204,23 +221,6 @@ export class Objective {
     get failureWindow() {
         const { sec } = this.window
         return new FailureWindow(this.indicator, sec, this.badEventCount)
-    }
-
-    save() {
-        const ret = {
-            target: this.target,
-            windowDays: this.windowDays,
-        }
-        if (this.indicator.lowerBound) {
-            ret.lowerThreshold = this.lowerThreshold
-        }
-        if (this.indicator.upperBound) {
-            ret.upperThreshold = this.upperThreshold
-        }
-        if (this.alerts.length) {
-            ret.alerts = this.alerts.map((alert) => alert.save())
-        }
-        return ret
     }
 
     get formula() {

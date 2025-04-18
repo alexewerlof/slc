@@ -27,6 +27,19 @@ export class Alert {
         }
     }
 
+    save() {
+        const ret = {
+            burnRate: this.burnRate,
+            longWindowPerc: this.longWindowPerc,
+        }
+
+        if (this.useShortWindow) {
+            ret.shortWindowDivider = this.shortWindowDivider
+        }
+
+        return ret
+    }
+
     init(options) {
         if (!isObj(options)) {
             throw new TypeError(`Invalid options: ${options} (${typeof options})`)
@@ -94,19 +107,6 @@ export class Alert {
 
     get alertTTRWindow() {
         return this.errorBudgetBurn.shrink(100 - this.longWindowPerc)
-    }
-
-    save() {
-        const ret = {
-            burnRate: this.burnRate,
-            longWindowPerc: this.longWindowPerc,
-        }
-
-        if (this.useShortWindow) {
-            ret.shortWindowDivider = this.shortWindowDivider
-        }
-
-        return ret
     }
 
     get formula() {
