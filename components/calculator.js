@@ -7,25 +7,25 @@ export class Calculator {
     /** @type {Indicator[]} List of indicators managed by this calculator */
     indicators = new SelectableArray(Indicator)
 
-    constructor(options) {
-        if (!options) {
+    constructor(state) {
+        if (!state) {
             return
         }
 
-        this.state = options
+        this.state = state
     }
 
     get state() {
         return { indicators: this.indicators.map((indicator) => indicator.state) }
     }
 
-    set state(options) {
-        if (!isObj(options)) {
-            throw new TypeError(`Invalid options: ${options} (${typeof options})`)
+    set state(newState) {
+        if (!isObj(newState)) {
+            throw new TypeError(`Invalid options: ${newState} (${typeof newState})`)
         }
 
-        if (isDef(options.indicators)) {
-            this.indicators.state = options.indicators
+        if (isDef(newState.indicators)) {
+            this.indicators.state = newState.indicators
         }
     }
 }

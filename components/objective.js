@@ -25,7 +25,7 @@ export class Objective {
 
     /** @type {Alert|undefined} the selected objective in UI */
 
-    constructor(indicator, options) {
+    constructor(indicator, state) {
         if (!isInstance(indicator, Indicator)) {
             throw new TypeError(`Expected an instance of Indicator. Got ${indicator}`)
         }
@@ -37,8 +37,8 @@ export class Objective {
             daysToSeconds(config.windowDays.default),
         )
 
-        if (isDef(options)) {
-            this.state = options
+        if (isDef(state)) {
+            this.state = state
         }
     }
 
@@ -59,9 +59,9 @@ export class Objective {
         return ret
     }
 
-    set state(options) {
-        if (!isObj(options)) {
-            throw new TypeError(`Invalid options object: ${options} ${typeof options}`)
+    set state(newState) {
+        if (!isObj(newState)) {
+            throw new TypeError(`Invalid options object: ${newState} ${typeof newState}`)
         }
 
         const {
@@ -70,7 +70,7 @@ export class Objective {
             lowerThreshold,
             upperThreshold,
             alerts,
-        } = options
+        } = newState
 
         if (isDef(target)) {
             if (!inRange(target, config.slo.min, config.slo.max)) {

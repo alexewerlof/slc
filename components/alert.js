@@ -15,15 +15,15 @@ export class Alert {
     /** Show the short window alert */
     useShortWindow = false
 
-    constructor(objective, options) {
+    constructor(objective, state) {
         if (!isInstance(objective, Objective)) {
             throw new TypeError(`Expected an instance of Objective. Got ${objective}`)
         }
 
         this.objective = objective
 
-        if (isDef(options)) {
-            this.state = options
+        if (isDef(state)) {
+            this.state = state
         }
     }
 
@@ -40,16 +40,16 @@ export class Alert {
         return ret
     }
 
-    set state(options) {
-        if (!isObj(options)) {
-            throw new TypeError(`Invalid options: ${options} (${typeof options})`)
+    set state(newState) {
+        if (!isObj(newState)) {
+            throw new TypeError(`Invalid options: ${newState} (${typeof newState})`)
         }
 
         const {
             burnRate,
             longWindowPerc,
             shortWindowDivider,
-        } = options
+        } = newState
 
         if (isDef(burnRate)) {
             if (!inRange(burnRate, config.alert.burnRate.min, config.alert.burnRate.max)) {

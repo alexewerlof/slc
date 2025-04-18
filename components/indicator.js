@@ -79,11 +79,11 @@ export class Indicator {
 
     /**
      * Creates a new Indicator object (SLI).
-     * @param {IndicatorOptions} [options] The options used to configure the indicator.
+     * @param {IndicatorOptions} [state] The options used to configure the indicator.
      */
-    constructor(options) {
-        if (isDef(options)) {
-            this.state = options
+    constructor(state) {
+        if (isDef(state)) {
+            this.state = state
         }
     }
 
@@ -123,11 +123,11 @@ export class Indicator {
 
     /**
      * Initializes the Indicator object with the provided options.
-     * @param {IndicatorOptions} [options] The options used to configure the indicator.
+     * @param {IndicatorOptions} [newState] The options used to configure the indicator.
      */
-    set state(options) {
-        if (!isObj(options)) {
-            throw new TypeError(`option should be an object. Got ${options} (${typeof options})`)
+    set state(newState) {
+        if (!isObj(newState)) {
+            throw new TypeError(`option should be an object. Got ${newState} (${typeof newState})`)
         }
 
         const {
@@ -141,7 +141,7 @@ export class Indicator {
             eventUnit,
             expectedDailyEvents,
             objectives,
-        } = options
+        } = newState
 
         if (isDef(displayName)) {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
