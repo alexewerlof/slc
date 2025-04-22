@@ -127,7 +127,7 @@ export class Indicator {
      */
     set state(newState) {
         if (!isObj(newState)) {
-            throw new TypeError(`option should be an object. Got ${newState} (${typeof newState})`)
+            throw new TypeError(`state should be an object. Got ${newState} (${typeof newState})`)
         }
 
         const {

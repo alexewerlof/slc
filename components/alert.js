@@ -42,7 +42,7 @@ export class Alert {
 
     set state(newState) {
         if (!isObj(newState)) {
-            throw new TypeError(`Invalid options: ${newState} (${typeof newState})`)
+            throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
         }
 
         const {

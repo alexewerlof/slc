@@ -61,7 +61,7 @@ export class Objective {
 
     set state(newState) {
         if (!isObj(newState)) {
-            throw new TypeError(`Invalid options object: ${newState} ${typeof newState}`)
+            throw new TypeError(`state should be an object. Got: ${newState} ${typeof newState}`)
         }
 
         const {
