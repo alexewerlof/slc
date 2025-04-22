@@ -15,13 +15,11 @@ export const config = fz({
         minLength: 2,
         maxLength: 100,
         default: '',
-        placeholder: 'Availability, Latency, Success Rate, etc.',
     }),
     description: fz({
         minLength: 0,
         maxLength: 500,
         default: '',
-        placeholder: 'What is the purpose of this indicator and how is it measured?',
     }),
     timeslice: fz({
         min: 1,

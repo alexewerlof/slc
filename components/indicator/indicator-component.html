@@ -10,7 +10,7 @@
             v-model="indicator.displayName"
             :minlength="config.displayName.minLength"
             :maxlength="config.displayName.maxLength"
-            :placeholder="config.displayName.placeholder">
+            placeholder="Availability, Latency, Success Rate, etc.">
     </div>
 
     <div class="input-group">
@@ -25,7 +25,7 @@
             v-model="indicator.description"
             :minlength="config.description.minLength"
             :maxlength="config.description.maxLength"
-            :placeholder="config.description.placeholder"></textarea>
+            placeholder="What is the purpose of this indicator and how is it measured?"></textarea>
     </div>
 </fieldset>
 <fieldset>
