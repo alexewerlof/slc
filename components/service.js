@@ -1,27 +1,70 @@
 import { namify } from '../lib/fmt.js'
 import { icon } from '../lib/icons.js'
 import { crdObj, metadataObj } from '../lib/crd.js'
-import { isInArr, isInstance } from '../lib/validation.js'
+import { isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Consumption } from './consumption.js'
 import { Failure } from './failure.js'
 import { Metric } from './metric.js'
 import { Provider } from './provider.js'
+import { config } from '../config.js'
 
 const scopeIcon = icon('scope')
 
 export class Service {
     static possibleTypes = ['Automated', 'Manual', 'Hybrid']
-
-    constructor(provider, displayName = '', description = '', type = Service.possibleTypes[0]) {
+    provider = null
+    displayName = config.displayName.default
+    description = config.description.default
+    type = Service.possibleTypes[0]
+    failures = []
+    metrics = []
+    constructor(provider, state) {
         if (!isInstance(provider, Provider)) {
             throw new Error(`Service.constructor: provider must be an instance of Provider. Got ${provider}`)
         }
         this.provider = provider
-        this.displayName = displayName
-        this.description = description
-        this.failures = []
-        this.metrics = []
-        this.type = type
+        if (isDef(state)) {
+            this.state = state
+        }
+    }
+
+    get state() {
+        return {
+            displayName: this.displayName,
+            description: this.description,
+            type: this.type,
+            //failures: this.failures.map((failure) => failure.state),
+            //metrics: this.metrics.map((metric) => metric.state),
+        }
+    }
+
+    set state(newState) {
+        if (!isObj(newState)) {
+            throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
+        }
+        const {
+            displayName,
+            description,
+            type,
+        } = newState
+        if (isDef(displayName)) {
+            if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
+                throw new TypeError(`Invalid displayName. ${displayName}`)
+            }
+            this.displayName = displayName
+        }
+        if (isDef(description)) {
+            if (!isStrLen(description, config.description.minLength, config.description.maxLength)) {
+                throw new TypeError(`Invalid description. ${description}`)
+            }
+            this.description = description
+        }
+        if (isDef(type)) {
+            if (!isInArr(type, Service.possibleTypes)) {
+                throw new TypeError(`Invalid type. ${type}`)
+            }
+            this.type = type
+        }
     }
 
     set type(val) {
@@ -117,72 +160,11 @@ export class Service {
         return removeCount
     }
 
-    addMetric(metric) {
-        if (!isInstance(metric, Metric)) {
-            throw new Error(`Expected an instance of Metric. Got ${metric}`)
-        }
-        metric.service = this
-        this.metrics.push(metric)
-        return metric
-    }
-
-    addNewMetric(displayName, description, isBoolean, numericUnit) {
-        return this.addMetric(new Metric(this, displayName, description, isBoolean, numericUnit))
-    }
-
-    removeMetric(metric) {
-        if (!isInstance(metric, Metric)) {
-            throw new Error(`Expected an instance of Metric. Got ${metric}`)
-        }
-        const index = this.metrics.indexOf(metric)
-        if (index === -1) {
-            return false
-        }
-        this.metrics.splice(index, 1)
-        return true
-    }
-
     toString() {
         return `${this.provider.displayName}${scopeIcon}${this.displayName}`
     }
 
-    toJSON() {
-        return crdObj(
-            'Service',
-            metadataObj(
-                namify(this.provider.displayName, this.displayName),
-                this.displayName,
-            ),
-            {
-                description: this.description,
-                failures: this.failures,
-                metrics: this.metrics,
-            },
-        )
-    }
-
     get ref() {
         return this.provider.services.indexOf(this)
-    }
-
-    save() {
-        return {
-            displayName: this.displayName,
-            description: this.description,
-            type: this.type,
-            failures: this.failures.map((failure) => failure.save()),
-            metrics: this.metrics.map((metric) => metric.save()),
-        }
-    }
-
-    static load(provider, serviceObj) {
-        const newService = new Service(provider, serviceObj.displayName, serviceObj.description, serviceObj.type)
-        for (const failureObj of serviceObj.failures) {
-            newService.addFailure(Failure.load(newService, failureObj))
-        }
-        for (const metricObj of serviceObj.metrics) {
-            newService.addMetric(Metric.load(newService, metricObj))
-        }
-        return newService
     }
 }

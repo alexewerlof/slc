@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
+        <script>
+            window.dataLayer = window.dataLayer || []
+            function gtag() {
+                dataLayer.push(arguments)
+            }
+            gtag('js', new Date())
+            gtag('config', 'G-J0S6RM2D7G')
+        </script>
+
+        <meta charset="UTF-8">
+        <meta name="theme-color" content="#FFBC52">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/style.css">
+        <meta name="description" content="A simple Service Level Assessment that complies with Google SRE books.">
+        <meta property="og:title" content="Service Level Assessment">
+        <meta
+            property="og:description"
+            content="A simple Service Level Assessment that complies with Google SRE books."
+        >
+        <meta property="og:image" content="https://slc.alexewerlof.com/img/icon.png">
+        <meta property="og:url" content="https://slc.alexewerlof.com">
+        <meta property="og:type" content="website">
+        <link rel="icon" type="image/svg" href="/img/icon.svg">
+        <link rel="manifest" href="manifest.json">
+        <title>Service Level Assessment</title>
+    </head>
+
+    <body>
+        <noscript>
+            <p>This web application requires JavaScript to work.</p>
+        </noscript>
+
+        <div id="app" v-cloak>
+            <announcement-component>
+                <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
+            </announcement-component>
+            <header-component title="Service Level Assessment">
+                Beta
+            </header-component>
+            <assessment-component :assessment="assessment"></assessment-component>
+            <footer-component></footer-component>
+            <script type="module" src="index.js" defer async></script>
+    </body>
+</html>

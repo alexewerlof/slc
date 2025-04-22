@@ -1,0 +1,219 @@
+<div class="assessment-component">
+    <div class="container logo-bg">
+        <steps-component v-model="currentStep" :steps="steps"></steps-component>
+
+        <div v-if="currentStep === 0">
+            <div class="surface">
+                Intro text
+            </div>
+        </div>
+
+        <article v-if="currentStep === 1">
+            <section>
+                <div class="surface">
+                    <h2>
+                        Providers
+                        <help-component>
+                            <p>
+                                Before defining service levels, we first need to identify the entity providing that service.
+                            </p>
+                            <p>
+                                You don't need to list all of your service providers.
+                                As a rule of thumb start with the consumer-facing services
+                                and as you work your way through the UI, you can come back and
+                                add any missing service provider.
+                            </p>
+                        </help-component>
+                    </h2>
+                    <fieldset class="b-mar-gap2">
+                        <legend>Provider ({{ assessment.providers.length }})</legend>
+                        <div class="input-group" v-if="assessment.providers.length">
+                            <label for="provider-selector">Select</label>
+                            <select id="provider-selector" v-model="assessment.providers.selected">
+                                <option v-for="provider of assessment.providers" :value="provider">
+                                    {{ provider }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="button-bar">
+                            <button
+                                @click="assessment.providers.pushNew()"
+                            >
+                                Add
+                            </button>
+                            <button
+                                class="button--danger"
+                                @click="assessment.providers.removeSelected()"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </fieldset>
+                    <div class="well" v-if="assessment.providers.selected">
+                        <provider-component
+                            :provider="assessment.providers.selected"></provider-component>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="surface">
+                    <h2>
+                        Service
+                        <help-component>
+                            <p>
+                                A 
+                                <ext-link href="https://blog.alexewerlof.com/p/service">service</ext-link>
+                                is a collection of capabilities, features, or solutions that are provided to the consumer.
+                            </p>
+                            <p>
+                                The service is the thing that the consumer interacts with.
+                                It is the thing that the provider is responsible for.
+                            </p>
+                        </help-component>
+                    </h2>
+                    <fieldset class="b-mar-gap2" v-if="selectedProvider">
+                        <legend>Service ({{ selectedProvider.services.length }})</legend>
+                        <div class="input-group" v-if="selectedProvider.services.length">
+                            <label for="service-selector">Select</label>
+                            <select id="service-selector" v-model="selectedProvider.services.selected">
+                                <option v-for="service of selectedProvider.services" :value="service">
+                                    {{ service.displayName }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="button-bar">
+                            <button
+                                @click="selectedProvider.services.pushNew()"
+                            >
+                                Add
+                            </button>
+                            <button
+                                class="button--danger"
+                                @click="selectedProvider.services.removeSelected()"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </fieldset>
+                    <div class="well" v-if="selectedService">
+                        <service-component
+                            :service="selectedService"></service-component>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="surface">
+                    Chat/Preview
+                </div>
+            </section>
+        </article>
+
+        <article v-if="currentStep === 2">
+            <section>
+                <div class="surface">
+                    <h2>
+                        Consumers
+                        <help-component>
+                            <p>
+                                <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">
+                                    Consumer
+                                </ext-link>
+                                refers to the entity that consumes services to achieve a goal.
+                                <ul>
+                                    <li>For internal services, the consumer can be a group of people, a system, or a component.</li>
+                                    <li>For external services, the consumer can be a customer, a partner, or a third-party system.</li>
+                                </ul>
+                            </p>
+                            <p>
+                                Give this consumer a name and description to make it easier to identify
+                                throuout the service level definition.
+                            </p>
+                        </help-component>
+                    </h2>
+                    <fieldset class="b-mar-gap2">
+                        <legend>Consumer ({{ assessment.consumers.length }})</legend>
+                        <div class="input-group" v-if="assessment.consumers.length">
+                            <label for="consumer-selector">Select</label>
+                            <select id="consumer-selector" v-model="assessment.consumers.selected">
+                                <option v-for="consumer of assessment.consumers" :value="consumer">
+                                    {{ consumer }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="button-bar">
+                            <button
+                                @click="assessment.consumers.pushNew()"
+                            >
+                                Add
+                            </button>
+                            <button
+                                class="button--danger"
+                                @click="assessment.consumers.removeSelected()"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </fieldset>
+                    <div class="well" v-if="assessment.consumers.selected">
+                        <consumer-component
+                            :consumer="assessment.consumers.selected"></consumer-component>
+                </div>
+            </section>
+            <section>
+                <div class="surface">
+                    <h2>
+                        Consumptions
+                        <help-component>
+                            <p>
+                                <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">
+                                    Consumption
+                                </ext-link>
+                                refers to how a consumer uses services to achieve a goal.
+                                Other names are <em>JTBD</em> (Job To Be Done) or <em>Use Case</em>.
+                                A consumption is typically part of a user journey or customer journey.
+                            </p>
+                            <p>
+                                For example, if the consumer is a website that uses an API service,
+                                its consumption can be "Get user data from API".
+                            </p>
+                            <p>
+                                A service may have many consumptions by the same consumer or even by different consumers.
+                            </p>        
+                        </help-component>
+                    </h2>
+                    <fieldset class="b-mar-gap2" v-if="selectedConsumer">
+                        <legend>Consumption ({{ selectedConsumer.consumptions.length }})</legend>
+                        <div class="input-group" v-if="selectedConsumer.consumptions.length">
+                            <label for="consumption-selector">Select</label>
+                            <select id="consumption-selector" v-model="selectedConsumer.consumptions.selected">
+                                <option v-for="consumption of selectedConsumer.consumptions" :value="consumption">
+                                    {{ consumption.displayName }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="button-bar">
+                            <button
+                                @click="selectedConsumer.consumptions.pushNew()"
+                            >
+                                Add
+                            </button>
+                            <button
+                                class="button--danger"
+                                @click="selectedConsumer.consumptions.removeSelected()"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </fieldset>
+                    <div class="well" v-if="selectedConsumption">
+                        <consumption-component
+                            :consumption="selectedConsumption"></consumption-component>
+                    </div>
+                </div>
+            </section>
+            <section>
+                Model
+            </section>
+        </article>
+    </div>
+</div>

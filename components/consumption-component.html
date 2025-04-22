@@ -1,59 +1,32 @@
-<div>
+<div class="consumption-component">
 
-    <div class="annotated">
-        <div class="annotated__controls">
-            <h2>Consumer</h2>
-            <p>{{ consumption.consumer }}</p>
-        </div>
-        <div class="annotated__controls">
-            <h2>Consumption Name</h2>
-            <input type="text" v-model="consumption.displayName">
-            <h2>Description</h2>
-            <textarea v-model="consumption.description"></textarea>
-        </div>
-        <div class="annotated__help">
-            <p>
-                <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">
-                    Consumption
-                </ext-link>
-                refers to how a consumer uses services to achieve a goal or capability.
-                Other names are <em>JTBD</em> (Job To Be Done) or <em>Use Case</em>.
-            </p>
-            <p>
-                Give a name to this consumption to indicate how {{ consumption.consumer.displayName }}
-                uses services.
-            </p>
-            <p>
-                In simple terms, a consumption is a goal or capability of the consumer.
-                For example, if the consumer is a website that uses an API serivce,
-                its consumption can be "Get user data from API".
-            </p>
-        </div>
-
-        <div class="annotated__controls">
-            <h2>Consumes Services</h2>
-            <div v-for="service of consumption.consumer.assessment.allServices">
-                <label>
-                    <input
-                        type="checkbox"
-                        :checked="service.isConsumedBy(consumption)"
-                        @change="$event => consumption.setDependency(service, $event.target.checked)">
-                    {{ service }}
-                </label>
-            </div>
-
-            <div class="error block" v-if="consumption.dependencyCount === 0">
+    <fieldset>
+        <legend>Basics</legend>
+        <label for="consumption-display-name">
+            Name
+            <help-component>
                 <p>
-                    This consumption does not depend on any service.
-                    Failures are identified at the point of consuming a service.
+                    Give a name to this consumption to indicate how {{ consumption.consumer.displayName }}
+                    uses services.
                 </p>
-                <p>
-                    Please either remove this consumption or add a dependendency in order to proceed.
-                    If the service is missing, you can add it as well.
-                </p>
-            </div>
-        </div>
-        <div class="annotated__help">
+            </help-component>
+        </label>
+        <input
+            type="text"
+            id="consumption-display-name"
+            v-model="consumption.displayName">
+
+        <label for="consumption-description">
+            Description
+        </label>
+        <textarea
+            id="consumption-description"
+            placeholder="e.g., Get user data from API"></textarea> 
+    </fieldset>
+
+    <h4>
+        Consumes
+        <help-component>
             <p>
                 Select all the services that are required for {{ consumption.consumer }}
                 to {{ consumption.displayName }}.
@@ -61,17 +34,18 @@
             <p>
                 If there are services that are missing, you can go back and add them.
             </p>
-        </div>
+        </help-component>
+    </h4>
 
-        <div class="annotated__controls">
-            <div class="button-bar">
-                <button class="danger" @click="consumption.consumer.removeConsumption(consumption)">
-                    {{ icon('remove') }} 
-                    Remove Consumption
-                </button>
-            </div>
-        </div>
+    <div class="error block">
+        <p>
+            This consumption does not depend on any service.
+            Failures are identified at the point of consuming a service.
+        </p>
+        <p>
+            Please either remove this consumption or add a dependendency in order to proceed.
+            If the service is missing, you can add it as well.
+        </p>
     </div>
 
-    <service-component v-for="service of consumption.services" :service="service"></service-component>
 </div>

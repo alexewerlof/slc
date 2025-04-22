@@ -2,7 +2,6 @@ import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
 import { Service } from './service.js'
 import { Consumption } from './consumption.js'
-import { crdObj } from '../lib/crd.js'
 import { icon } from '../lib/icons.js'
 import { clamp } from '../lib/math.js'
 
@@ -44,42 +43,7 @@ export class Failure {
         return `${this.consumption} ${failureIcon} ${this.service} ⇒ ${this.symptom}`
     }
 
-    toJSON() {
-        return crdObj('Failure', undefined, {
-            // service: this.service,
-            // consumption: this.consumption,
-            symptom: this.symptom,
-            consequence: this.consequence,
-            businessImpact: this.businessImpact,
-            impactLevel: this.impactLevel,
-        })
-    }
-
     get index() {
         return this.service.failures.indexOf(this)
-    }
-
-    save() {
-        return {
-            consumerIndex: this.consumption.consumer.index,
-            consumptionIndex: this.consumption.index,
-            symptom: this.symptom,
-            consequence: this.consequence,
-            businessImpact: this.businessImpact,
-            impactLevel: this.impactLevel,
-        }
-    }
-
-    static load(service, failureObj) {
-        const consumer = service.provider.assessment.consumers[failureObj.consumerIndex]
-        const failure = new Failure(
-            service,
-            consumer.consumptions[failureObj.consumptionIndex],
-            failureObj.symptom,
-            failureObj.consequence,
-            failureObj.businessImpact,
-            failureObj.impactLevel,
-        )
-        return failure
     }
 }

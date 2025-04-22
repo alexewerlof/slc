@@ -1,13 +1,42 @@
 import { Provider } from './provider.js'
 import { Consumer } from './consumer.js'
-import { isInstance } from '../lib/validation.js'
-import { Service } from './service.js'
-import { Consumption } from './consumption.js'
+import { isArr, isDef, isObj } from '../lib/validation.js'
+import { SelectableArray } from '../lib/selectable-array.js'
 
 export class Assessment {
-    constructor() {
-        this.providers = []
-        this.consumers = []
+    consumers = new SelectableArray(Consumer, this)
+    providers = new SelectableArray(Provider, this)
+
+    constructor(state) {
+        if (isObj(state)) {
+            this.state = state
+        }
+    }
+
+    get state() {
+        return {
+            providers: this.providers.map((provider) => provider.state),
+            consumers: this.consumers.map((consumer) => consumer.state),
+        }
+    }
+
+    set state(newState) {
+        if (!isObj(newState)) {
+            throw new TypeError(`Invalid options: ${newState} (${typeof newState})`)
+        }
+
+        if (isDef(newState.consumers)) {
+            if (!isArr(newState.consumers)) {
+                throw new TypeError(`Invalid consumers: ${newState.consumers} (${typeof newState.consumers})`)
+            }
+            this.consumers.state = newState.consumers
+        }
+        if (isDef(newState.providers)) {
+            if (!isArr(newState.providers)) {
+                throw new TypeError(`Invalid providers: ${newState.providers} (${typeof newState.providers})`)
+            }
+            this.providers.state = newState.providers
+        }
     }
 
     get allServices() {
@@ -26,89 +55,7 @@ export class Assessment {
         return this.allServices.flatMap((service) => service.metrics)
     }
 
-    getDependencyCount(consumption, service) {
-        if (!isInstance(consumption, Consumption)) {
-            throw new Error(`Expected an instance of Consumption. Got ${consumption}`)
-        }
-        if (!isInstance(service, Service)) {
-            throw new Error(`Expected an instance of Service. Got ${service}`)
-        }
-        return service.getConsumptionFailures(consumption).length
-    }
-
-    addProvider(provider) {
-        if (!isInstance(provider, Provider)) {
-            throw new Error(`Expected an instance of Provider. Got ${provider}`)
-        }
-        provider.assessment = this
-        this.providers.push(provider)
-        return provider
-    }
-
-    addNewProvider(title, description) {
-        return this.addProvider(new Provider(this, title, description))
-    }
-
-    removeProvider(provider) {
-        if (!isInstance(provider, Provider)) {
-            throw new Error(`Expected an instance of Provider. Got ${provider}`)
-        }
-        const index = this.providers.indexOf(provider)
-        if (index === -1) {
-            return false
-        }
-        this.providers.splice(index, 1)
-        return true
-    }
-
-    addConsumer(consumer) {
-        if (!isInstance(consumer, Consumer)) {
-            throw new Error(`Expected an instance of Consumer. Got ${consumer}`)
-        }
-        consumer.assessment = this
-        this.consumers.push(consumer)
-        return consumer
-    }
-
-    addNewConsumer(title, description) {
-        return this.addConsumer(new Consumer(this, title, description))
-    }
-
-    removeConsumer(consumer) {
-        if (!isInstance(consumer, Consumer)) {
-            throw new Error(`Expected an instance of Consumer. Got ${consumer}`)
-        }
-        const index = this.consumers.indexOf(consumer)
-        if (index === -1) {
-            return false
-        }
-        this.consumers.splice(index, 1)
-        return true
-    }
-
-    toJSON() {
-        return {
-            providers: this.providers,
-            consumers: this.consumers,
-        }
-    }
-
-    save() {
-        return {
-            providers: this.providers.map((provider) => provider.save()),
-            consumers: this.consumers.map((consumer) => consumer.save()),
-        }
-    }
-
-    static load(assessmentObj) {
-        const newAssessment = new Assessment()
-        for (const consumer of assessmentObj.consumers) {
-            newAssessment.addConsumer(Consumer.load(newAssessment, consumer))
-        }
-        for (const provider of assessmentObj.providers) {
-            newAssessment.addProvider(Provider.load(newAssessment, provider))
-        }
-
-        return newAssessment
+    toString() {
+        return `Assessment: ${this.consumers.length} consumers, ${this.providers.length} providers`
     }
 }

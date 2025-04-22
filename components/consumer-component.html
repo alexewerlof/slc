@@ -1,84 +1,44 @@
-<div>
+<div class="provider-component">
+    <fieldset>
+        <legend>Basics</legend>
+        <div class="input-group">
+            <label for="consumer-display-name">
+                Name
+                <help-component>
 
-    <div class="annotated">
-        <div class="annotated__controls">
-            
+                </help-component>
+            </label>
+            <input id="consumer-display-name" type="text" v-model="consumer.displayName">
         </div>
-        <div class="annotated__controls">
-            <h2>Consumer Name</h2>
-            <input type="text" v-model="consumer.displayName">
-            <h2>Description</h2>
-            <textarea v-model="consumer.description"></textarea>
-        </div>
-        <div class="annotated__help">
-            <p>
-                <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">
-                    Consumer
-                </ext-link>
-                refers to the entity that consumes services to achieve a goal.
-                <ul>
-                    <li>For internal services, the consumer can be a group of people, a system, or a component.</li>
-                    <li>For external services, the consumer can be a customer, a partner, or a third-party system.</li>
-                </ul>
-            </p>
-            <p>
-                Give this consumer a name and description to make it easier to identify
-                throuout the service level definition.
-            </p>
+        <div class="input-group">
+            <label for="consumer-description">
+                Description
+                <help-component>
+
+                </help-component>
+            </label>
+            <textarea id="consumer-description" v-model="consumer.description"></textarea>
         </div>
 
-        <div class="annotated__controls">
-            <h2>Type</h2>
-            <select v-model="consumer.type">
+        <div class="input-group">
+            <label for="consumer-type">
+                Type
+                <help-component>
+                    <p>A service consumer can be any of these types:</p>
+                    <ul>
+                        <li><strong>Group</strong>: a group of 1 or more <em>people</em></li>
+                        <li><strong>Component</strong>: something that actually runs and deploys independently (e.g., a database, microservice, etc.)</li>
+                        <li><strong>System</strong>: a logical grouping of components</li>
+                    </ul>
+                    <p>
+                        Read more <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">here</ext-link>.
+                    </p>        
+                </help-component>
+            </label>
+            <select id="consumer-type" v-model="consumer.type">
                 <option
                     v-for="possibleType of consumer.constructor.possibleTypes">{{ possibleType }}</option>
             </select>
         </div>
-        <div class="annotated__help">
-            <p>A service consumer can be any of these types:</p>
-            <ul>
-                <li><strong>Group</strong>: a group of 1 or more <em>people</em></li>
-                <li><strong>Component</strong>: something that actually runs and deploys independently (e.g., a database, microservice, etc.)</li>
-                <li><strong>System</strong>: a logical grouping of components</li>
-            </ul>
-            <p>
-                Read more <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">here</ext-link>.
-            </p>
-        </div>
-    </div>
-
-    <show-hide-component
-        v-for="consumption of consumer.consumptions"
-        title="Consumption"
-        :name="consumption">
-
-        <consumption-component :consumption="consumption"></consumption-component>
-    </show-hide-component>
-
-    <div class="annotated">
-        <div class="annotated__controls">
-            <div class="error block" v-if="consumer.consumptions.length === 0">
-                <p>
-                    At the moment this consumer hasn't defined any consumption.
-                    Therefore it is not useful for defining a service level.
-                </p>
-            </div>
-            <div class="button-bar">
-                <button @click="consumer.addNewConsumption()">
-                    {{ icon('add') }} 
-                    Add New Consumption</button>
-                <button class="danger" @click="consumer.remove()">
-                    {{ icon('remove') }} 
-                    Remove Consumer
-                </button>
-            </div>
-        </div>
-        <div class="annotated__help">
-            <p>
-                In simple language, a consumption is how a consumer uses a service.
-                The most important aspect of a consumption is the purpose to use a service.
-            </p>
-        </div>
-    </div>
-
+    </fieldset>
 </div>
