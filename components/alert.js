@@ -14,6 +14,8 @@ export class Alert {
     shortWindowDivider = config.alert.shortWindowDivider.default
     /** Show the short window alert */
     useShortWindow = false
+    /** The objective this alert is attached to */
+    objective = null
 
     constructor(objective, state) {
         if (!isInstance(objective, Objective)) {

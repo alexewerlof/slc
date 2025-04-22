@@ -23,7 +23,8 @@ export class Objective {
     /** {@type {Alert[]}} List of alerts attached to this SLO */
     alerts = new SelectableArray(Alert, this)
 
-    /** @type {Alert|undefined} the selected objective in UI */
+    /** The indicator this SLO is attached to */
+    indicator = null
 
     constructor(indicator, state) {
         if (!isInstance(indicator, Indicator)) {
