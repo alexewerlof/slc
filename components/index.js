@@ -2,6 +2,7 @@ import { componentDefinition, getUrlStrs } from '../lib/component-loader.js'
 import { isStrLen } from '../lib/validation.js'
 
 const componentSpecifications = [
+    ' AJH  : ./assessment-component',
     ' AJHC : ./alert/alert-chart-component',
     ' AJH  : ./alert/alert-component',
     ' AJHC : ./ui/announcement-component',

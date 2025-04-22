@@ -3,10 +3,17 @@ import { Service } from './service.js'
 import { Failure } from './failure.js'
 import { icon } from '../lib/icons.js'
 import { Condition } from './condition.js'
+import { config } from '../config.js'
 
 const metricIcon = icon('metric')
 
 export class Metric {
+    service = null
+    displayName = config.displayName.default
+    description = config.description.default
+    isBoolean = true
+    numericUnit = config.unit.default
+    condition = null
     constructor(service, displayName = '', description = '', isBoolean = false, numericUnit = '') {
         if (!isInstance(service, Service)) {
             throw new Error(`Expected an instance of Service. Got ${service}`)

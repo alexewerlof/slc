@@ -1,20 +1,72 @@
 import { Service } from './service.js'
-import { isInArr, isInstance } from '../lib/validation.js'
+import { isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
-import { crdObj, metadataObj } from '../lib/crd.js'
+import { SelectableArray } from '../lib/selectable-array.js'
+import { config } from '../config.js'
 
 export class Provider {
-    static possibleTypes = ['System', 'Component', 'Group']
+    static possibleTypes = Object.freeze(['System', 'Component', 'Group'])
 
-    constructor(assessment, displayName = '', description = '', type = Provider.possibleTypes[0]) {
+    assessment = null
+    displayName = config.displayName.default
+    description = config.description.default
+    type = Provider.possibleTypes[0]
+
+    services = new SelectableArray(Service, this)
+
+    constructor(assessment, state) {
         if (!isInstance(assessment, Assessment)) {
             throw new Error(`Provider.constructor: assessment must be an instance of Assessment. Got ${assessment}`)
         }
         this.assessment = assessment
-        this.displayName = displayName
-        this.description = description
-        this.services = []
-        this.type = type
+        if (isDef(state)) {
+            this.state = state
+        }
+    }
+
+    get state() {
+        return {
+            displayName: this.displayName,
+            description: this.description,
+            type: this.type,
+            services: this.services.map((service) => service.state),
+        }
+    }
+
+    set state(newState) {
+        if (!isObj(newState)) {
+            throw new TypeError(`Invalid options: ${newState} (${typeof newState})`)
+        }
+        const {
+            displayName,
+            description,
+            type,
+            services,
+        } = newState
+        if (isDef(displayName)) {
+            if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
+                throw new TypeError(`Invalid displayName. ${displayName}`)
+            }
+            this.displayName = displayName
+        }
+        if (isDef(description)) {
+            if (!isStrLen(description, config.description.minLength, config.description.maxLength)) {
+                throw new TypeError(`Invalid description. ${description}`)
+            }
+            this.description = description
+        }
+        if (isDef(type)) {
+            if (!isInArr(type, Provider.possibleTypes)) {
+                throw new TypeError(`Invalid type. ${type}`)
+            }
+            this.type = type
+        }
+        if (isDef(services)) {
+            if (!Array.isArray(services)) {
+                throw new TypeError(`Invalid services: ${services} (${typeof services})`)
+            }
+            this.services.state = services
+        }
     }
 
     set type(val) {
@@ -28,64 +80,11 @@ export class Provider {
         return this._type
     }
 
-    addService(service) {
-        if (!isInstance(service, Service)) {
-            throw new Error(`Service must be an instance of Service. Got ${service}`)
-        }
-        service.provider = this
-        this.services.push(service)
-        return service
-    }
-
-    addNewService(displayName, description) {
-        return this.addService(new Service(this, displayName, description))
-    }
-
-    removeService(service) {
-        if (!isInstance(service, Service)) {
-            throw new Error(`Service must be an instance of Service. Got ${service}`)
-        }
-        const index = this.services.indexOf(service)
-        if (index > -1) {
-            this.services.splice(index, 1)
-        } else {
-            throw new ReferenceError(`Service ${service} not found in provider ${this}`)
-        }
-    }
-
-    remove() {
-        return this.assessment.removeProvider(this)
-    }
-
     toString() {
         return this.displayName
     }
 
-    toJSON() {
-        return crdObj('Provider', metadataObj(undefined, this.displayName), {
-            description: this.description,
-            services: this.services,
-        })
-    }
-
     get ref() {
         return this.assessment.systems.indexOf(this)
-    }
-
-    save() {
-        return {
-            displayName: this.displayName,
-            description: this.description,
-            type: this.type,
-            services: this.services.map((service) => service.save()),
-        }
-    }
-
-    static load(assessment, providerObj) {
-        const newProvider = new Provider(assessment, providerObj.displayName, providerObj.description, providerObj.type)
-        for (const service of providerObj.services) {
-            newProvider.addService(Service.load(newProvider, service))
-        }
-        return newProvider
     }
 }

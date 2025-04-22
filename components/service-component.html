@@ -1,85 +1,84 @@
-<div>
-
-    <div class="annotated">
-        <div class="annotated__controls">
-            <h2>Provider</h2>
-            <p>{{ service.provider }}</p>
-            <h2>Service Name</h2>
-            <input type="text" v-model="service.displayName">
-            <h2>Description</h2>
-            <textarea v-model="service.description"></textarea>
+<div class="service-component">
+    <fieldset>
+        <legend>Basics</legend>
+        <div class="input-group">
+            <label for="service-name">
+                Name
+                <help-component>
+                    <p>
+                        Give your service provider a name to be able to recognize it.
+                        The description is optional but can be useful to provide more context.
+                    </p>            
+                </help-component>
+            </label>
+            <input
+                id="service-name"
+                type="text"
+                v-model="service.displayName">
         </div>
-        <div class="annotated__help">
-            <p>
-                <ext-link href="https://blog.alexewerlof.com/p/service">
-                    Service
-                </ext-link>
-                refers to the capabilities, features, solutions, etc. that are provided towards the consumer.
-                We will define the consumers and their consumptions in the next steps.
-            </p>
-            <p>
-                Give your service provider a name to be able to recognize it.
-                The description is optional but can be useful to provide more context.
-            </p>
-            <p>
-                A service is what the consumer interacts with. For example: an API endpoint may provide multiple capabilities that are used by the consumers to solve different use cases.
-            </p>
+        <div class="input-group">
+            <label for="service-description">
+                Description
+                <help-component>
+                    <p>
+                        The description is optional but can be useful to provide more context.
+                        It can be a short paragraph or a link to a document.
+                    </p>
+                </help-component>
+            </label>
+            <textarea
+                id="service-description"
+                v-model="service.description"></textarea>
         </div>
-
-        <div class="annotated__controls">
-            <h2>Type</h2>
-            <select v-model="service.type">
-                <option
-                    v-for="possibleType of service.constructor.possibleTypes">{{ possibleType }}</option>
-            </select>
-        </div>
-        <div class="annotated__help">
-            <p>A service can be any of these types:</p>
-            <ul>
-                <li><strong>Automated</strong>: a service that’s fully automated using software/hardware</li>
-                <li><strong>Manual</strong>: a manual service is either too expensive to automate or requires human intervention or judgement</li>
-                <li><strong>Hybrid</strong>: a mix of both manual and automated</li>
-            </ul>
-            <p>
-                Generally, the service levels are used for automated services but this categorization exists to signify that even the services that require manual effort can be measured and improved using service levels.
-                Read more <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">here</ext-link>.
-            </p>
-        </div>
-
-        <div class="annotated__controls">
-            <h2>Consumptions</h2>
-            <ul>
-                <li v-for="consumption of service.consumptions">
-                    {{ consumption }}
-                </li>
-            </ul>
-
-            <div class="error block" v-if="service.consumptions.length === 0">
+    </fieldset>
+    <div class="input-group">
+        <label>
+            Type
+            <help-component>
+                <p>A service can be any of these types:</p>
+                <ul>
+                    <li><strong>Automated</strong>: a service that’s fully automated using software/hardware</li>
+                    <li><strong>Manual</strong>: a manual service is either too expensive to automate or requires human intervention or judgement</li>
+                    <li><strong>Hybrid</strong>: a mix of both manual and automated</li>
+                </ul>
                 <p>
-                    This service is not consumed by any consumer.
-                    Failures are identified at the point of consuming a service.
+                    Generally, the service levels are used for automated services but this categorization exists to signify that even the services that require manual effort can be measured and improved using service levels.
+                    Read more <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">here</ext-link>.
+                </p>
+            </help-component>
+        </label>
+        <select v-model="service.type">
+            <option
+                v-for="possibleType of service.constructor.possibleTypes">{{ possibleType }}</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <h4>
+            Consumptions
+            <help-component>
+                <p>
+                    What consumptions depend on this service and for which consumer?
                 </p>
                 <p>
-                    Please either remove it or add a dependent in order to proceed.
+                    If there are consumers that are missing, you can add them.
                 </p>
-            </div>
-        </div>
-        <div class="annotated__help">
-            <p>
-                What consumptions depend on this service and for which consumer?
-            </p>
-            <p>
-                If there are consumers that are missing, you can add them.
-            </p>
-        </div>
+            </help-component>
+        </h4>
+        <ul>
+            <li v-for="consumption of service.consumptions">
+                {{ consumption }}
+            </li>
+        </ul>
 
-        <div class="annotated__controls">
-            <div class="button-bar">
-                <button class="danger" @click="service.remove()">
-                    {{ icon('remove') }} 
-                    Remove Service
-                </button>
-            </div>
+        <div class="error block" v-if="service.consumptions.length === 0">
+            <p>
+                This service is not consumed by any consumer.
+                Failures are identified at the point of consuming a service.
+            </p>
+            <p>
+                Please either remove it or add a dependent in order to proceed.
+            </p>
         </div>
     </div>
 </div>

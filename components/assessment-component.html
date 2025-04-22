@@ -1,0 +1,115 @@
+<div class="assessment-component">
+    <div class="container logo-bg">
+        <steps-component v-model="currentStep" :steps="steps"></steps-component>
+
+        <div v-if="currentStep === 0">
+            <div class="surface">
+                Intro text
+            </div>
+        </div>
+
+        <article v-if="currentStep === 1">
+            <section>
+                <div class="surface">
+                    <h2>
+                        Providers
+                        <help-component>
+                            <p>
+                                Before defining service levels, we first need to identify the entity providing that service.
+                            </p>
+                            <p>
+                                You don't need to list all of your service providers.
+                                As a rule of thumb start with the consumer-facing services
+                                and as you work your way through the UI, you can come back and
+                                add any missing service provider.
+                            </p>
+                        </help-component>
+                    </h2>
+                    <fieldset class="b-mar-gap2">
+                        <legend>Provider ({{ assessment.providers.length }})</legend>
+                        <div class="input-group" v-if="assessment.providers.length">
+                            <label for="provider-selector">Select</label>
+                            <select id="provider-selector" v-model="assessment.providers.selected">
+                                <option v-for="provider of assessment.providers" :value="provider">
+                                    {{ provider }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="button-bar">
+                            <button
+                                @click="assessment.providers.pushNew()"
+                            >
+                                Add
+                            </button>
+                            <button
+                                class="button--danger"
+                                @click="assessment.providers.removeSelected()"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </fieldset>
+                    <div class="well" v-if="assessment.providers.selected">
+                        <provider-component
+                            :provider="assessment.providers.selected"></provider-component>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="surface">
+                    <h2>
+                        Service
+                        <help-component>
+                            <p>
+                                A 
+                                <ext-link href="https://blog.alexewerlof.com/p/service">service</ext-link>
+                                is a collection of capabilities, features, or solutions that are provided to the consumer.
+                            </p>
+                            <p>
+                                The service is the thing that the consumer interacts with.
+                                It is the thing that the provider is responsible for.
+                            </p>
+                        </help-component>
+                    </h2>
+                    <fieldset class="b-mar-gap2" v-if="selectedProvider">
+                        <legend>Service ({{ selectedProvider.services.length }})</legend>
+                        <div class="input-group" v-if="selectedProvider.services.length">
+                            <label for="service-selector">Select</label>
+                            <select id="service-selector" v-model="selectedProvider.services.selected">
+                                <option v-for="service of selectedProvider.services" :value="service">
+                                    {{ service.displayName }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="button-bar">
+                            <button
+                                @click="selectedProvider.services.pushNew()"
+                            >
+                                Add
+                            </button>
+                            <button
+                                class="button--danger"
+                                @click="selectedProvider.services.removeSelected()"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </fieldset>
+                    <div class="well" v-if="selectedService">
+                        <service-component
+                            :service="selectedService"></service-component>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="surface">
+                    Chat/Preview
+                </div>
+            </section>
+        </article>
+
+        <article v-if="currentStep === 2">
+            WIP
+        </article>
+    </div>
+</div>
