@@ -131,3 +131,7 @@ section {
     margin-top: var(--gap2);
     margin-bottom: var(--gap2);
 }
+
+.b-map-gap2 {
+    margin-bottom: var(--gap2);
+}
