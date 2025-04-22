@@ -5,6 +5,7 @@ fieldset {
     padding-top: 0;
     margin: 0;
     box-shadow: inset 0 0 var(--gap) var(--bthick) var(--background-darker);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 fieldset legend {
