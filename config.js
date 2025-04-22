@@ -12,7 +12,7 @@ export const config = fz({
     // This version will be changed when the URL parameters change
     urlVer: 3,
     displayName: fz({
-        minLength: 10,
+        minLength: 2,
         maxLength: 100,
         default: '',
         placeholder: 'Availability, Latency, Success Rate, etc.',
