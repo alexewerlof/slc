@@ -1,12 +1,10 @@
-import { namify } from '../lib/fmt.js'
 import { icon } from '../lib/icons.js'
-import { crdObj, metadataObj } from '../lib/crd.js'
-import { isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
+import { isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Consumption } from './consumption.js'
-import { Failure } from './failure.js'
-import { Metric } from './metric.js'
 import { Provider } from './provider.js'
 import { config } from '../config.js'
+import { Dependency } from './dependency.js'
+import { SelectableArray } from '../lib/selectable-array.js'
 
 const scopeIcon = icon('scope')
 
@@ -16,8 +14,8 @@ export class Service {
     displayName = config.displayName.default
     description = config.description.default
     type = Service.possibleTypes[0]
-    failures = []
-    metrics = []
+    dependencies = new SelectableArray(Dependency, this)
+
     constructor(provider, state) {
         if (!isInstance(provider, Provider)) {
             throw new Error(`Service.constructor: provider must be an instance of Provider. Got ${provider}`)
@@ -33,8 +31,7 @@ export class Service {
             displayName: this.displayName,
             description: this.description,
             type: this.type,
-            //failures: this.failures.map((failure) => failure.state),
-            //metrics: this.metrics.map((metric) => metric.state),
+            dependencies: this.dependencies.state,
         }
     }
 
@@ -46,6 +43,7 @@ export class Service {
             displayName,
             description,
             type,
+            dependencies,
         } = newState
         if (isDef(displayName)) {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
@@ -65,6 +63,12 @@ export class Service {
             }
             this.type = type
         }
+        if (isDef(dependencies)) {
+            if (!isArr(dependencies)) {
+                throw new TypeError(`Invalid dependencies. ${dependencies}`)
+            }
+            this.dependencies.state = dependencies
+        }
     }
 
     set type(val) {
@@ -79,85 +83,47 @@ export class Service {
     }
 
     get consumptions() {
-        const set = new Set(this.failures.map((failure) => failure.consumption))
-        return Array.from(set)
+        return this.dependencies.map((d) => d.consumption)
     }
 
-    remove() {
-        this.provider.removeService(this)
-    }
-
-    get failuresByRisk() {
-        return this.failures.sort((f1, f2) => f2.impactLevel - f1.impactLevel)
-    }
-
-    addFailure(failure) {
-        if (!isInstance(failure, Failure)) {
-            throw new Error(`Expected an instance of Failure. Got ${failure}`)
+    getDependency(consumption) {
+        if (!isInstance(consumption, Consumption)) {
+            throw new TypeError(`consumption must be an instance of Consumption. Got ${consumption}`)
         }
-        failure.service = this
-        this.failures.push(failure)
-        return failure
-    }
-
-    addNewFailure(consumption, symptom, consequence, businessImpact, impactLevel) {
-        return this.addFailure(new Failure(this, consumption, symptom, consequence, businessImpact, impactLevel))
-    }
-
-    removeFailure(failure) {
-        if (!isInstance(failure, Failure)) {
-            throw new Error(`Expected an instance of Failure. Got ${failure}`)
-        }
-        const index = this.failures.indexOf(failure)
-        if (index === -1) {
-            return false
-        }
-        this.failures.splice(index, 1)
-        for (const metric of this.metrics) {
-            metric.unLinkFailure(failure)
-        }
-        return true
+        return this.dependencies.find((d) => d.consumption === consumption)
     }
 
     isConsumedBy(consumption) {
+        return this.getDependency(consumption) !== undefined
+    }
+
+    addDependency(consumption) {
+        if (!this.isConsumedBy(consumption)) {
+            this.dependencies.push(
+                new Dependency(this, {
+                    consumptionIndex: consumption.index,
+                    consumerIndex: consumption.consumer.index,
+                }),
+            )
+        }
+    }
+
+    removeDependency(consumption) {
         if (!isInstance(consumption, Consumption)) {
-            throw new Error(`Expected an instance of Consumption. Got ${consumption}`)
+            throw new TypeError(`consumption must be an instance of Consumption. Got ${consumption}`)
         }
-        return this.failures.some((f) => f.consumption === consumption)
+        const index = this.dependencies.findIndex((d) => d.consumption === consumption)
+        if (index !== -1) {
+            this.dependencies.splice(index, 1)
+        }
     }
 
-    getConsumptionFailures(consumption) {
-        if (!isInstance(consumption, Consumption)) {
-            throw new Error(`Expected an instance of Consumption. Got ${consumption}`)
+    setConsumedBy(consumption, value) {
+        if (value) {
+            this.addDependency(consumption)
+        } else {
+            this.removeDependency(consumption)
         }
-        return this.failures.filter((f) => f.consumption === consumption)
-    }
-
-    getConsumptionFailureMaxImpactLevel(consumption) {
-        const failures = this.getConsumptionFailures(consumption)
-        if (failures.length === 0) {
-            return 0
-        }
-        return Math.max(...failures.map((f) => f.impactLevel))
-    }
-
-    addConsumption(consumption) {
-        if (this.isConsumedBy(consumption)) {
-            return false
-        }
-        this.addNewFailure(consumption)
-        return true
-    }
-
-    removeConsumption(consumption) {
-        let removeCount = 0
-        for (let i = this.failures.length - 1; i >= 0; i--) {
-            if (this.failures[i].consumption === consumption) {
-                removeCount++
-                this.failures.splice(i, 1)
-            }
-        }
-        return removeCount
     }
 
     toString() {

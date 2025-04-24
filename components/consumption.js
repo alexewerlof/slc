@@ -49,7 +49,7 @@ export class Consumption {
         }
     }
 
-    setDependency(service, value) {
+    setConsumedBy(service, value) {
         if (value) {
             service.addConsumption(this)
         } else {

@@ -36,16 +36,17 @@
             </p>
         </help-component>
     </h4>
-
-    <div class="error block">
-        <p>
-            This consumption does not depend on any service.
-            Failures are identified at the point of consuming a service.
-        </p>
-        <p>
-            Please either remove this consumption or add a dependendency in order to proceed.
-            If the service is missing, you can add it as well.
-        </p>
-    </div>
-
+    <fieldset v-for="(provider, pi) in consumption.consumer.assessment.providers">
+        <legend :title="provider.description">{{ provider.displayName }}</legend>
+        <div v-for="(service, si) of provider.services">
+            <input
+                type="checkbox"
+                :id="`service-${pi}-${si}`"
+                :checked="service.isConsumedBy(consumption)"
+                @change="service.setConsumedBy(consumption, $event.target.checked)">
+            <label :for="`service-${pi}-${si}`" :title="service.description">
+                {{ service.displayName }}
+            </label>
+        </div>
+    </fieldset>
 </div>

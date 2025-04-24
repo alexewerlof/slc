@@ -1,14 +1,13 @@
-import { inRange, isDef, isInstance, isStr } from '../lib/validation.js'
+import { inRange, isDef, isInstance, isObj, isStr } from '../lib/validation.js'
 import { config } from '../config.js'
-import { Service } from './service.js'
-import { Consumption } from './consumption.js'
 import { icon } from '../lib/icons.js'
+import { Dependency } from './dependency.js'
 
 const failureIcon = icon('failure')
 
 // If a certain service fails, what activities will it impact and how?
 export class Failure {
-    service = null
+    dependency = null
     consumption = null
     symptom = ''
     consequence = ''
@@ -16,15 +15,24 @@ export class Failure {
     impactLevel = config.impactLevel.default
 
     constructor(
-        service,
+        dependency,
         state,
     ) {
-        if (!isInstance(service, Service)) {
-            throw new Error(`Expected a Service instance. Got ${service}`)
+        if (!isInstance(dependency, Dependency)) {
+            throw new Error(`Expected an instance of Dependency. Got: ${dependency} (${typeof dependency})`)
         }
-        this.service = service
+        this.dependency = dependency
         if (isDef(state)) {
             this.state = state
+        }
+    }
+
+    get state() {
+        return {
+            symptom: this.symptom,
+            consequence: this.consequence,
+            businessImpact: this.businessImpact,
+            impactLevel: this.impactLevel,
         }
     }
 
@@ -34,21 +42,11 @@ export class Failure {
         }
 
         const {
-            consumption,
             symptom,
             consequence,
             businessImpact,
             impactLevel,
         } = newState
-
-        if (isDef(consumption)) {
-            if (!isInstance(consumption, Consumption)) {
-                throw new TypeError(
-                    `consumption should be an instance of Consumption. Got: ${consumption} (${typeof consumption})`,
-                )
-            }
-            this.consumption = consumption
-        }
 
         if (isDef(symptom)) {
             if (!isStr(symptom)) {
@@ -81,14 +79,6 @@ export class Failure {
             }
             this.impactLevel = impactLevel
         }
-    }
-
-    get metrics() {
-        return this.service.metrics.filter((metric) => metric.isFailureLinked(this))
-    }
-
-    remove() {
-        return this.service.removeFailure(this)
     }
 
     toString() {

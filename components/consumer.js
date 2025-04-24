@@ -16,6 +16,7 @@ export class Consumer {
         if (!isInstance(assessment, Assessment)) {
             throw new Error(`Consumer.constructor: assessment must be an instance of Assessment. Got ${assessment}`)
         }
+        this.assessment = assessment
         if (isDef(state)) {
             this.state = state
         }

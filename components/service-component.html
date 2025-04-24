@@ -65,20 +65,18 @@
                 </p>
             </help-component>
         </h4>
-        <ul>
-            <li v-for="consumption of service.consumptions">
-                {{ consumption }}
-            </li>
-        </ul>
-
-        <div class="error block" v-if="service.consumptions.length === 0">
-            <p>
-                This service is not consumed by any consumer.
-                Failures are identified at the point of consuming a service.
-            </p>
-            <p>
-                Please either remove it or add a dependent in order to proceed.
-            </p>
-        </div>
+        <fieldset v-for="(consumer, ci) in service.provider.assessment.consumers">
+            <legend :title="consumer.description">{{ consumer.displayName }}</legend>
+            <div v-for="(consumption, si) of consumer.consumptions">
+                <input
+                    type="checkbox"
+                    :id="`consumption-${ci}-${si}`"
+                    :checked="service.isConsumedBy(consumption)"
+                    @change="service.setConsumedBy(consumption, $event.target.checked)">
+                <label :for="`consumption-${ci}-${si}`" :title="consumption.description">
+                    {{ consumption.displayName }}
+                </label>
+            </div>
+        </fieldset>
     </div>
 </div>

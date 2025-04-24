@@ -6,6 +6,7 @@ import { SelectableArray } from '../lib/selectable-array.js'
 export class Assessment {
     consumers = new SelectableArray(Consumer, this)
     providers = new SelectableArray(Provider, this)
+    dependencies = []
 
     constructor(state) {
         if (isObj(state)) {
@@ -47,12 +48,8 @@ export class Assessment {
         return this.consumers.flatMap((consumer) => consumer.consumptions)
     }
 
-    get allFailures() {
-        return this.allServices.flatMap((service) => service.failures)
-    }
-
-    get allMetrics() {
-        return this.allServices.flatMap((service) => service.metrics)
+    get allDependencies() {
+        return this.allServices.flatMap((service) => service.dependencies)
     }
 
     toString() {

@@ -215,5 +215,11 @@
                 Model
             </section>
         </article>
+
+        <div v-if="currentStep === 3">
+            <div class="surface" v-for="dependency of assessment.allDependencies">
+                {{ dependency}}
+            </div>
+        </div>
     </div>
 </div>
