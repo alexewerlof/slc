@@ -14,19 +14,64 @@ ul.benefit-list {
     text-align: center;
 }
 
-.price-table {
-    width: 50%;
-    margin: 0 auto;
-}
-
-.price-table th:not(:first-child) {
-    width: 18%;
-}
-
 .star {
     color: var(--brand-red);
 }
 
 .star::before {
     content: '*';
+}
+
+.check-list {
+    list-style-type: '\2713';
+    padding-left: 0.5em;
+}
+
+.check-list li {
+    padding-left: 0.3em;
+}
+
+.apps-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap2);
+    padding: var(--gap2) 0;
+}
+
+.app-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--gap);
+    flex-basis: 10em;
+    flex-grow: 1;
+}
+
+.app-item__logo {
+    width: 50%;
+    margin-bottom: var(--gap);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-item__title {
+    font-size: 1em;
+}
+
+.app-item__description {
+    flex-grow: 1;
+}
+
+.app-item .button-bar {
+    margin-top: auto;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.app-item .button--cta {
+    font-size: 0.9em;
+    width: 100%;
 }

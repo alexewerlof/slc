@@ -37,177 +37,103 @@
 
         <div id="app" v-cloak>
             <hero-component file-name="subtle-prism.svg">
-                <article>
-                    <section>
-                        <div class="container">
-                            <div class="app-logo">
-                                <img src="/img/icon.svg" width="300">
-                            </div>
-                            <h2>Master Service Reliability With Confidence</h2>
-                            <ul class="benefit-list">
-                                <li>Transform how your engineering teams identify meaningful SLIs</li>
-                                <li>Set reasonable SLOs and tie them to business objectives</li>
-                                <li>Fine tune alerts that matter while reducing alert fatigue</li>
-                                <li>Build a culture of accountability and ownership</li>
-                                <li>Learn complex concepts with interactive diagrams and ample help and articles</li>
-                            </ul>
-                            <div class="button-bar">
-                                <button class="button--large button--cta" @click="gotoApp('calculator', 'hero_cta')">
-                                    Try It Free →
-                                </button>
-                            </div>
-                        </div>
-                    </section>
-                </article>
+                <div class="container">
+                    <div class="app-logo">
+                        <img src="/img/icon.svg" width="300">
+                    </div>
+                    <h2>Master Service Reliability With Confidence</h2>
+                    <ul class="benefit-list">
+                        <li>Transform how your engineering teams identify meaningful SLIs</li>
+                        <li>Set reasonable SLOs and tie them to business objectives</li>
+                        <li>Fine tune alerts that matter while reducing alert fatigue</li>
+                        <li>Build a culture of accountability and ownership</li>
+                        <li>Learn complex concepts with interactive diagrams and ample help and articles</li>
+                    </ul>
+                    <div class="button-bar">
+                        <button class="button--large button--cta" @click="gotoApp(mainApp, 'hero_cta')">
+                            Try It Free →
+                        </button>
+                    </div>
+                </div>
             </hero-component>
 
-            <article class="container">
-                <section>
-                    <h2>Apps</h2>
-                    <p>
-                        This site is the landing page for a suit of open source apps that improves your understanding
-                        and implementation of Service Levels as a tool to measure and improve reliability.
-                    </p>
-                </section>
-            </article>
-
-            <article class="container stretch">
-                <section class="surface">
-                    <h2>Calculator</h2>
-                    <p>
-                        The calculator takes the guesswork out of setting reasonable SLOs. It also helps you save your
-                        work in JSON for offline analysis or load it for tweaking in a slick UI.
-                    </p>
-                    <ul>
-                        <li>Convert metrics to SLIs</li>
-                        <li>Fine tune SLOs</li>
-                        <li>See the alerting rules tied to those SLOs</li>
-                    </ul>
-                    <button @click="gotoApp('calculator', 'landing_panel')">Calculate SLOs →</button>
-                </section>
-                <section class="surface">
-                    <h2>Uptime Visualizer</h2>
-                    <p>
-                        This is a more advanced version of what you get from other tools with visualizations and
-                        flexibility to tweak your timeslices.
-                    </p>
-                    <ul>
-                        <li>Model uptime scenarios in real-time</li>
-                        <li>Interactively model different reliability scenarios with our dynamic uptime calculator.</li>
-                        <li>
-                            Make informed decisions about appropriate availability targets for your specific service
-                            needs.
-                        </li>
-                    </ul>
-                    <button @click="gotoApp('uptime', 'landing_panel')">Visualize Uptime →</button>
-                </section>
-                <section class="surface">
-                    <h2>Workshop</h2>
-                    <p>
-                        After running these workshops for tens of teams and tweaking it to perfection, I've created a
-                        tool that eliminates me from the loop using AI.
-                    </p>
-                    <ul>
-                        <li>Interactive Workshop Tool</li>
-                        <li>Identify services and business risks</li>
-                        <li>
-                            Find meaningful reliability metrics that actually matter to your consumers, stakeholders,
-                            and business continuity
-                        </li>
-                    </ul>
-                    <button disabled>Try Workshop →</button>
-                </section>
-            </article>
-
-            <article class="container">
-                <section>
-                    <h2>Price</h2>
-                    <p>
-                        We have three payment plans<span class="star"></span>:
-                    </p>
-                    <div class="surface">
-                        <table class="price-table">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Beginner</th>
-                                    <th>Pro</th>
-                                    <th>Enterprise</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>SLIs</td>
-                                    <td>5</td>
-                                    <td>15</td>
-                                    <td rowspan="6">Call Sales<span class="star"></span></td>
-                                </tr>
-                                <tr>
-                                    <th>SLOs</th>
-                                    <td>7</td>
-                                    <td>30</td>
-                                </tr>
-                                <tr>
-                                    <th>Alerting rules</th>
-                                    <td>12</td>
-                                    <td>50</td>
-                                </tr>
-                                <tr>
-                                    <th>Knowledge base</th>
-                                    <td>None</td>
-                                    <td>Limited</td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        OpenSLO support
-                                        <span class="subtle-hint">(upcoming)</span>
-                                    </th>
-                                    <td>-</td>
-                                    <td>5/mo</td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        AI
-                                        <span class="subtle-hint">(upcoming)</span>
-                                    </th>
-                                    <td>-</td>
-                                    <td>100 Tokens</td>
-                                </tr>
-                            </tbody>
-                        </table>
+            <div class="container mar-gap2">
+                <h2>Apps</h2>
+                <p>
+                    This site is the landing page for a suit of open source apps that improves your understanding
+                    and implementation of Service Levels as a tool to measure and improve reliability.
+                </p>
+                <div class="apps-container well">
+                    <div v-for="app in apps" :key="app.manifest.name" class="app-item">
+                        <img class="app-item__logo" :src="app.manifest.icons[0].src">
+                        <button @click="gotoApp(app, 'app-list')" class="app-item__title">{{ app.manifest.name }}</button>
+                        <p class="app-item__description">{{ app.manifest.description }}</p>
                     </div>
-                    <p>
-                        <span class="star"> Just joking! 😄 Everything is free as in beer and speech.</span>
-                    </p>
-                    <p>
-                        The <ext-link href="https://github.com/alexewerlof/slc">source code</ext-link> is also available
-                        for security audit or hosting from your own local infrastructure.
-                    </p>
+                </div>
 
-                    <h2>Support My Work</h2>
-                    <p>
-                        Designing, creating and maintaining these apps has taken
-                        <ext-link href="https://github.com/alexewerlof/slc/graphs/contributors"
-                        >hundreds of hours since July 2023</ext-link>. I pull these hours from my private time,
-                        weekends, and sometimes take vacation days to work on them. It also costs money to serve this
-                        app to you and I pay that from my own pocket. No complains though. I do my little part in
-                        lifting our community.
-                    </p>
-                    <p>
-                        To support my work, you can subscribe to
-                        <ext-link href="https://blog.alexewerlof.com/">my newsletter</ext-link>. This also gives you
-                        full access to my online book on this topic:
-                        <ext-link href="https://blog.alexewerlof.com/p/rem">Reliability Engineering Mindset</ext-link>.
-                        <br />
-                        <em>
-                            Right now, you can get 20% off via
-                            <ext-link href="https://blog.alexewerlof.com/protipsdiscount">this link</ext-link>. If you
-                            feel like it, you can save 50% using a
-                            <ext-link href="https://blog.alexewerlof.com/d8f4bfde">group subscription</ext-link>.
-                        </em>
-                    </p>
-                </section>
-            </article>
+                <h2>Pricing</h2>
+                <article class="stretch">
+                    <section class="surface">
+                        <h3>Free</h3>
+                        <ul class="check-list">
+                            <li>5 SLIs</li>
+                            <li>8 SLOs</li>
+                            <li>14 Alerts</li>
+                        </ul>
+                    </section>
+                    <section class="surface">
+                        <h3>Pro</h3>
+                        <ul class="check-list">
+                            <li>50 SLIs</li>
+                            <li>100 SLOs</li>
+                            <li>200 Alerts</li>
+                            <li>OpenSLO support <span class="subtle-hint">(upcoming)</span></li>
+                        </ul>
+                    </section>
+                    <section class="surface">
+                        <h3>Enterprise</h3>
+                        <ul class="check-list">
+                            <li>Unlimited SLIs, SLOs, and Alerts</li>
+                            <li>AI-chat <span class="subtle-hint">(upcoming)</span></li>
+                            <li>Access to code for audit</li>
+                            <li>Run it in your infrastructure</li>
+                            <li>Advanced intelligent ghosting</li>
+                        </ul>
+                        <button class="button--cta">Call Sales<span class="star"></span></button>
+                    </section>
+                </article>
+                
+                <p>
+                    <span class="star"> Just joking! 😄 Everything is free as in beer and speech.</span>
+                </p>
+                <p>
+                    The <ext-link href="https://github.com/alexewerlof/slc">source code</ext-link> is also available
+                    for security audit or hosting from your own local infrastructure.
+                </p>
+
+                <h2>Support My Work</h2>
+                <p>
+                    Designing, creating and maintaining these apps has taken
+                    <ext-link href="https://github.com/alexewerlof/slc/graphs/contributors"
+                    >hundreds of hours since July 2023</ext-link>. I pull these hours from my private time,
+                    weekends, and sometimes take vacation days to work on them. It also costs money to serve this
+                    app to you and I pay that from my own pocket. No complains though. I do my little part in
+                    lifting our community.
+                </p>
+                <p>
+                    To support my work, you can subscribe to
+                    <ext-link href="https://blog.alexewerlof.com/">my newsletter</ext-link>. This also gives you
+                    full access to my online book on this topic:
+                    <ext-link href="https://blog.alexewerlof.com/p/rem">Reliability Engineering Mindset</ext-link>.
+                    <br />
+                    <em>
+                        Right now, you can get 20% off via
+                        <ext-link href="https://blog.alexewerlof.com/protipsdiscount">this link</ext-link>. If you
+                        feel like it, you can save 50% using a
+                        <ext-link href="https://blog.alexewerlof.com/d8f4bfde">group subscription</ext-link>.
+                    </em>
+                </p>
+            </div>
 
             <article class="container">
                 <section>

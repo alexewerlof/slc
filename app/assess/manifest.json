@@ -1,6 +1,6 @@
 {
     "name": "Service Level Assessment",
-    "short_name": "SLC",
+    "short_name": "Assess",
     "description": "A tool to assess services, consumptions, and risks to find meaningful SLIs.",
     "start_url": "index.html",
     "display": "standalone",
