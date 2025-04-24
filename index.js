@@ -29,9 +29,7 @@ const apps = await Promise.all(appNames.map(async (name) => {
 
 const mainApp = apps.find((app) => app.name === 'calculator')
 
-console.log('App manifests:', apps)
-
-export const app = createApp({
+const app = createApp({
     data() {
         return {
             apps,
@@ -39,16 +37,12 @@ export const app = createApp({
         }
     },
     methods: {
-        gotoApp(app, term) {
+        gotoApp(app, campaign) {
             const appURL = new URL(app.url)
-            console.log('App URL:', appURL)
-            const redirectUrl = addUTM(appURL, {
+            globalThis.location.href = addUTM(appURL, {
                 source: 'web',
-                medium: 'web',
-                campaign: 'landing_page',
-                term,
+                campaign,
             })
-            globalThis.location.href = redirectUrl.toString()
         },
     },
     mounted() {
@@ -59,12 +53,10 @@ export const app = createApp({
             const { search } = url
             const redirectUrl = new URL(mainApp.url)
             redirectUrl.search = search
-            addUTM(redirectUrl, {
+            globalThis.location.replace(addUTM(redirectUrl, {
                 source: 'web',
-                medium: 'web',
                 campaign: 'auto-redirect',
-            })
-            globalThis.location = redirectUrl
+            }))
         }
     },
 })
