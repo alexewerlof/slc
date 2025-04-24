@@ -1,7 +1,7 @@
 import { createApp } from './vendor/vue.js'
 import { addUTM } from './lib/utm.js'
 import { registerAllComponents } from './components/index.js'
-import { isInArr, isObj } from './lib/validation.js'
+import { isObj } from './lib/validation.js'
 
 const appNames = [
     'calculator',
