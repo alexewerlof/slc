@@ -65,8 +65,10 @@
                 </p>
                 <div class="apps-container well">
                     <div v-for="app in apps" :key="app.manifest.name" class="app-item">
-                        <img class="app-item__logo" :src="app.manifest.icons[0].src">
-                        <button @click="gotoApp(app, 'app-list')" class="app-item__title">{{ app.manifest.name }}</button>
+                        <button @click="gotoApp(app, 'app-list')" class="button--cta">
+                            <img class="app-item__logo" :src="app.manifest.icons[0].src">
+                            <div class="app-item__title">{{ app.manifest.name }}</div>
+                        </button>
                         <p class="app-item__description">{{ app.manifest.description }}</p>
                     </div>
                 </div>
@@ -79,6 +81,7 @@
                             <li>5 SLIs</li>
                             <li>8 SLOs</li>
                             <li>14 Alerts</li>
+                            <li>Tooltips</li>
                         </ul>
                     </section>
                     <section class="surface">
@@ -87,16 +90,18 @@
                             <li>50 SLIs</li>
                             <li>100 SLOs</li>
                             <li>200 Alerts</li>
-                            <li>OpenSLO support <span class="subtle-hint">(upcoming)</span></li>
+                            <li>Articles on key concepts</li>
+                            <li>Share links publicly</li>
                         </ul>
                     </section>
                     <section class="surface">
                         <h3>Enterprise</h3>
                         <ul class="check-list">
                             <li>Unlimited SLIs, SLOs, and Alerts</li>
-                            <li>AI-chat <span class="subtle-hint">(upcoming)</span></li>
+                            <li>OpenSLO support <span class="subtle-hint">(upcoming)</span></li>
                             <li>Access to code for audit</li>
                             <li>Run it in your infrastructure</li>
+                            <li>AI-chat <span class="subtle-hint">(upcoming)</span></li>
                             <li>Advanced intelligent ghosting</li>
                         </ul>
                         <button class="button--cta">Call Sales<span class="star"></span></button>
@@ -104,11 +109,9 @@
                 </article>
                 
                 <p>
-                    <span class="star"> Just joking! 😄 Everything is free as in beer and speech.</span>
-                </p>
-                <p>
-                    The <ext-link href="https://github.com/alexewerlof/slc">source code</ext-link> is also available
-                    for security audit or hosting from your own local infrastructure.
+                    <span class="star"> Just joking! 😄
+                        <ext-link href="https://github.com/alexewerlof/slc">Everything is free as in beer and speech</ext-link>.
+                    </span>
                 </p>
 
                 <h2>Support My Work</h2>

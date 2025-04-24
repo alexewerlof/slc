@@ -35,7 +35,7 @@ ul.benefit-list {
     display: flex;
     flex-wrap: wrap;
     gap: var(--gap2);
-    padding: var(--gap2) 0;
+    padding: var(--gap2);
 }
 
 .app-item {
@@ -43,14 +43,13 @@ ul.benefit-list {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: var(--gap);
     flex-basis: 10em;
     flex-grow: 1;
 }
 
 .app-item__logo {
     width: 50%;
-    margin-bottom: var(--gap);
+    margin: 0 auto;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -58,7 +57,7 @@ ul.benefit-list {
 }
 
 .app-item__title {
-    font-size: 1em;
+    font-size: 1.5em;
 }
 
 .app-item__description {
