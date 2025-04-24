@@ -9,9 +9,9 @@
     "id": "1.4",
     "icons": [
         {
-            "src": "/img/icon.png",
+            "src": "/img/service-level-uptime-icon.svg",
             "sizes": "500x500",
-            "type": "image/png"
+            "type": "image/svg+xml"
         }
     ]
 }
