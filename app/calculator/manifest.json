@@ -1,7 +1,7 @@
 {
     "name": "Service Level Calculator",
     "short_name": "SLC",
-    "description": "A simple Service Level Calculator that complies with Google SRE books.",
+    "description": "A tool for experimenting your Service Levels and tying them to alerts.",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#001426",
