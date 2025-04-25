@@ -216,18 +216,34 @@
             </section>
         </article>
 
-        <div v-if="currentStep === 3" class="pad-gap2">
-            <div v-for="service of assessment.allServices">
-                <h2>
-                    Service: {{ service }}
-                    <tooltip-component v-if="service.description">
-                        {{ service.description }}
-                    </tooltip-component>
-                </h2>
-                <div class="surface b-mar-gap2" v-for="dependency of service.dependencies">
-                    <dependency-component :dependency="dependency"></dependency-component>
+        <article v-if="currentStep === 3" class="pad-gap2">
+            <section class="surface">
+                <fieldset class="b-mar-gap2">
+                    <legend>Dependency</legend>
+                    <div class="input-group">
+                        <label>Select ({{ assessment.dependencies.length }})</label>
+                        <select v-model="assessment.dependencies.selectedIndex">
+                            <option v-for="(dependency, i) of assessment.dependencies" :value="i">
+                                {{ dependency }}
+                            </option>
+                        </select>
+                    </div>
+                </fieldset>
+                <div class="well" v-if="assessment.dependencies.selected">
+                    <h2>Consumption</h2>
+                    <p>{{ assessment.dependencies.selected.consumption }}</p>
+                    <h2>Service</h2>
+                    <p>{{ assessment.dependencies.selected.service }}</p>
                 </div>
-            </div>
-        </div>
+            </section>
+            <section class="surface">
+                <div v-if="assessment.dependencies.selected">
+                    <dependency-component :dependency="assessment.dependencies.selected"></dependency-component>
+                </div>
+            </section>
+            <section>
+                Chat
+            </section>
+        </article>
     </div>
 </div>

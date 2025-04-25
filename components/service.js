@@ -1,10 +1,9 @@
 import { icon } from '../lib/icons.js'
-import { isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
+import { isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Consumption } from './consumption.js'
 import { Provider } from './provider.js'
 import { config } from '../config.js'
 import { Dependency } from './dependency.js'
-import { SelectableArray } from '../lib/selectable-array.js'
 
 const scopeIcon = icon('scope')
 
@@ -13,8 +12,7 @@ export class Service {
     provider = null
     displayName = config.displayName.default
     description = config.description.default
-    type = Service.possibleTypes[0]
-    dependencies = new SelectableArray(Dependency, this)
+    _type = Service.possibleTypes[0]
 
     constructor(provider, state) {
         if (!isInstance(provider, Provider)) {
@@ -31,7 +29,6 @@ export class Service {
             displayName: this.displayName,
             description: this.description,
             type: this.type,
-            dependencies: this.dependencies.state,
         }
     }
 
@@ -43,7 +40,6 @@ export class Service {
             displayName,
             description,
             type,
-            dependencies,
         } = newState
         if (isDef(displayName)) {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
@@ -63,12 +59,6 @@ export class Service {
             }
             this.type = type
         }
-        if (isDef(dependencies)) {
-            if (!isArr(dependencies)) {
-                throw new TypeError(`Invalid dependencies. ${dependencies}`)
-            }
-            this.dependencies.state = dependencies
-        }
     }
 
     set type(val) {
@@ -86,51 +76,19 @@ export class Service {
         return this.dependencies.map((d) => d.consumption)
     }
 
-    getDependency(consumption) {
-        if (!isInstance(consumption, Consumption)) {
-            throw new TypeError(`consumption must be an instance of Consumption. Got ${consumption}`)
-        }
-        return this.dependencies.find((d) => d.consumption === consumption)
-    }
-
     isConsumedBy(consumption) {
-        return this.getDependency(consumption) !== undefined
-    }
-
-    addDependency(consumption) {
-        if (!this.isConsumedBy(consumption)) {
-            this.dependencies.push(
-                new Dependency(this, {
-                    consumptionIndex: consumption.index,
-                    consumerIndex: consumption.consumer.index,
-                }),
-            )
-        }
-    }
-
-    removeDependency(consumption) {
-        if (!isInstance(consumption, Consumption)) {
-            throw new TypeError(`consumption must be an instance of Consumption. Got ${consumption}`)
-        }
-        const index = this.dependencies.findIndex((d) => d.consumption === consumption)
-        if (index !== -1) {
-            this.dependencies.splice(index, 1)
-        }
+        return this.provider.assessment.isLinked(this, consumption)
     }
 
     setConsumedBy(consumption, value) {
-        if (value) {
-            this.addDependency(consumption)
-        } else {
-            this.removeDependency(consumption)
-        }
+        return this.provider.assessment.setLinked(this, consumption, value)
     }
 
     toString() {
         return `${this.provider.displayName}${scopeIcon}${this.displayName}`
     }
 
-    get ref() {
+    get index() {
         return this.provider.services.indexOf(this)
     }
 }

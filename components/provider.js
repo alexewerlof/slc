@@ -1,5 +1,5 @@
 import { Service } from './service.js'
-import { isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
+import { isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { config } from '../config.js'
@@ -10,7 +10,7 @@ export class Provider {
     assessment = null
     displayName = config.displayName.default
     description = config.description.default
-    type = Provider.possibleTypes[0]
+    _type = Provider.possibleTypes[0]
 
     services = new SelectableArray(Service, this)
 
@@ -62,7 +62,7 @@ export class Provider {
             this.type = type
         }
         if (isDef(services)) {
-            if (!Array.isArray(services)) {
+            if (!isArr(services)) {
                 throw new TypeError(`Invalid services: ${services} (${typeof services})`)
             }
             this.services.state = services
@@ -84,7 +84,7 @@ export class Provider {
         return this.displayName
     }
 
-    get ref() {
-        return this.assessment.systems.indexOf(this)
+    get index() {
+        return this.assessment.providers.indexOf(this)
     }
 }

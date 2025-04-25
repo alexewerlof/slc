@@ -49,16 +49,12 @@ export class Consumption {
         }
     }
 
-    setConsumedBy(service, value) {
-        if (value) {
-            service.addConsumption(this)
-        } else {
-            service.removeConsumption(this)
-        }
+    isConsuming(service) {
+        return this.consumer.assessment.isLinked(service, this)
     }
 
-    remove() {
-        this.consumer.removeConsumption(this)
+    setConsuming(service, value) {
+        return this.consumer.assessment.setLinked(service, this, value)
     }
 
     toString() {
