@@ -1,8 +1,7 @@
-import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
-import { percL10n } from '../lib/fmt.js'
-import { Failure } from './failure.js'
+import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
 import { icon } from '../lib/icons.js'
+import { Dependency } from './dependency.js'
 
 export default {
     computed: {
@@ -11,13 +10,15 @@ export default {
         },
     },
     props: {
-        failure: {
-            type: Object,
-            validator: (v) => isInstance(v, Failure),
+        dependency: {
+            type: Dependency,
+            required: true,
         },
     },
     methods: {
         icon,
         percL10n,
+        numL10n,
+        boundCaption,
     },
 }

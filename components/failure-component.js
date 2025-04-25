@@ -1,4 +1,3 @@
-import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
 import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
 import { Failure } from './failure.js'
@@ -12,8 +11,8 @@ export default {
     },
     props: {
         failure: {
-            type: Object,
-            validator: (v) => isInstance(v, Failure),
+            type: Failure,
+            required: true,
         },
     },
     methods: {

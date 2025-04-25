@@ -1,0 +1,30 @@
+<div class="dependency-component">
+    <h3>
+        Consumption: {{ dependency.consumption }}
+        <tooltip-component v-if="dependency.consumption.description">
+            {{ dependency.consumption.description }}
+        </tooltip-component>
+    </h3>
+    <fieldset class="b-mar-gap2">
+        <legend>Failure</legend>
+        <label>Select</label>
+        <select v-model="dependency.failures.selected">
+            <option v-for="failure in dependency.failures" :value="failure">
+                {{ failure.symptom }}
+            </option>
+        </select>
+        <div class="input-group">
+            <div class="button-bar">
+                <button @click="dependency.failures.pushNew()">
+                    Add
+                </button>
+                <button class="button--danger" @click="dependency.failures.removeSelected()">
+                    Remove
+                </button>
+            </div>
+        </div>
+    </fieldset>
+    <div class="well" v-if="dependency.failures.selected">
+        <failure-component :failure="dependency.failures.selected"></failure-component>
+    </div>
+</div>

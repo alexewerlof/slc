@@ -216,9 +216,17 @@
             </section>
         </article>
 
-        <div v-if="currentStep === 3">
-            <div class="surface" v-for="dependency of assessment.allDependencies">
-                {{ dependency}}
+        <div v-if="currentStep === 3" class="pad-gap2">
+            <div v-for="service of assessment.allServices">
+                <h2>
+                    Service: {{ service }}
+                    <tooltip-component v-if="service.description">
+                        {{ service.description }}
+                    </tooltip-component>
+                </h2>
+                <div class="surface b-mar-gap2" v-for="dependency of service.dependencies">
+                    <dependency-component :dependency="dependency"></dependency-component>
+                </div>
             </div>
         </div>
     </div>

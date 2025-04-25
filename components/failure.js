@@ -8,7 +8,6 @@ const failureIcon = icon('failure')
 // If a certain service fails, what activities will it impact and how?
 export class Failure {
     dependency = null
-    consumption = null
     symptom = ''
     consequence = ''
     businessImpact = ''
@@ -82,10 +81,10 @@ export class Failure {
     }
 
     toString() {
-        return `${this.consumption} ${failureIcon} ${this.service} ⇒ ${this.symptom}`
+        return `${this.dependency.consumption} ${failureIcon} ${this.dependency.service} ⇒ ${this.symptom}`
     }
 
     get index() {
-        return this.service.failures.indexOf(this)
+        return this.dependency.failures.indexOf(this)
     }
 }
