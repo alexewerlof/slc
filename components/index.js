@@ -29,6 +29,7 @@ const componentSpecifications = [
     ' AJHC : ./ui/header-component',
     '  JHC : ./ui/help-component',
     ' AJHC : ./ui/hero-component',
+    ' AJHC : ./assessment-graph-component',
     ' AJH  : ./indicator/indicator-component',
     ' AJHC : ./indicator/indicator-finder-component',
     ' AJHC : ./ui/inline-select-component',
