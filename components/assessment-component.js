@@ -3,7 +3,7 @@ import { readTextFile } from '../lib/share.js'
 import { Assessment } from '../components/assessment.js'
 import { icon } from '../lib/icons.js'
 
-export default ({
+export default {
     data() {
         const steps = [
             'Introduction',
@@ -75,4 +75,4 @@ export default ({
             document.getElementById(id).click()
         },
     },
-})
+}
