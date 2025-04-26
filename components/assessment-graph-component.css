@@ -4,7 +4,7 @@
     justify-content: center;
 }
 .assessment-graph-component__dot {
-    fill: var(--background-darker);
+    fill: var(--brand-pink);
 }
 
 .assessment-graph-component__entity {
@@ -14,8 +14,7 @@
 }
 
 .assessment-graph-component__entity:hover {
-    fill: var(--secondary-color);
-    stroke-width: 2;
+    stroke: var(--secondary-color);
 }
 
 .assessment-graph-component__entity--provider {
@@ -35,7 +34,8 @@
 }
 
 .assessment-graph-component__entity--dependency {
-    fill: var(--brand-pink);
+    fill: var(--background-color);
+    stroke: var(--brand-pink);
 }
 
 .assessment-graph-component__line {
@@ -47,5 +47,16 @@
 }
 
 .assessment-graph-component__line--dependency {
-    stroke: var(--background-darker);
+    stroke: var(--brand-pink);
+}
+
+.assessment-graph-component__entity-text {
+    pointer-events: none;
+    user-select: none;
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+.assessment-graph-component__entity-text--dependency {
+    fill: var(--brand-pink);
 }

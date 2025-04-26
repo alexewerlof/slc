@@ -21,13 +21,17 @@
                     @click="$emit('select', service)"
                     :cx="serviceX(service)"
                     :cy="serviceY(service)"
-                    :r="serviceRadius"></circle>
+                    :r="serviceRadius">
+                    <title>{{ service }}</title>
+                </circle>
             </g>
             <circle class="assessment-graph-component__entity assessment-graph-component__entity--provider"
                 @click="$emit('select', provider)"
                 :cx="providerX(provider)"
                 :cy="providerY(provider)"
-                :r="providerRadius"></circle>
+                :r="providerRadius">
+                <title>{{ provider }}</title>
+            </circle>
         </g>
         <g v-for="consumer of assessment.consumers">
             <g v-for="consumption of consumer.consumptions">
@@ -42,20 +46,32 @@
                     @click="$emit('select', consumption)"
                     :cx="consumptionX(consumption)"
                     :cy="consumptionY(consumption)"
-                    :r="consumptionRadius"></circle>
+                    :r="consumptionRadius">
+                    <title>{{ consumption }}</title>
+                </circle>
             </g>
             <circle class="assessment-graph-component__entity assessment-graph-component__entity--consumer"
                 @click="$emit('select', consumer)"
                 :cx="consumerX(consumer)"
                 :cy="consumerY(consumer)"
-                :r="consumerRadius"></circle>
+                :r="consumerRadius">
+                <title>{{ consumer }}</title>
+            </circle>
         </g>
         <g v-for="dependency of assessment.dependencies">
             <circle class="assessment-graph-component__entity assessment-graph-component__entity--dependency"
                 @click="$emit('select', dependency)"
                 :cx="serviceX(dependency.service)"
                 :cy="consumptionY(dependency.consumption)"
-                :r="dependencyRadius"></circle>
+                :r="dependencyRadius">
+                <title>{{ dependency }}</title>
+            </circle>
+            <text
+                :x="serviceX(dependency.service)"
+                :y="consumptionY(dependency.consumption) + 2"
+                class="assessment-graph-component__entity-text assessment-graph-component__entity-text--dependency">
+                {{ dependency.failures.length }}
+            </text>
         </g>
     </svg>
 </div>
