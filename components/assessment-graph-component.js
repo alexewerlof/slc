@@ -3,16 +3,14 @@ import { Assessment } from './assessment.js'
 export default {
     data() {
         return {
-            dotRadius: 3,
+            deltaX: 60,
+            deltaY: 60,
+            dotRadius: 4,
             providerRadius: 8,
             serviceRadius: 10,
             consumerRadius: 8,
             consumptionRadius: 10,
             dependencyRadius: 12,
-            deltaX: 50,
-            deltaY: 50,
-            width: 600,
-            height: 800,
         }
     },
     emits: ['select'],
@@ -23,10 +21,26 @@ export default {
         },
     },
     computed: {
+        heightCells() {
+            let ret = 3
+            this.assessment.consumers.forEach((consumer) => ret += consumer.consumptions.length)
+            return ret
+        },
+        widthCells() {
+            let ret = 3
+            this.assessment.providers.forEach((provider) => ret += provider.services.length)
+            return ret
+        },
+        width() {
+            return this.deltaX * this.widthCells
+        },
+        height() {
+            return this.deltaY * this.heightCells
+        },
         gridPoints() {
             const ret = []
-            for (let x = 1; x < 10; x++) {
-                for (let y = 1; y < 10; y++) {
+            for (let x = 3; x < this.widthCells; x++) {
+                for (let y = 3; y < this.heightCells; y++) {
                     ret.push({
                         x: this.scaleX(x),
                         y: this.scaleY(y),
@@ -36,17 +50,6 @@ export default {
             }
             return ret
         },
-    },
-    mounted() {
-        const outerDiv = this.$refs.outerDiv
-
-        if (outerDiv) {
-            this.width = outerDiv.clientWidth
-            this.height = outerDiv.clientHeight
-            console.log(`Outder div dimensions: ${this.width} x ${this.height}`)
-        } else {
-            console.error('Could not find the outer div element.')
-        }
     },
     methods: {
         serviceX(service) {

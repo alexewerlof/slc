@@ -1,5 +1,7 @@
 .assessment-graph-component {
-    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 .assessment-graph-component__dot {
     fill: var(--background-darker);
@@ -45,5 +47,5 @@
 }
 
 .assessment-graph-component__line--dependency {
-    stroke: var(--background-lighter);
+    stroke: var(--background-darker);
 }

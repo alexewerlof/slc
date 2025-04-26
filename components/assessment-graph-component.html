@@ -1,4 +1,4 @@
-<div class="assessment-graph-component" ref="outerDiv">
+<div class="assessment-graph-component">
     <svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height">
         <g class="assessment-graph-component__grid">
             <circle
@@ -13,14 +13,14 @@
                 <path
                     class="assessment-graph-component__line assessment-graph-component__line--relation"
                     :d="d(providerX(provider), providerY(provider), serviceX(service), serviceY(service))"></path>
-                    <path
+                <path
                     class="assessment-graph-component__line assessment-graph-component__line--dependency"
                     :d="d(serviceX(service), serviceY(service), serviceX(service), height)"></path>
-                    <circle
+                <circle
                     class="assessment-graph-component__entity assessment-graph-component__entity--service"
                     @click="$emit('select', service)"
                     :cx="serviceX(service)"
-                    :cy="serviceY(2)"
+                    :cy="serviceY(service)"
                     :r="serviceRadius"></circle>
             </g>
             <circle class="assessment-graph-component__entity assessment-graph-component__entity--provider"
