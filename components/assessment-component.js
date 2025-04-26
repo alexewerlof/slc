@@ -2,7 +2,7 @@ import { config } from '../config.js'
 import { readTextFile } from '../lib/share.js'
 import { Assessment } from '../components/assessment.js'
 import { icon } from '../lib/icons.js'
-import { isInstance } from '../lib/validation.js'
+import { inRange, isInstance } from '../lib/validation.js'
 import { Provider } from './provider.js'
 import { Service } from './service.js'
 import { Consumer } from './consumer.js'
@@ -54,6 +54,7 @@ export default {
     },
     methods: {
         icon,
+        inRange,
 
         goto(x) {
             if (isInstance(x, Provider)) {
