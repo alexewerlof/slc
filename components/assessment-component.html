@@ -1,6 +1,11 @@
 <div class="assessment-component">
     <div class="container logo-bg">
         <steps-component v-model="currentStep" :steps="steps"></steps-component>
+        <div class="well" v-if="0 < currentStep && currentStep < 4">
+            <assessment-graph-component
+                @select="goto"
+                :assessment="assessment"></assessment-graph-component>
+        </div>
 
         <div v-if="currentStep === 0">
             <div class="surface">
@@ -247,6 +252,5 @@
                 Chat
             </section>
         </article>
-        <assessment-graph-component @select="goto" :assessment="assessment"></assessment-graph-component>
     </div>
 </div>
