@@ -4,7 +4,7 @@
         <label>Select ({{ dependency.failures.length }})</label>
         <select v-model="dependency.failures.selected">
             <option v-for="failure in dependency.failures" :value="failure">
-                {{ failure.symptom }}
+                {{ failure.symptom || 'Unknown symptom'}}
             </option>
         </select>
         <div class="input-group">

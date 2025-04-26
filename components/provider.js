@@ -81,7 +81,7 @@ export class Provider {
     }
 
     toString() {
-        return this.displayName
+        return this.displayName || `Provider #${this.index}`
     }
 
     get index() {

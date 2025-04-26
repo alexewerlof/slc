@@ -85,7 +85,8 @@ export class Service {
     }
 
     toString() {
-        return `${this.provider.displayName}${scopeIcon}${this.displayName}`
+        const thisDisplayName = this.displayName || `Service #${this.index}`
+        return `${this.provider.displayName}${scopeIcon}${thisDisplayName}`
     }
 
     get index() {

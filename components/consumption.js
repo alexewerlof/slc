@@ -58,7 +58,8 @@ export class Consumption {
     }
 
     toString() {
-        return `${this.consumer.displayName}${scopeIcon}${this.displayName}`
+        const thisDisplayName = this.displayName || `Consumption #${this.index}`
+        return `${this.consumer.displayName}${scopeIcon}${thisDisplayName}`
     }
 
     get index() {

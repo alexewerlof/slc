@@ -104,14 +104,7 @@ export class Consumer {
     }
 
     toString() {
-        return this.displayName
-    }
-
-    toJSON() {
-        return osloObj('Consumer', osloMetadata(undefined, this.displayName), {
-            description: this.description,
-            consumptions: this.consumptions,
-        })
+        return this.displayName || `Consumer #${this.index}`
     }
 
     get index() {
