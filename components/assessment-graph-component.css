@@ -1,39 +1,39 @@
+.assessment-graph-component {
+    background-color: black;
+}
 .assessment-graph-component__dot {
     fill: var(--background-darker);
-}
-
-.assessment-graph-component__dot:hover {
-    fill: var(--background-lighter);
-}
-
-.assessment-graph-component__entity:hover {
-    stroke-width: 1;
-    stroke: red;
 }
 
 .assessment-graph-component__entity {
     stroke: var(--primary-color);
     stroke-width: 2;
+    cursor: pointer;
+}
+
+.assessment-graph-component__entity:hover {
+    fill: var(--secondary-color);
+    stroke-width: 2;
 }
 
 .assessment-graph-component__entity--provider {
-    fill: var(--primary-color);
-}
-
-.assessment-graph-component__entity--service {
-    fill: var(--secondary-color);
-}
-
-.assessment-graph-component__entity--consumer {
-    fill: var(--brand-red);
-}
-
-.assessment-graph-component__entity--consumption {
     fill: var(--brand-green);
 }
 
-.assessment-graph-component__entity--dependency {
+.assessment-graph-component__entity--service {
+    fill: var(--brand-green);
+}
+
+.assessment-graph-component__entity--consumer {
     fill: var(--brand-purple);
+}
+
+.assessment-graph-component__entity--consumption {
+    fill: var(--brand-purple);
+}
+
+.assessment-graph-component__entity--dependency {
+    fill: var(--brand-pink);
 }
 
 .assessment-graph-component__line {

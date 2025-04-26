@@ -1,21 +1,18 @@
 import { Assessment } from './assessment.js'
 
-const DX = 100
-const DY = 100
-const DRADIUS = 3
-
 export default {
     data() {
         return {
-            providerRadius: 10,
-            serviceRadius: 8,
-            consumerRadius: 10,
-            consumptionRadius: 8,
-            dependencyRadius: 5,
-            deltaX: 100,
-            deltaY: 100,
-            width: 1100,
-            height: 880,
+            dotRadius: 3,
+            providerRadius: 8,
+            serviceRadius: 10,
+            consumerRadius: 8,
+            consumptionRadius: 10,
+            dependencyRadius: 12,
+            deltaX: 50,
+            deltaY: 50,
+            width: 600,
+            height: 800,
         }
     },
     emits: ['select'],
@@ -28,14 +25,28 @@ export default {
     computed: {
         gridPoints() {
             const ret = []
-            for (let i = 0; i < 100; i++) {
-                for (let j = 0; j < 100; j++) {
-                    const { x, y } = this.indexToPixel(i, j)
-                    ret.push({ x, y, r: DRADIUS })
+            for (let x = 1; x < 10; x++) {
+                for (let y = 1; y < 10; y++) {
+                    ret.push({
+                        x: this.scaleX(x),
+                        y: this.scaleY(y),
+                        r: this.dotRadius,
+                    })
                 }
             }
             return ret
         },
+    },
+    mounted() {
+        const outerDiv = this.$refs.outerDiv
+
+        if (outerDiv) {
+            this.width = outerDiv.clientWidth
+            this.height = outerDiv.clientHeight
+            console.log(`Outder div dimensions: ${this.width} x ${this.height}`)
+        } else {
+            console.error('Could not find the outer div element.')
+        }
     },
     methods: {
         serviceX(service) {
@@ -82,12 +93,6 @@ export default {
         },
         scaleY(y) {
             return y * this.deltaY
-        },
-        indexToPixel(indexX, indexY) {
-            return {
-                x: indexX * DX,
-                y: indexY * DY,
-            }
         },
     },
 }

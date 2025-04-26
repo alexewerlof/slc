@@ -1,59 +1,61 @@
-<svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height" class="assessment-graph-component">
-    <g class="assessment-graph-component__grid">
-        <circle
-            class="assessment-graph-component__dot"
-            v-for="point of gridPoints"
-            :cx="point.x"
-            :cy="point.y"
-            :r="point.r"></circle>
-    </g>
-    <g v-for="provider of assessment.providers">
-        <g v-for="service of provider.services">
-            <path
-                class="assessment-graph-component__line assessment-graph-component__line--relation"
-                :d="d(providerX(provider), providerY(provider), serviceX(service), serviceY(service))"></path>
-                <path
-                class="assessment-graph-component__line assessment-graph-component__line--dependency"
-                :d="d(serviceX(service), serviceY(service), serviceX(service), height)"></path>
-                <circle
-                class="assessment-graph-component__entity assessment-graph-component__entity--service"
-                @click="$emit('select', service)"
-                :cx="serviceX(service)"
-                :cy="serviceY(2)"
-                :r="serviceRadius"></circle>
-        </g>
-        <circle class="assessment-graph-component__entity assessment-graph-component__entity--provider"
-            @click="$emit('select', provider)"
-            :cx="providerX(provider)"
-            :cy="providerY(provider)"
-            :r="providerRadius"></circle>
-    </g>
-    <g v-for="consumer of assessment.consumers">
-        <g v-for="consumption of consumer.consumptions">
-            <path
-                class="assessment-graph-component__line assessment-graph-component__line--relation"
-                :d="d(consumerX(consumer), consumerY(consumer), consumptionX(consumption), consumptionY(consumption))"></path>
-            <path
-                class="assessment-graph-component__line assessment-graph-component__line--dependency"
-                :d="d(consumptionX(consumption), consumptionY(consumption), width, consumptionY(consumption))"></path>
+<div class="assessment-graph-component" ref="outerDiv">
+    <svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height">
+        <g class="assessment-graph-component__grid">
             <circle
-                class="assessment-graph-component__entity assessment-graph-component__entity--consumption"
-                @click="$emit('select', consumption)"
-                :cx="consumptionX(consumption)"
-                :cy="consumptionY(consumption)"
-                :r="consumptionRadius"></circle>
+                class="assessment-graph-component__dot"
+                v-for="point of gridPoints"
+                :cx="point.x"
+                :cy="point.y"
+                :r="point.r"></circle>
         </g>
-        <circle class="assessment-graph-component__entity assessment-graph-component__entity--consumer"
-            @click="$emit('select', consumer)"
-            :cx="consumerX(consumer)"
-            :cy="consumerY(consumer)"
-            :r="consumerRadius"></circle>
-    </g>
-    <g v-for="dependency of assessment.dependencies">
-        <circle class="assessment-graph-component__entity assessment-graph-component__entity--dependency"
-            @click="$emit('select', dependency)"
-            :cx="serviceX(dependency.service)"
-            :cy="consumptionY(dependency.consumption)"
-            :r="dependencyRadius"></circle>
-    </g>
-</svg>
+        <g v-for="provider of assessment.providers">
+            <g v-for="service of provider.services">
+                <path
+                    class="assessment-graph-component__line assessment-graph-component__line--relation"
+                    :d="d(providerX(provider), providerY(provider), serviceX(service), serviceY(service))"></path>
+                    <path
+                    class="assessment-graph-component__line assessment-graph-component__line--dependency"
+                    :d="d(serviceX(service), serviceY(service), serviceX(service), height)"></path>
+                    <circle
+                    class="assessment-graph-component__entity assessment-graph-component__entity--service"
+                    @click="$emit('select', service)"
+                    :cx="serviceX(service)"
+                    :cy="serviceY(2)"
+                    :r="serviceRadius"></circle>
+            </g>
+            <circle class="assessment-graph-component__entity assessment-graph-component__entity--provider"
+                @click="$emit('select', provider)"
+                :cx="providerX(provider)"
+                :cy="providerY(provider)"
+                :r="providerRadius"></circle>
+        </g>
+        <g v-for="consumer of assessment.consumers">
+            <g v-for="consumption of consumer.consumptions">
+                <path
+                    class="assessment-graph-component__line assessment-graph-component__line--relation"
+                    :d="d(consumerX(consumer), consumerY(consumer), consumptionX(consumption), consumptionY(consumption))"></path>
+                <path
+                    class="assessment-graph-component__line assessment-graph-component__line--dependency"
+                    :d="d(consumptionX(consumption), consumptionY(consumption), width, consumptionY(consumption))"></path>
+                <circle
+                    class="assessment-graph-component__entity assessment-graph-component__entity--consumption"
+                    @click="$emit('select', consumption)"
+                    :cx="consumptionX(consumption)"
+                    :cy="consumptionY(consumption)"
+                    :r="consumptionRadius"></circle>
+            </g>
+            <circle class="assessment-graph-component__entity assessment-graph-component__entity--consumer"
+                @click="$emit('select', consumer)"
+                :cx="consumerX(consumer)"
+                :cy="consumerY(consumer)"
+                :r="consumerRadius"></circle>
+        </g>
+        <g v-for="dependency of assessment.dependencies">
+            <circle class="assessment-graph-component__entity assessment-graph-component__entity--dependency"
+                @click="$emit('select', dependency)"
+                :cx="serviceX(dependency.service)"
+                :cy="consumptionY(dependency.consumption)"
+                :r="dependencyRadius"></circle>
+        </g>
+    </svg>
+</div>
