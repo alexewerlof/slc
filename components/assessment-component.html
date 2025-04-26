@@ -218,6 +218,7 @@
 
         <article v-if="currentStep === 3" class="pad-gap2">
             <section class="surface">
+                <h2>Dependencies</h2>
                 <fieldset class="b-mar-gap2">
                     <legend>Dependency</legend>
                     <div class="input-group">
@@ -237,6 +238,7 @@
                 </div>
             </section>
             <section class="surface">
+                <h2>Failures</h2>
                 <div v-if="assessment.dependencies.selected">
                     <dependency-component :dependency="assessment.dependencies.selected"></dependency-component>
                 </div>
