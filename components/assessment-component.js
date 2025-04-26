@@ -2,6 +2,12 @@ import { config } from '../config.js'
 import { readTextFile } from '../lib/share.js'
 import { Assessment } from '../components/assessment.js'
 import { icon } from '../lib/icons.js'
+import { isInstance } from '../lib/validation.js'
+import { Provider } from './provider.js'
+import { Service } from './service.js'
+import { Consumer } from './consumer.js'
+import { Consumption } from './consumption.js'
+import { Dependency } from './dependency.js'
 
 export default {
     data() {
@@ -48,6 +54,29 @@ export default {
     },
     methods: {
         icon,
+
+        goto(x) {
+            if (isInstance(x, Provider)) {
+                this.currentStep = 1
+                this.assessment.providers.selected = x
+            } else if (isInstance(x, Service)) {
+                this.currentStep = 1
+                this.assessment.providers.selected = x.provider
+                this.assessment.providers.selected.services.selected = x
+            } else if (isInstance(x, Consumer)) {
+                this.currentStep = 2
+                this.assessment.consumers.selected = x
+            } else if (isInstance(x, Consumption)) {
+                this.currentStep = 2
+                this.assessment.consumers.selected = x.consumer
+                this.assessment.consumers.selected.consumptions.selected = x
+            } else if (isInstance(x, Dependency)) {
+                this.currentStep = 3
+                this.assessment.dependencies.selected = x
+            } else {
+                throw new Error(`Invalid goto argument: ${x}`)
+            }
+        },
 
         exportToJson() {
             // this.exportedCode = JSON.stringify(this.assessment, null, 2)

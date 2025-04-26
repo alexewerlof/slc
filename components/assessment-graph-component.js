@@ -1,4 +1,3 @@
-import data from '../collection/data.js'
 import { Assessment } from './assessment.js'
 
 const DX = 100
@@ -19,6 +18,7 @@ export default {
             height: 880,
         }
     },
+    emits: ['select'],
     props: {
         assessment: {
             type: Assessment,
@@ -76,9 +76,6 @@ export default {
         },
         d(x1, y1, x2, y2) {
             return `M${x1},${y1}L${x2},${y2}`
-        },
-        alert(entity) {
-            alert(`Entity: ${entity}`)
         },
         scaleX(x) {
             return x * this.deltaX
