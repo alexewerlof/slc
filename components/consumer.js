@@ -77,6 +77,12 @@ export class Consumer {
         return this._type
     }
 
+    onRemove() {
+        for (const consumption of this.consumptions) {
+            consumption.onRemove()
+        }
+    }
+
     addConsumption(consumption) {
         if (!isInstance(consumption, Consumption)) {
             throw new Error(`Consumption must be an instance of Consumption. Got ${consumption}`)

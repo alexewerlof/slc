@@ -72,6 +72,15 @@ export class Service {
         return this._type
     }
 
+    onRemove() {
+        const { dependencies } = this.provider.assessment
+        for (let i = dependencies.length - 1; i >= 0; i--) {
+            if (dependencies[i].service === this) {
+                dependencies.removeIndex(i)
+            }
+        }
+    }
+
     get consumptions() {
         return this.dependencies.map((d) => d.consumption)
     }

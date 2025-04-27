@@ -49,6 +49,15 @@ export class Consumption {
         }
     }
 
+    onRemove() {
+        const { dependencies } = this.consumer.assessment
+        for (let i = dependencies.length - 1; i >= 0; i--) {
+            if (dependencies[i].consumption === this) {
+                dependencies.removeIndex(i)
+            }
+        }
+    }
+
     isConsuming(service) {
         return this.consumer.assessment.isLinked(service, this)
     }

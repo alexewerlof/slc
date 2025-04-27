@@ -80,6 +80,12 @@ export class Provider {
         return this._type
     }
 
+    onRemove() {
+        for (const service of this.services) {
+            service.onRemove()
+        }
+    }
+
     toString() {
         return this.displayName || `Provider #${this.index}`
     }
