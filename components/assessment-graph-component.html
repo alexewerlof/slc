@@ -6,7 +6,7 @@
                     class="assessment-graph-component__line assessment-graph-component__line--relation"
                     :d="d(providerX(provider), providerY, serviceX(service), serviceY)"></path>
                 <path
-                    class="assessment-graph-component__line assessment-graph-component__line--dependency"
+                    class="assessment-graph-component__line assessment-graph-component__line--service-dependency"
                     :d="d(serviceX(service), serviceY, serviceX(service), height)"></path>
                 <circle
                     class="assessment-graph-component__entity assessment-graph-component__entity--service"
@@ -31,7 +31,7 @@
                     class="assessment-graph-component__line assessment-graph-component__line--relation"
                     :d="d(consumerX, consumerY(consumer), consumptionX, consumptionY(consumption))"></path>
                 <path
-                    class="assessment-graph-component__line assessment-graph-component__line--dependency"
+                    class="assessment-graph-component__line assessment-graph-component__line--consumption-dependency"
                     :d="d(consumptionX, consumptionY(consumption), width, consumptionY(consumption))"></path>
                 <circle
                     class="assessment-graph-component__entity assessment-graph-component__entity--consumption"

@@ -8,10 +8,12 @@
     stroke: var(--primary-color);
     stroke-width: 2;
     cursor: pointer;
+    filter: drop-shadow(2px 2px 3px black);
 }
 
 .assessment-graph-component__entity:hover {
     stroke: var(--secondary-color);
+    filter: none;
 }
 
 .assessment-graph-component__entity--provider {
@@ -43,8 +45,14 @@
     stroke: var(--primary-color);
 }
 
-.assessment-graph-component__line--dependency {
-    stroke: var(--brand-pink);
+.assessment-graph-component__line--service-dependency {
+    stroke: var(--brand-green);
+    stroke-dasharray: 5, 5;
+}
+
+.assessment-graph-component__line--consumption-dependency {
+    stroke: var(--brand-purple);
+    stroke-dasharray: 5, 5;
 }
 
 .assessment-graph-component__entity-text {

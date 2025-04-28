@@ -33,27 +33,27 @@ export default {
             return ret
         },
         width() {
-            let ret = this.padding + this.consumptionX
+            let ret = this.consumptionX
             for (const provider of this.assessment.providers) {
                 ret += this.providerWidth(provider)
             }
             return ret
         },
         height() {
-            let ret = this.padding + this.serviceY
+            let ret = this.serviceY
             for (const consumer of this.assessment.consumers) {
                 ret += this.consumerHeight(consumer)
             }
             return ret
         },
         providerY() {
-            return this.scaleY(1)
+            return this.scaleY(0.5)
         },
         serviceY() {
             return this.scaleY(2)
         },
         consumerX() {
-            return this.scaleX(1)
+            return this.scaleX(0.5)
         },
         consumptionX() {
             return this.scaleX(2)
@@ -81,14 +81,14 @@ export default {
             return ret
         },
         providerOffset(provider) {
-            let ret = this.padding + this.consumptionX
+            let ret = this.consumptionX
             for (let i = 0; i < provider.index; i++) {
                 ret += this.providerWidth(this.assessment.providers[i])
             }
             return ret
         },
         consumerOffset(consumer) {
-            let ret = this.padding + this.serviceY
+            let ret = this.serviceY
             for (let i = 0; i < consumer.index; i++) {
                 ret += this.consumerHeight(this.assessment.consumers[i])
             }
