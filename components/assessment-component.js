@@ -13,10 +13,9 @@ export default {
     data() {
         const steps = [
             'Introduction',
-            'Provider',
+            'Providers',
             'Consumers',
             'Failures',
-            'Risks',
             'Metrics',
             'Events',
             'Summary',
@@ -24,7 +23,7 @@ export default {
         ]
 
         return {
-            currentStep: 3,
+            currentStep: 0,
             steps,
             exportedCode: '-',
         }
