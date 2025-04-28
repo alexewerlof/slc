@@ -1,9 +1,7 @@
 import { icon } from '../lib/icons.js'
 import { isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
-import { Consumption } from './consumption.js'
 import { Provider } from './provider.js'
 import { config } from '../config.js'
-import { Dependency } from './dependency.js'
 
 const scopeIcon = icon('scope')
 
