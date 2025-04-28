@@ -37,6 +37,18 @@ export default {
         height() {
             return this.deltaY * this.heightCells
         },
+        providerY() {
+            return this.scaleY(1)
+        },
+        serviceY() {
+            return this.scaleY(2)
+        },
+        consumerX() {
+            return this.scaleX(1)
+        },
+        consumptionX() {
+            return this.scaleX(2)
+        },
         gridPoints() {
             const ret = []
             for (let x = 3; x < this.widthCells; x++) {
@@ -52,6 +64,12 @@ export default {
         },
     },
     methods: {
+        scaleX(x) {
+            return x * this.deltaX
+        },
+        scaleY(y) {
+            return y * this.deltaY
+        },
         serviceX(service) {
             const providerIndex = service.provider.index
             let servicesBefore = 0
@@ -60,18 +78,9 @@ export default {
             }
             return this.scaleX(servicesBefore + service.index + 3)
         },
-        serviceY() {
-            return this.scaleY(2)
-        },
         providerX(provider) {
             return provider.services.reduce((sumX, service) => this.serviceX(service) + sumX, 0) /
                 provider.services.length
-        },
-        providerY() {
-            return this.scaleY(1)
-        },
-        consumptionX() {
-            return this.scaleX(2)
         },
         consumptionY(consumption) {
             const consumerIndex = consumption.consumer.index
@@ -81,21 +90,12 @@ export default {
             }
             return this.scaleY(consumptionsBefore + consumption.index + 3)
         },
-        consumerX() {
-            return this.scaleX(1)
-        },
         consumerY(consumer) {
             return consumer.consumptions.reduce((sumY, consumption) => this.consumptionY(consumption) + sumY, 0) /
                 consumer.consumptions.length
         },
         d(x1, y1, x2, y2) {
             return `M${x1},${y1}L${x2},${y2}`
-        },
-        scaleX(x) {
-            return x * this.deltaX
-        },
-        scaleY(y) {
-            return y * this.deltaY
         },
     },
 }

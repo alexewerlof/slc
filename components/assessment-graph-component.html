@@ -12,15 +12,15 @@
             <g v-for="service of provider.services">
                 <path
                     class="assessment-graph-component__line assessment-graph-component__line--relation"
-                    :d="d(providerX(provider), providerY(provider), serviceX(service), serviceY(service))"></path>
+                    :d="d(providerX(provider), providerY, serviceX(service), serviceY)"></path>
                 <path
                     class="assessment-graph-component__line assessment-graph-component__line--dependency"
-                    :d="d(serviceX(service), serviceY(service), serviceX(service), height)"></path>
+                    :d="d(serviceX(service), serviceY, serviceX(service), height)"></path>
                 <circle
                     class="assessment-graph-component__entity assessment-graph-component__entity--service"
                     @click="$emit('select', service)"
                     :cx="serviceX(service)"
-                    :cy="serviceY(service)"
+                    :cy="serviceY"
                     :r="serviceRadius">
                     <title>{{ service }}</title>
                 </circle>
@@ -28,7 +28,7 @@
             <circle class="assessment-graph-component__entity assessment-graph-component__entity--provider"
                 @click="$emit('select', provider)"
                 :cx="providerX(provider)"
-                :cy="providerY(provider)"
+                :cy="providerY"
                 :r="providerRadius">
                 <title>{{ provider }}</title>
             </circle>
@@ -37,14 +37,14 @@
             <g v-for="consumption of consumer.consumptions">
                 <path
                     class="assessment-graph-component__line assessment-graph-component__line--relation"
-                    :d="d(consumerX(consumer), consumerY(consumer), consumptionX(consumption), consumptionY(consumption))"></path>
+                    :d="d(consumerX, consumerY(consumer), consumptionX, consumptionY(consumption))"></path>
                 <path
                     class="assessment-graph-component__line assessment-graph-component__line--dependency"
-                    :d="d(consumptionX(consumption), consumptionY(consumption), width, consumptionY(consumption))"></path>
+                    :d="d(consumptionX, consumptionY(consumption), width, consumptionY(consumption))"></path>
                 <circle
                     class="assessment-graph-component__entity assessment-graph-component__entity--consumption"
                     @click="$emit('select', consumption)"
-                    :cx="consumptionX(consumption)"
+                    :cx="consumptionX"
                     :cy="consumptionY(consumption)"
                     :r="consumptionRadius">
                     <title>{{ consumption }}</title>
@@ -52,7 +52,7 @@
             </g>
             <circle class="assessment-graph-component__entity assessment-graph-component__entity--consumer"
                 @click="$emit('select', consumer)"
-                :cx="consumerX(consumer)"
+                :cx="consumerX"
                 :cy="consumerY(consumer)"
                 :r="consumerRadius">
                 <title>{{ consumer }}</title>
