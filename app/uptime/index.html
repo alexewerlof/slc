@@ -43,7 +43,7 @@
                         <legend>Timeslice</legend>
                         <div class="input-group">
                             <label for="sli-event-unit">
-                                Length: {{ indicator.timeslice }}
+                                Length: <time>{{ indicator.timeslice }}s</time>
                                 <help-component>
                                     <p>
                                         Time-based SLIs aggregate metric data over a timeslice
@@ -93,6 +93,12 @@
                                 :step="config.timeslice.step"
                                 placeholder="60"
                                 v-model.number="indicator.timeslice">
+                            <div class="button-bar">
+                                <button @click="indicator.timeslice = 1">Second</button>
+                                <button @click="indicator.timeslice = 60">Minute</button>
+                                <button @click="indicator.timeslice = 300">5 Minutes</button>
+                                <button @click="indicator.timeslice = 3600">Hour</button>
+                            </div>
                         </div>
                     </fieldset>
                     <h2>SLO</h2>
