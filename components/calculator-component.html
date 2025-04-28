@@ -56,7 +56,7 @@
                             <button @click="calculator.indicators.pushNew()">Add Empty</button>
                             <button @click="isIndicatorTemplatesVisible = true">Add From Template</button>
                             <button
-                                v-if="calculator.indicators.selected"
+                                :disabled="!calculator.indicators.selected"
                                 @click="calculator.indicators.removeSelected()"
                                 class="button--danger"
                             >
@@ -111,7 +111,7 @@
                             class="button-bar">
                             <button @click="calculator.indicators.selected.objectives.pushNew()">Add New</button>
                             <button
-                                v-if="calculator.indicators.selected.objectives.selected"
+                                :disabled="!calculator.indicators.selected.objectives.selected"
                                 @click="calculator.indicators.selected.objectives.removeSelected()"
                                 class="button--danger">
                                 Remove
@@ -184,7 +184,7 @@
                             <button @click="calculator.indicators.selected.objectives.selected.alerts.pushNew()">Add New</button>
                             <button @click="addRecommendedAlerts()">Add Recommended</button>
                             <button
-                                v-if="calculator.indicators.selected?.objectives.selected?.alerts.selected"
+                                :disabled="!calculator.indicators.selected?.objectives.selected?.alerts.selected"
                                 @click="calculator.indicators.selected.objectives.selected.alerts.removeSelected()"
                                 class="button--danger"
                             >
