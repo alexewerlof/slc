@@ -23,9 +23,9 @@ export class Dependency {
 
     get state() {
         return {
-            consumerIndex: this.consumer.index,
+            consumerIndex: this.consumption.consumer.index,
             consumptionIndex: this.consumption.index,
-            providerIndex: this.provider.index,
+            providerIndex: this.service.provider.index,
             serviceIndex: this.service.index,
             failures: this.failures.map((failure) => failure.state),
         }
