@@ -3,14 +3,15 @@ import { Assessment } from './assessment.js'
 export default {
     data() {
         return {
-            deltaX: 60,
-            deltaY: 60,
+            deltaX: 50,
+            deltaY: 50,
             dotRadius: 4,
             providerRadius: 8,
             serviceRadius: 10,
             consumerRadius: 8,
             consumptionRadius: 10,
             dependencyRadius: 12,
+            padding: 50,
         }
     },
     emits: ['select'],
@@ -32,10 +33,18 @@ export default {
             return ret
         },
         width() {
-            return this.deltaX * this.widthCells
+            let ret = this.padding + this.consumptionX
+            for (const provider of this.assessment.providers) {
+                ret += this.providerWidth(provider)
+            }
+            return ret
         },
         height() {
-            return this.deltaY * this.heightCells
+            let ret = this.padding + this.serviceY
+            for (const consumer of this.assessment.consumers) {
+                ret += this.consumerHeight(consumer)
+            }
+            return ret
         },
         providerY() {
             return this.scaleY(1)
@@ -57,29 +66,45 @@ export default {
         scaleY(y) {
             return y * this.deltaY
         },
-        serviceX(service) {
-            const providerIndex = service.provider.index
-            let servicesBefore = 0
-            for (let i = 0; i < providerIndex; i++) {
-                servicesBefore += this.assessment.providers[i].services.length
+        providerWidth(provider) {
+            let ret = 2 * this.padding
+            if (provider.services.length > 1) {
+                ret += this.scaleX(provider.services.length - 1)
             }
-            return this.scaleX(servicesBefore + service.index + 3)
+            return ret
+        },
+        consumerHeight(consumer) {
+            let ret = 2 * this.padding
+            if (consumer.consumptions.length > 1) {
+                ret += this.scaleY(consumer.consumptions.length - 1)
+            }
+            return ret
+        },
+        providerOffset(provider) {
+            let ret = this.padding + this.consumptionX
+            for (let i = 0; i < provider.index; i++) {
+                ret += this.providerWidth(this.assessment.providers[i])
+            }
+            return ret
+        },
+        consumerOffset(consumer) {
+            let ret = this.padding + this.serviceY
+            for (let i = 0; i < consumer.index; i++) {
+                ret += this.consumerHeight(this.assessment.consumers[i])
+            }
+            return ret
         },
         providerX(provider) {
-            return provider.services.reduce((sumX, service) => this.serviceX(service) + sumX, 0) /
-                provider.services.length
-        },
-        consumptionY(consumption) {
-            const consumerIndex = consumption.consumer.index
-            let consumptionsBefore = 0
-            for (let i = 0; i < consumerIndex; i++) {
-                consumptionsBefore += this.assessment.consumers[i].consumptions.length
-            }
-            return this.scaleY(consumptionsBefore + consumption.index + 3)
+            return this.providerOffset(provider) + this.providerWidth(provider) / 2
         },
         consumerY(consumer) {
-            return consumer.consumptions.reduce((sumY, consumption) => this.consumptionY(consumption) + sumY, 0) /
-                consumer.consumptions.length
+            return this.consumerOffset(consumer) + this.consumerHeight(consumer) / 2
+        },
+        serviceX(service) {
+            return this.providerOffset(service.provider) + this.padding + this.scaleX(service.index)
+        },
+        consumptionY(consumption) {
+            return this.consumerOffset(consumption.consumer) + this.padding + this.scaleY(consumption.index)
         },
         d(x1, y1, x2, y2) {
             return `M${x1},${y1}L${x2},${y2}`
