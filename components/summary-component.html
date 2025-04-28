@@ -1,69 +1,18 @@
-<article>
-    <section>
-        <h1>Summary</h1>
-        <h2>
-            {{ icon('provider') }}
-            Providers
-        </h2>
-        <ul>
-            <li v-for="provider of assessment.providers">
-                {{ provider }}
-            </li>
-        </ul>
-        <h2>
-            {{ icon('service') }}
-            Services
-        </h2>
-        <ul>
-            <li v-for="service of assessment.allServices">
-                {{ service }}
-            </li>
-        </ul>
-        <h2>
-            {{ icon('consumer') }}
-            Consumers
-        </h2>
-        <ul>
-            <li v-for="consumer of assessment.consumers">
-                {{ consumer }}
-            </li>
-        </ul>
-        <h2>
-            {{ icon('consumption') }}
-            Consumptions
-        </h2>
-        <ul>
-            <li v-for="consumption of assessment.allConsumptions">
-                {{ consumption }}
-            </li>
-        </ul>
-        <h2>
-            {{ icon('failure') }}
-            Failures
-        </h2>
-        <ul>
-            <li v-for="failure of assessment.allFailures">
-                {{ failure }} (impact level: {{ failure.impactLevel }})
-                <ul>
-                    <li v-for="metric of failure.metrics">
-                        {{ metric }}
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <h2>
-            {{ icon('metric') }}
-            Metrics
-        </h2>
-        <ul>
-            <li v-for="metric of assessment.allMetrics">
-                {{ metric }}
-                <ul>
-                    <li v-for="failure of metric.linkedFailures">
-                        {{ failure }}
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </section>
-</article>
+<div>
+    <h1>Services</h1>
+    <ul v-for="service of allServices">
+        <li>{{ service }}
+            <ul>
+                <li v-for="consumption of serviceConsumptions(service)">{{ consumption }}</li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h1>
+        {{ icon('failure') }}
+        Failures
+    </h1>
+    <ul>
+        <li v-for="failure of allFailures">{{ failure }}</li>
+    </ul>
+</div>

@@ -362,5 +362,19 @@
                 Chat
             </section>
         </article>
+
+        <article v-if="currentStep === 6" class="pad-gap2">
+            <section class="surface">
+                <summary-component :assessment="assessment"></summary-component>
+            </section>
+        </article>
+
+        <article v-if="currentStep === 7" class="pad-gap2">
+            <section class="surface">
+                <code-block-component>
+                    <pre>{{ JSON.stringify(assessment.state, null, 2) }}</pre>
+                </code-block-component>
+            </section>
+        </article>
     </div>
 </div>
