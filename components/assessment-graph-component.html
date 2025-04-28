@@ -1,13 +1,5 @@
 <div class="assessment-graph-component">
     <svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height">
-        <g class="assessment-graph-component__grid">
-            <circle
-                class="assessment-graph-component__dot"
-                v-for="point of gridPoints"
-                :cx="point.x"
-                :cy="point.y"
-                :r="point.r"></circle>
-        </g>
         <g v-for="provider of assessment.providers">
             <g v-for="service of provider.services">
                 <path

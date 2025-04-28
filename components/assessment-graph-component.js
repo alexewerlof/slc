@@ -49,19 +49,6 @@ export default {
         consumptionX() {
             return this.scaleX(2)
         },
-        gridPoints() {
-            const ret = []
-            for (let x = 3; x < this.widthCells; x++) {
-                for (let y = 3; y < this.heightCells; y++) {
-                    ret.push({
-                        x: this.scaleX(x),
-                        y: this.scaleY(y),
-                        r: this.dotRadius,
-                    })
-                }
-            }
-            return ret
-        },
     },
     methods: {
         scaleX(x) {

@@ -3,9 +3,6 @@
     flex-direction: row;
     justify-content: center;
 }
-.assessment-graph-component__dot {
-    fill: var(--brand-pink);
-}
 
 .assessment-graph-component__entity {
     stroke: var(--primary-color);
