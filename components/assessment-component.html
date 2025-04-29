@@ -363,6 +363,12 @@
             </section>
         </article>
 
+        <article v-if="currentStep === 4">
+            <section class="well">
+                <failure-sort-component :assessment="assessment"></failure-sort-component>
+            </section>
+        </article>
+
         <article v-if="currentStep === 6" class="pad-gap2">
             <section class="surface">
                 <summary-component :assessment="assessment"></summary-component>

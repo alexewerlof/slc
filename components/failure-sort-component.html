@@ -1,0 +1,23 @@
+<div class="failure-sort-component">
+    <div v-for="(failure, index) of failures" class="failure-sort-component__failure">
+        <div
+            class="surface"
+            draggable="true"
+            @dragstart="startDrag($event, index)"
+            @drop="onDrop($event, index)"
+            @dragenter.prevent
+            @dragover.prevent
+        >
+            <div class="subtle-hint">{{ failure }} (impact level: {{ failure.impactLevel }})</div>
+            <p>
+                <strong>Consequence:</strong> {{ failure.consequence }}
+                <br>
+                <strong>Business Impact:</strong> {{ failure.businessImpact }}</p>
+            </p>
+        </div>
+    </div>
+    <div class="button-bar">
+        <button @click="resetImpactLevelsInOrder" :disabled="failures.length === 0">Set Impact Levels</button>
+        <button @click="wrapFailures">Start</button>
+    </div>
+</div>

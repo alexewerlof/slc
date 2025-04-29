@@ -16,7 +16,7 @@ export default {
             'Providers',
             'Consumers',
             'Failures',
-            'Metrics',
+            'Risks',
             'Events',
             'Summary',
             'Export',

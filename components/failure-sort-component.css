@@ -1,0 +1,8 @@
+.failure-sort-component {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: var(--gap2);
+}
+
+.failure-sort-component__failure {}
