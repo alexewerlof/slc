@@ -248,7 +248,7 @@
                 {
                     "symptom": "Can't read the temperature from the car",
                     "consequence": "The user cannot decide whether to use remote climate control or not",
-                    "businessImpact": "They may contact customer support",
+                    "businessImpact": "Users may contact customer support",
                     "impactLevel": 10
                 }
             ]
@@ -268,7 +268,7 @@
                 {
                     "symptom": "Can't unlock the car",
                     "consequence": "The user may have to use a key",
-                    "businessImpact": "The user may call customer support",
+                    "businessImpact": "Users may contact customer support",
                     "impactLevel": 10
                 },
                 {
@@ -302,7 +302,7 @@
                 {
                     "symptom": "The car image cannot be shown in the app",
                     "consequence": "The user may get confused",
-                    "businessImpact": "User may call customer support",
+                    "businessImpact": "Users may contact customer support",
                     "impactLevel": 10
                 }
             ]
@@ -316,7 +316,7 @@
                 {
                     "symptom": "The car image cannot be shown in the app",
                     "consequence": "The user may get confused",
-                    "businessImpact": "User may call customer support",
+                    "businessImpact": "Users may contact customer support",
                     "impactLevel": 10
                 }
             ]
@@ -344,7 +344,7 @@
                 {
                     "symptom": "Cannot retrieve the contract",
                     "consequence": "User may get frustrated",
-                    "businessImpact": "The customer may call customer support",
+                    "businessImpact": "Users may contact customer support",
                     "impactLevel": 10
                 }
             ]
