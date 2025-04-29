@@ -63,10 +63,6 @@ export class Dependency {
         }
     }
 
-    get failuresByRisk() {
-        return this.failures.sort((f1, f2) => f2.impactLevel - f1.impactLevel)
-    }
-
     toString() {
         return `${this.consumption} ${consumptionIcon} ${this.service}`
     }
