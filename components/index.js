@@ -10,6 +10,7 @@ const componentSpecifications = [
     ' AJHC : ./alert/burn-event-component',
     ' AJHC : ./alert/burn-rate-component',
     ' AJHC : ./calculator-component',
+    ' AJHC : ./chat-component',
     ' AJHC : ./chat-thread-component',
     ' AJHC : ./ui/code-block-component',
     ' AJH  : ./condition-component',

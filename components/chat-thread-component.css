@@ -1,15 +1,6 @@
 .chat-thread-component {
-    background-color: var(--background-darker);
-    padding: var(--gap2);
-    margin: var(--gap3) auto;
     display: flex;
     flex-direction: column;
-}
-
-@media screen and (min-width: 768px) {
-    .chat-thread-component {
-        max-width: 50vw;
-    }
 }
 
 .chat-thread-component__message {
@@ -31,8 +22,8 @@
 }
 
 .chat-thread-component__message-contents:last-child {
-    border-bottom-left-radius: var(--bradius);
-    border-bottom-right-radius: var(--bradius);
+    border-bottom-left-radius: var(--bradius2);
+    border-bottom-right-radius: var(--bradius2);
 }
 
 .chat-thread-component__message--system {

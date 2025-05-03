@@ -1,0 +1,56 @@
+<div class="chat-component">
+    <div class="input-group">
+        <label for="engine-selector">Engine</label>
+        <inline-select-component v-model="selectedEngine" :options="engines"></inline-select-component>
+    </div>
+    <div class="input-group">
+        <label for="api-key">API Key</label>
+        <div class="subtle-hint">
+            <ext-link href="https://aistudio.google.com/apikey">Get an API key</ext-link>
+        </div>
+        <input
+            type="text"
+            id="api-key"
+            v-model="apiKey"
+            placeholder="Enter your API key here..."
+            autocomplete="on"
+        />
+    </div>
+    <div class="input-group">
+        <label for="temperature">
+            Temperature: {{ temperature }}
+            <help-component>
+                <p>Temperature is a hyperparameter that governs the sampling process during text generation. It determines how "random" or "creative" the model's outputs will be:</p>
+                <ul>
+                    <li>
+                        Lower temperature (closer to 0): Produces more deterministic, predictable responses. The model consistently selects the highest probability words.
+                    </li>
+                    <li>
+                        Higher temperature: Leads to more varied, creative, and sometimes unexpected responses. The model may select lower probability words, increasing diversity but potentially reducing reliability
+                    </li>
+                </ul>
+            </help-component>
+        </label>
+        <input
+            type="range"
+            id="temperature"
+            :min="config.temperature.min"
+            :max="config.temperature.max"
+            :step="config.temperature.step"
+            v-model.number="temperature"
+        />
+    </div>
+    <chat-thread-component :messages="messages"></chat-thread-component>
+    <div class="input-group" v-if="apiKey">
+        <div class="input-button-pair">
+            <input
+                type="text"
+                v-model="message"
+                placeholder="Type your message here..."
+                @keyup.enter="submitPrompt"
+                :disabled="isEditDisabled" />
+            <button @click="submitPrompt">Send</button>
+        </div>
+        <loading-animation-component v-if="isEditDisabled"></loading-animation-component>
+    </div>
+</div>
