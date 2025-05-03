@@ -1,9 +1,17 @@
 <div class="chat-thread-component">
-    <div v-for="message of messages"
-        :class="`chat-thread-component__message chat-thread-component__message--${message.role}`">
-        <div class="chat-thread-component__message-role">
-            {{ message.role }}
+    <div class="input-group">
+        <label>
+            <input type="checkbox" v-model="showSystemMessages">
+            Show System Messages
+        </label>
+    </div>
+    <div class="chat-thread-component__message-container">
+        <div v-for="message of messages"
+            :class="`chat-thread-component__message chat-thread-component__message--${message.role}`" :hidden="message.role === 'system' && !showSystemMessages">
+            <div class="chat-thread-component__message-role">
+                {{ message.role }}
+            </div>
+            <div class="chat-thread-component__message-contents" v-html="markdownToHTML(message.content)"></div>
         </div>
-        <div class="chat-thread-component__message-contents" v-html="markdownToHTML(message.content)"></div>
     </div>
 </div>

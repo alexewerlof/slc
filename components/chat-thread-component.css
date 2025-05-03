@@ -1,4 +1,6 @@
-.chat-thread-component {
+.chat-thread-component {}
+
+.chat-thread-component__message-container {
     display: flex;
     flex-direction: column;
 }
