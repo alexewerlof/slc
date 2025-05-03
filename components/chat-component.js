@@ -1,4 +1,4 @@
-import { Gemini } from '../lib/gemini.js'
+import { Gemini } from '../lib/llm/gemini.js'
 import { showToast } from '../lib/toast.js'
 
 const config = {
