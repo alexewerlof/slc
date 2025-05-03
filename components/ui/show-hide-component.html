@@ -1,12 +1,20 @@
-<div :class="{ 'show-hide-component': true, 'show-hide-component--visible': isVisible }">
-    <div @click="toggle()" class="show-hide-component__header" >
-        <span class="show-hide-component__icon">{{ icon }}</span>
+<div class="show-hide-component">
+    <label class="show-hide-component__header">
+        <input
+            type="checkbox"
+            class="show-hide-component__checkbox"
+            v-model="isVisible"
+        />
+        <div :class="{
+            'show-hide-component__icon': true,
+            'show-hide-component__icon--rotated': isVisible
+        }">{{ icon }}</div>
         <span class="show-hide-component__title">{{ title }}</span>
-        <span class="show-hide-component__name">{{ name }}</span>
-    </div>
+    </label>
     <transition>
-        <div v-show="isVisible" class="show-hide-component__contents">
-            <slot></slot>
-        </div>
+        <div
+            class="show-hide-component__contents"
+            v-show="isVisible"
+        ><slot></slot></div>
     </transition>
 </div>

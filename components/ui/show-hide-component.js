@@ -1,24 +1,18 @@
 export default {
     data() {
         return {
-            isVisible: true,
+            isVisible: !this.hidden,
+            icon: '▶',
         }
-    },
-    computed: {
-        icon() {
-            return this.isVisible ? '▼' : '▶'
-        },
     },
     props: {
         title: {
             type: String,
             default: 'NO TITLE!',
         },
-        name: String,
-    },
-    methods: {
-        toggle() {
-            this.isVisible = !this.isVisible
+        hidden: {
+            type: Boolean,
+            default: false,
         },
     },
 }

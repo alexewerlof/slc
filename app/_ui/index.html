@@ -150,7 +150,7 @@
                             </div>
                         </fieldset>
                     </form>
-                    <fieldset>
+                    <fieldset class="b-mar-gap2">
                         <legend>Custom Components</legend>
                         <div class="input-group">
                             <label for="inline-select">
@@ -164,6 +164,14 @@
                             <inline-select-component v-model="inlineSelectValue" :options="inlineSelectOptions"></inline-select-component>
                         </div>
                     </fieldset>
+                    <show-hide-component title="Some advanced stuff">
+                        <div class="input-group">
+                            <label>
+                                <input type="checkbox">
+                                Checkbox
+                            </label>
+                        </div>
+                    </show-hide-component>    
                     <h2>Buttons</h2>
                     <h3>Small</h3>
                     <div>
