@@ -1,47 +1,115 @@
 <div class="chat-component">
-    <div class="input-group">
-        <label for="engine-selector">Engine</label>
-        <inline-select-component v-model="selectedEngine" :options="engines"></inline-select-component>
+    <div class="well">
+        <chat-thread-component :messages="messages"></chat-thread-component>
     </div>
-    <div class="input-group">
-        <label for="api-key">API Key</label>
-        <div class="subtle-hint">
-            <ext-link href="https://aistudio.google.com/apikey">Get an API key</ext-link>
+    <fieldset class="b-mar-gap2">
+        <legend>AI</legend>
+        <div class="input-group b-mar-gap2">
+            <label for="engine-selector">
+                Engine
+                <help-component>
+                    <p>
+                        Due to cost of running AI, this open source app relies on you to provide your AI and models. There are many options:
+                    </p>
+                    <ul>
+                        <li>
+                            <ext-link href="https://webllm.mlc.ai/">WebLLM</ext-link>: the easiest option. It runs the LLM engine in this browser window and caches the model for later usage.
+                        </li>
+                        <li>
+                            <ext-link href="https://lmstudio.ai/">LM Studio</ext-link>: allows running models locally. You need to configure a local server to be able to use it.
+                        </li>
+                        <li>
+                            <ext-link href="https://jan.ai/">Jan</ext-link>: similar to LM Studio but with a simpler user interface.
+                        </li>
+                        <li>
+                            <ext-link href="https://chatgpt.com/">OpenAI</ext-link>: the company behind ChatGPT and run by a lunatic.
+                            You need to get an
+                            <ext-link href="https://platform.openai.com/api-keys">API Key</ext-link>.
+                        </li>
+                        <li>
+                            <ext-link href="https://claude.ai/">Claude</ext-link>: similar to OpenAI, run by some former OpenAI employees.
+                            You need to get an
+                            <ext-link href="https://console.anthropic.com/settings/keys">API Key</ext-link>.
+                        </li>
+                        <li>
+                            <ext-link href="https://gemini.google.com">Gemini</ext-link>: from Google which arguably started this whole AI thingie by their Transformers architecture.
+                            You need to get an
+                            <ext-link href="https://aistudio.google.com/apikey">API Key</ext-link>.
+                        </li>
+                    </ul>
+                    <p>
+                        For services that require an API Key: it will not be stored locally or shared with anyone but it will be in the requests that are made to the API endpoints.
+                    </p>
+                </help-component>
+            </label>
+            <inline-select-component v-model="selectedEngine" :options="engines"></inline-select-component>
         </div>
-        <input
-            type="text"
-            id="api-key"
-            v-model="apiKey"
-            placeholder="Enter your API key here..."
-            autocomplete="on"
-        />
-    </div>
+        <div class="input-group b-mar-gap2" v-if="selectedEngine.needsApiKey">
+            <label for="api-key">API Key</label>
+            <div class="subtle-hint">
+                This LLM Engine requires API keys
+            </div>
+            <input
+                type="text"
+                id="api-key"
+                v-model="apiKey"
+                placeholder="Enter your API key here..."
+                autocomplete="on"
+            />
+        </div>
+        <show-hide-component title="Advanced" hidden="true">
+            <div class="input-group">
+                <label for="temperature">
+                    Temperature: {{ temperature }}
+                    <help-component>
+                        <p>Temperature is a hyperparameter that governs the sampling process during text generation. It determines how "random" or "creative" the model's outputs will be:</p>
+                        <ul>
+                            <li>
+                                Lower temperature (closer to 0): Produces more deterministic, predictable responses. The model consistently selects the highest probability words.
+                            </li>
+                            <li>
+                                Higher temperature: Leads to more varied, creative, and sometimes unexpected responses. The model may select lower probability words, increasing diversity but potentially reducing reliability
+                            </li>
+                        </ul>
+                    </help-component>
+                </label>
+                <input
+                    type="range"
+                    id="temperature"
+                    :min="config.temperature.min"
+                    :max="config.temperature.max"
+                    :step="config.temperature.step"
+                    v-model.number="temperature"
+                />
+            </div>
+            <div class="input-group">
+                <label for="max-tokens">
+                    Max Tokens: {{ maxTokens }}
+                    <help-component>
+                        <p>
+                            You can set a maximum tokens to be generated by the AI in response to your queries.
+                        </p>
+                        <p>
+                            A token generally corresponds to ~4 characters in English text, with common words typically using 1-2 tokens and longer/uncommon words using more.
+                        </p>
+                        <ul>
+                            <li>Higher max token: generates longer and more elaborate responses but takes longer</li>
+                            <li>Lower max token: reduces AI response delay but may cut the message half-way through.</li>
+                        </ul>
+                    </help-component>
+                </label>
+                <input
+                    type="range"
+                    id="max-tokens"
+                    :min="config.maxTokens.min"
+                    :max="config.maxTokens.max"
+                    :step="config.maxTokens.step"
+                    v-model.number="maxTokens"
+                />
+            </div>
+        </show-hide-component>
+    </fieldset>
     <div class="input-group">
-        <label for="temperature">
-            Temperature: {{ temperature }}
-            <help-component>
-                <p>Temperature is a hyperparameter that governs the sampling process during text generation. It determines how "random" or "creative" the model's outputs will be:</p>
-                <ul>
-                    <li>
-                        Lower temperature (closer to 0): Produces more deterministic, predictable responses. The model consistently selects the highest probability words.
-                    </li>
-                    <li>
-                        Higher temperature: Leads to more varied, creative, and sometimes unexpected responses. The model may select lower probability words, increasing diversity but potentially reducing reliability
-                    </li>
-                </ul>
-            </help-component>
-        </label>
-        <input
-            type="range"
-            id="temperature"
-            :min="config.temperature.min"
-            :max="config.temperature.max"
-            :step="config.temperature.step"
-            v-model.number="temperature"
-        />
-    </div>
-    <chat-thread-component :messages="messages"></chat-thread-component>
-    <div class="input-group" v-if="apiKey">
         <div class="input-button-pair">
             <input
                 type="text"

@@ -1,4 +1,3 @@
-import { Gemini } from '../lib/llm/gemini.js'
 import { showToast } from '../lib/toast.js'
 
 const config = {
@@ -8,6 +7,12 @@ const config = {
         max: 2,
         step: 0.1,
     },
+    maxTokens: {
+        default: 1000,
+        min: 100,
+        max: 10000,
+        step: 100,
+    },
 }
 
 export default {
@@ -16,7 +21,8 @@ export default {
             {
                 title: 'LM Studio',
                 value: {
-                    id: 'lm_studio',
+                    id: 'lmstudio',
+                    needsApiKey: false,
                 },
             },
             {
@@ -24,30 +30,35 @@ export default {
                 title: 'WebLLM',
                 value: {
                     id: 'webllm',
-                },
-            },
-            {
-                title: 'Claude',
-                value: {
-                    id: 'claude',
-                },
-            },
-            {
-                title: 'Gemini',
-                value: {
-                    id: 'gemini',
+                    needsApiKey: false,
                 },
             },
             {
                 title: 'Jan',
                 value: {
                     id: 'jan',
+                    needsApiKey: false,
+                },
+            },
+            {
+                title: 'Claude',
+                value: {
+                    id: 'claude',
+                    needsApiKey: true,
+                },
+            },
+            {
+                title: 'Gemini',
+                value: {
+                    id: 'gemini',
+                    needsApiKey: true,
                 },
             },
             {
                 title: 'OpenAI',
                 value: {
                     id: 'openai',
+                    needsApiKey: true,
                 },
             },
         ]
@@ -58,6 +69,7 @@ export default {
             isEditDisabled: false,
             temperature: config.temperature.default,
             message: 'What is an SLO?',
+            maxTokens: config.maxTokens.default,
             config,
         }
     },
@@ -70,13 +82,16 @@ export default {
     methods: {
         async submitPrompt() {
             try {
-                const gemini = new Gemini(this.apiKey)
+                const engine = await import(`../lib/llm/${this.selectedEngine.id}.js`)
                 this.messages.push({ role: 'user', content: this.message })
                 this.message = ''
                 this.isEditDisabled = true
-                const response = await gemini.getCompletion(this.messages, {
-                    temperature: 0.1,
-                    maxOutputTokens: 1000,
+                const response = await engine.getCompletion(this.messages, {
+                    // model: 'models/gemini-2.0-flash:generateContent',
+                    model: 'phi-4',
+                    apiKey: this.apiKey,
+                    temperature: this.temperature,
+                    maxTokens: this.maxTokens,
                 })
                 this.messages.push(response)
             } catch (error) {

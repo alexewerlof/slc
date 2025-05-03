@@ -132,6 +132,10 @@ section {
     margin-bottom: var(--gap2);
 }
 
+.t-mar-gap2 {
+    margin-bottom: var(--gap2);
+}
+
 .b-mar-gap2 {
     margin-bottom: var(--gap2);
 }
