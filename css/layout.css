@@ -122,12 +122,12 @@ section {
     margin: var(--gap2);
 }
 
-.v-mar-gap2 {
+.h-mar-gap2 {
     margin-left: var(--gap2);
     margin-right: var(--gap2);
 }
 
-.h-mar-gap2 {
+.v-mar-gap2 {
     margin-top: var(--gap2);
     margin-bottom: var(--gap2);
 }
