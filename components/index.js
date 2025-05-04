@@ -48,6 +48,7 @@ const componentSpecifications = [
     ' AJH  : ./summary-component',
     ' AJHC : ./ui/tabs-component',
     ' A HC : ./ui/tooltip-component',
+    ' AJH  : ./llm/lmstudio-settings-component',
 ]
 
 function parseComponentSpec(componentSpec) {

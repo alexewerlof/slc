@@ -1,4 +1,4 @@
-import { isDef, isInstance, isObj } from '../validation.js'
+import { isDef, isInstance, isObj } from '../../lib/validation.js'
 
 export async function postMessage(url, data, extraHeaders = {}) {
     if (!isInstance(url, URL)) {
