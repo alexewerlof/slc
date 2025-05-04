@@ -6,6 +6,10 @@
     box-shadow: 0 0 var(--gap) var(--bthick) var(--background-darker);
 }
 
+.inline-select-component__buttons button {
+    box-shadow: none;
+}
+
 .inline-select-component__buttons button + button {
     margin-left: 0;
 }

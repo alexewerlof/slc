@@ -141,29 +141,24 @@ button {
     border: none;
     border-radius: var(--bradius);
     cursor: pointer;
-    transition: filter var(--animation-speed);
+    box-shadow: inset 0 0 0.5em 0 #ffffff44;
     padding: var(--gap) var(--gap2);
     margin: 1px; /* To have place for showing focus outline */
+    transition: filter var(--animation-speed), box-shadow var(--animation-speed);
 }
 
-a.button {
-    background-color: var(--secondary-color);
-    color: var(--background-color);
-    border: var(--bthick) solid currentColor;
-    border-radius: var(--bradius);
-    cursor: pointer;
-    transition: filter var(--animation-speed);
-    padding: var(--gap) var(--gap2);
-}
-
-button[disabled] {
+button[disabled], button[disabled]:hover {
     background-color: var(--background-lighter);
     color: var(--ui-border);
     cursor: not-allowed;
+    box-shadow: none;
+    filter: none;
 }
 
 button:hover {
     filter: brightness(135%);
+    box-shadow: 0 0 0.5em 0 var(--secondary-color);
+    z-index: 1;
 }
 
 .button--small {
@@ -179,8 +174,16 @@ button:hover {
     background-color: var(--primary-color);
 }
 
+.button--cta:hover {
+    box-shadow: 0 0 0.5em 0 var(--primary-color);
+}
+
 .button--danger {
     background-color: var(--brand-red);
+}
+
+.button--danger:hover {
+    box-shadow: 0 0 0.5em 0 var(--brand-red);
 }
 
 a, a:hover, a:active {
