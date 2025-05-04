@@ -1,4 +1,4 @@
-import { isArr, isObj, isStrLen } from '../validation.js'
+import { isArr, isObj, isStrLen } from '../../lib/validation.js'
 import { postMessage } from './common.js'
 
 function toParts(text) {

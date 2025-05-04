@@ -1,0 +1,18 @@
+<div class="lmstudio-settings-component">
+    <div class="input-group">
+        <label for="lmstudio-settings-component__base-url">Base URL</label>
+        <input
+            type="url"
+            v-model="lmstudio.baseUrl"
+            id="lmstudio-settings-component__base-url" />
+    </div>
+    <div class="input-group">
+        <label for="lmstudio-settings-component__model-list">Model List</label>
+        <div class="input-button-pair">
+        <select v-model="lmstudio.modelIds.selected" id="lmstudio-settings-component__model-list">
+            <option v-for="id of lmstudio.modelIds" :value="id">{{ id }}</option>
+        </select>
+        <button @click="lmstudio.updateModelIds()">Fetch</button>
+    </div>
+    </div>
+</div>

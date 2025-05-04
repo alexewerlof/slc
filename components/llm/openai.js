@@ -1,4 +1,4 @@
-import { isArr, isObj, isStr } from '../validation.js'
+import { isArr, isObj, isStr } from '../../lib/validation.js'
 import { postMessage } from './common.js'
 
 export async function getCompletion(messages, options) {

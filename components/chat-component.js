@@ -1,4 +1,5 @@
 import { showToast } from '../lib/toast.js'
+import { LMStudio } from './llm/lmstudio.js'
 
 const config = {
     temperature: {
@@ -22,48 +23,49 @@ export default {
                 title: 'LM Studio',
                 value: {
                     id: 'lmstudio',
-                    needsApiKey: false,
+                    instance: new LMStudio(),
                 },
             },
+            /*
             {
                 disabled: true,
                 title: 'WebLLM',
                 value: {
                     id: 'webllm',
-                    needsApiKey: false,
+                    instance: LMStudio,
                 },
             },
             {
                 title: 'Jan',
                 value: {
                     id: 'jan',
-                    needsApiKey: false,
+                    instance: LMStudio,
                 },
             },
             {
                 title: 'Claude',
                 value: {
                     id: 'claude',
-                    needsApiKey: true,
+                    instance: LMStudio,
                 },
             },
             {
                 title: 'Gemini',
                 value: {
                     id: 'gemini',
-                    needsApiKey: true,
+                    instance: LMStudio,
                 },
             },
             {
                 title: 'OpenAI',
                 value: {
                     id: 'openai',
-                    needsApiKey: true,
+                    instance: LMStudio,
                 },
             },
+            */
         ]
         return {
-            apiKey: '',
             engines,
             selectedEngine: engines[0].value,
             isEditDisabled: false,
@@ -82,14 +84,11 @@ export default {
     methods: {
         async submitPrompt() {
             try {
-                const engine = await import(`../lib/llm/${this.selectedEngine.id}.js`)
                 this.messages.push({ role: 'user', content: this.message })
                 this.message = ''
                 this.isEditDisabled = true
-                const response = await engine.getCompletion(this.messages, {
-                    // model: 'models/gemini-2.0-flash:generateContent',
-                    model: 'phi-4',
-                    apiKey: this.apiKey,
+                const response = await this.selectedEngine.instance.getCompletion(this.messages, {
+                    // TODO: Gemini model: 'models/gemini-2.0-flash:generateContent',
                     temperature: this.temperature,
                     maxTokens: this.maxTokens,
                 })

@@ -1,6 +1,7 @@
 <div class="chat-component">
     <div class="well">
         <chat-thread-component :messages="messages"></chat-thread-component>
+        <loading-animation-component v-if="isEditDisabled"></loading-animation-component>
     </div>
     <fieldset class="b-mar-gap2">
         <legend>AI</legend>
@@ -43,6 +44,12 @@
                 </help-component>
             </label>
             <inline-select-component v-model="selectedEngine" :options="engines"></inline-select-component>
+        </div>
+        <div class="b-mar-gap2">
+            <lmstudio-settings-component
+                v-if="selectedEngine.id === 'lmstudio'"
+                :lmstudio="selectedEngine.instance">
+            </lmstudio-settings-component>
         </div>
         <div class="input-group b-mar-gap2" v-if="selectedEngine.needsApiKey">
             <label for="api-key">API Key</label>
@@ -111,14 +118,13 @@
     </fieldset>
     <div class="input-group">
         <div class="input-button-pair">
-            <input
+            <textarea
                 type="text"
                 v-model="message"
                 placeholder="Type your message here..."
                 @keyup.enter="submitPrompt"
-                :disabled="isEditDisabled" />
+                :disabled="isEditDisabled"></textarea>
             <button @click="submitPrompt">Send</button>
         </div>
-        <loading-animation-component v-if="isEditDisabled"></loading-animation-component>
     </div>
 </div>
