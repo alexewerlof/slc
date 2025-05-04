@@ -57,7 +57,12 @@ input[type='range']:focus::-webkit-slider-thumb {
     height: 200%;
 }
 
-input[type='search'], input[type='text'], input[type='number'], select, textarea {
+input[type='search'],
+input[type='text'],
+input[type='number'],
+input[type='url'],
+select,
+textarea {
     padding: var(--gap);
     font-family: inherit;
     font-size: inherit;
@@ -74,23 +79,31 @@ input[type='search'], input[type='text'], input[type='number'], select, textarea
 input[type='search']:hover,
 input[type='text']:hover,
 input[type='number']:hover,
+input[type='url']:hover,
 select:hover,
 textarea:hover,
 table input[type='search'],
 table input[type='text'],
 table input[type='number'],
+table input[type='url'],
 table select,
 table textarea {
     border-color: var(--secondary-color);
 }
 
-input[type='search']:focus, input[type='text']:focus, input[type='number']:focus, select:focus, textarea:focus {
+input[type='search']:focus,
+input[type='text']:focus,
+input[type='number']:focus,
+input[type='url']:focus,
+select:focus,
+textarea:focus {
     border-color: var(--secondary-color);
 }
 
 input[type='search']:focus-visible,
-[type='text']:focus-visible,
+input[type='text']:focus-visible,
 input[type='number']:focus-visible,
+input[type='url']:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
     outline: none;
@@ -202,7 +215,9 @@ a, a:hover, a:active {
     display: flex;
 }
 
-.input-button-pair input {
+.input-button-pair input,
+.input-button-pair select,
+.input-button-pair textarea {
     flex: 1;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -234,6 +249,7 @@ label.spaced + label.spaced {
 input[type='search']:invalid,
 input[type='text']:invalid,
 input[type='number']:invalid,
+input[type='url']:invalid,
 select:invalid,
 textarea:invalid {
     border-color: var(--brand-red);
