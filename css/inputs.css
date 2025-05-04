@@ -141,7 +141,7 @@ button {
     border: none;
     border-radius: var(--bradius);
     cursor: pointer;
-    transition: background-color var(--animation-speed);
+    transition: filter var(--animation-speed);
     padding: var(--gap) var(--gap2);
     margin: 1px; /* To have place for showing focus outline */
 }
@@ -152,7 +152,7 @@ a.button {
     border: var(--bthick) solid currentColor;
     border-radius: var(--bradius);
     cursor: pointer;
-    transition: background-color var(--animation-speed);
+    transition: filter var(--animation-speed);
     padding: var(--gap) var(--gap2);
 }
 
@@ -163,7 +163,7 @@ button[disabled] {
 }
 
 button:hover {
-    filter: brightness(115%);
+    filter: brightness(135%);
 }
 
 .button--small {
