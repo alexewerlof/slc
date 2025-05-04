@@ -1,4 +1,6 @@
-.chat-thread-component {}
+.chat-thread-component {
+    background-color: transparent;
+}
 
 .chat-thread-component__message-container {
     display: flex;
@@ -7,7 +9,10 @@
 
 .chat-thread-component__message {
     max-width: 80%;
-    margin: var(--gap2) 0;
+}
+
+.chat-thread-component__message + .chat-thread-component__message {
+    margin-top: var(--gap2);
 }
 
 .chat-thread-component__message-role {
