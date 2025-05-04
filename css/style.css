@@ -137,3 +137,8 @@ td button {
     scrollbar-color: var(--background-lighter) var(--background-darker);
     scrollbar-width: thin;
 }
+
+mark {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
