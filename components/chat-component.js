@@ -72,6 +72,7 @@ export default {
             temperature: config.temperature.default,
             message: 'What is an SLO?',
             maxTokens: config.maxTokens.default,
+            lmstudio: new LMStudio(),
             config,
         }
     },
