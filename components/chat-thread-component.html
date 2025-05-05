@@ -11,7 +11,7 @@
             <div class="chat-thread-component__message-role">
                 {{ message.role }}
             </div>
-            <div class="chat-thread-component__message-contents" v-html="markdownToHTML(message.content)"></div>
+            <markdown-component class="chat-thread-component__message-contents" :markdown="message.content"></markdown-component>
         </div>
     </div>
 </div>

@@ -36,6 +36,7 @@ const componentSpecifications = [
     ' AJHC : ./indicator/indicator-finder-component',
     ' AJHC : ./ui/inline-select-component',
     ' A HC : ./ui/loading-animation-component',
+    ' AJH  : ./ui/markdown-component',
     ' AJH  : ./metric-component',
     ' AJH  : ./objective/objective-component',
     ' AJHC : ./percentage-overview-component',
