@@ -1,19 +1,17 @@
 .feedback-blob-component {
+    opacity: 0.8;
     position: fixed;
     bottom: var(--gap2);
     right: var(--gap2);
-    background-color: var(--primary-color);
-    color: var(--background-color);
-    padding: var(--gap) var(--gap2);
     border-radius: 50px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.5em 0.5em rgba(0, 0, 0, 0.2);
     cursor: pointer;
     font-size: 1.2em;
-    transition: transform var(--animation-speed) ease, box-shadow var(--animation-speed) ease;
+    transition: transform var(--animation-speed) ease, opacity var(--animation-speed) ease;
 }
 
 .feedback-blob-component:hover {
+    opacity: 1;
     transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     color: var(--background-color);
 }
