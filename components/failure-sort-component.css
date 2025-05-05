@@ -5,4 +5,29 @@
     gap: var(--gap2);
 }
 
-.failure-sort-component__failure {}
+.failure-sort-component__failure {
+    cursor: row-resize;
+}
+
+.failure-sort-component__failure:hover {
+    border: 1px solid var(--secondary-color);
+}
+
+.failure-sort-component__failure-move, /* Applied to moving elements */
+.failure-sort-component__failure-enter-active,
+.failure-sort-component__failure-leave-active {
+    transition: all 0.5s ease; /* Adjust timing and easing as needed */
+}
+
+.failure-sort-component__failure-enter-from,
+.failure-sort-component__failure-leave-to {
+    opacity: 0;
+    transform: translateX(30px); /* Example starting/ending position for enter/leave */
+}
+
+/* Ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.failure-sort-component__failure-leave-active {
+    position: absolute;
+    width: calc(100% - 2 * var(--padding-inline, 1rem)); /* Adjust based on your actual padding/margins if needed */
+}
