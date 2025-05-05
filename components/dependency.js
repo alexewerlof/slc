@@ -8,8 +8,6 @@ import { Failure } from './failure.js'
 import { Service } from './service.js'
 import { Provider } from './provider.js'
 
-const consumptionIcon = icon('consumption')
-
 export class Dependency {
     failures = new SelectableArray(Failure, this)
 
@@ -64,6 +62,6 @@ export class Dependency {
     }
 
     toString() {
-        return `${this.consumption} ${consumptionIcon} ${this.service}`
+        return `${this.consumption} ${icon('dependency')} ${this.service}`
     }
 }

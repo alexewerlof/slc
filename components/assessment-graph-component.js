@@ -1,3 +1,4 @@
+import { icon } from '../lib/icons.js'
 import { Assessment } from './assessment.js'
 
 export default {
@@ -5,12 +6,11 @@ export default {
         return {
             deltaX: 50,
             deltaY: 50,
-            dotRadius: 4,
-            providerRadius: 8,
-            serviceRadius: 10,
-            consumerRadius: 8,
-            consumptionRadius: 10,
-            dependencyRadius: 12,
+            providerRadius: 10,
+            serviceRadius: 12,
+            consumerRadius: 10,
+            consumptionRadius: 12,
+            dependencyRadius: 14,
             padding: 50,
         }
     },
@@ -60,6 +60,7 @@ export default {
         },
     },
     methods: {
+        icon,
         scaleX(x) {
             return x * this.deltaX
         },

@@ -24,13 +24,27 @@
                     The UI is roughly broken into the following steps:
                 </p>
                 <ul>
-                    <li><button @click="currentStep = 1">Providers</button>: Define the service providers</li>
-                    <li><button @click="currentStep = 2">Consumers</button>: Define the consumers of the services</li>
-                    <li><button @click="currentStep = 3">Failures</button>: Define the failures that threaten the consumption of the services</li>
-                    <li><button @click="currentStep = 4">Risks</button>: Define the business impact of failures and sort them accordingly</li>
-                    <li><button @click="currentStep = 5">Metrics</button>: What to measure to proactively be on top of the risks?</li>
-                    <li><button @click="currentStep = 6">Summary</button>: A summary of the assessment</li>
-                    <li><button @click="currentStep = 7">Export</button>: Export the assessment to share with others</li>
+                    <li>
+                        <button @click="currentStep = 1">{{ icon('provider') }} Providers</button>: Define the service providers
+                    </li>
+                    <li>
+                        <button @click="currentStep = 2">{{ icon('consumer') }} Consumers</button>: Define the consumers of the services
+                    </li>
+                    <li>
+                        <button @click="currentStep = 3">{{ icon('failure') }} Failures</button>: Define the failures that threaten the consumption of the services
+                    </li>
+                    <li>
+                        <button @click="currentStep = 4">{{ icon('risk') }} Risks</button>: Define the business impact of failures and sort them accordingly
+                    </li>
+                    <li>
+                        <button @click="currentStep = 5">{{ icon('metric') }} Metrics</button>: What to measure to proactively be on top of the risks?
+                    </li>
+                    <li>
+                        <button @click="currentStep = 6">Summary</button>: A summary of the assessment
+                    </li>
+                    <li>
+                        <button @click="currentStep = 7">Export</button>: Export the assessment to share with others
+                    </li>
                 </ul>      
                 <p>
                     You can go back and forth between the tabs as you work your way through the UI.
@@ -71,50 +85,37 @@
                     <span class="exprs">Consumer</span>
                     has 1+
                     <span class="punct">{{ icon('consumption') }}</span>
-                    <span class="exprs">Consumption</span>(s).
-                    to achieve a goal
+                    <span class="exprs">Consumption</span>(s) to achieve a goal.
                     <br>
 
+                    <span class="punct">{{ icon('dependency') }}</span>
+                    <span class="exprs">Dependency</span>
+                    ties a
                     <span class="punct">{{ icon('consumption') }}</span>
                     <span class="exprs">Consumption</span>
-                    uses 1+
-                    <span class="punct">{{ icon('service') }}</span>
-                    <span class="exprs">Service</span>(s).
-                    <br>
-
-                    Each
-                    <span class="punct">{{ icon('consumption') }}</span>
-                    <span class="exprs">Consumption</span>
-                    -
+                    to a
                     <span class="punct">{{ icon('service') }}</span>
                     <span class="exprs">Service</span>
-                    pair has 1+
+                    <br>
+
+                    <span class="punct">{{ icon('dependency') }}</span>
+                    <span class="exprs">Dependency</span>
+                    has 1+
                     <span class="punct">{{ icon('failure') }}</span>
                     <span class="exprs">Failure</span>(s).
                     <br>
 
                     <span class="punct">{{ icon('failure') }}</span>
                     <span class="exprs">Failure</span>
-                    has
+                    has a
+                    <span class="punct">{{ icon('symptom') }}</span>
+                    <span class="exprs">Symptom</span>,
+                    a
                     <span class="punct">{{ icon('consequence') }}</span>
-                    <span class="exprs">Consequences</span>(s).
-                    <br>
-
-                    <span class="punct">{{ icon('risk') }}</span>
-                    <span class="exprs">Risk</span>
-                    associates a
-                    <span class="punct">{{ icon('consequence') }}</span>
-                    <span class="exprs">Consequences</span>
-                    to a business
+                    <span class="exprs">Consequence</span>,
+                    and a 
                     <span class="punct">{{ icon('impact') }}</span>
-                    <span class="exprs">Impact</span>.
-                    <br>
-
-                    <span class="punct">{{ icon('metric') }}</span>
-                    <span class="exprs">Metric</span>
-                    measures 1+
-                    <span class="punct">{{ icon('failure') }}</span>
-                    <span class="exprs">Failure</span>(s).
+                    <span class="exprs">Business Impact</span>
                 </code-block-component>
             </div>
         </div>

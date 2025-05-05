@@ -3,8 +3,6 @@ import { config } from '../config.js'
 import { icon } from '../lib/icons.js'
 import { Dependency } from './dependency.js'
 
-const failureIcon = icon('failure')
-
 // If a certain service fails, what activities will it impact and how?
 export class Failure {
     dependency = null
@@ -81,7 +79,21 @@ export class Failure {
     }
 
     toString() {
-        return `${this.dependency.consumption} ${failureIcon} ${this.dependency.service} ⇒ ${this.symptom}`
+        const ret = [
+            this.dependency.consumption,
+            icon('failure'),
+            this.dependency.service,
+        ]
+        if (this.symptom) {
+            ret.push(icon('symptom'), this.symptom)
+        }
+        if (this.consequence) {
+            ret.push(icon('consequence'), this.consequence)
+        }
+        if (this.businessImpact) {
+            ret.push(icon('impact'), this.businessImpact)
+        }
+        return ret.join(' ')
     }
 
     get index() {
