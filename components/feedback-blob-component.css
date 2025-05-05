@@ -9,7 +9,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     font-size: 1.2em;
-    transition: transform 200ms ease, box-shadow 200ms ease;
+    transition: transform var(--animation-speed) ease, box-shadow var(--animation-speed) ease;
 }
 
 .feedback-blob-component:hover {
