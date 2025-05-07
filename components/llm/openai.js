@@ -12,7 +12,7 @@ export async function getCompletion(messages, options) {
     if (!isStr(apiKey)) {
         throw new Error(`API key should be strong. Got: ${apiKey}`)
     }
-    const url = new URL('v1/chat/completions', 'https://api.openai.com')
+    const url = new URL('chat/completions', 'https://api.openai.com/v1/')
     const response = await postMessage(url, {
         messages,
         model,

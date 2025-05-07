@@ -54,7 +54,8 @@ export async function getCompletion(messages, options) {
     if (!isStrLen(apiKey, 10)) {
         throw new Error(`Invalid API key: ${apiKey}`)
     }
-    const url = new URL(`v1beta/${model}`, 'https://generativelanguage.googleapis.com/')
+    // TODO: they do have OpenAI compatible API endpoints: https://ai.google.dev/gemini-api/docs/openai#rest
+    const url = new URL(model, 'https://generativelanguage.googleapis.com/v1beta/')
     url.searchParams.append('key', apiKey)
 
     const { systemInstruction, contents } = toGeminiMessages(messages)

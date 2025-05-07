@@ -3,7 +3,7 @@ import { isArr, isObj } from '../../lib/validation.js'
 import { postMessage } from './common.js'
 
 export class LMStudio {
-    baseUrl = 'http://localhost:1234'
+    baseUrl = 'http://localhost:1234/v1/'
     modelIds = new SelectableArray(String)
 
     constructor() {
@@ -31,7 +31,7 @@ export class LMStudio {
         }
         const { maxTokens, temperature } = options
         // TODO: OpenAI: https://api.openai.com/v1/chat/completions/
-        const response = await postMessage(this.makeUrl('v1/chat/completions'), {
+        const response = await postMessage(this.makeUrl('chat/completions'), {
             messages,
             model: this.modelIds.selected,
             temperature,
