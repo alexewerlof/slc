@@ -76,6 +76,10 @@ section {
     overflow: auto; /* Ensure content doesn't overflow */
 }
 
+.pad-0 {
+    padding: 0;
+}
+
 .pad-gap {
     padding: var(--gap);
 }
@@ -102,6 +106,10 @@ section {
 .h-pad-gap2 {
     padding-top: var(--gap2);
     padding-bottom: var(--gap2);
+}
+
+.mar-0 {
+    margin: 0;
 }
 
 .mar-gap {
@@ -138,4 +146,82 @@ section {
 
 .b-mar-gap2 {
     margin-bottom: var(--gap2);
+}
+
+/* ------------------------ a 12 column grid system ------------------------ */
+
+.mozaic--gap2 {
+    gap: var(--gap2);
+    padding: var(--gap2);
+}
+
+@media screen and (min-width: 1000px) {
+    .mozaic {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+    }
+
+    .mozaic__tile,
+    .mozaic__tile--1c {
+        grid-column: span 1;
+    }
+
+    .mozaic__tile--2c {
+        grid-column: span 2;
+    }
+
+    .mozaic__tile--third,
+    .mozaic__tile--3c {
+        grid-column: span 3;
+    }
+
+    .mozaic__tile--fourth,
+    .mozaic__tile--4c {
+        grid-column: span 4;
+    }
+
+    .mozaic__tile--5c {
+        grid-column: span 5;
+    }
+
+    .mozaic__tile--half,
+    .mozaic__tile--6c {
+        grid-column: span 6;
+    }
+
+    .mozaic__tile--7c {
+        grid-column: span 7;
+    }
+
+    .mozaic__tile--8c {
+        grid-column: span 8;
+    }
+
+    .mozaic__tile--9c {
+        grid-column: span 9;
+    }
+
+    .mozaic__tile--10c {
+        grid-column: span 10;
+    }
+
+    .mozaic__tile--11c {
+        grid-column: span 11;
+    }
+
+    .mozaic__tile--whole,
+    .mozaic__tile--12c {
+        grid-column: 1 / -1;
+    }
+
+    .mozaic__tile--2r {
+        grid-row: span 2;
+    }
+}
+
+@media screen and (max-width: 999px) {
+    .mozaic {
+        display: flex;
+        flex-direction: column;
+    }
 }

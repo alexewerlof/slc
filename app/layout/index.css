@@ -1,0 +1,13 @@
+.mozaic {
+    border: 1px solid var(--brand-green);
+    font-family: var(--code-font-family);
+    font-size: var(--code-font-size);
+    text-align: center;
+    word-break: break-all;
+}
+
+.mozaic__tile {
+    border: 1px solid var(--brand-red);
+    border-top-width: 4px;
+    height: 3em;
+}
