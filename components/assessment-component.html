@@ -7,7 +7,7 @@
                 :assessment="assessment"></assessment-graph-component>
         </div>
 
-        <div v-if="currentStep === 0">
+        <div v-if="currentStep === 0" class="pad-gap2">
             <div class="surface">
                 <hero-component fileName="subtle-prism.svg">
                     <h1>Service Level Workshop</h1>
@@ -120,8 +120,8 @@
             </div>
         </div>
 
-        <article v-if="currentStep === 1">
-            <section>
+        <div v-if="currentStep === 1" class="mozaic mozaic--gap2">
+            <div class="mozaic__tile mozaic__tile--half">
                 <div class="surface">
                     <h2>
                         Providers
@@ -167,8 +167,8 @@
                             :provider="assessment.providers.selected"></provider-component>
                     </div>
                 </div>
-            </section>
-            <section>
+            </div>
+            <div class="mozaic__tile mozaic__tile--half">
                 <div class="surface">
                     <h2>
                         Service
@@ -214,16 +214,11 @@
                             :service="selectedService"></service-component>
                     </div>
                 </div>
-            </section>
-            <section>
-                <div class="surface">
-                    Chat/Preview
-                </div>
-            </section>
-        </article>
+            </div>
+        </div>
 
-        <article v-if="currentStep === 2">
-            <section>
+        <div v-if="currentStep === 2" class="mozaic mozaic--gap2">
+            <div class="mozaic__tile mozaic__tile--half">
                 <div class="surface">
                     <h2>
                         Consumers
@@ -272,9 +267,10 @@
                     <div class="well" v-if="assessment.consumers.selected">
                         <consumer-component
                             :consumer="assessment.consumers.selected"></consumer-component>
+                    </div>
                 </div>
-            </section>
-            <section>
+            </div>
+            <div class="mozaic__tile mozaic__tile--half">
                 <div class="surface">
                     <h2>
                         Consumptions
@@ -326,62 +322,60 @@
                             :consumption="selectedConsumption"></consumption-component>
                     </div>
                 </div>
-            </section>
-            <section>
-                Model
-            </section>
-        </article>
+            </div>
+        </div>
 
-        <article v-if="currentStep === 3" class="pad-gap2">
-            <section class="surface">
-                <h2>Dependencies</h2>
-                <fieldset class="b-mar-gap2">
-                    <legend>Dependency</legend>
-                    <div class="input-group">
-                        <label>Select ({{ assessment.dependencies.length }})</label>
-                        <select v-model="assessment.dependencies.selectedIndex">
-                            <option v-for="(dependency, i) of assessment.dependencies" :value="i">
-                                {{ dependency }}
-                            </option>
-                        </select>
+        <div v-if="currentStep === 3" class="mozaic mozaic--gap2">
+            <div class="mozaic__tile mozaic__tile--half">
+                <div class="surface">
+                    <h2>Dependencies</h2>
+                    <fieldset class="b-mar-gap2">
+                        <legend>Dependency</legend>
+                        <div class="input-group">
+                            <label>Select ({{ assessment.dependencies.length }})</label>
+                            <select v-model="assessment.dependencies.selectedIndex">
+                                <option v-for="(dependency, i) of assessment.dependencies" :value="i">
+                                    {{ dependency }}
+                                </option>
+                            </select>
+                        </div>
+                    </fieldset>
+                    <div class="well" v-if="assessment.dependencies.selected">
+                        <h2>Consumption</h2>
+                        <p>{{ assessment.dependencies.selected.consumption }}</p>
+                        <h2>Service</h2>
+                        <p>{{ assessment.dependencies.selected.service }}</p>
                     </div>
-                </fieldset>
-                <div class="well" v-if="assessment.dependencies.selected">
-                    <h2>Consumption</h2>
-                    <p>{{ assessment.dependencies.selected.consumption }}</p>
-                    <h2>Service</h2>
-                    <p>{{ assessment.dependencies.selected.service }}</p>
                 </div>
-            </section>
-            <section class="surface">
-                <h2>Failures</h2>
-                <div v-if="assessment.dependencies.selected">
-                    <dependency-component :dependency="assessment.dependencies.selected"></dependency-component>
+            </div>
+            <div class="mozaic__tile mozaic__tile--half">
+                <div class="surface">
+                    <h2>Failures</h2>
+                    <div v-if="assessment.dependencies.selected">
+                        <dependency-component :dependency="assessment.dependencies.selected"></dependency-component>
+                    </div>
                 </div>
-            </section>
-            <section>
-                Chat
-            </section>
-        </article>
+            </div>
+        </div>
 
-        <article v-if="currentStep === 4">
+        <div v-if="currentStep === 4" class="pad-gap2">
             <section class="well">
                 <failure-sort-component :assessment="assessment"></failure-sort-component>
             </section>
-        </article>
+        </div>
 
-        <article v-if="currentStep === 6" class="pad-gap2">
+        <div v-if="currentStep === 6" class="pad-gap2">
             <section class="surface">
                 <summary-component :assessment="assessment"></summary-component>
             </section>
-        </article>
+        </div>
 
-        <article v-if="currentStep === 7" class="pad-gap2">
-            <section class="surface">
+        <div v-if="currentStep === 7" class="pad-gap2">
+            <div class="surface">
                 <code-block-component>
                     <pre>{{ JSON.stringify(assessment.state, null, 2) }}</pre>
                 </code-block-component>
-            </section>
-        </article>
+            </div>
+        </div>
     </div>
 </div>
