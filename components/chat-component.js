@@ -1,5 +1,5 @@
 import { showToast } from '../lib/toast.js'
-import { LMStudio } from './llm/lmstudio.js'
+import { LLMAPI } from './llm/llm-api.js'
 
 const config = {
     temperature: {
@@ -14,65 +14,71 @@ const config = {
         max: 10000,
         step: 100,
     },
+    engines: [
+        /*
+        {
+            name: 'WebLLM',
+            baseUrl: undefined,
+            website: 'https://webllm.mlc.ai/',
+            description:
+                'The easiest option. It runs the LLM engine in this browser window and caches the model for later usage.',
+        },
+        */
+        {
+            name: 'LM Studio',
+            baseUrl: 'http://localhost:1234/v1/',
+            website: 'https://lmstudio.ai/',
+            description: 'Runs on a local computer. You need to configure a local server to be able to use it.',
+        },
+        {
+            name: 'Jan',
+            baseUrl: 'http://localhost:1337/v1/',
+            website: 'https://jan.ai/',
+            description: 'Similar to LM Studio but with a simpler user interface.',
+        },
+        {
+            name: 'Gemini',
+            baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai/',
+            website: 'https://gemini.google.com',
+            description: 'from Google which arguably started this whole AI thingie by their Transformers architecture.',
+            apiKeyWebsite: 'https://aistudio.google.com/apikey',
+        },
+        {
+            name: 'OpenAI',
+            baseUrl: 'https://api.openai.com/v1/',
+            website: 'https://chatgpt.com/',
+            description: 'The company behind ChatGPT and run by a lunatic.',
+            apiKeyWebsite: 'https://platform.openai.com/api-keys',
+        },
+        {
+            name: 'Claude',
+            baseUrl: 'https://api.anthropic.com/v1/',
+            website: 'https://claude.ai/',
+            description: 'Similar to OpenAI, run by some former OpenAI employees.',
+            apiKeyWebsite: 'https://console.anthropic.com/settings/keys',
+        },
+    ],
 }
 
 export default {
     data() {
-        const engines = [
-            {
-                title: 'LM Studio',
-                value: {
-                    id: 'lmstudio',
-                    instance: new LMStudio(),
-                },
-            },
-            /*
-            {
-                disabled: true,
-                title: 'WebLLM',
-                value: {
-                    id: 'webllm',
-                    instance: LMStudio,
-                },
-            },
-            {
-                title: 'Jan',
-                value: {
-                    id: 'jan',
-                    instance: LMStudio,
-                },
-            },
-            {
-                title: 'Claude',
-                value: {
-                    id: 'claude',
-                    instance: LMStudio,
-                },
-            },
-            {
-                title: 'Gemini',
-                value: {
-                    id: 'gemini',
-                    instance: LMStudio,
-                },
-            },
-            {
-                title: 'OpenAI',
-                value: {
-                    id: 'openai',
-                    instance: LMStudio,
-                },
-            },
-            */
-        ]
+        const engineSelection = config.engines.map((engine) => {
+            return {
+                title: engine.name,
+                value: new LLMAPI(engine),
+            }
+        })
+        const tabNames = ['Engine', 'Chat']
         return {
-            engines,
-            selectedEngine: engines[0].value,
+            engines: config.engines,
+            engineSelection,
+            selectedEngine: engineSelection[0].value,
             isEditDisabled: false,
             temperature: config.temperature.default,
             message: 'What is an SLO?',
             maxTokens: config.maxTokens.default,
-            lmstudio: new LMStudio(),
+            tabNames,
+            selTabName: tabNames[0],
             config,
         }
     },
@@ -88,7 +94,7 @@ export default {
                 this.messages.push({ role: 'user', content: this.message })
                 this.message = ''
                 this.isEditDisabled = true
-                const response = await this.selectedEngine.instance.getCompletion(this.messages, {
+                const response = await this.selectedEngine.getCompletion(this.messages, {
                     // TODO: Gemini model: 'models/gemini-2.0-flash:generateContent',
                     temperature: this.temperature,
                     maxTokens: this.maxTokens,

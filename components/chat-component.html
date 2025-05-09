@@ -1,41 +1,24 @@
 <div class="chat-component">
-    <div class="well">
+    <tabs-component v-model="selTabName" :tab-names="tabNames"></tabs-component>
+    <div v-if="selTabName === 'Chat'" class="well b-mar-gap2">
         <chat-thread-component :messages="messages"></chat-thread-component>
-        <loading-animation-component v-if="isEditDisabled"></loading-animation-component>
+        <loading-animation-component v-if="selectedEngine.isBusy"></loading-animation-component>
     </div>
-    <fieldset class="b-mar-gap2">
-        <legend>AI</legend>
+    <div v-if="selTabName === 'Engine'" class="well b-mar-gap2">
         <div class="input-group b-mar-gap2">
             <label for="engine-selector">
-                Engine
+                LLM
                 <help-component>
                     <p>
                         Due to cost of running AI, this open source app relies on you to provide your AI and models. There are many options:
                     </p>
                     <ul>
-                        <li>
-                            <ext-link href="https://webllm.mlc.ai/">WebLLM</ext-link>: the easiest option. It runs the LLM engine in this browser window and caches the model for later usage.
-                        </li>
-                        <li>
-                            <ext-link href="https://lmstudio.ai/">LM Studio</ext-link>: allows running models locally. You need to configure a local server to be able to use it.
-                        </li>
-                        <li>
-                            <ext-link href="https://jan.ai/">Jan</ext-link>: similar to LM Studio but with a simpler user interface.
-                        </li>
-                        <li>
-                            <ext-link href="https://chatgpt.com/">OpenAI</ext-link>: the company behind ChatGPT and run by a lunatic.
-                            You need to get an
-                            <ext-link href="https://platform.openai.com/api-keys">API Key</ext-link>.
-                        </li>
-                        <li>
-                            <ext-link href="https://claude.ai/">Claude</ext-link>: similar to OpenAI, run by some former OpenAI employees.
-                            You need to get an
-                            <ext-link href="https://console.anthropic.com/settings/keys">API Key</ext-link>.
-                        </li>
-                        <li>
-                            <ext-link href="https://gemini.google.com">Gemini</ext-link>: from Google which arguably started this whole AI thingie by their Transformers architecture.
-                            You need to get an
-                            <ext-link href="https://aistudio.google.com/apikey">API Key</ext-link>.
+                        <li v-for="engine of engines">
+                            <ext-link :href="engine.website">{{ engine.name }}</ext-link>:
+                            {{ engine.description }}
+                            <span v-if="engine.apiKeyWebsite" class="subtle-hint">
+                                <ext-link :href="engine.apiKeyWebsite">Get API Key</ext-link>
+                            </span>
                         </li>
                     </ul>
                     <p>
@@ -43,13 +26,10 @@
                     </p>
                 </help-component>
             </label>
-            <inline-select-component v-model="selectedEngine" :options="engines"></inline-select-component>
+            <inline-select-component v-model="selectedEngine" :options="engineSelection"></inline-select-component>
         </div>
         <div class="b-mar-gap2">
-            <lmstudio-settings-component
-                v-if="selectedEngine.id === 'lmstudio'"
-                :lmstudio="selectedEngine.instance">
-            </lmstudio-settings-component>
+            <llm-api-settings-component :llm-api="selectedEngine"></llm-api-settings-component>
         </div>
         <div class="input-group b-mar-gap2" v-if="selectedEngine.needsApiKey">
             <label for="api-key">API Key</label>
@@ -115,7 +95,7 @@
                 />
             </div>
         </show-hide-component>
-    </fieldset>
+    </div>
     <div class="input-group">
         <div class="input-button-pair">
             <textarea
