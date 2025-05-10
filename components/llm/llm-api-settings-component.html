@@ -1,6 +1,9 @@
 <div class="llm-api-settings-component">
     <div class="input-group">
-        <label for="llm-api-settings-component__base-url">Base URL</label>
+        <label for="llm-api-settings-component__base-url">
+            Base URL
+            <div class="subtle-hint">Make sure the URL ends with <code>/</code></div>
+        </label>
         <input
             type="url"
             v-model="llmApi.baseUrl"
