@@ -1,42 +1,8 @@
 .steps-component {
-    display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: var(--gap2);
-    border-top: var(--bthick) solid var(--primary-color);
-}
 
-.steps-component__step {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.steps-component__step-tale {
-    background-color: var(--primary-color);
-    width: var(--bthick);
-    height: 1em;
-}
-
-.steps-component__step-number {
-    font-family: var(--title-font-family);
-    border: var(--bthick) solid var(--primary-color);
-    width: 3em;
-    height: 3em;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--background-color);
-}
-
-.steps-component__step-number--active {
-    background-color: var(--primary-color);
-    color: var(--background-color);
-}
-
-.steps-component__step-label {
-    padding: 1em;
+    & button {
+        flex-grow: 1;
+    }
 }
