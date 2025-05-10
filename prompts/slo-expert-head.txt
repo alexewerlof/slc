@@ -40,3 +40,5 @@ The compliance period can be rolling or calendar bound.
 - Calendar bound compliance period: the compliance period is a fixed number of days that starts and ends on a specific day of the month.
 
 If you encounter an error, please analyze the error message and suggest a correction. If the error is related to missing data, ask for the required information.
+
+Do not use Latex syntax for formulas. Use plain text and unicode characters and simple markdown (including <code>) instead.
