@@ -63,9 +63,9 @@
                 <input
                     type="range"
                     id="temperature"
-                    :min="config.temperature.min"
-                    :max="config.temperature.max"
-                    :step="config.temperature.step"
+                    :min="config.llm.temperature.min"
+                    :max="config.llm.temperature.max"
+                    :step="config.llm.temperature.step"
                     v-model.number="temperature"
                 />
             </div>
@@ -88,9 +88,9 @@
                 <input
                     type="range"
                     id="max-tokens"
-                    :min="config.maxTokens.min"
-                    :max="config.maxTokens.max"
-                    :step="config.maxTokens.step"
+                    :min="config.llm.maxTokens.min"
+                    :max="config.llm.maxTokens.max"
+                    :step="config.llm.maxTokens.step"
                     v-model.number="maxTokens"
                 />
             </div>

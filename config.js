@@ -382,4 +382,68 @@ export const config = fz({
         baseUrl:
             'https://docs.google.com/forms/d/e/1FAIpQLSc-CQudkQ9WLVmryi7Idlwv03M7s0Sy6DMlENzhUJesKb3kmg/viewform?usp=pp_url',
     }),
+    llm: fz({
+        engines: [
+            /*
+            {
+                name: 'WebLLM',
+                baseUrl: undefined,
+                website: 'https://webllm.mlc.ai/',
+                description:
+                    'The easiest option. It runs the LLM engine in this browser window and caches the model for later usage.',
+            },
+            */
+            {
+                name: 'LM Studio',
+                baseUrl: 'http://localhost:1234/v1/',
+                website: 'https://lmstudio.ai/',
+                description: 'Runs on a local computer. You need to configure a local server to be able to use it.',
+                suggestedModel: 'phi-4',
+            },
+            {
+                name: 'Jan',
+                baseUrl: 'http://localhost:1337/v1/',
+                website: 'https://jan.ai/',
+                description: 'Similar to LM Studio but with a simpler user interface.',
+                suggestedModel: 'llama3.1-8b-instruct',
+            },
+            {
+                name: 'Gemini',
+                baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai/',
+                website: 'https://gemini.google.com',
+                description:
+                    'from Google which arguably started this whole AI thingie by their Transformers architecture.',
+                apiKeyWebsite: 'https://aistudio.google.com/apikey',
+                suggestedModel: 'models/gemini-2.0-flash:generateContent',
+            },
+            {
+                name: 'OpenAI',
+                baseUrl: 'https://api.openai.com/v1/',
+                website: 'https://chatgpt.com/',
+                description: 'The company behind ChatGPT and run by a lunatic.',
+                apiKeyWebsite: 'https://platform.openai.com/api-keys',
+                suggestedModel: 'o4-mini',
+            },
+            {
+                name: 'Claude',
+                baseUrl: 'https://api.anthropic.com/v1/',
+                website: 'https://claude.ai/',
+                description: 'Similar to OpenAI, run by some former OpenAI employees.',
+                apiKeyWebsite: 'https://console.anthropic.com/settings/keys',
+                suggestedModel: 'claude-3-5-haiku-20241022',
+            },
+        ],
+        temperature: {
+            default: 0.1,
+            min: 0,
+            max: 2,
+            step: 0.1,
+        },
+        maxTokens: {
+            default: 1000,
+            min: 100,
+            max: 10000,
+            step: 100,
+        },
+    }),
 })
