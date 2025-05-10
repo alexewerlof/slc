@@ -26,7 +26,7 @@ const app = createApp({
             },
         ]
         const stepLabels = ['Washing', 'Chopping', 'Cooking', 'Eating']
-        const tabNames = ['First Tab', 'Second Tab', 'Third Tab']
+        const tabNames = ['Forms', 'Buttons', 'Typography', 'Layout']
         return {
             // Expose the config to the UI
             config,

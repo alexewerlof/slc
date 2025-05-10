@@ -13,13 +13,13 @@ const componentSpecifications = [
     ' AJH  : ./chat-component',
     ' AJHC : ./chat-thread-component',
     ' AJHC : ./ui/code-block-component',
-    ' AJH  : ./condition-component',
+    ' AJH  : ./condition-component', // TODO: needs a rewrite or remove
     ' AJH  : ./consumer-component',
     ' AJH  : ./consumption-component',
     ' AJHC : ./ui/cookie-popup-component',
     ' AJHC : ./ui/dialog-component',
     ' AJHC : ./objective/error-budget-component',
-    ' AJH  : ./event-component',
+    ' AJH  : ./event-component', // TODO: needs a rewrite or remove
     '  JH  : ./ext-link',
     ' AJH  : ./failure-component',
     ' AJH  : ./dependency-component',
@@ -43,7 +43,7 @@ const componentSpecifications = [
     ' AJHC : ./plot-2d-component',
     ' AJH  : ./provider-component',
     ' AJH  : ./service-component',
-    ' AJH  : ./service-metric-component',
+    ' AJH  : ./service-metric-component', // TODO: needs a rewrite or remove
     ' AJHC : ./ui/show-hide-component',
     ' AJHC : ./ui/steps-component',
     ' AJH  : ./summary-component',

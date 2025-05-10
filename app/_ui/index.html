@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="icon" type="image/svg" href="/img/icon.svg">
+    <link rel="stylesheet" href="index.css">
     <title>UI Demo</title>
 </head>
 <body>
@@ -15,62 +16,43 @@
         <header-component title="UI Demo">
             | HEADER COMPONENT SLOT
         </header-component>
-        <hero-component file-name="subtle-prism.svg">
-            <h1>Header 1</h1>
-            <h2>
-                Header 2
-                <tooltip-component>
-                    This is a tooltip
-                </tooltip-component>
-            </h2>
-            <p>Some text for the hero component that can go here and show properly</p>
-        </hero-component>
-        <div class="surface">
-            <p>
-                This is a nice surface
-            </p>
-        </div>
-        <div class="well">
-            <p>
-                This is a nice well
-            </p>
-        </div>
-        <div class="container">
-            <button @click="isDialogVisible = true">Show Dialog</button>
-            <dialog-component v-model:is-visible="isDialogVisible">
-                <p>This is just a simple dialog box. You can also close it with the <kbd>Esc</kbd> key</p>
-            </dialog-component>
-            <h2>Current Step: {{ currStep }}</h2>
-            <steps-component v-model="currStep" :steps="stepLabels"></steps-component>
-            <h1>Selected Tab: {{ selTabName }}</h1>
-            <tabs-component v-model="selTabName" :tab-names="tabNames"></tabs-component>
-            <div class="annotated">
-                <div class="annotated__full-width">
-                    This part is full length
-                    <tooltip-component>
-                        meaning it can span across the entire width of the container
-                    </tooltip-component>
-                </div>
-                <div class="annotated__controls">
+        <div class="container pad-gap2">
+            <div class="surface">
+                <hero-component file-name="subtle-prism.svg">
+                    <h1>Header 1</h1>
+                    <h2>
+                        Header 2
+                        <tooltip-component>
+                            This is a tooltip
+                        </tooltip-component>
+                    </h2>
+                    <p>Some text for the hero component that can go here and show properly</p>
+                </hero-component>
+                <h1>Selected Tab: {{ selTabName }}</h1>
+                <tabs-component v-model="selTabName" :tab-names="tabNames"></tabs-component>
+
+                <div v-if="selTabName === 'Forms'">
+
+                    <div class="button-bar">
+                        <button @click="isDialogVisible = true">Show Dialog</button>
+                    </div>
+                    
+                    <dialog-component v-model:is-visible="isDialogVisible">
+                        <p>This is just a simple dialog box. You can also close it with the <kbd>Esc</kbd> key</p>
+                    </dialog-component>
+                    
+                    <div class="well">
+                        <h2>Current Step: {{ currStep }}</h2>
+                        <steps-component v-model="currStep" :steps="stepLabels"></steps-component>
+                    </div>
                     <form>
                         <fieldset>
-                            <legend>Form legend</legend>
-                            <div class="block">block</div>
-                            <code-block-component title="Example code">
-                                This is a code block
-                                <label>Label</label>
-                                <code>
-                                    <span class="funct">funct</span>
-                                    <span class="punct">(</span>
-                                    <span class="exprs">"SLI"</span>
-                                    <span class="punct">,</span>
-                                    <span class="const">98</span>
-                                    <span class="punct">)</span>
-                                </code>
-                            </code-block-component>
-                            <div class="block info">block info</div>
-                            <div class="block warning">block warning</div>
-                            <div class="block error">block error</div>
+                            <legend>
+                                Form legend
+                                <tooltip-component>
+                                    Yes! It's an actual form!
+                                </tooltip-component>
+                            </legend>
                             <div class="input-group">
                                 <label for="input1">Text Input</label>
                                 <input type="text" id="input1" name="input1">
@@ -175,8 +157,10 @@
                                 Checkbox
                             </label>
                         </div>
-                    </show-hide-component>    
-                    <h2>Buttons</h2>
+                    </show-hide-component>
+                </div>
+
+                <div v-if="selTabName === 'Buttons'">
                     <h3>Small</h3>
                     <div>
                         <button @click="clicked('Small')" class="button--small">Button 1</button>
@@ -217,18 +201,24 @@
                         <button class="button--danger">Button 3 Danger</button>
                         <button class="button--danger" disabled>Disabled Danger</button>
                     </div>
+                    <div class="button-bar">
+                        <button @click="clicked('Small')" class="button--small">Button 1</button>
+                        <button @click="clicked('Small')" class="button--small">Button 2</button>
+                        <button @click="clicked('Small')" class="button--small">Button 3</button>
+                        <button @click="clicked('Small')" class="button--small" disabled>Disabled</button>
+                    </div>
                 </div>
-                <div class="annotated__help">
-                    <markdown-component :markdown="`# Markdown Header
+
+                <div v-if="selTabName === 'Typography'">
+                    <div class="well">
+                        <markdown-component :markdown="`# Markdown Header
 This *is* **some** ~~test~~ for you!`"></markdown-component>
+                    </div>
                     <p>
                         This page primarily exists to check the look and feel of various UI aspects and visually inspect the CSS.
                     </p>
                     <h1>
                         Heading 1
-                        <tooltip-component>
-                            This is a tooltip
-                        </tooltip-component>
                     </h1>
                     <h2>Heading 2</h2>
                     <h3>Heading 3</h3>
@@ -301,9 +291,89 @@ This *is* **some** ~~test~~ for you!`"></markdown-component>
                             </tr>
                         </tfoot>
                     </table>
+                    <div class="block">block</div>
+                    <code-block-component title="Example code">
+                        This is a code block
+                        <label>Label</label>
+                        <code>
+                            <span class="funct">funct</span>
+                            <span class="punct">(</span>
+                            <span class="exprs">"SLI"</span>
+                            <span class="punct">,</span>
+                            <span class="const">98</span>
+                            <span class="punct">)</span>
+                        </code>
+                    </code-block-component>
+                    <div class="block info">block info</div>
+                    <div class="block warning">block warning</div>
+                    <div class="block error">block error</div>
+                </div>
+
+                <div v-if="selTabName === 'Layout'" class="mozaic mozaic--gap2">
+                    <div class="mozaic__tile mozaic__tile--whole"><h2>12</h2></div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    
+                    <div class="mozaic__tile mozaic__tile--whole"><h2>6</h2></div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    
+                    <div class="mozaic__tile mozaic__tile--whole"><h2>Quarter</h2></div>
+                    <div class="mozaic__tile mozaic__tile--3c">mozaic__tile--3c</div>
+                    <div class="mozaic__tile mozaic__tile--3c">mozaic__tile--3c</div>
+                    <div class="mozaic__tile mozaic__tile--3c">mozaic__tile--3c</div>
+                    <div class="mozaic__tile mozaic__tile--3c">mozaic__tile--3c</div>
+                    
+                    <div class="mozaic__tile mozaic__tile--whole"><h2>Third</h2></div>
+                    <div class="mozaic__tile mozaic__tile--4c">mozaic__tile--4c</div>
+                    <div class="mozaic__tile mozaic__tile--4c">mozaic__tile--4c</div>
+                    <div class="mozaic__tile mozaic__tile--4c">mozaic__tile--4c</div>
+                    
+                    <div class="mozaic__tile mozaic__tile--whole"><h2>Half</h2></div>
+                    <div class="mozaic__tile mozaic__tile--6c">mozaic__tile--6c</div>
+                    <div class="mozaic__tile mozaic__tile--6c">mozaic__tile--6c</div>
+
+                    <div class="mozaic__tile mozaic__tile--whole"><h2>Complement</h2></div>
+                    <div class="mozaic__tile mozaic__tile--1c">mozaic__tile--1c</div>
+                    <div class="mozaic__tile mozaic__tile--11c">mozaic__tile--11c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--10c">mozaic__tile--10c</div>
+                    <div class="mozaic__tile mozaic__tile--3c">mozaic__tile--3c</div>
+                    <div class="mozaic__tile mozaic__tile--9c">mozaic__tile--9c</div>
+                    <div class="mozaic__tile mozaic__tile--4c">mozaic__tile--4c</div>
+                    <div class="mozaic__tile mozaic__tile--8c">mozaic__tile--8c</div>
+                    <div class="mozaic__tile mozaic__tile--5c">mozaic__tile--5c</div>
+                    <div class="mozaic__tile mozaic__tile--7c">mozaic__tile--7c</div>
+                    <div class="mozaic__tile mozaic__tile--6c">mozaic__tile--6c</div>
+                    <div class="mozaic__tile mozaic__tile--6c">mozaic__tile--6c</div>
+                    <div class="mozaic__tile mozaic__tile--7c">mozaic__tile--7c</div>
+                    <div class="mozaic__tile mozaic__tile--5c">mozaic__tile--5c</div>
+                    <div class="mozaic__tile mozaic__tile--8c">mozaic__tile--8c</div>
+                    <div class="mozaic__tile mozaic__tile--4c">mozaic__tile--4c</div>
+                    <div class="mozaic__tile mozaic__tile--9c">mozaic__tile--9c</div>
+                    <div class="mozaic__tile mozaic__tile--3c">mozaic__tile--3c</div>
+                    <div class="mozaic__tile mozaic__tile--10c">mozaic__tile--10c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--11c">mozaic__tile--11c</div>
+                    <div class="mozaic__tile mozaic__tile--1c">mozaic__tile--1c</div>
                 </div>
             </div>
         </div>
+
         <footer-component>
             Footer extra text
         </footer-component>
