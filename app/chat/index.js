@@ -2,7 +2,7 @@ import { createApp } from '../../vendor/vue.js'
 import { registerAllComponents } from '../../components/index.js'
 import { fetchPrompt } from '../../lib/prompt.js'
 
-const systemPrompt = await fetchPrompt('/prompts/slo-expert-head.txt')
+const systemPrompt = await fetchPrompt('/prompts/slo-expert-head.md')
 
 export const app = createApp({
     data() {
