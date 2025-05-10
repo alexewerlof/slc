@@ -41,10 +41,6 @@
                         <p>This is just a simple dialog box. You can also close it with the <kbd>Esc</kbd> key</p>
                     </dialog-component>
                     
-                    <div class="well">
-                        <h2>Current Step: {{ currStep }}</h2>
-                        <steps-component v-model="currStep" :steps="stepLabels"></steps-component>
-                    </div>
                     <form>
                         <fieldset>
                             <legend>
@@ -161,6 +157,11 @@
                 </div>
 
                 <div v-if="selTabName === 'Buttons'">
+                    <div class="well">
+                        <h2>Current Step: {{ currStep }}</h2>
+                        <steps-component v-model="currStep" :steps="stepLabels"></steps-component>
+                    </div>
+
                     <h3>Small</h3>
                     <div>
                         <button @click="clicked('Small')" class="button--small">Button 1</button>

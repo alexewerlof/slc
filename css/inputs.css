@@ -146,13 +146,23 @@ textarea {
     margin-top: var(--gap);
     margin-bottom: var(--gap);
     gap: var(--gap);
+
+    & button:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    & button:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
 }
 
 button {
     background-color: var(--secondary-color);
     color: var(--background-color);
     border: none;
-    border-radius: var(--bradius);
+    border-radius: var(--bradius2);
     cursor: pointer;
     box-shadow: inset 0 0 0.5em 0 #ffffff44;
     padding: var(--gap) var(--gap2);
@@ -176,11 +186,13 @@ button:hover {
 
 .button--small {
     padding: 1px var(--gap);
+    border-radius: var(--bradius);
 }
 
 .button--large {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     padding: var(--gap2);
+    border-radius: var(--bradius3);
 }
 
 .button--cta {

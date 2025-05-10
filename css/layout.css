@@ -85,13 +85,13 @@ section {
 }
 
 .v-pad-gap {
-    padding-left: var(--gap);
-    padding-right: var(--gap);
+    padding-top: var(--gap);
+    padding-bottom: var(--gap);
 }
 
 .h-pad-gap {
-    padding-top: var(--gap);
-    padding-bottom: var(--gap);
+    padding-left: var(--gap);
+    padding-right: var(--gap);
 }
 
 .pad-gap2 {
@@ -99,13 +99,13 @@ section {
 }
 
 .v-pad-gap2 {
-    padding-left: var(--gap2);
-    padding-right: var(--gap2);
+    padding-top: var(--gap2);
+    padding-bottom: var(--gap2);
 }
 
 .h-pad-gap2 {
-    padding-top: var(--gap2);
-    padding-bottom: var(--gap2);
+    padding-left: var(--gap2);
+    padding-right: var(--gap2);
 }
 
 .mar-0 {
