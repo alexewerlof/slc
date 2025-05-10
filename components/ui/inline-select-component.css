@@ -3,19 +3,17 @@
     border: var(--bthick) solid var(--ui-border);
     margin: 0;
     border-radius: var(--bradius);
-    box-shadow: 0 0 var(--gap) var(--bthick) var(--background-darker);
 }
 
-.inline-select-component__buttons button {
+.inline-select-component__buttons button {}
+
+.inline-select-component__button--inactive {
     box-shadow: none;
+    background-color: inherit;
+    color: inherit;
+    border: none;
 }
 
 .inline-select-component__buttons button + button {
     margin-left: 0;
-}
-
-.inline-select-component__button--inactive {
-    background-color: inherit;
-    color: inherit;
-    border: none;
 }
