@@ -7,10 +7,6 @@
     flex-direction: column;
 }
 
-.chat-thread-component__message {
-    max-width: 80%;
-}
-
 .chat-thread-component__message + .chat-thread-component__message {
     margin-top: var(--gap2);
 }
