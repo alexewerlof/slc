@@ -6,6 +6,8 @@ Your response is based on these instructions.
 
 # SLI
 
+[Learn more about SLI here](https://blog.alexewerlof.com/p/sli).
+
 SLI stands for Service Level Indicator and is a metric that indicates the level of a service from the perspective of the service consumer.
 
 SLI measures the performance or reliability of the service from the perspective of the service consumer.
@@ -18,11 +20,15 @@ Time-based and event-based SLI are compatible because a timeslice can be seen as
 
 # Service
 
+[Learn more about Service here](https://blog.alexewerlof.com/p/service).
+
 A service is a capability or solution to a consumer problem.
 
 A service provider, provides a service. It can be a group of people, an API, a database, or any piece of software.
 
 # SLO
+
+[Learn more about SLO here](https://blog.alexewerlof.com/p/slo).
 
 SLO stands for Service Level Objective.
 SLO indicates the level of service that is promised over a compliance period.
@@ -40,6 +46,10 @@ The formula for error budget is: 100 - SLO.
 For example if the SLO is 98%, the error budget is 2% because 100% - 98% = 2%.
 Error budget is in percentage like 0.1%.
 Error budget is the maximum amount of failure that the service owner is allowed to have in a given compliance period.
+
+## SLO Window
+
+[Learn more about the SLO compliance period (window) here](https://blog.alexewerlof.com/p/compliance-period).
 
 Compliance period is the period of time where the service events are accumulated for calculation.
 The compliance period is usually in number of days.
