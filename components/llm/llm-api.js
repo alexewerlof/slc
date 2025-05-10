@@ -17,6 +17,7 @@ export class LLMAPI {
             website,
             description,
             apiKeyWebsite,
+            suggestedModel,
         } = options
         if (!isStr(name)) {
             throw new TypeError(`name must be a string. Got ${name}`)
@@ -37,6 +38,10 @@ export class LLMAPI {
             throw new TypeError(`When defined, apiKeyWebsite must be a valid URL string. Got ${apiKeyWebsite}`)
         }
         this.apiKeyWebsite = apiKeyWebsite
+        if (!isStr(suggestedModel)) {
+            throw new TypeError(`suggestedModel must be a string. Got ${suggestedModel}`)
+        }
+        this.modelIds.state = [suggestedModel]
     }
 
     makeUrl(path) {
@@ -100,8 +105,19 @@ export class LLMAPI {
         }
     }
 
-    async getModelIds() {
+    async updateModelIds() {
         const response = await this.fetchJson('GET', 'models')
+        const previouslySelectedModelId = this.modelIds.selected
         this.modelIds.state = response.data.map((model) => model.id)
+        if (previouslySelectedModelId) {
+            const str = previouslySelectedModelId.valueOf()
+            this.modelIds.find((modelId) => {
+                if (modelId.valueOf() === str) {
+                    this.modelIds.selected = modelId
+                    return true
+                }
+                return false
+            })
+        }
     }
 }

@@ -29,12 +29,14 @@ const config = {
             baseUrl: 'http://localhost:1234/v1/',
             website: 'https://lmstudio.ai/',
             description: 'Runs on a local computer. You need to configure a local server to be able to use it.',
+            suggestedModel: 'phi-4',
         },
         {
             name: 'Jan',
             baseUrl: 'http://localhost:1337/v1/',
             website: 'https://jan.ai/',
             description: 'Similar to LM Studio but with a simpler user interface.',
+            suggestedModel: 'llama3.1-8b-instruct',
         },
         {
             name: 'Gemini',
@@ -42,6 +44,7 @@ const config = {
             website: 'https://gemini.google.com',
             description: 'from Google which arguably started this whole AI thingie by their Transformers architecture.',
             apiKeyWebsite: 'https://aistudio.google.com/apikey',
+            suggestedModel: 'models/gemini-2.0-flash:generateContent',
         },
         {
             name: 'OpenAI',
@@ -49,6 +52,7 @@ const config = {
             website: 'https://chatgpt.com/',
             description: 'The company behind ChatGPT and run by a lunatic.',
             apiKeyWebsite: 'https://platform.openai.com/api-keys',
+            suggestedModel: 'o4-mini',
         },
         {
             name: 'Claude',
@@ -56,6 +60,7 @@ const config = {
             website: 'https://claude.ai/',
             description: 'Similar to OpenAI, run by some former OpenAI employees.',
             apiKeyWebsite: 'https://console.anthropic.com/settings/keys',
+            suggestedModel: 'claude-3-5-haiku-20241022',
         },
     ],
 }
@@ -68,7 +73,7 @@ export default {
                 value: new LLMAPI(engine),
             }
         })
-        const tabNames = ['Engine', 'Chat']
+        const tabNames = ['Settings', 'Chat']
         return {
             engines: config.engines,
             engineSelection,

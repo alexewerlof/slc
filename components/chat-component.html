@@ -4,10 +4,10 @@
         <chat-thread-component :messages="messages"></chat-thread-component>
         <loading-animation-component v-if="selectedEngine.isBusy"></loading-animation-component>
     </div>
-    <div v-if="selTabName === 'Engine'" class="well b-mar-gap2">
+    <div v-if="selTabName === 'Settings'" class="well b-mar-gap2">
         <div class="input-group b-mar-gap2">
             <label for="engine-selector">
-                LLM
+                LLM Engine
                 <help-component>
                     <p>
                         Due to cost of running AI, this open source app relies on you to provide your AI and models. There are many options:
