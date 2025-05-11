@@ -23,7 +23,7 @@ export default {
         ]
 
         return {
-            currentStep: 1,
+            currentStep: 0,
             steps,
             exportedCode: '-',
         }
