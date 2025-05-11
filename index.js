@@ -4,9 +4,9 @@ import { registerAllComponents } from './components/index.js'
 import { isObj } from './lib/validation.js'
 
 const appNames = [
-    'calculator',
     'uptime',
     'assess',
+    'calculator',
 ]
 
 const apps = await Promise.all(appNames.map(async (name) => {
