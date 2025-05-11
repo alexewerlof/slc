@@ -1,10 +1,13 @@
 <div class="steps-component button-bar pad-gap2">
     <button v-for="(label, index) in steps"
-        :class="{ 'button--large': true, 'button--cta': modelValue === index }"
+        :class="{
+            'steps-component__button': true,
+            'button--large': true,
+            'button--cta': modelValue === index,
+        }"
         @click="$emit('update:modelValue', index)"
     >
-        {{ index || '⌂' }}
-        <br>
-        {{ label }}
+        <span class="steps-component__number" v-text="index"></span>
+        <span class="steps-component__label" v-text="label"></span>
     </button>
 </div>
