@@ -1,5 +1,8 @@
 :root {
     --animation-speed: 0.2s;
+    --animation-speed2: calc(var(--animation-speed) * 2);
+    --animation-speed3: calc(var(--animation-speed) * 3);
+    --animation-speed4: calc(var(--animation-speed) * 4);
     --primary-color: #ffbc52;
     --primary-lighter: #ffd699;
     --secondary-color: #47a9ff;
