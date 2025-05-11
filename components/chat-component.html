@@ -31,19 +31,6 @@
         <div class="b-mar-gap2">
             <llm-api-settings-component :llm-api="selectedEngine"></llm-api-settings-component>
         </div>
-        <div class="input-group b-mar-gap2" v-if="selectedEngine.needsApiKey">
-            <label for="api-key">API Key</label>
-            <div class="subtle-hint">
-                This LLM Engine requires API keys
-            </div>
-            <input
-                type="text"
-                id="api-key"
-                v-model="apiKey"
-                placeholder="Enter your API key here..."
-                autocomplete="on"
-            />
-        </div>
         <show-hide-component title="Advanced" hidden="true">
             <div class="input-group">
                 <label for="temperature">
