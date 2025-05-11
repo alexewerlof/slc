@@ -1,11 +1,22 @@
+.inline-select-component {
+    display: block;
+}
+
 .inline-select-component__buttons {
     display: inline-block;
     border: var(--bthick) solid var(--ui-border);
-    margin: 0;
-    border-radius: var(--bradius);
+    border-radius: var(--bradius2);
+
+    & .button-bar {
+        justify-content: left;
+        margin: 0;
+        gap: 0;
+    }
 }
 
-.inline-select-component__buttons button {}
+.inline-select-component__buttons button {
+    margin: 0;
+}
 
 .inline-select-component__button--inactive {
     box-shadow: none;
