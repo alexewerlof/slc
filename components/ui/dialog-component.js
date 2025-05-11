@@ -2,7 +2,10 @@ export default {
     data() {
     },
     props: {
-        title: String,
+        title: {
+            type: String,
+            default: 'Dialog',
+        },
         isVisible: {
             type: Boolean,
             default: false,
