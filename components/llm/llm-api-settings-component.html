@@ -7,6 +7,7 @@
         <input
             type="url"
             v-model="llmApi.baseUrl"
+            required="required"
             id="llm-api-settings-component__base-url" />
     </div>
     <div class="input-group" v-if="llmApi.requiresApiKey">
@@ -20,6 +21,7 @@
             type="text"
             v-model="llmApi.apiKey"
             autocomplete="apiKeyUniqueId"
+            required="required"
             :id="apiKeyUniqueId" />
         </label>
     </div>
