@@ -414,7 +414,7 @@ export const config = fz({
                 description:
                     'from Google which arguably started this whole AI thingie by their Transformers architecture.',
                 apiKeyWebsite: 'https://aistudio.google.com/apikey',
-                suggestedModel: 'models/gemini-2.0-flash:generateContent',
+                suggestedModel: 'models/gemini-2.0-flash-lite',
             },
             {
                 name: 'OpenAI',
