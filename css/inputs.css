@@ -225,23 +225,21 @@ a, a:hover, a:active {
 
 .input-button-pair {
     display: flex;
-}
 
-.input-button-pair input,
-.input-button-pair select,
-.input-button-pair textarea {
-    flex: 1;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    margin: 0;
-    border-right: none;
-}
+    & :first-child {
+        flex: 1;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
 
-.input-button-pair button {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    margin: 0;
-    border: var(--bthick) solid var(--ui-border);
+    & :last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    button {
+        margin: 0;
+    }
 }
 
 label {
