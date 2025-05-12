@@ -4,8 +4,11 @@ import { isArr, isDef, isInArr, isObj, isStr, isUrlStr } from '../../lib/validat
 export class LLMAPI {
     baseUrl = undefined
     apiKey = undefined
-    modelIds = new SelectableArray(String)
     isBusy = false
+    apiKeyWebsite = undefined
+    website = undefined
+    suggestedModel = undefined
+    modelIds = new SelectableArray(String)
 
     constructor(options) {
         if (!isObj(options)) {
@@ -41,6 +44,7 @@ export class LLMAPI {
         if (!isStr(suggestedModel)) {
             throw new TypeError(`suggestedModel must be a string. Got ${suggestedModel}`)
         }
+        this.suggestedModel = suggestedModel
         this.modelIds.state = [suggestedModel]
     }
 
