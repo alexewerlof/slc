@@ -14,6 +14,7 @@ const componentSpecifications = [
     ' AJHC : ./chat-thread-component',
     ' AJHC : ./ui/code-block-component',
     ' A HC : ./ui/book-cover-component',
+    ' AJH  : ./assessment-component-intro',
     ' AJH  : ./condition-component', // TODO: needs a rewrite or remove
     ' AJH  : ./consumer-component',
     ' AJH  : ./consumption-component',
