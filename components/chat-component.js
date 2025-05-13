@@ -38,7 +38,6 @@ export default {
                 this.selTabName = this.tabNames[1]
                 this.isEditDisabled = true
                 const response = await this.selectedEngine.getCompletion(this.messages, {
-                    // TODO: Gemini model: 'models/gemini-2.0-flash:generateContent',
                     temperature: this.temperature,
                     maxTokens: this.maxTokens,
                 })
