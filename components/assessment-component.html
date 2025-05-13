@@ -12,99 +12,98 @@
         </div>
 
         <div v-if="currentStep === 1" class="mozaic mozaic--gap2">
-            <div class="mozaic__tile mozaic__tile--half">
-                <div class="surface">
-                    <h2>
-                        Providers
-                        <help-component>
-                            <p>
-                                Before defining service levels, we first need to identify the entity providing that service.
-                            </p>
-                            <p>
-                                You don't need to list all of your service providers.
-                                As a rule of thumb start with the consumer-facing services
-                                and as you work your way through the UI, you can come back and
-                                add any missing service provider.
-                            </p>
-                        </help-component>
-                    </h2>
-                    <fieldset class="b-mar-gap2">
-                        <legend>Provider ({{ assessment.providers.length }})</legend>
-                        <div class="input-group" v-if="assessment.providers.length">
-                            <label for="provider-selector">Select</label>
-                            <select id="provider-selector" v-model="assessment.providers.selected">
-                                <option v-for="provider of assessment.providers" :value="provider">
-                                    {{ provider }}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="button-bar">
-                            <button
-                                @click="assessment.providers.pushNew()"
-                            >
-                                Add
-                            </button>
-                            <button
-                                class="button--danger"
-                                @click="assessment.providers.removeSelected()"
-                                :disabled="!assessment.providers.selected"
-                            >
-                                Remove
-                            </button>
-                        </div>
-                    </fieldset>
-                    <div class="well" v-if="assessment.providers.selected">
-                        <provider-component
-                            :provider="assessment.providers.selected"></provider-component>
+            <div class="mozaic__tile mozaic__tile--4c surface">
+                <h2>
+                    Providers
+                    <help-component>
+                        <p>
+                            Before defining service levels, we first need to identify the entity providing that service.
+                        </p>
+                        <p>
+                            You don't need to list all of your service providers.
+                            As a rule of thumb start with the consumer-facing services
+                            and as you work your way through the UI, you can come back and
+                            add any missing service provider.
+                        </p>
+                    </help-component>
+                </h2>
+                <fieldset class="b-mar-gap2">
+                    <legend>Provider ({{ assessment.providers.length }})</legend>
+                    <div class="input-group" v-if="assessment.providers.length">
+                        <label for="provider-selector">Select</label>
+                        <select id="provider-selector" v-model="assessment.providers.selected">
+                            <option v-for="provider of assessment.providers" :value="provider">
+                                {{ provider }}
+                            </option>
+                        </select>
                     </div>
+                    <div class="button-bar">
+                        <button
+                            @click="assessment.providers.pushNew()"
+                        >
+                            Add
+                        </button>
+                        <button
+                            class="button--danger"
+                            @click="assessment.providers.removeSelected()"
+                            :disabled="!assessment.providers.selected"
+                        >
+                            Remove
+                        </button>
+                    </div>
+                </fieldset>
+                <div class="well" v-if="assessment.providers.selected">
+                    <provider-component
+                        :provider="assessment.providers.selected"></provider-component>
                 </div>
             </div>
-            <div class="mozaic__tile mozaic__tile--half">
-                <div class="surface">
-                    <h2>
-                        Service
-                        <help-component>
-                            <p>
-                                A 
-                                <ext-link href="https://blog.alexewerlof.com/p/service">service</ext-link>
-                                is a collection of capabilities, features, or solutions that are provided to the consumer.
-                            </p>
-                            <p>
-                                The service is the thing that the consumer interacts with.
-                                It is the thing that the provider is responsible for.
-                            </p>
-                        </help-component>
-                    </h2>
-                    <fieldset class="b-mar-gap2" v-if="selectedProvider">
-                        <legend>Service ({{ selectedProvider.services.length }})</legend>
-                        <div class="input-group" v-if="selectedProvider.services.length">
-                            <label for="service-selector">Select</label>
-                            <select id="service-selector" v-model="selectedProvider.services.selected">
-                                <option v-for="service of selectedProvider.services" :value="service">
-                                    {{ service.displayName }}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="button-bar">
-                            <button
-                                @click="selectedProvider.services.pushNew()"
-                            >
-                                Add
-                            </button>
-                            <button
-                                class="button--danger"
-                                @click="selectedProvider.services.removeSelected()"
-                                :disabled="!selectedProvider.services.selected"
-                            >
-                                Remove
-                            </button>
-                        </div>
-                    </fieldset>
-                    <div class="well" v-if="selectedService">
-                        <service-component
-                            :service="selectedService"></service-component>
+            <div class="mozaic__tile mozaic__tile--4c surface">
+                <h2>
+                    Service
+                    <help-component>
+                        <p>
+                            A 
+                            <ext-link href="https://blog.alexewerlof.com/p/service">service</ext-link>
+                            is a collection of capabilities, features, or solutions that are provided to the consumer.
+                        </p>
+                        <p>
+                            The service is the thing that the consumer interacts with.
+                            It is the thing that the provider is responsible for.
+                        </p>
+                    </help-component>
+                </h2>
+                <fieldset class="b-mar-gap2" v-if="selectedProvider">
+                    <legend>Service ({{ selectedProvider.services.length }})</legend>
+                    <div class="input-group" v-if="selectedProvider.services.length">
+                        <label for="service-selector">Select</label>
+                        <select id="service-selector" v-model="selectedProvider.services.selected">
+                            <option v-for="service of selectedProvider.services" :value="service">
+                                {{ service.displayName }}
+                            </option>
+                        </select>
                     </div>
+                    <div class="button-bar">
+                        <button
+                            @click="selectedProvider.services.pushNew()"
+                        >
+                            Add
+                        </button>
+                        <button
+                            class="button--danger"
+                            @click="selectedProvider.services.removeSelected()"
+                            :disabled="!selectedProvider.services.selected"
+                        >
+                            Remove
+                        </button>
+                    </div>
+                </fieldset>
+                <div class="well" v-if="selectedService">
+                    <service-component
+                        :service="selectedService"></service-component>
                 </div>
+            </div>
+            <div class="mozaic__tile mozaic__tile--4c surface">
+                <chat-component :messages="messages"></chat-component>
             </div>
         </div>
 

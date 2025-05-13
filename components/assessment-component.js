@@ -8,6 +8,9 @@ import { Service } from './service.js'
 import { Consumer } from './consumer.js'
 import { Consumption } from './consumption.js'
 import { Dependency } from './dependency.js'
+import { fetchMessage } from '../lib/prompt.js'
+
+const systemPrompt = await fetchMessage('system', 'assess-prompt.md', '../../prompts/glossary.md')
 
 export default {
     data() {
@@ -23,9 +26,10 @@ export default {
         ]
 
         return {
-            currentStep: 0,
+            currentStep: 1,
             steps,
             exportedCode: '-',
+            messages: [systemPrompt],
         }
     },
     props: {

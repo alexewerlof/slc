@@ -1,18 +1,23 @@
 import { createApp } from '../../vendor/vue.js'
 import { registerAllComponents } from '../../components/index.js'
-import { fetchPrompt } from '../../lib/prompt.js'
+import { fetchMessage } from '../../lib/prompt.js'
 
-const systemPrompt = await fetchPrompt('/prompts/slo-expert-head.md')
+const systemPrompt = await fetchMessage('system', 'chat-prompt.md', '../../prompts/glossary.md')
 
 export const app = createApp({
     data() {
         return {
-            messages: [{
-                role: 'system',
-                content: systemPrompt,
-            }],
+            messages: [
+                systemPrompt,
+            ],
             message: 'Can you briefly say what is the difference between SLO and SLA?',
         }
+    },
+    props: {
+        messages: {
+            type: Array,
+            required: true,
+        },
     },
 })
 
