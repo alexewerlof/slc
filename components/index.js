@@ -93,8 +93,7 @@ function parseComponentSpec(componentSpec) {
 export async function registerAllComponents(app) {
     await Promise.all(componentSpecifications.map(async (componentSpec) => {
         const { name, isAsync, relativeUrlBase, hasHtml, hasJs, hasCss } = parseComponentSpec(componentSpec)
-        const baseUrlStr = import.meta.resolve(relativeUrlBase)
-        const urlStrs = getUrlStrs(baseUrlStr, hasHtml, hasJs, hasCss)
+        const urlStrs = getUrlStrs(import.meta.resolve, relativeUrlBase, hasHtml, hasJs, hasCss)
 
         app.component(name, await componentDefinition(isAsync, urlStrs))
     }))
