@@ -5,6 +5,7 @@ import { SelectableArray } from '../lib/selectable-array.js'
 import { Dependency } from './dependency.js'
 import { Service } from './service.js'
 import { Consumption } from './consumption.js'
+import { icon } from '../lib/icons.js'
 
 export class Assessment {
     consumers = new SelectableArray(Consumer, this)
@@ -96,6 +97,121 @@ export class Assessment {
     }
 
     toString() {
-        return `Assessment: ${this.consumers.length} consumers, ${this.providers.length} providers, ${this.dependencies.length} dependencies`
+        const lines = []
+        const emptyLine = '\n'
+        const newParagraph = '\n\n'
+
+        lines.push(
+            '# Assessment',
+            emptyLine,
+            `This is the current state of the assessment.`,
+            emptyLine,
+        )
+
+        lines.push(
+            `## Icons`,
+            emptyLine,
+            `- ${icon('provider')} indicates **Provider**`,
+            `- ${icon('service')} indicates **Service**`,
+            `- ${icon('consumer')} indicates **Consumer**`,
+            `- ${icon('consumption')} indicates **Consumption**`,
+            `- ${icon('dependency')} indicates **Dependency**`,
+            `- ${icon('failure')} indicates **Failure**`,
+            `- ${icon('symptom')} indicates **Symptom**`,
+            `- ${icon('consequence')} indicates **Consequence**`,
+            `- ${icon('impact')} indicates **Business Impact**`,
+            `- ${icon('scope')} indicates a parent-child relationship like **Provider${
+                icon('scope')
+            }Service** or **Consumer${icon('scope')}Consumption**`,
+        )
+
+        lines.push(
+            `## Relationships`,
+            emptyLine,
+            `- Each Provider offers 1+ Service(s).`,
+            `- Each Consumer has 1+ Consumption(s) to achieve a goal.`,
+            `- Each Dependency ties a Consumption to a Service.`,
+            `- Each Dependency has 1+ Failure(s).`,
+            `- Each Failure has a Symptom, a Consequence, and a Business Impact`,
+        )
+
+        lines.push(newParagraph)
+
+        lines.push(
+            `## Providers`,
+            emptyLine,
+        )
+
+        for (const provider of this.providers) {
+            lines.push(
+                `- ${icon('provider')} **${provider.displayName}**: ${provider.description}`,
+            )
+            for (const service of provider.services) {
+                lines.push(
+                    `  - ${icon('service')} **${service.displayName}**: ${service.description}`,
+                )
+                for (const dependency of this.dependencies) {
+                    if (dependency.service === service) {
+                        lines.push(
+                            `    - ${
+                                icon('dependency')
+                            } **${dependency.consumption.consumer.displayName}**: ${dependency.description}`,
+                        )
+                    }
+                }
+            }
+        }
+
+        lines.push(
+            `## Consumers`,
+            emptyLine,
+        )
+
+        for (const consumer of this.consumers) {
+            lines.push(
+                `- ${icon('consumer')} **${consumer.displayName}**: ${consumer.description}`,
+            )
+            for (const consumption of consumer.consumptions) {
+                lines.push(
+                    `  - ${icon('consumption')} **${consumption.displayName}**: ${consumption.description}`,
+                )
+                for (const dependency of this.dependencies) {
+                    if (dependency.consumption === consumption) {
+                        lines.push(
+                            `    - ${
+                                icon('dependency')
+                            } **${dependency.service.displayName}**: ${dependency.description}`,
+                        )
+                    }
+                }
+            }
+        }
+
+        lines.push(
+            `## Dependencies`,
+            emptyLine,
+        )
+
+        for (const dependency of this.dependencies) {
+            lines.push(
+                `- ${dependency}`,
+            )
+        }
+
+        lines.push(
+            `## Failures`,
+            emptyLine,
+        )
+
+        const failuresByImpact = this.dependencies.flatMap((dependency) => dependency.failures)
+            .sort((f1, f2) => f2.impactLevel - f1.impactLevel)
+
+        for (const failure of failuresByImpact) {
+            lines.push(
+                `- ${failure}`,
+            )
+        }
+
+        return lines.join('\n')
     }
 }

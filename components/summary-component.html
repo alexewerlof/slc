@@ -1,18 +1,5 @@
 <div>
-    <h1>Services and consumptions</h1>
-    <ul v-for="service of allServices">
-        <li>{{ service }}
-            <ul>
-                <li v-for="consumption of serviceConsumptions(service)">{{ consumption }}</li>
-            </ul>
-        </li>
-    </ul>
-    <hr>
-    <h1>
-        {{ icon('failure') }}
-        Failures
-    </h1>
-    <ul>
-        <li v-for="failure of allFailures">{{ failure }}</li>
-    </ul>
+    <code-block-component>
+        <markdown-component :markdown="assessment.toString()"></markdown-component>
+    </code-block-component>
 </div>
