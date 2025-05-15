@@ -1,4 +1,4 @@
-import { componentDefinition, getUrlStrs } from '../lib/component-loader.js'
+import { componentDefinition, getUrlStrs, parseComponentSpec } from '../lib/component-loader.js'
 import { isStrLen } from '../lib/validation.js'
 
 const componentSpecifications = [
@@ -56,35 +56,6 @@ const componentSpecifications = [
     './ui/tooltip-component.hc&',
     './llm/llm-api-settings-component.jh&',
 ]
-
-function parseComponentSpec(componentSpec) {
-    const lastDot = componentSpec.lastIndexOf('.')
-    if (lastDot === -1) {
-        throw new Error(`Invalid componentSpec: ${componentSpec}`)
-    }
-    const flags = componentSpec.slice(lastDot + 1).trim().toLowerCase()
-    if (flags.length <= 1) {
-        throw new SyntaxError(`Empty flags: ${componentSpec} => '${flags}'`)
-    }
-    const relativeUrlBase = componentSpec.slice(0, lastDot).trim()
-    if (!isStrLen(relativeUrlBase, 5)) {
-        throw new Error(`Invalid relativeUrlBase: ${relativeUrlBase}`)
-    }
-    const name = relativeUrlBase.split('/').pop()
-    const nameRegex = /^[a-zA-Z0-9-]+$/
-    if (!isStrLen(name, 3) || !nameRegex.test(name)) {
-        throw new Error(`Invalid component name: ${name}`)
-    }
-
-    return {
-        name,
-        relativeUrlBase,
-        isAsync: flags.includes('&'),
-        hasJs: flags.includes('j'),
-        hasHtml: flags.includes('h'),
-        hasCss: flags.includes('c'),
-    }
-}
 
 /**
  * Register all components in the Vue application to load asynchronously on-demand.
