@@ -1,5 +1,4 @@
-import { componentDefinition, getUrlStrs, parseComponentSpec } from '../lib/component-loader.js'
-import { isStrLen } from '../lib/validation.js'
+import { registerComponents } from '../lib/component-loader.js'
 
 const componentSpecifications = [
     './assessment-component.jh&',
@@ -62,10 +61,5 @@ const componentSpecifications = [
  * @param {VueApplication} app a reference to the Vue application instance
  */
 export async function registerAllComponents(app) {
-    await Promise.all(componentSpecifications.map(async (componentSpec) => {
-        const { name, isAsync, relativeUrlBase, hasHtml, hasJs, hasCss } = parseComponentSpec(componentSpec)
-        const urlStrs = getUrlStrs(import.meta.resolve, relativeUrlBase, hasHtml, hasJs, hasCss)
-
-        app.component(name, await componentDefinition(isAsync, urlStrs))
-    }))
+    await registerComponents(app, componentSpecifications, import.meta.resolve)
 }
