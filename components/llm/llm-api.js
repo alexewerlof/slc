@@ -96,17 +96,17 @@ export class LLMAPI {
             throw new TypeError(`messages must be an array. Got ${messages}`)
         }
         const { maxTokens, temperature } = options
-        const response = await this.fetchJson('POST', 'chat/completions', {
+        return await this.fetchJson('POST', 'chat/completions', {
             messages,
             model: this.modelIds.selected,
             temperature,
             max_tokens: maxTokens,
         })
+    }
 
-        return {
-            role: 'assistant',
-            content: response.choices[0].message.content,
-        }
+    async getCompletionMessage(messages, options) {
+        const response = await this.getCompletion(messages, options)
+        return response.choices[0].message
     }
 
     async updateModelIds() {

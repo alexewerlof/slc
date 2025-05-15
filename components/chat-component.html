@@ -1,7 +1,7 @@
 <div class="chat-component">
     <tabs-component v-model="selTabName" :tab-names="tabNames"></tabs-component>
     <div v-if="selTabName === 'Chat'" class="well b-mar-gap2">
-        <chat-thread-component :messages="messages"></chat-thread-component>
+        <chat-thread-component :thread="thread"></chat-thread-component>
         <loading-animation-component v-if="selectedEngine.isBusy"></loading-animation-component>
     </div>
     <div v-if="selTabName === 'Settings'" class="well b-mar-gap2">

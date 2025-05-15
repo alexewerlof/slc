@@ -2,21 +2,18 @@
     background-color: transparent;
 }
 
-.chat-thread-component__message-container {
+.chat-thread-component__thread {
     display: flex;
     flex-direction: column;
+    gap: var(--gap2);
 }
 
-.chat-thread-component__message + .chat-thread-component__message {
-    margin-top: var(--gap2);
-}
-
-.chat-thread-component__message-role {
+.chat-thread-component__role {
     font-family: var(--title-font-family);
     text-transform: uppercase;
 }
 
-.chat-thread-component__message-contents {
+.chat-thread-component__contents {
     padding: var(--gap) var(--gap2);
     box-shadow: 0.2em 0.2em 0.3em rgb(0 0 0 / 45%);
     margin: var(--bthick) 0;
@@ -24,41 +21,37 @@
     color: var(--background-color);
 }
 
-.chat-thread-component__message-contents:last-child {
-    border-bottom-left-radius: var(--bradius2);
-    border-bottom-right-radius: var(--bradius2);
+.chat-thread-component__contents:last-child {
+    border-bottom-left-radius: var(--bradius);
+    border-bottom-right-radius: var(--bradius);
 }
 
-.chat-thread-component__message--system {
-    align-self: center;
+.chat-thread-component__bead--system {
+    & .chat-thread-component__role {
+        color: var(--brand-purple);
+    }
+
+    & .chat-thread-component__contents {
+        background-color: var(--brand-purple);
+    }
 }
 
-.chat-thread-component__message--system .chat-thread-component__message-contents {
-    background-color: var(--brand-purple);
-}
-
-.chat-thread-component__message--system .chat-thread-component__message-role {
-    color: var(--brand-purple);
-    text-align: center;
-}
-
-.chat-thread-component__message--user {
+.chat-thread-component__bead--user {
     align-self: flex-end;
+    & .chat-thread-component__role {
+        color: var(--secondary-color);
+        text-align: right;
+    }
+    & .chat-thread-component__contents {
+        background-color: var(--secondary-color);
+    }
 }
 
-.chat-thread-component__message--user .chat-thread-component__message-contents {
-    background-color: var(--secondary-color);
-}
-
-.chat-thread-component__message--user .chat-thread-component__message-role {
-    color: var(--secondary-color);
-    text-align: right;
-}
-
-.chat-thread-component__message--assistant .chat-thread-component__message-contents {
-    background-color: var(--brand-green);
-}
-
-.chat-thread-component__message--assistant .chat-thread-component__message-role {
-    color: var(--brand-green);
+.chat-thread-component__bead--assistant {
+    & .chat-thread-component__role {
+        color: var(--brand-green);
+    }
+    & .chat-thread-component__contents {
+        background-color: var(--brand-green);
+    }
 }

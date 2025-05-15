@@ -5,13 +5,13 @@
             Show System Messages
         </label>
     </div>
-    <div class="chat-thread-component__message-container">
-        <div v-for="message of messages"
-            :class="`chat-thread-component__message chat-thread-component__message--${message.role}`" :hidden="message.role === 'system' && !showSystemMessages">
-            <div class="chat-thread-component__message-role">
-                {{ message.role }}
+    <div class="chat-thread-component__thread">
+        <div v-for="bead of thread.beads"
+            :class="`chat-thread-component__bead chat-thread-component__bead--${bead.role}`" :hidden="bead.role === 'system' && !showSystemMessages">
+            <div class="chat-thread-component__role">
+                {{ bead.role }}
             </div>
-            <markdown-component class="chat-thread-component__message-contents" :markdown="message.content"></markdown-component>
+            <markdown-component class="chat-thread-component__contents" :markdown="bead.content"></markdown-component>
         </div>
     </div>
 </div>

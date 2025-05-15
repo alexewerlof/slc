@@ -1,23 +1,19 @@
 import { createApp } from '../../vendor/vue.js'
 import { registerAllComponents } from '../../components/index.js'
-import { fetchMessage } from '../../lib/prompt.js'
+import { Bead, Thread } from '../../components/thread.js'
+import { fetchTextFilesAndConcat } from '../../lib/prompt.js'
 
-const systemPrompt = await fetchMessage('system', 'chat-prompt.md', '../../prompts/glossary.md')
+const systemContent = await fetchTextFilesAndConcat(
+    'chat-prompt.md',
+    '../../prompts/glossary.md',
+)
 
 export const app = createApp({
     data() {
         return {
-            messages: [
-                systemPrompt,
-            ],
-            message: 'Can you briefly say what is the difference between SLO and SLA?',
+            test: 'test',
+            thread: new Thread(new Bead('system', systemContent)),
         }
-    },
-    props: {
-        messages: {
-            type: Array,
-            required: true,
-        },
     },
 })
 

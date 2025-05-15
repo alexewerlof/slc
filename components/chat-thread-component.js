@@ -1,3 +1,5 @@
+import { Thread } from './thread.js'
+
 export default {
     data() {
         return {
@@ -5,8 +7,8 @@ export default {
         }
     },
     props: {
-        messages: {
-            type: Array,
+        thread: {
+            type: Thread,
             required: true,
         },
     },
