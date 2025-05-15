@@ -16,6 +16,21 @@ const systemContent = await fetchTextFilesAndConcat(
     '../../prompts/glossary.md',
 )
 
+class AssessmentBead extends Bead {
+    constructor(assessment) {
+        super('system', '')
+        this.assessment = assessment
+    }
+
+    get content() {
+        return this.assessment.toString()
+    }
+
+    set content(value) {
+        this._content = 'dummy'
+    }
+}
+
 export default {
     data() {
         const steps = [
@@ -30,11 +45,12 @@ export default {
         ]
 
         return {
-            currentStep: 1,
+            currentStep: 0,
             steps,
             exportedCode: '-',
             thread: new Thread(
                 new Bead('system', systemContent),
+                new AssessmentBead(this.assessment),
             ),
         }
     },
