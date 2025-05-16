@@ -1,7 +1,7 @@
 <div class="assessment-component">
     <div class="container logo-bg">
         <steps-component v-model="currentStep" :steps="steps"></steps-component>
-        <div class="well mar-gap2" v-if="inRange(currentStep, 1, 3)">
+        <div class="frost h-mar-gap2" v-if="inRange(currentStep, 1, 3)">
             <assessment-graph-component
                 @select="goto"
                 :assessment="assessment"></assessment-graph-component>
