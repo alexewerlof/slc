@@ -1,5 +1,10 @@
 .chat-thread-component {
     background-color: transparent;
+
+    & h1,
+    & h2 {
+        color: inherit;
+    }
 }
 
 .chat-thread-component__thread {
