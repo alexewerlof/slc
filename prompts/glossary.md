@@ -18,7 +18,51 @@ Time-based and event-based SLI are compatible because a timeslice can be seen as
 
 A service is a capability or solution to a consumer problem.
 
-A service provider, provides a service. It can be a group of people, an API, a database, or any piece of software.
+## Service Provider
+
+[Learn more about provider here](https://blog.alexewerlof.com/p/service-level-terminology).
+
+A service provider, provides a service.
+
+Provider can have any of these types:
+
+- **Group**: a group of people providing manual services. For example: governance, operation, access management, etc.
+- **Component**: a piece of code that can be deployed independently and provides a service. For example: a database, a microservice, a monolith, etc. The component that provides a service can have dependencies to other services, but those services are outside the scope of the current assessment.
+- **System**: a logical grouping of components that together offer a service that solve a problem for the consumer. For example: an API. The main difference between a component or system provider is how much the service consumer cares about their granulairty. If the service consumer doesn't care about which exact **component** provides a service, **system** is a good abstraction.
+
+## Service Consumer
+
+[Learn more about consumer here](https://blog.alexewerlof.com/p/service-level-terminology).
+
+Is an entity that consumers the service that is provided by a provider.
+
+Consumer can have any of these types:
+
+- **Group**: a group of people consuming a service to achieve a goal. For example: end users, paying customers, etc.
+- **Component**: a piece of code that can be deployed independently and uses a service. For example: a web applicatio, a mobile application, another microservice or monolith, etc. The component that consumes a service has a dependency to that service. This dependency is a core part of the service level assessment.
+- **System**: a logical grouping of components that together consume a service. For example: an payment gateway. The main difference between a component or system consumer is how much the service provider cares about their granulairty. If the service provider doesn't care about which exact **component** uses it, **system** is a good abstraction.
+
+## Service Consumption
+
+[Learn more about consumption here](https://blog.alexewerlof.com/p/service-level-terminology).
+
+Consumption describes why the consumer uses a service. This usage essentially establishes a dependency from consumer to the service provider. The reason consumption is important in the context service level is because of the biggest pitfalls of implementing service levels: to measure the wrong thing! Service level should always be measured from the perspective of the consumers. Consumption describes that aspect.
+
+Consumption is also known as: use case, user need, user requirement, JTBD (jobs to be done), dependency, user story.
+
+## Service Failure
+
+[Learn more about failure here](https://blog.alexewerlof.com/p/service-level-terminology).
+
+Failure describes how a consumption may not be successful. It is at the base of how [un]reliability is perceived from the perspective of the service consumer.
+
+Failure has:
+
+- **Symptom**: how does the consumer know that something is broken
+- **Consequences**: what is the consequence of the symptom on the service consumption
+- **Business Impact**: how does the consequences hurt the business
+- **Impact Level**: a quantified measure of the business impact
+- **Likelihood**: the possibility of the failure
 
 # SLO
 
