@@ -78,6 +78,12 @@
                             <li>14 Alerts</li>
                             <li>Tooltips</li>
                         </ul>
+                        <button class="button--cta" @click="$refs.freeDialog.show(true)">
+                            Sign up
+                        </button>
+                        <dialog-component title="Free tier" ref="freeDialog">
+                            <p>Only the PRO version is available at this time.</p>
+                        </dialog-component>
                     </div>
                     <div class="mozaic__tile mozaic__tile--4c mar-gap2 frost">
                         <h3>Pro</h3>
@@ -88,6 +94,16 @@
                             <li>Articles on key concepts</li>
                             <li>Share links publicly</li>
                         </ul>
+                        <button class="button--cta" @click="$refs.proDialog.show(true)">
+                            Sign up
+                        </button>
+                        <dialog-component title="Pro tier" ref="proDialog">
+                            <p>
+                                <ext-link href="https://github.com/alexewerlof/slc">
+                                    Everything is free as in beer and speech
+                                </ext-link>.
+                            </p>
+                        </dialog-component>
                     </div>
                     <div class="mozaic__tile mozaic__tile--4c mar-gap2 frost">
                         <h3>Enterprise</h3>
@@ -99,15 +115,14 @@
                             <li>AI-chat <span class="subtle-hint">(upcoming)</span></li>
                             <li>Advanced intelligent ghosting</li>
                         </ul>
-                        <button class="button--cta">Call Sales<span class="star"></span></button>
+                        <button class="button--cta" @click="$refs.enterpriseDialog.show(true)">
+                            Call Sales<span class="star"></span>
+                        </button>
+                        <dialog-component title="Enterprise tier" ref="enterpriseDialog">
+                            <p>No enterprise features are available at this time.</p>
+                        </dialog-component>
                     </div>
                 </div>
-                
-                <p>
-                    <span class="star"> Just joking! 😄
-                        <ext-link href="https://github.com/alexewerlof/slc">Everything is free as in beer and speech</ext-link>.
-                    </span>
-                </p>
 
                 <h2>Support My Work</h2>
                 <p>
