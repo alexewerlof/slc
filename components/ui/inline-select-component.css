@@ -16,6 +16,7 @@
 
 .inline-select-component__buttons button {
     margin: 0;
+    padding: var(--gap);
 }
 
 .inline-select-component__button--inactive {
