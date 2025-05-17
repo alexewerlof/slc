@@ -76,10 +76,6 @@ section {
     overflow: auto; /* Ensure content doesn't overflow */
 }
 
-.pad-0 {
-    padding: 0;
-}
-
 .pad-gap {
     padding: var(--gap);
 }
