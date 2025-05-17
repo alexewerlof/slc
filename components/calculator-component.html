@@ -53,8 +53,8 @@
                         </div>
 
                         <div class="button-bar">
-                            <button @click="calculator.indicators.pushNew()">Add Empty</button>
-                            <button @click="isIndicatorTemplatesVisible = true">Add From Template</button>
+                            <button @click="calculator.indicators.pushNew()">Add New</button>
+                            <button @click="$refs.indicatorTemplateDialog.show(true)">Add Template</button>
                             <button
                                 :disabled="!calculator.indicators.selected"
                                 @click="calculator.indicators.removeSelected()"
@@ -63,9 +63,7 @@
                                 Remove
                             </button>
                         </div>
-                        <dialog-component v-if="isIndicatorTemplatesVisible"
-                            title="Indicator Templates"
-                            v-model:isVisible="isIndicatorTemplatesVisible">
+                        <dialog-component title="Indicator Templates" ref="indicatorTemplateDialog">
                             <indicator-finder-component @indicator-selected="addIndicatorFromSelector"></indicator-finder-component>
                         </dialog-component>                    
                     </fieldset>

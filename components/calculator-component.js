@@ -7,11 +7,6 @@ import { isInstance } from '../lib/validation.js'
 import { Indicator } from './indicator.js'
 
 export default {
-    data() {
-        return {
-            isIndicatorTemplatesVisible: false,
-        }
-    },
     props: {
         calculator: {
             type: Object,
@@ -53,7 +48,6 @@ export default {
             if (!isInstance(indicator, Indicator)) {
                 throw new TypeError(`Expected an instance of Indicator. Got ${indicator}`)
             }
-            this.isIndicatorTemplatesVisible = false
             return this.calculator.indicators.pushNew(indicator.state)
         },
         addRecommendedAlerts() {

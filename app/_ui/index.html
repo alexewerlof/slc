@@ -34,11 +34,16 @@
                 <div v-if="selTabName === 'Forms'">
 
                     <div class="button-bar frost">
-                        <button @click="isDialogVisible = true">Show Dialog</button>
+                        <button @click="showDialog('normalDialog')">Show Normal Dialog</button>
+                        <button @click="showDialog('modalDialog', true)">Show Modal Dialog</button>
                     </div>
                     
-                    <dialog-component v-model:is-visible="isDialogVisible">
-                        <p>This is just a simple dialog box. You can also close it with the <kbd>Esc</kbd> key</p>
+                    <dialog-component ref="normalDialog">
+                        <p>This is just a simple dialog box.</p>
+                    </dialog-component>
+
+                    <dialog-component ref="modalDialog">
+                        <p>This is a modal dialog box. You can also close it with the <kbd>Esc</kbd> key</p>
                     </dialog-component>
                     
                     <form>

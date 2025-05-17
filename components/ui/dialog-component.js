@@ -1,36 +1,17 @@
 export default {
-    data() {
-    },
     props: {
         title: {
             type: String,
             default: 'Dialog',
         },
-        isVisible: {
-            type: Boolean,
-            default: false,
-        },
-    },
-    emits: ['update:isVisible'],
-    mounted() {
-        console.log('mounted', this.isVisible)
-        if (this.isVisible) {
-            this.show()
-        }
-    },
-    watch: {
-        isVisible(newValue) {
-            console.log('watch:isVisible', newValue)
-            if (newValue) {
-                this.show()
-            } else {
-                this.close()
-            }
-        },
     },
     methods: {
-        show() {
-            this.$refs.dialogComponent.showModal()
+        show(modal = false) {
+            if (modal) {
+                this.$refs.dialogComponent.showModal()
+            } else {
+                this.$refs.dialogComponent.show()
+            }
         },
         close() {
             this.$refs.dialogComponent.close()

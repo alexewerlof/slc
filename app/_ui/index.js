@@ -30,7 +30,6 @@ const app = createApp({
         return {
             // Expose the config to the UI
             config,
-            isDialogVisible: false,
             inlineSelectOptions,
             inlineSelectValue: inlineSelectOptions[0].value,
             currStep: 0,
@@ -42,6 +41,9 @@ const app = createApp({
     methods: {
         clicked(name) {
             showToast(`Clicked ${name}`)
+        },
+        showDialog(ref, modal) {
+            this.$refs[ref].show(modal)
         },
     },
 })
