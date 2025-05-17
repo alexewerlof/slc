@@ -112,6 +112,13 @@ td button {
         rgba(from var(--background-color) r g b / 0.1) 20%,
         rgba(from var(--foreground-color) r g b / 0.1) 60%
     );
+    background-size: 110% 110%;
+    background-position: 0 0;
+    transition: background-position var(--animation-speed2) ease;
+}
+
+.frost:hover {
+    background-position: 100% 100%;
 }
 
 .surface, .well {
