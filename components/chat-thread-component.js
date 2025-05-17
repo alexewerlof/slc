@@ -12,4 +12,18 @@ export default {
             required: true,
         },
     },
+    methods: {
+        scrollToTop() {
+            const container = this.$refs.threadContainerRef
+            if (container) {
+                container.scrollTop = 0
+            }
+        },
+        scrollToBottom() {
+            const container = this.$refs.threadContainerRef
+            if (container) {
+                container.scrollTop = container.scrollHeight
+            }
+        },
+    },
 }

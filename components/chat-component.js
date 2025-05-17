@@ -11,7 +11,7 @@ export default {
                 value: new LLMAPI(engine),
             }
         })
-        const tabNames = ['Settings', 'Chat']
+        const tabNames = ['Chat', 'Settings']
         return {
             engines: config.llm.engines,
             engineSelection,
@@ -35,8 +35,10 @@ export default {
         async submitPrompt() {
             try {
                 this.thread.add(new Bead('user', this.message))
+                this.$nextTick(() => {
+                    this.$refs.chatThreadComponent.scrollToBottom()
+                })
                 this.message = ''
-                this.selTabName = this.tabNames[1]
                 this.isEditDisabled = true
                 const messages = this.thread.toJSON()
                 this.thread.add(new Bead('assistant', 'Loading...'))
@@ -45,6 +47,9 @@ export default {
                     temperature: this.temperature,
                 })
                 this.thread.beads.at(-1).content = content
+                this.$nextTick(() => {
+                    this.$refs.chatThreadComponent.scrollToBottom()
+                })
             } catch (error) {
                 console.error('Error:', error)
                 showToast('Error: ' + error.message)

@@ -4,8 +4,12 @@
             <input type="checkbox" v-model="showSystemMessages">
             Show System Messages
         </label>
+        <div class="button-bar">
+            <button @click="scrollToTop()">⭱</button>
+            <button @click="scrollToBottom()">⭳</button>
+        </div>
     </div>
-    <div class="chat-thread-component__thread">
+    <div class="chat-thread-component__thread" ref="threadContainerRef">
         <div v-for="bead of thread.beads"
             :class="`chat-thread-component__bead chat-thread-component__bead--${bead.role}`" :hidden="bead.role === 'system' && !showSystemMessages">
             <div class="chat-thread-component__role">

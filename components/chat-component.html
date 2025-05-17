@@ -1,10 +1,21 @@
 <div class="chat-component">
     <tabs-component v-model="selTabName" :tab-names="tabNames"></tabs-component>
-    <div v-if="selTabName === 'Chat'" class="well b-mar-gap2">
-        <chat-thread-component :thread="thread"></chat-thread-component>
+    <div v-if="selTabName === 'Chat'" class="well">
+        <chat-thread-component class="b-mar-gap2" :thread="thread" ref="chatThreadComponent"></chat-thread-component>
         <loading-animation-component v-if="selectedEngine.isBusy"></loading-animation-component>
+        <div class="input-group">
+            <div class="input-button-pair">
+                <textarea
+                    type="text"
+                    v-model="message"
+                    placeholder="Type your message here..."
+                    @keyup.enter="submitPrompt"
+                    :disabled="isEditDisabled"></textarea>
+                <button @click="submitPrompt" type="button">Send</button>
+            </div>
+        </div>
     </div>
-    <div v-if="selTabName === 'Settings'" class="well b-mar-gap2">
+    <div v-if="selTabName === 'Settings'" class="well">
         <div class="input-group b-mar-gap2">
             <label for="engine-selector">
                 LLM Engine
@@ -82,16 +93,5 @@
                 />
             </div>
         </show-hide-component>
-    </div>
-    <div class="input-group">
-        <div class="input-button-pair">
-            <textarea
-                type="text"
-                v-model="message"
-                placeholder="Type your message here..."
-                @keyup.enter="submitPrompt"
-                :disabled="isEditDisabled"></textarea>
-            <button @click="submitPrompt">Send</button>
-        </div>
     </div>
 </div>
