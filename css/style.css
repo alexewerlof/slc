@@ -108,9 +108,9 @@ td button {
     padding: var(--gap2);
     background-image: repeating-linear-gradient(
         45deg,
-        rgba(from var(--foreground-color) r g b / 0.1) 0%,
-        rgba(from var(--background-color) r g b / 0.1) 20%,
-        rgba(from var(--foreground-color) r g b / 0.1) 60%
+        rgba(from var(--foreground-color) r g b / 0.08) 0%,
+        rgba(from var(--background-color) r g b / 0.08) 20%,
+        rgba(from var(--foreground-color) r g b / 0.08) 60%
     );
     background-size: 110% 110%;
     background-position: 0 0;
