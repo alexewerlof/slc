@@ -111,17 +111,14 @@ export class LLMAPI {
 
     async updateModelIds() {
         const response = await this.fetchJson('GET', 'models')
-        const previouslySelectedModelId = this.modelIds.selected
+        const prevModelId = this.modelIds.selected
         this.modelIds.state = response.data.map((model) => model.id)
-        if (previouslySelectedModelId) {
-            const str = previouslySelectedModelId.valueOf()
-            this.modelIds.find((modelId) => {
-                if (modelId.valueOf() === str) {
-                    this.modelIds.selected = modelId
-                    return true
-                }
-                return false
-            })
+        if (prevModelId) {
+            const prevModelIdStr = prevModelId.valueOf()
+            const foundModelId = this.modelIds.find((modelId) => modelId.valueOf() === prevModelIdStr)
+            if (foundModelId) {
+                this.modelIds.selected = foundModelId
+            }
         }
     }
 }
