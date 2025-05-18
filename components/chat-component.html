@@ -1,6 +1,6 @@
 <div class="chat-component">
     <tabs-component v-model="selTabName" :tab-names="tabNames"></tabs-component>
-    <div v-if="selTabName === 'Chat'" class="well">
+    <div v-if="selTabName === 'Chat'">
         <chat-thread-component class="b-mar-gap2" :thread="thread" ref="chatThreadComponent"></chat-thread-component>
         <loading-animation-component v-if="selectedEngine.isBusy"></loading-animation-component>
         <div class="input-group">

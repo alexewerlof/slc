@@ -1,7 +1,6 @@
 .chat-thread-component {
-    & h1,
-    & h2 {
-        color: inherit;
+    pre {
+        overflow: auto;
     }
 }
 
@@ -22,16 +21,9 @@
 }
 
 .chat-thread-component__contents {
-    padding: var(--gap) var(--gap2);
-    box-shadow: 0.2em 0.2em 0.3em rgb(0 0 0 / 45%);
-    margin: var(--bthick) 0;
+    padding-top: 0;
+    padding-bottom: 0;
     align-self: flex-start;
-    color: var(--background-color);
-}
-
-.chat-thread-component__contents:last-child {
-    border-bottom-left-radius: var(--bradius);
-    border-bottom-right-radius: var(--bradius);
 }
 
 .chat-thread-component__bead--system {
@@ -40,18 +32,19 @@
     }
 
     & .chat-thread-component__contents {
-        background-color: var(--brand-purple);
+        border-color: var(--brand-purple);
     }
 }
 
 .chat-thread-component__bead--user {
     align-self: flex-end;
+
     & .chat-thread-component__role {
         color: var(--secondary-color);
         text-align: right;
     }
     & .chat-thread-component__contents {
-        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
     }
 }
 
@@ -60,6 +53,6 @@
         color: var(--brand-green);
     }
     & .chat-thread-component__contents {
-        background-color: var(--brand-green);
+        border-color: var(--brand-green);
     }
 }
