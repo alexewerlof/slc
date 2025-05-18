@@ -148,7 +148,6 @@ section {
 
 .mozaic--gap2 {
     gap: var(--gap2);
-    padding: var(--gap2);
 }
 
 @media screen and (min-width: 1000px) {

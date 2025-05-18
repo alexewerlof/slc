@@ -1,6 +1,7 @@
 .steps-component {
     justify-content: space-around;
     align-items: center;
+    margin: 0;
 
     & button {
         flex-grow: 1;
