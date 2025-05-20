@@ -1,4 +1,5 @@
-import { isInArr, isStr } from '../lib/validation.js'
+import { fetchTextFilesAndConcat } from '../lib/prompt.js'
+import { isFn, isInArr, isStr } from '../lib/validation.js'
 
 export class Bead {
     _content = undefined
@@ -39,6 +40,25 @@ export class Bead {
     }
 }
 
+export class FileBead extends Bead {
+    _fileNames = undefined
+    constructor(name, ...fileNames) {
+        super(name)
+        this._fileNames = fileNames
+    }
+
+    get loaded() {
+        return Boolean(this.content)
+    }
+
+    async load() {
+        if (!this.loaded) {
+            this.content = await fetchTextFilesAndConcat(...this._fileNames)
+        }
+        return this.content
+    }
+}
+
 export class Thread {
     beads = []
 
@@ -55,11 +75,16 @@ export class Thread {
         }
     }
 
-    clear() {
-        this.beads.length = 0
+    async getMessages() {
+        await Promise.all(this.beads.map(async (bead) => {
+            if (isFn(bead.load)) {
+                await bead.load()
+            }
+        }))
+        return this.beads.map((bead) => bead.toJSON())
     }
 
-    toJSON() {
-        return this.beads
+    clear() {
+        this.beads.length = 0
     }
 }

@@ -8,13 +8,7 @@ import { Service } from './service.js'
 import { Consumer } from './consumer.js'
 import { Consumption } from './consumption.js'
 import { Dependency } from './dependency.js'
-import { fetchTextFilesAndConcat } from '../lib/prompt.js'
-import { Bead, Thread } from './thread.js'
-
-const systemContent = await fetchTextFilesAndConcat(
-    'assess-prompt.md',
-    '../../prompts/glossary.md',
-)
+import { Bead, FileBead, Thread } from './thread.js'
 
 class AssessmentBead extends Bead {
     constructor(assessment) {
@@ -49,7 +43,7 @@ export default {
             steps,
             exportedCode: '-',
             thread: new Thread(
-                new Bead('system', systemContent),
+                new FileBead('system', 'assess-prompt.md', '../../prompts/glossary.md'),
                 new AssessmentBead(this.assessment),
             ),
         }
