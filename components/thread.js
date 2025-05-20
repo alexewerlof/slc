@@ -32,7 +32,7 @@ export class Bead {
         this._content = content
     }
 
-    toJSON() {
+    toMessage() {
         return {
             role: this.role,
             content: this.content,
@@ -75,13 +75,13 @@ export class Thread {
         }
     }
 
-    async getMessages() {
+    async toMessages() {
         await Promise.all(this.beads.map(async (bead) => {
             if (isFn(bead.load)) {
                 await bead.load()
             }
         }))
-        return this.beads.map((bead) => bead.toJSON())
+        return this.beads.map((bead) => bead.toMessage())
     }
 
     clear() {
