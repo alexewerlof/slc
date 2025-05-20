@@ -9,7 +9,7 @@
     flex-direction: column;
     gap: var(--gap2);
     max-height: 50vh;
-    padding: 0 var(--gap2);
+    padding: 0 var(--gap2) var(--bthick) var(--gap2);
     overflow-y: auto;
     scroll-behavior: smooth;
     margin: 0 calc(var(--gap2) * -1);
