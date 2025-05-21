@@ -33,7 +33,7 @@ export default {
             'Consumers',
             'Failures',
             'Risks',
-            'Events',
+            'Metrics',
             'Summary',
             'Export',
         ]
