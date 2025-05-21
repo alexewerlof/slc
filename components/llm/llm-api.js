@@ -65,11 +65,16 @@ export class LLMAPI {
         if (methodUpperCase !== 'GET' && !isObj(data)) {
             throw new TypeError(`data must be an object. Got ${data}`)
         }
-        const headers = {
-            'Content-Type': 'application/json',
-        }
+        const headers = new Headers()
+        headers.set('Accept', 'application/json')
+        headers.set('Accept-Charset', 'utf-8')
+        headers.set('Connection', 'keep-alive')
+        headers.set('Content-Type', 'application/json')
         if (this.requiresApiKey) {
-            headers['Authorization'] = `Bearer ${this.apiKey}`
+            if (!isStr(this.apiKey)) {
+                throw new Error(`API key is required for ${this.name}.`)
+            }
+            headers.set('Authorization', `Bearer ${this.apiKey}`)
         }
         this.isBusy = true
         const response = await fetch(url, {
