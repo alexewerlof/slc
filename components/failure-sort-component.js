@@ -2,12 +2,12 @@ import { isArrIdx, isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { config } from '../config.js'
 import { Failure } from './failure.js'
+import { icon } from '../lib/icons.js'
 
 function resetImpactLevelsInOrder(failures) {
     const { min, max } = config.impactLevel
     const lastIndex = failures.length - 1
     const step = (max - min) / lastIndex
-    console.dir({ min, max, step, lastIndex })
     for (let i = 0; i <= lastIndex; i++) {
         const failure = failures[i]
         if (!isInstance(failure, Failure)) {
@@ -21,35 +21,32 @@ export default {
     props: {
         assessment: Assessment,
     },
-    computed: {
-        failures() {
-            return this.assessment.dependencies
-                .flatMap((dependency) => dependency.failures)
-                .sort((f1, f2) => f2.impactLevel - f1.impactLevel)
-        },
-    },
     methods: {
+        icon,
+        swapFailures(srcIndex, dstIndex) {
+            if (srcIndex === dstIndex) {
+                return
+            }
+            if (!isArrIdx(this.assessment.failures, srcIndex)) {
+                throw new RangeError(`Invalid or out of range srcIndex: ${srcIndex}`)
+            }
+            if (!isArrIdx(this.assessment.failures, dstIndex)) {
+                throw new RangeError(`Invalid or out of range dstIndex: ${dstIndex}`)
+            }
+            const failures = [...this.assessment.failures]
+            const srcFailure = this.assessment.failures[srcIndex]
+            failures.splice(srcIndex, 1)
+            failures.splice(dstIndex, 0, srcFailure)
+            resetImpactLevelsInOrder(failures)
+        },
         startDrag(event, srcIndex) {
-            console.log('startDrag srcIndex', srcIndex)
             event.dataTransfer.dropEffect = 'move'
             event.dataTransfer.effectAllowed = 'move'
             event.dataTransfer.setData('srcIndex', JSON.stringify({ srcIndex }))
         },
         onDrop(event, dstIndex) {
-            console.log('onDrop srcIndex', dstIndex)
             const srcIndex = JSON.parse(event.dataTransfer.getData('srcIndex')).srcIndex
-            if (srcIndex === dstIndex) {
-                console.log('Indexes are the same. nothing to do here.')
-                return
-            }
-            if (!isArrIdx(this.failures, srcIndex)) {
-                throw new RangeError(`Invalid or out of range srcIndex: ${srcIndex}`)
-            }
-            const failures = [...this.failures]
-            const srcFailure = this.failures[srcIndex]
-            failures.splice(srcIndex, 1)
-            failures.splice(dstIndex, 0, srcFailure)
-            resetImpactLevelsInOrder(failures)
+            this.swapFailures(srcIndex, dstIndex)
         },
     },
 }

@@ -96,6 +96,12 @@ export class Assessment {
         }
     }
 
+    get failures() {
+        return this.dependencies
+            .flatMap((dependency) => dependency.failures)
+            .sort((f1, f2) => f2.impactLevel - f1.impactLevel)
+    }
+
     toString() {
         const lines = []
         const emptyLine = '\n'
@@ -203,10 +209,7 @@ export class Assessment {
             emptyLine,
         )
 
-        const failuresByImpact = this.dependencies.flatMap((dependency) => dependency.failures)
-            .sort((f1, f2) => f2.impactLevel - f1.impactLevel)
-
-        for (const failure of failuresByImpact) {
+        for (const failure of this.failures) {
             lines.push(
                 `- ${failure}`,
             )
