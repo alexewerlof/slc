@@ -2,6 +2,7 @@
     justify-content: left;
     border-bottom: var(--bthick2) solid var(--primary-color);
     padding-bottom: 0;
+    padding-left: var(--gap);
 }
 
 .tabs-component__tab {
