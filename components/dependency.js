@@ -1,30 +1,25 @@
 import { icon } from '../lib/icons.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { isArr, isDef, isInstance, isObj } from '../lib/validation.js'
-import { Assessment } from './assessment.js'
 import { Consumer } from './consumer.js'
 import { Consumption } from './consumption.js'
 import { Failure } from './failure.js'
 import { Service } from './service.js'
-import { Provider } from './provider.js'
 
 export class Dependency {
     failures = new SelectableArray(Failure, this)
 
-    constructor(assessment, state) {
-        if (!isInstance(assessment, Assessment)) {
-            throw TypeError(`assessment must be an instance of Assessment. Got ${assessment}`)
+    constructor(service, state) {
+        if (!isInstance(service, Service)) {
+            throw TypeError(`Expected an instance of service. Got ${service}`)
         }
-        this.assessment = assessment
+        this.service = service
         this.state = state
     }
 
     get state() {
         return {
-            consumerIndex: this.consumption.consumer.index,
-            consumptionIndex: this.consumption.index,
-            providerIndex: this.service.provider.index,
-            serviceIndex: this.service.index,
+            consumptionRef: [this.consumption.consumer.index, this.consumption.index],
             failures: this.failures.map((failure) => failure.state),
         }
     }
@@ -33,26 +28,26 @@ export class Dependency {
         if (!isObj(newState)) {
             throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
         }
-        const { consumerIndex, consumptionIndex, providerIndex, serviceIndex, failures } = newState
+
+        const { consumptionRef, failures } = newState
+
+        if (!isArr(consumptionRef) || consumptionRef.length !== 2) {
+            throw new TypeError(`Invalid consumptionRef: ${consumptionRef} (${typeof consumptionRef})`)
+        }
+
+        const [consumerIndex, consumptionIndex] = consumptionRef
+
         const consumer = this.assessment.consumers[consumerIndex]
         if (!isInstance(consumer, Consumer)) {
-            throw TypeError(`Consumer must be an instance of Consumer. Got ${consumer}`)
+            throw TypeError(`Consumer must be an instance of Consumer. Got ${consumer} (index: ${consumerIndex})`)
         }
-        const consumption = consumer.consumptions[consumptionIndex]
-        if (!isInstance(consumption, Consumption)) {
-            throw TypeError(`Consumption must be an instance of Consumption. Got ${consumption}`)
+
+        this.consumption = consumer.consumptions[consumptionIndex]
+        if (!isInstance(this.consumption, Consumption)) {
+            throw TypeError(
+                `Consumption must be an instance of Consumption. Got ${this.consumption} (index: ${consumptionIndex})`,
+            )
         }
-        this.consumption = consumption
-        const provider = this.assessment.providers[providerIndex]
-        if (!isInstance(provider, Provider)) {
-            throw TypeError(`Provider must be an instance of Provider. Got ${provider}`)
-        }
-        this.provider = provider
-        const service = provider.services[serviceIndex]
-        if (!isInstance(service, Service)) {
-            throw TypeError(`Service must be an instance of Service. Got ${service}`)
-        }
-        this.service = service
         if (isDef(failures)) {
             if (!isArr(failures)) {
                 throw new TypeError(`Invalid failures: ${failures} (${typeof failures})`)
@@ -63,5 +58,13 @@ export class Dependency {
 
     toString() {
         return `${this.consumption} ${icon('dependency')} ${this.service}`
+    }
+
+    get provider() {
+        return this.service.provider
+    }
+
+    get assessment() {
+        return this.provider.assessment
     }
 }

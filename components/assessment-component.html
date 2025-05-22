@@ -247,6 +247,74 @@
                     <failure-sort-component :assessment="assessment"></failure-sort-component>
                 </div>
 
+                <div v-if="currentStep === 5" class="mozaic__tile mozaic__tile--half surface">
+                    <h2>Services</h2>                    
+                    <fieldset class="b-mar-gap2">
+                        <legend>Service ({{ assessment.services.length }})</legend>
+                        <select id="service-selector" v-model="metricService">
+                            <option v-for="service of assessment.services" :value="service">
+                                {{ service }} ({{ service.failures.length }})
+                            </option>
+                        </select>
+                    </fieldset>
+                    <div v-if="metricService"class="well">
+                        <h2>
+                            Failures
+                            <help-component>
+                                <p>
+                                    Here are all the way that this particular service can fail
+                                    sorted by their business impact.
+                                </p>
+                                <p>
+                                    Our goal at this step is to come up with metrics that allow us
+                                    to be <em>on top of failure</em>.
+                                </p>
+                                <p>
+                                    What does it mean to be <em>on top of failure</em>?
+                                    It means that we want to be able to detect the failure using
+                                    automatic alerts <em>before</em> the humans
+                                    (e.g. customers, colleagues) have to report it.
+                                </p>
+                            </help-component>
+                        </h2>
+                        <ol>
+                            <li v-for="failure of metricService.failures">{{ failure }}</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div v-if="currentStep === 5" class="mozaic__tile mozaic__tile--half surface">
+                    <h2>Metrics</h2>
+                    <fieldset v-if="metricService">
+                        <legend>Metric</legend>
+                        <div class="block warning">
+                            There are no objectives (SLOs) attached to the selected indicator (SLI).
+                        </div>
+                        <select v-model="metricService.metrics.selected">
+                            <option v-for="metric of metricService.metrics" :value="metric">
+                                {{ metric }}
+                            </option>
+                        </select>
+                        <div class="button-bar">
+                            <button
+                                @click="metricService.metrics.pushNew()"
+                            >
+                                Add
+                            </button>
+                            <button
+                                class="button--danger"
+                                @click="metricService.metrics.removeSelected()"
+                                :disabled="!metricService.metrics.length"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </fieldset>
+                    <div v-if="metricService?.metrics?.selected">
+                        <metric-component :metric="metricService.metrics.selected"></metric-component>
+                    </div>
+               </div>
+
                 <div v-if="currentStep === 6" class="surface mozaic__tile mozaic__tile--whole">
                     <summary-component :assessment="assessment"></summary-component>
                 </div>

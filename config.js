@@ -13,7 +13,7 @@ export const config = fz({
     urlVer: 3,
     displayName: fz({
         minLength: 2,
-        maxLength: 100,
+        maxLength: 300,
         default: '',
     }),
     description: fz({

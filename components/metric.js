@@ -1,4 +1,4 @@
-import { isInArr, isInstance } from '../lib/validation.js'
+import { isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Service } from './service.js'
 import { Failure } from './failure.js'
 import { icon } from '../lib/icons.js'
@@ -9,22 +9,65 @@ const metricIcon = icon('metric')
 
 export class Metric {
     service = null
-    displayName = config.displayName.default
-    description = config.description.default
+    displayName = ''
+    description = ''
     isBoolean = true
-    numericUnit = config.unit.default
-    condition = null
-    constructor(service, displayName = '', description = '', isBoolean = false, numericUnit = '') {
+    numericUnit = ''
+    condition = new Condition(this)
+    linkedFailures = []
+
+    constructor(service, state) {
         if (!isInstance(service, Service)) {
             throw new Error(`Expected an instance of Service. Got ${service}`)
         }
         this.service = service
-        this.displayName = displayName
-        this.description = description
-        this.isBoolean = isBoolean
-        this.numericUnit = numericUnit
-        this.condition = new Condition(this)
-        this.linkedFailures = []
+        if (isDef(state)) {
+            this.state = state
+        }
+    }
+
+    get state() {
+        return {
+            displayName: this.displayName,
+            description: this.description,
+            isBoolean: this.isBoolean,
+            numericUnit: this.numericUnit,
+            linkedFailuresIndex: this.linkedFailures.map((failure) => failure.index),
+        }
+    }
+
+    set state(newState) {
+        if (!isObj(newState)) {
+            throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
+        }
+
+        const {
+            displayName,
+            description,
+            isBoolean,
+            numericUnit,
+        } = newState
+
+        if (isDef(displayName)) {
+            if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
+                throw new TypeError(`Invalid displayName. ${displayName}`)
+            }
+            this.displayName = displayName
+        }
+        if (isDef(description)) {
+            if (!isStrLen(description, config.description.minLength, config.description.maxLength)) {
+                throw new TypeError(`Invalid description. ${description}`)
+            }
+            this.description = description
+        }
+        if (isDef(isBoolean)) {
+            // TODO: validate isBoolean
+            this.isBoolean = isBoolean
+        }
+        if (isDef(numericUnit)) {
+            // TODO: validate numericUnit
+            this.numericUnit = numericUnit
+        }
     }
 
     get unit() {
@@ -76,28 +119,6 @@ export class Metric {
 
     toString() {
         return `${this.service} ${metricIcon} ${this.displayName}`
-    }
-
-    remove() {
-        return this.service.removeMetric(this)
-    }
-
-    toJSON() {
-        return {
-            displayName: this.displayName,
-            description: this.description,
-            // failures: this.failures,
-        }
-    }
-
-    save() {
-        return {
-            displayName: this.displayName,
-            description: this.description,
-            isNumeric: this.isNumeric,
-            numericUnit: this.numericUnit,
-            linkedFailuresIndex: this.linkedFailures.map((failure) => failure.index),
-        }
     }
 
     static load(service, metricObj) {

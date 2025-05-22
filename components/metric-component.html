@@ -1,3 +1,33 @@
-<div>
-    to be written
+<div class="metric-component">
+    <fieldset>
+        <legend>Basics</legend>
+        <div class="input-group">
+            <label for="metric-input">Name</label>
+            <input type="text" id="metric-input" placeholder="Enter metric name" v-model="metric.displayName" />
+        </div>
+        <div class="input-group">
+            <label for="metric-description">Description</label>
+            <input
+                type="text" id="metric-description"
+                placeholder="Enter metric description"
+                v-model="metric.description" />
+        </div>
+    </fieldset>
+    <h3>
+        Symptoms
+        <help-component>
+            <p>
+                Mark all the failures which their symptoms are measured by this metric.
+            </p>
+        </help-component>
+    </h3>
+    <fieldset v-for="dependency of metric.service.dependencies">
+        <legend title="Consumption">{{ dependency.consumption }}</legend>
+        <div v-for="failure of dependency.failures" class="input-group">
+            <label title="Symptom">
+                <input type="checkbox">
+                {{ failure.symptom }}
+            </label>
+        </div>
+    </fieldset>
 </div>

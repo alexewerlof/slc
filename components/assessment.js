@@ -10,7 +10,6 @@ import { icon } from '../lib/icons.js'
 export class Assessment {
     consumers = new SelectableArray(Consumer, this)
     providers = new SelectableArray(Provider, this)
-    dependencies = new SelectableArray(Dependency, this)
 
     constructor(state) {
         if (isObj(state)) {
@@ -20,9 +19,8 @@ export class Assessment {
 
     get state() {
         return {
-            providers: this.providers.state,
             consumers: this.consumers.state,
-            dependencies: this.dependencies.state,
+            providers: this.providers.state,
         }
     }
 
@@ -34,13 +32,9 @@ export class Assessment {
         const {
             consumers,
             providers,
-            dependencies,
         } = newState
 
         if (isDef(consumers)) {
-            if (!isArr(consumers)) {
-                throw new TypeError(`Invalid consumers: ${consumers} (${typeof consumers})`)
-            }
             this.consumers.state = consumers
         }
         if (isDef(providers)) {
@@ -48,12 +42,6 @@ export class Assessment {
                 throw new TypeError(`Invalid providers: ${providers} (${typeof providers})`)
             }
             this.providers.state = providers
-        }
-        if (isDef(dependencies)) {
-            if (!isArr(dependencies)) {
-                throw new TypeError(`Invalid dependencies: ${dependencies} (${typeof dependencies})`)
-            }
-            this.dependencies.state = dependencies
         }
     }
 
@@ -96,10 +84,25 @@ export class Assessment {
         }
     }
 
+    get services() {
+        return this.providers.flatMap((provider) => provider.services)
+    }
+
+    get dependencies() {
+        return this.services.flatMap((service) => service.dependencies)
+    }
+
     get failures() {
         return this.dependencies
             .flatMap((dependency) => dependency.failures)
             .sort((f1, f2) => f2.impactLevel - f1.impactLevel)
+    }
+
+    findFailures(service) {
+        if (!isInstance(service, Service)) {
+            throw new TypeError(`service must be an instance of Service. Got ${service}`)
+        }
+        return this.failures.filter((failure) => failure.dependency.service === service)
     }
 
     toString() {

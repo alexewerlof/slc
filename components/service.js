@@ -2,6 +2,9 @@ import { icon } from '../lib/icons.js'
 import { isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Provider } from './provider.js'
 import { config } from '../config.js'
+import { SelectableArray } from '../lib/selectable-array.js'
+import { Metric } from './metric.js'
+import { Dependency } from './dependency.js'
 
 const scopeIcon = icon('scope')
 
@@ -10,6 +13,8 @@ export class Service {
     provider = null
     displayName = config.displayName.default
     description = config.description.default
+    dependencies = new SelectableArray(Dependency, this)
+    metrics = new SelectableArray(Metric, this)
     _type = Service.possibleTypes[0]
 
     constructor(provider, state) {
@@ -38,6 +43,8 @@ export class Service {
             displayName,
             description,
             type,
+            dependencies,
+            metrics,
         } = newState
         if (isDef(displayName)) {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
@@ -56,6 +63,12 @@ export class Service {
                 throw new TypeError(`Invalid type. ${type}`)
             }
             this.type = type
+        }
+        if (isDef(dependencies)) {
+            this.dependencies.state = dependencies
+        }
+        if (isDef(metrics)) {
+            this.metrics.state = metrics
         }
     }
 
@@ -79,8 +92,16 @@ export class Service {
         }
     }
 
+    get dependencies() {
+        return this.provider.assessment.dependencies.filter((d) => d.service === this)
+    }
+
     get consumptions() {
         return this.dependencies.map((d) => d.consumption)
+    }
+
+    get failures() {
+        return this.dependencies.flatMap((d) => d.failures)
     }
 
     isConsumedBy(consumption) {

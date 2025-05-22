@@ -42,6 +42,8 @@ export default {
             currentStep: 0,
             steps,
             exportedCode: '-',
+            // Only used in the metrics step
+            metricService: null,
             thread: new Thread(
                 new FileBead('system', 'assess-prompt.md', '../../prompts/glossary.md'),
                 new AssessmentBead(this.assessment),
