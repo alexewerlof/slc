@@ -6,11 +6,12 @@ export default {
         return {
             deltaX: 50,
             deltaY: 50,
-            providerRadius: 10,
+            providerRadius: 12,
             serviceRadius: 12,
-            consumerRadius: 10,
+            consumerRadius: 12,
             consumptionRadius: 12,
             dependencyRadius: 14,
+            metricRadius: 12,
             padding: 50,
         }
     },
@@ -44,7 +45,7 @@ export default {
             for (const consumer of this.assessment.consumers) {
                 ret += this.consumerHeight(consumer)
             }
-            return ret
+            return ret + 50
         },
         providerY() {
             return this.scaleY(0.5)
@@ -57,6 +58,9 @@ export default {
         },
         consumptionX() {
             return this.scaleX(2)
+        },
+        metricY() {
+            return this.height - this.scaleY(0.4)
         },
     },
     methods: {
@@ -103,6 +107,9 @@ export default {
         },
         serviceX(service) {
             return this.providerOffset(service.provider) + this.padding + this.scaleX(service.index)
+        },
+        metricX(metric) {
+            return this.serviceX(metric.service)
         },
         consumptionY(consumption) {
             return this.consumerOffset(consumption.consumer) + this.padding + this.scaleY(consumption.index)

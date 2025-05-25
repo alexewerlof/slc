@@ -2,7 +2,7 @@ fieldset {
     border: var(--bthick) solid var(--divider-color);
     border-radius: var(--bradius);
     padding: var(--gap2);
-    padding-top: 0;
+    padding-top: var(--gap);
     margin: 0;
     box-shadow: inset 0 0 var(--gap) var(--bthick) var(--background-darker);
     background-color: rgba(0, 0, 0, 0.1);

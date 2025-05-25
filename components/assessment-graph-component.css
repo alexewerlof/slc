@@ -37,6 +37,11 @@
     stroke: var(--brand-pink);
 }
 
+.assessment-graph-component__entity--metric {
+    fill: var(--primary-color);
+    stroke: var(--brand-pink);
+}
+
 .assessment-graph-component__line {
     stroke-width: 2;
 }

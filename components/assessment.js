@@ -88,6 +88,10 @@ export class Assessment {
         return this.providers.flatMap((provider) => provider.services)
     }
 
+    get metrics() {
+        return this.services.flatMap((service) => service.metrics)
+    }
+
     get dependencies() {
         return this.services.flatMap((service) => service.dependencies)
     }

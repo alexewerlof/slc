@@ -9,6 +9,7 @@ import { Consumer } from './consumer.js'
 import { Consumption } from './consumption.js'
 import { Dependency } from './dependency.js'
 import { Bead, FileBead, Thread } from './thread.js'
+import { Metric } from './metric.js'
 
 class AssessmentBead extends Bead {
     constructor(assessment) {
@@ -42,8 +43,6 @@ export default {
             currentStep: 0,
             steps,
             exportedCode: '-',
-            // Only used in the metrics step
-            metricService: null,
             thread: new Thread(
                 new FileBead('system', 'assess-prompt.md', '../../prompts/glossary.md'),
                 new AssessmentBead(this.assessment),
@@ -75,6 +74,9 @@ export default {
         selectedDependency() {
             return this.selectedService?.dependencies.selected
         },
+        selectedMetric() {
+            return this.selectedService?.metrics.selected
+        },
     },
     methods: {
         icon,
@@ -100,6 +102,11 @@ export default {
                 this.assessment.providers.selected = x.service.provider
                 this.assessment.providers.selected.services.selected = x.service
                 this.assessment.providers.selected.services.selected.dependencies.selected = x
+            } else if (isInstance(x, Metric)) {
+                this.currentStep = 5
+                this.assessment.providers.selected = x.service.provider
+                this.assessment.providers.selected.services.selected = x.service
+                this.assessment.providers.selected.services.selected.metrics.selected = x
             } else {
                 throw new Error(`Invalid goto argument: ${x}`)
             }
