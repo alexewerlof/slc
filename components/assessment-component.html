@@ -5,7 +5,7 @@
         <div class="mozaic mozaic--gap2 pad-gap2">
             <div class="mozaic__tile mozaic__tile--8c mozaic mozaic--gap2">
 
-                <div class="frost mozaic__tile--whole" v-if="inRange(currentStep, 1, 3)">
+                <div class="frost mozaic__tile--whole" v-if="inRange(currentStep, 1, 3) || currentStep === 5">
                     <assessment-graph-component
                         @select="goto"
                         :assessment="assessment"></assessment-graph-component>
