@@ -72,6 +72,9 @@ export default {
         selectedConsumption() {
             return this.selectedConsumer?.consumptions.selected
         },
+        selectedDependency() {
+            return this.selectedService?.dependencies.selected
+        },
     },
     methods: {
         icon,
@@ -94,7 +97,9 @@ export default {
                 this.assessment.consumers.selected.consumptions.selected = x
             } else if (isInstance(x, Dependency)) {
                 this.currentStep = 3
-                this.assessment.dependencies.selected = x
+                this.assessment.providers.selected = x.service.provider
+                this.assessment.providers.selected.services.selected = x.service
+                this.assessment.providers.selected.services.selected.dependencies.selected = x
             } else {
                 throw new Error(`Invalid goto argument: ${x}`)
             }
