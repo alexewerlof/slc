@@ -31,17 +31,3 @@
     position: absolute;
     width: calc(100% - 2 * var(--padding-inline, 1rem)); /* Adjust based on your actual padding/margins if needed */
 }
-
-.failure-sort-component__controls {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding-right: var(--gap2);
-}
-
-.failure-sort-component__index {
-    font-family: var(--title-font-family);
-    font-size: 2em;
-    text-align: center;
-    color: var(--primary-color);
-}

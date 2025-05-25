@@ -17,32 +17,36 @@
             <div
                 v-for="(failure, index) of assessment.failures"
                 :key="failure"
-                class="failure-sort-component__failure frost mozaic"
+                class="failure-sort-component__failure frost"
                 draggable="true"
                 @dragstart="startDrag($event, index)"
                 @drop="onDrop($event, index)"
                 @dragenter.prevent
                 @dragover.prevent
                 >
-                <div class="failure-sort-component__controls mozaic__tile mozaic__tile--2a">
+                <h2>{{ index + 1 }}. {{ failure.businessImpact }}</h2>
+                <p v-text="failure"></p>
+                <div class="button-bar">
                     <button
-                        title="Move Up"
                         :disabled="index === 0"
-                        @click="swapFailures(index, index - 1)"
-                        v-text="icon('up')">
+                        @click="swapFailures(index, 0)">
+                        Move To Top
                     </button>
-                    <div class="failure-sort-component__index" v-text="index + 1"></div>
                     <button
-                        title="Move Down"
-                        :disabled="index === assessment.failures.length - 1"
-                        @click="swapFailures(index, index + 1)"
-                        v-text="icon('down')">
+                        :disabled="index === 0"
+                        @click="swapFailures(index, index - 1)">
+                        Move Up
                     </button>
-                </div>
-                <div class="mozaic__tile mozaic__tile--10c">
-                    <div class="subtle-hint">{{ failure }} (impact level: {{ failure.impactLevel }})</div>
-                    <div><strong>Consequence:</strong> {{ failure.consequence }}</div>
-                    <div><strong>Business Impact:</strong> {{ failure.businessImpact }}</div>
+                    <button
+                        :disabled="index === assessment.failures.length - 1"
+                        @click="swapFailures(index, index + 1)">
+                        Move Down
+                    </button>
+                    <button
+                        :disabled="index === assessment.failures.length - 1"
+                        @click="swapFailures(index, assessment.failures.length - 1)">
+                        Move To Bottom
+                    </button>
                 </div>
             </div>
         </TransitionGroup>
