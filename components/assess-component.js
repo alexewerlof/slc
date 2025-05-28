@@ -8,23 +8,8 @@ import { Service } from './service.js'
 import { Consumer } from './consumer.js'
 import { Consumption } from './consumption.js'
 import { Dependency } from './dependency.js'
-import { Bead, FileBead, Thread } from './thread.js'
+import { FileBead, Thread } from './thread.js'
 import { Metric } from './metric.js'
-
-class AssessmentBead extends Bead {
-    constructor(assessment) {
-        super('system', '')
-        this.assessment = assessment
-    }
-
-    get content() {
-        return this.assessment.toString()
-    }
-
-    set content(value) {
-        this._content = 'dummy'
-    }
-}
 
 export default {
     data() {
