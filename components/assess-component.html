@@ -1,4 +1,4 @@
-<div class="assessment-component">
+<div class="assess-component">
     <div class="container logo-bg">
         <steps-component class="h-pad-gap2" v-model="currentStep" :steps="steps"></steps-component>
 
@@ -12,7 +12,7 @@
                 </div>
 
                 <div v-if="currentStep === 0" class="surface mozaic__tile mozaic__tile--whole">
-                    <assessment-component-intro></assessment-component-intro>
+                    <assess-component-intro></assess-component-intro>
                 </div>
 
                 <div v-if="currentStep === 1" class="mozaic__tile mozaic__tile--half surface">

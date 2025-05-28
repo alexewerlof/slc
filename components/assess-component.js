@@ -1,6 +1,6 @@
 import { config } from '../config.js'
 import { readTextFile } from '../lib/share.js'
-import { Assessment } from '../components/assessment.js'
+import { Assessment } from './assessment.js'
 import { icon } from '../lib/icons.js'
 import { inRange, isInstance } from '../lib/validation.js'
 import { Provider } from './provider.js'

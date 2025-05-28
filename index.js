@@ -6,6 +6,7 @@ import { isObj } from './lib/validation.js'
 const appNames = [
     'uptime',
     'assess',
+    'assessment',
     'calculator',
 ]
 

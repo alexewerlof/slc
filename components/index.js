@@ -1,7 +1,7 @@
 import { registerComponents } from '../lib/component-loader.js'
 
 const componentSpecifications = [
-    './assessment-component.jh&',
+    './assess-component.jh&',
     './alert/alert-chart-component.jhc&',
     './alert/alert-component.jh&',
     './ui/announcement-component.jhc&',
@@ -13,7 +13,7 @@ const componentSpecifications = [
     './chat-thread-component.jhc&',
     './ui/code-block-component.jhc&',
     './ui/book-cover-component.hc&',
-    './assessment-component-intro.jh&',
+    './assess-component-intro.jh&',
     // TODO: needs a rewrite or remove
     './condition-component.jh&',
     './consumer-component.jh&',

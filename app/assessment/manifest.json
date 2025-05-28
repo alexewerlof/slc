@@ -1,6 +1,6 @@
 {
-    "name": "Service Assess",
-    "short_name": "Assess",
+    "name": "Service Assessment",
+    "short_name": "Assessment",
     "description": "A tool to assess services, consumptions, and risks to find meaningful SLIs.",
     "start_url": "index.html",
     "display": "standalone",
