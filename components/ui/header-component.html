@@ -1,11 +1,11 @@
-<header class="header-component">
+<header class="header-component" :style="manifestStyle">
     <div class="header-component__contents container">
         <a href="/" tooltip="Home page">
-            <img src="/img/icon.svg" alt="Service Level Calculator Logo" class="header-component__logo" />
+            <img :src="manifest.icons[0].src" alt="Logo" class="header-component__logo" />
         </a>
-        <h1 class="header-component__title">
-            {{ title }}
-        </h1>
+        <a :href="manifest.start_url">
+            <h1 class="header-component__title" v-text="manifest.name" :title="manifest.id"></h1>
+        </a>
         <slot></slot>
     </div>
 </header>

@@ -1,0 +1,17 @@
+{
+    "name": "Service Level Chat",
+    "short_name": "Chat",
+    "description": "Use an LLM to have a chat about service levels",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#001426",
+    "theme_color": "#FFBC52",
+    "id": "1.4",
+    "icons": [
+        {
+            "src": "/img/service-level-calculator-icon.svg",
+            "sizes": "500x500",
+            "type": "image/svg+xml"
+        }
+    ]
+}

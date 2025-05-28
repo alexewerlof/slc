@@ -1,8 +1,16 @@
 export default {
     props: {
-        title: {
-            type: String,
-            default: 'Missing title',
+        manifest: {
+            type: Object,
+            required: true,
+        },
+    },
+    computed: {
+        manifestStyle() {
+            return {
+                'background-color': this.manifest.background_color,
+                'color': this.manifest.theme_color,
+            }
         },
     },
 }

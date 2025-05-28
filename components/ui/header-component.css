@@ -1,8 +1,11 @@
 .header-component {
     margin-bottom: var(--gap);
     border-bottom: 1px solid var(--divider-color);
-    background-color: var(--background-darker);
     box-shadow: 0 0 var(--gap2) 0 var(--divider-color);
+    /* If the relevant items are missing from manifest.json, these colors will pop up */
+    background-color: var(--brand-red);
+    /* If the relevant items are missing from manifest.json, these colors will pop up */
+    color: var(--brand-green);
 }
 
 .header-component__contents {
@@ -24,6 +27,7 @@
     top: 0.3em;
 }
 
+/* TODO: the top-nav is only used in calculator */
 .header-component__top-nav {
     position: sticky;
     top: 0;
@@ -33,6 +37,7 @@
     text-align: center;
 }
 
+/* TODO: the top-nav is only used in calculator */
 .header-component__top-nav li {
     display: inline-block;
     padding: 0 1em;

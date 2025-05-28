@@ -5,15 +5,11 @@ import { config } from '../../config.js'
 import { numL10n } from '../../lib/fmt.js'
 import { humanTime } from '../../lib/time.js'
 import { registerAllComponents } from '../../components/index.js'
+import { loadJson } from '../../lib/share.js'
+
+const manifest = await loadJson('manifest.json')
 
 export const app = createApp({
-    methods: {
-        numL10n,
-        humanTime,
-        timesliceToHumanTime(count) {
-            return humanTime(this.indicator.timeslice * count, true)
-        },
-    },
     data() {
         const indicator = new Indicator()
         indicator.metricName = 'system is up'
@@ -43,6 +39,7 @@ export const app = createApp({
             },
         )
         return {
+            manifest,
             config,
             indicator,
             objective,
@@ -52,6 +49,13 @@ export const app = createApp({
     watch: {
         'objective.target'(target) {
             this.table.forEach(({ objective }) => objective.target = target)
+        },
+    },
+    methods: {
+        numL10n,
+        humanTime,
+        timesliceToHumanTime(count) {
+            return humanTime(this.indicator.timeslice * count, true)
         },
     },
 })

@@ -2,16 +2,19 @@ import { createApp } from '../../vendor/vue.js'
 import { config } from '../../config.js'
 import { percentToRatio } from '../../lib/math.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '../../lib/fmt.js'
-import { stateToUrl } from '../../lib/share.js'
+import { loadJson, stateToUrl } from '../../lib/share.js'
 import { makeCalculator } from '../../components/calculator.js'
 import { attachBeforeUnloadHandler } from '../../lib/browser.js'
 import { registerAllComponents } from '../../components/index.js'
+
+const manifest = await loadJson('manifest.json')
 
 export const app = createApp({
     data() {
         const calculator = makeCalculator(globalThis.location.href)
 
         return {
+            manifest,
             // Expose the config to the UI
             config,
             // For sharing and loading state to and from URL
