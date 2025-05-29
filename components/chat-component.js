@@ -41,7 +41,7 @@ export default {
                 this.message = ''
                 this.isEditDisabled = true
                 const messages = await this.thread.toMessages()
-                this.thread.add(new Bead('assistant'))
+                this.thread.add(new Bead('assistant', 'Loading...'))
                 const { content } = await this.selectedEngine.getCompletionMessage(messages, {
                     maxTokens: this.maxTokens,
                     temperature: this.temperature,

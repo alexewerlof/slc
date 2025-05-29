@@ -5,7 +5,7 @@ export class Bead {
     _content = undefined
     _role = undefined
 
-    constructor(role, content = '') {
+    constructor(role, content) {
         this.role = role
         this.content = content
     }
@@ -22,12 +22,18 @@ export class Bead {
     }
 
     get content() {
-        return this._content
+        if (isStr(this._content)) {
+            return this._content
+        }
+        if (isFn(this._content)) {
+            return this._content.call(this)
+        }
+        return 'Invalid content'
     }
 
     set content(content) {
-        if (!isStr(content)) {
-            throw new TypeError(`content must be a string. Got ${content}`)
+        if (!isStr(content) && !isFn(content)) {
+            throw new TypeError(`content must be a string or function. Got ${content} (${typeof content})`)
         }
         this._content = content
     }
@@ -42,18 +48,20 @@ export class Bead {
 
 export class FileBead extends Bead {
     _fileNames = undefined
-    constructor(name, ...fileNames) {
-        super(name)
+    _loaded = false
+
+    constructor(role, ...fileNames) {
+        super(role, 'Files:\n' + fileNames.map((f) => `- ${f}`).join('\n'))
+        if (fileNames.length === 0) {
+            throw new Error('At least one file name must be provided')
+        }
         this._fileNames = fileNames
     }
 
-    get loaded() {
-        return Boolean(this.content)
-    }
-
     async load() {
-        if (!this.loaded) {
+        if (!this._loaded) {
             this.content = await fetchTextFilesAndConcat(...this._fileNames)
+            this._loaded = true
         }
         return this.content
     }

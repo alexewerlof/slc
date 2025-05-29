@@ -8,7 +8,7 @@ import { Service } from './service.js'
 import { Consumer } from './consumer.js'
 import { Consumption } from './consumption.js'
 import { Dependency } from './dependency.js'
-import { FileBead, Thread } from './thread.js'
+import { Bead, FileBead, Thread } from './thread.js'
 import { Metric } from './metric.js'
 
 export default {
@@ -30,7 +30,7 @@ export default {
             exportedCode: '-',
             thread: new Thread(
                 new FileBead('system', 'assess-prompt.md', '../../prompts/glossary.md'),
-                new AssessmentBead(this.assessment),
+                new Bead('system', () => this.assessment.toString()),
             ),
         }
     },
