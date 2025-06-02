@@ -35,7 +35,9 @@ h1[id] {
 
 h1 {
     font-size: 2em;
-    color: var(--primary-color);
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-lighter) 70%, var(--primary-color) 100%);
+    color: transparent;
+    background-clip: text;
 }
 
 h2 {
