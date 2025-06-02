@@ -3,6 +3,12 @@
         <chat-component :thread></chat-component>
     </div>
     <div class="mozaic__tile mozaic__tile--6c">
+        <div class="frost">
+            <div class="button-bar">
+                <button @click="editingInstance = assessment.providers.pushNew()">New Provider</button>
+                <button @click="editingInstance = assessment.consumers.pushNew()">New Consumer</button>
+            </div>
+        </div>
         <assessment-graph-component :assessment @select="editComponent"></assessment-graph-component>
     </div>
     <div class="mozaic__tile mozaic__tile--3c surface">
