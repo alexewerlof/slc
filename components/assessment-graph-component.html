@@ -71,7 +71,24 @@
                         {{ dependency.failures.length }}
                     </text>
                 </g>
+                <!-- Metrics -->
+                <g v-for="metric of service.metrics">
+                    <circle class="assessment-graph-component__entity assessment-graph-component__entity--metric"
+                        @click="$emit('select', metric)"
+                        :cx="metricX(metric)"
+                        :cy="metricY"
+                        :r="metricRadius">
+                        <title>Metric: {{ metric }}</title>
+                    </circle>
+                    <text
+                        :x="metricX(metric)"
+                        :y="metricY + 2"
+                        class="assessment-graph-component__entity-text assessment-graph-component__entity-text--metric">
+                        {{ metric.service.metrics.length }}
+                    </text>
+                </g>
             </g>
+            <!-- Provider -->
             <circle class="assessment-graph-component__entity assessment-graph-component__entity--provider"
                 @click="$emit('select', provider)"
                 :cx="providerX(provider)"
@@ -83,22 +100,6 @@
                 :x="providerX(provider)"
                 :y="providerY"
             >{{ icon('provider') }}</text>
-        </g>
-        <!-- Metrics -->
-        <g v-for="metric of assessment.metrics">
-            <circle class="assessment-graph-component__entity assessment-graph-component__entity--metric"
-                @click="$emit('select', metric)"
-                :cx="metricX(metric)"
-                :cy="metricY"
-                :r="metricRadius">
-                <title>Metric: {{ metric }}</title>
-            </circle>
-            <text
-                :x="metricX(metric)"
-                :y="metricY + 2"
-                class="assessment-graph-component__entity-text assessment-graph-component__entity-text--metric">
-                {{ metric.service.metrics.length }}
-            </text>
         </g>
     </svg>
 </div>
