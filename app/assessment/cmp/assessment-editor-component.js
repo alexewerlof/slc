@@ -19,9 +19,9 @@ export default {
         }
     },
     methods: {
-        editComponent(selectedObj) {
-            this.editingClassName = selectedObj.constructor.name
-            this.editingInstance = selectedObj
+        editComponent(name, instance) {
+            this.editingClassName = name
+            this.editingInstance = instance
         },
     },
 }

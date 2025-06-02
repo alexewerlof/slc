@@ -11,7 +11,7 @@
                     :d="d(consumptionX, consumptionY(consumption), width, consumptionY(consumption))"></path>
                 <circle
                     class="assessment-graph-component__entity assessment-graph-component__entity--consumption"
-                    @click="$emit('select', consumption)"
+                    @click="$emit('select', 'Consumption', consumption)"
                     :cx="consumptionX"
                     :cy="consumptionY(consumption)"
                     :r="consumptionRadius">
@@ -23,7 +23,7 @@
                 >{{ icon('consumption') }}</text>
             </g>
             <circle class="assessment-graph-component__entity assessment-graph-component__entity--consumer"
-                @click="$emit('select', consumer)"
+                @click="$emit('select', 'Consumer', consumer)"
                 :cx="consumerX"
                 :cy="consumerY(consumer)"
                 :r="consumerRadius">
@@ -45,7 +45,7 @@
                     :d="d(serviceX(service), serviceY, serviceX(service), height)"></path>
                 <circle
                     class="assessment-graph-component__entity assessment-graph-component__entity--service"
-                    @click="$emit('select', service)"
+                    @click="$emit('select', 'Service', service)"
                     :cx="serviceX(service)"
                     :cy="serviceY"
                     :r="serviceRadius">
@@ -58,7 +58,7 @@
                 <!-- Dependencies -->
                 <g v-for="dependency of service.dependencies">
                     <circle class="assessment-graph-component__entity assessment-graph-component__entity--dependency"
-                        @click="$emit('select', dependency)"
+                        @click="$emit('select', 'ServiceDependency', dependency)"
                         :cx="serviceX(dependency.service)"
                         :cy="consumptionY(dependency.consumption)"
                         :r="dependencyRadius">
@@ -72,25 +72,23 @@
                     </text>
                 </g>
                 <!-- Metrics -->
-                <g v-for="metric of service.metrics">
-                    <circle class="assessment-graph-component__entity assessment-graph-component__entity--metric"
-                        @click="$emit('select', metric)"
-                        :cx="metricX(metric)"
-                        :cy="metricY"
-                        :r="metricRadius">
-                        <title>Metric: {{ metric }}</title>
-                    </circle>
-                    <text
-                        :x="metricX(metric)"
-                        :y="metricY + 2"
-                        class="assessment-graph-component__entity-text assessment-graph-component__entity-text--metric">
-                        {{ metric.service.metrics.length }}
-                    </text>
-                </g>
+                <circle class="assessment-graph-component__entity assessment-graph-component__entity--metric"
+                    @click="$emit('select', 'ServiceMetrics', service)"
+                    :cx="serviceX(service)"
+                    :cy="metricY"
+                    :r="metricRadius">
+                    <title>Metrics for {{ service }}</title>
+                </circle>
+                <text
+                    :x="serviceX(service)"
+                    :y="metricY + 2"
+                    class="assessment-graph-component__entity-text assessment-graph-component__entity-text--metric">
+                    {{ service.metrics.length }}
+                </text>
             </g>
             <!-- Provider -->
             <circle class="assessment-graph-component__entity assessment-graph-component__entity--provider"
-                @click="$emit('select', provider)"
+                @click="$emit('select', 'Provider', provider)"
                 :cx="providerX(provider)"
                 :cy="providerY"
                 :r="providerRadius">

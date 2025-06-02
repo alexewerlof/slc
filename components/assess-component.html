@@ -242,32 +242,7 @@
                 </div>
 
                 <div v-if="currentStep === 5" class="mozaic__tile mozaic__tile--half surface">
-                    <h2>Metrics</h2>
-                    <fieldset v-if="selectedMetric">
-                        <legend>Metrics ({{ selectedService.metrics.length }})</legend>
-                        <select v-model="selectedService.metrics.selected">
-                            <option v-for="metric of selectedService.metrics" :value="metric">
-                                {{ metric }}
-                            </option>
-                        </select>
-                        <div class="button-bar">
-                            <button
-                                @click="selectedService.metrics.pushNew()"
-                            >
-                                Add
-                            </button>
-                            <button
-                                class="button--danger"
-                                @click="selectedService.metrics.removeSelected()"
-                                :disabled="!selectedService.metrics.length"
-                            >
-                                Remove
-                            </button>
-                        </div>
-                    </fieldset>
-                    <div v-if="selectedMetric">
-                        <metric-component :metric="selectedMetric"></metric-component>
-                    </div>
+                    <service-metrics-component :service="selectedService"></service-metrics-component>
                </div>
 
                 <div v-if="currentStep === 6" class="surface mozaic__tile mozaic__tile--whole">

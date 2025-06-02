@@ -5,21 +5,30 @@
     <div class="mozaic__tile mozaic__tile--6c">
         <assessment-graph-component :assessment @select="editComponent"></assessment-graph-component>
     </div>
-    <div class="mozaic__tile mozaic__tile--3c frost">
+    <div class="mozaic__tile mozaic__tile--3c surface">
         <div v-if="editingClassName === 'Provider'">
+            <h2>Provider</h2>
             <provider-component :provider="editingInstance"></provider-component>
         </div>
         <div v-if="editingClassName === 'Service'">
+            <h2>Service</h2>
             <service-component :service="editingInstance"></service-component>
         </div>
         <div v-if="editingClassName === 'Consumer'">
+            <h2>Consumer</h2>
             <consumer-component :consumer="editingInstance"></consumer-component>
         </div>
         <div v-if="editingClassName === 'Consumption'">
+            <h2>Consumption</h2>
             <consumption-component :consumption="editingInstance"></consumption-component>
         </div>
-        <div v-if="editingClassName === 'Dependency'">
+        <div v-if="editingClassName === 'ServiceDependency'">
+            <h2>Service Dependencies</h2>
             <dependency-component :dependency="editingInstance"></dependency-component>
+        </div>
+        <div v-if="editingClassName === 'ServiceMetrics'">
+            <h2>Service Metrics</h2>
+            <service-metrics-component :service="editingInstance"></metric-component>
         </div>
     </div>
 </div>

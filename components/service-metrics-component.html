@@ -1,60 +1,27 @@
-<div>
-    <div class="block-both">
-        <h1>Service: {{ service }}</h1>
-
-        <h2>Failures</h2>
-        <div v-if="service.failures.length === 0" class="error block">
-            <p>
-                You have not identified any failures for this service.
-                Make sure that there is a consumption for this service and you
-                have identified the symptoms for the failures.
-            </p>
+<div class="service-metrics-component">
+    <fieldset>
+        <legend>Metrics ({{ service.metrics.length }})</legend>
+        <select v-model="service.metrics.selected">
+            <option v-for="metric of service.metrics" :value="metric">
+                {{ metric }}
+            </option>
+        </select>
+        <div class="button-bar">
+            <button
+                @click="service.metrics.pushNew()"
+            >
+                Add
+            </button>
+            <button
+                class="button--danger"
+                @click="service.metrics.removeSelected()"
+                :disabled="!service.metrics.length"
+            >
+                Remove
+            </button>
         </div>
-        <table v-if="service.failures.length">
-            <thead>
-                <tr>
-                    <th>Consumer</th>
-                    <th>Consumption</th>
-                    <th>Symptom</th>
-                    <th>Consequence</th>
-                    <th>Business Impact</th>
-                    <th>Impact Level</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="failure of service.failures">
-                    <td>{{ failure.consumption.consumer }}</td>
-                    <td>{{ failure.consumption.displayName }}</td>
-                    <td>{{ failure.symptom }}</td>
-                    <td>{{ failure.consequence }}</td>
-                    <td>{{ failure.businessImpact }}</td>
-                    <td>{{ failure.impactLevel }}</td>
-                </tr>
-            </tbody>
-        </table>
+    </fieldset>
+    <div v-if="service.metrics.selected">
+        <metric-component :metric="service.metrics.selected"></metric-component>
     </div>
-
-    <show-hide-component
-        v-for="metric in service.metrics"
-        title="Metric"
-        :name="metric">
-        <metric-component
-            :metric="metric"></metric-component>
-    </show-hide-component>
-
-    <div class="annotated" v-if="service.failures.length">
-        <div class="annotated__controls">
-            <div class="button-bar">
-                <button @click="service.addNewMetric()">
-                    {{ icon('add') }} 
-                    Add New Metric
-                </button>
-            </div>
-        </div>
-        <div class="annotated__help">
-            {{ service }} has {{ service.failures.length }} failures and
-            {{ service.metrics.length }} metrics.
-        </div>
-    </div>
-
 </div>
