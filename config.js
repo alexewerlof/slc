@@ -440,7 +440,7 @@ export const config = fz({
             step: 0.1,
         },
         maxTokens: {
-            default: 1000,
+            default: 4096,
             min: 100,
             max: 10000,
             step: 100,
