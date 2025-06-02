@@ -1,0 +1,17 @@
+{
+    "name": "UI Demo",
+    "short_name": "UI",
+    "description": "A development tool to demo the UI components for visual check.",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#001426",
+    "theme_color": "#FFBC52",
+    "id": "1.4",
+    "icons": [
+        {
+            "src": "/img/icon.svg",
+            "sizes": "500x500",
+            "type": "image/svg+xml"
+        }
+    ]
+}
