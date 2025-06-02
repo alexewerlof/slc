@@ -1,4 +1,3 @@
-import { isInstance } from '../lib/validation.js'
 import { Service } from './service.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
@@ -12,8 +11,8 @@ export default {
     },
     props: {
         service: {
-            type: Object,
-            validator: (v) => isInstance(v, Service),
+            type: Service,
+            required: true,
         },
     },
     methods: {
