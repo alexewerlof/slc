@@ -14,6 +14,14 @@ export default {
                 new FileBead('system', 'assess-prompt.md', '../../prompts/glossary.md'),
                 new Bead('system', () => this.assessment.toString()),
             ),
+            editingClassName: '',
+            editingInstance: null,
         }
+    },
+    methods: {
+        editComponent(selectedObj) {
+            this.editingClassName = selectedObj.constructor.name
+            this.editingInstance = selectedObj
+        },
     },
 }
