@@ -113,7 +113,7 @@ export default {
             const fileContents = await readTextFile($event.target.files[0])
             this.exportedCode = fileContents
             try {
-                this.assessment = Assessment.load(JSON.parse(fileContents))
+                this.assessment.state = JSON.parse(fileContents)
             } catch (error) {
                 this.exportedCode = error
             }
