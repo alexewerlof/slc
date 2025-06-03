@@ -1,4 +1,4 @@
-import { isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
+import { isArr, isBool, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Service } from './service.js'
 import { Failure } from './failure.js'
 import { icon } from '../lib/icons.js'
@@ -63,8 +63,10 @@ export class Metric {
             this.description = description
         }
         if (isDef(isBoolean)) {
-            // TODO: validate isBoolean
-            this.isBoolean = Boolean(isBoolean)
+            if (!isBool(isBoolean)) {
+                throw new TypeError(`Invalid isBoolean. ${isBoolean}`)
+            }
+            this.isBoolean = isBoolean
         }
         if (isDef(numericUnit)) {
             // TODO: validate numericUnit
