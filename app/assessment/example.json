@@ -69,8 +69,11 @@
                             "description": "error rate",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                0
+                            "linkedFailureRefs": [
+                                [
+                                    0,
+                                    0
+                                ]
                             ]
                         },
                         {
@@ -78,8 +81,11 @@
                             "description": "The response to climate API is relatively fast",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                0
+                            "linkedFailureRefs": [
+                                [
+                                    0,
+                                    0
+                                ]
                             ]
                         },
                         {
@@ -87,8 +93,11 @@
                             "description": "",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                1
+                            "linkedFailureRefs": [
+                                [
+                                    0,
+                                    1
+                                ]
                             ]
                         }
                     ]
@@ -131,8 +140,11 @@
                             "description": "Status check should be reasonably fast",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                0
+                            "linkedFailureRefs": [
+                                [
+                                    0,
+                                    0
+                                ]
                             ]
                         },
                         {
@@ -140,9 +152,11 @@
                             "description": "Successfully registered the command",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                1,
-                                2
+                            "linkedFailureRefs": [
+                                [
+                                    0,
+                                    1
+                                ]
                             ]
                         },
                         {
@@ -150,8 +164,11 @@
                             "description": "lock status check does not fail",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                0
+                            "linkedFailureRefs": [
+                                [
+                                    0,
+                                    0
+                                ]
                             ]
                         }
                     ]
@@ -217,9 +234,11 @@
                             "description": "some image is returned",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                0,
-                                2
+                            "linkedFailureRefs": [
+                                [
+                                    0,
+                                    0
+                                ]
                             ]
                         },
                         {
@@ -227,9 +246,11 @@
                             "description": "image matches the model (we use user report as a check asking them \"report problems\")",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                0,
-                                2
+                            "linkedFailureRefs": [
+                                [
+                                    1,
+                                    0
+                                ]
                             ]
                         },
                         {
@@ -237,8 +258,11 @@
                             "description": "For all other reasons that an image may be missing in the app",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                1
+                            "linkedFailureRefs": [
+                                [
+                                    2,
+                                    0
+                                ]
                             ]
                         }
                     ]
@@ -276,8 +300,11 @@
                             "description": "",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                0
+                            "linkedFailureRefs": [
+                                [
+                                    0,
+                                    0
+                                ]
                             ]
                         },
                         {
@@ -285,8 +312,11 @@
                             "description": "The manual files can be large. if the download is interrupted for any reasons, we may want to look into it.",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                0
+                            "linkedFailureRefs": [
+                                [
+                                    0,
+                                    0
+                                ]
                             ]
                         }
                     ]
@@ -331,8 +361,11 @@
                             "description": "",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                0
+                            "linkedFailureRefs": [
+                                [
+                                    0,
+                                    0
+                                ]
                             ]
                         },
                         {
@@ -340,8 +373,11 @@
                             "description": "",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                1
+                            "linkedFailureRefs": [
+                                [
+                                    0,
+                                    0
+                                ]
                             ]
                         }
                     ]
@@ -379,8 +415,11 @@
                             "description": "To ensure that we show the right specs, we randomly check 1% of page views using a JavaScript snippet that scrapes data from our website and sends it to a backend that's made for the purpose of cross-checking this data against what the data that should have been sent via CMS (note: this will also check the cache errors)",
                             "isNumeric": true,
                             "numericUnit": "",
-                            "linkedFailuresIndex": [
-                                0
+                            "linkedFailureRefs": [
+                                [
+                                    0,
+                                    0
+                                ]
                             ]
                         }
                     ]

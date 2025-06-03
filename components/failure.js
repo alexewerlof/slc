@@ -99,4 +99,8 @@ export class Failure {
     get index() {
         return this.dependency.failures.indexOf(this)
     }
+
+    get ref() {
+        return [this.dependency.index, this.index]
+    }
 }

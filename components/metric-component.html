@@ -23,10 +23,13 @@
     </h3>
     <fieldset v-for="dependency of metric.service.dependencies">
         <legend title="Consumption">{{ dependency.consumption }}</legend>
-        <div v-for="failure of dependency.failures" class="input-group">
-            <label title="Symptom">
-                <input type="checkbox">
-                {{ failure.symptom }}
+        <div v-for="failure of dependency.failures" class="input-group" :title="failure">
+            <label>
+                <input
+                    type="checkbox"
+                    :checked="metric.isFailureLinked(failure)"
+                    @change="metric.setFailure(failure, $event.target.checked)">
+                    {{ failure.symptom }}
             </label>
         </div>
     </fieldset>

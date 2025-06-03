@@ -1,9 +1,10 @@
-import { isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
+import { isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Service } from './service.js'
 import { Failure } from './failure.js'
 import { icon } from '../lib/icons.js'
 import { Condition } from './condition.js'
 import { config } from '../config.js'
+import { Dependency } from './dependency.js'
 
 const metricIcon = icon('metric')
 
@@ -32,7 +33,7 @@ export class Metric {
             description: this.description,
             isBoolean: this.isBoolean,
             numericUnit: this.numericUnit,
-            linkedFailuresIndex: this.linkedFailures.map((failure) => failure.index),
+            linkedFailureRefs: this.linkedFailures.map((failure) => failure.ref),
         }
     }
 
@@ -46,6 +47,7 @@ export class Metric {
             description,
             isBoolean,
             numericUnit,
+            linkedFailureRefs,
         } = newState
 
         if (isDef(displayName)) {
@@ -62,11 +64,17 @@ export class Metric {
         }
         if (isDef(isBoolean)) {
             // TODO: validate isBoolean
-            this.isBoolean = isBoolean
+            this.isBoolean = Boolean(isBoolean)
         }
         if (isDef(numericUnit)) {
             // TODO: validate numericUnit
             this.numericUnit = numericUnit
+        }
+        if (isDef(linkedFailureRefs)) {
+            if (!isArr(linkedFailureRefs)) {
+                throw new TypeError(`Invalid linkedFailureRefs. ${linkedFailureRefs}`)
+            }
+            this.linkedFailures = linkedFailureRefs.map((ref) => this.getFailureFromRef(ref))
         }
     }
 
@@ -80,6 +88,22 @@ export class Metric {
 
     set isNumeric(value) {
         this.isBoolean = !value
+    }
+
+    getFailureFromRef(ref) {
+        if (!isArr(ref) || ref.length !== 2) {
+            throw new TypeError(`Invalid failure ref. ${ref}`)
+        }
+        const [dependencyIndex, failureIndex] = ref
+        const dependency = this.service.dependencies[dependencyIndex]
+        if (!isInstance(dependency, Dependency)) {
+            throw new TypeError(`Invalid dependency. ${dependency}`)
+        }
+        const failure = dependency.failures[failureIndex]
+        if (!isInstance(failure, Failure)) {
+            throw new TypeError(`Invalid failure. ${failure}`)
+        }
+        return failure
     }
 
     isFailureLinked(failure) {
@@ -122,10 +146,10 @@ export class Metric {
     }
 
     static load(service, metricObj) {
-        const { displayName, description, isBoolean, numericUnit, linkedFailuresIndex } = metricObj
+        const { displayName, description, isBoolean, numericUnit, linkedFailureRefs } = metricObj
         const newMetric = new Metric(service, displayName, description, isBoolean, numericUnit)
 
-        for (const failureIndex of linkedFailuresIndex) {
+        for (const failureIndex of linkedFailureRefs) {
             newMetric.linkFailure(service.failures[failureIndex])
         }
 
