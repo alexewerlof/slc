@@ -15,6 +15,9 @@
         <div v-if="editingClassName === 'Provider'">
             <h2>Provider</h2>
             <provider-component :provider="editingInstance"></provider-component>
+            <div class="button-bar">
+                <button @click="editingInstance.services.pushNew()">New Service</button>
+            </div>
         </div>
         <div v-if="editingClassName === 'Service'">
             <h2>Service</h2>
@@ -23,6 +26,9 @@
         <div v-if="editingClassName === 'Consumer'">
             <h2>Consumer</h2>
             <consumer-component :consumer="editingInstance"></consumer-component>
+            <div class="button-bar">
+                <button @click="editingInstance.consumptions.pushNew()">New Consumption</button>
+            </div>
         </div>
         <div v-if="editingClassName === 'Consumption'">
             <h2>Consumption</h2>
