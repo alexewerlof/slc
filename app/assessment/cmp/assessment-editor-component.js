@@ -23,5 +23,8 @@ export default {
             this.editingClassName = name
             this.editingInstance = instance
         },
+        showDialog(ref, modal) {
+            this.$refs[ref].show(modal)
+        },
     },
 }
