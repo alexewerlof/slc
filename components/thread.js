@@ -92,7 +92,12 @@ export class Thread {
         return this.beads.map((bead) => bead.toMessage())
     }
 
-    clear() {
-        this.beads.length = 0
+    clear(keepSystemMessages = true) {
+        if (!keepSystemMessages) {
+            this.beads.length = 0
+        } else {
+            this.beads = this.beads.filter((bead) => bead.role === 'system')
+        }
+        return this
     }
 }
