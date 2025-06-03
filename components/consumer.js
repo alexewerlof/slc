@@ -27,6 +27,7 @@ export class Consumer {
             displayName: this.displayName,
             description: this.description,
             type: this.type,
+            consumptions: this.consumptions.state,
         }
     }
 

@@ -12,7 +12,7 @@ export class Metric {
     service = null
     displayName = ''
     description = ''
-    isBoolean = true
+    isBoolean = false
     numericUnit = ''
     condition = new Condition(this)
     linkedFailures = []

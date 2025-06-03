@@ -67,4 +67,8 @@ export class Dependency {
     get assessment() {
         return this.provider.assessment
     }
+
+    get index() {
+        return this.service.dependencies.indexOf(this)
+    }
 }
