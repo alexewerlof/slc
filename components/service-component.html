@@ -65,15 +65,14 @@
                 </p>
             </help-component>
         </h4>
-        <fieldset v-for="(consumer, ci) in service.provider.assessment.consumers">
+        <fieldset v-for="consumer in service.provider.assessment.consumers">
             <legend :title="consumer.description">{{ consumer.displayName }}</legend>
-            <div v-for="(consumption, si) of consumer.consumptions">
+            <div v-for="consumption of consumer.consumptions">
+                <label :title="consumption.description">
                 <input
                     type="checkbox"
-                    :id="`consumption-${ci}-${si}`"
                     :checked="service.isConsumedBy(consumption)"
                     @change="service.setConsumedBy(consumption, $event.target.checked)">
-                <label :for="`consumption-${ci}-${si}`" :title="consumption.description">
                     {{ consumption.displayName }}
                 </label>
             </div>
