@@ -2,7 +2,6 @@ import { Provider } from './provider.js'
 import { Consumer } from './consumer.js'
 import { isArr, isDef, isInstance, isObj } from '../lib/validation.js'
 import { SelectableArray } from '../lib/selectable-array.js'
-import { Dependency } from './dependency.js'
 import { Service } from './service.js'
 import { Consumption } from './consumption.js'
 import { icon } from '../lib/icons.js'
@@ -58,30 +57,6 @@ export class Assessment {
                 dependency.consumption === consumption
             )
         })
-    }
-
-    isLinked(service, consumption) {
-        return this.findDependency(service, consumption) !== undefined
-    }
-
-    setLinked(service, consumption, value) {
-        if (value) {
-            if (!this.isLinked(service, consumption)) {
-                this.dependencies.push(
-                    new Dependency(this, {
-                        providerIndex: service.provider.index,
-                        serviceIndex: service.index,
-                        consumerIndex: consumption.consumer.index,
-                        consumptionIndex: consumption.index,
-                    }),
-                )
-            }
-        } else {
-            const dependency = this.findDependency(service, consumption)
-            if (dependency) {
-                this.dependencies.remove(dependency)
-            }
-        }
     }
 
     get services() {

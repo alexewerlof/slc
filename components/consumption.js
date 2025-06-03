@@ -58,14 +58,6 @@ export class Consumption {
         }
     }
 
-    isConsuming(service) {
-        return this.consumer.assessment.isLinked(service, this)
-    }
-
-    setConsuming(service, value) {
-        return this.consumer.assessment.setLinked(service, this, value)
-    }
-
     toString() {
         const thisDisplayName = this.displayName || `Consumption #${this.index}`
         return `${this.consumer.displayName}${scopeIcon}${thisDisplayName}`

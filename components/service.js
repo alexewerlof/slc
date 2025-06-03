@@ -105,11 +105,24 @@ export class Service {
     }
 
     isConsumedBy(consumption) {
-        return this.provider.assessment.isLinked(this, consumption)
+        return this.dependencies.some((d) => d.consumption === consumption)
     }
 
     setConsumedBy(consumption, value) {
-        return this.provider.assessment.setLinked(this, consumption, value)
+        if (value) {
+            if (!this.isConsumedBy(consumption)) {
+                this.dependencies.push(
+                    new Dependency(this, {
+                        consumptionRef: [consumption.consumer.index, consumption.index],
+                    }),
+                )
+            }
+        } else {
+            const idx = this.dependencies.findIndex((d) => d.consumption === consumption)
+            if (idx !== -1) {
+                this.dependencies.removeIndex(idx)
+            }
+        }
     }
 
     toString() {
