@@ -5,7 +5,7 @@ import { loadJson } from '../../lib/share.js'
 
 const [manifest, exampleJson] = await Promise.all([
     loadJson('manifest.json'),
-    loadJson('example.json'),
+    loadJson('../assessment/example.json'),
 ])
 
 export const app = createApp({
