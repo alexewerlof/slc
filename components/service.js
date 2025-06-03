@@ -32,6 +32,8 @@ export class Service {
             displayName: this.displayName,
             description: this.description,
             type: this.type,
+            dependencies: this.dependencies.state,
+            metrics: this.metrics.state,
         }
     }
 
