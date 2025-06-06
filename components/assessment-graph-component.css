@@ -4,44 +4,6 @@
     justify-content: center;
 }
 
-.assessment-graph-component__entity {
-    stroke: var(--primary-color);
-    stroke-width: 2;
-    cursor: pointer;
-    filter: drop-shadow(2px 2px 3px black);
-}
-
-.assessment-graph-component__entity:hover {
-    stroke: var(--secondary-color);
-    filter: none;
-}
-
-.assessment-graph-component__entity--provider {
-    fill: var(--brand-green);
-}
-
-.assessment-graph-component__entity--service {
-    fill: var(--brand-green);
-}
-
-.assessment-graph-component__entity--consumer {
-    fill: var(--brand-purple);
-}
-
-.assessment-graph-component__entity--consumption {
-    fill: var(--brand-purple);
-}
-
-.assessment-graph-component__entity--dependency {
-    fill: var(--background-color);
-    stroke: var(--brand-pink);
-}
-
-.assessment-graph-component__entity--metric {
-    fill: var(--primary-color);
-    stroke: var(--brand-pink);
-}
-
 .assessment-graph-component__line {
     stroke-width: 2;
 }
@@ -58,15 +20,4 @@
 .assessment-graph-component__line--consumption-dependency {
     stroke: var(--brand-purple);
     stroke-dasharray: 5, 5;
-}
-
-.assessment-graph-component__entity-text {
-    pointer-events: none;
-    user-select: none;
-    text-anchor: middle;
-    dominant-baseline: middle;
-}
-
-.assessment-graph-component__entity-text--dependency {
-    fill: var(--brand-pink);
 }

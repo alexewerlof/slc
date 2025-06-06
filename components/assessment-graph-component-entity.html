@@ -1,0 +1,11 @@
+<g class="assessment-graph-component-entity"
+    :class="`assessment-graph-component-entity--${type}`">
+    <circle :cx :cy :r>
+        <title v-if="tooltip">{{ tooltip }}</title>
+    </circle>
+    <text
+        :x="cx"
+        :y="cy">
+        <slot></slot>
+    </text>
+</g>

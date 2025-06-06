@@ -34,6 +34,7 @@ const componentSpecifications = [
     './ui/help-component.jhc',
     './ui/hero-component.jhc&',
     './assessment-graph-component.jhc&',
+    './assessment-graph-component-entity.jhc&',
     './failure-sort-component.jhc&',
     './indicator/indicator-component.jh&',
     './indicator/indicator-finder-component.jhc&',

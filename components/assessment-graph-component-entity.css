@@ -1,0 +1,59 @@
+.assessment-graph-component-entity {
+    & circle {
+        stroke: var(--primary-color);
+        stroke-width: 2;
+        cursor: pointer;
+        filter: drop-shadow(2px 2px 3px black);
+    }
+
+    & text {
+        pointer-events: none;
+        user-select: none;
+        text-anchor: middle;
+        dominant-baseline: middle;
+    }
+}
+
+.assessment-graph-component-entity:hover circle {
+    stroke: var(--secondary-color);
+    filter: none;
+}
+
+.assessment-graph-component-entity--provider, .assessment-graph-component-entity--service {
+    & circle {
+        fill: var(--brand-green);
+    }
+    & text {
+        fill: var(--background-color);
+    }
+}
+
+.assessment-graph-component-entity--consumer, .assessment-graph-component-entity--consumption {
+    & circle {
+        fill: var(--brand-purple);
+    }
+    & text {
+        fill: var(--background-color);
+    }
+}
+
+.assessment-graph-component-entity--dependency {
+    & circle {
+        fill: var(--background-color);
+        stroke: var(--brand-pink);
+    }
+
+    & text {
+        fill: var(--brand-pink);
+    }
+}
+
+.assessment-graph-component-entity--metric {
+    & circle {
+        fill: var(--primary-color);
+        stroke: var(--brand-pink);
+    }
+    & text {
+        fill: var(--background-color);
+    }
+}
