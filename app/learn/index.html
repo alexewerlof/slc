@@ -16,7 +16,6 @@
         <meta name="theme-color" content="#FFBC52">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/css/style.css">
-        <link rel="stylesheet" href="index.css">
         <meta name="description" content="A simple Service Level Calculator that complies with Google SRE books.">
         <meta property="og:title" content="Service Level Calculator">
         <meta
@@ -41,45 +40,13 @@
                 <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
             </announcement-component>
             <header-component :manifest></header-component>
-            <p>
-                <ext-link href="https://gaminghub.omen.com/documents/OmenAILearnMore" medium="testing"
-                >Inspiration</ext-link>
-            </p>
-            <article>
-                <section>
-                    <h2>Basics</h2>
 
-                    <faq-component question="What is SLI?">
-                        <p>Service Level Indicators</p>
-                    </faq-component>
-
-                    <faq-component question="What is a SLO?">
-                        <p>Service Level Objectives</p>
-                    </faq-component>
-
-                    <faq-component question="What is a Error Budget?">
-                        <p>Error Budget is the compliment of Service Level Objective.</p>
-                        <p>The formula to calculate the Error Budget is:</p>
-                        <math>
-                            <mrow>
-                                <mi>Error\_budget</mi>
-                                <mo>=</mo>
-                                <mn>100</mn>
-                                <mo>-</mo>
-                                <mi>SLO</mi>
-                            </mrow>
-                        </math>
-                    </faq-component>
-
-                    <faq-component question="What is a SLA?">
-                        <p>Service Level Agreement</p>
-                    </faq-component>
-
-                    <h2>Time-based vs Event-based</h2>
-                </section>
-            </article>
+            <div class="container pad-gap2">
+                <h1>Glossary</h1>
+                <markdown-component :markdown="glossary"></markdown-component>
+            </div>
+            
             <cookie-popup-component></cookie-popup-component>
-
             <footer-component></footer-component>
             <feedback-blob-component></feedback-blob-component>
         </div>

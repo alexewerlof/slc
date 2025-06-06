@@ -1,13 +1,17 @@
 import { createApp } from '../../vendor/vue.js'
 import { registerAllComponents } from '../../components/index.js'
-import { loadJson } from '../../lib/share.js'
+import { loadJson, loadText } from '../../lib/share.js'
 
-const manifest = await loadJson('manifest.json')
+const [manifest, glossary] = await Promise.all([
+    loadJson('manifest.json'),
+    loadText('../../prompts/glossary.md'),
+])
 
 export const app = createApp({
     data() {
         return {
             manifest,
+            glossary,
         }
     },
 })
