@@ -10,8 +10,34 @@ ul.benefit-list {
     padding: 0.3em;
 }
 
+/* Keyframes for the subtle floating animation for the app logo */
+@keyframes subtle-float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(0.25em); /* Adjust the float height as desired */
+    }
+}
+
 .app-logo {
+    padding-top: 3em;
     text-align: center;
+
+    & img {
+        /* Apply the continuous floating animation */
+        animation: subtle-float var(--animation-speed10) ease-in-out infinite;
+        /* Smooth transition for hover effects */
+        transition: transform var(--animation-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    &:hover {
+        /* Pause the floating animation on hover to let the hover transform take full control */
+        animation-play-state: paused;
+        /* Scale up and slightly rotate on hover for a playful effect */
+        transform: scale(0.9) rotate(1turn);
+        transition: transform var(--animation-speed) ease-in-out;
+    }
 }
 
 .star {
@@ -33,44 +59,14 @@ ul.benefit-list {
 
 .apps-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: var(--gap2);
-    padding: var(--gap2);
 }
 
 .app-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    flex-basis: 10em;
-    flex-grow: 1;
+    text-decoration: none;
 }
 
 .app-item__logo {
-    width: 50%;
-    margin: 0 auto;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.app-item__title {
-    font-size: 1.5em;
-}
-
-.app-item__description {
-    flex-grow: 1;
-}
-
-.app-item .button-bar {
-    margin-top: auto;
-    width: 100%;
-    flex-shrink: 0;
-}
-
-.app-item .button--cta {
-    font-size: 0.9em;
     width: 100%;
 }

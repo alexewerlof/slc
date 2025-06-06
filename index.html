@@ -43,9 +43,10 @@
                     </div>
                     <h2>Master Service Reliability With Confidence</h2>
                     <ul class="benefit-list">
-                        <li>Transform how your engineering teams identify meaningful SLIs</li>
-                        <li>Set reasonable SLOs and tie them to business objectives</li>
-                        <li>Fine tune alerts that matter while reducing alert fatigue</li>
+                        <li>Transform how your engineering teams measure the right thing (SLI)</li>
+                        <li>Set reasonable expectations (SLO) that are connected to business objectives</li>
+                        <li>Tie commitments (SLI) to alerting, and burn rate to reduce alert fatigue</li>
+                        <li>Balance the pace of development while controlling the risks using error budgets</li>
                         <li>Build a culture of accountability and ownership</li>
                         <li>Learn complex concepts with interactive diagrams, AI and articles</li>
                     </ul>
@@ -59,13 +60,17 @@
                     and implementation of Service Levels as a tool to measure and improve reliability.
                 </p>
                 <div class="apps-container well">
-                    <div v-for="app in apps" :key="app.manifest.name" class="app-item">
-                        <button @click="gotoApp(app, 'app-list')" class="button--cta">
-                            <img class="app-item__logo" :src="app.manifest.icons[0].src">
-                            <div class="app-item__title">{{ app.manifest.name }}</div>
-                        </button>
-                        <p class="app-item__description">{{ app.manifest.description }}</p>
-                    </div>
+                    <a v-for="app in apps"
+                        :key="app.manifest.name"
+                        :href="app.url"
+                        class="app-item mozaic mozaic--gap2">
+                        <img class="app-item__logo mozaic__tile mozaic__tile--2c"
+                            :src="app.manifest.icons[0].src" />
+                        <div class="mozaic__tile mozaic__tile--10c">
+                            <h3>{{ app.manifest.name }}</h3>
+                            <p class="app-item__description">{{ app.manifest.description }}</p>
+                        </div>
+                    </a>
                 </div>
 
                 <h2>Pricing</h2>
@@ -94,6 +99,7 @@
                             <li>200 Alerts</li>
                             <li>Articles on key concepts</li>
                             <li>Share links publicly</li>
+                            <li>AI-chat <span class="subtle-hint">(upcoming)</span></li>
                         </ul>
                         <button class="button--cta" @click="$refs.proDialog.show(true)">
                             <span class="material-symbols-outlined">mail</span>
@@ -114,7 +120,8 @@
                             <li>OpenSLO support <span class="subtle-hint">(upcoming)</span></li>
                             <li>Access to code for audit</li>
                             <li>Run it in your infrastructure</li>
-                            <li>AI-chat <span class="subtle-hint">(upcoming)</span></li>
+                            <li>Generate alerting rules <span class="subtle-hint">(upcoming)</span></li>
+                            <li>SLA generation & analysis <span class="subtle-hint">(upcoming)</span></li>
                             <li>Advanced intelligent ghosting</li>
                         </ul>
                         <button class="button--cta" @click="$refs.enterpriseDialog.show(true)">
@@ -131,23 +138,25 @@
                 <p>
                     Designing, creating and maintaining these apps has taken
                     <ext-link href="https://github.com/alexewerlof/slc/graphs/contributors"
-                    >hundreds of hours since July 2023</ext-link>. I pull these hours from my private time,
+                    >hundreds of hours since July 2023</ext-link>. It also pairs with my book, 
+                    <ext-link href="https://blog.alexewerlof.com/p/rem">Reliability Engineering Mindset</ext-link>
+                    which is another collosal project.
+                </p>
+                <p>
+                    I pull these hours from my private time,
                     weekends, and sometimes take vacation days to work on them. It also costs money to serve this
                     app to you and I pay that from my own pocket. No complains though. I do my little part in
                     lifting our community.
                 </p>
                 <p>
                     To support my work, you can subscribe to
-                    <ext-link href="https://blog.alexewerlof.com/">my newsletter</ext-link>. This also gives you
-                    full access to my online book on this topic:
-                    <ext-link href="https://blog.alexewerlof.com/p/rem">Reliability Engineering Mindset</ext-link>.
-                    <br />
-                    <em>
-                        Right now, you can get 20% off via
-                        <ext-link href="https://blog.alexewerlof.com/protipsdiscount">this link</ext-link>. If you
-                        feel like it, you can save 50% using a
-                        <ext-link href="https://blog.alexewerlof.com/d8f4bfde">group subscription</ext-link>.
-                    </em>
+                    <ext-link href="https://blog.alexewerlof.com/">my newsletter</ext-link> for free.
+                    If you feel like it, I appreciate a paid subscription.
+                    If you want to save money, you can get 20% off via
+                    <ext-link href="https://blog.alexewerlof.com/protipsdiscount">this link</ext-link>
+                    or 50% buying a
+                    <ext-link href="https://blog.alexewerlof.com/d8f4bfde">group subscription</ext-link>
+                    with groups as small as 2 persons!
                 </p>
             </div>
 

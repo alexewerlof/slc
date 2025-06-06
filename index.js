@@ -2,22 +2,22 @@ import { createApp } from './vendor/vue.js'
 import { addUTM } from './lib/utm.js'
 import { registerAllComponents } from './components/index.js'
 import { isObj } from './lib/validation.js'
+import { loadJson } from './lib/share.js'
 
 const appNames = [
     'uptime',
     'assess',
     'assessment',
     'calculator',
+    'learn',
+    'templates',
 ]
 
+// Attempting to load all manifests also serves as a quick smoke test
 const apps = await Promise.all(appNames.map(async (name) => {
     const url = new URL(`./app/${name}/index.html`, globalThis.location.origin)
     const manifestUrl = new URL(`./app/${name}/manifest.json`, globalThis.location.origin)
-    const response = await fetch(manifestUrl)
-    const manifest = await response.json()
-    if (!response.ok) {
-        throw new Error(`Failed to load manifest for ${name}: ${response.status} ${response.statusText}`)
-    }
+    const manifest = await loadJson(manifestUrl)
     if (!isObj(manifest)) {
         throw new Error(`Manifest for ${name} is empty`)
     }
@@ -36,15 +36,6 @@ const app = createApp({
             apps,
             mainApp,
         }
-    },
-    methods: {
-        gotoApp(app, campaign) {
-            const appURL = new URL(app.url)
-            globalThis.location.href = addUTM(appURL, {
-                source: 'web',
-                campaign,
-            })
-        },
     },
     mounted() {
         const url = new URL(globalThis.location.href)
