@@ -1,4 +1,4 @@
-import { fetchTextFilesAndConcat } from '../lib/prompt.js'
+import { loadText } from '../lib/share.js'
 import { isFn, isInArr, isStr } from '../lib/validation.js'
 
 export class Bead {
@@ -60,7 +60,8 @@ export class FileBead extends Bead {
 
     async load() {
         if (!this._loaded) {
-            this.content = await fetchTextFilesAndConcat(...this._fileNames)
+            const contents = await Promise.all(this._fileNames.map(loadText))
+            this.content = contents.join('\n')
             this._loaded = true
         }
         return this.content
