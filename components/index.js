@@ -46,7 +46,6 @@ const componentSpecifications = [
     './plot-2d-component.jhc&',
     './provider-component.jh&',
     './service-component.jh&',
-    // TODO: needs a rewrite or remove
     './service-metrics-component.jh&',
     './ui/show-hide-component.jhc&',
     './ui/steps-component.jhc&',
