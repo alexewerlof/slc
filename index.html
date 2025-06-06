@@ -54,10 +54,9 @@
             </hero-component>
 
             <div class="container pad-gap2">
-                <h2>Apps</h2>
+                <h2>Service Level Toolbox</h2>
                 <p>
-                    This site is the landing page for a suit of open source apps that improves your understanding
-                    and implementation of Service Levels as a tool to measure and improve reliability.
+                    This product is a collection of tools to understand, assess, measure, and commit to Service Levels (SLI, SLO, SLA).
                 </p>
                 <div class="apps-container well">
                     <a v-for="app in apps"
@@ -100,6 +99,7 @@
                             <li>Articles on key concepts</li>
                             <li>Share links publicly</li>
                             <li>AI-chat <span class="subtle-hint">(upcoming)</span></li>
+                            <li>Analyze SLA contract <span class="subtle-hint">(upcoming)</span></li>
                         </ul>
                         <button class="button--cta" @click="$refs.proDialog.show(true)">
                             <span class="material-symbols-outlined">mail</span>
@@ -117,11 +117,11 @@
                         <h3>Enterprise</h3>
                         <ul class="check-list">
                             <li>Unlimited SLIs, SLOs, and Alerts</li>
-                            <li>OpenSLO support <span class="subtle-hint">(upcoming)</span></li>
                             <li>Access to code for audit</li>
                             <li>Run it in your infrastructure</li>
+                            <li>OpenSLO support <span class="subtle-hint">(upcoming)</span></li>
                             <li>Generate alerting rules <span class="subtle-hint">(upcoming)</span></li>
-                            <li>SLA generation & analysis <span class="subtle-hint">(upcoming)</span></li>
+                            <li>Generate SLA contract based on your SLI/SLO <span class="subtle-hint">(upcoming)</span></li>
                             <li>Advanced intelligent ghosting</li>
                         </ul>
                         <button class="button--cta" @click="$refs.enterpriseDialog.show(true)">
