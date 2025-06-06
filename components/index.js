@@ -26,7 +26,6 @@ const componentSpecifications = [
     './ext-link.jh',
     './failure-component.jh&',
     './dependency-component.jh&',
-    './faq-component.jhc&',
     './feedback-blob-component.jhc&',
     './footer-component.jhc&',
     './formula-component.jh&',
