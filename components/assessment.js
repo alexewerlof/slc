@@ -99,28 +99,22 @@ export class Assessment {
         lines.push(
             `## Icons`,
             emptyLine,
-            `- ${icon('provider')} indicates **Provider**`,
-            `- ${icon('service')} indicates **Service**`,
-            `- ${icon('consumer')} indicates **Consumer**`,
-            `- ${icon('consumption')} indicates **Consumption**`,
-            `- ${icon('dependency')} indicates **Dependency**`,
-            `- ${icon('failure')} indicates **Failure**`,
+            `- ${icon('provider')} indicates **Provider**. Each Provider offers 1+ Service(s).`,
+            `- ${icon('service')} indicates **Service**. Each Service is offered by exactly 1 Provider.`,
+            `- ${icon('consumer')} indicates **Consumer**. Each Consumer has 1+ Consumption(s) to achieve a goal.`,
+            `- ${icon('consumption')} indicates **Consumption**. Each Consumption belongs to exactly 1 Consumer.`,
+            `- ${
+                icon('dependency')
+            } indicates **Dependency**. Each Dependency ties a Consumption to a Service. Each Dependency has 1+ Failure(s).`,
+            `- ${
+                icon('failure')
+            } indicates **Failure**. Each Failure belongs to exactly one Dependency. Each Failure has a Symptom, a Consequence, and a Business Impact`,
             `- ${icon('symptom')} indicates **Symptom**`,
             `- ${icon('consequence')} indicates **Consequence**`,
             `- ${icon('impact')} indicates **Business Impact**`,
             `- ${icon('scope')} indicates a parent-child relationship like **Provider${
                 icon('scope')
             }Service** or **Consumer${icon('scope')}Consumption**`,
-        )
-
-        lines.push(
-            `## Relationships`,
-            emptyLine,
-            `- Each Provider offers 1+ Service(s).`,
-            `- Each Consumer has 1+ Consumption(s) to achieve a goal.`,
-            `- Each Dependency ties a Consumption to a Service.`,
-            `- Each Dependency has 1+ Failure(s).`,
-            `- Each Failure has a Symptom, a Consequence, and a Business Impact`,
         )
 
         lines.push(newParagraph)
@@ -195,6 +189,23 @@ export class Assessment {
             lines.push(
                 `- ${failure}`,
             )
+        }
+
+        lines.push(
+            `## Metrics`,
+            emptyLine,
+        )
+
+        for (const metric of this.metrics) {
+            lines.push(
+                `- ${metric}`,
+            )
+
+            for (const linkedFailure of metric.linkedFailures) {
+                lines.push(
+                    `  - ${linkedFailure}`,
+                )
+            }
         }
 
         return lines.join('\n')
