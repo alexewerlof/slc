@@ -79,7 +79,8 @@
                             <li>Tooltips</li>
                         </ul>
                         <button class="button--cta" @click="$refs.freeDialog.show(true)">
-                            Sign up
+                            <span class="material-symbols-outlined">lock_open</span>
+                            No account needed
                         </button>
                         <dialog-component title="Free tier" ref="freeDialog">
                             <p>Only the PRO version is available at this time.</p>
@@ -95,6 +96,7 @@
                             <li>Share links publicly</li>
                         </ul>
                         <button class="button--cta" @click="$refs.proDialog.show(true)">
+                            <span class="material-symbols-outlined">mail</span>
                             Sign up
                         </button>
                         <dialog-component title="Pro tier" ref="proDialog">
@@ -116,6 +118,7 @@
                             <li>Advanced intelligent ghosting</li>
                         </ul>
                         <button class="button--cta" @click="$refs.enterpriseDialog.show(true)">
+                            <span class="material-symbols-outlined">phone_in_talk</span>
                             Call Sales<span class="star"></span>
                         </button>
                         <dialog-component title="Enterprise tier" ref="enterpriseDialog">

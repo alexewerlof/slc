@@ -2,7 +2,10 @@
     <div v-if="!hideTopBar" class="code-block-component__top-bar">
         <div class="code-block-component__title">{{ title }}</div>
         <div class="code-block-component__buttons">
-            <button class="button--small" type="button" @click="copy">Copy</button>
+            <button class="button--small" type="button" @click="copy">
+                <span class="material-symbols-outlined">content_copy</span>
+                Copy
+            </button>
         </div>
     </div>
     <div class="code-block-component__code-container" ref="codeRef">

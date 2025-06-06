@@ -13,6 +13,12 @@
     box-sizing: border-box;
 }
 
+.header-component__home-link {
+    display: inline-block;
+    margin-right: var(--gap);
+    font-size: 1.4em;
+}
+
 .header-component__title {
     display: inline-block;
     margin: 0;

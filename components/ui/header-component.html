@@ -1,9 +1,10 @@
 <header class="header-component" :style="manifestStyle">
     <div class="header-component__contents container">
-        <a href="/" tooltip="Home page">
-            <img :src="manifest.icons[0].src" alt="Logo" class="header-component__logo" />
+        <a href="/" tooltip="Home page" class="header-component__home-link">
+            <span class="material-symbols-outlined">arrow_back</span>
         </a>
         <a :href="manifest.start_url">
+            <img :src="manifest.icons[0].src" alt="Logo" class="header-component__logo" />
             <h1 class="header-component__title" v-text="manifest.name" :title="manifest.id"></h1>
         </a>
         <slot></slot>
