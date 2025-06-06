@@ -2,8 +2,9 @@ import { createApp } from '../../vendor/vue.js'
 import { registerAllComponents } from '../../components/index.js'
 import { loadJson, loadText } from '../../lib/share.js'
 
-const [manifest, glossary] = await Promise.all([
+const [manifest, sreBooks, glossary] = await Promise.all([
     loadJson('manifest.json'),
+    loadText('sre-books.md'),
     loadText('../../prompts/glossary.md'),
 ])
 
@@ -11,6 +12,7 @@ export const app = createApp({
     data() {
         return {
             manifest,
+            sreBooks,
             glossary,
         }
     },
