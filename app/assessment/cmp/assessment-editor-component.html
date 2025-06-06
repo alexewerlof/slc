@@ -7,10 +7,14 @@
             <div class="button-bar">
                 <button @click="editingInstance = assessment.providers.pushNew()">New Provider</button>
                 <button @click="editingInstance = assessment.consumers.pushNew()">New Consumer</button>
+                <button @click="showDialog('summaryDialog', true)">Summary</button>
                 <button @click="showDialog('exportDialog', true)">Export</button>
             </div>
         </div>
         <assessment-graph-component :assessment @select="editComponent"></assessment-graph-component>
+        <dialog-component title="Summary" ref="summaryDialog">
+            <markdown-component :markdown="assessment.toString()"></markdown-component>
+        </dialog-component>
         <dialog-component title="Export" ref="exportDialog">
             <code-block-component>
                 <pre>{{ JSON.stringify(assessment.state, null, 2) }}</pre>
