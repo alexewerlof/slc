@@ -1,6 +1,6 @@
 # SRE Concepts
 
-This cheatsheet compiles information from the provided sources on key Site Reliability Engineering (SRE) concepts related to reliability measurement and incident management.
+This cheatsheet compiles information from the popular sources on key Site Reliability Engineering (SRE) concepts related to reliability measurement and incident management.
 
 ## The Reliability Stack
 
@@ -230,5 +230,3 @@ These inform **Service Level Objectives (SLOs)**, which are targets for SLIs ove
 *   **Buy-in**: Critical for adopting SLOs and error budgets. Needs to come from teams, stakeholders, and leadership. Can start small to limit initial convincing. Chapter 6 of Implementing Service Level Objectives is dedicated to getting buy-in.
 *   **Staffing**: Staff SRE teams appropriately; don't skimp. Focus on overall system cost, not just unit cost of operators. SRE is not scalable through headcount; automate instead. If SREs are scarce, focus efforts on services that are part of a single product, built on similar tech stacks.
 *   **Frameworks**: Provide upfront gains in consistency and efficiency. Free developers from gluing components in incompatible ways. Drive single reusable solutions for production concerns.
-
-This cheatsheet provides a foundation based on the provided sources. Remember that SRE is a continuously evolving discipline, and practical implementation details may vary outside of Google's specific context.
