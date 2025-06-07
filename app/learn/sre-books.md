@@ -1,4 +1,4 @@
-# SRE Concepts Cheatsheet: SLIs, SLOs, SLAs, Error Budgets, & Alerting
+# SRE Concepts
 
 This cheatsheet compiles information from the provided sources on key Site Reliability Engineering (SRE) concepts related to reliability measurement and incident management.
 

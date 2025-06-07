@@ -1,3 +1,5 @@
+# Glossary
+
 ## Service
 
 _Service_ is a key concept in the Service Level framework. Sometimes engineers confuse service for microservices, or other components or systems that _provide_ a service but service is a service is a capability or solution to a consumer problem.
