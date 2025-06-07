@@ -42,10 +42,11 @@
             <header-component :manifest></header-component>
 
             <div class="container pad-gap2">
-                <h1>Glossary</h1>
-                <markdown-component :markdown="glossary"></markdown-component>
-                <h1>SRE Books</h1>
-                <markdown-component :markdown="sreBooks"></markdown-component>
+                <toc-component for="toc-source"></toc-component>
+                <div id="toc-source">
+                    <markdown-component :markdown="glossary"></markdown-component>
+                    <markdown-component :markdown="sreBooks"></markdown-component>
+                </div>
             </div>
             
             <cookie-popup-component></cookie-popup-component>

@@ -1,0 +1,12 @@
+<div class="toc-component">
+    <button @click="updateToc()">Update</button>
+    <nav>
+        <ol>
+            <li v-for="node in headers"
+                class="toc-component__item"
+                :class="`toc-component__item--${node.tagName}`">
+                <a :href="`#${node.id}`">{{ node.textContent }}</a>
+            </li>
+        </ol>
+    </nav>
+</div>
