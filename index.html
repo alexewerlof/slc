@@ -56,7 +56,7 @@
             <div class="container pad-gap2">
                 <h2>Service Level Toolbox</h2>
                 <p>
-                    This product is a collection of tools to understand, assess, measure, and commit to Service Levels (SLI, SLO, SLA).
+                    This product is a suit of tools to understand, assess, measure, and commit to Service Levels (SLI, SLO, SLA).
                 </p>
                 <div class="apps-container well">
                     <a v-for="app in apps"
@@ -73,16 +73,22 @@
                 </div>
 
                 <h2>Pricing</h2>
-                <div class="mozaic">
-                    <div class="mozaic__tile mozaic__tile--4c mar-gap2 frost">
-                        <h3>Free</h3>
+                <div class="mozaic mozaic--gap2">
+                    <div class="mozaic__tile mozaic__tile--4c frost">
+                        <h2>
+                            Free
+                            <div class="subtle-hint">
+                                For those who want to kick the tiers
+                                to see what it's about!
+                            </div>
+                        </h2>
                         <ul class="check-list">
                             <li>5 SLIs</li>
                             <li>8 SLOs</li>
                             <li>14 Alerts</li>
                             <li>Tooltips</li>
                         </ul>
-                        <button class="button--cta" @click="$refs.freeDialog.show(true)">
+                        <button class="price-button button--cta" @click="$refs.freeDialog.show(true)">
                             <span class="material-symbols-outlined">lock_open</span>
                             No account needed
                         </button>
@@ -90,18 +96,23 @@
                             <p>Only the PRO version is available at this time.</p>
                         </dialog-component>
                     </div>
-                    <div class="mozaic__tile mozaic__tile--4c mar-gap2 frost">
-                        <h3>Pro</h3>
+                    <div class="mozaic__tile mozaic__tile--4c frost">
+                        <h2>
+                            Pro
+                            <div class="subtle-hint">
+                                For those who want to use Service Levels to measure
+                                the right thing and set reasonable expectations
+                            </div>
+                        </h2>
                         <ul class="check-list">
                             <li>50 SLIs</li>
                             <li>100 SLOs</li>
                             <li>200 Alerts</li>
                             <li>Articles on key concepts</li>
                             <li>Share links publicly</li>
-                            <li>AI-chat <span class="subtle-hint">(upcoming)</span></li>
-                            <li>Analyze SLA contract <span class="subtle-hint">(upcoming)</span></li>
+                            <li>AI-chat</li>
                         </ul>
-                        <button class="button--cta" @click="$refs.proDialog.show(true)">
+                        <button class="price-button button--cta" @click="$refs.proDialog.show(true)">
                             <span class="material-symbols-outlined">mail</span>
                             Sign up
                         </button>
@@ -113,8 +124,14 @@
                             </p>
                         </dialog-component>
                     </div>
-                    <div class="mozaic__tile mozaic__tile--4c mar-gap2 frost">
-                        <h3>Enterprise</h3>
+                    <div class="mozaic__tile mozaic__tile--4c frost">
+                        <h2>
+                            Enterprise
+                            <div class="subtle-hint">
+                                Run the entire app on your infrastructure
+                                for maximum security and privacy
+                            </div>
+                        </h2>
                         <ul class="check-list">
                             <li>Unlimited SLIs, SLOs, and Alerts</li>
                             <li>Access to code for audit</li>
@@ -122,9 +139,9 @@
                             <li>OpenSLO support <span class="subtle-hint">(upcoming)</span></li>
                             <li>Generate alerting rules <span class="subtle-hint">(upcoming)</span></li>
                             <li>Generate SLA contract based on your SLI/SLO <span class="subtle-hint">(upcoming)</span></li>
-                            <li>Advanced intelligent ghosting</li>
+                            <li>Analyze SLA contract <span class="subtle-hint">(upcoming)</span></li>
                         </ul>
-                        <button class="button--cta" @click="$refs.enterpriseDialog.show(true)">
+                        <button class="price-button button--cta" @click="$refs.enterpriseDialog.show(true)">
                             <span class="material-symbols-outlined">phone_in_talk</span>
                             Call Sales<span class="star"></span>
                         </button>
