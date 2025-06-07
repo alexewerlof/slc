@@ -30,14 +30,6 @@ ul.benefit-list {
         /* Smooth transition for hover effects */
         transition: transform var(--animation-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
     }
-
-    &:hover {
-        /* Pause the floating animation on hover to let the hover transform take full control */
-        animation-play-state: paused;
-        /* Scale up and slightly rotate on hover for a playful effect */
-        transform: scale(0.9) rotate(1turn);
-        transition: transform var(--animation-speed) ease-in-out;
-    }
 }
 
 .star {
