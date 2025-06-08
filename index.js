@@ -9,6 +9,7 @@ const appNames = [
     'assess',
     'assessment',
     'calculator',
+    'simulator',
     'learn',
     'templates',
 ]
@@ -28,13 +29,13 @@ const apps = await Promise.all(appNames.map(async (name) => {
     }
 }))
 
-const mainApp = apps.find((app) => app.name === 'calculator')
+const calculatorApp = apps.find((app) => app.name === 'calculator')
 
 const app = createApp({
     data() {
         return {
             apps,
-            mainApp,
+            mainApp: calculatorApp,
         }
     },
     mounted() {
@@ -43,7 +44,7 @@ const app = createApp({
         // If `urlVer` or `title` are present, redirect to the calculator
         if (url.searchParams.has('urlVer') || url.searchParams.has('title')) {
             const { search } = url
-            const redirectUrl = new URL(mainApp.url)
+            const redirectUrl = new URL(calculatorApp.url)
             redirectUrl.search = search
             globalThis.location.replace(addUTM(redirectUrl, {
                 source: 'web',
