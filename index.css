@@ -27,8 +27,10 @@ ul.benefit-list {
     & img {
         /* Apply the continuous floating animation */
         animation: subtle-float var(--animation-speed10) ease-in-out infinite;
-        /* Smooth transition for hover effects */
-        transition: transform var(--animation-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+
+        &:hover {
+            animation-play-state: paused;
+        }
     }
 }
 
