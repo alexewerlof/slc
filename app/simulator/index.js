@@ -8,6 +8,9 @@ import { isNum } from '../../lib/validation.js'
 import { percent } from '../../lib/math.js'
 import { numL10n, percL10n } from '../../lib/fmt.js'
 import { registerAllComponents } from '../../components/index.js'
+import { loadJson } from '../../lib/share.js'
+
+const manifest = await loadJson('manifest.json')
 
 const percentageColor = d3.scaleLinear()
     .domain([config.slider.min, config.slider.max])
@@ -16,6 +19,7 @@ const percentageColor = d3.scaleLinear()
 const app = createApp({
     data() {
         return {
+            manifest,
             config,
             windowDays: config.windowDays.default,
             // How many windows of data should be generated in the simulation
