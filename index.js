@@ -6,12 +6,12 @@ import { loadJson } from './lib/share.js'
 
 const appNames = [
     'uptime',
-    'assess',
     'assessment',
     'calculator',
+    'templates',
     'simulator',
     'learn',
-    'templates',
+    'assess',
 ]
 
 // Attempting to load all manifests also serves as a quick smoke test
