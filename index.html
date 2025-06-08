@@ -78,8 +78,7 @@
                         <h2>
                             Free
                             <div class="subtle-hint">
-                                For those who want to kick the tiers
-                                to see what it's about!
+                                For beginners
                             </div>
                         </h2>
                         <ul class="check-list">
@@ -88,7 +87,7 @@
                             <li>14 Alerts</li>
                             <li>Tooltips</li>
                         </ul>
-                        <button class="price-button button--cta" @click="$refs.freeDialog.show(true)">
+                        <button class="price-button" @click="$refs.freeDialog.show(true)">
                             <span class="material-symbols-outlined">lock_open</span>
                             No account needed
                         </button>
@@ -96,18 +95,15 @@
                             <p>Only the PRO version is available at this time.</p>
                         </dialog-component>
                     </div>
-                    <div class="mozaic__tile mozaic__tile--4c frost">
+                    <div class="mozaic__tile mozaic__tile--4c frost preferred-price">
                         <h2>
                             Pro
                             <div class="subtle-hint">
-                                For those who want to use Service Levels to measure
-                                the right thing and set reasonable expectations
+                                For product teams and developers
                             </div>
                         </h2>
                         <ul class="check-list">
-                            <li>50 SLIs</li>
-                            <li>100 SLOs</li>
-                            <li>200 Alerts</li>
+                            <li>Unlimited SLIs, SLOs, and Alerts</li>
                             <li>Articles on key concepts</li>
                             <li>Share links publicly</li>
                             <li>AI-chat</li>
@@ -120,7 +116,7 @@
                             <p>
                                 <ext-link href="https://github.com/alexewerlof/slc">
                                     Everything is free as in beer and speech
-                                </ext-link>. 😊
+                                </ext-link>. 😊 No sign up required.
                             </p>
                         </dialog-component>
                     </div>
@@ -128,22 +124,19 @@
                         <h2>
                             Enterprise
                             <div class="subtle-hint">
-                                Run the entire app on your infrastructure
-                                for maximum security and privacy
+                                Scale and compliance at reasonable price
                             </div>
                         </h2>
                         <ul class="check-list">
-                            <li>Unlimited SLIs, SLOs, and Alerts</li>
-                            <li>Access to code for audit</li>
                             <li>Run it in your infrastructure</li>
                             <li>OpenSLO support <span class="subtle-hint">(upcoming)</span></li>
                             <li>Generate alerting rules <span class="subtle-hint">(upcoming)</span></li>
                             <li>Generate SLA contract based on your SLI/SLO <span class="subtle-hint">(upcoming)</span></li>
                             <li>Analyze SLA contract <span class="subtle-hint">(upcoming)</span></li>
                         </ul>
-                        <button class="price-button button--cta" @click="$refs.enterpriseDialog.show(true)">
+                        <button class="price-button" @click="$refs.enterpriseDialog.show(true)">
                             <span class="material-symbols-outlined">phone_in_talk</span>
-                            Call Sales<span class="star"></span>
+                            Call Sales
                         </button>
                         <dialog-component title="Enterprise tier" ref="enterpriseDialog">
                             <p>No enterprise features are available at this time.</p>

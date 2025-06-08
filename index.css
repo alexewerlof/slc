@@ -34,14 +34,6 @@ ul.benefit-list {
     }
 }
 
-.star {
-    color: var(--brand-red);
-}
-
-.star::before {
-    content: '*';
-}
-
 .check-list {
     list-style-type: '\2713';
     padding-left: 0.5em;
@@ -67,4 +59,8 @@ ul.benefit-list {
 
 .price-button {
     width: 100%;
+}
+
+.preferred-price {
+    border-color: var(--primary-color);
 }
