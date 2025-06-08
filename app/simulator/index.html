@@ -10,7 +10,7 @@
 </head>
 <body>
     <div id="app">
-        <header-component :manifest></header-component>
+        <header-component :manifest>Beta</header-component>
         <div class="container pad-gap2">
             <article>
                 <section>
@@ -115,25 +115,24 @@
 
             <tabs-component v-model="selectedTab" :tab-names="[
                     'Generator',
+                    'Incident',
                     'Percentile',
                     'Service',
                     'Analytics',
                     'JSON Data',
                 ]"></tabs-component>
 
-            <div class="tab-content" v-if="selectedTab === 'Generator'">
-                <article>
-                    <section>
-                        <h3>Presets</h3>
-                        <div class="button-bar">
-                            <button v-for="pre in config.simulator.percentages.presets"
-                                @click="percentages = [...pre.values]">{{ pre.name }}
-                            </button>
-                        </div>
-                    </section>
-                </article>
-                <article>
-                    <section>
+            <div v-if="selectedTab === 'Generator'">
+                <div class="well b-mar-gap2">
+                    <h2>Presets</h2>
+                    <div class="button-bar">
+                        <button v-for="pre in config.simulator.percentages.presets"
+                            @click="percentages = [...pre.values]">{{ pre.name }}
+                        </button>
+                    </div>
+                </div>
+                <div class="mozaic mozaic--gap2">
+                    <div class="mozaic__tile mozaic__tile--half surface">
                         <h2>Data distribution</h2>
                         <table>
                             <thead>
@@ -207,9 +206,9 @@
                             :label-render-y="unitRender"
                             axis-title-x="Sorted Data Index"
                             :axis-title-y="metricName"></plot-2d-component>
-                        </section>
-                    <section>
-                        <h1>Count</h1>
+                    </div>
+                    <div class="mozaic__tile mozaic__tile--half surface">
+                        <h2>Data Count</h2>
                         <p>
                             Window: {{ windowDays }} days
                         </p>
@@ -260,36 +259,39 @@
                         <div class="button-bar">
                             <button @click="generateData">Generate Data</button>
                         </div>
-                    </section>
-                    <section>
-                        <h2>Emulate an incident</h2>
-                        <label>
-                            <h2>Incident length {{ percL10n(incidentLengthPerc) }} Window ({{ incidentDataCount }})</h2>
-                            <input type="range"
-                                :min="config.incidentLengthPerc.min"
-                                :max="config.incidentLengthPerc.max"
-                                :step="config.incidentLengthPerc.step"
-                                v-model.number="incidentLengthPerc">
-            
-                        </label>
-                        <label>
-                            <h2>Insertion Point</h2>
-                            <input type="range"
-                                min="0"
-                                :max="dataCount"
-                                v-model.number="incidentInsertionPoint">
-                            at point {{ incidentInsertionPoint }}
-                        </label>
-            
-                        <div class="button-bar">
-                            <button @click="addIncident">Insert Incident</button>
-                        </div>        
-                    </section>
-                </article>
-
+                    </div>
+                </div>
+                
+            </div>
+            <div v-if="selectedTab === 'Incident'" class="well">
+                <h2>Emulate an incident</h2>
+                <label for="incident-length-perc">
+                    Length: {{ percL10n(incidentLengthPerc) }} of Window 
+                    <div class="subtle-hint">
+                        {{ numL10n(incidentDataCount) }} data points
+                    </div>
+                </label>
+                <input type="range"
+                    id="incident-length-perc"
+                    :min="config.incidentLengthPerc.min"
+                    :max="config.incidentLengthPerc.max"
+                    :step="config.incidentLengthPerc.step"
+                    v-model.number="incidentLengthPerc">
+                <label for="incident-insertion-point">
+                    Insertion Point: {{ numL10n(incidentInsertionPoint) }}
+                </label>
+                <input type="range"
+                    id="incident-insertion-point"
+                    min="0"
+                    :max="dataCount"
+                    v-model.number="incidentInsertionPoint">
+                
+                <div class="button-bar">
+                    <button @click="addIncident">Insert Incident</button>
+                </div>        
             </div>
 
-            <div class="tab-content" v-if="selectedTab === 'Percentile'">
+            <div v-if="selectedTab === 'Percentile'">
                 <h3>Sort order</h3>
                 <div>
                     <label>
@@ -329,7 +331,7 @@
                     is-bar-chart></plot-2d-component>
             </div>
 
-            <div class="tab-content" v-if="selectedTab === 'Service'">
+            <div v-if="selectedTab === 'Service'">
                 <h2>Accumulated Failure Counter</h2>
                 <plot-2d-component
                     :points="accumulatedFailure"
@@ -359,7 +361,7 @@
                     :label-render-y="xRender"
                     axis-title-y="Burn Rate"></plot-2d-component>
             </div>
-            <div class="tab-content" v-if="selectedTab === 'Analytics'">
+            <div v-if="selectedTab === 'Analytics'" class="well">
                 <h2>Analytics</h2>
                 <table>
                     <thead>
@@ -422,7 +424,7 @@
                 </table>
             </div>
 
-            <div class="tab-content" v-if="selectedTab === 'JSON Data'">
+            <div v-if="selectedTab === 'JSON Data'">
                 <code-block-component :title="`${numL10n(jsonData.length)} data points`">
                     {{ jsonData }}
                 </code-block-component>
