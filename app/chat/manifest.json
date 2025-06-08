@@ -1,12 +1,12 @@
 {
     "name": "Service Level Chat",
     "short_name": "Chat",
-    "description": "Use an LLM to have a chat about service levels",
+    "description": "Use an LLM to have a chat about service levels and various SRE topics.",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#001426",
     "theme_color": "#FFBC52",
-    "id": "1.4",
+    "orientation": "landscape",
     "icons": [
         {
             "src": "/img/service-level-calculator-icon.svg",

@@ -1,12 +1,12 @@
 {
-    "name": "Service Level Templates",
-    "short_name": "SLC",
-    "description": "A simple Service Level Calculator that complies with Google SRE books.",
+    "name": "Service Level Indicator Templates",
+    "short_name": "SLI Templates",
+    "description": "A collection of the most common Service Level Indicators for different types of services.",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#001426",
     "theme_color": "#FFBC52",
-    "id": "1.4",
+    "orientation": "landscape",
     "icons": [
         {
             "src": "/img/icon.png",

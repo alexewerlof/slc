@@ -1,12 +1,12 @@
 {
     "name": "Service Assess",
     "short_name": "Assess",
-    "description": "A tool to assess services, consumptions, and risks to find meaningful SLIs.",
+    "description": "The older version of Service Assessment tool. This version will be kept around for a while for me to get feedback.",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#001426",
     "theme_color": "#FFBC52",
-    "id": "1.4",
+    "orientation": "landscape",
     "icons": [
         {
             "src": "/img/service-level-assess-icon.svg",

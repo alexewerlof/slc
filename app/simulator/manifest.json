@@ -1,7 +1,7 @@
 {
-    "name": "Uptime Calculator",
-    "short_name": "Uptime",
-    "description": "A simple Uptime Calculator that does not hide the notion of timeslices (unlike uptime.is)",
+    "name": "Metric Simulator",
+    "short_name": "Simulator",
+    "description": "A flexible simulator for generating metrics with various distributions and playing around with how service level status can be calculated",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#001426",
