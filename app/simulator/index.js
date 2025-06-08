@@ -6,7 +6,7 @@ import { d3 } from '../../vendor/d3.js'
 import { boundTypeToOperator, calculateSlsMetric, createIsGood } from '../../lib/sl.js'
 import { isNum } from '../../lib/validation.js'
 import { percent } from '../../lib/math.js'
-import { percL10n } from '../../lib/fmt.js'
+import { numL10n, percL10n } from '../../lib/fmt.js'
 import { registerAllComponents } from '../../components/index.js'
 
 const percentageColor = d3.scaleLinear()
@@ -305,6 +305,7 @@ const app = createApp({
     },
     methods: {
         percL10n,
+        numL10n,
         setAllPercentagesTo(val) {
             this.percentages = new Array(this.percentages.length).fill(val)
         },

@@ -16,10 +16,6 @@ section {
     text-align: center;
 }
 
-.json-data {
-    overflow-wrap: anywhere;
-}
-
 .freq-indicator {
     font-size: 1%;
     height: 10px;

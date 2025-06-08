@@ -9,7 +9,7 @@
     <title>Metric Simulator</title>
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="container pad-gap2">
         <article>
             <section>
                 <h2>SLI</h2>
@@ -132,7 +132,7 @@
             </article>
             <article>
                 <section>
-                    <h1>Data distribution</h1>
+                    <h2>Data distribution</h2>
                     <table>
                         <thead>
                             <tr>
@@ -260,7 +260,7 @@
                     </div>
                 </section>
                 <section>
-                    <h1>Emulate an incident</h1>
+                    <h2>Emulate an incident</h2>
                     <label>
                         <h2>Incident length {{ percL10n(incidentLengthPerc) }} Window ({{ incidentDataCount }})</h2>
                         <input type="range"
@@ -421,14 +421,12 @@
         </div>
 
         <div class="tab-content" v-if="selectedTab === 'JSON Data'">
-            <code class="json-data">
+            <code-block-component :title="`${numL10n(jsonData.length)} data points`">
                 {{ jsonData }}
-            </code>
+            </code-block-component>
+        </div>
         </div>
     </div>
-    <footer>
-        <a href="https://github.com/alexewerlof/percentile">Source</a>
-    </footer>
     <script type="module" src="index.js" async defer></script>
 </body>
 </html>
