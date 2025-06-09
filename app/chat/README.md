@@ -1,0 +1,1 @@
+This is just a standalone application to chat about SRE topics. It is useful for checking your LLM settings in isolation.
