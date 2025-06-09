@@ -10,7 +10,12 @@
                     placeholder="Type your message here..."
                     @keyup.enter="submitPrompt"
                     :disabled="isEditDisabled"></textarea>
-                <button @click="submitPrompt" type="button" title="Send" :disabled="isEditDisabled">
+                <button
+                    @click="submitPrompt"
+                    class="button--cta button--large"
+                    type="button"
+                    title="Send"
+                    :disabled="isEditDisabled">
                     <icon-component name="send"></icon-component>
                 </button>
             </div>
