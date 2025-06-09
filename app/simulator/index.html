@@ -141,8 +141,10 @@
                                 <tr>
                                     <th colspan="2">
                                         Range
-                                        <button @click="removeRange">-</button>                
-                                        <button @click="addRange">+</button>
+                                        <div class="button-bar button-bar--small">
+                                            <button @click="removeRange">-</button>                
+                                            <button @click="addRange">+</button>
+                                        </div>
                                     </th>
                                     <th></th>
                                     <th>Quick Set</th>
@@ -153,9 +155,11 @@
                                     <th>To</th>
                                     <th></th>
                                     <th>
-                                        <button v-for="pre of config.slider.presets"
-                                            @click="setAllPercentagesTo(pre)">{{ pre }}
-                                        </button>
+                                        <div class="button-bar button-bar--small">
+                                            <button v-for="pre of config.slider.presets"
+                                                @click="setAllPercentagesTo(pre)">{{ pre }}
+                                            </button>
+                                        </div>
                                     </th>
                                     <th>Absolute</th>
                                     <th>Relative</th>

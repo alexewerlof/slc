@@ -149,7 +149,7 @@ textarea {
     flex-wrap: wrap;
     margin-top: var(--gap);
     margin-bottom: var(--gap);
-    gap: var(--gap);
+    gap: calc(var(--gap) / 2);
 
     & button:not(:last-child) {
         border-top-right-radius: 0;
@@ -160,6 +160,10 @@ textarea {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
     }
+}
+
+.button-bar--small {
+    gap: calc(var(--gap) / 4);
 }
 
 button {
@@ -189,6 +193,7 @@ button:hover {
     z-index: 1;
 }
 
+.button-bar--small button,
 .button--small {
     padding: 1px var(--gap);
     border-radius: var(--bradius);
