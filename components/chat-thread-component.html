@@ -5,9 +5,15 @@
             System Messages
         </label>
         <div class="button-bar button-bar--small">
-            <button @click="thread.clear(true)" title="Clear">C</button>
-            <button @click="scrollToTop()">⭱</button>
-            <button @click="scrollToBottom()">⭳</button>
+            <button @click="thread.clear(true)" title="Clear" class="button--danger">
+                <icon-component name="delete"></icon-component>
+            </button>
+            <button @click="scrollToTop()" title="Scroll to top">
+                <icon-component name="arrow_upward"></icon-component>
+            </button>
+            <button @click="scrollToBottom()" title="Scroll to bottom">
+                <icon-component name="arrow_downward"></icon-component>
+            </button>
         </div>
     </div>
     <div class="chat-thread-component__thread" ref="threadContainerRef">

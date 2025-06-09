@@ -10,12 +10,14 @@
         <div class="input-group">
             <div class="button-bar">
                 <button @click="dependency.failures.pushNew()">
+                    <icon-component name="add_circle"></icon-component>
                     Add
                 </button>
                 <button
                     class="button--danger"
                     @click="dependency.failures.removeSelected()"
                     :disabled="!dependency.failures.selected">
+                    <icon-component name="delete"></icon-component>
                     Remove
                 </button>
             </div>

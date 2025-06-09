@@ -378,6 +378,17 @@ This *is* **some** ~~test~~ for you!`"></markdown-component>
                     <div class="mozaic__tile mozaic__tile--11c">mozaic__tile--11c</div>
                     <div class="mozaic__tile mozaic__tile--1c">mozaic__tile--1c</div>
                 </div>
+
+                <div v-if="selTabName === 'Icons'">
+                    <h3>Icons</h3>
+                    <ul>
+                        <li v-for="name in iconNames">
+                            <icon-component :name></icon-component>
+                            &nbsp;
+                            <code>{{ name }}</code>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 

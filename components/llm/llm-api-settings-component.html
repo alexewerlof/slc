@@ -12,6 +12,7 @@
     </div>
     <div class="input-group" v-if="llmApi.requiresApiKey">
         <label :for="apiKeyUniqueId">
+            <icon-component name="key"></icon-component>
             API Key
             <div class="subtle-hint" class="subtle-hint">
                 <ext-link :href="llmApi.apiKeyWebsite">Get API Key</ext-link>
@@ -40,6 +41,9 @@
         </select>
     </div>
     <div class="button-bar">
-        <button @click="llmApi.updateModelIds()">Update</button>
+        <button @click="llmApi.updateModelIds()">
+            <icon-component name="sync"></icon-component>
+            Update
+        </button>
     </div>
 </div>

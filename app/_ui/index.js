@@ -3,6 +3,7 @@ import { config } from '../../config.js'
 import { showToast } from '../../lib/toast.js'
 import { registerAllComponents } from '../../components/index.js'
 import { loadJson } from '../../lib/share.js'
+import { iconNames } from '../../lib/icons.js'
 
 const manifest = await loadJson('manifest.json')
 
@@ -29,11 +30,12 @@ const app = createApp({
             },
         ]
         const stepLabels = ['Washing', 'Chopping', 'Cooking', 'Eating']
-        const tabNames = ['Forms', 'Buttons', 'Typography', 'Layout']
+        const tabNames = ['Forms', 'Buttons', 'Typography', 'Layout', 'Icons']
         return {
             manifest,
             // Expose the config to the UI
             config,
+            iconNames,
             inlineSelectOptions,
             inlineSelectValue: inlineSelectOptions[0].value,
             currStep: 0,

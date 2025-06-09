@@ -53,13 +53,20 @@
                         </div>
 
                         <div class="button-bar">
-                            <button @click="calculator.indicators.pushNew()">Add New</button>
-                            <button @click="$refs.indicatorTemplateDialog.show(true)">Add Template</button>
+                            <button @click="calculator.indicators.pushNew()">
+                                <icon-component name="add_circle"></icon-component>
+                                Add New
+                            </button>
+                            <button @click="$refs.indicatorTemplateDialog.show(true)">
+                                <icon-component name="extension"></icon-component>
+                                Add Template
+                            </button>
                             <button
                                 :disabled="!calculator.indicators.selected"
                                 @click="calculator.indicators.removeSelected()"
                                 class="button--danger"
                             >
+                                <icon-component name="delete"></icon-component>
                                 Remove
                             </button>
                         </div>
@@ -107,11 +114,15 @@
                         <div 
                             v-if="calculator.indicators.selected"
                             class="button-bar">
-                            <button @click="calculator.indicators.selected.objectives.pushNew()">Add New</button>
+                            <button @click="calculator.indicators.selected.objectives.pushNew()">
+                                <icon-component name="add_circle"></icon-component>
+                                Add New
+                            </button>
                             <button
                                 :disabled="!calculator.indicators.selected.objectives.selected"
                                 @click="calculator.indicators.selected.objectives.removeSelected()"
                                 class="button--danger">
+                                <icon-component name="delete"></icon-component>
                                 Remove
                             </button>
                         </div>
@@ -179,13 +190,20 @@
                         </div>
 
                         <div class="button-bar" v-if="calculator.indicators.selected?.objectives.selected">
-                            <button @click="calculator.indicators.selected.objectives.selected.alerts.pushNew()">Add New</button>
-                            <button @click="addRecommendedAlerts()">Add Recommended</button>
+                            <button @click="calculator.indicators.selected.objectives.selected.alerts.pushNew()">
+                                <icon-component name="add_circle"></icon-component>
+                                Add New
+                            </button>
+                            <button @click="addRecommendedAlerts()">
+                                <icon-component name="playlist_add_circle"></icon-component>
+                                Add Recommended
+                            </button>
                             <button
                                 :disabled="!calculator.indicators.selected?.objectives.selected?.alerts.selected"
                                 @click="calculator.indicators.selected.objectives.selected.alerts.removeSelected()"
                                 class="button--danger"
                             >
+                                <icon-component name="delete"></icon-component>
                                 Remove
                             </button>
                         </div>

@@ -10,6 +10,7 @@
             <button
                 @click="service.metrics.pushNew()"
             >
+                <icon-component name="add_circle"></icon-component>
                 Add
             </button>
             <button
@@ -17,6 +18,7 @@
                 @click="service.metrics.removeSelected()"
                 :disabled="!service.metrics.length"
             >
+                <icon-component name="delete"></icon-component>
                 Remove
             </button>
         </div>

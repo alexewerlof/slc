@@ -1,7 +1,7 @@
 <header class="header-component" :style="manifestStyle">
     <div class="header-component__contents container">
         <a href="/" tooltip="Home page" class="header-component__home-link">
-            <span class="material-symbols-outlined">arrow_back</span>
+            <icon-component name="arrow_back"></icon-component>
         </a>
         <a :href="manifest.start_url">
             <img :src="manifest.icons[0].src" alt="Logo" class="header-component__logo" />

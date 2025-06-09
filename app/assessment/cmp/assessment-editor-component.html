@@ -5,10 +5,22 @@
     <div class="mozaic__tile mozaic__tile--6c">
         <div class="frost">
             <div class="button-bar">
-                <button @click="editingInstance = assessment.providers.pushNew()">New Provider</button>
-                <button @click="editingInstance = assessment.consumers.pushNew()">New Consumer</button>
-                <button @click="showDialog('summaryDialog', true)">Summary</button>
-                <button @click="showDialog('exportDialog', true)">Export</button>
+                <button @click="editingInstance = assessment.providers.pushNew()">
+                    <icon-component name="add_circle"></icon-component>
+                    New Provider
+                </button>
+                <button @click="editingInstance = assessment.consumers.pushNew()">
+                    <icon-component name="add_circle"></icon-component>
+                    New Consumer
+                </button>
+                <button @click="showDialog('summaryDialog', true)">
+                    <icon-component name="article"></icon-component>
+                    Summary
+                </button>
+                <button @click="showDialog('exportDialog', true)">
+                    <icon-component name="download"></icon-component>
+                    Export
+                </button>
             </div>
         </div>
         <assessment-graph-component :assessment @select="editComponent"></assessment-graph-component>
@@ -26,7 +38,10 @@
             <h2>Provider</h2>
             <provider-component :provider="editingInstance"></provider-component>
             <div class="button-bar">
-                <button @click="editingInstance.services.pushNew()">New Service</button>
+                <button @click="editingInstance.services.pushNew()">
+                    <icon-component name="add_circle"></icon-component>
+                    New Service
+                </button>
             </div>
         </div>
         <div v-if="editingClassName === 'Service'">
@@ -37,7 +52,10 @@
             <h2>Consumer</h2>
             <consumer-component :consumer="editingInstance"></consumer-component>
             <div class="button-bar">
-                <button @click="editingInstance.consumptions.pushNew()">New Consumption</button>
+                <button @click="editingInstance.consumptions.pushNew()">
+                    <icon-component name="add_circle"></icon-component>
+                    New Consumption
+                </button>
             </div>
         </div>
         <div v-if="editingClassName === 'Consumption'">

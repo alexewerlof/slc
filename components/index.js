@@ -1,6 +1,7 @@
 import { registerComponents } from '../lib/component-loader.js'
 
 const componentSpecifications = [
+    './ui/icon-component.jhc',
     './assess-component.jh&',
     './alert/alert-chart-component.jhc&',
     './alert/alert-component.jh&',

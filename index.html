@@ -88,7 +88,7 @@
                             <li>Tooltips</li>
                         </ul>
                         <button class="price-button" @click="$refs.freeDialog.show(true)">
-                            <span class="material-symbols-outlined">lock_open</span>
+                            <icon-component name="lock_open"></icon-component>
                             No account needed
                         </button>
                         <dialog-component title="Free tier" ref="freeDialog">
@@ -109,7 +109,7 @@
                             <li>AI-chat</li>
                         </ul>
                         <button class="price-button button--cta" @click="$refs.proDialog.show(true)">
-                            <span class="material-symbols-outlined">mail</span>
+                            <icon-component name="mail"></icon-component>
                             Sign up
                         </button>
                         <dialog-component title="Pro tier" ref="proDialog">
@@ -135,7 +135,7 @@
                             <li>Analyze SLA contract <span class="subtle-hint">(upcoming)</span></li>
                         </ul>
                         <button class="price-button" @click="$refs.enterpriseDialog.show(true)">
-                            <span class="material-symbols-outlined">phone_in_talk</span>
+                            <icon-component name="phone_in_talk"></icon-component>
                             Call Sales
                         </button>
                         <dialog-component title="Enterprise tier" ref="enterpriseDialog">
