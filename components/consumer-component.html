@@ -37,7 +37,9 @@
             </label>
             <select id="consumer-type" v-model="consumer.type">
                 <option
-                    v-for="possibleType of consumer.constructor.possibleTypes">{{ possibleType }}</option>
+                    v-for="possibleType of consumer.constructor.possibleTypes">
+                    {{ possibleType }}
+                </option>
             </select>
         </div>
     </fieldset>
