@@ -9,6 +9,20 @@
 
 .dialog-component__title-bar {
     display: flex;
+    margin: calc(var(--gap2) * -1);
+    margin-bottom: var(--gap);
+    padding: var(--gap);
+    padding-left: var(--gap2);
+    border-bottom-width: 1px;
+    color: var(--primary-color);
+    background-color: #ffffff09;
+    border-bottom-style: solid;
+    border-image-source: linear-gradient(
+        to right,
+        var(--primary-color),
+        var(--secondary-color, var(--primary-color))
+    ); /* Example gradient */
+    border-image-slice: 1;
 }
 
 .dialog-component__title {
