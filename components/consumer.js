@@ -110,8 +110,12 @@ export class Consumer {
         return this.assessment.removeConsumer(this)
     }
 
-    toString() {
+    get displayNameWithFallback() {
         return this.displayName || `Consumer #${this.index}`
+    }
+
+    toString() {
+        return this.displayNameWithFallback
     }
 
     get index() {

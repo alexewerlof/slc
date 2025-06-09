@@ -86,8 +86,12 @@ export class Provider {
         }
     }
 
-    toString() {
+    get displayNameWithFallback() {
         return this.displayName || `Provider #${this.index}`
+    }
+
+    toString() {
+        return this.displayNameWithFallback
     }
 
     get index() {

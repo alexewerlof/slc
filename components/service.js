@@ -127,9 +127,12 @@ export class Service {
         }
     }
 
+    get displayNameWithFallback() {
+        return this.displayName || `Service #${this.index}`
+    }
+
     toString() {
-        const thisDisplayName = this.displayName || `Service #${this.index}`
-        return `${this.provider.displayName}${scopeIcon}${thisDisplayName}`
+        return `${this.provider.displayNameWithFallback}${scopeIcon}${this.displayNameWithFallback}`
     }
 
     get index() {

@@ -66,14 +66,19 @@
             </help-component>
         </h4>
         <fieldset v-for="consumer in service.provider.assessment.consumers">
-            <legend :title="consumer.description">{{ consumer.displayName }}</legend>
+            <legend :title="consumer.description">{{ consumer.displayNameWithFallback }}</legend>
+            <div v-if="!consumer.consumptions.length">
+                <div class="warning block">
+                    No consumption defined.
+                </div>
+            </div>
             <div v-for="consumption of consumer.consumptions">
                 <label :title="consumption.description">
                 <input
                     type="checkbox"
                     :checked="service.isConsumedBy(consumption)"
                     @change="service.setConsumedBy(consumption, $event.target.checked)">
-                    {{ consumption.displayName }}
+                    {{ consumption.displayNameWithFallback }}
                 </label>
             </div>
         </fieldset>

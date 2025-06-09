@@ -58,9 +58,12 @@ export class Consumption {
         }
     }
 
+    get displayNameWithFallback() {
+        return this.displayName || `Consumption #${this.index}`
+    }
+
     toString() {
-        const thisDisplayName = this.displayName || `Consumption #${this.index}`
-        return `${this.consumer.displayName}${scopeIcon}${thisDisplayName}`
+        return `${this.consumer.displayNameWithFallback}${scopeIcon}${this.displayNameWithFallback}`
     }
 
     get index() {
