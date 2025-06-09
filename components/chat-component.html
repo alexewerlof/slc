@@ -15,8 +15,17 @@
                     class="button--cta button--large"
                     type="button"
                     title="Send"
-                    :disabled="isEditDisabled">
+                    v-if="!isEditDisabled"
+                >
                     <icon-component name="send"></icon-component>
+                </button>
+                <button
+                    v-if="this.abortController"
+                    @click="abortCompletion('User aborted completion')"
+                    class="button--danger button--large"
+                    title="Stop generation"
+                >
+                    <icon-component name="stop_circle"></icon-component>
                 </button>
             </div>
         </div>

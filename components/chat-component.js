@@ -17,19 +17,24 @@ export default {
             engines: config.llm.engines,
             engineSelection,
             selectedEngine: engineSelection[0].value,
-            isEditDisabled: false,
             temperature: config.llm.temperature.default,
             message: 'What is an SLO?',
             maxTokens: config.llm.maxTokens.default,
             tabNames,
             selTabName: tabNames[0],
             config,
+            abortController: undefined,
         }
     },
     props: {
         thread: {
             type: Thread,
             required: true,
+        },
+    },
+    computed: {
+        isEditDisabled() {
+            return this.abortController !== undefined
         },
     },
     methods: {
@@ -40,13 +45,14 @@ export default {
                     this.$refs.chatThreadComponent.scrollToBottom()
                 })
                 this.message = ''
-                this.isEditDisabled = true
                 const messages = await this.thread.toMessages()
                 this.thread.add(new Bead('assistant', 'Loading...'))
+                this.abortController = new AbortController()
                 const content = getFirstCompletion(
                     await this.selectedEngine.getCompletion(messages, {
                         maxTokens: this.maxTokens,
                         temperature: this.temperature,
+                        signal: this.abortController.signal,
                     }),
                 )
                 this.thread.beads.at(-1).content = content
@@ -55,9 +61,15 @@ export default {
                 })
             } catch (error) {
                 console.error('Error:', error)
-                showToast('Error: ' + error.message)
+                showToast('Error: ' + error)
             }
-            this.isEditDisabled = false
+            this.abortController = undefined
+        },
+        abortCompletion(reason) {
+            if (this.abortController) {
+                this.abortController.abort(reason)
+                this.abortController = undefined
+            }
         },
     },
 }

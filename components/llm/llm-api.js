@@ -57,7 +57,7 @@ export class LLMAPI {
         this.modelIds.state = response.data.map((model) => model.id)
     }
 
-    async fetchJson(method, path, data) {
+    async fetchJson(method, path, data, signal) {
         const methodUpperCase = method.toUpperCase()
         if (!isInArr(methodUpperCase, ['GET', 'POST'])) {
             throw new RangeError(`Invalid HTTP Method: ${method}`)
@@ -78,21 +78,27 @@ export class LLMAPI {
             }
             headers.set('Authorization', `Bearer ${this.apiKey}`)
         }
-        this.isBusy = true
-        const response = await fetch(url, {
-            method,
-            headers,
-            body: JSON.stringify(data),
-        })
-        this.isBusy = false
-        if (!response.ok) {
-            try {
-                throw await response.text()
-            } catch (errorMessage) {
-                throw new Error(`HTTP ${methodUpperCase} ${url} status: ${response.status}: ${errorMessage}`)
+        try {
+            this.isBusy = true
+            const response = await fetch(url, {
+                method,
+                headers,
+                signal,
+                body: JSON.stringify(data),
+            })
+            this.isBusy = false
+            if (!response.ok) {
+                try {
+                    throw await response.text()
+                } catch (errorMessage) {
+                    throw new Error(`HTTP ${methodUpperCase} ${url} status: ${response.status}: ${errorMessage}`)
+                }
             }
+            return response.json()
+        } catch (error) {
+            this.isBusy = false
+            throw error
         }
-        return response.json()
     }
 
     async getCompletion(messages, options) {
@@ -102,12 +108,12 @@ export class LLMAPI {
         if (!isArr(messages)) {
             throw new TypeError(`messages must be an array. Got ${messages}`)
         }
-        const { maxTokens, temperature } = options
+        const { maxTokens, temperature, signal } = options
         return await this.fetchJson('POST', 'chat/completions', {
             messages,
             model: this.modelIds.selected,
             temperature,
             max_tokens: maxTokens,
-        })
+        }, signal)
     }
 }
