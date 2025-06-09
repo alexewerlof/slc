@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
+    <script>
+        window.dataLayer = window.dataLayer || []
+        function gtag() {
+            dataLayer.push(arguments)
+        }
+        gtag('js', new Date())
+        gtag('config', 'G-J0S6RM2D7G')
+    </script>
+
     <meta charset="UTF-8">
+    <meta name="theme-color" content="#FFBC52">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="index.css">
+    <meta name="description" content="A flexible simulator for generating metrics with various distributions and playing around with how service level status can be calculated">
+    <meta property="og:title" content="Service Level Assessment">
+    <meta
+        property="og:description"
+        content="A flexible simulator for generating metrics with various distributions and playing around with how service level status can be calculated"
+    >
+    <meta property="og:image" content="https://slc.alexewerlof.com/img/icon.png">
+    <meta property="og:url" content="https://slc.alexewerlof.com">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/svg" href="icon.svg">
     <link rel="manifest" href="manifest.json">
     <title>Metric Simulator</title>
 </head>

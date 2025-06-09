@@ -11,6 +11,7 @@ const appNames = [
     'templates',
     'simulator',
     'learn',
+    'chat',
     'assess',
 ]
 
@@ -25,6 +26,7 @@ const apps = await Promise.all(appNames.map(async (name) => {
     return {
         name,
         url,
+        icon: (new URL(manifest.icons[0].src, manifestUrl)).toString(),
         manifest,
     }
 }))

@@ -9,7 +9,7 @@
     "orientation": "landscape",
     "icons": [
         {
-            "src": "/img/service-level-assess-icon.svg",
+            "src": "icon.svg",
             "sizes": "500x500",
             "type": "image/svg+xml"
         }
