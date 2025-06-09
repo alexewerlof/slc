@@ -1,0 +1,12 @@
+<div class="readme-banner-component container h-pad-gap2" v-if="isVisible">
+    <button
+        class="readme-banner-component__close-button button--small"
+        @click="close()"
+        title="Close"
+        >
+        X
+    </button>
+    <div class="info block">
+        <markdown-loader-component file-name="README.md"></markdown-component>
+    </div>
+</div>
