@@ -1,6 +1,7 @@
 import { config } from '../config.js'
 import { showToast } from '../lib/toast.js'
 import { LLMAPI } from './llm/llm-api.js'
+import { getFirstCompletion } from './llm/util.js'
 import { Bead, Thread } from './thread.js'
 
 export default {
@@ -42,10 +43,12 @@ export default {
                 this.isEditDisabled = true
                 const messages = await this.thread.toMessages()
                 this.thread.add(new Bead('assistant', 'Loading...'))
-                const { content } = await this.selectedEngine.getCompletionMessage(messages, {
-                    maxTokens: this.maxTokens,
-                    temperature: this.temperature,
-                })
+                const content = getFirstCompletion(
+                    await this.selectedEngine.getCompletion(messages, {
+                        maxTokens: this.maxTokens,
+                        temperature: this.temperature,
+                    }),
+                )
                 this.thread.beads.at(-1).content = content
                 this.$nextTick(() => {
                     this.$refs.chatThreadComponent.scrollToBottom()

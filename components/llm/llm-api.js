@@ -48,12 +48,13 @@ export class LLMAPI {
         this.modelIds.state = [suggestedModel]
     }
 
-    makeUrl(path) {
+    _makeUrl(path) {
         return new URL(path, this.baseUrl)
     }
 
-    get requiresApiKey() {
-        return isStr(this.apiKeyWebsite)
+    async updateModelIds() {
+        const response = await this.fetchJson('GET', 'models')
+        this.modelIds.state = response.data.map((model) => model.id)
     }
 
     async fetchJson(method, path, data) {
@@ -61,7 +62,7 @@ export class LLMAPI {
         if (!isInArr(methodUpperCase, ['GET', 'POST'])) {
             throw new RangeError(`Invalid HTTP Method: ${method}`)
         }
-        const url = this.makeUrl(path)
+        const url = this._makeUrl(path)
         if (methodUpperCase !== 'GET' && !isObj(data)) {
             throw new TypeError(`data must be an object. Got ${data}`)
         }
@@ -70,7 +71,8 @@ export class LLMAPI {
         headers.set('Accept-Charset', 'utf-8')
         headers.set('Connection', 'keep-alive')
         headers.set('Content-Type', 'application/json')
-        if (this.requiresApiKey) {
+        // If the apiKeyWebsite is set, this means an API key is required for the engine
+        if (isStr(this.apiKeyWebsite)) {
             if (!isStr(this.apiKey)) {
                 throw new Error(`API key is required for ${this.name}.`)
             }
@@ -107,15 +109,5 @@ export class LLMAPI {
             temperature,
             max_tokens: maxTokens,
         })
-    }
-
-    async getCompletionMessage(messages, options) {
-        const response = await this.getCompletion(messages, options)
-        return response.choices[0].message
-    }
-
-    async updateModelIds() {
-        const response = await this.fetchJson('GET', 'models')
-        this.modelIds.state = response.data.map((model) => model.id)
     }
 }
