@@ -28,6 +28,8 @@ ul.benefit-list {
     & img {
         /* Apply the continuous floating animation */
         max-width: 150px;
+        box-shadow: 0 0 6px 4px #00000047;
+        border-radius: var(--bradius5);
 
         &:hover {
             animation: subtle-float var(--animation-speed10) ease-in-out infinite;
