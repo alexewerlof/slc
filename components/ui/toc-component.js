@@ -10,7 +10,6 @@ export default {
     },
     data() {
         return {
-            toc: [],
             headers: [],
             /** Used for storing the interval ID for cleanup */
             intervalId: null,
@@ -21,8 +20,8 @@ export default {
             console.log('Update')
             const contentElement = document.getElementById(this.for)
             if (!contentElement) {
-                if (this.toc.length > 0) {
-                    this.toc = []
+                if (this.headers.length > 0) {
+                    this.headers = []
                 }
                 return
             }

@@ -1,10 +1,10 @@
 <div class="toc-component">
     <nav>
         <ol>
-            <li v-for="node in headers"
+            <li v-for="header in headers"
                 class="toc-component__item"
-                :class="`toc-component__item--${node.tagName}`">
-                <a :href="`#${node.id}`">{{ node.textContent }}</a>
+                :class="`toc-component__item--${header.tagName}`">
+                <a :href="`#${header.id}`">{{ header.textContent }}</a>
             </li>
         </ol>
     </nav>
