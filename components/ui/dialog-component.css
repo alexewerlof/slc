@@ -28,4 +28,5 @@
 .dialog-component__title {
     flex-grow: 1;
     font-family: var(--title-font-family);
+    font-size: 1.4em;
 }

@@ -205,6 +205,20 @@ button:hover {
     border-radius: var(--bradius3);
 }
 
+.button--round {
+    border-radius: var(--gap2);
+    padding: var(--gap);
+    vertical-align: middle;
+
+    &.button--small {
+        padding: 0;
+    }
+
+    &.button--large {
+        border-radius: var(--gap3);
+    }
+}
+
 .button--cta {
     background-color: var(--primary-color);
 }

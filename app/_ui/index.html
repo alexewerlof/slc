@@ -178,6 +178,7 @@
                         <button @click="clicked('Small')" class="button--small">Button 3</button>
                         <button @click="clicked('Small')" class="button--small" disabled>Disabled</button>
                     </div>
+
                     <h3>Regular</h3>
                     <div>
                         <button @click="clicked('Normal')">Button 1</button>
@@ -185,6 +186,7 @@
                         <button @click="clicked('Normal')">Button 3</button>
                         <button @click="clicked('Normal')" disabled>Disabled</button>
                     </div>
+                    
                     <h3>Large</h3>
                     <div>
                         <button @click="clicked('Large')" class="button--large">Button 1</button>
@@ -192,6 +194,21 @@
                         <button @click="clicked('Large')" class="button--large">Button 3</button>
                         <button @click="clicked('Large')" class="button--large" disabled>Disabled</button>
                     </div>
+
+                    <h3>Round</h3>
+                    <div>
+                        <span>Some text</span>
+                        <button @click="clicked('Round small')" class="button--small button--round">
+                            <icon-component name="close"></icon-component>
+                        </button>
+                        <button @click="clicked('Round')" class="button--round">
+                            <icon-component name="close"></icon-component>
+                        </button>
+                        <button @click="clicked('Round large')" class="button--large button--round">
+                            <icon-component name="close"></icon-component>
+                        </button>
+                    </div>
+                    
                     <h2>Button Bar</h2>
                     <div class="button-bar">
                         <button>Button 1</button>
