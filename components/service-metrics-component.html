@@ -1,7 +1,10 @@
 <div class="service-metrics-component">
     <fieldset class="b-mar-gap2">
         <legend>Metrics ({{ service.metrics.length }})</legend>
-        <select v-model="service.metrics.selected">
+        <select
+            v-if="service.metrics.length"
+            v-model="service.metrics.selected"
+        >
             <option v-for="metric of service.metrics" :value="metric">
                 {{ metric }}
             </option>

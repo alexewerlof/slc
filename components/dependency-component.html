@@ -1,8 +1,10 @@
 <div class="dependency-component">
     <fieldset class="b-mar-gap2">
-        <legend>Failure</legend>
-        <label>Select ({{ dependency.failures.length }})</label>
-        <select v-model="dependency.failures.selected">
+        <legend>Failure ({{ dependency.failures.length }})</legend>
+        <select
+            v-if="dependency.failures.length"
+            v-model="dependency.failures.selected"
+        >
             <option v-for="failure in dependency.failures" :value="failure">
                 {{ failure.symptom || 'Unknown symptom'}}
             </option>
