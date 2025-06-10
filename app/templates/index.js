@@ -1,6 +1,8 @@
 import { createApp } from '../../vendor/vue.js'
 import { registerAllComponents } from '../../components/index.js'
-import { loadJson } from '../../lib/share.js'
+import { Calculator } from '../../components/calculator.js'
+import { loadJson, stateToUrl } from '../../lib/share.js'
+import { addUTM } from '../../lib/utm.js'
 
 const manifest = await loadJson('manifest.json')
 
@@ -9,6 +11,22 @@ export const app = createApp({
         return {
             manifest,
         }
+    },
+    methods: {
+        handleIndicatorSelected(indicator) {
+            const calculator = new Calculator({
+                indicators: [indicator],
+            })
+            const calculatorAppUrl = new URL('../calculator/index.html', globalThis.location)
+            const destination = stateToUrl(calculatorAppUrl, calculator.state).toString()
+            globalThis.open(
+                addUTM(destination, {
+                    source: 'web',
+                    campaign: 'templates_app',
+                }),
+                '_blank',
+            )
+        },
     },
 })
 
