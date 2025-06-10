@@ -150,6 +150,10 @@ section {
     gap: var(--gap2);
 }
 
+.mozaic--gap4 {
+    gap: var(--gap4);
+}
+
 @media screen and (min-width: 1000px) {
     .mozaic {
         display: grid;

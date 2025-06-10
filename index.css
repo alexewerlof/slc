@@ -23,17 +23,23 @@ ul.benefit-list {
 }
 
 .top-logo {
-    padding-top: 3em;
     text-align: center;
 
     & img {
         /* Apply the continuous floating animation */
-        animation: subtle-float var(--animation-speed10) ease-in-out infinite;
-        max-width: 50vw;
+        max-width: 150px;
 
         &:hover {
-            animation-play-state: paused;
+            animation: subtle-float var(--animation-speed10) ease-in-out infinite;
         }
+    }
+}
+
+.hero__image-container {
+    padding: var(--gap);
+    .hero__overview-image {
+        display: block;
+        width: 100%;
     }
 }
 
@@ -46,21 +52,16 @@ ul.benefit-list {
     padding-left: 0.3em;
 }
 
-.apps-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap2);
-}
+.apps-container {}
 
 .app-item {
     text-decoration: none;
 
     .app-item__logo {
-        width: 100%;
-        max-width: 30vw;
+        width: 3em;
     }
 
-    &:hover .app-item__logo {
+    &:hover {
         filter: brightness(135%);
     }
 

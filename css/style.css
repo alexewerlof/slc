@@ -156,6 +156,11 @@ td button {
     background-size: contain;
 }
 
+.scribble-bg {
+    background-image: url('/img/ssscribble-1.svg');
+    background-size: contain;
+}
+
 * {
     scrollbar-color: var(--background-lighter) var(--background-darker);
     scrollbar-width: thin;

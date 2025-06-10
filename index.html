@@ -34,44 +34,57 @@
         </noscript>
 
         <div id="app" v-cloak>
-            <hero-component file-name="subtle-prism.svg">
-                <div class="container">
-                    <div class="top-logo">
+            <hero-component file-name="ffflux-3.svg">
+                <div class="container mozaic mozaic--gap4 pad-gap2">
+                    <div class="top-logo mozaic__tile mozaic__tile--2c">
                         <img src="img/icon.svg">
                     </div>
-                    <h2>Master Service Reliability With Confidence</h2>
-                    <ul class="benefit-list">
-                        <li>Transform how your engineering teams measure the right thing (SLI)</li>
-                        <li>Set reasonable expectations (SLO) that are connected to business objectives</li>
-                        <li>Tie commitments (SLI) to alerting, and burn rate to reduce alert fatigue</li>
-                        <li>Balance the pace of development while controlling the risks using error budgets</li>
-                        <li>Build a culture of accountability and ownership</li>
-                        <li>Learn complex concepts with interactive diagrams, AI and articles</li>
-                    </ul>
+                    <div class="mozaic__tile mozaic__tile--10c">
+                        <h2>Master Service Reliability With Confidence</h2>
+                    </div>
+                    <div class="mozaic__tile--7c">
+                        <ul class="benefit-list">
+                            <li>
+                                Transform how your engineering teams <strong>measure the right thing</strong> (SLI)
+                            </li>
+                            <li>
+                                Set <strong>reasonable expectations</strong> (SLO) that are connected to business objectives
+                            </li>
+                            <li>
+                                Connect commitment to alerting & build a culture of <strong>accountability and ownership</strong>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mozaic__tile--5c">
+                        <div class="hero__image-container frost">
+                            <img class="hero__overview-image" src="img/overview.svg" alt="A tile screen of some app charts">
+                        </div>
+                    </div>
                 </div>
             </hero-component>
 
             <div class="container pad-gap2">
-                <h2>Service Level Toolbox</h2>
-                <p>
-                    This product is a suit of tools to understand, assess, measure, and commit to Service Levels (SLI, SLO, SLA).
-                </p>
-                <div class="apps-container well">
+                <div class="apps-container well mozaic mozaic--gap2">
+                    <div class="mozaic__tile mozaic__tile--whole">
+                        <h2>Service Level Toolbox</h2>
+                        <p>
+                            This product is a suit of tools to understand, assess, measure, and commit to Service Levels (SLI, SLO, SLA).
+                        </p>
+                    </div>
                     <a v-for="app in apps"
                         :key="app.manifest.name"
                         :href="app.url"
-                        class="app-item mozaic mozaic--gap2 frost">
-                        <img class="app-item__logo mozaic__tile mozaic__tile--2c"
-                            :src="app.icon" />
-                        <div class="mozaic__tile mozaic__tile--10c">
-                            <h3 class="app-item__title">{{ app.manifest.name }}</h3>
-                            <p class="app-item__description">{{ app.manifest.description }}</p>
-                        </div>
+                        class="app-item mozaic__tile--half frost">
+                        <img class="app-item__logo" :src="app.icon" />
+                        <h3 class="app-item__title">{{ app.manifest.name }}</h3>
+                        <p class="app-item__description">{{ app.manifest.description }}</p>
                     </a>
                 </div>
-
+            </div>
+            
+            <div class="container pad-gap2 scribble-bg">
                 <h2>Pricing</h2>
-                <div class="mozaic mozaic--gap2">
+                <div class="mozaic mozaic--gap4 pad-gap2">
                     <div class="mozaic__tile mozaic__tile--4c surface">
                         <h2>
                             Free
@@ -79,15 +92,15 @@
                                 For beginners
                             </div>
                         </h2>
+                        <button class="price-button" @click="$refs.freeDialog.show(true)">
+                            <icon-component name="lock_open"></icon-component>
+                            Try it for free
+                        </button>
                         <ul class="check-list">
                             <li>5 SLIs</li>
                             <li>8 SLOs</li>
                             <li>14 Alerts</li>
                         </ul>
-                        <button class="price-button" @click="$refs.freeDialog.show(true)">
-                            <icon-component name="lock_open"></icon-component>
-                            No account needed
-                        </button>
                         <dialog-component title="Free tier" ref="freeDialog">
                             <p>Only the PRO version is available at this time.</p>
                         </dialog-component>
@@ -99,16 +112,16 @@
                                 For product teams
                             </div>
                         </h2>
+                        <button class="price-button button--cta" @click="$refs.proDialog.show(true)">
+                            <icon-component name="mail"></icon-component>
+                            Start Free Trial
+                        </button>
                         <ul class="check-list">
                             <li>Unlimited SLIs, SLOs, and Alerts</li>
                             <li>Articles on key concepts</li>
                             <li>Share links publicly</li>
                             <li>AI-chat</li>
                         </ul>
-                        <button class="price-button button--cta" @click="$refs.proDialog.show(true)">
-                            <icon-component name="mail"></icon-component>
-                            Sign up
-                        </button>
                         <dialog-component title="Pro tier" ref="proDialog">
                             <p>
                                 <ext-link href="https://github.com/alexewerlof/slc">
@@ -124,23 +137,26 @@
                                 For compliance at scale
                             </div>
                         </h2>
+                        <button class="price-button" @click="$refs.enterpriseDialog.show(true)">
+                            <icon-component name="phone_in_talk"></icon-component>
+                            Start Free Trial
+                        </button>
                         <ul class="check-list">
                             <li>Run it in your infrastructure</li>
                             <li>OpenSLO support <span class="subtle-hint">(upcoming)</span></li>
                             <li>Generate alerting rules <span class="subtle-hint">(upcoming)</span></li>
                             <li>Generate SLA contract based on your SLI/SLO <span class="subtle-hint">(upcoming)</span></li>
                             <li>Analyze SLA contract <span class="subtle-hint">(upcoming)</span></li>
+                            <li>Version history <span class="subtle-hint">(upcoming)</span></li>
                         </ul>
-                        <button class="price-button" @click="$refs.enterpriseDialog.show(true)">
-                            <icon-component name="phone_in_talk"></icon-component>
-                            Call Sales
-                        </button>
                         <dialog-component title="Enterprise tier" ref="enterpriseDialog">
                             <p>No enterprise features are available at this time.</p>
                         </dialog-component>
                     </div>
                 </div>
+            </div>
 
+            <div class="container pad-gap2">
                 <h2>Support My Work</h2>
                 <p>
                     Designing, creating and maintaining these apps has taken
