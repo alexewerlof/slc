@@ -9,7 +9,7 @@
 .book-cover-component__book {
     position: relative;
     display: block;
-    width: var(--book-width);
+    max-width: var(--book-width);
     height: var(--book-height);
     margin: 5% auto;
     background: transparent;

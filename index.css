@@ -1,5 +1,7 @@
-html, body {
-    font-size: 22px;
+@media screen and (min-width: 768px) {
+    html, body {
+        font-size: 22px;
+    }
 }
 
 ul.benefit-list {
@@ -20,13 +22,14 @@ ul.benefit-list {
     }
 }
 
-.app-logo {
+.top-logo {
     padding-top: 3em;
     text-align: center;
 
     & img {
         /* Apply the continuous floating animation */
         animation: subtle-float var(--animation-speed10) ease-in-out infinite;
+        max-width: 50vw;
 
         &:hover {
             animation-play-state: paused;
@@ -51,10 +54,19 @@ ul.benefit-list {
 
 .app-item {
     text-decoration: none;
-}
 
-.app-item__logo {
-    width: 100%;
+    .app-item__logo {
+        width: 100%;
+        max-width: 30vw;
+    }
+
+    &:hover .app-item__logo {
+        filter: brightness(135%);
+    }
+
+    .app-item__title {
+        color: var(--primary-color);
+    }
 }
 
 .price-button {

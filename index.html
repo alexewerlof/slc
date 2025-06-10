@@ -36,8 +36,8 @@
         <div id="app" v-cloak>
             <hero-component file-name="subtle-prism.svg">
                 <div class="container">
-                    <div class="app-logo">
-                        <img src="img/icon.svg" width="300">
+                    <div class="top-logo">
+                        <img src="img/icon.svg">
                     </div>
                     <h2>Master Service Reliability With Confidence</h2>
                     <ul class="benefit-list">
@@ -60,11 +60,11 @@
                     <a v-for="app in apps"
                         :key="app.manifest.name"
                         :href="app.url"
-                        class="app-item mozaic mozaic--gap2">
+                        class="app-item mozaic mozaic--gap2 frost">
                         <img class="app-item__logo mozaic__tile mozaic__tile--2c"
                             :src="app.icon" />
                         <div class="mozaic__tile mozaic__tile--10c">
-                            <h3>{{ app.manifest.name }}</h3>
+                            <h3 class="app-item__title">{{ app.manifest.name }}</h3>
                             <p class="app-item__description">{{ app.manifest.description }}</p>
                         </div>
                     </a>
@@ -72,7 +72,7 @@
 
                 <h2>Pricing</h2>
                 <div class="mozaic mozaic--gap2">
-                    <div class="mozaic__tile mozaic__tile--4c frost">
+                    <div class="mozaic__tile mozaic__tile--4c surface">
                         <h2>
                             Free
                             <div class="subtle-hint">
@@ -93,7 +93,7 @@
                             <p>Only the PRO version is available at this time.</p>
                         </dialog-component>
                     </div>
-                    <div class="mozaic__tile mozaic__tile--4c frost preferred-price">
+                    <div class="mozaic__tile mozaic__tile--4c surface preferred-price">
                         <h2>
                             Pro
                             <div class="subtle-hint">
@@ -118,7 +118,7 @@
                             </p>
                         </dialog-component>
                     </div>
-                    <div class="mozaic__tile mozaic__tile--4c frost">
+                    <div class="mozaic__tile mozaic__tile--4c surface">
                         <h2>
                             Enterprise
                             <div class="subtle-hint">
