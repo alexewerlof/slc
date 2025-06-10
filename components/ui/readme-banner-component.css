@@ -16,4 +16,15 @@
             opacity: 1;
         }
     }
+
+    .readme-banner-component__content {
+        display: flex;
+        flex-direction: row;
+        gap: var(--gap2);
+        align-items: flex-start;
+
+        .readme-banner-component__icon-container {
+            font-size: 2em;
+        }
+    }
 }
