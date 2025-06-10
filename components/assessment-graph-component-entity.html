@@ -1,5 +1,9 @@
-<g class="assessment-graph-component-entity"
-    :class="`assessment-graph-component-entity--${type}`">
+<g 
+    @mouseenter="$emit('status', tooltip)"
+    @mouseleave="$emit('status')"
+    class="assessment-graph-component-entity"
+    :class="`assessment-graph-component-entity--${type}`"
+>
     <circle :cx :cy :r>
         <title v-if="tooltip">{{ tooltip }}</title>
     </circle>

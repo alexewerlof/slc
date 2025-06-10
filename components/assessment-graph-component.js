@@ -13,6 +13,7 @@ export default {
             dependencyRadius: 14,
             metricRadius: 12,
             padding: 50,
+            statusText: undefined,
         }
     },
     emits: ['select'],
@@ -61,6 +62,14 @@ export default {
         },
         metricY() {
             return this.height - this.scaleY(0.4)
+        },
+        statusStyle() {
+            if (this.statusText) {
+                return {
+                    opacity: 1,
+                }
+            }
+            return null
         },
     },
     methods: {
@@ -116,6 +125,9 @@ export default {
         },
         d(x1, y1, x2, y2) {
             return `M${x1},${y1}L${x2},${y2}`
+        },
+        updateStatus(statusText) {
+            this.statusText = statusText
         },
     },
 }

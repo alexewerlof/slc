@@ -16,6 +16,7 @@
                     :r="consumptionRadius"
                     :tooltip="`Consumption: ${ consumption }`"
                     @click="$emit('select', 'Consumption', consumption)"
+                    @status="updateStatus"
                     >
                     {{ icon('consumption') }}
                 </assessment-graph-component-entity>
@@ -27,6 +28,7 @@
                 :r="consumerRadius"
                 :tooltip="`Consumer: ${ consumer }`"
                 @click="$emit('select', 'Consumer', consumer)"
+                @status="updateStatus"
                 >
                 {{ icon('consumer') }}
             </assessment-graph-component-entity>
@@ -47,6 +49,7 @@
                     :r="serviceRadius"
                     :tooltip="`Service: ${ service }`"
                     @click="$emit('select', 'Service', service)"
+                    @status="updateStatus"
                     >
                     {{ icon('service') }}
                 </assessment-graph-component-entity>
@@ -59,6 +62,7 @@
                     :r="dependencyRadius"
                     :tooltip="`Dependency: ${ dependency }`"
                     @click="$emit('select', 'ServiceDependency', dependency)"
+                    @status="updateStatus"
                     >
                     {{ dependency.failures.length }}
                 </assessment-graph-component-entity>
@@ -70,6 +74,7 @@
                     :r="metricRadius"
                     :tooltip="`Metric for ${ service }`"
                     @click="$emit('select', 'ServiceMetrics', service)"
+                    @status="updateStatus"
                     >
                     {{ service.metrics.length }}
                 </assessment-graph-component-entity>
@@ -82,9 +87,12 @@
                 :cy="providerY"
                 :r="providerRadius"
                 @click="$emit('select', 'Provider', provider)"
+                @status="updateStatus"
                 >
                 {{ icon('provider') }}
             </assessment-graph-component-entity>
         </g>
     </svg>
+    <div class="assessment-graph-component__status-bar"
+        :style="statusStyle">{{ statusText }}</div>
 </div>

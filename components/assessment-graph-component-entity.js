@@ -21,4 +21,5 @@ export default {
             required: false,
         },
     },
+    emits: ['status'],
 }
