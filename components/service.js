@@ -138,4 +138,8 @@ export class Service {
     get index() {
         return this.provider.services.indexOf(this)
     }
+
+    remove() {
+        return this.provider.services.remove(this)
+    }
 }

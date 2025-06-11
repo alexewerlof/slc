@@ -1,6 +1,5 @@
 # High prio
 
-- [ ] Enable removing entities in the assess app
 - [ ] Support unique ID for entities to be able to reference in function calls
 - [ ] Enable function calls for the assess app
 - [ ] Save chat configuration across executions
@@ -31,6 +30,7 @@
 
 # Shipped
 
+- [X] 2025-06-11: Enable removing entities in the assess app
 - [X] 2025-06-10: Add more SLI examples from SLDs and workshops
 - [X] 2025-06-10: Add SLS simulator
 - [X] 2025-06-10: Support multi-layered SLOs

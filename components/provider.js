@@ -97,4 +97,8 @@ export class Provider {
     get index() {
         return this.assessment.providers.indexOf(this)
     }
+
+    remove() {
+        return this.assessment.providers.remove(this)
+    }
 }

@@ -53,7 +53,7 @@ export class Consumption {
         const { dependencies } = this.consumer.assessment
         for (let i = dependencies.length - 1; i >= 0; i--) {
             if (dependencies[i].consumption === this) {
-                dependencies.removeIndex(i)
+                dependencies[i].remove()
             }
         }
     }
@@ -68,5 +68,9 @@ export class Consumption {
 
     get index() {
         return this.consumer.consumptions.indexOf(this)
+    }
+
+    remove() {
+        return this.consumer.consumptions.remove(this)
     }
 }

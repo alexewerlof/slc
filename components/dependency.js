@@ -71,4 +71,8 @@ export class Dependency {
     get index() {
         return this.service.dependencies.indexOf(this)
     }
+
+    remove() {
+        this.service.dependencies.remove(this)
+    }
 }

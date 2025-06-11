@@ -34,19 +34,44 @@
         </dialog-component>
     </div>
     <div class="mozaic__tile mozaic__tile--3c surface">
+        <div v-if="editingClassName === ''">
+            <p>
+                Select a node to edit.
+            </p>
+        </div>
         <div v-if="editingClassName === 'Provider'">
             <h2>Provider</h2>
             <provider-component :provider="editingInstance"></provider-component>
             <div class="button-bar">
-                <button @click="editingInstance.services.pushNew()">
+                <button
+                    @click="editingInstance.services.pushNew()"
+                >
                     <icon-component name="add_circle"></icon-component>
                     New Service
+                </button>
+                <button
+                    @click="removeProvider(editingInstance)"
+                    class="button--danger"
+                    title="Remove this provider"
+                >
+                    <icon-component name="delete"></icon-component>
+                    Remove
                 </button>
             </div>
         </div>
         <div v-if="editingClassName === 'Service'">
             <h2>Service</h2>
             <service-component :service="editingInstance"></service-component>
+            <div class="button-bar">
+                <button
+                    @click="removeService(editingInstance)"
+                    class="button--danger"
+                    title="Remove this service"
+                >
+                    <icon-component name="delete"></icon-component>
+                    Remove
+                </button>
+            </div>
         </div>
         <div v-if="editingClassName === 'Consumer'">
             <h2>Consumer</h2>
@@ -56,15 +81,43 @@
                     <icon-component name="add_circle"></icon-component>
                     New Consumption
                 </button>
+                <button
+                    @click="removeConsumer(editingInstance)"
+                    class="button--danger"
+                    title="Remove this consumer"
+                >
+                    <icon-component name="delete"></icon-component>
+                    Remove
+                </button>
             </div>
         </div>
         <div v-if="editingClassName === 'Consumption'">
             <h2>Consumption</h2>
             <consumption-component :consumption="editingInstance"></consumption-component>
+            <div class="button-bar">
+                <button
+                    @click="removeConsumption(editingInstance)"
+                    class="button--danger"
+                    title="Remove this consumption"
+                >
+                    <icon-component name="delete"></icon-component>
+                    Remove
+                </button>
+            </div>
         </div>
         <div v-if="editingClassName === 'ServiceDependency'">
             <h2>Service Dependencies</h2>
             <dependency-component :dependency="editingInstance"></dependency-component>
+            <div class="button-bar">
+                <button
+                    @click="removeDependency(editingInstance)"
+                    class="button--danger"
+                    title="Remove this dependency"
+                >
+                    <icon-component name="delete"></icon-component>
+                    Remove
+                </button>
+            </div>
         </div>
         <div v-if="editingClassName === 'ServiceMetrics'">
             <h2>Service Metrics</h2>

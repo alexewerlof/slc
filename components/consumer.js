@@ -107,7 +107,7 @@ export class Consumer {
     }
 
     remove() {
-        return this.assessment.removeConsumer(this)
+        return this.assessment.consumers.remove(this)
     }
 
     get displayNameWithFallback() {
