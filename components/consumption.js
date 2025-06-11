@@ -49,6 +49,12 @@ export class Consumption {
         }
     }
 
+    get dependencies() {
+        return this.consumer.assessment.dependencies.filter(
+            (dependency) => dependency.consumption === this,
+        )
+    }
+
     onRemove() {
         const { dependencies } = this.consumer.assessment
         for (let i = dependencies.length - 1; i >= 0; i--) {
