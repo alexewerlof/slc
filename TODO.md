@@ -16,6 +16,7 @@
 
 # Medium prio
 
+- [ ] Move the README.md rendering logic to the header to make it easier to show/hide it using a button there
 - [ ] Show down the error budget for common windows regardless of the chosen window (like uptime.is does) at least in the help window
 - [ ] Support importing from OpenSLO
 - [ ] Support exporting to OpenSLO
