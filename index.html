@@ -95,7 +95,7 @@
                         </h2>
                         <button class="price-button" @click="$refs.freeDialog.show(true)">
                             <icon-component name="lock_open"></icon-component>
-                            Try it for free
+                            No account required
                         </button>
                         <ul class="check-list">
                             <li>5 SLIs</li>
@@ -122,12 +122,19 @@
                             <li>Articles on key concepts</li>
                             <li>Share links publicly</li>
                             <li>AI-chat</li>
+                            <li>Run in your infrastructure</li>
+                            <li>OpenSLO support <span class="subtle-hint">(upcoming)</span></li>
                         </ul>
                         <dialog-component title="Pro tier" ref="proDialog">
                             <p>
                                 <ext-link href="https://github.com/alexewerlof/slc">
                                     Everything is free as in beer and speech
-                                </ext-link>. 😊 No sign up required.
+                                </ext-link>. 😊 No credit cart required.
+                            </p>
+                            <p>
+                                I would only ask you to subscribe to
+                                <ext-link href="https://blog.alexewerlof.com/welcome">my newsletter</ext-link>
+                                if you like reliability engineering and that's optional.
                             </p>
                         </dialog-component>
                     </div>
@@ -143,8 +150,6 @@
                             Start Free Trial
                         </button>
                         <ul class="check-list">
-                            <li>Run it in your infrastructure</li>
-                            <li>OpenSLO support <span class="subtle-hint">(upcoming)</span></li>
                             <li>Generate alerting rules <span class="subtle-hint">(upcoming)</span></li>
                             <li>Generate SLA contract based on your SLI/SLO <span class="subtle-hint">(upcoming)</span></li>
                             <li>Analyze SLA contract <span class="subtle-hint">(upcoming)</span></li>
