@@ -20,9 +20,22 @@
                 Mark all the failures which their symptoms are measured by this metric.
             </p>
         </help-component>
+        <div class="warning block" v-if="metric.linkedFailures.length === 0">
+            This metric is not measuring any failure which makes it a poor choice for SLI.
+            Please connect this metric to some failures.
+        </div>
     </h3>
+    <div class="warning block" v-if="metric.service.dependencies.length === 0">
+        No consumer depends on this service.
+        Please declare a dependency before trying to set a metric.
+    </div>
     <fieldset v-for="dependency of metric.service.dependencies">
         <legend title="Consumption">{{ dependency.consumption }}</legend>
+        <div class="warning block" v-if="dependency.failures.length === 0">
+            No failure is identified for this dependency.
+            Please add some failures to to measure it with a metric.
+        </div>
+
         <div v-for="failure of dependency.failures" class="input-group" :title="failure">
             <label>
                 <input
