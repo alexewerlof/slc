@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    svg {
+        max-width: 100%;
+    }
 }
 
 .assessment-graph-component__line {
