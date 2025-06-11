@@ -1,6 +1,10 @@
 <div class="dependency-component">
     <fieldset class="b-mar-gap2">
         <legend>Failure ({{ dependency.failures.length }})</legend>
+        <div class="warning block" v-if="dependency.failures.length === 0">
+            No failure is identified for this dependency.
+            Add some failures in order to be able to tie them to metrics.
+        </div>
         <select
             v-if="dependency.failures.length"
             v-model="dependency.failures.selected"

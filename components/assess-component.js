@@ -81,7 +81,7 @@ export default {
                     this.assessment.consumers.selected = instance.consumer
                     this.assessment.consumers.selected.consumptions.selected = instance
                     break
-                case 'ServiceDependency':
+                case 'Dependency':
                     this.currentStep = 3
                     this.assessment.providers.selected = instance.service.provider
                     this.assessment.providers.selected.services.selected = instance.service
