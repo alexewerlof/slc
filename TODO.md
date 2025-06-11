@@ -1,28 +1,41 @@
 # High prio
 
-- [ ] Add SLS simulator
-- [ ] Allow subsetting the valid timeslice
-- [ ] Support multi-layered SLOs
-- [ ] Add in-browser LLM for the workshop
+- [ ] Enable removing entities in the assess app
+- [ ] Support unique ID for entities to be able to reference in function calls
+- [ ] Enable function calls for the assess app
+- [ ] Save chat configuration across executions
 - [ ] Support calendar-bound windows
-- [ ] Add some metrics to the example.json
-- [ ] Allow directly saving the JSON export
+- [ ] Support undo/redo (Version history)
+- [ ] Support exporting to JSON
+- [ ] Support importing from JSON
+- [ ] Support saving JSON/YAML to file
+- [ ] Support loading JSON/YAML from file
 - [ ] Allow multiple consequences
+- [ ] Generate SLA contract based on your SLI/SLO
+- [ ] Analyze SLA contract
+- [ ] Support loading/saving projects like Mermaincharts
 
 # Medium prio
 
-- [ ] Add more examples from SLDs and workshops
 - [ ] Show down the error budget for common windows regardless of the chosen window (like uptime.is does) at least in the help window
-- [ ] Allow exporting to OpenSLO format
+- [ ] Support importing from OpenSLO
+- [ ] Support exporting to OpenSLO
+- [ ] Support plugins for generating alerting rules in different observability platforms
 - [ ] Write the remaining help posts
-  - [ ] Compliance period
+  - [X] Compliance period
   - [ ] Error budget
-  - [ ] SLA
+  - [X] SLA
   - [ ] SLD
   - [ ] SHOW HN: Post (also serve as intro to the app)
+- [ ] Allow subsetting the valid timeslice
 
 # Shipped
 
+- [X] 2025-06-10: Add more SLI examples from SLDs and workshops
+- [X] 2025-06-10: Add SLS simulator
+- [X] 2025-06-10: Support multi-layered SLOs
+- [X] 2025-06-10: Add in-browser LLM for the assessment workshop
+- [X] 2025-06-10: Add some metrics to the example.json
 - [X] 2024-09-23: Workshop: Allow copying the JSON export
 - [X] 2024-09-23: Workshop: The "Add New" button should be after the current list (e.g. system, service, consumer, consumption)
 - [X] 2024-08-15: rename valid -> eventUnit
