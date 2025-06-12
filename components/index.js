@@ -50,7 +50,6 @@ const componentSpecifications = [
     './plot-2d-component.jhc&',
     './provider-component.jh&',
     './service-component.jh&',
-    './service-metrics-component.jh&',
     './ui/show-hide-component.jhc&',
     './ui/steps-component.jhc&',
     './summary-component.jh&',
