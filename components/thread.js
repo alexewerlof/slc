@@ -101,4 +101,8 @@ export class Thread {
         }
         return this
     }
+
+    clone() {
+        return new Thread(...this.beads)
+    }
 }
