@@ -1,5 +1,3 @@
-import data from '../collection/data.js'
-
 export default {
     props: {
         type: {

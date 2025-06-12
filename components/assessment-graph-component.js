@@ -1,12 +1,14 @@
 import { icon } from '../lib/icons.js'
 import { Assessment } from './assessment.js'
 
+function arrSum(arr) {
+    return arr.reduce((a, b) => a + b, 0)
+}
+
 export default {
     data() {
         return {
-            deltaX: 50,
-            deltaY: 50,
-            padding: 50,
+            delta: 50,
             statusText: undefined,
         }
     },
@@ -18,6 +20,9 @@ export default {
         },
     },
     computed: {
+        consumptionCount() {
+            return this.assessment.consumptions.length
+        },
         heightCells() {
             let ret = 3
             this.assessment.consumers.forEach((consumer) => ret += consumer.consumptions.length)
@@ -29,33 +34,13 @@ export default {
             return ret
         },
         width() {
-            let ret = this.consumptionX
-            for (const provider of this.assessment.providers) {
-                ret += this.providerWidth(provider)
-            }
-            return ret
+            const providerWidths = this.assessment.providers.map((provider) => this.providerWidth(provider))
+            return this.consumptionX() + arrSum(providerWidths)
         },
         height() {
-            let ret = this.serviceY
-            for (const consumer of this.assessment.consumers) {
-                ret += this.consumerHeight(consumer)
-            }
-            return ret + 50
-        },
-        providerY() {
-            return this.scaleY(0.5)
-        },
-        serviceY() {
-            return this.scaleY(2)
-        },
-        consumerX() {
-            return this.scaleX(0.5)
-        },
-        consumptionX() {
-            return this.scaleX(2)
-        },
-        metricY() {
-            return this.height - this.scaleY(0.4)
+            const consumptionHeights = this.assessment.consumers.map((consumer) => this.consumerHeight(consumer))
+            const maxMetricCount = Math.max(...this.assessment.services.map((s) => s.metrics.length))
+            return this.serviceY() + this.scaleY(maxMetricCount) + arrSum(consumptionHeights)
         },
         statusStyle() {
             if (this.statusText) {
@@ -69,53 +54,75 @@ export default {
     methods: {
         icon,
         scaleX(x) {
-            return x * this.deltaX
+            return x * this.delta
         },
         scaleY(y) {
-            return y * this.deltaY
+            return y * this.delta
         },
         providerWidth(provider) {
-            let ret = 2 * this.padding
+            let ret = 2
             if (provider.services.length > 1) {
-                ret += this.scaleX(provider.services.length - 1)
+                ret += provider.services.length - 1
             }
-            return ret
+            return this.scaleX(ret)
         },
         consumerHeight(consumer) {
-            let ret = 2 * this.padding
+            let ret = 2
             if (consumer.consumptions.length > 1) {
-                ret += this.scaleY(consumer.consumptions.length - 1)
+                ret += consumer.consumptions.length - 1
             }
-            return ret
+            return this.scaleY(ret)
         },
-        providerOffset(provider) {
-            let ret = this.consumptionX
+        providerOffsetX(provider) {
+            let ret = this.consumptionX() //all consumers have the same X
             for (let i = 0; i < provider.index; i++) {
                 ret += this.providerWidth(this.assessment.providers[i])
             }
             return ret
         },
-        consumerOffset(consumer) {
-            let ret = this.serviceY
+        consumerOffsetY(consumer) {
+            let ret = this.serviceY() //all services have the same Y
             for (let i = 0; i < consumer.index; i++) {
                 ret += this.consumerHeight(this.assessment.consumers[i])
             }
             return ret
         },
         providerX(provider) {
-            return this.providerOffset(provider) + this.providerWidth(provider) / 2
+            return this.providerOffsetX(provider) + this.providerWidth(provider) / 2
+        },
+        providerY() {
+            return this.scaleY(0.5)
+        },
+        consumerX() {
+            return this.scaleX(0.5)
         },
         consumerY(consumer) {
-            return this.consumerOffset(consumer) + this.consumerHeight(consumer) / 2
+            return this.consumerOffsetY(consumer) + this.consumerHeight(consumer) / 2
         },
         serviceX(service) {
-            return this.providerOffset(service.provider) + this.padding + this.scaleX(service.index)
+            return this.providerOffsetX(service.provider) + this.delta + this.scaleX(service.index)
+        },
+        serviceY() {
+            return this.scaleY(2)
+        },
+        consumptionX() {
+            return this.scaleX(2)
+        },
+        consumptionY(consumption) {
+            return this.consumerOffsetY(consumption.consumer) + this.delta + this.scaleY(consumption.index)
+        },
+        dependencyX(dependency) {
+            return this.serviceX(dependency.service)
+        },
+        dependencyY(dependency) {
+            return this.consumptionY(dependency.consumption)
         },
         metricX(metric) {
             return this.serviceX(metric.service)
         },
-        consumptionY(consumption) {
-            return this.consumerOffset(consumption.consumer) + this.padding + this.scaleY(consumption.index)
+        metricY(metric) {
+            const metricCount = metric.service.metrics.length
+            return this.height - this.scaleY(metricCount - metric.index)
         },
         d(x1, y1, x2, y2) {
             return `M${x1},${y1}L${x2},${y2}`

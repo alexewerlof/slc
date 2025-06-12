@@ -65,6 +65,10 @@
                 </p>
             </help-component>
         </h4>
+        <div class="warning block">
+            <p>No consumptions depend on this service.</p>
+            <p>Please select some consumptions or add new ones.</p>
+        </div>
         <fieldset v-for="consumer in service.provider.assessment.consumers">
             <legend :title="consumer.description">{{ consumer.displayNameWithFallback }}</legend>
             <div v-if="!consumer.consumptions.length">

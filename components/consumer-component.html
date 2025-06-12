@@ -20,28 +20,27 @@
             </label>
             <textarea id="consumer-description" v-model="consumer.description"></textarea>
         </div>
-
-        <div class="input-group">
-            <label for="consumer-type">
-                Type
-                <help-component>
-                    <p>A service consumer can be any of these types:</p>
-                    <ul>
-                        <li><strong>Group</strong>: a group of 1 or more <em>people</em></li>
-                        <li><strong>Component</strong>: something that actually runs and deploys independently (e.g., a database, microservice, etc.)</li>
-                        <li><strong>System</strong>: a logical grouping of components</li>
-                    </ul>
-                    <p>
-                        Read more <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">here</ext-link>.
-                    </p>        
-                </help-component>
-            </label>
-            <select id="consumer-type" v-model="consumer.type">
-                <option
-                    v-for="possibleType of consumer.constructor.possibleTypes">
-                    {{ possibleType }}
-                </option>
-            </select>
-        </div>
     </fieldset>
+    <div class="input-group">
+        <label for="consumer-type">
+            Type
+            <help-component>
+                <p>A service consumer can be any of these types:</p>
+                <ul>
+                    <li><strong>Group</strong>: a group of 1 or more <em>people</em></li>
+                    <li><strong>Component</strong>: something that actually runs and deploys independently (e.g., a database, microservice, etc.)</li>
+                    <li><strong>System</strong>: a logical grouping of components</li>
+                </ul>
+                <p>
+                    Read more <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">here</ext-link>.
+                </p>        
+            </help-component>
+        </label>
+        <select id="consumer-type" v-model="consumer.type">
+            <option
+                v-for="possibleType of consumer.constructor.possibleTypes">
+                {{ possibleType }}
+            </option>
+        </select>
+    </div>
 </div>

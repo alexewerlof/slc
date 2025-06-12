@@ -23,7 +23,7 @@
                 </button>
             </div>
         </div>
-        <assessment-graph-component :assessment @select="editComponent"></assessment-graph-component>
+        <assessment-graph-component :assessment @select="(entity) => editingInstance = entity"></assessment-graph-component>
         <dialog-component title="Summary" ref="summaryDialog">
             <markdown-component :markdown="assessment.toString()"></markdown-component>
         </dialog-component>
@@ -33,12 +33,7 @@
             </code-block-component>
         </dialog-component>
     </div>
-    <div class="mozaic__tile mozaic__tile--3c surface">
-        <div v-if="editingClassName === ''">
-            <p>
-                Select a node to edit.
-            </p>
-        </div>
+    <div v-if="editingInstance" class="mozaic__tile mozaic__tile--3c surface">
         <div v-if="editingClassName === 'Provider'">
             <h2>Provider</h2>
             <provider-component :provider="editingInstance"></provider-component>
@@ -63,13 +58,17 @@
             <h2>Service</h2>
             <service-component :service="editingInstance"></service-component>
             <div class="button-bar">
+                <button @click="editingInstance.metrics.pushNew()">
+                    <icon-component name="add_circle"></icon-component>
+                    New Metric
+                </button>
                 <button
                     @click="removeService(editingInstance)"
                     class="button--danger"
                     title="Remove this service"
                 >
                     <icon-component name="delete"></icon-component>
-                    Remove
+                    Remove Service
                 </button>
             </div>
         </div>
@@ -87,7 +86,7 @@
                     title="Remove this consumer"
                 >
                     <icon-component name="delete"></icon-component>
-                    Remove
+                    Remove Consumer
                 </button>
             </div>
         </div>
@@ -101,7 +100,7 @@
                     title="Remove this consumption"
                 >
                     <icon-component name="delete"></icon-component>
-                    Remove
+                    Remove Consumption
                 </button>
             </div>
         </div>
@@ -115,13 +114,23 @@
                     title="Remove this dependency"
                 >
                     <icon-component name="delete"></icon-component>
-                    Remove
+                    Remove Dependency
                 </button>
             </div>
         </div>
-        <div v-if="editingClassName === 'ServiceMetrics'">
-            <h2>Service Metrics</h2>
-            <service-metrics-component :service="editingInstance"></metric-component>
+        <div v-if="editingClassName === 'Metric'">
+            <h2>Metric</h2>
+            <metric-component :metric="editingInstance"></metric-component>
+            <div class="button-bar">
+                <button
+                    @click="removeMetric(editingInstance)"
+                    class="button--danger"
+                    title="Remove this metric"
+                >
+                    <icon-component name="delete"></icon-component>
+                    Remove Metric
+                </button>
+            </div>
         </div>
     </div>
 </div>

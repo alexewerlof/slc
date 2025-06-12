@@ -143,8 +143,16 @@ export class Metric {
         }
     }
 
+    remove() {
+        return this.service.metrics.remove(this)
+    }
+
     toString() {
         return `${this.service} ${metricIcon} ${this.displayName}`
+    }
+
+    get index() {
+        return this.service.metrics.indexOf(this)
     }
 
     static load(service, metricObj) {

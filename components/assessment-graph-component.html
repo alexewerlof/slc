@@ -1,20 +1,20 @@
 <div class="assessment-graph-component">
-    <svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height">
+    <svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height" @click.self="$emit('select', undefined)">
         <!-- Consumptions & Consumers -->
         <g v-for="consumer of assessment.consumers">
             <g v-for="consumption of consumer.consumptions">
                 <path
                     class="assessment-graph-component__line assessment-graph-component__line--relation"
-                    :d="d(consumerX, consumerY(consumer), consumptionX, consumptionY(consumption))"></path>
+                    :d="d(consumerX(consumer), consumerY(consumer), consumptionX(consumption), consumptionY(consumption))"></path>
                 <path
                     class="assessment-graph-component__line assessment-graph-component__line--consumption-dependency"
-                    :d="d(consumptionX, consumptionY(consumption), width, consumptionY(consumption))"></path>
+                    :d="d(consumptionX(consumption), consumptionY(consumption), width, consumptionY(consumption))"></path>
                 <assessment-graph-component-entity
                     type="consumption"
-                    :cx="consumptionX"
+                    :cx="consumptionX(consumption)"
                     :cy="consumptionY(consumption)"
                     :tooltip="`Consumption: ${ consumption }`"
-                    @click="$emit('select', 'Consumption', consumption)"
+                    @click="$emit('select', consumption)"
                     @status="updateStatus"
                     >
                     {{ icon('consumption') }}
@@ -22,10 +22,10 @@
             </g>
             <assessment-graph-component-entity
                 type="consumer"
-                :cx="consumerX"
+                :cx="consumerX(consumer)"
                 :cy="consumerY(consumer)"
                 :tooltip="`Consumer: ${ consumer }`"
-                @click="$emit('select', 'Consumer', consumer)"
+                @click="$emit('select', consumer)"
                 @status="updateStatus"
                 >
                 {{ icon('consumer') }}
@@ -36,16 +36,16 @@
             <g v-for="service of provider.services">
                 <path
                     class="assessment-graph-component__line assessment-graph-component__line--relation"
-                    :d="d(providerX(provider), providerY, serviceX(service), serviceY)"></path>
+                    :d="d(providerX(provider), providerY(provider), serviceX(service), serviceY(service))"></path>
                 <path
                     class="assessment-graph-component__line assessment-graph-component__line--service-dependency"
-                    :d="d(serviceX(service), serviceY, serviceX(service), height)"></path>
+                    :d="d(serviceX(service), serviceY(service), serviceX(service), height)"></path>
                 <assessment-graph-component-entity
                     type="service"
                     :cx="serviceX(service)"
-                    :cy="serviceY"
+                    :cy="serviceY(service)"
                     :tooltip="`Service: ${ service }`"
-                    @click="$emit('select', 'Service', service)"
+                    @click="$emit('select', service)"
                     @status="updateStatus"
                     >
                     {{ icon('service') }}
@@ -54,24 +54,25 @@
                 <assessment-graph-component-entity
                     v-for="dependency of service.dependencies"
                     type="dependency"
-                    :cx="serviceX(dependency.service)"
-                    :cy="consumptionY(dependency.consumption)"
+                    :cx="dependencyX(dependency)"
+                    :cy="dependencyY(dependency)"
                     :tooltip="`Dependency: ${ dependency }`"
-                    @click="$emit('select', 'Dependency', dependency)"
+                    @click="$emit('select', dependency)"
                     @status="updateStatus"
                     >
                     {{ dependency.failures.length }}
                 </assessment-graph-component-entity>
                 <!-- Metrics -->
                 <assessment-graph-component-entity
+                    v-for="metric of service.metrics"
                     type="metric"
-                    :cx="serviceX(service)"
-                    :cy="metricY"
-                    :tooltip="`Metric for ${ service }`"
-                    @click="$emit('select', 'ServiceMetrics', service)"
+                    :cx="metricX(metric)"
+                    :cy="metricY(metric)"
+                    :tooltip="`Metric: ${ metric }`"
+                    @click="$emit('select', metric)"
                     @status="updateStatus"
                     >
-                    {{ service.metrics.length }}
+                    {{ icon('metric') }}
                 </assessment-graph-component-entity>
             </g>
             <!-- Provider -->
@@ -79,8 +80,8 @@
                 type="provider"
                 :tooltip="`Provider: ${ provider }`"
                 :cx="providerX(provider)"
-                :cy="providerY"
-                @click="$emit('select', 'Provider', provider)"
+                :cy="providerY(provider)"
+                @click="$emit('select', provider)"
                 @status="updateStatus"
                 >
                 {{ icon('provider') }}
