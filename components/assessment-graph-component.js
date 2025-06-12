@@ -18,6 +18,10 @@ export default {
             type: Assessment,
             required: true,
         },
+        selectedEntity: {
+            type: Object,
+            required: false,
+        },
     },
     computed: {
         consumptionCount() {

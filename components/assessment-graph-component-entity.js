@@ -16,11 +16,29 @@ export default {
             type: String,
             required: false,
         },
+        isSelected: {
+            type: Boolean,
+            required: false,
+        },
     },
-    data() {
-        return {
-            r: 12,
-        }
+    computed: {
+        r() {
+            return this.isSelected ? 13 : 12
+        },
+        outerR() {
+            return this.r + 4
+        },
+        classes() {
+            const ret = [
+                'assessment-graph-component-entity',
+                `assessment-graph-component-entity--${this.type}`,
+            ]
+            if (this.isSelected) {
+                ret.push('assessment-graph-component-entity--selected')
+            }
+
+            return ret.join(' ')
+        },
     },
     emits: ['status'],
 }

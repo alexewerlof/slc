@@ -23,7 +23,7 @@
                 </button>
             </div>
         </div>
-        <assessment-graph-component :assessment @select="(entity) => editingInstance = entity"></assessment-graph-component>
+        <assessment-graph-component :assessment @select="(entity) => editingInstance = entity" :selected-entity="editingInstance"></assessment-graph-component>
         <dialog-component title="Summary" ref="summaryDialog">
             <markdown-component :markdown="assessment.toString()"></markdown-component>
         </dialog-component>
