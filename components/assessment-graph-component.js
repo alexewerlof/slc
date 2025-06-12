@@ -6,12 +6,6 @@ export default {
         return {
             deltaX: 50,
             deltaY: 50,
-            providerRadius: 12,
-            serviceRadius: 12,
-            consumerRadius: 12,
-            consumptionRadius: 12,
-            dependencyRadius: 14,
-            metricRadius: 12,
             padding: 50,
             statusText: undefined,
         }

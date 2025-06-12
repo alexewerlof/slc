@@ -1,3 +1,5 @@
+import data from '../collection/data.js'
+
 export default {
     props: {
         type: {
@@ -12,14 +14,15 @@ export default {
             type: Number,
             required: true,
         },
-        r: {
-            type: Number,
-            required: true,
-        },
         tooltip: {
             type: String,
             required: false,
         },
+    },
+    data() {
+        return {
+            r: 12,
+        }
     },
     emits: ['status'],
 }
