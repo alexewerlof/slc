@@ -57,6 +57,7 @@ const componentSpecifications = [
     './ui/tabs-component.jhc&',
     './ui/tooltip-component.hc&',
     './llm/llm-api-settings-component.jh&',
+    './llm/single-prompt-component.jh&',
 ]
 
 /**
