@@ -12,7 +12,7 @@
     display: inline-block;
 }
 
-.show-hide-component__checkbox {
+input[type='checkbox'].show-hide-component__checkbox {
     display: none;
 }
 

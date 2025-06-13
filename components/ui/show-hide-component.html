@@ -1,14 +1,14 @@
 <div class="show-hide-component">
     <label class="show-hide-component__header">
+        <div :class="{
+            'show-hide-component__icon': true,
+            'show-hide-component__icon--rotated': isVisible
+        }">{{ icon }}</div>
         <input
             type="checkbox"
             class="show-hide-component__checkbox"
             v-model="isVisible"
         />
-        <div :class="{
-            'show-hide-component__icon': true,
-            'show-hide-component__icon--rotated': isVisible
-        }">{{ icon }}</div>
         <span class="show-hide-component__title">{{ title }}</span>
     </label>
     <transition>
