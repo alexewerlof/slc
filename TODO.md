@@ -1,5 +1,6 @@
 # High prio
 
+- [ ] Enable app-wide LLM config
 - [ ] Support unique ID for entities to be able to reference in function calls
 - [ ] Enable function calls for the assess app
 - [ ] Save chat configuration across executions
