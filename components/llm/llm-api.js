@@ -102,11 +102,11 @@ export class LLMAPI {
     }
 
     async getCompletion(messages, options) {
-        if (!isObj(options)) {
-            throw new TypeError(`options must be an object. Got ${options}`)
-        }
         if (!isArr(messages)) {
             throw new TypeError(`messages must be an array. Got ${messages}`)
+        }
+        if (!isObj(options)) {
+            throw new TypeError(`options must be an object. Got ${options}`)
         }
         const { maxTokens, temperature, signal } = options
         return await this.fetchJson('POST', 'chat/completions', {
