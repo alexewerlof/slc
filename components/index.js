@@ -10,8 +10,6 @@ const componentSpecifications = [
     './alert/burn-event-component.jhc&',
     './alert/burn-rate-component.jhc&',
     './calculator-component.jhc&',
-    './chat-component.jh&',
-    './chat-thread-component.jhc&',
     './ui/code-block-component.jhc&',
     './ui/book-cover-component.hc&',
     './assess-component-intro.jh&',
@@ -55,6 +53,8 @@ const componentSpecifications = [
     './summary-component.jh&',
     './ui/tabs-component.jhc&',
     './ui/tooltip-component.hc&',
+    './llm/chat-thread-component.jhc&',
+    './llm/chat-component.jh&',
     './llm/llm-api-settings-component.jh&',
     './llm/single-prompt-component.jh&',
 ]

@@ -1,8 +1,8 @@
-import { config } from '../config.js'
-import { showToast } from '../lib/toast.js'
-import { LLMAPI } from './llm/llm-api.js'
-import { getFirstCompletion } from './llm/util.js'
-import { Bead, Thread } from './thread.js'
+import { config } from '../../config.js'
+import { showToast } from '../../lib/toast.js'
+import { LLMAPI } from './llm-api.js'
+import { getFirstCompletion } from './util.js'
+import { Bead, Thread } from '../thread.js'
 
 export default {
     data() {

@@ -1,4 +1,4 @@
-import { Thread } from './thread.js'
+import { Thread } from '../thread.js'
 
 export default {
     data() {
