@@ -38,8 +38,8 @@
                 <div v-if="selTabName === 'Forms'">
 
                     <div class="button-bar frost">
-                        <button @click="showDialog('normalDialog')">Show Normal Dialog</button>
-                        <button @click="showDialog('modalDialog', true)">Show Modal Dialog</button>
+                        <button @click="$refs.normalDialog.show()">Show Normal Dialog</button>
+                        <button @click="$refs.modalDialog.show(true)">Show Modal Dialog</button>
                     </div>
                     
                     <dialog-component ref="normalDialog">

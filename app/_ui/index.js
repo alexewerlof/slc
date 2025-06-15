@@ -48,9 +48,6 @@ const app = createApp({
         clicked(name) {
             showToast(`Clicked ${name}`)
         },
-        showDialog(ref, modal) {
-            this.$refs[ref].show(modal)
-        },
     },
 })
 
