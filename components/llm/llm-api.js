@@ -11,8 +11,23 @@ export class LLMAPI {
     modelIds = new SelectableArray(String)
 
     constructor(options) {
-        if (!isObj(options)) {
-            throw new TypeError(`options must be an object. Got ${options}`)
+        this.state = options
+    }
+
+    get state() {
+        return {
+            name: this.name,
+            baseUrl: this.baseUrl,
+            website: this.website,
+            description: this.description,
+            apiKeyWebsite: this.apiKeyWebsite,
+            suggestedModel: this.suggestedModel,
+        }
+    }
+
+    set state(newState) {
+        if (!isObj(newState)) {
+            throw new TypeError(`options must be an object. Got ${newState}`)
         }
         const {
             name,
@@ -21,7 +36,7 @@ export class LLMAPI {
             description,
             apiKeyWebsite,
             suggestedModel,
-        } = options
+        } = newState
         if (!isStr(name)) {
             throw new TypeError(`name must be a string. Got ${name}`)
         }
