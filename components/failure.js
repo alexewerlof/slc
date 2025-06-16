@@ -2,19 +2,18 @@ import { inRange, isDef, isInstance, isObj, isStr } from '../lib/validation.js'
 import { config } from '../config.js'
 import { icon } from '../lib/icons.js'
 import { Dependency } from './dependency.js'
+import { Identifiable } from '../lib/identifiable.js'
 
 // If a certain service fails, what activities will it impact and how?
-export class Failure {
+export class Failure extends Identifiable {
     dependency = null
     symptom = ''
     consequence = ''
     businessImpact = ''
     impactLevel = config.impactLevel.default
 
-    constructor(
-        dependency,
-        state,
-    ) {
+    constructor(dependency, state) {
+        super()
         if (!isInstance(dependency, Dependency)) {
             throw new Error(`Expected an instance of Dependency. Got: ${dependency} (${typeof dependency})`)
         }

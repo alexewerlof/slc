@@ -1,4 +1,5 @@
 import { icon } from '../lib/icons.js'
+import { Identifiable } from '../lib/identifiable.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { isArr, isDef, isInstance, isObj } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
@@ -6,10 +7,11 @@ import { Consumption } from './consumption.js'
 import { Failure } from './failure.js'
 import { Service } from './service.js'
 
-export class Dependency {
+export class Dependency extends Identifiable {
     failures = new SelectableArray(Failure, this)
 
     constructor(service, state) {
+        super()
         if (!isInstance(service, Service)) {
             throw TypeError(`Expected an instance of service. Got ${service}`)
         }

@@ -3,8 +3,9 @@ import { isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/valid
 import { Assessment } from './assessment.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { config } from '../config.js'
+import { Identifiable } from '../lib/identifiable.js'
 
-export class Provider {
+export class Provider extends Identifiable {
     static possibleTypes = Object.freeze(['System', 'Component', 'Group'])
 
     assessment = null
@@ -15,6 +16,7 @@ export class Provider {
     services = new SelectableArray(Service, this)
 
     constructor(assessment, state) {
+        super()
         if (!isInstance(assessment, Assessment)) {
             throw new Error(`Provider.constructor: assessment must be an instance of Assessment. Got ${assessment}`)
         }

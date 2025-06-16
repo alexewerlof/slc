@@ -1,6 +1,7 @@
 import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
 import { entity2symbolNorm, percL10n } from '../lib/fmt.js'
+import { Identifiable } from '../lib/identifiable.js'
 import { clamp, percent, toFixed } from '../lib/math.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { daysToSeconds, secondsToDays } from '../lib/time.js'
@@ -10,7 +11,7 @@ import { Alert } from './alert.js'
 import { Formula } from './formula.js'
 import { Indicator } from './indicator.js'
 
-export class Objective {
+export class Objective extends Identifiable {
     /** The SLO percentage. It is also read/written by the sloInt and sloFrac computed  properties */
     target = config.slo.default
 
@@ -27,6 +28,7 @@ export class Objective {
     indicator = null
 
     constructor(indicator, state) {
+        super()
         if (!isInstance(indicator, Indicator)) {
             throw new TypeError(`Expected an instance of Indicator. Got ${indicator}`)
         }

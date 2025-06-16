@@ -5,10 +5,11 @@ import { config } from '../config.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { Metric } from './metric.js'
 import { Dependency } from './dependency.js'
+import { Identifiable } from '../lib/identifiable.js'
 
 const scopeIcon = icon('scope')
 
-export class Service {
+export class Service extends Identifiable {
     static possibleTypes = ['Automated', 'Manual', 'Hybrid']
     provider = null
     displayName = config.displayName.default
@@ -18,6 +19,7 @@ export class Service {
     _type = Service.possibleTypes[0]
 
     constructor(provider, state) {
+        super()
         if (!isInstance(provider, Provider)) {
             throw new Error(`Service.constructor: provider must be an instance of Provider. Got ${provider}`)
         }

@@ -2,15 +2,17 @@ import { icon } from '../lib/icons.js'
 import { isDef, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
 import { config } from '../config.js'
+import { Identifiable } from '../lib/identifiable.js'
 
 const scopeIcon = icon('scope')
 
-export class Consumption {
+export class Consumption extends Identifiable {
     consumer = null
     displayName = config.displayName.default
     description = config.description.default
 
     constructor(consumer, state) {
+        super()
         if (!isInstance(consumer, Consumer)) {
             throw new Error(`Consumption.constructor: consumer must be an instance of Consumer. Got ${consumer}`)
         }

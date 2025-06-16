@@ -5,10 +5,11 @@ import { icon } from '../lib/icons.js'
 import { Condition } from './condition.js'
 import { config } from '../config.js'
 import { Dependency } from './dependency.js'
+import { Identifiable } from '../lib/identifiable.js'
 
 const metricIcon = icon('metric')
 
-export class Metric {
+export class Metric extends Identifiable {
     service = null
     displayName = ''
     description = ''
@@ -18,6 +19,7 @@ export class Metric {
     linkedFailures = []
 
     constructor(service, state) {
+        super()
         if (!isInstance(service, Service)) {
             throw new Error(`Expected an instance of Service. Got ${service}`)
         }

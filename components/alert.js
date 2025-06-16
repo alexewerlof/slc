@@ -1,11 +1,12 @@
 import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
 import { entity2symbolNorm, percL10n } from '../lib/fmt.js'
+import { Identifiable } from '../lib/identifiable.js'
 import { toFixed } from '../lib/math.js'
 import { inRange, isDef, isInstance, isObj } from '../lib/validation.js'
 import { Objective } from './objective.js'
 
-export class Alert {
+export class Alert extends Identifiable {
     /** Alert burn rate: the rate above which the error budget is consumed */
     burnRate = config.alert.burnRate.default
     /** Long window alert = percentage of the SLO window */
@@ -18,6 +19,7 @@ export class Alert {
     objective = null
 
     constructor(objective, state) {
+        super()
         if (!isInstance(objective, Objective)) {
             throw new TypeError(`Expected an instance of Objective. Got ${objective}`)
         }

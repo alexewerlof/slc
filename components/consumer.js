@@ -1,10 +1,11 @@
 import { config } from '../config.js'
+import { Identifiable } from '../lib/identifiable.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { Consumption } from './consumption.js'
 
-export class Consumer {
+export class Consumer extends Identifiable {
     static possibleTypes = ['System', 'Component', 'Group']
     displayName = config.displayName.default
     description = config.description.default
@@ -13,6 +14,7 @@ export class Consumer {
     consumptions = new SelectableArray(Consumption, this)
 
     constructor(assessment, state) {
+        super()
         if (!isInstance(assessment, Assessment)) {
             throw new Error(`Consumer.constructor: assessment must be an instance of Assessment. Got ${assessment}`)
         }
