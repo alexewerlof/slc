@@ -65,7 +65,7 @@
                 </p>
             </help-component>
         </h4>
-        <div class="warning block">
+        <div class="warning block" v-if="service.dependencies.length === 0">
             <p>No consumptions depend on this service.</p>
             <p>Please select some consumptions or add new ones.</p>
         </div>
