@@ -1,8 +1,8 @@
 import { config } from '../../config.js'
 import { showToast } from '../../lib/toast.js'
 import { Bead, Thread } from './thread.js'
-import { LLMAPI } from './llm-api.js'
 import { getFirstCompletion } from './util.js'
+import { llm } from './llm.js'
 
 export default {
     props: {
@@ -45,10 +45,9 @@ export default {
                 this.thread.add(new Bead('user', this.prompt))
                 const messages = await this.thread.toMessages()
                 this.abortController = new AbortController()
-                const engines = config.llm.engines.map((engineConfig) => new LLMAPI(engineConfig))
                 this.response = 'Waiting for LLM...'
                 this.response = getFirstCompletion(
-                    await engines[0].getCompletion(messages, {
+                    await llm.getCompletion(messages, {
                         maxTokens: 8000,
                         temperature: 1,
                         signal: this.abortController.signal,
