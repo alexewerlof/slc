@@ -22,6 +22,7 @@ export class LLMAPI {
             description: this.description,
             apiKeyWebsite: this.apiKeyWebsite,
             suggestedModel: this.suggestedModel,
+            apiKey: this.apiKey,
         }
     }
 
@@ -36,6 +37,7 @@ export class LLMAPI {
             description,
             apiKeyWebsite,
             suggestedModel,
+            apiKey,
         } = newState
         if (!isStr(name)) {
             throw new TypeError(`name must be a string. Got ${name}`)
@@ -49,13 +51,22 @@ export class LLMAPI {
             throw new TypeError(`website must be a valid URL string. Got ${website}`)
         }
         this.website = website
-        if (!isStr(description)) {
+        if (isDef(description) && !isStr(description)) {
             throw new TypeError(`description must be a string. Got ${description}`)
         }
-        if (isDef(apiKeyWebsite) && !isUrlStr(apiKeyWebsite)) {
-            throw new TypeError(`When defined, apiKeyWebsite must be a valid URL string. Got ${apiKeyWebsite}`)
+        this.description = description
+        if (isDef(apiKeyWebsite)) {
+            if (!isUrlStr(apiKeyWebsite)) {
+                throw new TypeError(`When defined, apiKeyWebsite must be a valid URL string. Got ${apiKeyWebsite}`)
+            }
+            this.apiKeyWebsite = apiKeyWebsite
         }
-        this.apiKeyWebsite = apiKeyWebsite
+        if (isDef(apiKey)) {
+            if (!isStr(apiKey)) {
+                throw new TypeError(`apiKey must be a string. Got ${apiKey}`)
+            }
+            this.apiKey = apiKey
+        }
         if (!isStr(suggestedModel)) {
             throw new TypeError(`suggestedModel must be a string. Got ${suggestedModel}`)
         }
