@@ -3,7 +3,7 @@ import { readTextFile } from '../lib/share.js'
 import { Assessment } from './assessment.js'
 import { icon } from '../lib/icons.js'
 import { inRange } from '../lib/validation.js'
-import { Bead, FileBead, Thread } from './thread.js'
+import { Bead, FileBead, Thread } from './llm/thread.js'
 
 export default {
     data() {

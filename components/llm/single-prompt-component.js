@@ -1,6 +1,6 @@
 import { config } from '../../config.js'
 import { showToast } from '../../lib/toast.js'
-import { Bead, Thread } from '../thread.js'
+import { Bead, Thread } from './thread.js'
 import { LLMAPI } from './llm-api.js'
 import { getFirstCompletion } from './util.js'
 

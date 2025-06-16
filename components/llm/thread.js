@@ -1,5 +1,5 @@
-import { loadText } from '../lib/share.js'
-import { isFn, isInArr, isStr } from '../lib/validation.js'
+import { loadText } from '../../lib/share.js'
+import { isFn, isInArr, isStr } from '../../lib/validation.js'
 
 export class Bead {
     _content = undefined

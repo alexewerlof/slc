@@ -1,6 +1,6 @@
 import { createApp } from '../../vendor/vue.js'
 import { registerAllComponents } from '../../components/index.js'
-import { FileBead, Thread } from '../../components/thread.js'
+import { FileBead, Thread } from '../../components/llm/thread.js'
 import { loadJson } from '../../lib/share.js'
 
 const manifest = await loadJson('manifest.json')

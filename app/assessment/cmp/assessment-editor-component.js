@@ -5,7 +5,7 @@ import { Dependency } from '../../../components/dependency.js'
 import { Metric } from '../../../components/metric.js'
 import { Provider } from '../../../components/provider.js'
 import { Service } from '../../../components/service.js'
-import { Bead, FileBead, Thread } from '../../../components/thread.js'
+import { Bead, FileBead, Thread } from '../../../components/llm/thread.js'
 import { isInstance } from '../../../lib/validation.js'
 
 export default {
