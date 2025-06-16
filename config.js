@@ -383,6 +383,7 @@ export const config = fz({
             'https://docs.google.com/forms/d/e/1FAIpQLSc-CQudkQ9WLVmryi7Idlwv03M7s0Sy6DMlENzhUJesKb3kmg/viewform?usp=pp_url',
     }),
     llm: fz({
+        selectedEngineStateKey: 'LLM-SELECTED-ENGINE-STATE',
         engines: [
             /*
             {

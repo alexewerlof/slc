@@ -1,28 +1,13 @@
 import { config } from '../../config.js'
 import { showToast } from '../../lib/toast.js'
-import { LLMAPI } from './llm-api.js'
 import { getFirstCompletion } from './util.js'
 import { Bead, Thread } from '../thread.js'
+import { llm } from './llm.js'
 
 export default {
     data() {
-        const engineSelection = config.llm.engines.map((engine) => {
-            return {
-                title: engine.name,
-                value: new LLMAPI(engine),
-            }
-        })
-        const tabNames = ['Chat', 'Settings']
         return {
-            engines: config.llm.engines,
-            engineSelection,
-            selectedEngine: engineSelection[0].value,
-            temperature: config.llm.temperature.default,
             message: 'What is an SLO?',
-            maxTokens: config.llm.maxTokens.default,
-            tabNames,
-            selTabName: tabNames[0],
-            config,
             abortController: undefined,
         }
     },
@@ -33,6 +18,9 @@ export default {
         },
     },
     computed: {
+        config() {
+            return config
+        },
         isEditDisabled() {
             return this.abortController !== undefined
         },
@@ -49,7 +37,7 @@ export default {
                 this.thread.add(new Bead('assistant', 'Loading...'))
                 this.abortController = new AbortController()
                 const content = getFirstCompletion(
-                    await this.selectedEngine.getCompletion(messages, {
+                    await llm.getCompletion(messages, {
                         maxTokens: this.maxTokens,
                         temperature: this.temperature,
                         signal: this.abortController.signal,

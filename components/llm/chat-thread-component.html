@@ -5,6 +5,9 @@
             System Messages
         </label>
         <div class="button-bar button-bar--small">
+            <button @click="$refs.llmSettingsDialog.show(true)" title="Settings">
+                <icon-component name="settings"></icon-component>
+            </button>
             <button @click="thread.clear(true)" title="Clear" class="button--danger">
                 <icon-component name="delete"></icon-component>
             </button>
@@ -15,6 +18,9 @@
                 <icon-component name="arrow_downward"></icon-component>
             </button>
         </div>
+        <dialog-component ref="llmSettingsDialog" title="LLM Settings">
+            <llm-settings-component></llm-settings-component>
+        </dialog-component>
     </div>
     <div class="chat-thread-component__thread" ref="threadContainerRef">
         <div v-for="bead of thread.beads"

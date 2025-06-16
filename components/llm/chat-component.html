@@ -1,112 +1,31 @@
 <div class="chat-component">
-    <tabs-component v-model="selTabName" :tab-names="tabNames"></tabs-component>
-    <div v-if="selTabName === 'Chat'">
-        <chat-thread-component class="b-mar-gap2" :thread="thread" ref="chatThreadComponent"></chat-thread-component>
-        <div class="input-group">
-            <div class="input-button-pair">
-                <textarea
-                    type="text"
-                    v-model="message"
-                    placeholder="Type your message here..."
-                    @keyup.enter="submitPrompt"
-                    :disabled="isEditDisabled"></textarea>
-                <button
-                    @click="submitPrompt"
-                    class="button--cta button--large"
-                    type="button"
-                    title="Send"
-                    v-if="!isEditDisabled"
-                >
-                    <icon-component name="send"></icon-component>
-                </button>
-                <button
-                    v-if="this.abortController"
-                    @click="abortCompletion('User aborted completion')"
-                    class="button--danger button--large"
-                    title="Stop generation"
-                >
-                    <icon-component name="stop_circle"></icon-component>
-                </button>
-            </div>
+    <chat-thread-component class="b-mar-gap2" :thread="thread" ref="chatThreadComponent"></chat-thread-component>
+    <div class="input-group">
+        <div class="input-button-pair">
+            <textarea
+                type="text"
+                v-model="message"
+                placeholder="Type your message here..."
+                @keyup.enter="submitPrompt"
+                :disabled="isEditDisabled"></textarea>
+            <button
+                @click="submitPrompt"
+                class="button--cta button--large"
+                type="button"
+                title="Send"
+                v-if="!isEditDisabled"
+            >
+                <icon-component name="send"></icon-component>
+            </button>
+            <button
+                v-if="this.abortController"
+                @click="abortCompletion('User aborted completion')"
+                class="button--danger button--large"
+                title="Stop generation"
+            >
+                <icon-component name="stop_circle"></icon-component>
+            </button>
         </div>
     </div>
-    <div v-if="selTabName === 'Settings'">
-        <div class="input-group b-mar-gap2">
-            <label for="engine-selector">
-                LLM Engine
-                <help-component>
-                    <p>
-                        Due to cost of running AI, this open source app relies on you to provide your AI and models. There are many options:
-                    </p>
-                    <ul>
-                        <li v-for="engine of engines">
-                            <ext-link :href="engine.website">{{ engine.name }}</ext-link>:
-                            {{ engine.description }}
-                            <span v-if="engine.apiKeyWebsite" class="subtle-hint">
-                                <ext-link :href="engine.apiKeyWebsite">Get API Key</ext-link>
-                            </span>
-                        </li>
-                    </ul>
-                    <p>
-                        For services that require an API Key: it will not be stored locally or shared with anyone but it will be in the requests that are made to the API endpoints.
-                    </p>
-                </help-component>
-            </label>
-            <inline-select-component v-model="selectedEngine" :options="engineSelection"></inline-select-component>
-        </div>
-        <div class="b-mar-gap2">
-            <llm-api-settings-component :llm-api="selectedEngine"></llm-api-settings-component>
-        </div>
-        <show-hide-component title="Advanced" hidden="true">
-            <div class="input-group">
-                <label for="temperature">
-                    Temperature: {{ temperature }}
-                    <help-component>
-                        <p>Temperature is a hyperparameter that governs the sampling process during text generation. It determines how "random" or "creative" the model's outputs will be:</p>
-                        <ul>
-                            <li>
-                                Lower temperature (closer to 0): Produces more deterministic, predictable responses. The model consistently selects the highest probability words.
-                            </li>
-                            <li>
-                                Higher temperature: Leads to more varied, creative, and sometimes unexpected responses. The model may select lower probability words, increasing diversity but potentially reducing reliability
-                            </li>
-                        </ul>
-                    </help-component>
-                </label>
-                <input
-                    type="range"
-                    id="temperature"
-                    :min="config.llm.temperature.min"
-                    :max="config.llm.temperature.max"
-                    :step="config.llm.temperature.step"
-                    v-model.number="temperature"
-                />
-            </div>
-            <div class="input-group">
-                <label for="max-tokens">
-                    Max Tokens: {{ maxTokens }}
-                    <help-component>
-                        <p>
-                            You can set a maximum tokens to be generated by the AI in response to your queries.
-                        </p>
-                        <p>
-                            A token generally corresponds to ~4 characters in English text, with common words typically using 1-2 tokens and longer/uncommon words using more.
-                        </p>
-                        <ul>
-                            <li>Higher max token: generates longer and more elaborate responses but takes longer</li>
-                            <li>Lower max token: reduces AI response delay but may cut the message half-way through.</li>
-                        </ul>
-                    </help-component>
-                </label>
-                <input
-                    type="range"
-                    id="max-tokens"
-                    :min="config.llm.maxTokens.min"
-                    :max="config.llm.maxTokens.max"
-                    :step="config.llm.maxTokens.step"
-                    v-model.number="maxTokens"
-                />
-            </div>
-        </show-hide-component>
-    </div>
+
 </div>
