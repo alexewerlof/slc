@@ -37,7 +37,7 @@ Consumer can have any of these types:
 
 ### Service Consumption
 
-Consumption describes why the consumer uses a service. This usage essentially establishes a dependency from consumer to the service provider. The reason consumption is important in the context service level is because of the biggest pitfalls of implementing service levels: to measure the wrong thing! Service level should always be measured from the perspective of the consumers. Consumption describes that aspect.
+Consumption describes why the consumer uses a service. This usage essentially establishes a dependency from consumer to one or more services. The reason consumption is important in the context service level is because of the biggest pitfalls of implementing service levels: to measure the wrong thing! Service level should always be measured from the perspective of the consumers. Consumption describes that aspect.
 
 Consumption is also known as: use case, user need, user requirement, JTBD (jobs to be done), dependency, user story.
 
