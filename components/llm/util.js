@@ -1,6 +1,18 @@
 import { isArr, isObj, isStr } from '../../lib/validation.js'
 
-export function getFirstCompletion(response) {
+/**
+ * Type guard to check if an unknown object is a ToolsCallMessage.
+ * @param {unknown} x - The object to check.
+ * @returns {boolean} True if x is a ToolsCallMessage, false otherwise.
+ */
+export function isToolsCallMessage(x) {
+    if (!isObj(x)) {
+        return false
+    }
+    return x.role === 'assistant' && isArr(x.tool_calls)
+}
+
+export function getFirstMessage(response) {
     if (!isObj(response)) {
         throw new TypeError(`Expected response to be an object. Got ${response} (${typeof response})`)
     }
@@ -26,7 +38,11 @@ export function getFirstCompletion(response) {
         throw new TypeError(`Expected message to be an object. Got ${message} (${typeof message})`)
     }
 
-    const { content } = message
+    return message
+}
+
+export function getFirstCompletion(response) {
+    const { content } = getFirstMessage(response)
 
     if (!isStr(content)) {
         throw new TypeError(`Expected content to be a string. Got ${content} (${typeof content})`)

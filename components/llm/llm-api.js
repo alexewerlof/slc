@@ -134,12 +134,13 @@ export class LLMAPI {
         if (!isObj(options)) {
             throw new TypeError(`options must be an object. Got ${options}`)
         }
-        const { maxTokens, temperature, signal } = options
+        const { maxTokens, temperature, tools, signal } = options
         return await this.fetchJson('POST', 'chat/completions', {
             messages,
             model: this.modelIds.selected,
             temperature,
             max_tokens: maxTokens,
+            tools,
         }, signal)
     }
 }

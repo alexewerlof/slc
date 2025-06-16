@@ -5,15 +5,73 @@ import { SelectableArray } from '../lib/selectable-array.js'
 import { Service } from './service.js'
 import { Consumption } from './consumption.js'
 import { icon } from '../lib/icons.js'
+import { Tools } from './llm/tools.js'
 
 export class Assessment {
     consumers = new SelectableArray(Consumer, this)
     providers = new SelectableArray(Provider, this)
+    tools = new Tools(this)
 
     constructor(state) {
         if (isObj(state)) {
             this.state = state
         }
+
+        this.tools.add(
+            this.addNewProvider,
+            'Add a new provider to the assessment',
+            false,
+        ).param(
+            'displayName',
+            'string',
+            'The display name of the new provider',
+            true,
+        ).param(
+            'description',
+            'string',
+            'A description of the new provider',
+        ).param(
+            'type',
+            'string',
+            'The type of the new provider. It can only be one of these values: "System", "Component", "Group"',
+        )
+
+        this.tools.add(
+            this.addNewConsumer,
+            'Add a new consumer to the assessment',
+            false,
+        ).param(
+            'displayName',
+            'string',
+            'The display name of the new consumer',
+            true,
+        ).param(
+            'description',
+            'string',
+            'A description of the new consumer',
+        ).param(
+            'type',
+            'string',
+            'The type of the new consumer. It can only be one of these values: "System", "Component", "Group"',
+        )
+
+        function getDateAndTime() {
+            return String(new Date())
+        }
+
+        this.tools.add(
+            getDateAndTime,
+            'Get the current date and time',
+            false,
+        )
+    }
+
+    addNewProvider(state) {
+        this.providers.pushNew(state)
+    }
+
+    addNewConsumer(state) {
+        this.consumers.pushNew(state)
     }
 
     get state() {

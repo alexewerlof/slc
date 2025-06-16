@@ -1,8 +1,9 @@
 import { config } from '../../config.js'
 import { showToast } from '../../lib/toast.js'
-import { getFirstCompletion } from './util.js'
+import { getFirstMessage, isToolsCallMessage } from './util.js'
 import { Bead, Thread } from './thread.js'
 import { llm } from './llm.js'
+import { Tools } from './tools.js'
 
 export default {
     data() {
@@ -15,6 +16,10 @@ export default {
         thread: {
             type: Thread,
             required: true,
+        },
+        tools: {
+            type: Tools,
+            required: false,
         },
     },
     computed: {
@@ -36,14 +41,25 @@ export default {
                 const messages = await this.thread.toMessages()
                 this.thread.add(new Bead('assistant', 'Loading...'))
                 this.abortController = new AbortController()
-                const content = getFirstCompletion(
-                    await llm.getCompletion(messages, {
-                        maxTokens: this.maxTokens,
-                        temperature: this.temperature,
-                        signal: this.abortController.signal,
-                    }),
-                )
-                this.thread.beads.at(-1).content = content
+                const MAX_CONSECUTIVE_TOOLS_CALLS = 10
+                for (let i = 0; i < MAX_CONSECUTIVE_TOOLS_CALLS; i++) {
+                    const message = getFirstMessage(
+                        await llm.getCompletion(messages, {
+                            maxTokens: this.maxTokens,
+                            temperature: this.temperature,
+                            signal: this.abortController.signal,
+                            tools: this.tools?.descriptor,
+                        }),
+                    )
+                    if (this.tools && isToolsCallMessage(message)) {
+                        const toolResultMessages = await this.tools.exeToolCalls(message)
+                        messages.push(message, ...toolResultMessages)
+                    } else {
+                        this.thread.beads.at(-1).content = message.content || ''
+                        break
+                    }
+                }
+
                 this.$nextTick(() => {
                     this.$refs.chatThreadComponent.scrollToBottom()
                 })
