@@ -1,16 +1,10 @@
 # High prio
 
-- [ ] Enable app-wide LLM config
-- [ ] Support unique ID for entities to be able to reference in function calls
-- [ ] Enable function calls for the assess app
-- [ ] Save chat configuration across executions
-- [ ] Support calendar-bound windows
 - [ ] Support undo/redo (Version history)
-- [ ] Support exporting to JSON
-- [ ] Support importing from JSON
 - [ ] Support saving JSON/YAML to file
 - [ ] Support loading JSON/YAML from file
 - [ ] Allow multiple consequences
+- [ ] Support calendar-bound windows
 - [ ] Generate SLA contract based on your SLI/SLO
 - [ ] Analyze SLA contract
 - [ ] Support loading/saving projects like Mermaincharts
@@ -32,6 +26,9 @@
 
 # Shipped
 
+- [X] 2025-06-16: Enable app-wide LLM config to save chat configuration across executions
+- [X] 2025-06-17: Support unique ID for entities to be able to reference in function calls
+- [X] 2025-06-17: Enable function calls for the assessment app
 - [X] 2025-06-11: Enable removing entities in the assess app
 - [X] 2025-06-10: Add more SLI examples from SLDs and workshops
 - [X] 2025-06-10: Add SLS simulator
