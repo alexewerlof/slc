@@ -142,6 +142,15 @@ export class Tool {
         }
     }
 
+    get name() {
+        const actualFuncName = this.func.name
+        const boundPrefix = 'bound '
+        if (actualFuncName.startsWith(boundPrefix)) {
+            return actualFuncName.substring(boundPrefix.length)
+        }
+        return actualFuncName
+    }
+
     this(thisArg) {
         this.thisArg = thisArg
         return this
@@ -169,7 +178,7 @@ export class Tool {
             // Assumes this.func expects a single argument object
             const result = await this.func.call(this.thisArg, args)
             console.log(
-                `Successfully executed ${this.func.name}(${argsStr}) => ${result} (${typeof result})`,
+                `Successfully executed ${this.name}(${argsStr}) => ${result} (${typeof result})`,
             )
             switch (typeof result) {
                 case 'undefined':
@@ -184,7 +193,7 @@ export class Tool {
                     return JSON.stringify(result)
             }
         } catch (error) {
-            return `Error executing ${this.func.name}(${argsStr}): ${error}`
+            return `Error executing ${this.name}(${argsStr}): ${error}`
         }
     }
 
@@ -233,7 +242,7 @@ export class Tool {
         return {
             type: 'function',
             function: {
-                name: this.func.name,
+                name: this.name,
                 description: this.description,
                 parameters,
                 strict: this.strict,
@@ -305,7 +314,7 @@ export class Tools {
     async exeToolCall(toolCall) {
         const { name: funcName, arguments: argsStr } = toolCall.function
         console.log(`Agent wants to call ${funcName}(${argsStr})`)
-        const tool = this.tools.find((tool) => tool.func.name === funcName)
+        const tool = this.tools.find((tool) => tool.name === funcName)
         if (tool) {
             return toolResultMessage(toolCall.id, await tool.invoke(argsStr))
         }
