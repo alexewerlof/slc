@@ -50,6 +50,7 @@ const componentSpecifications = [
     './service-component.jh&',
     './ui/show-hide-component.jhc&',
     './ui/steps-component.jhc&',
+    './ui/id-component.jh',
     './summary-component.jh&',
     './ui/tabs-component.jhc&',
     './ui/tooltip-component.hc&',
