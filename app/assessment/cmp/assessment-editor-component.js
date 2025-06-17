@@ -7,6 +7,7 @@ import { Provider } from '../../../components/provider.js'
 import { Service } from '../../../components/service.js'
 import { Bead, FileBead, Thread } from '../../../components/llm/thread.js'
 import { isInstance } from '../../../lib/validation.js'
+import { Tools } from '../../../components/llm/tools.js'
 
 export default {
     props: {
@@ -16,6 +17,55 @@ export default {
         },
     },
     data() {
+        const tools = new Tools()
+        tools.add(
+            this.addNewConsumer,
+            'Add a new consumer to the assessment and return its id.',
+        ).this(this)
+            .prm('displayName:string*', 'The display name of the new consumer')
+            .prm('description:string', 'A description of the new consumer')
+            .prm(
+                'type:string',
+                'The type of the new consumer. It can only be one of these values: "System", "Component", "Group"',
+            )
+
+        tools.add(
+            this.addNewProvider,
+            'Add a new provider to the assessment and return its id.',
+        ).this(this)
+            .prm('displayName:string*', 'The display name of the new provider')
+            .prm('description:string', 'A description of the new provider')
+            .prm(
+                'type:string',
+                'The type of the new provider. It can only be one of these values: "System", "Component", "Group"',
+            )
+
+        tools.add(
+            this.addNewService,
+            'Add a new service to the designated provider and return its id.',
+        ).this(this)
+            .prm('providerId:string', 'The id of the provider to add the service to')
+            .prm('displayName:string*', 'The display name of the new service')
+            .prm('description:string', 'A description of the new service')
+            .prm(
+                'type:string',
+                'The type of the new service. It can only be one of these values: "Automated", "Manual", "Hybrid"',
+            )
+
+        tools.add(
+            this.addNewConsumption,
+            'Add a new consumption to the designated consumer and return its id.',
+        ).this(this)
+            .prm('consumerId:string', 'The id of the consumer to add the consumption to')
+            .prm('displayName:string*', 'The display name of the new consumption')
+            .prm('description:string', 'A description of the new consumption')
+
+        function getDateAndTime() {
+            return String(new Date())
+        }
+
+        tools.add(getDateAndTime, 'Get the current date and time')
+
         return {
             thread: new Thread(
                 new FileBead('system', 'assess-prompt.md', '../../prompts/glossary.md'),
@@ -26,6 +76,7 @@ export default {
                 ),
                 new Bead('system', () => this.assessment.toProlog()),
             ),
+            tools,
             editingInstance: undefined,
         }
     },
@@ -37,6 +88,28 @@ export default {
     methods: {
         showDialog(ref, modal) {
             this.$refs[ref].show(modal)
+        },
+        addNewProvider(state) {
+            return this.assessment.providers.pushNew(state).id
+        },
+        addNewService(options) {
+            const { providerId, ...state } = options
+            const provider = this.assessment.providers.find((p) => p.id === providerId)
+            if (!provider) {
+                throw new Error(`Provider with id ${providerId} not found`)
+            }
+            return provider.services.pushNew(state).id
+        },
+        addNewConsumer(state) {
+            return this.assessment.consumers.pushNew(state).id
+        },
+        addNewConsumption(options) {
+            const { consumerId, ...state } = options
+            const consumer = this.assessment.consumers.find((c) => c.id === consumerId)
+            if (!consumer) {
+                throw new Error(`Consumer with id ${consumerId} not found`)
+            }
+            return consumer.consumptions.pushNew(state).id
         },
         removeProvider(provider) {
             if (!isInstance(provider, Provider)) {

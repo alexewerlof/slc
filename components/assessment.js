@@ -5,53 +5,15 @@ import { SelectableArray } from '../lib/selectable-array.js'
 import { Service } from './service.js'
 import { Consumption } from './consumption.js'
 import { icon } from '../lib/icons.js'
-import { Tools } from './llm/tools.js'
 
 export class Assessment {
     consumers = new SelectableArray(Consumer, this)
     providers = new SelectableArray(Provider, this)
-    tools = new Tools()
 
     constructor(state) {
         if (isObj(state)) {
             this.state = state
         }
-
-        this.tools.add(
-            this.addNewProvider,
-            'Add a new provider to the assessment',
-        ).this(this)
-            .prm('displayName:string*', 'The display name of the new provider')
-            .prm('description:string', 'A description of the new provider')
-            .prm(
-                'type:string',
-                'The type of the new provider. It can only be one of these values: "System", "Component", "Group"',
-            )
-
-        this.tools.add(
-            this.addNewConsumer,
-            'Add a new consumer to the assessment',
-        ).this(this)
-            .prm('displayName:string*', 'The display name of the new consumer')
-            .prm('description:string', 'A description of the new consumer')
-            .prm(
-                'type:string',
-                'The type of the new consumer. It can only be one of these values: "System", "Component", "Group"',
-            )
-
-        function getDateAndTime() {
-            return String(new Date())
-        }
-
-        this.tools.add(getDateAndTime, 'Get the current date and time')
-    }
-
-    addNewProvider(state) {
-        this.providers.pushNew(state)
-    }
-
-    addNewConsumer(state) {
-        this.consumers.pushNew(state)
     }
 
     get state() {
