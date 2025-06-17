@@ -337,15 +337,7 @@
                                     "consequence": "User may get frustrated",
                                     "businessImpact": "Users may contact customer support",
                                     "impactLevel": 10
-                                }
-                            ]
-                        },
-                        {
-                            "consumptionRef": [
-                                1,
-                                2
-                            ],
-                            "failures": [
+                                },
                                 {
                                     "symptom": "Fetching wrong contract",
                                     "consequence": "User may get confused. In the worse case they may end up paying the wrong amount.",
