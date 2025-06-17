@@ -5,6 +5,10 @@
         cursor: pointer;
         filter: drop-shadow(2px 2px 3px black);
     }
+    & rect {
+        fill: transparent;
+        stroke: var(--secondary-color);
+    }
 
     &:hover circle {
         stroke: var(--secondary-color);
