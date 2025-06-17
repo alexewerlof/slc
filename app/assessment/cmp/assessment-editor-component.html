@@ -25,7 +25,7 @@
         </div>
         <assessment-graph-component :assessment @select="(entity) => editingInstance = entity" :selected-entity="editingInstance"></assessment-graph-component>
         <dialog-component title="Summary" ref="summaryDialog">
-            <markdown-component :markdown="assessment.toString()"></markdown-component>
+            <summary-component :assessment></summary-component>
         </dialog-component>
         <dialog-component title="Export" ref="exportDialog">
             <code-block-component>
