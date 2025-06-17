@@ -1,4 +1,5 @@
 <div class="dependency-component">
+    <id-component :entity="dependency"></id-component>
     <fieldset class="b-mar-gap2">
         <legend>Failure ({{ dependency.failures.length }})</legend>
         <div class="warning block" v-if="dependency.failures.length === 0">
