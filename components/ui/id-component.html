@@ -1,1 +1,4 @@
-<code title="Identifier" class="subtle-hint" v-text="entity.id"></code>
+<div class="subtle-hint" @click="copy()">
+    <code title="Identifier" v-text="entity.id" ref="copyNodeRef"></code>
+    <icon-component name="content_copy"></icon-component>
+</div>
