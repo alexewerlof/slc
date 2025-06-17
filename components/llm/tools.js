@@ -58,6 +58,36 @@ import { isDef, isFn, isStr } from '../../lib/validation.js'
  * @property {boolean} required - Whether this parameter is required.
  */
 
+export function parseParamShorthand(paramShorthand) {
+    if (!isStr(paramShorthand)) {
+        throw new TypeError(`Expected paramShorthand to be a string. Got ${paramShorthand}`)
+    }
+
+    const parts = paramShorthand.split(':')
+    if (parts.length !== 2) {
+        throw new SyntaxError(`Invalid paramShorthand format: ${paramShorthand}`)
+    }
+
+    const name = parts[0].trim()
+    if (name.length === 0) {
+        throw new SyntaxError(`Invalid paramShorthand name: ${paramShorthand}`)
+    }
+
+    const typeAndRequired = parts[1].trim()
+
+    const typeAndRequiredParts = typeAndRequired.split('*', 2)
+    if (typeAndRequiredParts.length > 1 && typeAndRequiredParts[1].length) {
+        throw new SyntaxError(`Invalid paramShorthand type: ${paramShorthand}`)
+    }
+    const required = typeAndRequiredParts.length === 2
+    const type = typeAndRequiredParts[0].trim()
+    if (type.length === 0) {
+        throw SyntaxError(`Invalid paramShorthand type: ${paramShorthand}`)
+    }
+
+    return { name, type, required }
+}
+
 export class Tool {
     /** The value of this inside the function when it is invoked */
     thisArg = undefined
@@ -171,6 +201,11 @@ export class Tool {
     param(name, type, description, required = false) {
         this.properties.push({ name, type, description, required })
         return this
+    }
+
+    prm(paramShorthand, description) {
+        const { name, type, required } = parseParamShorthand(paramShorthand)
+        return this.param(name, type, description, required)
     }
 
     /**

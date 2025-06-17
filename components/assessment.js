@@ -21,18 +21,10 @@ export class Assessment {
             this.addNewProvider,
             'Add a new provider to the assessment',
         ).this(this)
-            .param(
-                'displayName',
-                'string',
-                'The display name of the new provider',
-                true,
-            ).param(
-                'description',
-                'string',
-                'A description of the new provider',
-            ).param(
-                'type',
-                'string',
+            .prm('displayName:string*', 'The display name of the new provider')
+            .prm('description:string', 'A description of the new provider')
+            .prm(
+                'type:string',
                 'The type of the new provider. It can only be one of these values: "System", "Component", "Group"',
             )
 
@@ -40,18 +32,10 @@ export class Assessment {
             this.addNewConsumer,
             'Add a new consumer to the assessment',
         ).this(this)
-            .param(
-                'displayName',
-                'string',
-                'The display name of the new consumer',
-                true,
-            ).param(
-                'description',
-                'string',
-                'A description of the new consumer',
-            ).param(
-                'type',
-                'string',
+            .prm('displayName:string*', 'The display name of the new consumer')
+            .prm('description:string', 'A description of the new consumer')
+            .prm(
+                'type:string',
                 'The type of the new consumer. It can only be one of these values: "System", "Component", "Group"',
             )
 
