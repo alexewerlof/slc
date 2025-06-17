@@ -8,6 +8,8 @@
  * @property {string} function.arguments - A JSON string representing the arguments for the function.
  */
 
+import { isDef, isFn, isStr } from '../../lib/validation.js'
+
 /**
  * Describes a message from an assistant that includes tool call requests.
  * @typedef {object} ToolsCallMessage
@@ -57,6 +59,9 @@
  */
 
 export class Tool {
+    /** The value of this inside the function when it is invoked */
+    thisArg = undefined
+
     /**
      * An array of descriptions for each parameter the tool's function accepts.
      * @type {ToolProperty[]}
@@ -81,45 +86,58 @@ export class Tool {
      * Indicates if the function parameters allow additional properties not explicitly defined.
      * @type {boolean}
      */
-    additionalProperties
+    additionalProperties = false
 
     /**
      * A flag for strict mode adherence, typically for schema validation by the LLM.
      * @type {boolean}
      */
-    strict
+    strict = false
 
     /**
      * Creates an instance of a Tool.
      * @param {Function} func - The actual JavaScript function this tool will execute.
      * @param {string} description - A description of what the tool (function) does.
-     * @param {boolean} [additionalProperties=false] - Whether the function parameters object can accept properties not explicitly described.
-     * @param {boolean} [strict=false] - A flag often used by LLMs for schema validation strictness.
      */
-    constructor(
-        func,
-        description,
-        additionalProperties = false,
-        strict = false,
-    ) {
+    constructor(func, description) {
+        if (!isFn(func)) {
+            throw new TypeError(`Expected tool func to be a function. Got ${func}`)
+        }
         this.func = func
-        this.description = description
-        this.additionalProperties = additionalProperties
-        this.strict = strict
+        if (isDef(description)) {
+            if (!isStr(description)) {
+                throw new TypeError(`Expected tool description to be a string. Got ${description}`)
+            }
+            this.description = description
+        }
+    }
+
+    this(thisArg) {
+        this.thisArg = thisArg
+        return this
+    }
+
+    hasAdditionalProperties(value) {
+        this.additionalProperties = Boolean(value)
+        return this
+    }
+
+    strictMode(value) {
+        this.strict = Boolean(value)
+        return this
     }
 
     /**
      * Invokes the tool's function with the given arguments.
      * Arguments are expected to be a JSON string representing an object.
-     * @param {object} that - The 'this' context for the function call.
      * @param {string} argsStr - A JSON string representing the arguments object for the function.
      * @returns {Promise<string>} A promise that resolves to a string representation of the function's result.
      */
-    async invoke(that, argsStr) {
+    async invoke(argsStr) {
         try {
             const args = JSON.parse(argsStr)
             // Assumes this.func expects a single argument object
-            const result = await this.func.call(that, args)
+            const result = await this.func.call(this.thisArg, args)
             console.log(
                 `Successfully executed ${this.func.name}(${argsStr}) => ${result} (${typeof result})`,
             )
@@ -145,7 +163,7 @@ export class Tool {
      * @param {string} name - The name of the parameter.
      * @param {string} type - The data type of the parameter (e.g., "string", "number").
      * @param {string} description - A description of what the parameter is for.
-     * @param {boolean} [required=false] - Whether the parameter is required.
+     * @param {boolean} [required] - Whether the parameter is required.
      * @returns {this} The Tool instance for chaining.
      * @throws {Error} If attempting to add more parameter descriptions than the function's declared arity (this.func.length).
      *                 Note: This check might be problematic if `this.func` expects a single object argument, as `this.func.length` would be 1.
@@ -218,12 +236,7 @@ export class Tools {
     /** @type {Tool[]} */
     tools = []
 
-    /**
-     * Creates an instance of Tools.
-     * @param {object} that - The context ('this' value) to be used when invoking tool functions.
-     */
-    constructor(that) {
-        this.that = that
+    constructor() {
     }
 
     /**
@@ -235,8 +248,8 @@ export class Tools {
      * @param {boolean} [strict=false] - A flag often used by LLMs for schema validation strictness.
      * @returns {Tool} The newly created Tool instance, allowing for chaining of parameter descriptions.
      */
-    add(func, description, additionalProperties, strict) {
-        const newTool = new Tool(func, description, additionalProperties, strict)
+    add(func, description) {
+        const newTool = new Tool(func, description)
         this.tools.push(newTool)
         return newTool
     }
@@ -259,7 +272,7 @@ export class Tools {
         console.log(`Agent wants to call ${funcName}(${argsStr})`)
         const tool = this.tools.find((tool) => tool.func.name === funcName)
         if (tool) {
-            return toolResultMessage(toolCall.id, await tool.invoke(this.that, argsStr))
+            return toolResultMessage(toolCall.id, await tool.invoke(argsStr))
         }
         return toolResultMessage(toolCall.id, `No tool found with the name "${funcName}"`)
     }
