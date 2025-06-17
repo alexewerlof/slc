@@ -20,6 +20,11 @@ export default {
             thread: new Thread(
                 new FileBead('system', 'assess-prompt.md', '../../prompts/glossary.md'),
                 new Bead('system', () => this.assessment.toString()),
+                new Bead(
+                    'system',
+                    'Below is a Prolog representation of all the entities in the assessment and their logical connection. You can use it to answer questions about the assessment. Use the displayName of the entities instead of their id whenever possible. When answering questions refer to the provided Prolog code in order to understand the context.',
+                ),
+                new Bead('system', () => this.assessment.toProlog()),
             ),
             editingInstance: undefined,
         }

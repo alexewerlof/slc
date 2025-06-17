@@ -272,4 +272,167 @@ export class Assessment {
 
         return lines.join('\n')
     }
+
+    toProlog() {
+        const lines = []
+
+        function quoted(str) {
+            return `"${str.replace(/"/g, '\\"')}"`
+        }
+
+        function fact(predicate, ...id) {
+            lines.push(`${predicate}(${id.join(', ')}).`)
+        }
+
+        fact(
+            '% consumer',
+            'ConsumerID',
+            'DisplayName',
+            'Description',
+            'Type',
+        )
+        this.consumers.forEach((consumer) => {
+            fact(
+                'consumer',
+                consumer.id,
+                quoted(consumer.displayName),
+                quoted(consumer.description),
+                consumer.type,
+            )
+        })
+
+        fact(
+            '% hasConsumption',
+            'ConsumerID',
+            'ConsumptionID',
+        )
+        this.consumptions.forEach((consumption) => {
+            fact(
+                'hasConsumption',
+                consumption.consumer.id,
+                consumption.id,
+            )
+        })
+
+        fact(
+            '% consumption',
+            'ConsumptionID',
+            'DisplayName',
+            'Description',
+        )
+        this.consumptions.forEach((consumption) => {
+            fact(
+                'consumption',
+                consumption.id,
+                quoted(consumption.displayName),
+                quoted(consumption.description),
+            )
+        })
+
+        fact(
+            '% provider',
+            'ProviderID',
+            'DisplayName',
+            'Description',
+            'Type',
+        )
+        this.providers.forEach((provider) => {
+            fact(
+                'provider',
+                provider.id,
+                quoted(provider.displayName),
+                quoted(provider.description),
+                provider.type,
+            )
+        })
+
+        fact('% provides', 'ProviderID', 'ServiceID')
+        this.services.forEach((service) => {
+            lines.push(`provides(${service.provider.id}, ${service.id}).`)
+        })
+
+        fact(
+            '% service',
+            'ServiceID',
+            'DisplayName',
+            'Description',
+        )
+        this.services.forEach((service) => {
+            fact(
+                'service',
+                service.id,
+                quoted(service.displayName),
+                quoted(service.description),
+            )
+        })
+
+        fact(
+            '% measures',
+            'MetricID',
+            'ServiceID',
+        )
+
+        this.metrics.forEach((metric) => {
+            fact(
+                'measures',
+                metric.id,
+                metric.service.id,
+            )
+        })
+
+        fact(
+            '% metric',
+            'MetricID',
+            'DisplayName',
+            'Description',
+            'IsBoolean',
+            'NumericUnit',
+        )
+        this.metrics.forEach((metric) => {
+            fact(
+                'metric',
+                metric.id,
+                quoted(metric.displayName),
+                quoted(metric.description),
+                metric.isBoolean,
+                quoted(metric.numericUnit),
+            )
+        })
+
+        fact(
+            '% indicates',
+            'MetricID',
+            'FailureID',
+        )
+        this.metrics.forEach((metric) => {
+            for (const failure of metric.linkedFailures) {
+                fact(
+                    'indicates',
+                    metric.id,
+                    failure.id,
+                )
+            }
+        })
+
+        fact(
+            '% failure',
+            'FailureID',
+            'Symptom',
+            'Consequence',
+            'BusinessImpact',
+            'ImpactLevel',
+        )
+        this.failures.forEach((failure) => {
+            fact(
+                'failure',
+                failure.id,
+                quoted(failure.symptom),
+                quoted(failure.consequence),
+                quoted(failure.businessImpact),
+                failure.impactLevel,
+            )
+        })
+
+        return lines.join('\n')
+    }
 }
