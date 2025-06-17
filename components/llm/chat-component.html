@@ -5,6 +5,7 @@
             <textarea
                 type="text"
                 v-model="message"
+                ref="promptInput"
                 placeholder="Type your message here..."
                 @keyup.enter="submitPrompt"
                 :disabled="isEditDisabled"></textarea>

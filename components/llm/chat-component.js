@@ -59,14 +59,14 @@ export default {
                         break
                     }
                 }
-
-                this.$nextTick(() => {
-                    this.$refs.chatThreadComponent.scrollToBottom()
-                })
             } catch (error) {
                 console.error('Error:', error)
                 showToast('Error: ' + error)
             }
+            this.$nextTick(() => {
+                this.$refs.chatThreadComponent.scrollToBottom()
+                this.$refs.promptInput.focus()
+            })
             this.abortController = undefined
         },
         abortCompletion(reason) {
