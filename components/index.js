@@ -52,6 +52,7 @@ const componentSpecifications = [
     './ui/steps-component.jhc&',
     './ui/id-component.jh',
     './summary-component.jh&',
+    './lint-component.jh&',
     './ui/tabs-component.jhc&',
     './ui/tooltip-component.hc&',
     './llm/chat-thread-component.jhc&',

@@ -1,0 +1,5 @@
+<div class="lint-component">
+    <div v-for="item in lint.items" :class="className(item.level)">
+        <markdown-component :markdown="item.message"></markdown-component>
+    </div>
+</div>
