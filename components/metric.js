@@ -4,7 +4,6 @@ import { Failure } from './failure.js'
 import { icon } from '../lib/icons.js'
 import { Condition } from './condition.js'
 import { config } from '../config.js'
-import { Dependency } from './dependency.js'
 import { Identifiable } from '../lib/identifiable.js'
 import { Lint } from './lint.js'
 
@@ -32,11 +31,12 @@ export class Metric extends Identifiable {
 
     get state() {
         return {
+            id: this.id,
             displayName: this.displayName,
             description: this.description,
             isBoolean: this.isBoolean,
             numericUnit: this.numericUnit,
-            linkedFailureRefs: this.linkedFailures.map((failure) => failure.ref),
+            failureIds: this.linkedFailures.map((failure) => failure.id),
         }
     }
 
@@ -46,12 +46,17 @@ export class Metric extends Identifiable {
         }
 
         const {
+            id,
             displayName,
             description,
             isBoolean,
             numericUnit,
-            linkedFailureRefs,
+            failureIds,
         } = newState
+
+        if (isDef(id)) {
+            this.id = id
+        }
 
         if (isDef(displayName)) {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
@@ -75,11 +80,16 @@ export class Metric extends Identifiable {
             // TODO: validate numericUnit
             this.numericUnit = numericUnit
         }
-        if (isDef(linkedFailureRefs)) {
-            if (!isArr(linkedFailureRefs)) {
-                throw new TypeError(`Invalid linkedFailureRefs. ${linkedFailureRefs}`)
+        if (isDef(failureIds)) {
+            if (!isArr(failureIds)) {
+                throw new TypeError(`Invalid failureIds. ${failureIds}`)
             }
-            this.linkedFailures = linkedFailureRefs.map((ref) => this.getFailureFromRef(ref))
+            this.linkedFailures.length = 0
+            for (const failure of this.service.failures) {
+                if (failureIds.includes(failure.id)) {
+                    this.linkedFailures.push(failure)
+                }
+            }
         }
     }
 
@@ -93,22 +103,6 @@ export class Metric extends Identifiable {
 
     set isNumeric(value) {
         this.isBoolean = !value
-    }
-
-    getFailureFromRef(ref) {
-        if (!isArr(ref) || ref.length !== 2) {
-            throw new TypeError(`Invalid failure ref. ${ref}`)
-        }
-        const [dependencyIndex, failureIndex] = ref
-        const dependency = this.service.dependencies[dependencyIndex]
-        if (!isInstance(dependency, Dependency)) {
-            throw new TypeError(`Invalid dependency. ${dependency}`)
-        }
-        const failure = dependency.failures[failureIndex]
-        if (!isInstance(failure, Failure)) {
-            throw new TypeError(`Invalid failure. ${failure}`)
-        }
-        return failure
     }
 
     isFailureLinked(failure) {
@@ -148,6 +142,10 @@ export class Metric extends Identifiable {
 
     remove() {
         return this.service.metrics.remove(this)
+    }
+
+    get displayNameWithFallback() {
+        return this.displayName || this.id
     }
 
     toString() {

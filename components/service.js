@@ -32,6 +32,7 @@ export class Service extends Identifiable {
 
     get state() {
         return {
+            id: this.id,
             displayName: this.displayName,
             description: this.description,
             type: this.type,
@@ -45,33 +46,43 @@ export class Service extends Identifiable {
             throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
         }
         const {
+            id,
             displayName,
             description,
             type,
             dependencies,
             metrics,
         } = newState
+
+        if (isDef(id)) {
+            this.id = id
+        }
+
         if (isDef(displayName)) {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
                 throw new TypeError(`Invalid displayName. ${displayName}`)
             }
             this.displayName = displayName
         }
+
         if (isDef(description)) {
             if (!isStrLen(description, config.description.minLength, config.description.maxLength)) {
                 throw new TypeError(`Invalid description. ${description}`)
             }
             this.description = description
         }
+
         if (isDef(type)) {
             if (!isInArr(type, Service.possibleTypes)) {
                 throw new TypeError(`Invalid type. ${type}`)
             }
             this.type = type
         }
+
         if (isDef(dependencies)) {
             this.dependencies.state = dependencies
         }
+
         if (isDef(metrics)) {
             this.metrics.state = metrics
         }
@@ -118,7 +129,7 @@ export class Service extends Identifiable {
             if (!this.isConsumedBy(consumption)) {
                 this.dependencies.push(
                     new Dependency(this, {
-                        consumptionRef: [consumption.consumer.index, consumption.index],
+                        consumptionId: consumption.id,
                     }),
                 )
             }
@@ -131,7 +142,7 @@ export class Service extends Identifiable {
     }
 
     get displayNameWithFallback() {
-        return this.displayName || `Service #${this.index}`
+        return this.displayName || this.id
     }
 
     toString() {

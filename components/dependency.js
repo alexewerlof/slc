@@ -1,7 +1,7 @@
 import { icon } from '../lib/icons.js'
 import { Identifiable } from '../lib/identifiable.js'
 import { SelectableArray } from '../lib/selectable-array.js'
-import { isArr, isDef, isInstance, isObj } from '../lib/validation.js'
+import { isArr, isDef, isInstance, isObj, isStr } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
 import { Consumption } from './consumption.js'
 import { Failure } from './failure.js'
@@ -9,6 +9,7 @@ import { Lint } from './lint.js'
 import { Service } from './service.js'
 
 export class Dependency extends Identifiable {
+    consumption
     failures = new SelectableArray(Failure, this)
 
     constructor(service, state) {
@@ -22,7 +23,7 @@ export class Dependency extends Identifiable {
 
     get state() {
         return {
-            consumptionRef: [this.consumption.consumer.index, this.consumption.index],
+            consumptionId: this.consumption.id,
             failures: this.failures.map((failure) => failure.state),
         }
     }
@@ -32,24 +33,15 @@ export class Dependency extends Identifiable {
             throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
         }
 
-        const { consumptionRef, failures } = newState
+        const { consumptionId, failures } = newState
 
-        if (!isArr(consumptionRef) || consumptionRef.length !== 2) {
-            throw new TypeError(`Invalid consumptionRef: ${consumptionRef} (${typeof consumptionRef})`)
+        if (!isStr(consumptionId)) {
+            throw new TypeError(`Invalid consumptionId: ${consumptionId} (${typeof consumptionId})`)
         }
 
-        const [consumerIndex, consumptionIndex] = consumptionRef
-
-        const consumer = this.assessment.consumers[consumerIndex]
-        if (!isInstance(consumer, Consumer)) {
-            throw TypeError(`Consumer must be an instance of Consumer. Got ${consumer} (index: ${consumerIndex})`)
-        }
-
-        this.consumption = consumer.consumptions[consumptionIndex]
+        this.consumption = this.assessment.consumptions.find((consumption) => consumption.id === consumptionId)
         if (!isInstance(this.consumption, Consumption)) {
-            throw TypeError(
-                `Consumption must be an instance of Consumption. Got ${this.consumption} (index: ${consumptionIndex})`,
-            )
+            throw TypeError(`No consumption found with id ${consumptionId}.`)
         }
         if (isDef(failures)) {
             if (!isArr(failures)) {

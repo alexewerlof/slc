@@ -25,6 +25,7 @@ export class Consumption extends Identifiable {
 
     get state() {
         return {
+            id: this.id,
             displayName: this.displayName,
             description: this.description,
         }
@@ -35,15 +36,22 @@ export class Consumption extends Identifiable {
             throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
         }
         const {
+            id,
             displayName,
             description,
         } = newState
+
+        if (isDef(id)) {
+            this.id = id
+        }
+
         if (isDef(displayName)) {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
                 throw new TypeError(`Invalid displayName. ${displayName}`)
             }
             this.displayName = displayName
         }
+
         if (isDef(description)) {
             if (!isStrLen(description, config.description.minLength, config.description.maxLength)) {
                 throw new TypeError(`Invalid description. ${description}`)
@@ -68,7 +76,7 @@ export class Consumption extends Identifiable {
     }
 
     get displayNameWithFallback() {
-        return this.displayName || `Consumption #${this.index}`
+        return this.displayName || this.id
     }
 
     toString() {

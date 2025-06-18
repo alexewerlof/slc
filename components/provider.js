@@ -29,6 +29,7 @@ export class Provider extends Identifiable {
 
     get state() {
         return {
+            id: this.id,
             displayName: this.displayName,
             description: this.description,
             type: this.type,
@@ -41,29 +42,38 @@ export class Provider extends Identifiable {
             throw new TypeError(`Invalid options: ${newState} (${typeof newState})`)
         }
         const {
+            id,
             displayName,
             description,
             type,
             services,
         } = newState
+
+        if (isDef(id)) {
+            this.id = id
+        }
+
         if (isDef(displayName)) {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
                 throw new TypeError(`Invalid displayName. ${displayName}`)
             }
             this.displayName = displayName
         }
+
         if (isDef(description)) {
             if (!isStrLen(description, config.description.minLength, config.description.maxLength)) {
                 throw new TypeError(`Invalid description. ${description}`)
             }
             this.description = description
         }
+
         if (isDef(type)) {
             if (!isInArr(type, Provider.possibleTypes)) {
                 throw new TypeError(`Invalid type. ${type}`)
             }
             this.type = type
         }
+
         if (isDef(services)) {
             if (!isArr(services)) {
                 throw new TypeError(`Invalid services: ${services} (${typeof services})`)
@@ -90,7 +100,7 @@ export class Provider extends Identifiable {
     }
 
     get displayNameWithFallback() {
-        return this.displayName || `Provider #${this.index}`
+        return this.displayName || this.id
     }
 
     toString() {

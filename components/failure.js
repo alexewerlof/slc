@@ -26,6 +26,7 @@ export class Failure extends Identifiable {
 
     get state() {
         return {
+            id: this.id,
             symptom: this.symptom,
             consequence: this.consequence,
             businessImpact: this.businessImpact,
@@ -39,11 +40,16 @@ export class Failure extends Identifiable {
         }
 
         const {
+            id,
             symptom,
             consequence,
             businessImpact,
             impactLevel,
         } = newState
+
+        if (isDef(id)) {
+            this.id = id
+        }
 
         if (isDef(symptom)) {
             if (!isStr(symptom)) {
