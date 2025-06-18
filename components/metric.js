@@ -158,17 +158,6 @@ export class Metric extends Identifiable {
         return this.service.metrics.indexOf(this)
     }
 
-    static load(service, metricObj) {
-        const { displayName, description, isBoolean, numericUnit, linkedFailureRefs } = metricObj
-        const newMetric = new Metric(service, displayName, description, isBoolean, numericUnit)
-
-        for (const failureIndex of linkedFailureRefs) {
-            newMetric.linkFailure(service.failures[failureIndex])
-        }
-
-        return newMetric
-    }
-
     get lint() {
         const lint = new Lint()
 
