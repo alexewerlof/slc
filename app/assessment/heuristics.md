@@ -19,7 +19,7 @@ If (there are some consumers but no consumptions):
 > Consumption declares why a consumer uses one or more services to achieve a goal. This is a key piece of information because it forces us to think about how the failure is perceived from the consumers' point of view and what are the symptoms and business impact.
 
 # Consumer
-If (there are some consumers without consumptions):
+If (a consumers has no consumptions):
 > [comsumer_id] has no declared any consumptions. Consumptions explain why a consumer uses one or more services.
 > Please either add some consumptions to this consumer or remove it from the assessment.
 
@@ -32,6 +32,16 @@ If (a consumption has no dependencies):
 If (a providers has no services):
 > [provider_id] does not provide any services.
 > Please either add some services or remove this provider from the assessment.
+
+# Service
+If (a service has no dependencies):
+> [service_id] has no dependencies to any consumer.
+> Please either add some dependencies to this service or remove it from the assessment.
+
+# Dependency
+If (a dependency has no failures):
+> [dependency_id] has no failures.
+> Please either add some failures to this dependency or remove it from the assessment.
 
 # Metric
 If (a metric has no failures):
