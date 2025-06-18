@@ -171,7 +171,7 @@ export class Metric extends Identifiable {
         }
         if (this.service.dependencies.length === 0) {
             lint.warn(
-                'No consumer **depends** on the service that declares this metric.',
+                'No consumer **depends** on the service that this metric is measuring.',
                 'Please declare a dependency before trying to set a metric.',
             )
         }
