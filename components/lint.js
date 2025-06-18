@@ -13,14 +13,14 @@ export class Lint {
     constructor() {
     }
 
-    add(level, message) {
+    add(level, ...messages) {
         if (!isInArr(level, validLevels)) {
             throw new Error(`Invalid level: ${level}. Must be one of: ${validLevels.join(', ')}`)
         }
 
         const newItem = {
             level,
-            message,
+            message: messages.join('\n\n'),
         }
 
         const newPriority = priorityMap[level]
@@ -40,16 +40,16 @@ export class Lint {
         this.items.splice(insertionIndex, 0, newItem)
     }
 
-    error(message) {
-        this.add('error', message)
+    error(...messages) {
+        this.add('error', ...messages)
     }
 
-    warn(message) {
-        this.add('warn', message)
+    warn(...messages) {
+        this.add('warn', ...messages)
     }
 
-    info(message) {
-        this.add('info', message)
+    info(...messages) {
+        this.add('info', ...messages)
     }
 
     clear() {
