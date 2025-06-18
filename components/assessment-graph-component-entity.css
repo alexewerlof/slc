@@ -6,8 +6,9 @@
         filter: drop-shadow(2px 2px 3px black);
     }
     & rect {
-        fill: transparent;
+        stroke-width: 2;
         stroke: var(--secondary-color);
+        fill: none;
     }
 
     &:hover circle {
