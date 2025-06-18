@@ -6,6 +6,7 @@ import { Condition } from './condition.js'
 import { config } from '../config.js'
 import { Dependency } from './dependency.js'
 import { Identifiable } from '../lib/identifiable.js'
+import { Lint } from './lint.js'
 
 const metricIcon = icon('metric')
 
@@ -166,5 +167,27 @@ export class Metric extends Identifiable {
         }
 
         return newMetric
+    }
+
+    get lint() {
+        const lint = new Lint()
+
+        if (this.displayName.length === 0) {
+            lint.warn(`Please add the metric name`)
+        }
+
+        if (this.linkedFailures.length === 0) {
+            lint.warn(
+                'This metric is not measuring any **failure** which makes it a poor choice for SLI.',
+                'Please connect this metric to some failures.',
+            )
+        }
+        if (this.service.dependencies.length === 0) {
+            lint.warn(
+                'No consumer **depends** on the service that declares this metric.',
+                'Please declare a dependency before trying to set a metric.',
+            )
+        }
+        return lint
     }
 }

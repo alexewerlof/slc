@@ -5,6 +5,7 @@ import { isArr, isDef, isInstance, isObj } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
 import { Consumption } from './consumption.js'
 import { Failure } from './failure.js'
+import { Lint } from './lint.js'
 import { Service } from './service.js'
 
 export class Dependency extends Identifiable {
@@ -76,5 +77,16 @@ export class Dependency extends Identifiable {
 
     remove() {
         this.service.dependencies.remove(this)
+    }
+
+    get lint() {
+        const lint = new Lint()
+        if (this.failures.length === 0) {
+            lint.warn(
+                'No **failures** are identified for this dependency which effectively makes it pointless for this assessment.',
+                'Please declare some failures.',
+            )
+        }
+        return lint
     }
 }

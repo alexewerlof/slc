@@ -3,6 +3,7 @@ import { config } from '../config.js'
 import { icon } from '../lib/icons.js'
 import { Dependency } from './dependency.js'
 import { Identifiable } from '../lib/identifiable.js'
+import { Lint } from './lint.js'
 
 // If a certain service fails, what activities will it impact and how?
 export class Failure extends Identifiable {
@@ -101,5 +102,23 @@ export class Failure extends Identifiable {
 
     get ref() {
         return [this.dependency.index, this.index]
+    }
+
+    get lint() {
+        const lint = new Lint()
+
+        if (this.symptom.length === 0) {
+            lint.warn(`Please add a symptom to failure`)
+        }
+
+        if (this.consequence.length === 0) {
+            lint.info(`Please add a consequence to failure`)
+        }
+
+        if (this.businessImpact.length === 0) {
+            lint.info(`Please add a business impact to failure`)
+        }
+
+        return lint
     }
 }

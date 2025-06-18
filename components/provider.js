@@ -4,6 +4,7 @@ import { Assessment } from './assessment.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { config } from '../config.js'
 import { Identifiable } from '../lib/identifiable.js'
+import { Lint } from './lint.js'
 
 export class Provider extends Identifiable {
     static possibleTypes = Object.freeze(['System', 'Component', 'Group'])
@@ -102,5 +103,18 @@ export class Provider extends Identifiable {
 
     remove() {
         return this.assessment.providers.remove(this)
+    }
+
+    get lint() {
+        const lint = new Lint()
+        if (this.displayName.length === 0) {
+            lint.warn(`Please fill the display name.`)
+        }
+        if (this.services.length === 0) {
+            lint.warn(
+                `This provider is useless for this assessment because it provides no **services**. Please declare some services or remove this provider.`,
+            )
+        }
+        return lint
     }
 }

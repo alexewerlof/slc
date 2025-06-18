@@ -4,6 +4,7 @@ import { SelectableArray } from '../lib/selectable-array.js'
 import { isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { Consumption } from './consumption.js'
+import { Lint } from './lint.js'
 
 export class Consumer extends Identifiable {
     static possibleTypes = ['System', 'Component', 'Group']
@@ -122,5 +123,21 @@ export class Consumer extends Identifiable {
 
     get index() {
         return this.assessment.consumers.indexOf(this)
+    }
+
+    get lint() {
+        const lint = new Lint()
+
+        if (this.displayName.length === 0) {
+            lint.warn(`Please fill the display name.`)
+        }
+
+        if (this.consumptions.length === 0) {
+            lint.warn(
+                'No consumption is defined for this consumer which effectively makes it pointless for this assessment.',
+                'Please declare some consumptions or remove the consumer.',
+            )
+        }
+        return lint
     }
 }

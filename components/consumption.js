@@ -3,6 +3,7 @@ import { isDef, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
 import { config } from '../config.js'
 import { Identifiable } from '../lib/identifiable.js'
+import { Lint } from './lint.js'
 
 const scopeIcon = icon('scope')
 
@@ -80,5 +81,31 @@ export class Consumption extends Identifiable {
 
     remove() {
         return this.consumer.consumptions.remove(this)
+    }
+
+    get lint() {
+        const lint = new Lint()
+        const { assessment } = this.consumer
+        if (this.displayName.length === 0) {
+            lint.warn(`Please fill the display name.`)
+        }
+        if (assessment.providers.length === 0) {
+            lint.info(
+                'There are currently no service **providers** declared to consume.',
+                'Please add some service providers first.',
+            )
+        } else if (assessment.services.length === 0) {
+            lint.info(
+                'There are currently no **service** declared to consume.',
+                'Please add some services to the providers so that the consumption can depend on them.',
+            )
+        }
+        if (this.dependencies.length === 0) {
+            lint.warn(
+                'This consumption does not depend on any services which effectively makes it pointless in this assessment.',
+                'Please declare some dependencies to services.',
+            )
+        }
+        return lint
     }
 }

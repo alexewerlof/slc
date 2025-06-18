@@ -1,5 +1,6 @@
 <div class="consumption-component">
     <id-component :entity="consumption"></id-component>
+    <lint-component :lint="consumption.lint"></lint-component>
     <fieldset>
         <legend>Basics</legend>
         <label for="consumption-display-name">
@@ -36,28 +37,10 @@
             </p>
         </help-component>
     </h4>
-    <div class="info block" v-if="consumption.consumer.assessment.services.length === 0">
-        <p>
-            There are currently no services declared to consume.
-        </p>
-        <p v-if="consumption.consumer.assessment.providers.length">
-            Please add some services to providers first.
-        </p>
-        <p v-else>
-            Please add some providers first. Then add some services to them.
-        </p>
-    </div>
-    <div class="warning block" v-if="consumption.dependencies.length === 0">
-        <p>
-            This consumption does not depend on any services.
-        </p>
-    </div>
     <fieldset v-for="provider in consumption.consumer.assessment.providers">
         <legend :title="provider.description">{{ provider.displayNameWithFallback }}</legend>
         <div v-if="!provider.services.length">
-            <div class="warning block">
-                No service defined.
-            </div>
+            No service defined!
         </div>
         <div v-for="service of provider.services">
             <label :title="service.description">

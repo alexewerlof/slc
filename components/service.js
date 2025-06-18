@@ -6,6 +6,7 @@ import { SelectableArray } from '../lib/selectable-array.js'
 import { Metric } from './metric.js'
 import { Dependency } from './dependency.js'
 import { Identifiable } from '../lib/identifiable.js'
+import { Lint } from './lint.js'
 
 const scopeIcon = icon('scope')
 
@@ -143,5 +144,19 @@ export class Service extends Identifiable {
 
     remove() {
         return this.provider.services.remove(this)
+    }
+
+    get lint() {
+        const lint = new Lint()
+        if (this.displayName.length === 0) {
+            lint.warn(`Please fill the display name.`)
+        }
+        if (this.dependencies.length === 0) {
+            lint.warn(
+                'No consumptions depend on this service.',
+                'Please select some consumptions or add new ones.',
+            )
+        }
+        return lint
     }
 }

@@ -380,15 +380,15 @@ export class Assessment {
     }
 
     get lint() {
-        const ret = new Lint()
+        const lint = new Lint()
         if (this.providers.length === 0) {
-            ret.warn('There are no serivce **providers**. Please add some service providers.')
+            lint.warn('There are no serivce **providers**. Please add some service providers.')
         }
 
         if (this.consumers.length === 0) {
-            ret.warn('There are no **consumers**. Please add some service consumers.')
+            lint.warn('There are no **consumers**. Please add some service consumers.')
         }
 
-        return ret
+        return lint
     }
 }
