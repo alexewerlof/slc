@@ -111,12 +111,7 @@ export class Consumer extends Identifiable {
     }
 
     removeConsumption(consumption) {
-        const index = this.consumptions.indexOf(consumption)
-        if (index > -1) {
-            this.consumptions.splice(index, 1)
-        } else {
-            throw new ReferenceError(`Consumption ${consumption} not found in consumer ${this}`)
-        }
+        return this.consumptions.remove(consumption)
     }
 
     remove() {
