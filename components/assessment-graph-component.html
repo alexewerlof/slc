@@ -11,6 +11,7 @@
                     :d="d(consumptionX(consumption), consumptionY(consumption), width, consumptionY(consumption))"></path>
                 <assessment-graph-component-entity
                     :is-selected="selectedEntity === consumption"
+                    :has-notification="consumption.lint.count"
                     type="consumption"
                     :cx="consumptionX(consumption)"
                     :cy="consumptionY(consumption)"
@@ -23,6 +24,7 @@
             </g>
             <assessment-graph-component-entity
                 :is-selected="selectedEntity === consumer"
+                :has-notification="consumer.lint.count"
                 type="consumer"
                 :cx="consumerX(consumer)"
                 :cy="consumerY(consumer)"
@@ -44,6 +46,7 @@
                     :d="d(serviceX(service), serviceY(service), serviceX(service), height)"></path>
                 <assessment-graph-component-entity
                     :is-selected="selectedEntity === service"
+                    :has-notification="service.lint.count"
                     type="service"
                     :cx="serviceX(service)"
                     :cy="serviceY(service)"
@@ -57,6 +60,7 @@
                 <assessment-graph-component-entity
                     v-for="dependency of service.dependencies"
                     :is-selected="selectedEntity === dependency"
+                    :has-notification="dependency.lint.count"
                     type="dependency"
                     :cx="dependencyX(dependency)"
                     :cy="dependencyY(dependency)"
@@ -70,6 +74,7 @@
                 <assessment-graph-component-entity
                     v-for="metric of service.metrics"
                     :is-selected="selectedEntity === metric"
+                    :has-notification="metric.lint.count"
                     type="metric"
                     :cx="metricX(metric)"
                     :cy="metricY(metric)"
@@ -83,6 +88,7 @@
             <!-- Provider -->
             <assessment-graph-component-entity
                 :is-selected="selectedEntity === provider"
+                :has-notification="provider.lint.count"
                 type="provider"
                 :tooltip="`Provider: ${ provider }`"
                 :cx="providerX(provider)"

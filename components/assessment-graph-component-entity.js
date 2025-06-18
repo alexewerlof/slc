@@ -18,10 +18,30 @@ export default {
         },
         isSelected: {
             type: Boolean,
-            required: false,
+            default: false,
+        },
+        hasNotification: {
+            type: Boolean,
+            default: false,
         },
     },
     computed: {
+        sel() {
+            const padding = 5
+            return {
+                x: this.cx - this.r - padding,
+                y: this.cy - this.r - padding,
+                width: (this.r + padding) * 2,
+                height: (this.r + padding) * 2,
+            }
+        },
+        notif() {
+            return {
+                cx: this.cx + this.r,
+                cy: this.cy - this.r,
+                r: 3,
+            }
+        },
         r() {
             return this.isSelected ? 13 : 12
         },

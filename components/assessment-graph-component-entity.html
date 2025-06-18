@@ -3,8 +3,18 @@
     @mouseleave="$emit('status')"
     :class="classes"
 >
-    <rect v-if="isSelected" :x="cx-r-4" :y="cy-r-4" :width="outerR*2" :height="outerR*2"></rect>
-    <circle :cx :cy :r>
+    <rect
+        class="assessment-graph-component-entity__selection-indicator"
+        v-if="isSelected"
+        :x="sel.x"
+        :y="sel.y"
+        :width="sel.width"
+        :height="sel.height"></rect>
+    <circle
+        class="assessment-graph-component-entity__bg"
+        :cx
+        :cy
+        :r>
         <title v-if="tooltip">{{ tooltip }}</title>
     </circle>
     <text
@@ -12,4 +22,12 @@
         :y="cy">
         <slot></slot>
     </text>
+    <circle
+        v-if="hasNotification"
+        class="assessment-graph-component-entity__notification-indicator"
+        :cx="notif.cx"
+        :cy="notif.cy"
+        :r="notif.r"
+    >
+    </circle>
 </g>

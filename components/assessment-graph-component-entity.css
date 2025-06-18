@@ -1,17 +1,12 @@
 .assessment-graph-component-entity {
-    & circle {
+    & .assessment-graph-component-entity__bg {
         stroke: var(--primary-color);
         stroke-width: 2;
         cursor: pointer;
         filter: drop-shadow(2px 2px 3px black);
     }
-    & rect {
-        stroke-width: 2;
-        stroke: var(--secondary-color);
-        fill: none;
-    }
 
-    &:hover circle {
+    &:hover .assessment-graph-component-entity__bg {
         stroke: var(--secondary-color);
         filter: none;
     }
@@ -24,8 +19,18 @@
     }
 }
 
+.assessment-graph-component-entity__selection-indicator {
+    stroke-width: 2;
+    stroke: var(--secondary-color);
+    fill: none;
+}
+
+.assessment-graph-component-entity__notification-indicator {
+    fill: var(--brand-red);
+}
+
 .assessment-graph-component-entity--provider, .assessment-graph-component-entity--service {
-    & circle {
+    & .assessment-graph-component-entity__bg {
         fill: var(--brand-green);
     }
     & text {
@@ -34,7 +39,7 @@
 }
 
 .assessment-graph-component-entity--consumer, .assessment-graph-component-entity--consumption {
-    & circle {
+    & .assessment-graph-component-entity__bg {
         fill: var(--brand-purple);
     }
     & text {
@@ -43,7 +48,7 @@
 }
 
 .assessment-graph-component-entity--dependency {
-    & circle {
+    & .assessment-graph-component-entity__bg {
         fill: var(--background-color);
         stroke: var(--brand-pink);
     }
@@ -54,7 +59,7 @@
 }
 
 .assessment-graph-component-entity--metric {
-    & circle {
+    & .assessment-graph-component-entity__bg {
         fill: var(--primary-color);
         stroke: var(--brand-pink);
     }
