@@ -39,7 +39,7 @@
             <provider-component :provider="editingInstance"></provider-component>
             <div class="button-bar">
                 <button
-                    @click="editingInstance.services.pushNew()"
+                    @click="editingInstance = editingInstance.services.pushNew()"
                 >
                     <icon-component name="add_circle"></icon-component>
                     New Service
@@ -58,7 +58,7 @@
             <h2>Service</h2>
             <service-component :service="editingInstance"></service-component>
             <div class="button-bar">
-                <button @click="editingInstance.metrics.pushNew()">
+                <button @click="editingInstance = editingInstance.metrics.pushNew()">
                     <icon-component name="add_circle"></icon-component>
                     New Metric
                 </button>
@@ -76,7 +76,7 @@
             <h2>Consumer</h2>
             <consumer-component :consumer="editingInstance"></consumer-component>
             <div class="button-bar">
-                <button @click="editingInstance.consumptions.pushNew()">
+                <button @click="editingInstance = editingInstance.consumptions.pushNew()">
                     <icon-component name="add_circle"></icon-component>
                     New Consumption
                 </button>
