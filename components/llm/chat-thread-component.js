@@ -15,6 +15,18 @@ export default {
         },
     },
     methods: {
+        roleToFriendly(role) {
+            switch (role) {
+                case 'user':
+                    return 'You'
+                case 'assistant':
+                    return 'AI'
+                case 'system':
+                    return 'Developer'
+                default:
+                    return role
+            }
+        },
         scrollToTop() {
             const container = this.$refs.threadContainerRef
             if (container) {

@@ -25,9 +25,7 @@
     <div class="chat-thread-component__thread" ref="threadContainerRef">
         <div v-for="bead of thread.beads"
             :class="`chat-thread-component__bead chat-thread-component__bead--${bead.role}`" :hidden="bead.role === 'system' && !showSystemMessages">
-            <div class="chat-thread-component__role">
-                {{ bead.role }}
-            </div>
+            <div class="chat-thread-component__role" v-text="roleToFriendly(bead.role)"></div>
             <markdown-component v-if="bead.content" class="frost chat-thread-component__contents" :markdown="bead.content"></markdown-component>
             <loading-animation-component v-if="!bead.content"></loading-animation-component>
         </div>
