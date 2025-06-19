@@ -391,4 +391,40 @@ export class Assessment {
 
         return lint
     }
+
+    markdownLint() {
+        const ret = []
+
+        ret.push(this.lint.toMarkdown('Assessment Lint'))
+
+        for (const provider of this.providers) {
+            ret.push(provider.lint.toMarkdown(`Provider ${provider.id}`))
+        }
+
+        for (const consumer of this.consumers) {
+            ret.push(consumer.lint.toMarkdown(`Consumer ${consumer.id}`))
+        }
+
+        for (const service of this.services) {
+            ret.push(service.lint.toMarkdown(`Service ${service.id}`))
+        }
+
+        for (const consumption of this.consumptions) {
+            ret.push(consumption.lint.toMarkdown(`Consumption ${consumption.id}`))
+        }
+
+        for (const dependency of this.dependencies) {
+            ret.push(dependency.lint.toMarkdown(`Dependency ${dependency.id}`))
+        }
+
+        for (const metric of this.metrics) {
+            ret.push(metric.lint.toMarkdown(`Metric ${metric.id}`))
+        }
+
+        for (const failure of this.failures) {
+            ret.push(failure.lint.toMarkdown(`Failure ${failure.id}`))
+        }
+
+        return ret.filter((s) => s.length).join('\n\n')
+    }
 }
