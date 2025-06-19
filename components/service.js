@@ -167,6 +167,16 @@ export class Service extends Identifiable {
                 'No consumptions depend on this service.',
                 'Please select some consumptions or add new ones.',
             )
+        } else if (this.failures.length === 0) {
+            lint.warn(
+                'No failure is identified for any of the dependencies.',
+                'Please select a dependency and declare some failures',
+            )
+        } else if (this.metrics.length === 0) {
+            lint.warn(
+                'This service has no metrics associated with it',
+                'Please add some metrics.',
+            )
         }
         return lint
     }
