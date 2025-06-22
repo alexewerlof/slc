@@ -5,6 +5,11 @@ export default {
             required: true,
         },
     },
+    data() {
+        return {
+            isReadmeVisible: true,
+        }
+    },
     computed: {
         manifestStyle() {
             return {

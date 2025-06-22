@@ -2,15 +2,27 @@
     margin-bottom: var(--gap);
     border-bottom: 1px solid var(--divider-color);
     box-shadow: 0 0 var(--gap2) 0 var(--divider-color);
-    /* If the relevant items are missing from manifest.json, these colors will pop up */
-    background-color: var(--brand-red);
-    /* If the relevant items are missing from manifest.json, these colors will pop up */
-    color: var(--brand-green);
 }
 
 .header-component__contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
     padding: var(--gap2);
     box-sizing: border-box;
+
+    @media screen and (min-width: 700px) {
+        & {
+            justify-content: center;
+            flex-direction: row;
+        }
+    }
+}
+
+.header-component__identity {
+    justify-self: start;
+    margin-right: auto;
 }
 
 .header-component__home-link {

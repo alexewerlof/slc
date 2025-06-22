@@ -1,12 +1,26 @@
-<header class="header-component" :style="manifestStyle">
-    <div class="header-component__contents container">
-        <a href="/" tooltip="Home page" class="header-component__home-link">
-            <icon-component name="arrow_back"></icon-component>
-        </a>
-        <a :href="manifest.start_url">
-            <img :src="manifest.icons[0].src" alt="Logo" class="header-component__logo" />
-            <h1 class="header-component__title" v-text="manifest.name" :title="manifest.id"></h1>
-        </a>
-        <slot></slot>
+<div class="header-component">
+    <header class="header-component__header" :style="manifestStyle">
+        <div class="header-component__contents container">
+            <div class="header-component__identity">
+                <a href="/" tooltip="Home page" class="header-component__home-link">
+                    <icon-component name="arrow_back"></icon-component>
+                </a>
+                <a :href="manifest.start_url">
+                    <img :src="manifest.icons[0].src" alt="Logo" class="header-component__logo" />
+                    <h1 class="header-component__title" v-text="manifest.name" :title="manifest.id"></h1>
+                </a>
+                <slot></slot>
+            </div>
+            <div class="button-bar header-component__button-bar">
+                <button @click="isReadmeVisible = !isReadmeVisible" type="button" class="button--round">
+                    <icon-component name="info" class="cursor-pointer"></icon-component>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="info block mar-gap2" v-if="isReadmeVisible">
+            <markdown-loader-component file-name="README.md"></markdown-component>
+        </div>
     </div>
-</header>
+</div>
