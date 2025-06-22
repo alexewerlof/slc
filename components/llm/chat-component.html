@@ -7,10 +7,10 @@
                 v-model="message"
                 ref="promptInput"
                 placeholder="Type your message here..."
-                @keyup.enter="submitPrompt"
+                @keydown.enter.exact.prevent="submitPrompt()"
                 :disabled="isEditDisabled"></textarea>
             <button
-                @click="submitPrompt"
+                @click="submitPrompt()"
                 class="button--cta button--large"
                 type="button"
                 title="Send"
