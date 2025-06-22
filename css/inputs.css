@@ -55,6 +55,8 @@ input[type='range']:hover::-webkit-slider-thumb,
 input[type='range']:focus::-webkit-slider-thumb {
     margin-top: -0.5em;
     height: 200%;
+    filter: brightness(135%);
+    box-shadow: 0 0 0.5em 0 var(--secondary-color);
 }
 
 input[type='search'],
@@ -74,6 +76,25 @@ textarea {
     box-sizing: border-box;
     box-shadow: 0 0 var(--gap) var(--bthick) var(--background-darker);
     transition: border-color var(--animation-speed) ease-in-out;
+
+    &::placeholder {
+        color: var(--ui-border);
+    }
+
+    &:disabled {
+        border-color: var(--disabled-color);
+        color: var(--ui-border);
+        cursor: not-allowed;
+        background-color: inherit;
+
+        &::placeholder {
+            color: var(--disabled-color);
+        }
+
+        &:hover {
+            border-color: var(--disabled-color);
+        }
+    }
 
     &:focus {
         border-color: var(--secondary-color);
