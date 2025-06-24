@@ -84,6 +84,14 @@ export class Failure extends Identifiable {
         }
     }
 
+    onRemove() {
+        this.dependency.service.metrics.forEach((metric) => {
+            if (metric.isFailureLinked(this)) {
+                metric.unLinkFailure(this)
+            }
+        })
+    }
+
     toString() {
         const ret = [
             this.dependency.consumption,
