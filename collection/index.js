@@ -6,6 +6,10 @@ const groupNames = [
     'Frontend',
     'Operations',
     'Queue',
+    'Batch',
+    'Streaming',
+    'Auth',
+    'Search',
 ]
 
 export async function importAllGroups() {
