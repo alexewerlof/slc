@@ -1,5 +1,5 @@
-import { config } from '../config.js'
-import { addUTM } from '../lib/utm.js'
+import { config } from '../../config.js'
+import { addUTM } from '../../lib/utm.js'
 
 /*
 This is just a convenience component to
