@@ -11,7 +11,7 @@
                 :disabled="isEditDisabled"></textarea>
             <button
                 @click="submitPrompt()"
-                class="button--cta button--large"
+                class="button--cta"
                 type="button"
                 title="Send"
                 v-if="!isEditDisabled"
@@ -21,7 +21,7 @@
             <button
                 v-if="this.abortController"
                 @click="abortCompletion('User aborted completion')"
-                class="button--danger button--large"
+                class="button--danger"
                 title="Stop generation"
             >
                 <icon-component name="stop_circle"></icon-component>
