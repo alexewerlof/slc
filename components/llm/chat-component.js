@@ -29,9 +29,15 @@ export default {
         isEditDisabled() {
             return this.abortController !== undefined
         },
+        isMessageEmpty() {
+            return this.message.trim() === ''
+        },
     },
     methods: {
         async submitPrompt() {
+            if (this.isMessageEmpty) {
+                return
+            }
             try {
                 this.thread.add(new Bead('user', this.message))
                 this.$nextTick(() => {

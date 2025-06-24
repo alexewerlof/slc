@@ -14,6 +14,7 @@
                 class="button--cta"
                 type="button"
                 title="Send"
+                :disabled="isMessageEmpty"
                 v-if="!isEditDisabled"
             >
                 <icon-component name="send"></icon-component>
