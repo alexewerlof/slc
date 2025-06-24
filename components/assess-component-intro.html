@@ -21,7 +21,7 @@
             <button @click="currentStep = 2">{{ icon('consumer') }} Consumers</button>: Define the consumers of the services
         </li>
         <li>
-            <button @click="currentStep = 3">{{ icon('failure') }} Failures</button>: Define the failures that threaten the consumption of the services
+            <button @click="currentStep = 3">{{ icon('failure') }} Failures</button>: Define the failures that threaten the consumer tasks that depends on the services
         </li>
         <li>
             <button @click="currentStep = 4">{{ icon('risk') }} Risks</button>: Define the business impact of failures and sort them accordingly
@@ -74,15 +74,15 @@
         <span class="punct">{{ icon('consumer') }}</span>
         <span class="exprs">Consumer</span>
         has 1+
-        <span class="punct">{{ icon('consumption') }}</span>
-        <span class="exprs">Consumption</span>(s) to achieve a goal.
+        <span class="punct">{{ icon('task') }}</span>
+        <span class="exprs">Task</span>(s) to achieve a goal.
         <br>
 
         <span class="punct">{{ icon('dependency') }}</span>
         <span class="exprs">Dependency</span>
         ties a
-        <span class="punct">{{ icon('consumption') }}</span>
-        <span class="exprs">Consumption</span>
+        <span class="punct">{{ icon('task') }}</span>
+        <span class="exprs">Task</span>
         to a
         <span class="punct">{{ icon('service') }}</span>
         <span class="exprs">Service</span>

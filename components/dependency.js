@@ -2,13 +2,13 @@ import { icon } from '../lib/icons.js'
 import { Identifiable } from '../lib/identifiable.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { isArr, isDef, isInstance, isObj, isStr } from '../lib/validation.js'
-import { Consumption } from './consumption.js'
+import { Task } from './task.js'
 import { Failure } from './failure.js'
 import { Lint } from './lint.js'
 import { Service } from './service.js'
 
 export class Dependency extends Identifiable {
-    consumption
+    task
     failures = new SelectableArray(Failure, this)
 
     constructor(service, state) {
@@ -22,7 +22,7 @@ export class Dependency extends Identifiable {
 
     get state() {
         return {
-            consumptionId: this.consumption.id,
+            taskId: this.task.id,
             failures: this.failures.map((failure) => failure.state),
         }
     }
@@ -32,15 +32,15 @@ export class Dependency extends Identifiable {
             throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
         }
 
-        const { consumptionId, failures } = newState
+        const { taskId, failures } = newState
 
-        if (!isStr(consumptionId)) {
-            throw new TypeError(`Invalid consumptionId: ${consumptionId} (${typeof consumptionId})`)
+        if (!isStr(taskId)) {
+            throw new TypeError(`Invalid taskId: ${taskId} (${typeof taskId})`)
         }
 
-        this.consumption = this.assessment.consumptions.find((consumption) => consumption.id === consumptionId)
-        if (!isInstance(this.consumption, Consumption)) {
-            throw TypeError(`No consumption found with id ${consumptionId}.`)
+        this.task = this.assessment.tasks.find((task) => task.id === taskId)
+        if (!isInstance(this.task, Task)) {
+            throw TypeError(`No task found with id ${taskId}.`)
         }
         if (isDef(failures)) {
             if (!isArr(failures)) {
@@ -51,7 +51,7 @@ export class Dependency extends Identifiable {
     }
 
     toString() {
-        return `${this.consumption} ${icon('dependency')} ${this.service}`
+        return `${this.task} ${icon('dependency')} ${this.service}`
     }
 
     get provider() {

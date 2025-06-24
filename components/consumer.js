@@ -3,7 +3,7 @@ import { Identifiable } from '../lib/identifiable.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
-import { Consumption } from './consumption.js'
+import { Task } from './task.js'
 import { Lint } from './lint.js'
 
 export class Consumer extends Identifiable {
@@ -12,7 +12,7 @@ export class Consumer extends Identifiable {
     description = config.description.default
     type = Consumer.possibleTypes[0]
     assessment = null
-    consumptions = new SelectableArray(Consumption, this)
+    tasks = new SelectableArray(Task, this)
 
     constructor(assessment, state) {
         super()
@@ -31,7 +31,7 @@ export class Consumer extends Identifiable {
             displayName: this.displayName,
             description: this.description,
             type: this.type,
-            consumptions: this.consumptions.state,
+            tasks: this.tasks.state,
         }
     }
 
@@ -44,7 +44,7 @@ export class Consumer extends Identifiable {
             displayName,
             description,
             type,
-            consumptions,
+            tasks,
         } = newState
 
         if (isDef(id)) {
@@ -72,11 +72,11 @@ export class Consumer extends Identifiable {
             this.type = type
         }
 
-        if (isDef(consumptions)) {
-            if (!isArr(consumptions)) {
-                throw new TypeError(`Invalid consumptions. ${consumptions}`)
+        if (isDef(tasks)) {
+            if (!isArr(tasks)) {
+                throw new TypeError(`Invalid tasks. Expected an array. Got: ${tasks}`)
             }
-            this.consumptions.state = consumptions
+            this.tasks.state = tasks
         }
     }
 
@@ -92,26 +92,26 @@ export class Consumer extends Identifiable {
     }
 
     onRemove() {
-        for (const consumption of this.consumptions) {
-            consumption.onRemove()
+        for (const task of this.tasks) {
+            task.onRemove()
         }
     }
 
-    addConsumption(consumption) {
-        if (!isInstance(consumption, Consumption)) {
-            throw new Error(`Consumption must be an instance of Consumption. Got ${consumption}`)
+    addTask(task) {
+        if (!isInstance(task, Task)) {
+            throw new Error(`Task must be an instance of Task. Got ${task}`)
         }
-        consumption.consumer = this
-        this.consumptions.push(consumption)
-        return consumption
+        task.consumer = this
+        this.tasks.push(task)
+        return task
     }
 
-    addNewConsumption(title, description) {
-        return this.addConsumption(new Consumption(this, title, description))
+    addNewTask(title, description) {
+        return this.addTask(new Task(this, title, description))
     }
 
-    removeConsumption(consumption) {
-        return this.consumptions.remove(consumption)
+    removeTask(task) {
+        return this.tasks.remove(task)
     }
 
     remove() {
@@ -137,10 +137,10 @@ export class Consumer extends Identifiable {
             lint.warn(`Please fill the display name.`)
         }
 
-        if (this.consumptions.length === 0) {
+        if (this.tasks.length === 0) {
             lint.warn(
-                'No consumption is defined for this consumer which effectively makes it pointless for this assessment.',
-                'Please declare some consumptions or remove the consumer.',
+                'No task is defined for this consumer which effectively makes it pointless for this assessment.',
+                'Please declare some tasks or remove the consumer.',
             )
         }
         return lint

@@ -7,7 +7,7 @@ import { Lint } from './lint.js'
 
 const scopeIcon = icon('scope')
 
-export class Consumption extends Identifiable {
+export class Task extends Identifiable {
     consumer = null
     displayName = config.displayName.default
     description = config.description.default
@@ -15,7 +15,7 @@ export class Consumption extends Identifiable {
     constructor(consumer, state) {
         super()
         if (!isInstance(consumer, Consumer)) {
-            throw new Error(`Consumption.constructor: consumer must be an instance of Consumer. Got ${consumer}`)
+            throw new Error(`Task.constructor: consumer must be an instance of Consumer. Got ${consumer}`)
         }
         this.consumer = consumer
         if (isObj(state)) {
@@ -62,14 +62,14 @@ export class Consumption extends Identifiable {
 
     get dependencies() {
         return this.consumer.assessment.dependencies.filter(
-            (dependency) => dependency.consumption === this,
+            (dependency) => dependency.task === this,
         )
     }
 
     onRemove() {
         const { dependencies } = this.consumer.assessment
         for (let i = dependencies.length - 1; i >= 0; i--) {
-            if (dependencies[i].consumption === this) {
+            if (dependencies[i].task === this) {
                 dependencies[i].remove()
             }
         }
@@ -84,11 +84,11 @@ export class Consumption extends Identifiable {
     }
 
     get index() {
-        return this.consumer.consumptions.indexOf(this)
+        return this.consumer.tasks.indexOf(this)
     }
 
     remove() {
-        return this.consumer.consumptions.remove(this)
+        return this.consumer.tasks.remove(this)
     }
 
     get lint() {
@@ -105,12 +105,12 @@ export class Consumption extends Identifiable {
         } else if (assessment.services.length === 0) {
             lint.info(
                 'There are currently no **service** declared to consume.',
-                'Please add some services to the providers so that the consumption can depend on them.',
+                'Please add some services to the providers so that the task can depend on them.',
             )
         }
         if (this.dependencies.length === 0) {
             lint.warn(
-                'This consumption does not depend on any services which effectively makes it pointless in this assessment.',
+                'This task does not depend on any services which effectively makes it pointless in this assessment.',
                 'Please declare some dependencies to services.',
             )
         }

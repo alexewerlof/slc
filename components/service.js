@@ -112,29 +112,29 @@ export class Service extends Identifiable {
         return this.provider.assessment.dependencies.filter((d) => d.service === this)
     }
 
-    get consumptions() {
-        return this.dependencies.map((d) => d.consumption)
+    get tasks() {
+        return this.dependencies.map((d) => d.task)
     }
 
     get failures() {
         return this.dependencies.flatMap((d) => d.failures)
     }
 
-    isConsumedBy(consumption) {
-        return this.dependencies.some((d) => d.consumption === consumption)
+    isConsumedBy(task) {
+        return this.dependencies.some((d) => d.task === task)
     }
 
-    setConsumedBy(consumption, value) {
+    setConsumedBy(task, value) {
         if (value) {
-            if (!this.isConsumedBy(consumption)) {
+            if (!this.isConsumedBy(task)) {
                 this.dependencies.push(
                     new Dependency(this, {
-                        consumptionId: consumption.id,
+                        taskId: task.id,
                     }),
                 )
             }
         } else {
-            const idx = this.dependencies.findIndex((d) => d.consumption === consumption)
+            const idx = this.dependencies.findIndex((d) => d.task === task)
             if (idx !== -1) {
                 this.dependencies.removeIndex(idx)
             }
@@ -164,8 +164,8 @@ export class Service extends Identifiable {
         }
         if (this.dependencies.length === 0) {
             lint.warn(
-                'No consumptions depend on this service.',
-                'Please select some consumptions or add new ones.',
+                'No tasks depend on this service.',
+                'Please select some tasks or add new ones.',
             )
         } else if (this.failures.length === 0) {
             lint.warn(

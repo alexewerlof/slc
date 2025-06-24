@@ -3,7 +3,7 @@ import { Consumer } from './consumer.js'
 import { isArr, isDef, isInstance, isObj } from '../lib/validation.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { Service } from './service.js'
-import { Consumption } from './consumption.js'
+import { Task } from './task.js'
 import { icon } from '../lib/icons.js'
 import { Lint } from './lint.js'
 import { assessment2prolog } from '../app/assessment/cmp/prolog.js'
@@ -46,17 +46,17 @@ export class Assessment {
         }
     }
 
-    findDependency(service, consumption) {
+    findDependency(service, task) {
         if (!isInstance(service, Service)) {
             throw new TypeError(`service must be an instance of Service. Got ${service}`)
         }
-        if (!isInstance(consumption, Consumption)) {
-            throw new TypeError(`consumption must be an instance of Consumption. Got ${consumption}`)
+        if (!isInstance(task, Task)) {
+            throw new TypeError(`task must be an instance of Task. Got ${task}`)
         }
         return this.dependencies.find((dependency) => {
             return (
                 dependency.service === service &&
-                dependency.consumption === consumption
+                dependency.task === task
             )
         })
     }
@@ -65,8 +65,8 @@ export class Assessment {
         return this.providers.flatMap((provider) => provider.services)
     }
 
-    get consumptions() {
-        return this.consumers.flatMap((consumer) => consumer.consumptions)
+    get tasks() {
+        return this.consumers.flatMap((consumer) => consumer.tasks)
     }
 
     get metrics() {
@@ -107,11 +107,11 @@ export class Assessment {
             emptyLine,
             `- ${icon('provider')} indicates **Provider**. Each Provider offers 1+ Service(s).`,
             `- ${icon('service')} indicates **Service**. Each Service is offered by exactly 1 Provider.`,
-            `- ${icon('consumer')} indicates **Consumer**. Each Consumer has 1+ Consumption(s) to achieve a goal.`,
-            `- ${icon('consumption')} indicates **Consumption**. Each Consumption belongs to exactly 1 Consumer.`,
+            `- ${icon('consumer')} indicates **Consumer**. Each Consumer has 1+ Task(s) to achieve a goal.`,
+            `- ${icon('task')} indicates **Task**. Each Task belongs to exactly 1 Consumer.`,
             `- ${
                 icon('dependency')
-            } indicates **Dependency**. Each Dependency ties a Consumption to a Service. Each Dependency has 1+ Failure(s).`,
+            } indicates **Dependency**. Each Dependency ties a Task to a Service. Each Dependency has 1+ Failure(s).`,
             `- ${
                 icon('failure')
             } indicates **Failure**. Each Failure belongs to exactly one Dependency. Each Failure has a Symptom, a Consequence, and a Business Impact`,
@@ -120,7 +120,7 @@ export class Assessment {
             `- ${icon('impact')} indicates **Business Impact**`,
             `- ${icon('scope')} indicates a parent-child relationship like **Provider${
                 icon('scope')
-            }Service** or **Consumer${icon('scope')}Consumption**`,
+            }Service** or **Consumer${icon('scope')}Task**`,
         )
 
         lines.push(newParagraph)
@@ -143,7 +143,7 @@ export class Assessment {
                         lines.push(
                             `    - ${
                                 icon('dependency')
-                            } **${dependency.consumption.consumer.displayName}**: ${dependency.description}`,
+                            } **${dependency.task.consumer.displayName}**: ${dependency.description}`,
                         )
                     }
                 }
@@ -159,12 +159,12 @@ export class Assessment {
             lines.push(
                 `- ${icon('consumer')} **${consumer.displayName}**: ${consumer.description}`,
             )
-            for (const consumption of consumer.consumptions) {
+            for (const task of consumer.tasks) {
                 lines.push(
-                    `  - ${icon('consumption')} **${consumption.displayName}**: ${consumption.description}`,
+                    `  - ${icon('task')} **${task.displayName}**: ${task.description}`,
                 )
                 for (const dependency of this.dependencies) {
-                    if (dependency.consumption === consumption) {
+                    if (dependency.task === task) {
                         lines.push(
                             `    - ${
                                 icon('dependency')
@@ -251,8 +251,8 @@ export class Assessment {
             ret.push(service.lint.toMarkdown(`Service ${service.id}`))
         }
 
-        for (const consumption of this.consumptions) {
-            ret.push(consumption.lint.toMarkdown(`Consumption ${consumption.id}`))
+        for (const task of this.tasks) {
+            ret.push(task.lint.toMarkdown(`Task ${task.id}`))
         }
 
         for (const dependency of this.dependencies) {

@@ -38,7 +38,7 @@
     }
 }
 
-.assessment-graph-component-entity--consumer, .assessment-graph-component-entity--consumption {
+.assessment-graph-component-entity--consumer, .assessment-graph-component-entity--task {
     & .assessment-graph-component-entity__bg {
         fill: var(--brand-purple);
     }

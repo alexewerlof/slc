@@ -1,7 +1,7 @@
 {
     "name": "Service Assessment",
     "short_name": "Assessment",
-    "description": "A visual tool to assess services, consumptions, and risks to find meaningful metrics. It also uses AI to guide the you to discover different aspects of the service while dodging the common pitfalls.",
+    "description": "A visual tool to assess services, tasks, and risks to find meaningful metrics. It also uses AI to guide the you to discover different aspects of the service while dodging the common pitfalls.",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#001426",

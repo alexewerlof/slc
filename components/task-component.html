@@ -1,27 +1,27 @@
-<div class="consumption-component">
-    <id-component :entity="consumption"></id-component>
-    <lint-component :lint="consumption.lint"></lint-component>
+<div class="task-component">
+    <id-component :entity="task"></id-component>
+    <lint-component :lint="task.lint"></lint-component>
     <fieldset>
         <legend>Basics</legend>
-        <label for="consumption-display-name">
+        <label for="task-display-name">
             Name
             <help-component>
                 <p>
-                    Give a name to this consumption to indicate how {{ consumption.consumer.displayName }}
+                    Give a name to this task to indicate how {{ task.consumer.displayName }}
                     uses services.
                 </p>
             </help-component>
         </label>
         <input
             type="text"
-            id="consumption-display-name"
-            v-model="consumption.displayName">
+            id="task-display-name"
+            v-model="task.displayName">
 
-        <label for="consumption-description">
+        <label for="task-description">
             Description
         </label>
         <textarea
-            id="consumption-description"
+            id="task-description"
             placeholder="e.g., Get user data from API"></textarea> 
     </fieldset>
 
@@ -29,15 +29,15 @@
         Consumes
         <help-component>
             <p>
-                Select all the services that are required for {{ consumption.consumer }}
-                to {{ consumption.displayName }}.
+                Select all the services that are required for {{ task.consumer }}
+                to {{ task.displayName }}.
             </p>
             <p>
                 If there are services that are missing, you can go back and add them.
             </p>
         </help-component>
     </h4>
-    <fieldset v-for="provider in consumption.consumer.assessment.providers">
+    <fieldset v-for="provider in task.consumer.assessment.providers">
         <legend :title="provider.description">{{ provider.displayNameWithFallback }}</legend>
         <div v-if="!provider.services.length">
             No service defined!
@@ -46,8 +46,8 @@
             <label :title="service.description">
                 <input
                     type="checkbox"
-                    :checked="service.isConsumedBy(consumption)"
-                    @change="service.setConsumedBy(consumption, $event.target.checked)">
+                    :checked="service.isConsumedBy(task)"
+                    @change="service.setConsumedBy(task, $event.target.checked)">
                 {{ service.displayNameWithFallback }}
             </label>
         </div>

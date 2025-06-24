@@ -35,22 +35,22 @@ Consumer can have any of these types:
 
 [Learn more about consumer here](https://blog.alexewerlof.com/p/service-level-terminology).
 
-### Service Consumption
+### Task
 
-Consumption describes why the consumer uses a service. This usage essentially establishes a dependency from consumer to one or more services. The reason consumption is important in the context service level is because of the biggest pitfalls of implementing service levels: to measure the wrong thing! Service level should always be measured from the perspective of the consumers. Consumption describes that aspect.
+Task describes why the consumer uses a service. This essentially establishes a dependency from consumer to one or more services. The reason the consumer task is important in the context service level is because of the biggest pitfalls of implementing service levels: to measure the wrong thing! Service level should always be measured from the perspective of the consumers. Task describes that aspect.
 
-Consumption is also known as: use case, user need, user requirement, JTBD (jobs to be done), dependency, user story.
+Task is also known as: use case, user need, user requirement, JTBD (jobs to be done), dependency, user story.
 
-[Learn more about consumption here](https://blog.alexewerlof.com/p/service-level-terminology).
+[Learn more about task here](https://blog.alexewerlof.com/p/service-level-terminology).
 
 ### Service Failure
 
-Failure describes how a consumption may not be successful. It is at the base of how [un]reliability is perceived from the perspective of the service consumer.
+Failure describes how a task may not be successful. It is at the base of how [un]reliability is perceived from the perspective of the service consumer.
 
 Failure has:
 
 - **Symptom**: how does the consumer know that something is broken
-- **Consequences**: what is the consequence of the symptom on the service consumption
+- **Consequences**: what is the consequence of the symptom on the consumer task
 - **Business Impact**: how does the consequences hurt the business
 - **Impact Level**: a quantified measure of the business impact
 - **Likelihood**: the possibility of the failure

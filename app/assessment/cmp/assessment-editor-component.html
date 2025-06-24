@@ -76,9 +76,9 @@
             <h2>Consumer</h2>
             <consumer-component :consumer="editingInstance"></consumer-component>
             <div class="button-bar">
-                <button @click="editingInstance = editingInstance.consumptions.pushNew()">
+                <button @click="editingInstance = editingInstance.tasks.pushNew()">
                     <icon-component name="add_circle"></icon-component>
-                    New Consumption
+                    New Task
                 </button>
                 <button
                     @click="removeConsumer(editingInstance)"
@@ -90,17 +90,17 @@
                 </button>
             </div>
         </div>
-        <div v-if="editingClassName === 'Consumption'">
-            <h2>Consumption</h2>
-            <consumption-component :consumption="editingInstance"></consumption-component>
+        <div v-if="editingClassName === 'Task'">
+            <h2>Task</h2>
+            <task-component :task="editingInstance"></task-component>
             <div class="button-bar">
                 <button
-                    @click="removeConsumption(editingInstance)"
+                    @click="removeTask(editingInstance)"
                     class="button--danger"
-                    title="Remove this consumption"
+                    title="Remove this task"
                 >
                     <icon-component name="delete"></icon-component>
-                    Remove Consumption
+                    Remove Task
                 </button>
             </div>
         </div>

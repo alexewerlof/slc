@@ -16,7 +16,7 @@ const componentSpecifications = [
     // TODO: needs a rewrite or remove
     './condition-component.jh&',
     './consumer-component.jh&',
-    './consumption-component.jh&',
+    './task-component.jh&',
     './ui/cookie-popup-component.jhc&',
     './ui/dialog-component.jhc&',
     './objective/error-budget-component.jhc&',

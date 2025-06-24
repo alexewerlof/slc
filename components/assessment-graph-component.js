@@ -24,12 +24,12 @@ export default {
         },
     },
     computed: {
-        consumptionCount() {
-            return this.assessment.consumptions.length
+        taskCount() {
+            return this.assessment.tasks.length
         },
         heightCells() {
             let ret = 3
-            this.assessment.consumers.forEach((consumer) => ret += consumer.consumptions.length)
+            this.assessment.consumers.forEach((consumer) => ret += consumer.tasks.length)
             return ret
         },
         widthCells() {
@@ -39,12 +39,12 @@ export default {
         },
         width() {
             const providerWidths = this.assessment.providers.map((provider) => this.providerWidth(provider))
-            return this.consumptionX() + arrSum(providerWidths)
+            return this.taskX() + arrSum(providerWidths)
         },
         height() {
-            const consumptionHeights = this.assessment.consumers.map((consumer) => this.consumerHeight(consumer))
+            const taskHeights = this.assessment.consumers.map((consumer) => this.consumerHeight(consumer))
             const maxMetricCount = Math.max(...this.assessment.services.map((s) => s.metrics.length))
-            return this.serviceY() + this.scaleY(maxMetricCount) + arrSum(consumptionHeights)
+            return this.serviceY() + this.scaleY(maxMetricCount) + arrSum(taskHeights)
         },
         statusStyle() {
             if (this.statusText) {
@@ -72,13 +72,13 @@ export default {
         },
         consumerHeight(consumer) {
             let ret = 2
-            if (consumer.consumptions.length > 1) {
-                ret += consumer.consumptions.length - 1
+            if (consumer.tasks.length > 1) {
+                ret += consumer.tasks.length - 1
             }
             return this.scaleY(ret)
         },
         providerOffsetX(provider) {
-            let ret = this.consumptionX() //all consumers have the same X
+            let ret = this.taskX() //all consumers have the same X
             for (let i = 0; i < provider.index; i++) {
                 ret += this.providerWidth(this.assessment.providers[i])
             }
@@ -109,17 +109,17 @@ export default {
         serviceY() {
             return this.scaleY(2)
         },
-        consumptionX() {
+        taskX() {
             return this.scaleX(2)
         },
-        consumptionY(consumption) {
-            return this.consumerOffsetY(consumption.consumer) + this.delta + this.scaleY(consumption.index)
+        taskY(task) {
+            return this.consumerOffsetY(task.consumer) + this.delta + this.scaleY(task.index)
         },
         dependencyX(dependency) {
             return this.serviceX(dependency.service)
         },
         dependencyY(dependency) {
-            return this.consumptionY(dependency.consumption)
+            return this.taskY(dependency.task)
         },
         metricX(metric) {
             return this.serviceX(metric.service)

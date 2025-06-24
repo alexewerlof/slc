@@ -34,43 +34,43 @@ export function assessment2prolog(assessment) {
     })
 
     fact(
-        '% hasConsumption',
+        '% hasTask',
         'ConsumerID',
-        'ConsumptionID',
+        'TaskID',
     )
-    assessment.consumptions.forEach((consumption) => {
+    assessment.tasks.forEach((task) => {
         fact(
-            'hasConsumption',
-            consumption.consumer.id,
-            consumption.id,
+            'hasTask',
+            task.consumer.id,
+            task.id,
         )
     })
 
     fact(
-        '% consumption',
-        'ConsumptionID',
+        '% task',
+        'TaskID',
         'DisplayName',
         'Description',
     )
-    assessment.consumptions.forEach((consumption) => {
+    assessment.tasks.forEach((task) => {
         fact(
-            'consumption',
-            consumption.id,
-            quoted(consumption.displayName),
-            quoted(consumption.description),
+            'task',
+            task.id,
+            quoted(task.displayName),
+            quoted(task.description),
         )
     })
 
     fact(
         '% dependency',
-        'ConsumptionID',
+        'TaskID',
         'ServiceID',
     )
 
     assessment.dependencies.forEach((dependency) => {
         fact(
             'dependency',
-            dependency.consumption.id,
+            dependency.task.id,
             dependency.service.id,
         )
     })

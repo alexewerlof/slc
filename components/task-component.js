@@ -1,7 +1,7 @@
 import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
 import { numL10n, percL10n } from '../lib/fmt.js'
-import { Consumption } from './consumption.js'
+import { Task } from './task.js'
 import { icon } from '../lib/icons.js'
 
 export default {
@@ -11,9 +11,9 @@ export default {
         },
     },
     props: {
-        consumption: {
+        task: {
             type: Object,
-            validator: (v) => isInstance(v, Consumption),
+            validator: (v) => isInstance(v, Task),
         },
     },
     methods: {

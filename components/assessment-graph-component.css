@@ -22,7 +22,7 @@
     stroke-dasharray: 5, 5;
 }
 
-.assessment-graph-component__line--consumption-dependency {
+.assessment-graph-component__line--task-dependency {
     stroke: var(--brand-purple);
     stroke-dasharray: 5, 5;
 }

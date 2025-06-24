@@ -25,10 +25,10 @@ export default {
         icon,
         percL10n,
         numL10n,
-        serviceConsumptions(service) {
+        serviceTasks(service) {
             return this.assessment.dependencies.filter((dependency) => dependency.service === service).map((
                 dependency,
-            ) => dependency.consumption)
+            ) => dependency.task)
         },
     },
 }

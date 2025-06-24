@@ -1,25 +1,25 @@
 <div class="assessment-graph-component">
     <svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height" @click.self="$emit('select', undefined)">
-        <!-- Consumptions & Consumers -->
+        <!-- Tasks & Consumers -->
         <g v-for="consumer of assessment.consumers">
-            <g v-for="consumption of consumer.consumptions">
+            <g v-for="task of consumer.tasks">
                 <path
                     class="assessment-graph-component__line assessment-graph-component__line--relation"
-                    :d="d(consumerX(consumer), consumerY(consumer), consumptionX(consumption), consumptionY(consumption))"></path>
+                    :d="d(consumerX(consumer), consumerY(consumer), taskX(task), taskY(task))"></path>
                 <path
-                    class="assessment-graph-component__line assessment-graph-component__line--consumption-dependency"
-                    :d="d(consumptionX(consumption), consumptionY(consumption), width, consumptionY(consumption))"></path>
+                    class="assessment-graph-component__line assessment-graph-component__line--task-dependency"
+                    :d="d(taskX(task), taskY(task), width, taskY(task))"></path>
                 <assessment-graph-component-entity
-                    :is-selected="selectedEntity === consumption"
-                    :has-notification="consumption.lint.count"
-                    type="consumption"
-                    :cx="consumptionX(consumption)"
-                    :cy="consumptionY(consumption)"
-                    :tooltip="`Consumption: ${ consumption }`"
-                    @click="$emit('select', consumption)"
+                    :is-selected="selectedEntity === task"
+                    :has-notification="task.lint.count"
+                    type="task"
+                    :cx="taskX(task)"
+                    :cy="taskY(task)"
+                    :tooltip="`Task: ${ task }`"
+                    @click="$emit('select', task)"
                     @status="updateStatus"
                     >
-                    {{ icon('consumption') }}
+                    {{ icon('task') }}
                 </assessment-graph-component-entity>
             </g>
             <assessment-graph-component-entity

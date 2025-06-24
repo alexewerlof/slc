@@ -161,53 +161,52 @@
                 <div v-if="currentStep === 2" class="mozaic__tile mozaic__tile--half">
                     <div class="surface">
                         <h2>
-                            Consumptions
+                            Tasks
                             <help-component>
                                 <p>
                                     <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">
-                                        Consumption
+                                        Task
                                     </ext-link>
                                     refers to how a consumer uses services to achieve a goal.
                                     Other names are <em>JTBD</em> (Job To Be Done) or <em>Use Case</em>.
-                                    A consumption is typically part of a user journey or customer journey.
+                                    A task is typically part of a user journey or customer journey.
                                 </p>
                                 <p>
                                     For example, if the consumer is a website that uses an API service,
-                                    its consumption can be "Get user data from API".
+                                    its task can be "Get user data from API".
                                 </p>
                                 <p>
-                                    A service may have many consumptions by the same consumer or even by different consumers.
+                                    A service may have many tasks by the same consumer or even by different consumers.
                                 </p>        
                             </help-component>
                         </h2>
                         <fieldset class="b-mar-gap2" v-if="selectedConsumer">
-                            <legend>Consumption ({{ selectedConsumer.consumptions.length }})</legend>
-                            <div class="input-group" v-if="selectedConsumer.consumptions.length">
-                                <label for="consumption-selector">Select</label>
-                                <select id="consumption-selector" v-model="selectedConsumer.consumptions.selected">
-                                    <option v-for="consumption of selectedConsumer.consumptions" :value="consumption">
-                                        {{ consumption.displayName }}
+                            <legend>Task ({{ selectedConsumer.tasks.length }})</legend>
+                            <div class="input-group" v-if="selectedConsumer.tasks.length">
+                                <label for="task-selector">Select</label>
+                                <select id="task-selector" v-model="selectedConsumer.tasks.selected">
+                                    <option v-for="task of selectedConsumer.tasks" :value="task">
+                                        {{ task.displayName }}
                                     </option>
                                 </select>
                             </div>
                             <div class="button-bar">
                                 <button
-                                    @click="selectedConsumer.consumptions.pushNew()"
+                                    @click="selectedConsumer.tasks.pushNew()"
                                 >
                                     Add
                                 </button>
                                 <button
                                     class="button--danger"
-                                    @click="selectedConsumer.consumptions.removeSelected()"
-                                    :disabled="!selectedConsumer.consumptions.selected"
+                                    @click="selectedConsumer.tasks.removeSelected()"
+                                    :disabled="!selectedConsumer.tasks.selected"
                                 >
                                     Remove
                                 </button>
                             </div>
                         </fieldset>
-                        <div class="well" v-if="selectedConsumption">
-                            <consumption-component
-                                :consumption="selectedConsumption"></consumption-component>
+                        <div class="well" v-if="selectedTask">
+                            <task-component :task="selectedTask"></task-component>
                         </div>
                     </div>
                 </div>
@@ -216,8 +215,8 @@
                     <div class="surface">
                         <h2>Dependency</h2>
                         <div class="well" v-if="selectedDependency">
-                            <h3>Consumption</h3>
-                            <p>{{ selectedDependency.consumption }}</p>
+                            <h3>Task</h3>
+                            <p>{{ selectedDependency.task }}</p>
                             <h3>Service</h3>
                             <p>{{ selectedDependency.service }}</p>
                         </div>

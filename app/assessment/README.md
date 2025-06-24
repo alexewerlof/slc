@@ -1,7 +1,7 @@
 This is the new iteration of the [Assess](../assess/) application where the focus is on simplicity and graph visualization instead of forms and steps.
 
 **Provider** provides a **Service** while **Consumer** consumes it.
-**Consumption** is why a consumer consumes a service.
+**Task** explains why a consumer consumes a service.
 Essentially, the consumer has a **dependency** on the service.
 
 The goal of this app is to identify **failures** that can happen on those dependencies

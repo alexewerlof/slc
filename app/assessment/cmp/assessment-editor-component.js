@@ -1,6 +1,6 @@
 import { Assessment } from '../../../components/assessment.js'
 import { Consumer } from '../../../components/consumer.js'
-import { Consumption } from '../../../components/consumption.js'
+import { Task } from '../../../components/task.js'
 import { Dependency } from '../../../components/dependency.js'
 import { Metric } from '../../../components/metric.js'
 import { Provider } from '../../../components/provider.js'
@@ -53,19 +53,19 @@ export default {
             )
 
         tools.add(
-            this.addNewConsumption,
-            'Add a new consumption to the designated consumer and return its id.',
+            this.addNewTask,
+            'Add a new task to the designated consumer and return its id.',
         ).this(this)
-            .prm('consumerId:string*', 'The id of the consumer to add the consumption to')
-            .prm('displayName:string*', 'The display name of the new consumption')
-            .prm('description:string', 'A description of the new consumption')
+            .prm('consumerId:string*', 'The id of the consumer to add the task to')
+            .prm('displayName:string*', 'The display name of the new task')
+            .prm('description:string', 'A description of the new task')
 
         tools.add(
             this.addNewDependency,
-            'Create a new dependency between an existing consumption and service, then return the id of the dependency.',
+            'Create a new dependency between an existing task and service, then return the id of the dependency.',
         ).this(this)
             .prm('serviceId:string*', 'The id of the service to add the dependency to')
-            .prm('consumptionId:string*', 'The id of the consumption to add the dependency to')
+            .prm('taskId:string*', 'The id of the task to add the dependency to')
 
         function getDateAndTime() {
             return String(new Date())
@@ -81,7 +81,7 @@ export default {
                     'system',
                     () =>
                         [
-                            'Below is a Prolog representation of all the entities in the assessment and their logical connection. You can use it to answer questions about the assessment because this code represents the state of the assessment and entities like providers, services, consumers, consumptions, failures, and metrics.',
+                            'Below is a Prolog representation of all the entities in the assessment and their logical connection. You can use it to answer questions about the assessment because this code represents the state of the assessment and entities like providers, services, consumers, tasks, failures, and metrics.',
                             'Use the displayName of the entities instead of their id whenever possible. When answering questions refer to the provided Prolog code in order to understand the context.',
                             '```prolog',
                             this.assessment.toProlog(),
@@ -132,23 +132,23 @@ export default {
             this.editingInstance = newConsumer
             return newConsumer.id
         },
-        addNewConsumption(options) {
+        addNewTask(options) {
             const { consumerId, ...state } = options
             const consumer = this.assessment.consumers.find((c) => c.id === consumerId)
             if (!consumer) {
                 throw new Error(`Consumer with id ${consumerId} not found`)
             }
-            const newConsumption = consumer.consumptions.pushNew(state)
-            this.editingInstance = newConsumption
-            return newConsumption.id
+            const newTask = consumer.tasks.pushNew(state)
+            this.editingInstance = newTask
+            return newTask.id
         },
         addNewDependency(options) {
-            const { serviceId, consumptionId } = options
+            const { serviceId, taskId } = options
             const service = this.assessment.services.find((service) => service.id === serviceId)
             if (!service) {
                 throw new Error(`Service with id ${serviceId} not found`)
             }
-            const newDependency = service.dependencies.pushNew({ consumptionId })
+            const newDependency = service.dependencies.pushNew({ taskId })
             this.editingInstance = newDependency
             return newDependency.id
         },
@@ -166,12 +166,12 @@ export default {
             consumer.remove()
             this.editingInstance = undefined
         },
-        removeConsumption(consumption) {
-            if (!isInstance(consumption, Consumption)) {
-                throw new TypeError(`Expected an instance of Consumption. Got ${consumption}`)
+        removeTask(task) {
+            if (!isInstance(task, Task)) {
+                throw new TypeError(`Expected an instance of Task. Got ${task}`)
             }
-            const { consumer } = consumption
-            consumption.remove()
+            const { consumer } = task
+            task.remove()
             this.editingInstance = consumer
         },
         removeService(service) {

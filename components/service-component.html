@@ -60,7 +60,7 @@
             Consumed By
             <help-component>
                 <p>
-                    What consumptions depend on this service and for which consumer?
+                    What tasks depend on this service and for which consumer?
                 </p>
                 <p>
                     If there are consumers that are missing, you can add them.
@@ -69,16 +69,16 @@
         </h4>
         <fieldset v-for="consumer in service.provider.assessment.consumers">
             <legend :title="consumer.description">{{ consumer.displayNameWithFallback }}</legend>
-            <div v-if="!consumer.consumptions.length">
-                No consumption defined.
+            <div v-if="!consumer.tasks.length">
+                No task defined.
             </div>
-            <div v-for="consumption of consumer.consumptions">
-                <label :title="consumption.description">
+            <div v-for="task of consumer.tasks">
+                <label :title="task.description">
                 <input
                     type="checkbox"
-                    :checked="service.isConsumedBy(consumption)"
-                    @change="service.setConsumedBy(consumption, $event.target.checked)">
-                    {{ consumption.displayNameWithFallback }}
+                    :checked="service.isConsumedBy(task)"
+                    @change="service.setConsumedBy(task, $event.target.checked)">
+                    {{ task.displayNameWithFallback }}
                 </label>
             </div>
         </fieldset>

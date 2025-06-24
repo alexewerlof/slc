@@ -15,18 +15,18 @@ If (there are some consumers but no providers):
 > Consumers use the services from the providers to achieve a goal.
 > Please add some providers.
 
-If (there are some consumers but no consumptions):
-> Consumption declares why a consumer uses one or more services to achieve a goal. This is a key piece of information because it forces us to think about how the failure is perceived from the consumers' point of view and what are the symptoms and business impact.
+If (there are some consumers but no tasks):
+> Task declares why a consumer uses one or more services to achieve a goal. This is a key piece of information because it forces us to think about how the failure is perceived from the consumers' point of view and what are the symptoms and business impact.
 
 # Consumer
-If (a consumers has no consumptions):
-> [comsumer_id] has no declared any consumptions. Consumptions explain why a consumer uses one or more services.
-> Please either add some consumptions to this consumer or remove it from the assessment.
+If (a consumers has no tasks):
+> [comsumer_id] has not declared any tasks. Tasks explain why a consumer uses one or more services.
+> Please either add some tasks to this consumer or remove it from the assessment.
 
-# Consumption
-If (a consumption has no dependencies):
-> [consumption_id] has no dependencies to any service.
-> Please either add some dependencies to this consumption or remove it from the assessment.
+# Task
+If (a task has no dependencies):
+> [task_id] has no dependencies to any service.
+> Please either add some dependencies to this task or remove it from the assessment.
 
 # Provider
 If (a providers has no services):

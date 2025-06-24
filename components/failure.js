@@ -94,7 +94,7 @@ export class Failure extends Identifiable {
 
     toString() {
         const ret = [
-            this.dependency.consumption,
+            this.dependency.task,
             icon('failure'),
             this.dependency.service,
         ]

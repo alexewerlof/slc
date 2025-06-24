@@ -36,7 +36,7 @@
 - [X] 2025-06-10: Add in-browser LLM for the assessment workshop
 - [X] 2025-06-10: Add some metrics to the example.json
 - [X] 2024-09-23: Workshop: Allow copying the JSON export
-- [X] 2024-09-23: Workshop: The "Add New" button should be after the current list (e.g. system, service, consumer, consumption)
+- [X] 2024-09-23: Workshop: The "Add New" button should be after the current list (e.g. system, service, consumer, task)
 - [X] 2024-08-15: rename valid -> eventUnit
 - [X] 2024-08-15: rename good -> metricName
 - [X] 2024-08-12: Write a convertor for URL v0 to v1 unit -> if number ? assign to timeslot, otherwise if valid is not set explicitly, set valid

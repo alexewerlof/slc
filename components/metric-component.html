@@ -26,7 +26,7 @@
         </help-component>
     </h3>
     <fieldset v-for="dependency of metric.service.dependencies">
-        <legend title="Consumption">{{ dependency.consumption }}</legend>
+        <legend title="Task">{{ dependency.task }}</legend>
         <div v-if="dependency.failures.length === 0">
             No failure is identified for this dependency.
         </div>
