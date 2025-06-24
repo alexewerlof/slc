@@ -273,6 +273,20 @@ export class Assessment {
         })
 
         fact(
+            '% dependency',
+            'ConsumptionID',
+            'ServiceID',
+        )
+
+        this.dependencies.forEach((dependency) => {
+            fact(
+                'dependency',
+                dependency.consumption.id,
+                dependency.service.id,
+            )
+        })
+
+        fact(
             '% provider',
             'ProviderID',
             'DisplayName',

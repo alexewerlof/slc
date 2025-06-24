@@ -44,7 +44,7 @@ export default {
             this.addNewService,
             'Add a new service to the designated provider and return its id.',
         ).this(this)
-            .prm('providerId:string', 'The id of the provider to add the service to')
+            .prm('providerId:string*', 'The id of the provider to add the service to')
             .prm('displayName:string*', 'The display name of the new service')
             .prm('description:string', 'A description of the new service')
             .prm(
@@ -56,9 +56,16 @@ export default {
             this.addNewConsumption,
             'Add a new consumption to the designated consumer and return its id.',
         ).this(this)
-            .prm('consumerId:string', 'The id of the consumer to add the consumption to')
+            .prm('consumerId:string*', 'The id of the consumer to add the consumption to')
             .prm('displayName:string*', 'The display name of the new consumption')
             .prm('description:string', 'A description of the new consumption')
+
+        tools.add(
+            this.addNewDependency,
+            'Create a new dependency between an existing consumption and service, then return the id of the dependency.',
+        ).this(this)
+            .prm('serviceId:string*', 'The id of the service to add the dependency to')
+            .prm('consumptionId:string*', 'The id of the consumption to add the dependency to')
 
         function getDateAndTime() {
             return String(new Date())
@@ -99,7 +106,9 @@ export default {
             this.$refs[ref].show(modal)
         },
         addNewProvider(state) {
-            return this.assessment.providers.pushNew(state).id
+            const newProvider = this.assessment.providers.pushNew(state).id
+            this.editingInstance = newProvider
+            return newProvider.id
         },
         addNewService(options) {
             const { providerId, ...state } = options
@@ -107,10 +116,14 @@ export default {
             if (!provider) {
                 throw new Error(`Provider with id ${providerId} not found`)
             }
-            return provider.services.pushNew(state).id
+            const newService = provider.services.pushNew(state)
+            this.editingInstance = newService
+            return newService.id
         },
         addNewConsumer(state) {
-            return this.assessment.consumers.pushNew(state).id
+            const newConsumer = this.assessment.consumers.pushNew(state)
+            this.editingInstance = newConsumer
+            return newConsumer.id
         },
         addNewConsumption(options) {
             const { consumerId, ...state } = options
@@ -118,7 +131,19 @@ export default {
             if (!consumer) {
                 throw new Error(`Consumer with id ${consumerId} not found`)
             }
-            return consumer.consumptions.pushNew(state).id
+            const newConsumption = consumer.consumptions.pushNew(state)
+            this.editingInstance = newConsumption
+            return newConsumption.id
+        },
+        addNewDependency(options) {
+            const { serviceId, consumptionId } = options
+            const service = this.assessment.services.find((service) => service.id === serviceId)
+            if (!service) {
+                throw new Error(`Service with id ${serviceId} not found`)
+            }
+            const newDependency = service.dependencies.pushNew({ consumptionId })
+            this.editingInstance = newDependency
+            return newDependency.id
         },
         removeProvider(provider) {
             if (!isInstance(provider, Provider)) {
@@ -138,29 +163,33 @@ export default {
             if (!isInstance(consumption, Consumption)) {
                 throw new TypeError(`Expected an instance of Consumption. Got ${consumption}`)
             }
+            const { consumer } = consumption
             consumption.remove()
-            this.editingInstance = undefined
+            this.editingInstance = consumer
         },
         removeService(service) {
             if (!isInstance(service, Service)) {
                 throw new TypeError(`Expected an instance of Service. Got ${service}`)
             }
+            const { provider } = service
             service.remove()
-            this.editingInstance = undefined
+            this.editingInstance = provider
         },
         removeDependency(dependency) {
             if (!isInstance(dependency, Dependency)) {
                 throw new TypeError(`Expected an instance of Dependency. Got ${dependency}`)
             }
+            const { service } = dependency
             dependency.remove()
-            this.editingInstance = undefined
+            this.editingInstance = service
         },
         removeMetric(metric) {
             if (!isInstance(metric, Metric)) {
                 throw new TypeError(`Expected an instance of Metric. Got ${metric}`)
             }
+            const { service } = metric
             metric.remove()
-            this.editingInstance = undefined
+            this.editingInstance = service
         },
     },
 }
