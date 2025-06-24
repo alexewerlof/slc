@@ -7,7 +7,7 @@ export default {
     },
     data() {
         return {
-            isReadmeVisible: true,
+            isReadmeVisible: false,
         }
     },
     computed: {
