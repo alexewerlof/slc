@@ -59,11 +59,43 @@ export default [
         upperBound: 'le',
     }),
     new Indicator({
-        displayName: 'Availability: Real User Monitoring (RUM)',
+        displayName: 'Availability: Purchase Flow Success Rate',
         description: 'The percentage of purchase flows that performed without any critical errors',
         eventUnit: 'purchase flows',
         metricName: 'flow.errorCount.critical',
         metricUnit: 'errors',
         upperBound: 'le',
+    }),
+    new Indicator({
+        displayName: 'Correctness: JavaScript Error-Free Rate',
+        description:
+            'The percentage of page loads across all browsers and locales that complete without any uncaught JavaScript errors.',
+        eventUnit: 'page loads',
+        metricName: 'uncaught_exceptions.count',
+        metricUnit: 'exceptions',
+        upperBound: 'le', // A good SLO would have an upper threshold of 0
+    }),
+    new Indicator({
+        displayName: 'Correctness: Asset Load Success Rate',
+        description:
+            'The percentage of critical assets (e.g., CSS, JS, fonts) that load successfully without errors (e.g. 404).',
+        eventUnit: 'critical assets',
+        metricName: 'asset.response.code == 200',
+    }),
+    new Indicator({
+        displayName: 'Availability: Static Asset Availability',
+        description:
+            'The percentage of requests for static assets (images, CSS, JS) from the CDN that are served successfully.',
+        eventUnit: 'static asset requests',
+        metricName: 'response.code < 500',
+    }),
+    new Indicator({
+        displayName: 'Throughput: Rendering Performance',
+        description:
+            'The percentage of animation frames rendered at a sufficiently high rate (e.g. > 30fps), ensuring a smooth user experience during interactions and animations.',
+        eventUnit: 'animation frames',
+        metricName: 'frame_rate',
+        metricUnit: 'fps',
+        lowerBound: 'ge',
     }),
 ]

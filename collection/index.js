@@ -4,6 +4,7 @@ const groupNames = [
     'Data',
     'GenAI',
     'Frontend',
+    'Mobile',
     'Operations',
     'Queue',
     'Batch',
