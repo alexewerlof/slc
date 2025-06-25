@@ -17,6 +17,10 @@
                     <icon-component name="article"></icon-component>
                     Summary
                 </button>
+                <button @click="showDialog('uploadDialog', true)">
+                    <icon-component name="publish"></icon-component>
+                    Upload
+                </button>
                 <button @click="showDialog('exportDialog', true)">
                     <icon-component name="download"></icon-component>
                     Export
@@ -26,6 +30,16 @@
         <assessment-graph-component :assessment @select="(entity) => editingInstance = entity" :selected-entity="editingInstance"></assessment-graph-component>
         <dialog-component title="Summary" ref="summaryDialog">
             <summary-component :assessment></summary-component>
+        </dialog-component>
+        <dialog-component title="Upload" ref="uploadDialog">
+            <h3>Paste the state here</h3>
+            <textarea v-model="uploadedState"></textarea>
+            <div class="info block">
+                {{ uploadedStateMessage }}
+            </div>
+            <div class="button-bar">
+                <button @click="assignUploadedState('uploadDialog')" class="button--cta">Load</button>
+            </div>
         </dialog-component>
         <dialog-component title="Export" ref="exportDialog">
             <code-block-component>

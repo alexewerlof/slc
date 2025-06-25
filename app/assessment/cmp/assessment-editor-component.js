@@ -74,9 +74,12 @@ export default {
         tools.add(getDateAndTime, 'Get the current date and time')
 
         return {
+            uploadedState: '',
+            uploadedStateMessage: 'Not analyzed yet',
             thread: new Thread(
                 new FileBead('system', 'assess-prompt.md', '../../prompts/glossary.md'),
                 new Bead('system', () => this.assessment.toString()),
+                /*
                 new Bead(
                     'system',
                     () =>
@@ -98,6 +101,7 @@ export default {
                             this.assessment.markdownLint(),
                         ].join('\n'),
                 ),
+                */
             ),
             tools,
             editingInstance: undefined,
@@ -197,6 +201,21 @@ export default {
             const { service } = metric
             metric.remove()
             this.editingInstance = service
+        },
+        assignUploadedState(dialogRef) {
+            try {
+                this.uploadedStateMessage = 'Analyzing...'
+                const state = JSON.parse(this.uploadedState)
+                this.uploadedStateMessage = 'State parsed as JSON'
+                const tmpAssessment = new Assessment(state)
+                this.uploadedStateMessage = `State tested successfully`
+                console.log(`Loaded assessment state ${tmpAssessment}`)
+                this.assessment.state = state
+                this.uploadedStateMessage = `State loaded successfully`
+                this.$refs[dialogRef].close()
+            } catch (error) {
+                this.uploadedStateMessage = `Failed to load assessment state: ${error}`
+            }
         },
     },
 }
