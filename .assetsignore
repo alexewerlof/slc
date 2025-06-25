@@ -1,0 +1,4 @@
+**/node_modules
+!**/node_modules/vue/dist/vue.esm-browser.js
+**/.DS_Store
+**/.git
