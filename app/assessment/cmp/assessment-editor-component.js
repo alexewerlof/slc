@@ -117,7 +117,7 @@ export default {
             this.$refs[ref].show(modal)
         },
         addNewProvider(state) {
-            const newProvider = this.assessment.providers.pushNew(state).id
+            const newProvider = this.assessment.providers.pushNew(state)
             this.editingInstance = newProvider
             return newProvider.id
         },
