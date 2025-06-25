@@ -21,8 +21,8 @@ export default {
             default: false,
         },
         hasNotification: {
-            type: Boolean,
-            default: false,
+            type: Number,
+            default: 0,
         },
     },
     computed: {
