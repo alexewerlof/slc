@@ -42,9 +42,8 @@ export default {
             return this.taskX() + arrSum(providerWidths)
         },
         height() {
-            const taskHeights = this.assessment.consumers.map((consumer) => this.consumerHeight(consumer))
             const maxMetricCount = Math.max(...this.assessment.services.map((s) => s.metrics.length))
-            return this.serviceY() + this.scaleY(maxMetricCount) + arrSum(taskHeights)
+            return this.serviceY() + this.scaleY(this.taskCount + maxMetricCount + 2)
         },
         statusStyle() {
             if (this.statusText) {
@@ -125,8 +124,7 @@ export default {
             return this.serviceX(metric.service)
         },
         metricY(metric) {
-            const metricCount = metric.service.metrics.length
-            return this.height - this.scaleY(metricCount - metric.index)
+            return this.serviceY(metric.service) + this.scaleY(this.taskCount + metric.index + 2)
         },
         d(x1, y1, x2, y2) {
             return `M${x1},${y1}L${x2},${y2}`
