@@ -1,13 +1,4 @@
 {
     "name": "slc",
-    "type": "module",
-    "dependencies": {
-        "vue": "^3.5.17"
-    },
-    "devDependencies": {
-        "wrangler": "^4.21.2"
-    },
-    "scripts": {
-        "test": "node --test"
-    }
+    "type": "module"
 }
