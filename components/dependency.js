@@ -50,6 +50,10 @@ export class Dependency extends Identifiable {
         }
     }
 
+    onRemove() {
+        this.failures.forEach((failure) => failure.onRemove())
+    }
+
     toString() {
         return `${this.task} ${icon('dependency')} ${this.service}`
     }

@@ -100,11 +100,11 @@ export class Service extends Identifiable {
     }
 
     onRemove() {
-        const { dependencies } = this.provider.assessment
-        for (let i = dependencies.length - 1; i >= 0; i--) {
-            if (dependencies[i].service === this) {
-                dependencies.removeIndex(i)
-            }
+        for (const dependency of this.dependencies) {
+            dependency.remove()
+        }
+        for (const metric of this.metrics) {
+            metric.remove()
         }
     }
 
