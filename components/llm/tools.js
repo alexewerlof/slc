@@ -261,17 +261,17 @@ export class Tool {
 
 /**
  * Creates a ToolResultMessage object.
- * @param {string} toolCallId - The ID of the tool call.
+ * @param {string} id - The ID of the tool call.
  * @param {string} content - The result content from the tool execution.
  * @returns {ToolResultMessage} The constructed tool result message.
  */
 export function toolResultMessage(
-    toolCallId,
+    id,
     content,
 ) {
     return {
         role: 'tool',
-        tool_call_id: toolCallId,
+        tool_call_id: id,
         content,
     }
 }
@@ -312,13 +312,13 @@ export class Tools {
      * @returns {Promise<ToolResultMessage>} A promise that resolves to a tool result message.
      */
     async exeToolCall(toolCall) {
-        const { name: funcName, arguments: argsStr } = toolCall.function
+        const { id, function: { name: funcName, arguments: argsStr } } = toolCall
         console.log(`Agent wants to call ${funcName}(${argsStr})`)
         const tool = this.tools.find((tool) => tool.name === funcName)
         if (tool) {
-            return toolResultMessage(toolCall.id, await tool.invoke(argsStr))
+            return toolResultMessage(id, await tool.invoke(argsStr))
         }
-        return toolResultMessage(toolCall.id, `No tool found with the name "${funcName}"`)
+        return toolResultMessage(id, `No tool found with the name "${funcName}"`)
     }
 
     /**
@@ -327,8 +327,8 @@ export class Tools {
      * @returns {Promise<ToolResultMessage[]>} A promise that resolves to an array of tool result messages.
      */
     async exeToolCalls(toolsCallMessage) {
-        const toolResultMessages = []
         const functionCalls = toolsCallMessage.tool_calls.filter((t) => t.type === 'function')
+        const toolResultMessages = []
         for (const toolCall of functionCalls) {
             toolResultMessages.push(await this.exeToolCall(toolCall))
         }

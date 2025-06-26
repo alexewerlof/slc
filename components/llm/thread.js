@@ -5,6 +5,8 @@ export class Bead {
     _content = undefined
     _role = undefined
 
+    static POSSIBLE_ROLES = ['user', 'system', 'assistant', 'tool']
+
     constructor(role, content) {
         this.role = role
         this.content = content
@@ -15,7 +17,7 @@ export class Bead {
     }
 
     set role(role) {
-        if (!isInArr(role, ['user', 'system', 'assistant'])) {
+        if (!isInArr(role, Bead.POSSIBLE_ROLES)) {
             throw new Error(`Invalid role: ${role}`)
         }
         this._role = role
@@ -42,6 +44,47 @@ export class Bead {
         return {
             role: this.role,
             content: this.content,
+        }
+    }
+}
+
+export class UserPromptBead extends Bead {
+    constructor(content) {
+        super('user', content)
+    }
+}
+
+export class ToolCallsBead extends Bead {
+    _toolCalls = undefined
+
+    constructor(toolCalls) {
+        super('assistant', JSON.stringify(toolCalls, null, 2))
+        if (!Array.isArray(toolCalls) || toolCalls.length === 0) {
+            throw new Error('toolCalls must be a non-empty array')
+        }
+        this._toolCalls = toolCalls
+    }
+
+    toMessage() {
+        return {
+            role: this.role,
+            tool_calls: this._toolCalls,
+        }
+    }
+}
+
+export class ToolResultBead extends Bead {
+    constructor(toolCallId, result) {
+        super('tool', JSON.stringify(result, null, 2))
+        this.toolCallId = toolCallId
+        this.result = result
+    }
+
+    toMessage() {
+        return {
+            role: this.role,
+            tool_call_id: this.toolCallId,
+            content: this.result,
         }
     }
 }

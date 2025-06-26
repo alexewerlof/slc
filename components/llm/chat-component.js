@@ -1,7 +1,7 @@
 import { config } from '../../config.js'
 import { showToast } from '../../lib/toast.js'
 import { getFirstMessage, isToolsCallMessage } from './util.js'
-import { Bead, Thread } from './thread.js'
+import { Bead, Thread, ToolCallsBead, ToolResultBead, UserPromptBead } from './thread.js'
 import { llm } from './llm.js'
 import { Tools } from './tools.js'
 
@@ -39,16 +39,16 @@ export default {
                 return
             }
             try {
-                this.thread.add(new Bead('user', this.message))
+                this.thread.add(new UserPromptBead(this.message))
                 this.$nextTick(() => {
                     this.$refs.chatThreadComponent.scrollToBottom()
                 })
                 this.message = ''
-                const messages = await this.thread.toMessages()
-                this.thread.add(new Bead('assistant', 'Loading...'))
-                this.abortController = new AbortController()
-                const MAX_CONSECUTIVE_TOOLS_CALLS = 10
-                for (let i = 0; i < MAX_CONSECUTIVE_TOOLS_CALLS; i++) {
+                const MAX_CONSECUTIVE_TOOLS_CALLS = 20
+                let toolCallCount = 0
+                do {
+                    const messages = await this.thread.toMessages()
+                    this.abortController = new AbortController()
                     const message = getFirstMessage(
                         await llm.getCompletion(messages, {
                             maxTokens: this.maxTokens,
@@ -57,14 +57,27 @@ export default {
                             tools: this.tools?.descriptor,
                         }),
                     )
-                    if (this.tools && isToolsCallMessage(message)) {
-                        const toolResultMessages = await this.tools.exeToolCalls(message)
-                        messages.push(message, ...toolResultMessages)
-                    } else {
-                        this.thread.beads.at(-1).content = message.content || ''
+                    if (!this.tools || !isToolsCallMessage(message)) {
+                        this.thread.add(new Bead(message.role, message.content))
                         break
                     }
-                }
+                    this.thread.add(new ToolCallsBead(message.tool_calls))
+                    toolCallCount++
+                    if (toolCallCount >= MAX_CONSECUTIVE_TOOLS_CALLS) {
+                        showToast('Too many consecutive tool calls. Stopping.')
+                        this.thread.add(
+                            new Bead(
+                                'system',
+                                `Stopping due to too many tool calls (max=${MAX_CONSECUTIVE_TOOLS_CALLS})`,
+                            ),
+                        )
+                        break
+                    }
+                    const toolResultMessages = await this.tools.exeToolCalls(message)
+                    for (const toolResultMessage of toolResultMessages) {
+                        this.thread.add(new ToolResultBead(toolResultMessage.tool_call_id, toolResultMessage.content))
+                    }
+                } while (true)
             } catch (error) {
                 console.error('Error:', error)
                 showToast('Error: ' + error)
