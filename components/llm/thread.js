@@ -23,6 +23,21 @@ export class Bead {
         this._role = role
     }
 
+    get friendlyRole() {
+        switch (this.role) {
+            case 'user':
+                return 'You'
+            case 'assistant':
+                return 'AI'
+            case 'system':
+                return 'Developer'
+            case 'tool':
+                return 'App'
+            default:
+                return this.role
+        }
+    }
+
     get content() {
         if (isStr(this._content)) {
             return this._content
@@ -38,6 +53,10 @@ export class Bead {
             throw new TypeError(`content must be a string or function. Got ${content} (${typeof content})`)
         }
         this._content = content
+    }
+
+    get isDebug() {
+        return this.role === 'system'
     }
 
     toMessage() {
@@ -65,6 +84,10 @@ export class ToolCallsBead extends Bead {
         this._toolCalls = toolCalls
     }
 
+    get isDebug() {
+        return true
+    }
+
     toMessage() {
         return {
             role: this.role,
@@ -78,6 +101,10 @@ export class ToolResultBead extends Bead {
         super('tool', JSON.stringify(result, null, 2))
         this.toolCallId = toolCallId
         this.result = result
+    }
+
+    get isDebug() {
+        return true
     }
 
     toMessage() {

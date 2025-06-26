@@ -1,8 +1,8 @@
 <div class="chat-thread-component">
     <div class="input-group">
         <label>
-            <input type="checkbox" v-model="showSystemMessages">
-            System Messages
+            <input type="checkbox" v-model="showDebugInfo">
+            Debug Info
         </label>
         <div class="button-bar button-bar--small">
             <button @click="$refs.llmSettingsDialog.show(true)" title="Settings">
@@ -24,8 +24,9 @@
     </div>
     <div class="chat-thread-component__thread" ref="threadContainerRef">
         <div v-for="bead of thread.beads"
-            :class="`chat-thread-component__bead chat-thread-component__bead--${bead.role}`" :hidden="bead.role === 'system' && !showSystemMessages">
-            <div class="chat-thread-component__role" v-text="roleToFriendly(bead.role)"></div>
+            :class="`chat-thread-component__bead chat-thread-component__bead--${bead.role}`"
+            :hidden="!showDebugInfo && bead.isDebug">
+            <div class="chat-thread-component__role" v-text="bead.friendlyRole"></div>
             <markdown-component v-if="bead.content" class="frost chat-thread-component__contents" :markdown="bead.content"></markdown-component>
             <loading-animation-component v-if="!bead.content"></loading-animation-component>
         </div>
