@@ -25,6 +25,10 @@
                     <icon-component name="download"></icon-component>
                     Export
                 </button>
+                <button @click="clearAssessment()">
+                    <icon-component name="delete"></icon-component>
+                    Clear
+                </button>
             </div>
         </div>
         <assessment-graph-component :assessment @select="(entity) => editingInstance = entity" :selected-entity="editingInstance"></assessment-graph-component>

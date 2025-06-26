@@ -100,12 +100,8 @@ export class Service extends Identifiable {
     }
 
     onRemove() {
-        for (const dependency of this.dependencies) {
-            dependency.remove()
-        }
-        for (const metric of this.metrics) {
-            metric.remove()
-        }
+        this.metrics.removeAll()
+        this.dependencies.removeAll()
     }
 
     get dependencies() {

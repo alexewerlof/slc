@@ -217,5 +217,14 @@ export default {
                 this.uploadedStateMessage = `Failed to load assessment state: ${error}`
             }
         },
+        clearAssessment() {
+            const message = [
+                'This will remove all Providers, Consumers, Services, Tasks, Dependencies, Failures, and Metrics.',
+                'Are you sure you want to clear the assessment?',
+            ].join(' ')
+            if (confirm(message)) {
+                this.assessment.clear()
+            }
+        },
     },
 }

@@ -94,9 +94,7 @@ export class Provider extends Identifiable {
     }
 
     onRemove() {
-        for (const service of this.services) {
-            service.onRemove()
-        }
+        this.services.removeAll()
     }
 
     get displayNameWithFallback() {

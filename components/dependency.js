@@ -52,6 +52,7 @@ export class Dependency extends Identifiable {
 
     onRemove() {
         this.failures.forEach((failure) => failure.onRemove())
+        this.failures.removeAll()
     }
 
     toString() {

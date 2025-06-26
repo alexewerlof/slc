@@ -46,6 +46,11 @@ export class Assessment {
         }
     }
 
+    clear() {
+        this.providers.removeAll()
+        this.consumers.removeAll()
+    }
+
     findDependency(service, task) {
         if (!isInstance(service, Service)) {
             throw new TypeError(`service must be an instance of Service. Got ${service}`)
