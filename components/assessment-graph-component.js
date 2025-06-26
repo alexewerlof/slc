@@ -1,10 +1,6 @@
 import { icon } from '../lib/icons.js'
 import { Assessment } from './assessment.js'
 
-function arrSum(arr) {
-    return arr.reduce((a, b) => a + b, 0)
-}
-
 export default {
     data() {
         return {
