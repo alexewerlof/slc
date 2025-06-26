@@ -15,19 +15,19 @@
     </p>
     <ul>
         <li>
-            <button @click="currentStep = 1">{{ icon('provider') }} Providers</button>: Define the service providers
+            <button @click="currentStep = 1">{{ unicodeSymbol('provider') }} Providers</button>: Define the service providers
         </li>
         <li>
-            <button @click="currentStep = 2">{{ icon('consumer') }} Consumers</button>: Define the consumers of the services
+            <button @click="currentStep = 2">{{ unicodeSymbol('consumer') }} Consumers</button>: Define the consumers of the services
         </li>
         <li>
-            <button @click="currentStep = 3">{{ icon('failure') }} Failures</button>: Define the failures that threaten the consumer tasks that depends on the services
+            <button @click="currentStep = 3">{{ unicodeSymbol('failure') }} Failures</button>: Define the failures that threaten the consumer tasks that depends on the services
         </li>
         <li>
-            <button @click="currentStep = 4">{{ icon('risk') }} Risks</button>: Define the business impact of failures and sort them accordingly
+            <button @click="currentStep = 4">{{ unicodeSymbol('risk') }} Risks</button>: Define the business impact of failures and sort them accordingly
         </li>
         <li>
-            <button @click="currentStep = 5">{{ icon('metric') }} Metrics</button>: What to measure to proactively be on top of the risks?
+            <button @click="currentStep = 5">{{ unicodeSymbol('metric') }} Metrics</button>: What to measure to proactively be on top of the risks?
         </li>
         <li>
             <button @click="currentStep = 6">Summary</button>: A summary of the assessment
@@ -57,54 +57,54 @@
         The UI in this app is built using the following mental model:
     </p>
     <code-block-component>
-        <span class="punct">{{ icon('owner') }}</span>
+        <span class="punct">{{ unicodeSymbol('owner') }}</span>
         <span class="exprs">Owner</span>
         owns 1+
-        <span class="punct">{{ icon('provider') }}</span>
+        <span class="punct">{{ unicodeSymbol('provider') }}</span>
         <span class="exprs">Provider</span>(s).
         <br>
 
-        <span class="punct">{{ icon('provider') }}</span>
+        <span class="punct">{{ unicodeSymbol('provider') }}</span>
         <span class="exprs">Provider</span>
         offers 1+
-        <span class="punct">{{ icon('service') }}</span>
+        <span class="punct">{{ unicodeSymbol('service') }}</span>
         <span class="exprs">Service</span>(s).
         <br>
 
-        <span class="punct">{{ icon('consumer') }}</span>
+        <span class="punct">{{ unicodeSymbol('consumer') }}</span>
         <span class="exprs">Consumer</span>
         has 1+
-        <span class="punct">{{ icon('task') }}</span>
+        <span class="punct">{{ unicodeSymbol('task') }}</span>
         <span class="exprs">Task</span>(s) to achieve a goal.
         <br>
 
-        <span class="punct">{{ icon('dependency') }}</span>
+        <span class="punct">{{ unicodeSymbol('dependency') }}</span>
         <span class="exprs">Dependency</span>
         ties a
-        <span class="punct">{{ icon('task') }}</span>
+        <span class="punct">{{ unicodeSymbol('task') }}</span>
         <span class="exprs">Task</span>
         to a
-        <span class="punct">{{ icon('service') }}</span>
+        <span class="punct">{{ unicodeSymbol('service') }}</span>
         <span class="exprs">Service</span>
         <br>
 
-        <span class="punct">{{ icon('dependency') }}</span>
+        <span class="punct">{{ unicodeSymbol('dependency') }}</span>
         <span class="exprs">Dependency</span>
         has 1+
-        <span class="punct">{{ icon('failure') }}</span>
+        <span class="punct">{{ unicodeSymbol('failure') }}</span>
         <span class="exprs">Failure</span>(s).
         <br>
 
-        <span class="punct">{{ icon('failure') }}</span>
+        <span class="punct">{{ unicodeSymbol('failure') }}</span>
         <span class="exprs">Failure</span>
         has a
-        <span class="punct">{{ icon('symptom') }}</span>
+        <span class="punct">{{ unicodeSymbol('symptom') }}</span>
         <span class="exprs">Symptom</span>,
         a
-        <span class="punct">{{ icon('consequence') }}</span>
+        <span class="punct">{{ unicodeSymbol('consequence') }}</span>
         <span class="exprs">Consequence</span>,
         and a 
-        <span class="punct">{{ icon('impact') }}</span>
+        <span class="punct">{{ unicodeSymbol('impact') }}</span>
         <span class="exprs">Business Impact</span>
     </code-block-component>
 </div>

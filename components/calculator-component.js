@@ -1,6 +1,6 @@
 import { config } from '../config.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '../lib/fmt.js'
-import { icon } from '../lib/icons.js'
+import { unicodeSymbol } from '../lib/icons.js'
 import { Calculator } from './calculator.js'
 import { percentToRatio } from '../lib/math.js'
 import { isInstance } from '../lib/validation.js'
@@ -40,7 +40,7 @@ export default {
         boundCaption,
         entity2symbol,
         hasComparators,
-        icon,
+        unicodeSymbol,
         numL10n,
         percentToRatio,
         percL10n,

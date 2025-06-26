@@ -2,7 +2,7 @@ import { isInstance } from '../../lib/validation.js'
 import { Alert } from '../alert.js'
 import { config } from '../../config.js'
 import { percL10n } from '../../lib/fmt.js'
-import { icon } from '../../lib/icons.js'
+import { unicodeSymbol } from '../../lib/icons.js'
 
 export default {
     computed: {
@@ -18,6 +18,6 @@ export default {
     },
     methods: {
         percL10n,
-        icon,
+        unicodeSymbol,
     },
 }

@@ -2,7 +2,7 @@ import { isArrIdx, isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { config } from '../config.js'
 import { Failure } from './failure.js'
-import { icon } from '../lib/icons.js'
+import { unicodeSymbol } from '../lib/icons.js'
 
 function resetImpactLevelsInOrder(failures) {
     const { min, max } = config.impactLevel
@@ -22,7 +22,7 @@ export default {
         assessment: Assessment,
     },
     methods: {
-        icon,
+        unicodeSymbol,
         swapFailures(srcIndex, dstIndex) {
             if (srcIndex === dstIndex) {
                 return

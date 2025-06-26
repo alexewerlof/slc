@@ -6,11 +6,11 @@
         <div class="frost">
             <div class="button-bar">
                 <button @click="editingInstance = assessment.providers.pushNew()">
-                    <icon-component name="add_circle"></icon-component>
+                    <icon-component name="add"></icon-component>
                     New Provider
                 </button>
                 <button @click="editingInstance = assessment.consumers.pushNew()">
-                    <icon-component name="add_circle"></icon-component>
+                    <icon-component name="add"></icon-component>
                     New Consumer
                 </button>
                 <button @click="showDialog('summaryDialog', true)">
@@ -59,7 +59,7 @@
                 <button
                     @click="editingInstance = editingInstance.services.pushNew()"
                 >
-                    <icon-component name="add_circle"></icon-component>
+                    <icon-component name="add"></icon-component>
                     New Service
                 </button>
                 <button
@@ -77,7 +77,7 @@
             <service-component :service="editingInstance"></service-component>
             <div class="button-bar">
                 <button @click="editingInstance = editingInstance.metrics.pushNew()">
-                    <icon-component name="add_circle"></icon-component>
+                    <icon-component name="add"></icon-component>
                     New Metric
                 </button>
                 <button
@@ -95,7 +95,7 @@
             <consumer-component :consumer="editingInstance"></consumer-component>
             <div class="button-bar">
                 <button @click="editingInstance = editingInstance.tasks.pushNew()">
-                    <icon-component name="add_circle"></icon-component>
+                    <icon-component name="add"></icon-component>
                     New Task
                 </button>
                 <button

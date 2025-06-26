@@ -1,6 +1,6 @@
 import { config } from '../config.js'
 import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
-import { icon } from '../lib/icons.js'
+import { unicodeSymbol } from '../lib/icons.js'
 import { Dependency } from './dependency.js'
 
 export default {
@@ -16,7 +16,7 @@ export default {
         },
     },
     methods: {
-        icon,
+        unicodeSymbol,
         percL10n,
         numL10n,
         boundCaption,

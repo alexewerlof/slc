@@ -1,4 +1,4 @@
-import { icon } from '../lib/icons.js'
+import { unicodeSymbol } from '../lib/icons.js'
 import { Identifiable } from '../lib/identifiable.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { isArr, isDef, isInstance, isObj, isStr } from '../lib/validation.js'
@@ -56,7 +56,7 @@ export class Dependency extends Identifiable {
     }
 
     toString() {
-        return `${this.task} ${icon('dependency')} ${this.service}`
+        return `${this.task} ${unicodeSymbol('dependency')} ${this.service}`
     }
 
     get provider() {

@@ -54,7 +54,7 @@
 
                         <div class="button-bar">
                             <button @click="calculator.indicators.pushNew()">
-                                <icon-component name="add_circle"></icon-component>
+                                <icon-component name="add"></icon-component>
                                 Add New
                             </button>
                             <button @click="$refs.indicatorTemplateDialog.show(true)">
@@ -115,7 +115,7 @@
                             v-if="calculator.indicators.selected"
                             class="button-bar">
                             <button @click="calculator.indicators.selected.objectives.pushNew()">
-                                <icon-component name="add_circle"></icon-component>
+                                <icon-component name="add"></icon-component>
                                 Add New
                             </button>
                             <button
@@ -191,11 +191,11 @@
 
                         <div class="button-bar" v-if="calculator.indicators.selected?.objectives.selected">
                             <button @click="calculator.indicators.selected.objectives.selected.alerts.pushNew()">
-                                <icon-component name="add_circle"></icon-component>
+                                <icon-component name="add"></icon-component>
                                 Add New
                             </button>
                             <button @click="addRecommendedAlerts()">
-                                <icon-component name="playlist_add_circle"></icon-component>
+                                <icon-component name="add_all"></icon-component>
                                 Add Recommended
                             </button>
                             <button

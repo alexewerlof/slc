@@ -1,7 +1,7 @@
 import { config } from '../config.js'
 import { readTextFile } from '../lib/share.js'
 import { Assessment } from './assessment.js'
-import { icon } from '../lib/icons.js'
+import { unicodeSymbol } from '../lib/icons.js'
 import { inRange } from '../lib/validation.js'
 import { Bead, FileBead, Thread } from './llm/thread.js'
 
@@ -58,7 +58,7 @@ export default {
         },
     },
     methods: {
-        icon,
+        unicodeSymbol,
         inRange,
 
         goto(name, instance) {

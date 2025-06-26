@@ -1,4 +1,4 @@
-import { icon } from '../lib/icons.js'
+import { unicodeSymbol } from '../lib/icons.js'
 import { Assessment } from './assessment.js'
 
 export default {
@@ -69,7 +69,7 @@ export default {
         },
     },
     methods: {
-        icon,
+        unicodeSymbol,
         scaleX(x) {
             return x * this.delta
         },

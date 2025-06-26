@@ -19,7 +19,7 @@
                     @click="$emit('select', task)"
                     @status="updateStatus"
                     >
-                    {{ icon('task') }}
+                    {{ unicodeSymbol('task') }}
                 </assessment-graph-component-entity>
             </g>
             <assessment-graph-component-entity
@@ -32,7 +32,7 @@
                 @click="$emit('select', consumer)"
                 @status="updateStatus"
                 >
-                {{ icon('consumer') }}
+                {{ unicodeSymbol('consumer') }}
             </assessment-graph-component-entity>
         </g>
         <!-- Services & Providers -->
@@ -54,7 +54,7 @@
                     @click="$emit('select', service)"
                     @status="updateStatus"
                     >
-                    {{ icon('service') }}
+                    {{ unicodeSymbol('service') }}
                 </assessment-graph-component-entity>
                 <!-- Dependencies -->
                 <assessment-graph-component-entity
@@ -82,7 +82,7 @@
                     @click="$emit('select', metric)"
                     @status="updateStatus"
                     >
-                    {{ icon('metric') }}
+                    {{ unicodeSymbol('metric') }}
                 </assessment-graph-component-entity>
             </g>
             <!-- Provider -->
@@ -96,7 +96,7 @@
                 @click="$emit('select', provider)"
                 @status="updateStatus"
                 >
-                {{ icon('provider') }}
+                {{ unicodeSymbol('provider') }}
             </assessment-graph-component-entity>
         </g>
     </svg>

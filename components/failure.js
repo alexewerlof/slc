@@ -1,6 +1,6 @@
 import { inRange, isDef, isInstance, isObj, isStr } from '../lib/validation.js'
 import { config } from '../config.js'
-import { icon } from '../lib/icons.js'
+import { unicodeSymbol } from '../lib/icons.js'
 import { Dependency } from './dependency.js'
 import { Identifiable } from '../lib/identifiable.js'
 import { Lint } from './lint.js'
@@ -95,17 +95,17 @@ export class Failure extends Identifiable {
     toString() {
         const ret = [
             this.dependency.task,
-            icon('failure'),
+            unicodeSymbol('failure'),
             this.dependency.service,
         ]
         if (this.symptom) {
-            ret.push(icon('symptom'), this.symptom)
+            ret.push(unicodeSymbol('symptom'), this.symptom)
         }
         if (this.consequence) {
-            ret.push(icon('consequence'), this.consequence)
+            ret.push(unicodeSymbol('consequence'), this.consequence)
         }
         if (this.businessImpact) {
-            ret.push(icon('impact'), this.businessImpact)
+            ret.push(unicodeSymbol('impact'), this.businessImpact)
         }
         return ret.join(' ')
     }

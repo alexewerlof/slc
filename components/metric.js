@@ -1,13 +1,13 @@
 import { isArr, isBool, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Service } from './service.js'
 import { Failure } from './failure.js'
-import { icon } from '../lib/icons.js'
+import { unicodeSymbol } from '../lib/icons.js'
 import { Condition } from './condition.js'
 import { config } from '../config.js'
 import { Identifiable } from '../lib/identifiable.js'
 import { Lint } from './lint.js'
 
-const metricIcon = icon('metric')
+const metricIcon = unicodeSymbol('metric')
 
 export class Metric extends Identifiable {
     service = null

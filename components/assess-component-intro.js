@@ -1,7 +1,7 @@
-import { icon } from '../lib/icons.js'
+import { unicodeSymbol } from '../lib/icons.js'
 
 export default {
     methods: {
-        icon,
+        unicodeSymbol,
     },
 }

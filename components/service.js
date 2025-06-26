@@ -1,4 +1,4 @@
-import { icon } from '../lib/icons.js'
+import { unicodeSymbol } from '../lib/icons.js'
 import { isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Provider } from './provider.js'
 import { config } from '../config.js'
@@ -8,7 +8,7 @@ import { Dependency } from './dependency.js'
 import { Identifiable } from '../lib/identifiable.js'
 import { Lint } from './lint.js'
 
-const scopeIcon = icon('scope')
+const scopeIcon = unicodeSymbol('scope')
 
 export class Service extends Identifiable {
     static possibleTypes = ['Automated', 'Manual', 'Hybrid']

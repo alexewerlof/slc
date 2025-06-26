@@ -4,7 +4,7 @@ import { isArr, isDef, isInstance, isObj } from '../lib/validation.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { Service } from './service.js'
 import { Task } from './task.js'
-import { icon } from '../lib/icons.js'
+import { unicodeSymbol } from '../lib/icons.js'
 import { Lint } from './lint.js'
 import { assessment2prolog } from '../app/assessment/cmp/prolog.js'
 
@@ -110,22 +110,22 @@ export class Assessment {
         lines.push(
             `## Icons`,
             emptyLine,
-            `- ${icon('provider')} indicates **Provider**. Each Provider offers 1+ Service(s).`,
-            `- ${icon('service')} indicates **Service**. Each Service is offered by exactly 1 Provider.`,
-            `- ${icon('consumer')} indicates **Consumer**. Each Consumer has 1+ Task(s) to achieve a goal.`,
-            `- ${icon('task')} indicates **Task**. Each Task belongs to exactly 1 Consumer.`,
+            `- ${unicodeSymbol('provider')} indicates **Provider**. Each Provider offers 1+ Service(s).`,
+            `- ${unicodeSymbol('service')} indicates **Service**. Each Service is offered by exactly 1 Provider.`,
+            `- ${unicodeSymbol('consumer')} indicates **Consumer**. Each Consumer has 1+ Task(s) to achieve a goal.`,
+            `- ${unicodeSymbol('task')} indicates **Task**. Each Task belongs to exactly 1 Consumer.`,
             `- ${
-                icon('dependency')
+                unicodeSymbol('dependency')
             } indicates **Dependency**. Each Dependency ties a Task to a Service. Each Dependency has 1+ Failure(s).`,
             `- ${
-                icon('failure')
+                unicodeSymbol('failure')
             } indicates **Failure**. Each Failure belongs to exactly one Dependency. Each Failure has a Symptom, a Consequence, and a Business Impact`,
-            `- ${icon('symptom')} indicates **Symptom**`,
-            `- ${icon('consequence')} indicates **Consequence**`,
-            `- ${icon('impact')} indicates **Business Impact**`,
-            `- ${icon('scope')} indicates a parent-child relationship like **Provider${
-                icon('scope')
-            }Service** or **Consumer${icon('scope')}Task**`,
+            `- ${unicodeSymbol('symptom')} indicates **Symptom**`,
+            `- ${unicodeSymbol('consequence')} indicates **Consequence**`,
+            `- ${unicodeSymbol('impact')} indicates **Business Impact**`,
+            `- ${unicodeSymbol('scope')} indicates a parent-child relationship like **Provider${
+                unicodeSymbol('scope')
+            }Service** or **Consumer${unicodeSymbol('scope')}Task**`,
         )
 
         lines.push(newParagraph)
@@ -137,17 +137,17 @@ export class Assessment {
 
         for (const provider of this.providers) {
             lines.push(
-                `- ${icon('provider')} **${provider.displayName}**: ${provider.description}`,
+                `- ${unicodeSymbol('provider')} **${provider.displayName}**: ${provider.description}`,
             )
             for (const service of provider.services) {
                 lines.push(
-                    `  - ${icon('service')} **${service.displayName}**: ${service.description}`,
+                    `  - ${unicodeSymbol('service')} **${service.displayName}**: ${service.description}`,
                 )
                 for (const dependency of this.dependencies) {
                     if (dependency.service === service) {
                         lines.push(
                             `    - ${
-                                icon('dependency')
+                                unicodeSymbol('dependency')
                             } **${dependency.task.consumer.displayName}**: ${dependency.description}`,
                         )
                     }
@@ -162,17 +162,17 @@ export class Assessment {
 
         for (const consumer of this.consumers) {
             lines.push(
-                `- ${icon('consumer')} **${consumer.displayName}**: ${consumer.description}`,
+                `- ${unicodeSymbol('consumer')} **${consumer.displayName}**: ${consumer.description}`,
             )
             for (const task of consumer.tasks) {
                 lines.push(
-                    `  - ${icon('task')} **${task.displayName}**: ${task.description}`,
+                    `  - ${unicodeSymbol('task')} **${task.displayName}**: ${task.description}`,
                 )
                 for (const dependency of this.dependencies) {
                     if (dependency.task === task) {
                         lines.push(
                             `    - ${
-                                icon('dependency')
+                                unicodeSymbol('dependency')
                             } **${dependency.service.displayName}**: ${dependency.description}`,
                         )
                     }

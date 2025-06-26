@@ -1,7 +1,7 @@
 import { isInstance } from '../lib/validation.js'
 import { config } from '../config.js'
 import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
-import { icon } from '../lib/icons.js'
+import { unicodeSymbol } from '../lib/icons.js'
 import { Condition } from './condition.js'
 
 export default {
@@ -17,7 +17,7 @@ export default {
         },
     },
     methods: {
-        icon,
+        unicodeSymbol,
         percL10n,
         numL10n,
         boundCaption,
