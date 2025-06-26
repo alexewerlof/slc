@@ -27,23 +27,41 @@ export default {
         taskCount() {
             return this.assessment.tasks.length
         },
-        heightCells() {
-            let ret = 3
-            this.assessment.consumers.forEach((consumer) => ret += consumer.tasks.length)
-            return ret
+        maxMetricCount() {
+            const { services } = this.assessment
+            if (services.length === 0) {
+                return 0
+            }
+            return Math.max(...services.map((s) => s.metrics.length))
         },
-        widthCells() {
-            let ret = 3
-            this.assessment.providers.forEach((provider) => ret += provider.services.length)
-            return ret
+        consumersAndTasksWidth() {
+            return this.scaleX(2)
         },
         width() {
-            const providerWidths = this.assessment.providers.map((provider) => this.providerWidth(provider))
-            return this.taskX() + arrSum(providerWidths)
+            return this.consumersAndTasksWidth + this.providersAndServicesWidth
+        },
+        providersAndServicesWidth() {
+            const width = this.assessment.providers.reduce(
+                (sum, provider) => sum + this.providerWidth(provider),
+                0,
+            )
+            return Math.max(width, this.scaleY(1))
+        },
+        providersAndServicesHeight() {
+            return this.scaleY(2)
+        },
+        consumersAndTasksHeight() {
+            const height = this.assessment.consumers.reduce(
+                (sum, consumer) => sum + this.consumerHeight(consumer),
+                0,
+            )
+            return Math.max(height, this.scaleY(1))
+        },
+        metricsOffsetY() {
+            return this.providersAndServicesHeight + this.consumersAndTasksHeight
         },
         height() {
-            const maxMetricCount = Math.max(...this.assessment.services.map((s) => s.metrics.length))
-            return this.serviceY() + this.scaleY(this.taskCount + maxMetricCount + 2)
+            return this.providersAndServicesHeight + this.consumersAndTasksHeight + this.scaleY(this.maxMetricCount)
         },
         statusStyle() {
             if (this.statusText) {
@@ -124,7 +142,7 @@ export default {
             return this.serviceX(metric.service)
         },
         metricY(metric) {
-            return this.serviceY(metric.service) + this.scaleY(this.taskCount + metric.index + 2)
+            return this.metricsOffsetY + this.scaleY(metric.index)
         },
         d(x1, y1, x2, y2) {
             return `M${x1},${y1}L${x2},${y2}`
