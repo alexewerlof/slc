@@ -73,6 +73,13 @@ export default {
 
         tools.add(getDateAndTime, 'Get the current date and time')
 
+        const exportTabs = [
+            'JSON',
+            'Markdown',
+            'Prolog',
+            'Import',
+        ]
+
         return {
             uploadedState: '',
             uploadedStateMessage: 'Not analyzed yet',
@@ -104,6 +111,8 @@ export default {
                 */
             ),
             tools,
+            exportTabs,
+            selExportTab: exportTabs[0],
             editingInstance: undefined,
         }
     },

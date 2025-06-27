@@ -4,7 +4,7 @@
     </div>
     <div class="mozaic__tile mozaic__tile--6c">
         <div class="frost">
-            <div class="button-bar">
+            <div class="button-bar button-bar--center">
                 <button @click="editingInstance = assessment.providers.pushNew()">
                     <icon-component name="add"></icon-component>
                     New Provider
@@ -13,17 +13,9 @@
                     <icon-component name="add"></icon-component>
                     New Consumer
                 </button>
-                <button @click="showDialog('summaryDialog', true)">
-                    <icon-component name="article"></icon-component>
-                    Summary
-                </button>
-                <button @click="showDialog('uploadDialog', true)">
-                    <icon-component name="publish"></icon-component>
-                    Upload
-                </button>
-                <button @click="showDialog('exportDialog', true)">
+                <button @click="showDialog('stateDialog', true)">
                     <icon-component name="download"></icon-component>
-                    Export
+                    State
                 </button>
                 <button @click="clearAssessment()">
                     <icon-component name="delete"></icon-component>
@@ -36,19 +28,33 @@
             <summary-component :assessment></summary-component>
         </dialog-component>
         <dialog-component title="Upload" ref="uploadDialog">
-            <h3>Paste the state here</h3>
-            <textarea v-model="uploadedState"></textarea>
-            <div class="info block">
-                {{ uploadedStateMessage }}
-            </div>
-            <div class="button-bar">
-                <button @click="assignUploadedState('uploadDialog')" class="button--cta">Load</button>
-            </div>
+
         </dialog-component>
-        <dialog-component title="Export" ref="exportDialog">
-            <code-block-component>
-                <pre>{{ JSON.stringify(assessment.state, null, 2) }}</pre>
-            </code-block-component>
+        <dialog-component title="Export" ref="stateDialog">
+            <tabs-component v-model="selExportTab" :tab-names="exportTabs"></tabs-component>
+            <div v-if="selExportTab === 'Markdown'">
+                <markdown-component :markdown="assessment.toString()"></markdown-component>
+            </div>
+            <div v-if="selExportTab === 'Prolog'">
+                <code-block-component title="Prolog">
+                    <formula-component :formula="assessment.toProlog()"></formula-component>
+                </code-block-component>
+            </div>
+            <div v-if="selExportTab === 'JSON'">
+                <code-block-component title="JSON">
+                    <pre>{{ JSON.stringify(assessment.state, null, 2) }}</pre>
+                </code-block-component>
+            </div>
+            <div v-if="selExportTab === 'Import'">
+                <h3>Paste JSON state:</h3>
+                <textarea v-model="uploadedState"></textarea>
+                <div class="info block">
+                    {{ uploadedStateMessage }}
+                </div>
+                <div class="button-bar">
+                    <button @click="assignUploadedState('uploadDialog')" class="button--cta">Load</button>
+                </div>
+            </div>
         </dialog-component>
     </div>
     <div v-if="editingInstance" class="mozaic__tile mozaic__tile--3c surface">
