@@ -92,9 +92,17 @@ export function assessment2prolog(assessment) {
         )
     })
 
-    fact('% provides', 'ProviderID', 'ServiceID')
+    fact(
+        '% provides',
+        'ProviderID',
+        'ServiceID',
+    )
     assessment.services.forEach((service) => {
-        lines.push(`provides(${service.provider.id}, ${service.id}).`)
+        fact(
+            `provides`,
+            service.provider.id,
+            service.id,
+        )
     })
 
     fact(
