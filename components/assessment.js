@@ -88,6 +88,43 @@ export class Assessment {
             .sort((f1, f2) => f2.impactLevel - f1.impactLevel)
     }
 
+    get all() {
+        return [
+            ...this.providers,
+            ...this.services,
+            ...this.consumers,
+            ...this.tasks,
+            ...this.dependencies,
+            ...this.failures,
+            ...this.metrics,
+        ]
+    }
+
+    getEntityById(id) {
+        return this.all.find((entity) => entity.id === id)
+    }
+
+    getEntitiesByClassName(className) {
+        switch (className) {
+            case 'Provider':
+                return this.providers
+            case 'Service':
+                return this.services
+            case 'Consumer':
+                return this.consumers
+            case 'Task':
+                return this.tasks
+            case 'Dependency':
+                return this.dependencies
+            case 'Failure':
+                return this.failures
+            case 'Metric':
+                return this.metrics
+            default:
+                throw new TypeError(`Unknown class name: ${className}`)
+        }
+    }
+
     findFailures(service) {
         if (!isInstance(service, Service)) {
             throw new TypeError(`service must be an instance of Service. Got ${service}`)

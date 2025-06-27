@@ -19,6 +19,21 @@ export default {
     data() {
         const tools = new Tools()
         tools.add(
+            this.listEntities,
+            'Returns the id of entities with the specified class name.',
+        ).this(this)
+            .prm(
+                'className:string*',
+                'The class name of the entities to list. It can only be one of these values: "Provider", "Consumer", "Service", "Task", "Dependency", "Failure", "Metric"',
+            )
+
+        tools.add(
+            this.getEntityState,
+            'Returns information about a particular entity in JSON format.',
+        ).this(this)
+            .prm('id:string*', 'The id of the entity to get the state of')
+
+        tools.add(
             this.addNewConsumer,
             'Add a new consumer to the assessment and return its id.',
         ).this(this)
@@ -124,6 +139,16 @@ export default {
     methods: {
         showDialog(ref, modal) {
             this.$refs[ref].show(modal)
+        },
+        listEntities({ className }) {
+            return this.assessment.getEntitiesByClassName(className).map(({ id }) => id)
+        },
+        getEntityState({ id }) {
+            const entity = this.assessment.getEntityById(id)
+            if (!entity) {
+                throw new Error(`Entity with id ${id} not found`)
+            }
+            return entity.state
         },
         addNewProvider(state) {
             const newProvider = this.assessment.providers.pushNew(state)
