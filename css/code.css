@@ -15,12 +15,12 @@ code label {
 
 /* functions */
 code .funct {
-    color: var(--brand-red);
+    color: var(--primary-color);
 }
 
 /* punctuations */
 code .punct {
-    color: var(--brand-pink);
+    color: var(--brand-red);
 }
 
 /* expressions */
@@ -31,18 +31,18 @@ code .exprs {
 
 /* string */
 code .str {
-    color: var(--primary-color);
+    color: var(--brand-green);
     word-break: break-word;
 }
 
 /* comment */
 code .cmnt {
-    color: var(--brand-green);
+    color: var(--brand-purple);
 }
 
 /* constants */
 code .const {
-    color: var(--brand-purple);
+    color: var(--brand-pink);
 }
 
 math {
@@ -59,7 +59,7 @@ mfrac {
 }
 
 mn {
-    color: var(--brand-purple);
+    color: var(--brand-pink);
 }
 
 mo {
