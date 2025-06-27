@@ -10,30 +10,31 @@ export class Formula {
     }
     _add(text, type, label) {
         this.parts.push({ text, type, label })
+        return this
     }
     addSpace() {
-        this._add(' ')
+        return this._add(' ')
     }
     addBreak() {
-        this._add('\n')
+        return this._add('\n')
     }
     addFunct(text, label) {
-        this._add(text, 'funct', label)
+        return this._add(text, 'funct', label)
     }
     addExpr(text, label) {
-        this._add(text, 'exprs', label)
+        return this._add(text, 'exprs', label)
     }
     addStr(text, label) {
-        this._add(text, 'str', label)
+        return this._add(text, 'str', label)
     }
     addCmnt(text, label) {
-        this._add(text, 'cmnt', label)
+        return this._add(text, 'cmnt', label)
     }
     addConst(text, label) {
-        this._add(text, 'const', label)
+        return this._add(text, 'const', label)
     }
     addPunct(text, label) {
-        this._add(text, 'punct', label)
+        return this._add(text, 'punct', label)
     }
     pop() {
         this.parts.pop()
@@ -43,6 +44,7 @@ export class Formula {
             throw new Error('Expected a Formula instance')
         }
         this.parts.push(...formula.components)
+        return this
     }
     toString() {
         return this.parts.map(({ text }) => text).join('')
