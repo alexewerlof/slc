@@ -87,7 +87,7 @@ export default {
                             'Below is a Prolog representation of all the entities in the assessment and their logical connection. You can use it to answer questions about the assessment because this code represents the state of the assessment and entities like providers, services, consumers, tasks, failures, and metrics.',
                             'Use the displayName of the entities instead of their id whenever possible. When answering questions refer to the provided Prolog code in order to understand the context.',
                             '```prolog',
-                            this.assessment.toProlog(),
+                            this.assessment.toProlog().toString(),
                             '```',
                         ].join('\n'),
                 ),

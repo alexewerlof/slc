@@ -1,6 +1,6 @@
 <div>
     <markdown-component :markdown="assessment.toString()"></markdown-component>
     <code-block-component title="Prolog">
-        <pre>{{assessment.toProlog()}}</pre>
+        <formula-component :formula="assessment.toProlog()"></formula-component>
     </code-block-component>
 </div>

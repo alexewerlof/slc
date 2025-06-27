@@ -1,5 +1,6 @@
 import { Assessment } from '../../../components/assessment.js'
-import { isInstance } from '../../../lib/validation.js'
+import { Formula } from '../../../components/ui/formula.js'
+import { isInstance, isStr } from '../../../lib/validation.js'
 
 function quoted(str) {
     return `"${str.replace(/"/g, '\\"')}"`
@@ -10,10 +11,28 @@ export function assessment2prolog(assessment) {
         throw new TypeError(`Expected an instance of assessment. Got ${assessment} (${typeof assessment})}`)
     }
 
-    const lines = []
+    const formula = new Formula()
 
-    function fact(predicate, ...id) {
-        lines.push(`${predicate}(${id.join(', ')}).`)
+    function fact(predicate, ...ids) {
+        if (predicate.startsWith('% ')) {
+            formula.addCmnt(`${predicate}(${ids.join(', ')}).`)
+        } else {
+            formula.addFunct(predicate)
+            formula.addPunct('(')
+            for (const id of ids) {
+                if (!isStr(id)) {
+                    formula.addConst(id)
+                } else if (id.startsWith('"')) {
+                    formula.addStr(id)
+                } else {
+                    formula.addExpr(id)
+                }
+                formula.addPunct(', ')
+            }
+            formula.pop() // remove last comma
+            formula.addPunct(').')
+        }
+        formula.addBreak()
     }
 
     fact(
@@ -187,5 +206,5 @@ export function assessment2prolog(assessment) {
         )
     })
 
-    return lines.join('\n')
+    return formula
 }
