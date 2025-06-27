@@ -81,20 +81,6 @@ export function assessment2prolog(assessment) {
     })
 
     fact(
-        '% dependency',
-        'TaskID',
-        'ServiceID',
-    )
-
-    assessment.dependencies.forEach((dependency) => {
-        fact(
-            'dependency',
-            dependency.task.id,
-            dependency.service.id,
-        )
-    })
-
-    fact(
         '% provider',
         'ProviderID',
         'DisplayName',
@@ -112,7 +98,7 @@ export function assessment2prolog(assessment) {
     })
 
     fact(
-        '% provides',
+        '% providesService',
         'ProviderID',
         'ServiceID',
     )
@@ -140,16 +126,34 @@ export function assessment2prolog(assessment) {
     })
 
     fact(
-        '% measures',
-        'MetricID',
+        '% dependsOn',
+        'TaskID',
         'ServiceID',
     )
-
-    assessment.metrics.forEach((metric) => {
+    assessment.dependencies.forEach((dependency) => {
         fact(
-            'measures',
-            metric.id,
-            metric.service.id,
+            'dependsOn',
+            dependency.task.id,
+            dependency.service.id,
+        )
+    })
+
+    fact(
+        '% failure',
+        'FailureID',
+        'Symptom',
+        'Consequence',
+        'BusinessImpact',
+        'ImpactLevel',
+    )
+    assessment.failures.forEach((failure) => {
+        fact(
+            'failure',
+            failure.id,
+            quoted(failure.symptom),
+            quoted(failure.consequence),
+            quoted(failure.businessImpact),
+            failure.impactLevel,
         )
     })
 
@@ -188,21 +192,15 @@ export function assessment2prolog(assessment) {
     })
 
     fact(
-        '% failure',
-        'FailureID',
-        'Symptom',
-        'Consequence',
-        'BusinessImpact',
-        'ImpactLevel',
+        '% measures',
+        'MetricID',
+        'ServiceID',
     )
-    assessment.failures.forEach((failure) => {
+    assessment.metrics.forEach((metric) => {
         fact(
-            'failure',
-            failure.id,
-            quoted(failure.symptom),
-            quoted(failure.consequence),
-            quoted(failure.businessImpact),
-            failure.impactLevel,
+            'measures',
+            metric.id,
+            metric.service.id,
         )
     })
 
