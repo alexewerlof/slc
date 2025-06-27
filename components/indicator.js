@@ -4,7 +4,7 @@ import { Identifiable } from '../lib/identifiable.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { humanTimeSlices } from '../lib/time.js'
 import { inRange, isArr, isDef, isInArr, isObj, isStrLen } from '../lib/validation.js'
-import { Formula } from './formula.js'
+import { Formula } from './ui/formula.js'
 import { Objective } from './objective.js'
 
 /*

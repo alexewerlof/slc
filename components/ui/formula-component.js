@@ -1,4 +1,3 @@
-import { isInstance } from '../lib/validation.js'
 import { Formula } from './formula.js'
 
 /*
@@ -9,8 +8,8 @@ reduce the risk of typo errors.
 export default {
     props: {
         formula: {
-            type: Object,
-            validator: (value) => isInstance(value, Formula),
+            type: Formula,
+            required: true,
         },
     },
 }

@@ -1,15 +1,15 @@
-import { isInstance } from '../lib/validation.js'
+import { isInstance } from '../../lib/validation.js'
 
 export class Formula {
-    components
-    constructor(components = []) {
-        this.components = components
+    parts
+    constructor(...parts) {
+        this.parts = parts
     }
     clone() {
-        return new Formula([...this.components])
+        return new Formula(...this.parts)
     }
     _add(text, type, label) {
-        this.components.push({ text, type, label })
+        this.parts.push({ text, type, label })
     }
     addSpace() {
         this._add(' ')
@@ -30,15 +30,15 @@ export class Formula {
         this._add(text, 'punct', label)
     }
     pop() {
-        this.components.pop()
+        this.parts.pop()
     }
     merge(formula) {
         if (!isInstance(formula, Formula)) {
             throw new Error('Expected a Formula instance')
         }
-        this.components.push(...formula.components)
+        this.parts.push(...formula.components)
     }
     toString() {
-        return this.components.map(({ text }) => text).join('')
+        return this.parts.map(({ text }) => text).join('')
     }
 }

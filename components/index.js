@@ -27,7 +27,7 @@ const componentSpecifications = [
     './dependency-component.jh&',
     './ui/feedback-blob-component.jhc&',
     './ui/footer-component.jhc&',
-    './formula-component.jh&',
+    './ui/formula-component.jh&',
     './ui/header-component.jhc&',
     './ui/help-component.jhc',
     './ui/hero-component.jhc&',

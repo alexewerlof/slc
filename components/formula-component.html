@@ -1,5 +1,0 @@
-<template v-for="c in formula.components" :class="x.type">
-    <br v-if="c.text == '\n'">
-    <span v-if="c.label" :class="c.type"><label :for="c.label">{{ c.text }}</label></span>
-    <span v-else :class="c.type">{{ c.text }}</span>
-</template>

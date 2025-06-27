@@ -8,7 +8,7 @@ import { daysToSeconds, secondsToDays } from '../lib/time.js'
 import { inRange, isArr, isDef, isInstance, isObj } from '../lib/validation.js'
 import { Window } from '../lib/window.js'
 import { Alert } from './alert.js'
-import { Formula } from './formula.js'
+import { Formula } from './ui/formula.js'
 import { Indicator } from './indicator.js'
 
 export class Objective extends Identifiable {
