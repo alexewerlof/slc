@@ -72,10 +72,6 @@ ul.benefit-list {
     }
 }
 
-.price-button {
-    width: 100%;
-}
-
-.preferred-price {
+.surface--cta {
     border-color: var(--primary-color);
 }

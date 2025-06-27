@@ -84,80 +84,39 @@
             </div>
             
             <div class="container pad-gap2 scribble-bg">
-                <h2>Pricing</h2>
+                <h2>Features</h2>
                 <div class="mozaic mozaic--gap4 pad-gap2">
                     <div class="mozaic__tile mozaic__tile--4c surface">
-                        <h2>
-                            Free
-                            <div class="subtle-hint">
-                                For beginners
-                            </div>
-                        </h2>
-                        <button class="price-button" @click="$refs.freeDialog.show(true)">
-                            <icon-component name="lock_open"></icon-component>
-                            No account required
-                        </button>
+                        <h2>Learn By Doing</h2>
                         <ul class="check-list">
-                            <li>5 SLIs</li>
-                            <li>8 SLOs</li>
-                            <li>14 Alerts</li>
+                            <li>Lots of tips in the UI</li>
+                            <li>Tweak and play in real time</li>
+                            <li>Visual topology modeling</li>
+                            <li>Calculate error budget</li>
+                            <li>Get Alerting rules</li>
                         </ul>
-                        <dialog-component title="Free tier" ref="freeDialog">
-                            <p>Only the PRO version is available at this time.</p>
-                        </dialog-component>
                     </div>
-                    <div class="mozaic__tile mozaic__tile--4c surface preferred-price">
-                        <h2>
-                            Pro
-                            <div class="subtle-hint">
-                                For product teams
-                            </div>
-                        </h2>
-                        <button class="price-button button--cta" @click="$refs.proDialog.show(true)">
-                            <icon-component name="mail"></icon-component>
-                            Start Free Trial
-                        </button>
+                    <div class="mozaic__tile mozaic__tile--4c surface surface--cta">
+                        <h2>Evolve your Service Levels</h2>
                         <ul class="check-list">
-                            <li>Unlimited SLIs, SLOs, and Alerts</li>
+                            <li>Share your work publicly</li>
                             <li>Articles on key concepts</li>
-                            <li>Share links publicly</li>
-                            <li>AI-chat</li>
+                            <li>Prolog analysis</li>
+                            <li>AI-powered interaction</li>
                             <li>Run in your infrastructure</li>
-                            <li>OpenSLO support <span class="subtle-hint">(upcoming)</span></li>
                         </ul>
-                        <dialog-component title="Pro tier" ref="proDialog">
-                            <p>
-                                <ext-link href="https://github.com/alexewerlof/slc">
-                                    Everything is free as in beer and speech
-                                </ext-link>. 😊 No credit cart required.
-                            </p>
-                            <p>
-                                I would only ask you to subscribe to
-                                <ext-link href="https://blog.alexewerlof.com/welcome">my newsletter</ext-link>
-                                if you like reliability engineering and that's optional.
-                            </p>
-                        </dialog-component>
                     </div>
                     <div class="mozaic__tile mozaic__tile--4c surface">
                         <h2>
-                            Enterprise
-                            <div class="subtle-hint">
-                                For compliance at scale
-                            </div>
+                            Upcoming
                         </h2>
-                        <button class="price-button" @click="$refs.enterpriseDialog.show(true)">
-                            <icon-component name="phone"></icon-component>
-                            Start Free Trial
-                        </button>
                         <ul class="check-list">
-                            <li>Generate alerting rules <span class="subtle-hint">(upcoming)</span></li>
-                            <li>Generate SLA contract based on your SLI/SLO <span class="subtle-hint">(upcoming)</span></li>
-                            <li>Analyze SLA contract <span class="subtle-hint">(upcoming)</span></li>
-                            <li>Version history <span class="subtle-hint">(upcoming)</span></li>
+                            <li>Version history</li>
+                            <li>OpenSLO support</li>
+                            <li>Vendor-specific alerting rules</li>
+                            <li>Generate SLA contract</li>
+                            <li>Analyze SLA contract</li>
                         </ul>
-                        <dialog-component title="Enterprise tier" ref="enterpriseDialog">
-                            <p>No enterprise features are available at this time.</p>
-                        </dialog-component>
                     </div>
                 </div>
             </div>
