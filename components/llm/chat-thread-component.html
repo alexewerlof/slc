@@ -1,21 +1,21 @@
 <div class="chat-thread-component">
     <div class="input-group">
-        <label>
-            <input type="checkbox" v-model="showDebugInfo">
-            Debug Info
-        </label>
-        <div class="button-bar button-bar--small">
+        <div class="button-bar button-bar--small button-bar--center">
             <button @click="$refs.llmSettingsDialog.show(true)" title="Settings">
                 <icon-component name="settings"></icon-component>
-            </button>
-            <button @click="thread.clear(true)" title="Clear" class="button--danger">
-                <icon-component name="delete"></icon-component>
             </button>
             <button @click="scrollToTop()" title="Scroll to top">
                 <icon-component name="arrow_upward"></icon-component>
             </button>
             <button @click="scrollToBottom()" title="Scroll to bottom">
                 <icon-component name="arrow_downward"></icon-component>
+            </button>
+            <button @click="showDebugInfo = !showDebugInfo" title="Toggle Debug Info">
+                <icon-component v-if="showDebugInfo" name="show"></icon-component>
+                <icon-component v-else name="hide"></icon-component>
+            </button>
+            <button @click="thread.clear(true)" title="Clear" class="button--danger">
+                <icon-component name="delete"></icon-component>
             </button>
         </div>
         <dialog-component ref="llmSettingsDialog" title="LLM Settings">
