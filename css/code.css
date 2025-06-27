@@ -29,6 +29,18 @@ code .exprs {
     word-break: break-word;
 }
 
+/* string */
+code .str {
+    color: var(--primary-color);
+    word-break: break-word;
+}
+
+/* comment */
+code .cmnt {
+    color: var(--brand-purple);
+    opacity: 0.7;
+}
+
 /* constants */
 code .const {
     color: var(--brand-purple);

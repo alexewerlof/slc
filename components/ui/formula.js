@@ -23,6 +23,12 @@ export class Formula {
     addExpr(text, label) {
         this._add(text, 'exprs', label)
     }
+    addStr(text, label) {
+        this._add(text, 'str', label)
+    }
+    addCmnt(text, label) {
+        this._add(text, 'cmnt', label)
+    }
     addConst(text, label) {
         this._add(text, 'const', label)
     }
