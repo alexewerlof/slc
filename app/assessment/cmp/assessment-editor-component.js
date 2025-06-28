@@ -118,7 +118,7 @@ export default {
             )
             .fn((options) => {
                 const { providerId, ...state } = options
-                const provider = this.assessment.providers.find((p) => p.id === providerId)
+                const provider = this.assessment.providers.find(({ id }) => id === providerId)
                 if (!provider) {
                     throw new Error(`Provider with id ${providerId} not found`)
                 }
@@ -136,7 +136,7 @@ export default {
             .prm('description:string', 'A description of the new task')
             .fn((options) => {
                 const { consumerId, ...state } = options
-                const consumer = this.assessment.consumers.find((c) => c.id === consumerId)
+                const consumer = this.assessment.consumers.find(({ id }) => id === consumerId)
                 if (!consumer) {
                     throw new Error(`Consumer with id ${consumerId} not found`)
                 }
@@ -153,13 +153,67 @@ export default {
             .prm('taskId:string*', 'The id of the task to add the dependency to')
             .fn((options) => {
                 const { serviceId, taskId } = options
-                const service = this.assessment.services.find((service) => service.id === serviceId)
+                const service = this.assessment.services.find(({ id }) => id === serviceId)
                 if (!service) {
                     throw new Error(`Service with id ${serviceId} not found`)
                 }
                 const newDependency = service.dependencies.pushNew({ taskId })
                 this.editingInstance = newDependency
                 return newDependency.id
+            })
+
+        toolbox.add(
+            'addNewFailure',
+            'Add a new failure to an existing dependency, and then return the id of the newly created failure.',
+        )
+            .prm('dependencyId: string*', 'The id of the dependency to add the failure to')
+            .prm(
+                'symptom: string*',
+                'The consumer-facing symptom. This is how the failure negatively impacts the Task.',
+            )
+            .prm('consequence: string', 'The consequence of the failure on the consumer')
+            .prm(
+                'businessImpact: string',
+                'The impact of the failure on the ability of the business to make or save money',
+            )
+            .fn((options) => {
+                const { dependencyId, ...state } = options
+                const dependency = this.assessment.dependencies.find(({ id }) => id === dependencyId)
+                if (!isInstance(dependency, Dependency)) {
+                    throw new Error(`Could not find a dependency with id "${dependencyId}"`)
+                }
+                const newFailure = dependency.failures.pushNew(state)
+                this.editingInstance = dependency
+                dependency.failures.selected = newFailure
+                return newFailure.id
+            })
+
+        toolbox.add(
+            'addNewMetric',
+            'Add a new Metric to an existing service, and then return the id of the newly created metric.',
+        )
+            .prm('serviceId:string*', 'The id of the service to add the metric to')
+            .prm('displayName:string*', 'The name of the metric')
+            .prm('description:string', 'Some description about why this metric exists and where it is measured')
+            // .prm('isBoolean:string', '')
+            // .prm('numericUnit:string', '')
+            //.prm('failureIds:array', 'An list of failure ids that this metric helps measure')
+            /*
+            Need to support array property type
+            "items": {
+                "type": "string",
+                "description": "A single failure id"
+            }
+            */
+            .fn((options) => {
+                const { serviceId, ...state } = options
+                const service = this.assessment.services.find(({ id }) => id === serviceId)
+                if (!service) {
+                    throw new Error(`Service with id ${serviceId} not found`)
+                }
+                const newMetric = service.metrics.pushNew(state)
+                this.editingInstance = newMetric
+                return newMetric.id
             })
 
         toolbox.add(
