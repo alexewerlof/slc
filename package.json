@@ -1,4 +1,7 @@
 {
     "name": "slc",
-    "type": "module"
+    "type": "module",
+    "scripts": {
+        "test": "node --test"
+    }
 }
