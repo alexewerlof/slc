@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { parseParamShorthand } from './tools.js'
+import { parseParamShorthand } from './tool.js'
 
 test.describe('parseParamShorthand()', () => {
     test.it('should parse a required parameter correctly', () => {

@@ -7,7 +7,7 @@ import { Provider } from '../../../components/provider.js'
 import { Service } from '../../../components/service.js'
 import { Bead, FileBead, Thread } from '../../../components/llm/thread.js'
 import { isInstance } from '../../../lib/validation.js'
-import { Tools } from '../../../components/llm/tools.js'
+import { Toolbox } from '../../../components/llm/toolbox.js'
 
 export default {
     props: {
@@ -51,8 +51,8 @@ export default {
             ),
         )
 
-        const tools = new Tools()
-        tools.add(
+        const toolbox = new Toolbox()
+        toolbox.add(
             this.listEntities,
             'Returns the id of entities with the specified class name.',
         ).this(this)
@@ -61,13 +61,13 @@ export default {
                 'The class name of the entities to list. It can only be one of these values: "Provider", "Consumer", "Service", "Task", "Dependency", "Failure", "Metric"',
             )
 
-        tools.add(
+        toolbox.add(
             this.getEntityState,
             'Returns information about a particular entity in JSON format.',
         ).this(this)
             .prm('id:string*', 'The id of the entity to get the state of')
 
-        tools.add(
+        toolbox.add(
             this.addNewConsumer,
             'Add a new consumer to the assessment and return its id.',
         ).this(this)
@@ -78,7 +78,7 @@ export default {
                 'The type of the new consumer. It can only be one of these values: "System", "Component", "Group"',
             )
 
-        tools.add(
+        toolbox.add(
             this.addNewProvider,
             'Add a new provider to the assessment and return its id.',
         ).this(this)
@@ -89,7 +89,7 @@ export default {
                 'The type of the new provider. It can only be one of these values: "System", "Component", "Group"',
             )
 
-        tools.add(
+        toolbox.add(
             this.addNewService,
             'Add a new service to the designated provider and return its id.',
         ).this(this)
@@ -101,7 +101,7 @@ export default {
                 'The type of the new service. It can only be one of these values: "Automated", "Manual", "Hybrid"',
             )
 
-        tools.add(
+        toolbox.add(
             this.addNewTask,
             'Add a new task to the designated consumer and return its id.',
         ).this(this)
@@ -109,14 +109,14 @@ export default {
             .prm('displayName:string*', 'The display name of the new task')
             .prm('description:string', 'A description of the new task')
 
-        tools.add(
+        toolbox.add(
             this.addNewDependency,
             'Create a new dependency between an existing task and service, then return the id of the dependency.',
         ).this(this)
             .prm('serviceId:string*', 'The id of the service to add the dependency to')
             .prm('taskId:string*', 'The id of the task to add the dependency to')
 
-        tools.add(
+        toolbox.add(
             this.clearAssessment,
             'Clear the assessment of all Providers, Consumers, Services, Tasks, Dependencies, Failures, and Metrics.',
         ).this(this)
@@ -125,7 +125,7 @@ export default {
             return String(new Date())
         }
 
-        tools.add(getDateAndTime, 'Get the current date and time')
+        toolbox.add(getDateAndTime, 'Get the current date and time')
 
         const exportTabs = [
             'JSON',
@@ -138,7 +138,7 @@ export default {
             uploadedState: '',
             uploadedStateMessage: 'Not analyzed yet',
             thread,
-            tools,
+            tools: toolbox,
             exportTabs,
             selExportTab: exportTabs[0],
             editingInstance: undefined,

@@ -3,7 +3,7 @@ import { showToast } from '../../lib/toast.js'
 import { getFirstMessage, isToolsCallMessage } from './util.js'
 import { Bead, Thread, ToolCallsBead, ToolResultBead, UserPromptBead } from './thread.js'
 import { llm } from './llm.js'
-import { Tools } from './tools.js'
+import { Toolbox } from './toolbox.js'
 
 export default {
     data() {
@@ -18,7 +18,7 @@ export default {
             required: true,
         },
         tools: {
-            type: Tools,
+            type: Toolbox,
             required: false,
         },
     },
