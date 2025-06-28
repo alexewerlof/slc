@@ -22,6 +22,7 @@ export class Dependency extends Entity {
 
     get state() {
         return {
+            id: this.id,
             taskId: this.task.id,
             failures: this.failures.map((failure) => failure.state),
         }
@@ -32,7 +33,11 @@ export class Dependency extends Entity {
             throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
         }
 
-        const { taskId, failures } = newState
+        const { id, taskId, failures } = newState
+
+        if (isDef(id)) {
+            this.id = id
+        }
 
         if (!isStr(taskId)) {
             throw new TypeError(`Invalid taskId: ${taskId} (${typeof taskId})`)

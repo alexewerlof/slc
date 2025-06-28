@@ -51,6 +51,7 @@
                     "type": "Automated",
                     "dependencies": [
                         {
+                            "id": "Dependency-LYATE3RJ",
                             "taskId": "Task-ZPX76ZFE",
                             "failures": [
                                 {
@@ -110,6 +111,7 @@
                     "type": "Automated",
                     "dependencies": [
                         {
+                            "id": "Dependency-9RQ8W5SW",
                             "taskId": "Task-QPNEE3ED",
                             "failures": [
                                 {
@@ -184,6 +186,7 @@
                     "type": "Automated",
                     "dependencies": [
                         {
+                            "id": "Dependency-VDUJH6RX",
                             "taskId": "Task-P2BFJBQN",
                             "failures": [
                                 {
@@ -196,6 +199,7 @@
                             ]
                         },
                         {
+                            "id": "Dependency-V0EY9CVQ",
                             "taskId": "Task-ZPX76ZFE",
                             "failures": [
                                 {
@@ -208,6 +212,7 @@
                             ]
                         },
                         {
+                            "id": "Dependency-GVJ7Q5EU",
                             "taskId": "Task-QPNEE3ED",
                             "failures": [
                                 {
@@ -268,6 +273,7 @@
                     "type": "Automated",
                     "dependencies": [
                         {
+                            "id": "Dependency-0EVHAR6R",
                             "taskId": "Task-P2BFJBQN",
                             "failures": [
                                 {
@@ -310,6 +316,7 @@
                     "type": "Automated",
                     "dependencies": [
                         {
+                            "id": "Dependency-AQF2LT8P",
                             "taskId": "Task-6KF1W6TJ",
                             "failures": [
                                 {
@@ -367,6 +374,7 @@
                     "type": "Automated",
                     "dependencies": [
                         {
+                            "id": "Dependency-AXVYFYNZ",
                             "taskId": "Task-P2BFJBQN",
                             "failures": [
                                 {
