@@ -116,6 +116,11 @@ export default {
             .prm('serviceId:string*', 'The id of the service to add the dependency to')
             .prm('taskId:string*', 'The id of the task to add the dependency to')
 
+        tools.add(
+            this.clearAssessment,
+            'Clear the assessment of all Providers, Consumers, Services, Tasks, Dependencies, Failures, and Metrics.',
+        ).this(this)
+
         function getDateAndTime() {
             return String(new Date())
         }
