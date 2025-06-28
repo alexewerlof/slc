@@ -1,12 +1,12 @@
 import { config } from '../config.js'
-import { Identifiable } from '../lib/identifiable.js'
+import { Entity } from '../lib/entity.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { Task } from './task.js'
 import { Lint } from './lint.js'
 
-export class Consumer extends Identifiable {
+export class Consumer extends Entity {
     static possibleTypes = ['System', 'Component', 'Group']
     displayName = config.displayName.default
     description = config.description.default

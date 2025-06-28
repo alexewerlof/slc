@@ -1,5 +1,5 @@
 import { unicodeSymbol } from '../lib/icons.js'
-import { Identifiable } from '../lib/identifiable.js'
+import { Entity } from '../lib/entity.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { isArr, isDef, isInstance, isObj, isStr } from '../lib/validation.js'
 import { Task } from './task.js'
@@ -7,7 +7,7 @@ import { Failure } from './failure.js'
 import { Lint } from './lint.js'
 import { Service } from './service.js'
 
-export class Dependency extends Identifiable {
+export class Dependency extends Entity {
     task
     failures = new SelectableArray(Failure, this)
 

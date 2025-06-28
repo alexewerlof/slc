@@ -2,12 +2,12 @@ import { unicodeSymbol } from '../lib/icons.js'
 import { isDef, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
 import { config } from '../config.js'
-import { Identifiable } from '../lib/identifiable.js'
+import { Entity } from '../lib/entity.js'
 import { Lint } from './lint.js'
 
 const scopeIcon = unicodeSymbol('scope')
 
-export class Task extends Identifiable {
+export class Task extends Entity {
     consumer = null
     displayName = config.displayName.default
     description = config.description.default

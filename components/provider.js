@@ -3,10 +3,10 @@ import { isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/valid
 import { Assessment } from './assessment.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { config } from '../config.js'
-import { Identifiable } from '../lib/identifiable.js'
+import { Entity } from '../lib/entity.js'
 import { Lint } from './lint.js'
 
-export class Provider extends Identifiable {
+export class Provider extends Entity {
     static possibleTypes = Object.freeze(['System', 'Component', 'Group'])
 
     assessment = null

@@ -5,12 +5,12 @@ import { config } from '../config.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { Metric } from './metric.js'
 import { Dependency } from './dependency.js'
-import { Identifiable } from '../lib/identifiable.js'
+import { Entity } from '../lib/entity.js'
 import { Lint } from './lint.js'
 
 const scopeIcon = unicodeSymbol('scope')
 
-export class Service extends Identifiable {
+export class Service extends Entity {
     static possibleTypes = ['Automated', 'Manual', 'Hybrid']
     provider = null
     displayName = config.displayName.default

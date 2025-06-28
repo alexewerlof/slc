@@ -4,12 +4,12 @@ import { Failure } from './failure.js'
 import { unicodeSymbol } from '../lib/icons.js'
 import { Condition } from './condition.js'
 import { config } from '../config.js'
-import { Identifiable } from '../lib/identifiable.js'
+import { Entity } from '../lib/entity.js'
 import { Lint } from './lint.js'
 
 const metricIcon = unicodeSymbol('metric')
 
-export class Metric extends Identifiable {
+export class Metric extends Entity {
     service = null
     displayName = ''
     description = ''

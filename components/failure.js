@@ -2,11 +2,11 @@ import { inRange, isDef, isInstance, isObj, isStr } from '../lib/validation.js'
 import { config } from '../config.js'
 import { unicodeSymbol } from '../lib/icons.js'
 import { Dependency } from './dependency.js'
-import { Identifiable } from '../lib/identifiable.js'
+import { Entity } from '../lib/entity.js'
 import { Lint } from './lint.js'
 
 // If a certain service fails, what activities will it impact and how?
-export class Failure extends Identifiable {
+export class Failure extends Entity {
     dependency = null
     symptom = ''
     consequence = ''

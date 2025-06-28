@@ -1,7 +1,7 @@
 import { config } from '../config.js'
 import { FailureWindow } from '../lib/failure-window.js'
 import { entity2symbolNorm, percL10n } from '../lib/fmt.js'
-import { Identifiable } from '../lib/identifiable.js'
+import { Entity } from '../lib/entity.js'
 import { clamp, percent, toFixed } from '../lib/math.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { daysToSeconds, secondsToDays } from '../lib/time.js'
@@ -11,7 +11,7 @@ import { Alert } from './alert.js'
 import { Formula } from './ui/formula.js'
 import { Indicator } from './indicator.js'
 
-export class Objective extends Identifiable {
+export class Objective extends Entity {
     /** The SLO percentage. It is also read/written by the sloInt and sloFrac computed  properties */
     target = config.slo.default
 

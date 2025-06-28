@@ -1,6 +1,6 @@
 import { config } from '../config.js'
 import { entity2symbolNorm } from '../lib/fmt.js'
-import { Identifiable } from '../lib/identifiable.js'
+import { Entity } from '../lib/entity.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { humanTimeSlices } from '../lib/time.js'
 import { inRange, isArr, isDef, isInArr, isObj, isStrLen } from '../lib/validation.js'
@@ -41,7 +41,7 @@ Metric data points impact its condition for good||bad:
  * @property {Objective[]} [objectives] A list of objectives associated with the indicator.
  */
 
-export class Indicator extends Identifiable {
+export class Indicator extends Entity {
     /** @type {string} The title of the SLI */
     displayName = config.displayName.default
 
