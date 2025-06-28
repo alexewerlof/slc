@@ -89,15 +89,30 @@ export class Assessment {
     }
 
     get all() {
-        return [
-            ...this.providers,
-            ...this.services,
-            ...this.consumers,
-            ...this.tasks,
-            ...this.dependencies,
-            ...this.failures,
-            ...this.metrics,
-        ]
+        const ret = []
+        for (const consumer of this.consumers) {
+            ret.push(consumer)
+            for (const task of consumer.tasks) {
+                ret.push(task)
+            }
+        }
+        for (const provider of this.providers) {
+            ret.push(provider)
+            for (const service of provider.services) {
+                ret.push(service)
+                for (const dependency of service.dependencies) {
+                    ret.push(dependency)
+                    for (const failure of dependency.failures) {
+                        ret.push(failure)
+                    }
+                }
+                for (const metric of service.metrics) {
+                    ret.push(metric)
+                }
+            }
+        }
+
+        return ret
     }
 
     getEntityById(id) {
@@ -266,11 +281,11 @@ export class Assessment {
     get lint() {
         const lint = new Lint()
         if (this.providers.length === 0) {
-            lint.warn('There are no serivce **providers**. Please add some service providers.')
+            lint.warn('There are no serivce **providers** or services. Please add some service providers.')
         }
 
         if (this.consumers.length === 0) {
-            lint.warn('There are no **consumers**. Please add some service consumers.')
+            lint.warn('There are no **consumers** or tasks. Please add some service consumers.')
         }
 
         return lint
@@ -279,36 +294,18 @@ export class Assessment {
     markdownLint() {
         const ret = []
 
-        ret.push(this.lint.toMarkdown('Assessment Lint'))
-
-        for (const provider of this.providers) {
-            ret.push(provider.lint.toMarkdown(`Provider ${provider.id}`))
+        if (this.lint.count) {
+            ret.push('## Assessment Lint')
+            ret.push(this.lint.toMarkdown())
         }
 
-        for (const consumer of this.consumers) {
-            ret.push(consumer.lint.toMarkdown(`Consumer ${consumer.id}`))
+        for (const entity of this.all) {
+            if (entity.lint.count) {
+                ret.push(`## ${entity.id}`)
+                ret.push(entity.lint.toMarkdown())
+            }
         }
 
-        for (const service of this.services) {
-            ret.push(service.lint.toMarkdown(`Service ${service.id}`))
-        }
-
-        for (const task of this.tasks) {
-            ret.push(task.lint.toMarkdown(`Task ${task.id}`))
-        }
-
-        for (const dependency of this.dependencies) {
-            ret.push(dependency.lint.toMarkdown(`Dependency ${dependency.id}`))
-        }
-
-        for (const metric of this.metrics) {
-            ret.push(metric.lint.toMarkdown(`Metric ${metric.id}`))
-        }
-
-        for (const failure of this.failures) {
-            ret.push(failure.lint.toMarkdown(`Failure ${failure.id}`))
-        }
-
-        return ret.filter((s) => s.length).join('\n\n')
+        return ret.join('\n\n')
     }
 }

@@ -1,5 +1,3 @@
-import { isStr } from '../lib/validation.js'
-
 function joinNN(...strs) {
     return strs.join('\n\n')
 }
@@ -27,39 +25,28 @@ export class Lint {
         this.errorMessages = []
     }
 
-    toMarkdown(header) {
-        if (!isStr(header)) {
-            throw new TypeError(`header should be a string. Got: ${header} (${typeof header})`)
-        }
-
+    toMarkdown() {
         if (this.count === 0) {
             return ''
         }
 
         const ret = []
 
-        if (header) {
-            ret.push(`## ${header}`)
-        }
-
         if (this.errorMessages.length) {
-            ret.push('### Errors')
             for (const item of this.errorMessages) {
-                ret.push(`- ${item}`)
+                ret.push(`**Error:** ${item}`)
             }
         }
 
         if (this.warnMessages.length) {
-            ret.push('### Warnings')
             for (const item of this.warnMessages) {
-                ret.push(`- ${item}`)
+                ret.push(`**Warning:** ${item}`)
             }
         }
 
         if (this.infoMessages.length) {
-            ret.push('### Info')
             for (const item of this.infoMessages) {
-                ret.push(`- ${item}`)
+                ret.push(`**Info:** ${item}`)
             }
         }
 

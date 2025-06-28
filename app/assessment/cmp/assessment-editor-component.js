@@ -18,7 +18,7 @@ export default {
     },
     data() {
         const thread = new Thread(
-            new FileBead('system', 'assess-prompt.md', '../../prompts/glossary.md'),
+            new FileBead('system', 'assessment-prompt.md', '../../prompts/glossary.md'),
             new Bead('system', () =>
                 [
                     'This is the current state of the assessment that is updated as you add, remove, or modify entities.',
@@ -27,28 +27,28 @@ export default {
                     '```',
                 ].join('\n')),
             /*
-                new Bead(
-                    'system',
-                    () =>
-                        [
-                            'Below is a Prolog representation of all the entities in the assessment and their logical connection. You can use it to answer questions about the assessment because this code represents the state of the assessment and entities like providers, services, consumers, tasks, failures, and metrics.',
-                            'Use the displayName of the entities instead of their id whenever possible. When answering questions refer to the provided Prolog code in order to understand the context.',
-                            '```prolog',
-                            this.assessment.toProlog().toString(),
-                            '```',
-                        ].join('\n'),
-                ),
-                new Bead(
-                    'system',
-                    () =>
-                        [
-                            '# Lint',
-                            '',
-                            'And here are the "linting" messages that are deduces by analyzing the assessment:',
-                            this.assessment.markdownLint(),
-                        ].join('\n'),
-                ),
-                */
+            new Bead(
+                'system',
+                () =>
+                    [
+                        'Below is a Prolog representation of all the entities in the assessment and their logical connection. You can use it to answer questions about the assessment because this code represents the state of the assessment and entities like providers, services, consumers, tasks, failures, and metrics.',
+                        'Use the displayName of the entities instead of their id whenever possible. When answering questions refer to the provided Prolog code in order to understand the context.',
+                        '```prolog',
+                        this.assessment.toProlog().toString(),
+                        '```',
+                    ].join('\n'),
+            ),
+            */
+            new Bead(
+                'system',
+                () =>
+                    [
+                        'To help you understand the assessment, we have some heuristics that analyze the assessment and all its entities. If there is a a warning or error, please prioritize fixing them.',
+                        this.assessment.markdownLint(),
+                        'These heuristics are a great tip for you to ask the right questions and help the user add any missing entities or fix any issues in the assessment.',
+                        'You can also use the provided tools to add new entities or get information about existing ones.',
+                    ].join('\n\n'),
+            ),
         )
 
         const tools = new Tools()
