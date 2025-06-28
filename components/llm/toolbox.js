@@ -51,8 +51,8 @@ export class Toolbox {
      * @param {boolean} [strict=false] - A flag often used by LLMs for schema validation strictness.
      * @returns {Tool} The newly created Tool instance, allowing for chaining of parameter descriptions.
      */
-    add(func, description) {
-        const newTool = new Tool(func, description)
+    add(name, description) {
+        const newTool = new Tool(name, description)
         this.tools.push(newTool)
         return newTool
     }

@@ -8,7 +8,7 @@
  * @property {string} function.arguments - A JSON string representing the arguments for the function.
  */
 
-import { isDef, isFn, isStr } from '../../lib/validation.js'
+import { isFn, isStr } from '../../lib/validation.js'
 
 /**
  * Describes a message from an assistant that includes tool call requests.
@@ -124,31 +124,21 @@ export class Tool {
      */
     strict = false
 
-    /**
-     * Creates an instance of a Tool.
-     * @param {Function} func - The actual JavaScript function this tool will execute.
-     * @param {string} description - A description of what the tool (function) does.
-     */
-    constructor(func, description) {
+    constructor(name, ...description) {
+        if (!isStr(name)) {
+            throw new TypeError(`Expected tool name to be a string. Got ${name}`)
+        }
+        this.name = name
+
+        this.description = description.join(' ')
+    }
+
+    fn(func) {
         if (!isFn(func)) {
             throw new TypeError(`Expected tool func to be a function. Got ${func}`)
         }
         this.func = func
-        if (isDef(description)) {
-            if (!isStr(description)) {
-                throw new TypeError(`Expected tool description to be a string. Got ${description}`)
-            }
-            this.description = description
-        }
-    }
-
-    get name() {
-        const actualFuncName = this.func.name
-        const boundPrefix = 'bound '
-        if (actualFuncName.startsWith(boundPrefix)) {
-            return actualFuncName.substring(boundPrefix.length)
-        }
-        return actualFuncName
+        return this
     }
 
     this(thisArg) {
@@ -175,6 +165,9 @@ export class Tool {
     async invoke(argsStr) {
         try {
             const args = JSON.parse(argsStr)
+            if (!isFn(this.func)) {
+                throw new TypeError(`Tool ${this.name} does not have a valid function defined.`)
+            }
             // Assumes this.func expects a single argument object
             const result = await this.func.call(this.thisArg, args)
             console.log(
@@ -197,24 +190,10 @@ export class Tool {
         }
     }
 
-    /**
-     * Adds a description for a parameter of the tool's function.
-     * @param {string} name - The name of the parameter.
-     * @param {string} type - The data type of the parameter (e.g., "string", "number").
-     * @param {string} description - A description of what the parameter is for.
-     * @param {boolean} [required] - Whether the parameter is required.
-     * @returns {this} The Tool instance for chaining.
-     * @throws {Error} If attempting to add more parameter descriptions than the function's declared arity (this.func.length).
-     *                 Note: This check might be problematic if `this.func` expects a single object argument, as `this.func.length` would be 1.
-     */
-    param(name, type, description, required = false) {
-        this.properties.push({ name, type, description, required })
-        return this
-    }
-
     prm(paramShorthand, description) {
         const { name, type, required } = parseParamShorthand(paramShorthand)
-        return this.param(name, type, description, required)
+        this.properties.push({ name, type, description, required })
+        return this
     }
 
     /**

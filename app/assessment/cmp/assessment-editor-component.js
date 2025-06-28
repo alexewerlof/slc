@@ -52,47 +52,63 @@ export default {
         )
 
         const toolbox = new Toolbox()
-        toolbox.add(
-            this.listEntities,
-            'Returns the id of entities with the specified class name.',
-        ).this(this)
+        toolbox.add('listEntities', 'Returns the id of entities with the specified class name.')
             .prm(
                 'className:string*',
                 'The class name of the entities to list. It can only be one of these values: "Provider", "Consumer", "Service", "Task", "Dependency", "Failure", "Metric"',
-            )
+            ).fn(({ className }) => {
+                return this.assessment.getEntitiesByClassName(className).map(({ id }) => id)
+            })
 
         toolbox.add(
-            this.getEntityState,
-            'Returns information about a particular entity in JSON format.',
-        ).this(this)
+            'getEntityState',
+            'Returns information about a particular Provider, Consumer, Service, Task, Dependency, Failure, Metric in JSON format.',
+        )
             .prm('id:string*', 'The id of the entity to get the state of')
+            .fn(({ id }) => {
+                const entity = this.assessment.getEntityById(id)
+                if (!entity) {
+                    throw new Error(`Entity with id ${id} not found`)
+                }
+                return entity.state
+            })
 
         toolbox.add(
-            this.addNewConsumer,
+            'addNewConsumer',
             'Add a new consumer to the assessment and return its id.',
-        ).this(this)
+        )
             .prm('displayName:string*', 'The display name of the new consumer')
             .prm('description:string', 'A description of the new consumer')
             .prm(
                 'type:string',
                 'The type of the new consumer. It can only be one of these values: "System", "Component", "Group"',
             )
+            .fn((state) => {
+                const newConsumer = this.assessment.consumers.pushNew(state)
+                this.editingInstance = newConsumer
+                return newConsumer.id
+            })
 
         toolbox.add(
-            this.addNewProvider,
+            'addNewProvider',
             'Add a new provider to the assessment and return its id.',
-        ).this(this)
+        )
             .prm('displayName:string*', 'The display name of the new provider')
             .prm('description:string', 'A description of the new provider')
             .prm(
                 'type:string',
                 'The type of the new provider. It can only be one of these values: "System", "Component", "Group"',
             )
+            .fn((state) => {
+                const newProvider = this.assessment.providers.pushNew(state)
+                this.editingInstance = newProvider
+                return newProvider.id
+            })
 
         toolbox.add(
-            this.addNewService,
+            'addNewService',
             'Add a new service to the designated provider and return its id.',
-        ).this(this)
+        )
             .prm('providerId:string*', 'The id of the provider to add the service to')
             .prm('displayName:string*', 'The display name of the new service')
             .prm('description:string', 'A description of the new service')
@@ -100,32 +116,58 @@ export default {
                 'type:string',
                 'The type of the new service. It can only be one of these values: "Automated", "Manual", "Hybrid"',
             )
+            .fn((options) => {
+                const { providerId, ...state } = options
+                const provider = this.assessment.providers.find((p) => p.id === providerId)
+                if (!provider) {
+                    throw new Error(`Provider with id ${providerId} not found`)
+                }
+                const newService = provider.services.pushNew(state)
+                this.editingInstance = newService
+                return newService.id
+            })
 
         toolbox.add(
-            this.addNewTask,
+            'addNewTask',
             'Add a new task to the designated consumer and return its id.',
-        ).this(this)
+        )
             .prm('consumerId:string*', 'The id of the consumer to add the task to')
             .prm('displayName:string*', 'The display name of the new task')
             .prm('description:string', 'A description of the new task')
+            .fn((options) => {
+                const { consumerId, ...state } = options
+                const consumer = this.assessment.consumers.find((c) => c.id === consumerId)
+                if (!consumer) {
+                    throw new Error(`Consumer with id ${consumerId} not found`)
+                }
+                const newTask = consumer.tasks.pushNew(state)
+                this.editingInstance = newTask
+                return newTask.id
+            })
 
         toolbox.add(
-            this.addNewDependency,
+            'addNewDependency',
             'Create a new dependency between an existing task and service, then return the id of the dependency.',
-        ).this(this)
+        )
             .prm('serviceId:string*', 'The id of the service to add the dependency to')
             .prm('taskId:string*', 'The id of the task to add the dependency to')
+            .fn((options) => {
+                const { serviceId, taskId } = options
+                const service = this.assessment.services.find((service) => service.id === serviceId)
+                if (!service) {
+                    throw new Error(`Service with id ${serviceId} not found`)
+                }
+                const newDependency = service.dependencies.pushNew({ taskId })
+                this.editingInstance = newDependency
+                return newDependency.id
+            })
 
         toolbox.add(
-            this.clearAssessment,
+            'clearAssessment',
             'Clear the assessment of all Providers, Consumers, Services, Tasks, Dependencies, Failures, and Metrics.',
-        ).this(this)
+        ).this(this).fn(this.clearAssessment)
 
-        function getDateAndTime() {
-            return String(new Date())
-        }
-
-        toolbox.add(getDateAndTime, 'Get the current date and time')
+        toolbox.add('getDateAndTime', 'Get the current date and time').fn(() => String(new Date()))
 
         const exportTabs = [
             'JSON',
@@ -152,56 +194,6 @@ export default {
     methods: {
         showDialog(ref, modal) {
             this.$refs[ref].show(modal)
-        },
-        listEntities({ className }) {
-            return this.assessment.getEntitiesByClassName(className).map(({ id }) => id)
-        },
-        getEntityState({ id }) {
-            const entity = this.assessment.getEntityById(id)
-            if (!entity) {
-                throw new Error(`Entity with id ${id} not found`)
-            }
-            return entity.state
-        },
-        addNewProvider(state) {
-            const newProvider = this.assessment.providers.pushNew(state)
-            this.editingInstance = newProvider
-            return newProvider.id
-        },
-        addNewService(options) {
-            const { providerId, ...state } = options
-            const provider = this.assessment.providers.find((p) => p.id === providerId)
-            if (!provider) {
-                throw new Error(`Provider with id ${providerId} not found`)
-            }
-            const newService = provider.services.pushNew(state)
-            this.editingInstance = newService
-            return newService.id
-        },
-        addNewConsumer(state) {
-            const newConsumer = this.assessment.consumers.pushNew(state)
-            this.editingInstance = newConsumer
-            return newConsumer.id
-        },
-        addNewTask(options) {
-            const { consumerId, ...state } = options
-            const consumer = this.assessment.consumers.find((c) => c.id === consumerId)
-            if (!consumer) {
-                throw new Error(`Consumer with id ${consumerId} not found`)
-            }
-            const newTask = consumer.tasks.pushNew(state)
-            this.editingInstance = newTask
-            return newTask.id
-        },
-        addNewDependency(options) {
-            const { serviceId, taskId } = options
-            const service = this.assessment.services.find((service) => service.id === serviceId)
-            if (!service) {
-                throw new Error(`Service with id ${serviceId} not found`)
-            }
-            const newDependency = service.dependencies.pushNew({ taskId })
-            this.editingInstance = newDependency
-            return newDependency.id
         },
         removeProvider(provider) {
             if (!isInstance(provider, Provider)) {
