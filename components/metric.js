@@ -7,7 +7,7 @@ import { config } from '../config.js'
 import { Entity } from '../lib/entity.js'
 import { Lint } from './lint.js'
 
-const metricIcon = unicodeSymbol('metric')
+const scopeIcon = unicodeSymbol('scope')
 
 export class Metric extends Entity {
     service = null
@@ -144,12 +144,8 @@ export class Metric extends Entity {
         return this.service.metrics.remove(this)
     }
 
-    get displayNameWithFallback() {
-        return this.displayName || this.id
-    }
-
     toString() {
-        return `${this.service} ${metricIcon} ${this.displayName}`
+        return [this.service.markdownId, this.markdownId].join(scopeIcon)
     }
 
     get index() {

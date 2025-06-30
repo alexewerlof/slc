@@ -1,4 +1,3 @@
-import { unicodeSymbol } from '../lib/icons.js'
 import { Entity } from '../lib/entity.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { isArr, isDef, isInstance, isObj, isStr } from '../lib/validation.js'
@@ -61,7 +60,7 @@ export class Dependency extends Entity {
     }
 
     toString() {
-        return `${this.task} ${unicodeSymbol('dependency')} ${this.service}`
+        return [this.task.markdownId, this.service.markdownId].join(' ')
     }
 
     get provider() {

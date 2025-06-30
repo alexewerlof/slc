@@ -15,7 +15,7 @@
                     type="task"
                     :cx="taskX(task)"
                     :cy="taskY(task)"
-                    :tooltip="`Task: ${ task }`"
+                    :tooltip="task.markdownDisplayName"
                     @click="$emit('select', task)"
                     @status="updateStatus"
                     >
@@ -28,7 +28,7 @@
                 type="consumer"
                 :cx="consumerX(consumer)"
                 :cy="consumerY(consumer)"
-                :tooltip="`Consumer: ${ consumer }`"
+                :tooltip="consumer.markdownDisplayName"
                 @click="$emit('select', consumer)"
                 @status="updateStatus"
                 >
@@ -50,7 +50,7 @@
                     type="service"
                     :cx="serviceX(service)"
                     :cy="serviceY(service)"
-                    :tooltip="`Service: ${ service }`"
+                    :tooltip="service.markdownDisplayName"
                     @click="$emit('select', service)"
                     @status="updateStatus"
                     >
@@ -64,7 +64,7 @@
                     type="dependency"
                     :cx="dependencyX(dependency)"
                     :cy="dependencyY(dependency)"
-                    :tooltip="`Dependency: ${ dependency }`"
+                    :tooltip="dependency.markdownDisplayName"
                     @click="$emit('select', dependency)"
                     @status="updateStatus"
                     >
@@ -78,7 +78,7 @@
                     type="metric"
                     :cx="metricX(metric)"
                     :cy="metricY(metric)"
-                    :tooltip="`Metric: ${ metric }`"
+                    :tooltip="metric.markdownDisplayName"
                     @click="$emit('select', metric)"
                     @status="updateStatus"
                     >
@@ -90,7 +90,7 @@
                 :is-selected="selectedEntity === provider"
                 :has-notification="provider.lint.count"
                 type="provider"
-                :tooltip="`Provider: ${ provider }`"
+                :tooltip="provider.markdownDisplayName"
                 :cx="providerX(provider)"
                 :cy="providerY(provider)"
                 @click="$emit('select', provider)"

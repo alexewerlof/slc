@@ -1,6 +1,8 @@
 <div class="metric-component">
     <id-component :entity="metric"></id-component>
     <lint-component :lint="metric.lint"></lint-component>
+    <h3>Service</h3>
+    <markdown-component :markdown="metric.service.markdownDisplayName"></markdown-component>
     <fieldset>
         <legend>Basics</legend>
         <div class="input-group">

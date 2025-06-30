@@ -118,12 +118,8 @@ export class Consumer extends Entity {
         return this.assessment.consumers.remove(this)
     }
 
-    get displayNameWithFallback() {
-        return this.displayName || this.id
-    }
-
     toString() {
-        return this.displayNameWithFallback
+        return this.markdownId
     }
 
     get index() {

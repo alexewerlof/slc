@@ -1,6 +1,8 @@
 <div class="service-component">
     <id-component :entity="service"></id-component>
     <lint-component :lint="service.lint"></lint-component>
+    <h3>Provider</h3>
+    <markdown-component :markdown="service.provider.markdownDisplayName"></markdown-component>
     <fieldset>
         <legend>Basics</legend>
         <div class="input-group">
@@ -68,7 +70,7 @@
             </help-component>
         </h4>
         <fieldset v-for="consumer in service.provider.assessment.consumers">
-            <legend :title="consumer.description">{{ consumer.displayNameWithFallback }}</legend>
+            <legend :title="consumer.description">{{ consumer.markdownDisplayName }}</legend>
             <div v-if="!consumer.tasks.length">
                 No task defined.
             </div>
@@ -78,7 +80,7 @@
                     type="checkbox"
                     :checked="service.isConsumedBy(task)"
                     @change="service.setConsumedBy(task, $event.target.checked)">
-                    {{ task.displayNameWithFallback }}
+                    {{ task.markdownDisplayName }}
                 </label>
             </div>
         </fieldset>

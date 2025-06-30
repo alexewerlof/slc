@@ -75,12 +75,11 @@ export class Task extends Entity {
         }
     }
 
-    get displayNameWithFallback() {
-        return this.displayName || this.id
-    }
-
     toString() {
-        return `${this.consumer.displayNameWithFallback}${scopeIcon}${this.displayNameWithFallback}`
+        return [
+            this.consumer.markdownDisplayName,
+            this.markdownDisplayName,
+        ].join(scopeIcon)
     }
 
     get index() {

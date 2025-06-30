@@ -97,12 +97,8 @@ export class Provider extends Entity {
         this.services.removeAll()
     }
 
-    get displayNameWithFallback() {
-        return this.displayName || this.id
-    }
-
     toString() {
-        return this.displayNameWithFallback
+        return this.markdownId
     }
 
     get index() {

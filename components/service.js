@@ -137,12 +137,11 @@ export class Service extends Entity {
         }
     }
 
-    get displayNameWithFallback() {
-        return this.displayName || this.id
-    }
-
     toString() {
-        return `${this.provider.displayNameWithFallback}${scopeIcon}${this.displayNameWithFallback}`
+        return [
+            this.provider.markdownId,
+            this.markdownId,
+        ].join(scopeIcon)
     }
 
     get index() {

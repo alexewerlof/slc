@@ -1,9 +1,9 @@
 <div class="dependency-component">
     <id-component :entity="dependency"></id-component>
     <h3>Service</h3>
-    <p>{{ dependency.service }}</p>
+    <markdown-component :markdown="dependency.service.markdownId"></markdown-component>
     <h3>Task</h3>
-    <p>{{ dependency.task }}</p>
+    <markdown-component :markdown="dependency.task.markdownId"></markdown-component>
     <lint-component :lint="dependency.lint"></lint-component>
     <fieldset class="b-mar-gap2">
         <legend>Failure ({{ dependency.failures.length }})</legend>
