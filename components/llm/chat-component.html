@@ -6,7 +6,8 @@
                 type="text"
                 v-model="message"
                 ref="promptInput"
-                placeholder="Type your message here..."
+                rows="3"
+                :placeholder="promptPlaceholder"
                 @keydown.enter.exact.prevent="submitPrompt()"
                 :disabled="isEditDisabled"></textarea>
             <button

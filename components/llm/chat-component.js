@@ -8,11 +8,19 @@ import { Toolbox } from './toolbox.js'
 export default {
     data() {
         return {
-            message: 'What is an SLO?',
+            message: this.initiaPrompt,
             abortController: undefined,
         }
     },
     props: {
+        initiaPrompt: {
+            type: String,
+            default: '',
+        },
+        promptPlaceholder: {
+            type: String,
+            default: 'Your prompt...',
+        },
         thread: {
             type: Thread,
             required: true,
