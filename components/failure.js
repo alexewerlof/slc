@@ -24,6 +24,10 @@ export class Failure extends Entity {
         }
     }
 
+    get displayName() {
+        return this.symptom
+    }
+
     get state() {
         return {
             id: this.id,
