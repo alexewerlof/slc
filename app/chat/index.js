@@ -12,7 +12,6 @@ export const app = createApp({
             test: 'test',
             thread: new Thread(
                 new FileBead(
-                    'system',
                     new URL('chat-prompt.md', globalThis.location),
                     new URL('../../prompts/glossary.md', globalThis.location),
                 ),

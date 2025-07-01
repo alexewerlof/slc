@@ -1,15 +1,36 @@
 import { loadText } from '../../lib/share.js'
-import { isFn, isInArr, isStr } from '../../lib/validation.js'
+import { isBool, isDef, isFn, isInArr, isObj, isStr } from '../../lib/validation.js'
 
 export class Bead {
     _content = undefined
     _role = undefined
+    /** Beads that set this to true, do not get converted to messages */
+    isGhost = false
+    /** Beads that set this to true, don't get deleted */
+    isPersistent = true
+    /** Beads that set this to true, only show up when debugging info is shown */
+    isDebug = false
 
     static POSSIBLE_ROLES = ['user', 'system', 'assistant', 'tool']
 
-    constructor(role, content) {
+    constructor(role, content, options) {
         this.role = role
         this.content = content
+        if (isDef(options)) {
+            if (!isObj(options)) {
+                throw new TypeError(`options must be an object. Got ${options}`)
+            }
+            const { isGhost, isPersistent, isDebug } = options
+            if (isBool(isGhost)) {
+                this.isGhost = isGhost
+            }
+            if (isBool(isPersistent)) {
+                this.isPersistent = isPersistent
+            }
+            if (isBool(isDebug)) {
+                this.isDebug = isDebug
+            }
+        }
     }
 
     get role() {
@@ -21,6 +42,25 @@ export class Bead {
             throw new Error(`Invalid role: ${role}`)
         }
         this._role = role
+        switch (role) {
+            case 'system':
+                this.isGhost = false
+                this.isPersistent = true
+                this.isDebug = true
+                break
+            case 'user':
+                this.isGhost = false
+                this.isPersistent = false
+                this.isDebug = false
+                break
+            case 'assistant':
+                this.isGhost = false
+                this.isPersistent = false
+                this.isDebug = false
+                break
+            default:
+                throw new Error(`Invalid role: ${role}`)
+        }
     }
 
     get friendlyRole() {
@@ -77,7 +117,9 @@ export class ToolCallsBead extends Bead {
     _toolCalls = undefined
 
     constructor(toolCalls) {
-        super('assistant', JSON.stringify(toolCalls, null, 2))
+        super('assistant', JSON.stringify(toolCalls, null, 2), {
+            isDebug: true,
+        })
         if (!Array.isArray(toolCalls) || toolCalls.length === 0) {
             throw new Error('toolCalls must be a non-empty array')
         }
@@ -98,7 +140,9 @@ export class ToolCallsBead extends Bead {
 
 export class ToolResultBead extends Bead {
     constructor(toolCallId, result) {
-        super('tool', JSON.stringify(result, null, 2))
+        super('tool', JSON.stringify(result, null, 2), {
+            isDebug: true,
+        })
         this.toolCallId = toolCallId
         this.result = result
     }
@@ -120,8 +164,11 @@ export class FileBead extends Bead {
     _fileNames = undefined
     _loaded = false
 
-    constructor(role, ...fileNames) {
-        super(role, 'Files:\n' + fileNames.map((f) => `- ${f}`).join('\n'))
+    constructor(...fileNames) {
+        super('system', 'Files:\n' + fileNames.map((f) => `- ${f}`).join('\n'), {
+            isDebug: true,
+            isPersistent: true,
+        })
         if (fileNames.length === 0) {
             throw new Error('At least one file name must be provided')
         }
@@ -155,12 +202,13 @@ export class Thread {
     }
 
     async toMessages() {
-        await Promise.all(this.beads.map(async (bead) => {
+        const activeBeads = this.beads.filter((bead) => !bead.isGhost)
+        await Promise.all(activeBeads.map(async (bead) => {
             if (isFn(bead.load)) {
                 await bead.load()
             }
         }))
-        return this.beads.map((bead) => bead.toMessage())
+        return activeBeads.map((bead) => bead.toMessage())
     }
 
     clear(keepSystemMessages = true) {

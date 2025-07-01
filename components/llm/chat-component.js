@@ -87,8 +87,9 @@ export default {
                     }
                 } while (true)
             } catch (error) {
-                console.error('Error:', error)
-                showToast('Error: ' + error)
+                this.thread.add(new Bead('system', String(error)))
+                console.error(error)
+                showToast(error)
             }
             this.$nextTick(() => {
                 this.$refs.chatThreadComponent.scrollToBottom()

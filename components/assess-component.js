@@ -23,7 +23,7 @@ export default {
             steps,
             exportedCode: '-',
             thread: new Thread(
-                new FileBead('system', 'assess-prompt.md', '../../prompts/glossary.md'),
+                new FileBead('assess-prompt.md', '../../prompts/glossary.md'),
                 new Bead('system', () => this.assessment.toString()),
             ),
         }
