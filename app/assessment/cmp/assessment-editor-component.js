@@ -8,6 +8,7 @@ import { Service } from '../../../components/service.js'
 import { Bead, FileBead, Thread } from '../../../components/llm/thread.js'
 import { isInstance } from '../../../lib/validation.js'
 import { Toolbox } from '../../../components/llm/toolbox.js'
+import { nextStep } from './workflow.js'
 
 export default {
     props: {
@@ -25,6 +26,8 @@ export default {
                     '```json',
                     JSON.stringify(this.assessment.state),
                     '```',
+                    'To help you guide the user through the assessment, a deterministic algorithm is used to analyze the current state of the assessment and here is what you need to do:',
+                    nextStep(this.assessment),
                 ].join('\n')),
             /*
             new Bead(
@@ -47,6 +50,7 @@ export default {
                         this.assessment.markdownLint(),
                         'These heuristics are a great tip for you to ask the right questions and help the user add any missing entities or fix any issues in the assessment.',
                         'You can also use the provided tools to add new entities or get information about existing ones.',
+                        'Focus on fixing the most important problem first. Errors have higher priority than warnings.And issues with Providers are more important than services. Similarly, issues with Consumers are more important than Tasks. Dependencies are less important than both Services and Tasks. And Failures are less important than Dependencies. Issues with the Metrics are the least important and should be addressed last.',
                     ].join('\n\n'),
             ),
         )

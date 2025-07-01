@@ -17,9 +17,9 @@ The service provider (as its name suggests), provides a service.
 
 Provider can have any of these types:
 
-- **Group**: a group of people providing manual services. For example: governance, operation, access management, etc.
-- **Component**: a piece of code that can be deployed independently and provides a service. For example: a database, a microservice, a monolith, etc. The component that provides a service can have dependencies to other services, but those services are outside the scope of the current assessment.
-- **System**: a logical grouping of components that together offer a service that solve a problem for the consumer. For example: an API. The main difference between a component or system provider is how much the service consumer cares about their granulairty. If the service consumer doesn't care about which exact **component** provides a service, **system** is a good abstraction.
+- `Group`: a group of people providing manual services. For example: governance, operation, access management, etc.
+- `Component`: a piece of code that can be deployed independently and provides a service. For example: a database, one service in a microservice architecture, a monolith, etc. The component that provides a service can have dependencies to other services, but those services are outside the scope of the current assessment.
+- `System`: a logical grouping of components that together offer a service that solve a problem for the consumer. For example: an API. The main difference between a component or system provider is how much the service consumer cares about their granulairty. If the service consumer doesn't care about which exact `Component` provides a service, `System` is a good abstraction.
 
 [Learn more about provider here](https://blog.alexewerlof.com/p/service-level-terminology).
 
@@ -29,9 +29,9 @@ Is an entity that consumers the service that is provided by a provider.
 
 Consumer can have any of these types:
 
-- **Group**: a group of people consuming a service to achieve a goal. For example: end users, paying customers, etc.
-- **Component**: a piece of code that can be deployed independently and uses a service. For example: a web applicatio, a mobile application, another microservice or monolith, etc. The component that consumes a service has a dependency to that service. This dependency is a core part of the service level assessment.
-- **System**: a logical grouping of components that together consume a service. For example: an payment gateway. The main difference between a component or system consumer is how much the service provider cares about their granulairty. If the service provider doesn't care about which exact **component** uses it, **system** is a good abstraction.
+- `Group`: a group of people consuming a service to achieve a goal. For example: end users, paying customers, etc. If we don't know or care about what piece of technology consumes the **service** that is provided by the **Provider**, can just use `Group`.
+- `Component`: a piece of code that can be deployed independently and uses a service. For example: a web applicatio, a mobile application, another microservice or monolith, etc. The component that consumes a service has a dependency to that service. This dependency is a core part of the service level assessment.
+- `System`: a logical grouping of components that together consume a service. For example: an payment gateway. The main difference between a component or system consumer is how much the service provider cares about their granulairty. If the service provider doesn't care about which exact `Component` uses it, `System` is a good abstraction.
 
 [Learn more about consumer here](https://blog.alexewerlof.com/p/service-level-terminology).
 
@@ -39,7 +39,7 @@ Consumer can have any of these types:
 
 Task describes why the consumer uses a service. This essentially establishes a dependency from consumer to one or more services. The reason the consumer task is important in the context service level is because of the biggest pitfalls of implementing service levels: to measure the wrong thing! Service level should always be measured from the perspective of the consumers. Task describes that aspect.
 
-Task is also known as: use case, user need, user requirement, JTBD (jobs to be done), dependency, user story.
+Task is also known as: use case, user need, user requirement, JTBD (jobs to be done), user story.
 
 [Learn more about task here](https://blog.alexewerlof.com/p/service-level-terminology).
 
