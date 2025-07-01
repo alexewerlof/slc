@@ -1,3 +1,4 @@
+import { joinLines } from '../../lib/markdown.js'
 import { isInstance } from '../../lib/validation.js'
 
 export class Formula {
@@ -47,6 +48,6 @@ export class Formula {
         return this
     }
     toString() {
-        return this.parts.map(({ text }) => text).join('')
+        return joinLines(0, ...this.parts.map(({ text }) => text))
     }
 }

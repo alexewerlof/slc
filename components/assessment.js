@@ -7,6 +7,7 @@ import { Task } from './task.js'
 import { unicodeSymbol } from '../lib/icons.js'
 import { Lint } from './lint.js'
 import { assessment2prolog } from '../app/assessment/cmp/prolog.js'
+import { joinLines } from '../lib/markdown.js'
 
 export class Assessment {
     consumers = new SelectableArray(Consumer, this)
@@ -271,7 +272,7 @@ export class Assessment {
             }
         }
 
-        return lines.join('\n')
+        return joinLines(1, ...lines)
     }
 
     toProlog() {

@@ -1,6 +1,4 @@
-function joinNN(...strs) {
-    return strs.join('\n\n')
-}
+import { joinLines } from '../lib/markdown.js'
 
 export class Lint {
     infoMessages = []
@@ -8,15 +6,15 @@ export class Lint {
     errorMessages = []
 
     error(...messages) {
-        this.errorMessages.push(joinNN(...messages))
+        this.errorMessages.push(joinLines(2, ...messages))
     }
 
     warn(...messages) {
-        this.warnMessages.push(joinNN(...messages))
+        this.warnMessages.push(joinLines(2, ...messages))
     }
 
     info(...messages) {
-        this.infoMessages.push(joinNN(...messages))
+        this.infoMessages.push(joinLines(2, ...messages))
     }
 
     clear() {

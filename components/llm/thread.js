@@ -1,3 +1,4 @@
+import { joinLines } from '../../lib/markdown.js'
 import { loadText } from '../../lib/share.js'
 import { isBool, isDef, isFn, isInArr, isObj, isStr } from '../../lib/validation.js'
 
@@ -49,14 +50,15 @@ export class Bead {
                 this.isDebug = true
                 break
             case 'user':
-                this.isGhost = false
-                this.isPersistent = false
-                this.isDebug = false
-                break
             case 'assistant':
                 this.isGhost = false
                 this.isPersistent = false
                 this.isDebug = false
+                break
+            case 'tool':
+                this.isGhost = true
+                this.isPersistent = false
+                this.isDebug = true
                 break
             default:
                 throw new Error(`Invalid role: ${role}`)
@@ -165,7 +167,7 @@ export class FileBead extends Bead {
     _loaded = false
 
     constructor(...fileNames) {
-        super('system', 'Files:\n' + fileNames.map((f) => `- ${f}`).join('\n'), {
+        super('system', 'Files:\n' + joinLines(1, ...fileNames.map((f) => `- ${f}`)), {
             isDebug: true,
             isPersistent: true,
         })
@@ -178,7 +180,7 @@ export class FileBead extends Bead {
     async load() {
         if (!this._loaded) {
             const contents = await Promise.all(this._fileNames.map(loadText))
-            this.content = contents.join('\n')
+            this.content = joinLines(1, ...contents)
             this._loaded = true
         }
         return this.content
