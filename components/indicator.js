@@ -83,7 +83,7 @@ export class Indicator extends Entity {
      * @param {IndicatorOptions} [state] The options used to configure the indicator.
      */
     constructor(state) {
-        super()
+        super('i')
         if (isDef(state)) {
             this.state = state
         }

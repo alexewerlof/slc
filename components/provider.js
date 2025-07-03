@@ -17,7 +17,7 @@ export class Provider extends Entity {
     services = new SelectableArray(Service, this)
 
     constructor(assessment, state) {
-        super()
+        super('p')
         if (!isInstance(assessment, Assessment)) {
             throw new Error(`Provider.constructor: assessment must be an instance of Assessment. Got ${assessment}`)
         }

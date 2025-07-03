@@ -15,7 +15,7 @@ export class Consumer extends Entity {
     tasks = new SelectableArray(Task, this)
 
     constructor(assessment, state) {
-        super()
+        super('c')
         if (!isInstance(assessment, Assessment)) {
             throw new Error(`Consumer.constructor: assessment must be an instance of Assessment. Got ${assessment}`)
         }

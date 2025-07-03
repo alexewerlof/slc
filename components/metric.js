@@ -19,7 +19,7 @@ export class Metric extends Entity {
     linkedFailures = []
 
     constructor(service, state) {
-        super()
+        super('m')
         if (!isInstance(service, Service)) {
             throw new Error(`Expected an instance of Service. Got ${service}`)
         }

@@ -28,7 +28,7 @@ export class Objective extends Entity {
     indicator = null
 
     constructor(indicator, state) {
-        super()
+        super('o')
         if (!isInstance(indicator, Indicator)) {
             throw new TypeError(`Expected an instance of Indicator. Got ${indicator}`)
         }

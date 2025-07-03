@@ -11,7 +11,7 @@ export class Dependency extends Entity {
     failures = new SelectableArray(Failure, this)
 
     constructor(service, state) {
-        super()
+        super('d')
         if (!isInstance(service, Service)) {
             throw TypeError(`Expected an instance of service. Got ${service}`)
         }

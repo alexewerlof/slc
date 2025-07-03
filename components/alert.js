@@ -19,7 +19,7 @@ export class Alert extends Entity {
     objective = null
 
     constructor(objective, state) {
-        super()
+        super('a')
         if (!isInstance(objective, Objective)) {
             throw new TypeError(`Expected an instance of Objective. Got ${objective}`)
         }

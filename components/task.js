@@ -13,7 +13,7 @@ export class Task extends Entity {
     description = config.description.default
 
     constructor(consumer, state) {
-        super()
+        super('t')
         if (!isInstance(consumer, Consumer)) {
             throw new Error(`Task.constructor: consumer must be an instance of Consumer. Got ${consumer}`)
         }

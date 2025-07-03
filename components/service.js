@@ -20,7 +20,7 @@ export class Service extends Entity {
     _type = Service.possibleTypes[0]
 
     constructor(provider, state) {
-        super()
+        super('s')
         if (!isInstance(provider, Provider)) {
             throw new Error(`Service.constructor: provider must be an instance of Provider. Got ${provider}`)
         }

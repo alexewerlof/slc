@@ -14,7 +14,7 @@ export class Failure extends Entity {
     impactLevel = config.impactLevel.default
 
     constructor(dependency, state) {
-        super()
+        super('f')
         if (!isInstance(dependency, Dependency)) {
             throw new Error(`Expected an instance of Dependency. Got: ${dependency} (${typeof dependency})`)
         }

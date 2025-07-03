@@ -1,36 +1,36 @@
 {
     "consumers": [
         {
-            "id": "Consumer-BKLGG6JE",
+            "id": "cBKLGG6JE",
             "displayName": "Web site",
             "description": "Can be used by the potential consumers to learn about the cars, configure it, and order it",
             "type": "System",
             "tasks": [
                 {
-                    "id": "Task-P2BFJBQN",
+                    "id": "tP2BFJBQN",
                     "displayName": "Product Model Page",
                     "description": "Shows information about one particular car"
                 }
             ]
         },
         {
-            "id": "Consumer-VTVG3BFD",
+            "id": "cVTVG3BFD",
             "displayName": "Mobile client",
             "description": "Is used by the car owners to control the car",
             "type": "System",
             "tasks": [
                 {
-                    "id": "Task-ZPX76ZFE",
+                    "id": "tZPX76ZFE",
                     "displayName": "Adjust temperature remotely",
                     "description": ""
                 },
                 {
-                    "id": "Task-QPNEE3ED",
+                    "id": "tQPNEE3ED",
                     "displayName": "Lock/Unlock the car remotely",
                     "description": ""
                 },
                 {
-                    "id": "Task-6KF1W6TJ",
+                    "id": "t6KF1W6TJ",
                     "displayName": "Check car leasing contract",
                     "description": "Allows the consumers to quickly review their contract on the go"
                 }
@@ -39,30 +39,30 @@
     ],
     "providers": [
         {
-            "id": "Provider-JQJKC5A6",
+            "id": "pJQJKC5A6",
             "displayName": "Digital Twin API",
             "description": "Can be used to retrieve information about the car and control it remotely",
             "type": "System",
             "services": [
                 {
-                    "id": "Service-Q36V20PF",
+                    "id": "sQ36V20PF",
                     "displayName": "Climate API",
                     "description": "Retrieves or sets car climate",
                     "type": "Automated",
                     "dependencies": [
                         {
-                            "id": "Dependency-LYATE3RJ",
-                            "taskId": "Task-ZPX76ZFE",
+                            "id": "dLYATE3RJ",
+                            "taskId": "tZPX76ZFE",
                             "failures": [
                                 {
-                                    "id": "Failure-C2RWBHFW",
+                                    "id": "fC2RWBHFW",
                                     "symptom": "Can't set the temperature",
                                     "consequence": "The user cannot set their desired temperature",
                                     "businessImpact": "The frustrated owner may discourage others from buying our products",
                                     "impactLevel": 50
                                 },
                                 {
-                                    "id": "Failure-KTCPMWMN",
+                                    "id": "fKTCPMWMN",
                                     "symptom": "Can't read the temperature from the car",
                                     "consequence": "The user cannot decide whether to use remote climate control or not",
                                     "businessImpact": "Users may contact customer support",
@@ -73,63 +73,63 @@
                     ],
                     "metrics": [
                         {
-                            "id": "Metric-9ZQX1C0E",
+                            "id": "m9ZQX1C0E",
                             "displayName": "response_code between 200-499",
                             "description": "error rate",
                             "isBoolean": true,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-C2RWBHFW"
+                                "fC2RWBHFW"
                             ]
                         },
                         {
-                            "id": "Metric-E5RR66H9",
+                            "id": "mE5RR66H9",
                             "displayName": "latency < 10 seconds",
                             "description": "The response to climate API is relatively fast",
                             "isBoolean": false,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-C2RWBHFW"
+                                "fC2RWBHFW"
                             ]
                         },
                         {
-                            "id": "Metric-KBPCA68K",
+                            "id": "mKBPCA68K",
                             "displayName": "GET climate successful",
                             "description": "",
                             "isBoolean": true,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-KTCPMWMN"
+                                "fKTCPMWMN"
                             ]
                         }
                     ]
                 },
                 {
-                    "id": "Service-GGY5G3U5",
+                    "id": "sGGY5G3U5",
                     "displayName": "Car security API",
                     "description": "Can be used to lock or unlock the car",
                     "type": "Automated",
                     "dependencies": [
                         {
-                            "id": "Dependency-9RQ8W5SW",
-                            "taskId": "Task-QPNEE3ED",
+                            "id": "d9RQ8W5SW",
+                            "taskId": "tQPNEE3ED",
                             "failures": [
                                 {
-                                    "id": "Failure-3JVE7WWG",
+                                    "id": "f3JVE7WWG",
                                     "symptom": "Cannot see the lock status",
                                     "consequence": "The user may have to physically walk to the car to check it and that's not always possible",
                                     "businessImpact": "Frustrated user may call customer support or discourage others from buying our product",
                                     "impactLevel": 30
                                 },
                                 {
-                                    "id": "Failure-CLZF5HJU",
+                                    "id": "fCLZF5HJU",
                                     "symptom": "Can't unlock the car",
                                     "consequence": "The user may have to use a key",
                                     "businessImpact": "Users may contact customer support",
                                     "impactLevel": 10
                                 },
                                 {
-                                    "id": "Failure-Y6X7TK2Z",
+                                    "id": "fY6X7TK2Z",
                                     "symptom": "Can't lock the car",
                                     "consequence": "Thieves may get in the car before the user gets to lock it",
                                     "businessImpact": "The user may take significant financial damage and take us to court",
@@ -140,33 +140,33 @@
                     ],
                     "metrics": [
                         {
-                            "id": "Metric-1MLBSGAJ",
+                            "id": "m1MLBSGAJ",
                             "displayName": "lock status api returns status in less than 10 seconds",
                             "description": "Status check should be reasonably fast",
                             "isBoolean": false,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-3JVE7WWG"
+                                "f3JVE7WWG"
                             ]
                         },
                         {
-                            "id": "Metric-6SG0XGM8",
+                            "id": "m6SG0XGM8",
                             "displayName": "lock command API response_code === 202",
                             "description": "Successfully registered the command",
                             "isBoolean": true,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-CLZF5HJU"
+                                "fCLZF5HJU"
                             ]
                         },
                         {
-                            "id": "Metric-PSG7H5LY",
+                            "id": "mPSG7H5LY",
                             "displayName": "lock status api response code between 200 to 399 (inclusive)",
                             "description": "lock status check does not fail",
                             "isBoolean": false,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-3JVE7WWG"
+                                "f3JVE7WWG"
                             ]
                         }
                     ]
@@ -174,23 +174,23 @@
             ]
         },
         {
-            "id": "Provider-A0LFWY6N",
+            "id": "pA0LFWY6N",
             "displayName": "Image Storage",
             "description": "Retrieves or stores images for different car models in different colors",
             "type": "System",
             "services": [
                 {
-                    "id": "Service-YACY74QT",
+                    "id": "sYACY74QT",
                     "displayName": "Get car image API",
                     "description": "Returns the car image, useful for rendering the website and the app that's used to control the car",
                     "type": "Automated",
                     "dependencies": [
                         {
-                            "id": "Dependency-VDUJH6RX",
-                            "taskId": "Task-P2BFJBQN",
+                            "id": "dVDUJH6RX",
+                            "taskId": "tP2BFJBQN",
                             "failures": [
                                 {
-                                    "id": "Failure-A7QTKGRS",
+                                    "id": "fA7QTKGRS",
                                     "symptom": "Image is missing",
                                     "consequence": "User will get confused and leave the site",
                                     "businessImpact": "Loss of potential customer",
@@ -199,11 +199,11 @@
                             ]
                         },
                         {
-                            "id": "Dependency-V0EY9CVQ",
-                            "taskId": "Task-ZPX76ZFE",
+                            "id": "dV0EY9CVQ",
+                            "taskId": "tZPX76ZFE",
                             "failures": [
                                 {
-                                    "id": "Failure-HD8F981Y",
+                                    "id": "fHD8F981Y",
                                     "symptom": "The car image cannot be shown in the app",
                                     "consequence": "The user may get confused",
                                     "businessImpact": "Users may contact customer support",
@@ -212,11 +212,11 @@
                             ]
                         },
                         {
-                            "id": "Dependency-GVJ7Q5EU",
-                            "taskId": "Task-QPNEE3ED",
+                            "id": "dGVJ7Q5EU",
+                            "taskId": "tQPNEE3ED",
                             "failures": [
                                 {
-                                    "id": "Failure-R1NNFF8X",
+                                    "id": "fR1NNFF8X",
                                     "symptom": "The car image cannot be shown in the app",
                                     "consequence": "The user may get confused",
                                     "businessImpact": "Users may contact customer support",
@@ -227,33 +227,33 @@
                     ],
                     "metrics": [
                         {
-                            "id": "Metric-BBWHLE10",
+                            "id": "mBBWHLE10",
                             "displayName": "response_code != 4xx",
                             "description": "some image is returned",
                             "isBoolean": false,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-HD8F981Y"
+                                "fHD8F981Y"
                             ]
                         },
                         {
-                            "id": "Metric-CY7C0DUE",
+                            "id": "mCY7C0DUE",
                             "displayName": "user does not report the image",
                             "description": "image matches the model (we use user report as a check asking them \"report problems\")",
                             "isBoolean": true,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-A7QTKGRS"
+                                "fA7QTKGRS"
                             ]
                         },
                         {
-                            "id": "Metric-QSANRZES",
+                            "id": "mQSANRZES",
                             "displayName": "mobile app log indicating missing image",
                             "description": "For all other reasons that an image may be missing in the app",
                             "isBoolean": true,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-R1NNFF8X"
+                                "fR1NNFF8X"
                             ]
                         }
                     ]
@@ -261,23 +261,23 @@
             ]
         },
         {
-            "id": "Provider-J7GV6610",
+            "id": "pJ7GV6610",
             "displayName": "Document Storage",
             "description": "Stores different types of files like PDF, HTML, and images",
             "type": "System",
             "services": [
                 {
-                    "id": "Service-X9UHJ1PJ",
+                    "id": "sX9UHJ1PJ",
                     "displayName": "Car manual API",
                     "description": "Returns the car manual in different formats",
                     "type": "Automated",
                     "dependencies": [
                         {
-                            "id": "Dependency-0EVHAR6R",
-                            "taskId": "Task-P2BFJBQN",
+                            "id": "d0EVHAR6R",
+                            "taskId": "tP2BFJBQN",
                             "failures": [
                                 {
-                                    "id": "Failure-DQYCKRHD",
+                                    "id": "fDQYCKRHD",
                                     "symptom": "The user may be unable to look up key information",
                                     "consequence": "The user may be unsatisfied and either call support or not buy the car",
                                     "businessImpact": "Prospect may call customer support or sales agents or not buy the car",
@@ -288,46 +288,46 @@
                     ],
                     "metrics": [
                         {
-                            "id": "Metric-MQ4J8RLC",
+                            "id": "mMQ4J8RLC",
                             "displayName": "for a valid car model, the manual response code < 400",
                             "description": "",
                             "isBoolean": false,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-DQYCKRHD"
+                                "fDQYCKRHD"
                             ]
                         },
                         {
-                            "id": "Metric-Z0N90GTH",
+                            "id": "mZ0N90GTH",
                             "displayName": "download does not break for an already established session",
                             "description": "The manual files can be large. if the download is interrupted for any reasons, we may want to look into it.",
                             "isBoolean": true,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-DQYCKRHD"
+                                "fDQYCKRHD"
                             ]
                         }
                     ]
                 },
                 {
-                    "id": "Service-PMVMWCZE",
+                    "id": "sPMVMWCZE",
                     "displayName": "Car contract API",
                     "description": "Retrieves leasing contracts",
                     "type": "Automated",
                     "dependencies": [
                         {
-                            "id": "Dependency-AQF2LT8P",
-                            "taskId": "Task-6KF1W6TJ",
+                            "id": "dAQF2LT8P",
+                            "taskId": "t6KF1W6TJ",
                             "failures": [
                                 {
-                                    "id": "Failure-GLBALH4H",
+                                    "id": "fGLBALH4H",
                                     "symptom": "Cannot retrieve the contract",
                                     "consequence": "User may get frustrated",
                                     "businessImpact": "Users may contact customer support",
                                     "impactLevel": 10
                                 },
                                 {
-                                    "id": "Failure-W9U8P0OQ",
+                                    "id": "fW9U8P0OQ",
                                     "symptom": "Fetching wrong contract",
                                     "consequence": "User may get confused. In the worse case they may end up paying the wrong amount.",
                                     "businessImpact": "They customers may end up paying the wrong amount",
@@ -338,23 +338,23 @@
                     ],
                     "metrics": [
                         {
-                            "id": "Metric-ED6Z8YBM",
+                            "id": "mED6Z8YBM",
                             "displayName": "for valid requests, contract retrieval API response code < 400",
                             "description": "",
                             "isBoolean": false,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-GLBALH4H"
+                                "fGLBALH4H"
                             ]
                         },
                         {
-                            "id": "Metric-Y9Z0P517",
+                            "id": "mY9Z0P517",
                             "displayName": "the user credentials on the contract should match the user credentials that is logged in (web/mobile)",
                             "description": "",
                             "isBoolean": true,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-GLBALH4H"
+                                "fGLBALH4H"
                             ]
                         }
                     ]
@@ -362,23 +362,23 @@
             ]
         },
         {
-            "id": "Provider-MN0S2B13",
+            "id": "pMN0S2B13",
             "displayName": "CMS",
             "description": "Content management system",
             "type": "System",
             "services": [
                 {
-                    "id": "Service-2X4R1HKB",
+                    "id": "s2X4R1HKB",
                     "displayName": "Car specs",
                     "description": "Returns car specs and marketing content in different languages",
                     "type": "Automated",
                     "dependencies": [
                         {
-                            "id": "Dependency-AXVYFYNZ",
-                            "taskId": "Task-P2BFJBQN",
+                            "id": "dAXVYFYNZ",
+                            "taskId": "tP2BFJBQN",
                             "failures": [
                                 {
-                                    "id": "Failure-B5XWGBLX",
+                                    "id": "fB5XWGBLX",
                                     "symptom": "Wrong car specs are shown to the user",
                                     "consequence": "The user may make incorrect purchase decision. They may take us to court if the website info is legally binding.",
                                     "businessImpact": "Customer may take us to court if the website info is legally binding",
@@ -389,13 +389,13 @@
                     ],
                     "metrics": [
                         {
-                            "id": "Metric-UPWB4QX5",
+                            "id": "mUPWB4QX5",
                             "displayName": "Sampled double-check with CMS on a given RUM page is a pass",
                             "description": "To ensure that we show the right specs, we randomly check 1% of page views using a JavaScript snippet that scrapes data from our website and sends it to a backend that's made for the purpose of cross-checking this data against what the data that should have been sent via CMS (note: this will also check the cache errors)",
                             "isBoolean": true,
                             "numericUnit": "",
                             "failureIds": [
-                                "Failure-B5XWGBLX"
+                                "fB5XWGBLX"
                             ]
                         }
                     ]
