@@ -48,7 +48,13 @@
                         <div class="input-group" v-if="calculator.indicators.length">
                             <label for="indicator-selector">Select</label>
                             <select v-model="calculator.indicators.selected" id="indicator-selector">
-                                <option v-for="indicator of calculator.indicators" :value="indicator">{{ indicator }}</option>
+                                <option
+                                    v-for="indicator of calculator.indicators"
+                                    :value="indicator"
+                                    :key="indicator"
+                                >
+                                    {{ indicator }}
+                                </option>
                             </select>
                         </div>
 
@@ -107,7 +113,13 @@
                         <div class="input-group" v-if="calculator.indicators.selected?.objectives.length">
                             <label for="objective-selector">Select</label>
                             <select v-model="calculator.indicators.selected.objectives.selected" id="objective-selector">
-                                <option v-for="objective of calculator.indicators.selected.objectives" :value="objective">{{ objective }}</option>
+                                <option
+                                    v-for="objective of calculator.indicators.selected.objectives"
+                                    :value="objective"
+                                    :key="objective"
+                                >
+                                    {{ objective }}
+                                </option>
                             </select>
                         </div>
 
@@ -185,7 +197,13 @@
                         <div class="input-group" v-if="calculator.indicators.selected?.objectives.selected?.alerts.length">
                             <label for="alert-selector">Select</label>
                             <select v-model="calculator.indicators.selected.objectives.selected.alerts.selected" id="alert-selector">
-                                <option v-for="alert of calculator.indicators.selected.objectives.selected.alerts" :value="alert">{{ alert }}</option>
+                                <option
+                                    v-for="alert of calculator.indicators.selected.objectives.selected.alerts" 
+                                    :value="alert"
+                                    :key="alert"
+                                >
+                                    {{ alert }}
+                                </option>
                             </select>
                         </div>
 

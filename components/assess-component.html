@@ -35,7 +35,11 @@
                         <div class="input-group" v-if="assessment.providers.length">
                             <label for="provider-selector">Select</label>
                             <select id="provider-selector" v-model="assessment.providers.selected">
-                                <option v-for="provider of assessment.providers" :value="provider">
+                                <option
+                                    v-for="provider of assessment.providers"
+                                    :value="provider"
+                                    :key="provider.id"
+                                >
                                     {{ provider }}
                                 </option>
                             </select>
@@ -80,7 +84,11 @@
                         <div class="input-group" v-if="selectedProvider.services.length">
                             <label for="service-selector">Select</label>
                             <select id="service-selector" v-model="selectedProvider.services.selected">
-                                <option v-for="service of selectedProvider.services" :value="service">
+                                <option
+                                    v-for="service of selectedProvider.services"
+                                    :value="service"
+                                    :key="service.id"
+                                >
                                     {{ service.displayName }}
                                 </option>
                             </select>
@@ -132,7 +140,11 @@
                             <div class="input-group" v-if="assessment.consumers.length">
                                 <label for="consumer-selector">Select</label>
                                 <select id="consumer-selector" v-model="assessment.consumers.selected">
-                                    <option v-for="consumer of assessment.consumers" :value="consumer">
+                                    <option
+                                        v-for="consumer of assessment.consumers"
+                                        :value="consumer"
+                                        :key="consumer.id"
+                                    >
                                         {{ consumer }}
                                     </option>
                                 </select>
@@ -185,7 +197,11 @@
                             <div class="input-group" v-if="selectedConsumer.tasks.length">
                                 <label for="task-selector">Select</label>
                                 <select id="task-selector" v-model="selectedConsumer.tasks.selected">
-                                    <option v-for="task of selectedConsumer.tasks" :value="task">
+                                    <option
+                                        v-for="task of selectedConsumer.tasks"
+                                        :value="task"
+                                        :key="task.id"
+                                    >
                                         {{ task.displayName }}
                                     </option>
                                 </select>

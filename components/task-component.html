@@ -39,12 +39,18 @@
             </p>
         </help-component>
     </h4>
-    <fieldset v-for="provider in task.consumer.assessment.providers">
+    <fieldset
+        v-for="provider in task.consumer.assessment.providers"
+        :key="provider.id"
+    >
         <legend :title="provider.description">{{ provider.markdownDisplayName }}</legend>
         <div v-if="!provider.services.length">
             No service defined!
         </div>
-        <div v-for="service of provider.services">
+        <div
+            v-for="service of provider.services"
+            :key="service.id"
+        >
             <label :title="service.description">
                 <input
                     type="checkbox"

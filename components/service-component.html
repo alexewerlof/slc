@@ -69,12 +69,18 @@
                 </p>
             </help-component>
         </h4>
-        <fieldset v-for="consumer in service.provider.assessment.consumers">
+        <fieldset
+            v-for="consumer in service.provider.assessment.consumers"
+            :key="consumer.id"
+        >
             <legend :title="consumer.description">{{ consumer.markdownDisplayName }}</legend>
             <div v-if="!consumer.tasks.length">
                 No task defined.
             </div>
-            <div v-for="task of consumer.tasks">
+            <div
+                v-for="task of consumer.tasks"
+                :key="task.id"
+            >
                 <label :title="task.description">
                 <input
                     type="checkbox"

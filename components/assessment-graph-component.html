@@ -1,8 +1,8 @@
 <div class="assessment-graph-component">
     <svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height" @click.self="$emit('select', undefined)">
         <!-- Tasks & Consumers -->
-        <g v-for="consumer of assessment.consumers">
-            <g v-for="task of consumer.tasks">
+        <g v-for="consumer of assessment.consumers" :key="consumer.id">
+            <g v-for="task of consumer.tasks" :key="task.id">
                 <path
                     class="assessment-graph-component__line assessment-graph-component__line--relation"
                     :d="d(consumerX(consumer), consumerY(consumer), taskX(task), taskY(task))"></path>
@@ -36,8 +36,8 @@
             </assessment-graph-component-entity>
         </g>
         <!-- Services & Providers -->
-        <g v-for="provider of assessment.providers">
-            <g v-for="service of provider.services">
+        <g v-for="provider of assessment.providers" :key="provider.id">
+            <g v-for="service of provider.services" :key="service.id">
                 <path
                     class="assessment-graph-component__line assessment-graph-component__line--relation"
                     :d="d(providerX(provider), providerY(provider), serviceX(service), serviceY(service))"></path>
@@ -59,6 +59,7 @@
                 <!-- Dependencies -->
                 <assessment-graph-component-entity
                     v-for="dependency of service.dependencies"
+                    :key="dependency.id"
                     :is-selected="selectedEntity === dependency"
                     :has-notification="dependency.lint.count"
                     type="dependency"
@@ -73,6 +74,7 @@
                 <!-- Metrics -->
                 <assessment-graph-component-entity
                     v-for="metric of service.metrics"
+                    :key="metric.id"
                     :is-selected="selectedEntity === metric"
                     :has-notification="metric.lint.count"
                     type="metric"

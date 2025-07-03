@@ -27,13 +27,21 @@
             </p>
         </help-component>
     </h3>
-    <fieldset v-for="dependency of metric.service.dependencies">
+    <fieldset
+        v-for="dependency of metric.service.dependencies"
+        :key="dependency.id"
+    >
         <legend title="Task">{{ dependency.task }}</legend>
         <div v-if="dependency.failures.length === 0">
             No failure is identified for this dependency.
         </div>
 
-        <div v-for="failure of dependency.failures" class="input-group" :title="failure">
+        <div
+            v-for="failure of dependency.failures"
+            :key="failure.id"
+            class="input-group"
+            :title="failure"
+        >
             <label>
                 <input
                     type="checkbox"

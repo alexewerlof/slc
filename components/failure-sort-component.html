@@ -16,7 +16,7 @@
         <TransitionGroup name="failure-sort-component__failure">
             <div
                 v-for="(failure, index) of assessment.failures"
-                :key="failure"
+                :key="failure.id"
                 class="failure-sort-component__failure frost"
                 draggable="true"
                 @dragstart="startDrag($event, index)"
