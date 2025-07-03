@@ -185,16 +185,6 @@ textarea {
     margin-top: var(--gap);
     margin-bottom: var(--gap);
     gap: calc(var(--gap) / 2);
-
-    & button:not(:last-child) {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    & button:not(:first-child) {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-    }
 }
 
 .button-bar--left {
@@ -207,6 +197,18 @@ textarea {
 
 .button-bar--small {
     gap: calc(var(--gap) / 4);
+}
+
+.button-bar--unified-corner {
+    & button:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    & button:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
 }
 
 button {

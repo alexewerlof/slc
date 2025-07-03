@@ -1,5 +1,6 @@
 <div class="inline-select-component">
-    <div class="inline-select-component__buttons"><div class="button-bar">
+    <div class="inline-select-component__buttons">
+        <div class="button-bar button-bar--unified-corner">
             <button v-for="option in options"
                 v-text="option.title"
                 @click="$emit('update:modelValue', option.value)"
@@ -9,5 +10,6 @@
                     'inline-select-component__button',
                     modelValue === option.value ? '' : 'inline-select-component__button--inactive'
                 ]"></button>
-        </div></div>
+        </div>
+    </div>
 </div>

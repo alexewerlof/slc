@@ -17,7 +17,7 @@
 
 .code-block-component__top-bar {
     padding: var(--gap);
-    border-bottom: var(--bthick) solid var(--brand-purple);
+    border-bottom: var(--bthick) dashed var(--brand-purple);
     display: flex;
 }
 
