@@ -28,7 +28,7 @@
             :hidden="!showDebugInfo && bead.isDebug">
             <div class="chat-thread-component__role" v-text="bead.friendlyRole"></div>
             <markdown-component v-if="bead.content" class="frost chat-thread-component__contents" :markdown="bead.content"></markdown-component>
-            <loading-animation-component v-if="!bead.content"></loading-animation-component>
         </div>
+        <loading-animation-component v-if="isBusy"></loading-animation-component>
     </div>
 </div>

@@ -6,6 +6,7 @@ export default {
         return {
             showDebugInfo: false,
             llm,
+            _scrollInterval: null,
         }
     },
     props: {
@@ -13,6 +14,21 @@ export default {
             type: Thread,
             required: true,
         },
+        isBusy: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    mounted() {
+        this._scrollInterval = setInterval(() => {
+            if (this.isBusy) {
+                this.scrollToBottom()
+            }
+        }, 500)
+    },
+    beforeUnmount() {
+        console.log('Unregistering')
+        clearInterval(this._scrollInterval)
     },
     methods: {
         scrollToTop() {

@@ -1,5 +1,10 @@
 <div class="chat-component">
-    <chat-thread-component class="b-mar-gap2" :thread="thread" ref="chatThreadComponent"></chat-thread-component>
+    <chat-thread-component
+        class="b-mar-gap2"
+        :thread="thread"
+        :is-busy="isEditDisabled"
+        ref="chatThreadComponent">
+    </chat-thread-component>
     <div class="input-group">
         <div class="input-button-pair">
             <textarea

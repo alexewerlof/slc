@@ -217,7 +217,7 @@ export class Thread {
         if (!keepSystemMessages) {
             this.beads.length = 0
         } else {
-            this.beads = this.beads.filter((bead) => bead.role === 'system')
+            this.beads = this.beads.filter((bead) => bead.isPersistent)
         }
         return this
     }
