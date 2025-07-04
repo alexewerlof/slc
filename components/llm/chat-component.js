@@ -66,7 +66,13 @@ export default {
                         }),
                     )
                     if (!this.tools || !isToolsCallMessage(message)) {
-                        this.thread.add(new Bead(message.role, message.content))
+                        let content = message.content
+                        const endOfThoughtMarker = 'think>'
+                        const lastIndexOfThink = content.lastIndexOf(endOfThoughtMarker)
+                        if (lastIndexOfThink !== -1) {
+                            content = content.slice(endOfThoughtMarker.length + lastIndexOfThink + 1)
+                        }
+                        this.thread.add(new Bead(message.role, content))
                         break
                     }
                     this.thread.add(new ToolCallsBead(message.tool_calls))
