@@ -171,7 +171,9 @@ export class Tool {
             // Assumes this.func expects a single argument object
             const result = await this.func.call(this.thisArg, args)
             console.log(
-                `Successfully executed ${this.name}(${argsStr}) => ${result} (${typeof result})`,
+                `Successfully executed ${this.name}(${argsStr}) => ${typeof result}\n${
+                    JSON.stringify(result, null, 2)
+                }`,
             )
             switch (typeof result) {
                 case 'undefined':
