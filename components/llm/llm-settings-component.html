@@ -80,7 +80,7 @@
             />
         </div>
     </show-hide-component>
-    <div>{{ testResult }}</div>
+    <markdown-component :markdown="testResult"></markdown-component>
     <div class="button-bar">
         <button @click="test()">Test</button>
         <button @click="save()" class="button--cta">Apply</button>
