@@ -60,7 +60,11 @@ export class Dependency extends Entity {
     }
 
     toString() {
-        return [this.task.markdownId, this.service.markdownId].join(' ')
+        return [this.task.markdownId, this.service.markdownId].join(this.icon)
+    }
+
+    get markdownDisplayName() {
+        return [this.service.markdownDisplayName, this.task.markdownDisplayName].join(' ')
     }
 
     get provider() {
