@@ -19,6 +19,7 @@ const componentSpecifications = [
     './task-component.jh&',
     './ui/cookie-popup-component.jhc&',
     './ui/dialog-component.jhc&',
+    './ui/compound-button-component.jhc&',
     './objective/error-budget-component.jhc&',
     // TODO: needs a rewrite or remove
     './event-component.jh&',

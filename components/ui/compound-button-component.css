@@ -1,0 +1,10 @@
+.compound-button-component {
+    display: block;
+
+    & .compound-button-component__choices {
+        position: absolute;
+        margin: 0;
+        margin-top: var(--gap);
+        list-style: none;
+    }
+}

@@ -211,6 +211,10 @@ textarea {
     }
 }
 
+.button-bar--vertical {
+    flex-direction: column;
+}
+
 button {
     background-color: var(--secondary-color);
     color: var(--background-color);

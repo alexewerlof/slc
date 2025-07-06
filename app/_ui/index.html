@@ -36,6 +36,10 @@
                 <div v-if="selTabName === 'Forms'">
 
                     <div class="button-bar frost">
+                        <compound-button-component title="Compound Button">
+                            <button>Hello</button>
+                            <button>World!</button>
+                        </compound-button-component>
                         <button @click="$refs.normalDialog.show()">Show Normal Dialog</button>
                         <button @click="$refs.modalDialog.show(true)">Show Modal Dialog</button>
                     </div>

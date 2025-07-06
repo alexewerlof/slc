@@ -5,14 +5,16 @@
     <div class="mozaic__tile mozaic__tile--6c">
         <div class="frost">
             <div class="button-bar button-bar--center">
-                <button @click="editingInstance = assessment.providers.pushNew()">
-                    <icon-component name="add"></icon-component>
-                    New Provider
-                </button>
-                <button @click="editingInstance = assessment.consumers.pushNew()">
-                    <icon-component name="add"></icon-component>
-                    New Consumer
-                </button>
+                <compound-button-component title="New" icon-name="add">
+                    <button @click="editingInstance = assessment.providers.pushNew()">
+                        <icon-component name="provider"></icon-component>
+                        Provider
+                    </button>
+                    <button @click="editingInstance = assessment.consumers.pushNew()">
+                        <icon-component name="consumer"></icon-component>
+                        Consumer
+                    </button>
+                </compound-button-component>
                 <button @click="showDialog('stateDialog', true)">
                     <icon-component name="download"></icon-component>
                     State
