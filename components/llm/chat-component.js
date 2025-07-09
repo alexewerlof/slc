@@ -57,14 +57,17 @@ export default {
                 do {
                     const messages = await this.thread.toMessages()
                     this.abortController = new AbortController()
-                    const message = getFirstMessage(
-                        await llm.getCompletion(messages, {
-                            maxTokens: this.maxTokens,
-                            temperature: this.temperature,
-                            signal: this.abortController.signal,
-                            tools: this.tools?.descriptor,
-                        }),
-                    )
+                    const start = Date.now()
+                    const completion = await llm.getCompletion(messages, {
+                        maxTokens: this.maxTokens,
+                        temperature: this.temperature,
+                        signal: this.abortController.signal,
+                        tools: this.tools?.descriptor,
+                    })
+                    const duration = Date.now() - start
+                    const message = getFirstMessage(completion)
+                    const { usage } = completion
+                    usage.duration = duration
                     if (!this.tools || !isToolsCallMessage(message)) {
                         let content = message.content
                         const endOfThoughtMarker = 'think>'
@@ -72,10 +75,14 @@ export default {
                         if (lastIndexOfThink !== -1) {
                             content = content.slice(endOfThoughtMarker.length + lastIndexOfThink + 1)
                         }
-                        this.thread.add(new Bead(message.role, content))
+                        const bead = new Bead(message.role, content)
+                        bead.usage = usage
+                        this.thread.add(bead)
                         break
                     }
-                    this.thread.add(new ToolCallsBead(message.tool_calls))
+                    const bead = new ToolCallsBead(message.tool_calls)
+                    bead.usage = usage
+                    this.thread.add(bead)
                     toolCallCount++
                     if (toolCallCount >= MAX_CONSECUTIVE_TOOLS_CALLS) {
                         showToast('Too many consecutive tool calls. Stopping.')
