@@ -50,10 +50,28 @@ export default {
         const toolbox = new Toolbox()
         toolbox.add('listEntities', 'Returns the id of entities with the specified class name.')
             .prm(
-                'className:string*',
+                'className:string',
                 'The class name of the entities to list. It can only be one of these values: "Provider", "Consumer", "Service", "Task", "Dependency", "Failure", "Metric"',
             ).fn(({ className }) => {
                 return this.assessment.getEntitiesByClassName(className).map(({ id }) => id)
+            })
+
+        toolbox.add(
+            'removeEntity',
+            'Removes an entity given its id. Throws if it cannot find the entity or the user authorizes deleteion.',
+        )
+            .prm('id:string*', 'The id of the entity to delete')
+            .fn(({ id }) => {
+                const entity = this.assessment.getEntityById(id)
+                if (!entity) {
+                    throw new RangeError(`Could not find an entity with id ${id}`)
+                }
+                if (!confirm(`Are you sure you want to delete ${entity}`)) {
+                    throw new Error(`The user did not authorize deletion`)
+                }
+                const entityClassName = entity.className
+                entity.remove()
+                return `${entityClassName} with id ${id} is removed successfully`
             })
 
         toolbox.add(
@@ -67,6 +85,28 @@ export default {
                     throw new Error(`Entity with id ${id} not found`)
                 }
                 return entity.state
+            })
+
+        toolbox.add(
+            'updateEntityState',
+            'Updates the attributes of a particular Provider, Consumer, Service, Task, Dependency, Failure, or Metric.',
+        )
+            .prm('id:string*', 'The id of the entity to update')
+            .prm(
+                'state:object',
+                joinLines(
+                    0,
+                    'The new state of the entity. The value depends on object.',
+                    'Call getEntityState() first to understand the shape and values before trying to set them.',
+                    'Only the properties that you specify in the state will be updated and the rest will remain as is.',
+                ),
+            )
+            .fn(({ id, state }) => {
+                const entity = this.assessment.getEntityById(id)
+                if (!entity) {
+                    throw new Error(`Entity with id ${id} not found`)
+                }
+                return entity.state = state
             })
 
         toolbox.add(

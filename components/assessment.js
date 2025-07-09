@@ -136,6 +136,8 @@ export class Assessment {
                 return this.failures
             case 'Metric':
                 return this.metrics
+            case undefined:
+                return this.all
             default:
                 throw new TypeError(`Unknown class name: ${className}`)
         }
