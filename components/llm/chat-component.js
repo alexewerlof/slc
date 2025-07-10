@@ -100,7 +100,9 @@ export default {
                     }
                 } while (true)
             } catch (error) {
-                this.thread.add(new Bead('system', String(error)))
+                this.thread.add(
+                    new Bead('system', String(error), { isDebug: true, isPersistent: false, isGhost: true }),
+                )
                 console.error(error)
                 showToast(error)
             }

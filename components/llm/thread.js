@@ -115,21 +115,26 @@ export class UserPromptBead extends Bead {
     }
 }
 
+function objToMarkdown(obj) {
+    return joinLines(
+        1,
+        '```json',
+        JSON.stringify(obj, null, 2),
+        '```',
+    )
+}
+
 export class ToolCallsBead extends Bead {
     _toolCalls = undefined
 
     constructor(toolCalls) {
-        super('assistant', JSON.stringify(toolCalls, null, 2), {
+        super('assistant', objToMarkdown(toolCalls), {
             isDebug: true,
         })
         if (!Array.isArray(toolCalls) || toolCalls.length === 0) {
             throw new Error('toolCalls must be a non-empty array')
         }
         this._toolCalls = toolCalls
-    }
-
-    get isDebug() {
-        return true
     }
 
     toMessage() {
@@ -142,15 +147,11 @@ export class ToolCallsBead extends Bead {
 
 export class ToolResultBead extends Bead {
     constructor(toolCallId, result) {
-        super('tool', JSON.stringify(result, null, 2), {
+        super('tool', objToMarkdown(result), {
             isDebug: true,
         })
         this.toolCallId = toolCallId
         this.result = result
-    }
-
-    get isDebug() {
-        return true
     }
 
     toMessage() {
