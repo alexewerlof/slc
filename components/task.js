@@ -109,8 +109,8 @@ export class Task extends Entity {
         }
         if (this.usages.length === 0) {
             lint.warn(
-                'This task does not depend on any services which effectively makes it pointless in this assessment.',
-                'Please declare some usages to services.',
+                'This task does not use any services which effectively makes it pointless in this assessment.',
+                'Please either remove declare some service usage or remove this task.',
             )
         }
         return lint

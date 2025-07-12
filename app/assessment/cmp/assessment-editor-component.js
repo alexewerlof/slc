@@ -88,7 +88,7 @@ export default {
             })
 
         toolbox.add(
-            'updateEntityState',
+            'updateEntity',
             'Updates the attributes of a particular Provider, Consumer, Service, Task, Usage, Failure, or Metric.',
         )
             .prm('id:string*', 'The id of the entity to update')
