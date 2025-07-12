@@ -352,6 +352,7 @@ export default {
                 'Are you sure you want to clear the assessment?',
             ].join(' ')
             if (confirm(message)) {
+                this.editingInstance = undefined
                 this.assessment.clear()
             }
         },
