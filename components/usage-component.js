@@ -1,7 +1,7 @@
 import { config } from '../config.js'
 import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
 import { unicodeSymbol } from '../lib/icons.js'
-import { Dependency } from './dependency.js'
+import { Usage } from './usage.js'
 
 export default {
     computed: {
@@ -10,8 +10,8 @@ export default {
         },
     },
     props: {
-        dependency: {
-            type: Dependency,
+        usage: {
+            type: Usage,
             required: true,
         },
     },

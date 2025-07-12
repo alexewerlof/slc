@@ -52,17 +52,17 @@ export class Assessment {
         this.consumers.removeAll()
     }
 
-    findDependency(service, task) {
+    findUsage(service, task) {
         if (!isInstance(service, Service)) {
             throw new TypeError(`service must be an instance of Service. Got ${service}`)
         }
         if (!isInstance(task, Task)) {
             throw new TypeError(`task must be an instance of Task. Got ${task}`)
         }
-        return this.dependencies.find((dependency) => {
+        return this.usages.find((usage) => {
             return (
-                dependency.service === service &&
-                dependency.task === task
+                usage.service === service &&
+                usage.task === task
             )
         })
     }
@@ -79,13 +79,13 @@ export class Assessment {
         return this.services.flatMap((service) => service.metrics)
     }
 
-    get dependencies() {
-        return this.services.flatMap((service) => service.dependencies)
+    get usages() {
+        return this.services.flatMap((service) => service.usages)
     }
 
     get failures() {
-        return this.dependencies
-            .flatMap((dependency) => dependency.failures)
+        return this.usages
+            .flatMap((usage) => usage.failures)
             .sort((f1, f2) => f2.impactLevel - f1.impactLevel)
     }
 
@@ -101,9 +101,9 @@ export class Assessment {
             ret.push(provider)
             for (const service of provider.services) {
                 ret.push(service)
-                for (const dependency of service.dependencies) {
-                    ret.push(dependency)
-                    for (const failure of dependency.failures) {
+                for (const usage of service.usages) {
+                    ret.push(usage)
+                    for (const failure of usage.failures) {
                         ret.push(failure)
                     }
                 }
@@ -130,8 +130,8 @@ export class Assessment {
                 return this.consumers
             case 'Task':
                 return this.tasks
-            case 'Dependency':
-                return this.dependencies
+            case 'Usage':
+                return this.usages
             case 'Failure':
                 return this.failures
             case 'Metric':
@@ -147,7 +147,7 @@ export class Assessment {
         if (!isInstance(service, Service)) {
             throw new TypeError(`service must be an instance of Service. Got ${service}`)
         }
-        return this.failures.filter((failure) => failure.dependency.service === service)
+        return this.failures.filter((failure) => failure.usage.service === service)
     }
 
     toString() {
@@ -170,11 +170,11 @@ export class Assessment {
             `- ${unicodeSymbol('consumer')} indicates **Consumer**. Each Consumer has 1+ Task(s) to achieve a goal.`,
             `- ${unicodeSymbol('task')} indicates **Task**. Each Task belongs to exactly 1 Consumer.`,
             `- ${
-                unicodeSymbol('dependency')
-            } indicates **Dependency**. Each Dependency ties a Task to a Service. Each Dependency has 1+ Failure(s).`,
+                unicodeSymbol('usage')
+            } indicates **Usage**. Each Usage ties a Task to a Service. Each Usage has 1+ Failure(s).`,
             `- ${
                 unicodeSymbol('failure')
-            } indicates **Failure**. Each Failure belongs to exactly one Dependency. Each Failure has a Symptom, a Consequence, and a Business Impact`,
+            } indicates **Failure**. Each Failure belongs to exactly one Usage. Each Failure has a Symptom, a Consequence, and a Business Impact`,
             `- ${unicodeSymbol('symptom')} indicates **Symptom**`,
             `- ${unicodeSymbol('consequence')} indicates **Consequence**`,
             `- ${unicodeSymbol('impact')} indicates **Business Impact**`,
@@ -198,12 +198,12 @@ export class Assessment {
                 lines.push(
                     `  - ${unicodeSymbol('service')} **${service.displayName}**: ${service.description}`,
                 )
-                for (const dependency of this.dependencies) {
-                    if (dependency.service === service) {
+                for (const usage of this.usages) {
+                    if (usage.service === service) {
                         lines.push(
                             `    - ${
-                                unicodeSymbol('dependency')
-                            } **${dependency.task.consumer.displayName}**: ${dependency.description}`,
+                                unicodeSymbol('usage')
+                            } **${usage.task.consumer.displayName}**: ${usage.description}`,
                         )
                     }
                 }
@@ -223,12 +223,10 @@ export class Assessment {
                 lines.push(
                     `  - ${unicodeSymbol('task')} **${task.displayName}**: ${task.description}`,
                 )
-                for (const dependency of this.dependencies) {
-                    if (dependency.task === task) {
+                for (const usage of this.usages) {
+                    if (usage.task === task) {
                         lines.push(
-                            `    - ${
-                                unicodeSymbol('dependency')
-                            } **${dependency.service.displayName}**: ${dependency.description}`,
+                            `    - ${unicodeSymbol('usage')} **${usage.service.displayName}**: ${usage.description}`,
                         )
                     }
                 }
@@ -236,13 +234,13 @@ export class Assessment {
         }
 
         lines.push(
-            `## Dependencies`,
+            `## Usages`,
             emptyLine,
         )
 
-        for (const dependency of this.dependencies) {
+        for (const usage of this.usages) {
             lines.push(
-                `- ${dependency}`,
+                `- ${usage}`,
             )
         }
 

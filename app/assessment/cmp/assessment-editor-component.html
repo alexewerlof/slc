@@ -1,4 +1,4 @@
-<div class="assessment-editor-component mozaic mozaic--gap2 pad-gap2">
+<div class="assessment-editor-component mozaic mozaic--gap2 pad-gap2 logo-bg">
     <div class="mozaic__tile mozaic__tile--3c surface">
         <chat-component :thread :tools initia-prompt="Help me assess my architecture"></chat-component>
     </div>
@@ -130,17 +130,17 @@
                 </button>
             </div>
         </div>
-        <div v-if="editingClassName === 'Dependency'">
-            <h2>Dependencies</h2>
-            <dependency-component :dependency="editingInstance"></dependency-component>
+        <div v-if="editingClassName === 'Usage'">
+            <h2>Usage</h2>
+            <usage-component :usage="editingInstance"></usage-component>
             <div class="button-bar">
                 <button
-                    @click="removeDependency(editingInstance)"
+                    @click="removeUsage(editingInstance)"
                     class="button--danger"
-                    title="Remove this dependency"
+                    title="Remove this usage"
                 >
                     <icon-component name="delete"></icon-component>
-                    Remove Dependency
+                    Remove Usage
                 </button>
             </div>
         </div>

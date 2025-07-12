@@ -24,9 +24,9 @@ If (a consumers has no tasks):
 > Please either add some tasks to this consumer or remove it from the assessment.
 
 # Task
-If (a task has no dependencies):
-> [task_id] has no dependencies to any service.
-> Please either add some dependencies to this task or remove it from the assessment.
+If (a task has no usages):
+> [task_id] has no usages to any service.
+> Please either add some usages to this task or remove it from the assessment.
 
 # Provider
 If (a providers has no services):
@@ -34,14 +34,14 @@ If (a providers has no services):
 > Please either add some services or remove this provider from the assessment.
 
 # Service
-If (a service has no dependencies):
-> [service_id] has no dependencies to any consumer.
-> Please either add some dependencies to this service or remove it from the assessment.
+If (a service has no usages):
+> [service_id] has no usages to any consumer.
+> Please either add some usages to this service or remove it from the assessment.
 
-# Dependency
-If (a dependency has no failures):
-> [dependency_id] has no failures.
-> Please either add some failures to this dependency or remove it from the assessment.
+# Usage
+If (a usage has no failures):
+> [usage_id] has no failures.
+> Please either add some failures to this usage or remove it from the assessment.
 
 # Metric
 If (a metric has no failures):

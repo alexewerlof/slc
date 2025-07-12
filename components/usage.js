@@ -6,12 +6,12 @@ import { Failure } from './failure.js'
 import { Lint } from './lint.js'
 import { Service } from './service.js'
 
-export class Dependency extends Entity {
+export class Usage extends Entity {
     task
     failures = new SelectableArray(Failure, this)
 
     constructor(service, state) {
-        super('d')
+        super('u')
         if (!isInstance(service, Service)) {
             throw TypeError(`Expected an instance of service. Got ${service}`)
         }
@@ -76,11 +76,11 @@ export class Dependency extends Entity {
     }
 
     get index() {
-        return this.service.dependencies.indexOf(this)
+        return this.service.usages.indexOf(this)
     }
 
     remove() {
-        this.service.dependencies.remove(this)
+        this.service.usages.remove(this)
     }
 
     get lint() {

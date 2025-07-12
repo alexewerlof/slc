@@ -17,12 +17,12 @@
     stroke: var(--primary-color);
 }
 
-.assessment-graph-component__line--service-dependency {
+.assessment-graph-component__line--service-usage {
     stroke: var(--brand-green);
     stroke-dasharray: 5, 5;
 }
 
-.assessment-graph-component__line--task-dependency {
+.assessment-graph-component__line--task-usage {
     stroke: var(--brand-purple);
     stroke-dasharray: 5, 5;
 }

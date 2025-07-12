@@ -60,17 +60,17 @@ export class Task extends Entity {
         }
     }
 
-    get dependencies() {
-        return this.consumer.assessment.dependencies.filter(
-            (dependency) => dependency.task === this,
+    get usages() {
+        return this.consumer.assessment.usages.filter(
+            (usage) => usage.task === this,
         )
     }
 
     onRemove() {
-        const { dependencies } = this.consumer.assessment
-        for (let i = dependencies.length - 1; i >= 0; i--) {
-            if (dependencies[i].task === this) {
-                dependencies[i].remove()
+        const { usages } = this.consumer.assessment
+        for (let i = usages.length - 1; i >= 0; i--) {
+            if (usages[i].task === this) {
+                usages[i].remove()
             }
         }
     }
@@ -107,10 +107,10 @@ export class Task extends Entity {
                 'Please add some services to the providers so that the task can depend on them.',
             )
         }
-        if (this.dependencies.length === 0) {
+        if (this.usages.length === 0) {
             lint.warn(
                 'This task does not depend on any services which effectively makes it pointless in this assessment.',
-                'Please declare some dependencies to services.',
+                'Please declare some usages to services.',
             )
         }
         return lint

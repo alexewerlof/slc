@@ -1,7 +1,7 @@
 import { Assessment } from '../../../components/assessment.js'
 import { Consumer } from '../../../components/consumer.js'
 import { Task } from '../../../components/task.js'
-import { Dependency } from '../../../components/dependency.js'
+import { Usage } from '../../../components/usage.js'
 import { Metric } from '../../../components/metric.js'
 import { Provider } from '../../../components/provider.js'
 import { Service } from '../../../components/service.js'
@@ -34,7 +34,7 @@ export default {
                     this.assessment.markdownLint(),
                     'These heuristics are a great tip for you to ask the right questions and help the user add any missing entities or fix any issues in the assessment.',
                     'You can also use the provided tools to add new entities or get information about existing ones.',
-                    'Focus on fixing the most important problem first. Errors have higher priority than warnings.And issues with Providers are more important than services. Similarly, issues with Consumers are more important than Tasks. Dependencies are less important than both Services and Tasks. And Failures are less important than Dependencies. Issues with the Metrics are the least important and should be addressed last.',
+                    'Focus on fixing the most important problem first. Errors have higher priority than warnings.And issues with Providers are more important than services. Similarly, issues with Consumers are more important than Tasks. Usages are less important than both Services and Tasks. And Failures are less important than Usages. Issues with the Metrics are the least important and should be addressed last.',
                 )),
             new Bead(
                 'assistant',
@@ -51,7 +51,7 @@ export default {
         toolbox.add('listEntities', 'Returns the id of entities with the specified class name.')
             .prm(
                 'className:string',
-                'The class name of the entities to list. It can only be one of these values: "Provider", "Consumer", "Service", "Task", "Dependency", "Failure", "Metric"',
+                'The class name of the entities to list. It can only be one of these values: "Provider", "Consumer", "Service", "Task", "Usage", "Failure", "Metric"',
             ).fn(({ className }) => {
                 return this.assessment.getEntitiesByClassName(className).map(({ id }) => id)
             })
@@ -76,7 +76,7 @@ export default {
 
         toolbox.add(
             'getEntityState',
-            'Returns information about a particular Provider, Consumer, Service, Task, Dependency, Failure, Metric in JSON format.',
+            'Returns information about a particular Provider, Consumer, Service, Task, Usage, Failure, Metric in JSON format.',
         )
             .prm('id:string*', 'The id of the entity to get the state of')
             .fn(({ id }) => {
@@ -89,7 +89,7 @@ export default {
 
         toolbox.add(
             'updateEntityState',
-            'Updates the attributes of a particular Provider, Consumer, Service, Task, Dependency, Failure, or Metric.',
+            'Updates the attributes of a particular Provider, Consumer, Service, Task, Usage, Failure, or Metric.',
         )
             .prm('id:string*', 'The id of the entity to update')
             .prm(
@@ -182,27 +182,27 @@ export default {
             })
 
         toolbox.add(
-            'addNewDependency',
-            'Create a new dependency between an existing task and service, then return the id of the dependency.',
+            'addNewUsage',
+            'Create a new usage between an existing task and service, then return the id of the usage.',
         )
-            .prm('serviceId:string*', 'The id of the service to add the dependency to')
-            .prm('taskId:string*', 'The id of the task to add the dependency to')
+            .prm('serviceId:string*', 'The id of the service to add the usage to')
+            .prm('taskId:string*', 'The id of the task to add the usage to')
             .fn((options) => {
                 const { serviceId, taskId } = options
                 const service = this.assessment.services.find(({ id }) => id === serviceId)
                 if (!service) {
                     throw new Error(`Service with id ${serviceId} not found`)
                 }
-                const newDependency = service.dependencies.pushNew({ taskId })
-                this.editingInstance = newDependency
-                return newDependency.id
+                const newUsage = service.usages.pushNew({ taskId })
+                this.editingInstance = newUsage
+                return newUsage.id
             })
 
         toolbox.add(
             'addNewFailure',
-            'Add a new failure to an existing dependency, and then return the id of the newly created failure.',
+            'Add a new failure to an existing usage, and then return the id of the newly created failure.',
         )
-            .prm('dependencyId: string*', 'The id of the dependency to add the failure to')
+            .prm('usageId: string*', 'The id of the usage to add the failure to')
             .prm(
                 'symptom: string*',
                 'The consumer-facing symptom. This is how the failure negatively impacts the Task.',
@@ -213,14 +213,14 @@ export default {
                 'The impact of the failure on the ability of the business to make or save money',
             )
             .fn((options) => {
-                const { dependencyId, ...state } = options
-                const dependency = this.assessment.dependencies.find(({ id }) => id === dependencyId)
-                if (!isInstance(dependency, Dependency)) {
-                    throw new Error(`Could not find a dependency with id "${dependencyId}"`)
+                const { usageId, ...state } = options
+                const usage = this.assessment.usages.find(({ id }) => id === usageId)
+                if (!isInstance(usage, Usage)) {
+                    throw new Error(`Could not find a usage with id "${usageId}"`)
                 }
-                const newFailure = dependency.failures.pushNew(state)
-                this.editingInstance = dependency
-                dependency.failures.selected = newFailure
+                const newFailure = usage.failures.pushNew(state)
+                this.editingInstance = usage
+                usage.failures.selected = newFailure
                 return newFailure.id
             })
 
@@ -254,7 +254,7 @@ export default {
 
         toolbox.add(
             'clearAssessment',
-            'Clear the assessment of all Providers, Consumers, Services, Tasks, Dependencies, Failures, and Metrics.',
+            'Clear the assessment of all Providers, Consumers, Services, Tasks, Usages, Failures, and Metrics.',
         ).this(this).fn(this.clearAssessment)
 
         toolbox.add('getDateAndTime', 'Get the current date and time').fn(() => String(new Date()))
@@ -315,12 +315,12 @@ export default {
             service.remove()
             this.editingInstance = provider
         },
-        removeDependency(dependency) {
-            if (!isInstance(dependency, Dependency)) {
-                throw new TypeError(`Expected an instance of Dependency. Got ${dependency}`)
+        removeUsage(usage) {
+            if (!isInstance(usage, Usage)) {
+                throw new TypeError(`Expected an instance of Usage. Got ${usage}`)
             }
-            const { service } = dependency
-            dependency.remove()
+            const { service } = usage
+            usage.remove()
             this.editingInstance = service
         },
         removeMetric(metric) {
@@ -348,7 +348,7 @@ export default {
         },
         clearAssessment() {
             const message = [
-                'This will remove all Providers, Consumers, Services, Tasks, Dependencies, Failures, and Metrics.',
+                'This will remove all Providers, Consumers, Services, Tasks, Usages, Failures, and Metrics.',
                 'Are you sure you want to clear the assessment?',
             ].join(' ')
             if (confirm(message)) {

@@ -7,7 +7,7 @@
                     class="assessment-graph-component__line assessment-graph-component__line--relation"
                     :d="d(consumerX(consumer), consumerY(consumer), taskX(task), taskY(task))"></path>
                 <path
-                    class="assessment-graph-component__line assessment-graph-component__line--task-dependency"
+                    class="assessment-graph-component__line assessment-graph-component__line--task-usage"
                     :d="d(taskX(task), taskY(task), width, taskY(task))"></path>
                 <assessment-graph-component-entity
                     :is-selected="selectedEntity === task"
@@ -42,7 +42,7 @@
                     class="assessment-graph-component__line assessment-graph-component__line--relation"
                     :d="d(providerX(provider), providerY(provider), serviceX(service), serviceY(service))"></path>
                 <path
-                    class="assessment-graph-component__line assessment-graph-component__line--service-dependency"
+                    class="assessment-graph-component__line assessment-graph-component__line--service-usage"
                     :d="d(serviceX(service), serviceY(service), serviceX(service), height)"></path>
                 <assessment-graph-component-entity
                     :is-selected="selectedEntity === service"
@@ -56,20 +56,20 @@
                     >
                     {{ unicodeSymbol('service') }}
                 </assessment-graph-component-entity>
-                <!-- Dependencies -->
+                <!-- Usages -->
                 <assessment-graph-component-entity
-                    v-for="dependency of service.dependencies"
-                    :key="dependency.id"
-                    :is-selected="selectedEntity === dependency"
-                    :has-notification="dependency.lint.count"
-                    type="dependency"
-                    :cx="dependencyX(dependency)"
-                    :cy="dependencyY(dependency)"
-                    :tooltip="dependency.markdownDisplayName"
-                    @click="$emit('select', dependency)"
+                    v-for="usage of service.usages"
+                    :key="usage.id"
+                    :is-selected="selectedEntity === usage"
+                    :has-notification="usage.lint.count"
+                    type="usage"
+                    :cx="usageX(usage)"
+                    :cy="usageY(usage)"
+                    :tooltip="usage.markdownDisplayName"
+                    @click="$emit('select', usage)"
                     @status="updateStatus"
                     >
-                    {{ dependency.failures.length }}
+                    {{ usage.failures.length }}
                 </assessment-graph-component-entity>
                 <!-- Metrics -->
                 <assessment-graph-component-entity

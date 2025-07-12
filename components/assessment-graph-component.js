@@ -128,11 +128,11 @@ export default {
         taskY(task) {
             return this.consumerOffsetY(task.consumer) + this.delta + this.scaleY(task.index)
         },
-        dependencyX(dependency) {
-            return this.serviceX(dependency.service)
+        usageX(usage) {
+            return this.serviceX(usage.service)
         },
-        dependencyY(dependency) {
-            return this.taskY(dependency.task)
+        usageY(usage) {
+            return this.taskY(usage.task)
         },
         metricX(metric) {
             return this.serviceX(metric.service)

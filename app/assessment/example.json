@@ -49,9 +49,9 @@
                     "displayName": "Climate API",
                     "description": "Retrieves or sets car climate",
                     "type": "Automated",
-                    "dependencies": [
+                    "usages": [
                         {
-                            "id": "dLYATE3RJ",
+                            "id": "uLYATE3RJ",
                             "taskId": "tZPX76ZFE",
                             "failures": [
                                 {
@@ -109,9 +109,9 @@
                     "displayName": "Car security API",
                     "description": "Can be used to lock or unlock the car",
                     "type": "Automated",
-                    "dependencies": [
+                    "usages": [
                         {
-                            "id": "d9RQ8W5SW",
+                            "id": "u9RQ8W5SW",
                             "taskId": "tQPNEE3ED",
                             "failures": [
                                 {
@@ -184,9 +184,9 @@
                     "displayName": "Get car image API",
                     "description": "Returns the car image, useful for rendering the website and the app that's used to control the car",
                     "type": "Automated",
-                    "dependencies": [
+                    "usages": [
                         {
-                            "id": "dVDUJH6RX",
+                            "id": "uVDUJH6RX",
                             "taskId": "tP2BFJBQN",
                             "failures": [
                                 {
@@ -199,7 +199,7 @@
                             ]
                         },
                         {
-                            "id": "dV0EY9CVQ",
+                            "id": "uV0EY9CVQ",
                             "taskId": "tZPX76ZFE",
                             "failures": [
                                 {
@@ -212,7 +212,7 @@
                             ]
                         },
                         {
-                            "id": "dGVJ7Q5EU",
+                            "id": "uGVJ7Q5EU",
                             "taskId": "tQPNEE3ED",
                             "failures": [
                                 {
@@ -271,9 +271,9 @@
                     "displayName": "Car manual API",
                     "description": "Returns the car manual in different formats",
                     "type": "Automated",
-                    "dependencies": [
+                    "usages": [
                         {
-                            "id": "d0EVHAR6R",
+                            "id": "u0EVHAR6R",
                             "taskId": "tP2BFJBQN",
                             "failures": [
                                 {
@@ -314,9 +314,9 @@
                     "displayName": "Car contract API",
                     "description": "Retrieves leasing contracts",
                     "type": "Automated",
-                    "dependencies": [
+                    "usages": [
                         {
-                            "id": "dAQF2LT8P",
+                            "id": "uAQF2LT8P",
                             "taskId": "t6KF1W6TJ",
                             "failures": [
                                 {
@@ -372,9 +372,9 @@
                     "displayName": "Car specs",
                     "description": "Returns car specs and marketing content in different languages",
                     "type": "Automated",
-                    "dependencies": [
+                    "usages": [
                         {
-                            "id": "dAXVYFYNZ",
+                            "id": "uAXVYFYNZ",
                             "taskId": "tP2BFJBQN",
                             "failures": [
                                 {

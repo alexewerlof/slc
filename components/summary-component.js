@@ -12,7 +12,7 @@ export default {
             return this.assessment.providers.flatMap((provider) => provider.services)
         },
         allFailures() {
-            return this.assessment.dependencies.flatMap((dependency) => dependency.failures)
+            return this.assessment.usages.flatMap((usage) => usage.failures)
         },
     },
     props: {
@@ -26,9 +26,9 @@ export default {
         percL10n,
         numL10n,
         serviceTasks(service) {
-            return this.assessment.dependencies.filter((dependency) => dependency.service === service).map((
-                dependency,
-            ) => dependency.task)
+            return this.assessment.usages.filter((usage) => usage.service === service).map((
+                usage,
+            ) => usage.task)
         },
     },
 }

@@ -2,9 +2,9 @@ This is the new iteration of the [Assess](../assess/) application where the focu
 
 **Provider** provides a **Service** while **Consumer** consumes it.
 **Task** explains why a consumer consumes a service.
-Essentially, the consumer has a **dependency** on the service.
+Essentially, the consumer has a **usage** on the service.
 
-The goal of this app is to identify **failures** that can happen on those dependencies
+The goal of this app is to identify **failures** that can happen on those usages
 in order to get to the **metrics** that allow the service provider to be on top of their service.
 
 

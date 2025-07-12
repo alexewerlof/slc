@@ -43,17 +43,17 @@ export function nextStep(assessment) {
 
     // Tasks
     {
-        const taskWithNoDependencies = assessment.tasks.find((task) => task.dependencies.length === 0)
-        if (taskWithNoDependencies) {
-            return `Task ${taskWithNoDependencies} has no dependencies. Help the user identify and add some dependencies to it.`
+        const taskWithNoUsages = assessment.tasks.find((task) => task.usages.length === 0)
+        if (taskWithNoUsages) {
+            return `Task ${taskWithNoUsages} has no usages. Help the user identify and add some usages to it.`
         }
     }
 
     // Services
     {
-        const serviceWithNoDependencies = assessment.services.find((service) => service.dependencies.length === 0)
-        if (serviceWithNoDependencies) {
-            return `Service ${serviceWithNoDependencies} has no dependencies. Help the user identify and add some dependencies to it.`
+        const serviceWithNoUsages = assessment.services.find((service) => service.usages.length === 0)
+        if (serviceWithNoUsages) {
+            return `Service ${serviceWithNoUsages} has no usages. Help the user identify and add some usages to it.`
         }
     }
 

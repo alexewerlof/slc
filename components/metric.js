@@ -165,10 +165,10 @@ export class Metric extends Entity {
                 'Please connect this metric to some failures.',
             )
         }
-        if (this.service.dependencies.length === 0) {
+        if (this.service.usages.length === 0) {
             lint.warn(
-                'No consumer **depends** on the service that this metric is measuring.',
-                'Please declare a dependency before trying to set a metric.',
+                'No consumer **uses** the service that this metric is measuring.',
+                'Please declare a usage before trying to set a metric.',
             )
         }
         return lint

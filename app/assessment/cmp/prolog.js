@@ -126,15 +126,15 @@ export function assessment2prolog(assessment) {
     })
 
     fact(
-        '% dependsOn',
+        '% uses',
         'TaskID',
         'ServiceID',
     )
-    assessment.dependencies.forEach((dependency) => {
+    assessment.usages.forEach((usage) => {
         fact(
-            'dependsOn',
-            dependency.task.id,
-            dependency.service.id,
+            'uses',
+            usage.task.id,
+            usage.service.id,
         )
     })
 

@@ -1,24 +1,24 @@
 import { inRange, isDef, isInstance, isObj, isStr } from '../lib/validation.js'
 import { config } from '../config.js'
 import { unicodeSymbol } from '../lib/icons.js'
-import { Dependency } from './dependency.js'
+import { Usage } from './usage.js'
 import { Entity } from '../lib/entity.js'
 import { Lint } from './lint.js'
 
 // If a certain service fails, what activities will it impact and how?
 export class Failure extends Entity {
-    dependency = null
+    usage = null
     symptom = ''
     consequence = ''
     businessImpact = ''
     impactLevel = config.impactLevel.default
 
-    constructor(dependency, state) {
+    constructor(usage, state) {
         super('f')
-        if (!isInstance(dependency, Dependency)) {
-            throw new Error(`Expected an instance of Dependency. Got: ${dependency} (${typeof dependency})`)
+        if (!isInstance(usage, Usage)) {
+            throw new Error(`Expected an instance of Usage. Got: ${usage} (${typeof usage})`)
         }
-        this.dependency = dependency
+        this.usage = usage
         if (isDef(state)) {
             this.state = state
         }
@@ -89,7 +89,7 @@ export class Failure extends Entity {
     }
 
     onRemove() {
-        this.dependency.service.metrics.forEach((metric) => {
+        this.usage.service.metrics.forEach((metric) => {
             if (metric.isFailureLinked(this)) {
                 metric.unLinkFailure(this)
             }
@@ -98,9 +98,9 @@ export class Failure extends Entity {
 
     toString() {
         const ret = [
-            this.dependency.task,
+            this.usage.task,
             unicodeSymbol('failure'),
-            this.dependency.service,
+            this.usage.service,
         ]
         if (this.symptom) {
             ret.push(unicodeSymbol('symptom'), this.symptom)
@@ -115,11 +115,11 @@ export class Failure extends Entity {
     }
 
     get index() {
-        return this.dependency.failures.indexOf(this)
+        return this.usage.failures.indexOf(this)
     }
 
     get ref() {
-        return [this.dependency.index, this.index]
+        return [this.usage.index, this.index]
     }
 
     get lint() {

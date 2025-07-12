@@ -50,8 +50,8 @@ export default {
         selectedTask() {
             return this.selectedConsumer?.tasks.selected
         },
-        selectedDependency() {
-            return this.selectedService?.dependencies.selected
+        selectedUsage() {
+            return this.selectedService?.usages.selected
         },
         selectedMetric() {
             return this.selectedService?.metrics.selected
@@ -81,11 +81,11 @@ export default {
                     this.assessment.consumers.selected = instance.consumer
                     this.assessment.consumers.selected.tasks.selected = instance
                     break
-                case 'Dependency':
+                case 'Usage':
                     this.currentStep = 3
                     this.assessment.providers.selected = instance.service.provider
                     this.assessment.providers.selected.services.selected = instance.service
-                    this.assessment.providers.selected.services.selected.dependencies.selected = instance
+                    this.assessment.providers.selected.services.selected.usages.selected = instance
                     break
                 case 'ServiceMetrics':
                     this.currentStep = 5

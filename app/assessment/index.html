@@ -33,6 +33,14 @@
         <noscript>
             <p>This web application requires JavaScript to work.</p>
         </noscript>
+        <script>
+            window.onerror = function (err) {
+                const div = document.createElement('div')
+                div.innerHTML = err
+                document.body.appendChild(div)
+                return true
+            }
+        </script>
 
         <div id="app" v-cloak>
             <announcement-component>

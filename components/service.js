@@ -4,7 +4,7 @@ import { Provider } from './provider.js'
 import { config } from '../config.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { Metric } from './metric.js'
-import { Dependency } from './dependency.js'
+import { Usage } from './usage.js'
 import { Entity } from '../lib/entity.js'
 import { Lint } from './lint.js'
 
@@ -15,7 +15,7 @@ export class Service extends Entity {
     provider = null
     displayName = config.displayName.default
     description = config.description.default
-    dependencies = new SelectableArray(Dependency, this)
+    usages = new SelectableArray(Usage, this)
     metrics = new SelectableArray(Metric, this)
     _type = Service.possibleTypes[0]
 
@@ -36,7 +36,7 @@ export class Service extends Entity {
             displayName: this.displayName,
             description: this.description,
             type: this.type,
-            dependencies: this.dependencies.state,
+            usages: this.usages.state,
             metrics: this.metrics.state,
         }
     }
@@ -50,7 +50,7 @@ export class Service extends Entity {
             displayName,
             description,
             type,
-            dependencies,
+            usages,
             metrics,
         } = newState
 
@@ -79,8 +79,8 @@ export class Service extends Entity {
             this.type = type
         }
 
-        if (isDef(dependencies)) {
-            this.dependencies.state = dependencies
+        if (isDef(usages)) {
+            this.usages.state = usages
         }
 
         if (isDef(metrics)) {
@@ -101,38 +101,38 @@ export class Service extends Entity {
 
     onRemove() {
         this.metrics.removeAll()
-        this.dependencies.removeAll()
+        this.usages.removeAll()
     }
 
-    get dependencies() {
-        return this.provider.assessment.dependencies.filter((d) => d.service === this)
+    get usages() {
+        return this.provider.assessment.usages.filter((d) => d.service === this)
     }
 
     get tasks() {
-        return this.dependencies.map((d) => d.task)
+        return this.usages.map((d) => d.task)
     }
 
     get failures() {
-        return this.dependencies.flatMap((d) => d.failures)
+        return this.usages.flatMap((d) => d.failures)
     }
 
     isConsumedBy(task) {
-        return this.dependencies.some((d) => d.task === task)
+        return this.usages.some((d) => d.task === task)
     }
 
     setConsumedBy(task, value) {
         if (value) {
             if (!this.isConsumedBy(task)) {
-                this.dependencies.push(
-                    new Dependency(this, {
+                this.usages.push(
+                    new Usage(this, {
                         taskId: task.id,
                     }),
                 )
             }
         } else {
-            const idx = this.dependencies.findIndex((d) => d.task === task)
+            const idx = this.usages.findIndex((d) => d.task === task)
             if (idx !== -1) {
-                this.dependencies.removeIndex(idx)
+                this.usages.removeIndex(idx)
             }
         }
     }
@@ -157,15 +157,15 @@ export class Service extends Entity {
         if (this.displayName.length === 0) {
             lint.warn(`Please fill the display name.`)
         }
-        if (this.dependencies.length === 0) {
+        if (this.usages.length === 0) {
             lint.warn(
                 'No tasks depend on this service.',
                 'Please select some tasks or add new ones.',
             )
         } else if (this.failures.length === 0) {
             lint.warn(
-                'No failure is identified for any of the dependencies.',
-                'Please select a dependency and declare some failures',
+                'No failure is identified for any of the usages.',
+                'Please select a usage and declare some failures',
             )
         } else if (this.metrics.length === 0) {
             lint.warn(

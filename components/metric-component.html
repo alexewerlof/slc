@@ -28,16 +28,16 @@
         </help-component>
     </h3>
     <fieldset
-        v-for="dependency of metric.service.dependencies"
-        :key="dependency.id"
+        v-for="usage of metric.service.usages"
+        :key="usage.id"
     >
-        <legend title="Task">{{ dependency.task }}</legend>
-        <div v-if="dependency.failures.length === 0">
-            No failure is identified for this dependency.
+        <legend title="Task">{{ usage.task }}</legend>
+        <div v-if="usage.failures.length === 0">
+            No failure is identified for this usage.
         </div>
 
         <div
-            v-for="failure of dependency.failures"
+            v-for="failure of usage.failures"
             :key="failure.id"
             class="input-group"
             :title="failure"

@@ -25,7 +25,7 @@ const componentSpecifications = [
     './event-component.jh&',
     './ui/ext-link.jh',
     './failure-component.jh&',
-    './dependency-component.jh&',
+    './usage-component.jh&',
     './ui/feedback-blob-component.jhc&',
     './ui/footer-component.jhc&',
     './ui/formula-component.jh&',

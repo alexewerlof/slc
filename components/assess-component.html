@@ -229,20 +229,20 @@
 
                 <div v-if="currentStep === 3" class="mozaic__tile mozaic__tile--half">
                     <div class="surface">
-                        <h2>Dependency</h2>
-                        <div class="well" v-if="selectedDependency">
+                        <h2>Usage</h2>
+                        <div class="well" v-if="selectedUsage">
                             <h3>Task</h3>
-                            <p>{{ selectedDependency.task }}</p>
+                            <p>{{ selectedUsage.task }}</p>
                             <h3>Service</h3>
-                            <p>{{ selectedDependency.service }}</p>
+                            <p>{{ selectedUsage.service }}</p>
                         </div>
                     </div>
                 </div>
                 <div v-if="currentStep === 3" class="mozaic__tile mozaic__tile--half">
                     <div class="surface">
                         <h2>Failures</h2>
-                        <div v-if="selectedDependency">
-                            <dependency-component :dependency="selectedDependency"></dependency-component>
+                        <div v-if="selectedUsage">
+                            <usage-component :usage="selectedUsage"></usage-component>
                         </div>
                     </div>
                 </div>
