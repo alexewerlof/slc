@@ -3,7 +3,7 @@ import { llm } from './llm.js'
 import { getFirstCompletion } from './util.js'
 
 const testPrompt =
-    'Please confirm receipt by replying with only the string `OK`. This will be parsed programmatically, so ensure no additional text, formatting, or explanations are included.'
+    'This is a test and the results will be parsed programmatically. If you receive this, simply respond with OK without any extra word or punctuation.'
 
 export default {
     data() {

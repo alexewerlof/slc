@@ -22,6 +22,7 @@ export class LLMAPI {
             description: this.description,
             apiKeyWebsite: this.apiKeyWebsite,
             suggestedModel: this.suggestedModel,
+            model: this.modelIds.selected,
             apiKey: this.apiKey,
         }
     }
@@ -37,6 +38,7 @@ export class LLMAPI {
             description,
             apiKeyWebsite,
             suggestedModel,
+            model,
             apiKey,
         } = newState
         if (!isStr(name)) {
@@ -71,6 +73,12 @@ export class LLMAPI {
             throw new TypeError(`suggestedModel must be a string. Got ${suggestedModel}`)
         }
         this.suggestedModel = suggestedModel
+        if (isDef(model)) {
+            if (!isStr(model)) {
+                throw new TypeError(`model must be a string. Got ${model}`)
+            }
+            this.model = model
+        }
         this.modelIds.state = [suggestedModel]
     }
 

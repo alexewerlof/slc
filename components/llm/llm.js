@@ -1,19 +1,19 @@
 import { config } from '../../config.js'
 import { SelectableArray } from '../../lib/selectable-array.js'
 import { LLMAPI } from './llm-api.js'
+import { Store } from '../../lib/store.js'
 
 class LLM {
     engines = new SelectableArray(LLMAPI)
     temperature = config.llm.temperature.default
     maxTokens = config.llm.maxTokens.default
-    testResult = 'not tested'
 
     constructor() {
         this.engines.state = config.llm.engines
-        const selectedEngineStateStr = sessionStorage.getItem(config.llm.selectedEngineStateKey)
-        if (selectedEngineStateStr) {
+        this.store = new Store(config.llm.selectedEngineStateKey)
+        if (this.store.hasStoredValue) {
             try {
-                const selectedEngineState = JSON.parse(selectedEngineStateStr)
+                const selectedEngineState = this.store.state
                 const selectedEngine = this.engines.find((engine) => engine.name === selectedEngineState.name)
                 if (selectedEngine) {
                     selectedEngine.state = selectedEngineState
@@ -21,10 +21,10 @@ class LLM {
                 }
             } catch (error) {
                 console.log(
-                    'Using defaults because could not parse and assign selected engine state from ${config.llm.selectedEngineStateKey}',
+                    `Using defaults because could not parse and assign selected engine state from ${config.llm.selectedEngineStateKey}`,
                     error,
                 )
-                sessionStorage.removeItem(config.llm.selectedEngineStateKey)
+                this.store.remove()
             }
         }
     }
@@ -38,7 +38,7 @@ class LLM {
     }
 
     save() {
-        sessionStorage.setItem(config.llm.selectedEngineStateKey, JSON.stringify(this.engines.selected.state))
+        this.store.state = this.engines.selected.state
     }
 }
 
