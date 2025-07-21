@@ -164,10 +164,10 @@ export class Tool {
      */
     async invoke(argsStr) {
         try {
-            const args = JSON.parse(argsStr)
             if (!isFn(this.func)) {
-                throw new TypeError(`Tool ${this.name} does not have a valid function defined.`)
+                throw new TypeError(`Tool ${this.name} hasn't defined a function body.`)
             }
+            const args = JSON.parse(argsStr)
             // Assumes this.func expects a single argument object
             const result = await this.func.call(this.thisArg, args)
             console.log(
