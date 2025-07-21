@@ -359,6 +359,18 @@ This *is* **some** ~~test~~ for you!`"></markdown-component>
                     <div class="block info">block info</div>
                     <div class="block warning">block warning</div>
                     <div class="block error">block error</div>
+                    <text-block-component>
+                        This is a regular text block
+                    </text-block-component>
+                    <text-block-component type="info">
+                        This is an info text block
+                    </text-block-component>
+                    <text-block-component type="warning">
+                        This is a warning text block
+                    </text-block-component>
+                    <text-block-component type="error">
+                        This is an error text block
+                    </text-block-component>
                 </div>
 
                 <div v-if="selTabName === 'Layout'" class="mozaic mozaic--gap2">

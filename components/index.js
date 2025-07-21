@@ -24,6 +24,7 @@ const componentSpecifications = [
     // TODO: needs a rewrite or remove
     './event-component.jh&',
     './ui/ext-link.jh',
+    './ui/text-block-component.jhc&',
     './failure-component.jh&',
     './usage-component.jh&',
     './ui/feedback-blob-component.jhc&',
