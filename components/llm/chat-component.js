@@ -52,8 +52,8 @@ export default {
                     this.$refs.chatThreadComponent.scrollToBottom()
                 })
                 this.message = ''
-                const MAX_CONSECUTIVE_TOOLS_CALLS = 20
-                let toolCallCount = 0
+                const MAX_CONSECUTIVE_TOOLS_CALLS = 10
+                let consecutiveToolsCalls = 0
                 do {
                     const messages = await this.thread.toMessages()
                     this.abortController = new AbortController()
@@ -83,16 +83,9 @@ export default {
                     const bead = new ToolCallsBead(message.tool_calls)
                     bead.usage = usage
                     this.thread.add(bead)
-                    toolCallCount++
-                    if (toolCallCount >= MAX_CONSECUTIVE_TOOLS_CALLS) {
-                        showToast('Too many consecutive tool calls. Stopping.')
-                        this.thread.add(
-                            new Bead(
-                                'system',
-                                `Stopping due to too many tool calls (max=${MAX_CONSECUTIVE_TOOLS_CALLS})`,
-                            ),
-                        )
-                        break
+                    consecutiveToolsCalls++
+                    if (consecutiveToolsCalls >= MAX_CONSECUTIVE_TOOLS_CALLS) {
+                        throw new Error(`Stopping due to too many tool calls (max=${MAX_CONSECUTIVE_TOOLS_CALLS})`)
                     }
                     const toolResultMessages = await this.tools.exeToolCalls(message)
                     for (const toolResultMessage of toolResultMessages) {
@@ -106,10 +99,12 @@ export default {
                 console.error(error)
                 showToast(error)
             }
+
             this.$nextTick(() => {
                 this.$refs.chatThreadComponent.scrollToBottom()
                 this.$refs.promptInput.focus()
             })
+
             this.abortController = undefined
         },
         abortCompletion(reason) {
