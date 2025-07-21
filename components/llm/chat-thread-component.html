@@ -33,14 +33,14 @@
                 chat-thread-component__contents"
                 :markdown="bead.content">
             </markdown-component>
-            <code v-if="bead.usage">
+            <code v-if="showDebugInfo && bead.usage">
                 <span class="const" title="delay">{{ bead.usage.duration }}</span>
                 <span class="exprs">ms</span>
                 <span class="punct">, </span>
-                <span class="const" title="Promps tokens">{{ bead.usage.prompt_tokens }}</span>
+                <span class="const" title="Promps tokens" v-text="bead.usage.prompt_tokens"></span>
                 <span class="exprs">Tok</span>
                 <span class="punct">, </span>
-                <span class="const" title="Completion tokens">{{ bead.usage.completion_tokens }}</span>
+                <span class="const" title="Completion tokens" v-text="bead.usage.completion_tokens"></span>
                 <span class="exprs">Tok</span>
                 <span class="punct">, </span>
                 <span class="const" title="Throughput">
