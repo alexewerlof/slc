@@ -57,6 +57,10 @@ h5, h6 {
     font-size: 1em;
 }
 
+ul, ol {
+    padding-inline-start: var(--gap3);
+}
+
 hr {
     border: none;
     border-top: var(--bthick) solid var(--divider-color);
