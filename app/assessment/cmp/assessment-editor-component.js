@@ -51,7 +51,7 @@ export default {
         toolbox.add('listEntities', 'Returns the id of entities with the specified class name.')
             .prm(
                 'className:string',
-                'The class name of the entities to list. It can only be one of these values: "Provider", "Consumer", "Service", "Task", "Usage", "Failure", "Metric"',
+                'When specified, it filters the results to a subset of entities. It can only be one of these values: "Provider", "Consumer", "Service", "Task", "Usage", "Failure", "Metric". If abandoned, all types of entities will be returned.',
             ).fn(({ className }) => {
                 return this.assessment.getEntitiesByClassName(className).map(({ id }) => id)
             })
