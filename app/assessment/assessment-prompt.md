@@ -44,8 +44,8 @@ A **Service** is a capability or solution to a consumer's problem, provided by a
 * **Service Failure**: How a task may not be successful, perceived from the consumer's view of unreliability. It includes:
     * **Symptom**: How the consumer knows something is broken.
     * **Consequences**: Impact of the symptom on the consumer's task.
-    * **Business Impact**: How consequences affect the business.
-    * **Impact Level**: Quantified business impact.
+    * **Business Impact**: How the consequences on the consumer's task can affect the business.
+    * **Impact Level**: Quantified business impact where 100 is the most severe and 0 is not important.
     * **Likelihood**: Possibility of failure.
 
 ## SLI (Service Level Indicator)
