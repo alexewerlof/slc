@@ -1,9 +1,8 @@
 import { joinLines } from '../../lib/markdown.js'
 import { loadText } from '../../lib/share.js'
-import { isBool, isDef, isFn, isInArr, isObj, isStr } from '../../lib/validation.js'
+import { isArr, isBool, isFn, isInArr, isObj, isStr } from '../../lib/validation.js'
 
-export class Bead {
-    _content = undefined
+class RoledBead {
     _role = undefined
     /** Beads that set this to true, do not get converted to messages */
     isGhost = false
@@ -12,25 +11,49 @@ export class Bead {
     /** Beads that set this to true, only show up when debugging info is shown */
     isDebug = false
 
-    static POSSIBLE_ROLES = ['user', 'system', 'assistant', 'tool']
+    static DEFAULT_ROLE_OPTIONS = {
+        user: {
+            isGhost: false,
+            isPersistent: false,
+            isDebug: false,
+        },
+        assistant: {
+            isGhost: false,
+            isPersistent: false,
+            isDebug: true,
+        },
+        system: {
+            isGhost: false,
+            isPersistent: true,
+            isDebug: true,
+        },
+        tool: {
+            isGhost: false,
+            isPersistent: false,
+            isDebug: true,
+        },
+    }
 
-    constructor(role, content, options) {
+    static POSSIBLE_ROLES = Object.keys(RoledBead.DEFAULT_ROLE_OPTIONS)
+
+    constructor(options) {
+        if (!isObj(options)) {
+            throw new TypeError(`options must be an object. Got ${options} (${typeof options})`)
+        }
+        const { role } = options
         this.role = role
-        this.content = content
-        if (isDef(options)) {
-            if (!isObj(options)) {
-                throw new TypeError(`options must be an object. Got ${options}`)
-            }
-            const { isGhost, isPersistent, isDebug } = options
-            if (isBool(isGhost)) {
-                this.isGhost = isGhost
-            }
-            if (isBool(isPersistent)) {
-                this.isPersistent = isPersistent
-            }
-            if (isBool(isDebug)) {
-                this.isDebug = isDebug
-            }
+        const { isGhost, isPersistent, isDebug } = {
+            ...RoledBead.DEFAULT_ROLE_OPTIONS[role],
+            ...options,
+        }
+        if (isBool(isGhost)) {
+            this.isGhost = isGhost
+        }
+        if (isBool(isPersistent)) {
+            this.isPersistent = isPersistent
+        }
+        if (isBool(isDebug)) {
+            this.isDebug = isDebug
         }
     }
 
@@ -39,30 +62,10 @@ export class Bead {
     }
 
     set role(role) {
-        if (!isInArr(role, Bead.POSSIBLE_ROLES)) {
+        if (!isInArr(role, RoledBead.POSSIBLE_ROLES)) {
             throw new Error(`Invalid role: ${role}`)
         }
         this._role = role
-        switch (role) {
-            case 'system':
-                this.isGhost = false
-                this.isPersistent = true
-                this.isDebug = true
-                break
-            case 'user':
-            case 'assistant':
-                this.isGhost = false
-                this.isPersistent = false
-                this.isDebug = false
-                break
-            case 'tool':
-                this.isGhost = true
-                this.isPersistent = false
-                this.isDebug = true
-                break
-            default:
-                throw new Error(`Invalid role: ${role}`)
-        }
     }
 
     get friendlyRole() {
@@ -80,28 +83,43 @@ export class Bead {
         }
     }
 
+    get markdown() {
+        throw new Error('Child has not implemented markdown getter')
+    }
+
+    get message() {
+        throw new Error('Child has not implemented message getter')
+    }
+}
+
+export class ContentBead extends RoledBead {
+    constructor(options, ...contentBits) {
+        super(options)
+        this.contentBits = contentBits
+    }
+
     get content() {
-        if (isStr(this._content)) {
-            return this._content
-        }
-        if (isFn(this._content)) {
-            return this._content.call(this)
-        }
-        return 'Invalid content'
+        return joinLines(
+            1,
+            ...this.contentBits.map((contentBit) => {
+                return isFn(contentBit) ? contentBit.call(this) : contentBit
+            }),
+        )
     }
 
-    set content(content) {
-        if (!isStr(content) && !isFn(content)) {
-            throw new TypeError(`content must be a string or function. Got ${content} (${typeof content})`)
+    get markdown() {
+        if (isStr(this.content)) {
+            return this.content
         }
-        this._content = content
+        return joinLines(
+            1,
+            '```json',
+            JSON.stringify(this.content, null, 2),
+            '```',
+        )
     }
 
-    get isDebug() {
-        return this.role === 'system'
-    }
-
-    toMessage() {
+    get message() {
         return {
             role: this.role,
             content: this.content,
@@ -109,35 +127,66 @@ export class Bead {
     }
 }
 
-export class UserPromptBead extends Bead {
-    constructor(content) {
-        super('user', content)
+export class UserPromptBead extends ContentBead {
+    constructor(...content) {
+        super({ role: 'user' }, ...content)
     }
 }
 
-function objToMarkdown(obj) {
-    return joinLines(
-        1,
-        '```json',
-        JSON.stringify(obj, null, 2),
-        '```',
-    )
+export class AssistantResponse extends ContentBead {
+    constructor(messageContent) {
+        super({
+            role: 'assistant',
+            isDebug: false,
+            isPersistent: false,
+            isGhost: false,
+        }, messageContent)
+    }
+
+    get contentWithoughtThought() {
+        const endOfThoughtMarker = 'think>'
+        const lastIndexOfThink = this.content.lastIndexOf(endOfThoughtMarker)
+        if (lastIndexOfThink !== -1) {
+            return this.content.slice(endOfThoughtMarker.length + lastIndexOfThink + 1)
+        }
+        return this.content
+    }
+
+    get message() {
+        return {
+            role: this.role,
+            content: this.contentWithoughtThought,
+        }
+    }
 }
 
-export class ToolCallsBead extends Bead {
+export class ToolCallsBead extends RoledBead {
     _toolCalls = undefined
 
     constructor(toolCalls) {
-        super('assistant', objToMarkdown(toolCalls), {
+        super({
+            role: 'assistant',
             isDebug: true,
         })
-        if (!Array.isArray(toolCalls) || toolCalls.length === 0) {
-            throw new Error('toolCalls must be a non-empty array')
+        if (!isArr(toolCalls)) {
+            throw new TypeError('toolCalls must be an array')
+        }
+        if (toolCalls.length === 0) {
+            throw new RangeError('toolCalls must be a non-empty array')
         }
         this._toolCalls = toolCalls
     }
 
-    toMessage() {
+    get markdown() {
+        const ret = ['Tools calls:']
+        for (const toolCall of this._toolCalls) {
+            ret.push(`- ${toolCall.function.name}(${toolCall.function.arguments})`)
+        }
+
+        return joinLines(1, ...ret)
+    }
+
+    get message() {
         return {
             role: this.role,
             tool_calls: this._toolCalls,
@@ -145,30 +194,34 @@ export class ToolCallsBead extends Bead {
     }
 }
 
-export class ToolResultBead extends Bead {
-    constructor(toolCallId, result) {
-        super('tool', objToMarkdown(result), {
+export class ToolResultBead extends RoledBead {
+    constructor(toolInvokationResultMessage) {
+        super({
+            role: toolInvokationResultMessage.role,
             isDebug: true,
         })
-        this.toolCallId = toolCallId
-        this.result = result
+        this._toolInvokationResultMessage = toolInvokationResultMessage
     }
 
-    toMessage() {
+    get markdown() {
+        return '```json\n' + this._toolInvokationResultMessage.content + '\n```'
+    }
+
+    get message() {
         return {
             role: this.role,
-            tool_call_id: this.toolCallId,
-            content: this.result,
+            ...this._toolInvokationResultMessage,
         }
     }
 }
 
-export class FileBead extends Bead {
+export class FileBead extends RoledBead {
     _fileNames = undefined
     _loaded = false
 
     constructor(...fileNames) {
-        super('system', 'Files:\n' + joinLines(1, ...fileNames.map((f) => `- ${f}`)), {
+        super({
+            role: 'system',
             isDebug: true,
             isPersistent: true,
         })
@@ -186,6 +239,24 @@ export class FileBead extends Bead {
         }
         return this.content
     }
+
+    get markdown() {
+        if (this._loaded) {
+            return this.content
+        }
+        return joinLines(
+            1,
+            'Files:',
+            ...this._fileNames.map((f) => `- ${f}`),
+        )
+    }
+
+    get message() {
+        return {
+            role: this.role,
+            content: this.content,
+        }
+    }
 }
 
 export class Thread {
@@ -197,7 +268,7 @@ export class Thread {
 
     add(...beads) {
         for (const bead of beads) {
-            if (!(bead instanceof Bead)) {
+            if (!(bead instanceof RoledBead)) {
                 throw new TypeError(`Expected an instance of Bead. Got ${JSON.stringify(bead)}`)
             }
             this.beads.push(bead)
@@ -206,16 +277,15 @@ export class Thread {
 
     async toMessages() {
         const activeBeads = this.beads.filter((bead) => !bead.isGhost)
-        await Promise.all(activeBeads.map(async (bead) => {
-            if (isFn(bead.load)) {
-                await bead.load()
-            }
-        }))
-        return activeBeads.map((bead) => bead.toMessage())
+        const beadsWithAsyncLoad = activeBeads.filter((bead) => isFn(bead.load))
+        if (beadsWithAsyncLoad.length > 0) {
+            await Promise.all(beadsWithAsyncLoad.map((bead) => bead.load))
+        }
+        return activeBeads.map((bead) => bead.message)
     }
 
-    clear(keepSystemMessages = true) {
-        if (!keepSystemMessages) {
+    clear(everything = false) {
+        if (everything) {
             this.beads.length = 0
         } else {
             this.beads = this.beads.filter((bead) => bead.isPersistent)

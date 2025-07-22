@@ -1,7 +1,7 @@
 import { config } from '../../config.js'
 import { showToast } from '../../lib/toast.js'
 import { getFirstMessage, isToolsCallMessage } from './util.js'
-import { Bead, Thread, ToolCallsBead, ToolResultBead, UserPromptBead } from './thread.js'
+import { AssistantResponse, ContentBead, Thread, ToolCallsBead, ToolResultBead, UserPromptBead } from './thread.js'
 import { llm } from './llm.js'
 import { Toolbox } from './toolbox.js'
 
@@ -69,13 +69,7 @@ export default {
                     const { usage } = completion
                     usage.duration = duration
                     if (!this.tools || !isToolsCallMessage(message)) {
-                        let content = message.content
-                        const endOfThoughtMarker = 'think>'
-                        const lastIndexOfThink = content.lastIndexOf(endOfThoughtMarker)
-                        if (lastIndexOfThink !== -1) {
-                            content = content.slice(endOfThoughtMarker.length + lastIndexOfThink + 1)
-                        }
-                        const bead = new Bead(message.role, content)
+                        const bead = new AssistantResponse(message.content)
                         bead.usage = usage
                         this.thread.add(bead)
                         break
@@ -89,12 +83,17 @@ export default {
                     }
                     const toolResultMessages = await this.tools.exeToolCalls(message)
                     for (const toolResultMessage of toolResultMessages) {
-                        this.thread.add(new ToolResultBead(toolResultMessage.tool_call_id, toolResultMessage.content))
+                        this.thread.add(new ToolResultBead(toolResultMessage))
                     }
                 } while (true)
             } catch (error) {
                 this.thread.add(
-                    new Bead('system', String(error), { isDebug: true, isPersistent: false, isGhost: true }),
+                    new ContentBead({
+                        role: 'system',
+                        isDebug: true,
+                        isPersistent: false,
+                        isGhost: true,
+                    }, String(error)),
                 )
                 console.error(error)
                 showToast(error)

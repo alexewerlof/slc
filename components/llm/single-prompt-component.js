@@ -1,6 +1,6 @@
 import { config } from '../../config.js'
 import { showToast } from '../../lib/toast.js'
-import { Bead, Thread } from './thread.js'
+import { Thread, UserPromptBead } from './thread.js'
 import { getFirstCompletion } from './util.js'
 import { llm } from './llm.js'
 
@@ -42,7 +42,7 @@ export default {
     methods: {
         async submitPrompt() {
             try {
-                this.thread.add(new Bead('user', this.prompt))
+                this.thread.add(new UserPromptBead(this.prompt))
                 const messages = await this.thread.toMessages()
                 this.abortController = new AbortController()
                 this.response = 'Waiting for LLM...'

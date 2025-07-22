@@ -3,7 +3,7 @@ import { readTextFile } from '../lib/share.js'
 import { Assessment } from './assessment.js'
 import { unicodeSymbol } from '../lib/icons.js'
 import { inRange } from '../lib/validation.js'
-import { Bead, FileBead, Thread } from './llm/thread.js'
+import { ContentBead, FileBead, Thread } from './llm/thread.js'
 
 export default {
     data() {
@@ -24,7 +24,7 @@ export default {
             exportedCode: '-',
             thread: new Thread(
                 new FileBead('assess-prompt.md', '../../prompts/glossary.md'),
-                new Bead('system', () => this.assessment.toString()),
+                new ContentBead({ role: 'system' }, () => this.assessment.toString()),
             ),
         }
     },

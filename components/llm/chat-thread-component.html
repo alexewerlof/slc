@@ -14,7 +14,7 @@
                 <icon-component v-if="showDebugInfo" name="show"></icon-component>
                 <icon-component v-else name="hide"></icon-component>
             </button>
-            <button @click="thread.clear(true)" title="Clear" class="button--danger">
+            <button @click="thread.clear()" title="Clear" class="button--danger">
                 <icon-component name="delete"></icon-component>
             </button>
         </div>
@@ -28,10 +28,9 @@
             :hidden="!showDebugInfo && bead.isDebug">
             <div class="chat-thread-component__role" v-text="bead.friendlyRole"></div>
             <markdown-component
-                v-if="bead.content"
                 class="frost
                 chat-thread-component__contents"
-                :markdown="bead.content">
+                :markdown="bead.markdown">
             </markdown-component>
             <code v-if="showDebugInfo && bead.usage">
                 <span class="const" title="delay">{{ bead.usage.duration }}</span>

@@ -5,7 +5,7 @@ import { Usage } from '../../../components/usage.js'
 import { Metric } from '../../../components/metric.js'
 import { Provider } from '../../../components/provider.js'
 import { Service } from '../../../components/service.js'
-import { Bead, FileBead, Thread } from '../../../components/llm/thread.js'
+import { ContentBead, FileBead, Thread } from '../../../components/llm/thread.js'
 import { isInstance } from '../../../lib/validation.js'
 import { Toolbox } from '../../../components/llm/toolbox.js'
 import { nextStep } from './workflow.js'
@@ -21,29 +21,29 @@ export default {
     data() {
         const thread = new Thread(
             new FileBead('assessment-prompt.md' /*'../../prompts/glossary.md'*/),
-            new Bead('system', () =>
-                joinLines(
-                    2,
-                    'This is the current and latest state of the assessment that is kept updated as you add, remove, or modify entities.',
-                    '```json',
-                    JSON.stringify(this.assessment.state),
-                    '```',
-                    'To help you guide the user through the assessment, a deterministic algorithm is used to analyze the current state of the assessment and here is what you need to do:',
-                    nextStep(this.assessment),
-                    'To help you understand the assessment, we have some heuristics that analyze the assessment and all its entities. If there is a a warning or error, please prioritize fixing them.',
-                    this.assessment.markdownLint(),
-                    'These heuristics are a great tip for you to ask the right questions and help the user add any missing entities or fix any issues in the assessment.',
-                    'You can also use the provided tools to add new entities or get information about existing ones.',
-                    'Focus on fixing the most important problem first. Errors have higher priority than warnings.And issues with Providers are more important than services. Similarly, issues with Consumers are more important than Tasks. Usages are less important than both Services and Tasks. And Failures are less important than Usages. Issues with the Metrics are the least important and should be addressed last.',
-                )),
-            new Bead(
-                'assistant',
-                joinLines(
-                    2,
-                    'I can help you identify different aspects of your service topology in order to identify the best metrics.',
-                    'Tell me about your system.',
-                ),
-                { isGhost: true, isDebug: false, isPersistent: true },
+            new ContentBead(
+                { role: 'system' },
+                'This is the current and latest state of the assessment that is kept updated as you add, remove, or modify entities.',
+                '```json',
+                () => JSON.stringify(this.assessment.state),
+                '```',
+                'To help you guide the user through the assessment, a deterministic algorithm is used to analyze the current state of the assessment and here is what you need to do:',
+                () => nextStep(this.assessment),
+                'To help you understand the assessment, we have some heuristics that analyze the assessment and all its entities. If there is a a warning or error, please prioritize fixing them.',
+                () => this.assessment.markdownLint(),
+                'These heuristics are a great tip for you to ask the right questions and help the user add any missing entities or fix any issues in the assessment.',
+                'You can also use the provided tools to add new entities or get information about existing ones.',
+                'Focus on fixing the most important problem first. Errors have higher priority than warnings.And issues with Providers are more important than services. Similarly, issues with Consumers are more important than Tasks. Usages are less important than both Services and Tasks. And Failures are less important than Usages. Issues with the Metrics are the least important and should be addressed last.',
+            ),
+            new ContentBead(
+                {
+                    role: 'assistant',
+                    isGhost: true,
+                    isDebug: false,
+                    isPersistent: true,
+                },
+                'I can help you identify different aspects of your service topology in order to identify the best metrics.',
+                'Tell me about your system.',
             ),
         )
 
