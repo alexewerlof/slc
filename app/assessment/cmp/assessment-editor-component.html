@@ -84,6 +84,10 @@
             <h2>Service</h2>
             <service-component :service="editingInstance"></service-component>
             <div class="button-bar">
+                <button @click="editingInstance = editingInstance.provider.services.pushNew()">
+                    <icon-component name="add"></icon-component>
+                    Add another service
+                </button>
                 <button @click="editingInstance = editingInstance.metrics.pushNew()">
                     <icon-component name="add"></icon-component>
                     New Metric
@@ -120,6 +124,13 @@
             <h2>Task</h2>
             <task-component :task="editingInstance"></task-component>
             <div class="button-bar">
+                <button
+                    @click="editingInstance = editingInstance.consumer.tasks.pushNew()"
+                    title="Add another task"
+                >
+                    <icon-component name="add"></icon-component>
+                    Add another task
+                </button>
                 <button
                     @click="removeTask(editingInstance)"
                     class="button--danger"
