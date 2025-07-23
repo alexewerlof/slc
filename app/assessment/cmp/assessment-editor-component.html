@@ -74,9 +74,10 @@
             <div class="button-bar">
                 <button
                     @click="editingInstance = editingInstance.services.pushNew()"
+                    title="Add a new Service"
                 >
                     <icon-component name="add"></icon-component>
-                    New Service
+                    Add Service
                 </button>
                 <button
                     @click="removeProvider(editingInstance)"
@@ -92,13 +93,19 @@
             <h2>Service</h2>
             <service-component :service="editingInstance"></service-component>
             <div class="button-bar">
-                <button @click="editingInstance = editingInstance.provider.services.pushNew()">
+                <button
+                    @click="editingInstance = editingInstance.provider.services.pushNew()"
+                    title="Add another (sibling) service"
+                >
                     <icon-component name="add"></icon-component>
-                    Add another service
+                    Add Another Service
                 </button>
-                <button @click="editingInstance = editingInstance.metrics.pushNew()">
+                <button
+                    @click="editingInstance = editingInstance.metrics.pushNew()"
+                    title="Add a new metric"
+                >
                     <icon-component name="add"></icon-component>
-                    New Metric
+                    Add Metric
                 </button>
                 <button
                     @click="removeService(editingInstance)"
@@ -177,8 +184,5 @@
                 </button>
             </div>
         </div>
-    </div>
-    <div class="mozaic__tile mozaic__tile--whole">
-        <lint-component :lint="assessment.lint"></lint-component>
     </div>
 </div>

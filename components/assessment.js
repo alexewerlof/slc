@@ -71,6 +71,8 @@ export class Assessment extends Entity {
     }
 
     clear() {
+        this.displayName = config.displayName.default
+        this.description = config.description.default
         this.providers.removeAll()
         this.consumers.removeAll()
     }
@@ -179,7 +181,9 @@ export class Assessment extends Entity {
         const newParagraph = '\n\n'
 
         lines.push(
-            '# Assessment',
+            `# Assessment ${this.displayName}`,
+            emptyLine,
+            this.description,
             emptyLine,
             `This is the current state of the assessment.`,
             emptyLine,
@@ -325,7 +329,7 @@ export class Assessment extends Entity {
 
         for (const entity of this.all) {
             if (entity.lint.count) {
-                ret.push(`## ${entity.id}`)
+                ret.push(`## ${entity.className} ${entity.id}`)
                 ret.push(entity.lint.toMarkdown())
             }
         }
