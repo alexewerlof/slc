@@ -1,4 +1,6 @@
 {
+    "displayName": "Online Experience",
+    "description": "A website and mobile app to sell cars, book services, and control the car remotely",
     "consumers": [
         {
             "id": "cBKLGG6JE",
@@ -10,6 +12,11 @@
                     "id": "tP2BFJBQN",
                     "displayName": "Product Model Page",
                     "description": "Shows information about one particular car"
+                },
+                {
+                    "id": "tSMJCGNDX",
+                    "displayName": "Check car leasing contract",
+                    "description": "To see if the user has to pay or return the car, or have any unused benefits"
                 }
             ]
         },
@@ -28,11 +35,6 @@
                     "id": "tQPNEE3ED",
                     "displayName": "Lock/Unlock the car remotely",
                     "description": ""
-                },
-                {
-                    "id": "t6KF1W6TJ",
-                    "displayName": "Check car leasing contract",
-                    "description": "Allows the consumers to quickly review their contract on the go"
                 }
             ]
         }
@@ -106,7 +108,7 @@
                 },
                 {
                     "id": "sGGY5G3U5",
-                    "displayName": "Car security API",
+                    "displayName": "Car Access API",
                     "description": "Can be used to lock or unlock the car",
                     "type": "Automated",
                     "usages": [
@@ -141,8 +143,8 @@
                     "metrics": [
                         {
                             "id": "m1MLBSGAJ",
-                            "displayName": "lock status api returns status in less than 10 seconds",
-                            "description": "Status check should be reasonably fast",
+                            "displayName": "Lock status API latency",
+                            "description": "Status check should be reasonably fast (the actual threshold depends on UI and UX research)",
                             "isBoolean": false,
                             "numericUnit": "",
                             "failureIds": [
@@ -151,22 +153,13 @@
                         },
                         {
                             "id": "m6SG0XGM8",
-                            "displayName": "lock command API response_code === 202",
+                            "displayName": "Lock command API response_code === 202",
                             "description": "Successfully registered the command",
                             "isBoolean": true,
                             "numericUnit": "",
                             "failureIds": [
-                                "fCLZF5HJU"
-                            ]
-                        },
-                        {
-                            "id": "mPSG7H5LY",
-                            "displayName": "lock status api response code between 200 to 399 (inclusive)",
-                            "description": "lock status check does not fail",
-                            "isBoolean": false,
-                            "numericUnit": "",
-                            "failureIds": [
-                                "f3JVE7WWG"
+                                "fCLZF5HJU",
+                                "fY6X7TK2Z"
                             ]
                         }
                     ]
@@ -316,22 +309,22 @@
                     "type": "Automated",
                     "usages": [
                         {
-                            "id": "uAQF2LT8P",
-                            "taskId": "t6KF1W6TJ",
+                            "id": "uAFPEUJCQ",
+                            "taskId": "tSMJCGNDX",
                             "failures": [
                                 {
-                                    "id": "fGLBALH4H",
-                                    "symptom": "Cannot retrieve the contract",
-                                    "consequence": "User may get frustrated",
-                                    "businessImpact": "Users may contact customer support",
-                                    "impactLevel": 10
+                                    "id": "f9TNBA9HB",
+                                    "symptom": "Wrong Contract is shown",
+                                    "consequence": "The user may be charge the wrong amount",
+                                    "businessImpact": "Media scandal, unnecessary customer support costs, and hurting user loyalty",
+                                    "impactLevel": 50
                                 },
                                 {
-                                    "id": "fW9U8P0OQ",
-                                    "symptom": "Fetching wrong contract",
-                                    "consequence": "User may get confused. In the worse case they may end up paying the wrong amount.",
-                                    "businessImpact": "They customers may end up paying the wrong amount",
-                                    "impactLevel": 80
+                                    "id": "fQEPARRU7",
+                                    "symptom": "The contract is too slow to load",
+                                    "consequence": "The user may give up and not get access to the information they wanted",
+                                    "businessImpact": "User Confusion may hurt our brand",
+                                    "impactLevel": 50
                                 }
                             ]
                         }
@@ -339,22 +332,22 @@
                     "metrics": [
                         {
                             "id": "mED6Z8YBM",
-                            "displayName": "for valid requests, contract retrieval API response code < 400",
-                            "description": "",
+                            "displayName": "API response code < 400",
+                            "description": "For valid requests to contract retrieval",
                             "isBoolean": false,
                             "numericUnit": "",
                             "failureIds": [
-                                "fGLBALH4H"
+                                "fQEPARRU7"
                             ]
                         },
                         {
                             "id": "mY9Z0P517",
-                            "displayName": "the user credentials on the contract should match the user credentials that is logged in (web/mobile)",
-                            "description": "",
+                            "displayName": "contract user match logged in user",
+                            "description": "The user credentials on the contract should match the user credentials that is logged in (web/mobile)",
                             "isBoolean": true,
                             "numericUnit": "",
                             "failureIds": [
-                                "fGLBALH4H"
+                                "f9TNBA9HB"
                             ]
                         }
                     ]
