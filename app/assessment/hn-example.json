@@ -1,0 +1,226 @@
+{
+    "displayName": "Hackernews",
+    "description": "An example based on how HN may work",
+    "consumers": [
+        {
+            "id": "cFPM398A0",
+            "displayName": "Frontend",
+            "description": "",
+            "type": "System",
+            "tasks": [
+                {
+                    "id": "tU4CWW0P7",
+                    "displayName": "List news articles",
+                    "description": ""
+                },
+                {
+                    "id": "tSSRFP59E",
+                    "displayName": "See/Edit Personal info",
+                    "description": ""
+                },
+                {
+                    "id": "tK20Y3ZB3",
+                    "displayName": "Comment on a post",
+                    "description": ""
+                }
+            ]
+        }
+    ],
+    "providers": [
+        {
+            "id": "p28PRYHP7",
+            "displayName": "Hacker News Backend",
+            "description": "",
+            "type": "System",
+            "services": [
+                {
+                    "id": "sQWFU4RVX",
+                    "displayName": "News API",
+                    "description": "Returns a list of news that can be rendered on the front page. Supports pagination too.",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uP7UZE0XH",
+                            "taskId": "tU4CWW0P7",
+                            "failures": [
+                                {
+                                    "id": "fP6XD1CK8",
+                                    "symptom": "News articles fail to load",
+                                    "consequence": "Users are not informed about the latest news",
+                                    "businessImpact": "Users cannot see the latest news",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "mLFJHZ1VU",
+                            "displayName": "Latency",
+                            "description": "",
+                            "isBoolean": false,
+                            "numericUnit": "",
+                            "failureIds": [
+                                "fP6XD1CK8"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "sD9Y1WJHG",
+                    "displayName": "Submit API",
+                    "description": "Allows the users to submit links to Hacker News",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uD6L10MFV",
+                            "taskId": "tSSRFP59E",
+                            "failures": [
+                                {
+                                    "id": "fKZD0MJ3T",
+                                    "symptom": "User unable to submit links",
+                                    "consequence": "Users cannot submit new links to Hacker News",
+                                    "businessImpact": "Users cannot share new content",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "mGK1N4P9E",
+                            "displayName": "Submission Latency",
+                            "description": "The time it takes to submit a link.",
+                            "isBoolean": false,
+                            "numericUnit": "",
+                            "failureIds": [
+                                "fKZD0MJ3T"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "sTPJ7QA15",
+                    "displayName": "Log in API",
+                    "description": "Allows the users to log in using their credentials or change their password",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uTCNRJ72F",
+                            "taskId": "tSSRFP59E",
+                            "failures": [
+                                {
+                                    "id": "fRXX1W5XU",
+                                    "symptom": "Users are unable to log in",
+                                    "consequence": "Users cannot access their accounts",
+                                    "businessImpact": "Users cannot access their personalized content",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "m4SKUGYAH",
+                            "displayName": "Login Latency",
+                            "description": "The time it takes to log in.",
+                            "isBoolean": false,
+                            "numericUnit": "",
+                            "failureIds": [
+                                "fRXX1W5XU"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "sGYZZUCN0",
+                    "displayName": "Comment API",
+                    "description": "Allows fetching and posting comments under links",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uWK39PUQH",
+                            "taskId": "tK20Y3ZB3",
+                            "failures": [
+                                {
+                                    "id": "fC97WUD3T",
+                                    "symptom": "Comments are not loading",
+                                    "consequence": "Users cannot comment on posts",
+                                    "businessImpact": "Users cannot see comments",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "m0ZNCXQBL",
+                            "displayName": "Comment Load Time",
+                            "description": "The time it takes to load the comments.",
+                            "isBoolean": false,
+                            "numericUnit": "",
+                            "failureIds": [
+                                "fC97WUD3T"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "pRNBARPBX",
+            "displayName": "Static Web Server",
+            "description": "Just a simple web server running on FreeBSD",
+            "type": "System",
+            "services": [
+                {
+                    "id": "s23JL1F51",
+                    "displayName": "Serve static files",
+                    "description": "For example HTML, CSS and Javascript",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uZ5GXG3GF",
+                            "taskId": "tU4CWW0P7",
+                            "failures": [
+                                {
+                                    "id": "f8T5BMHFJ",
+                                    "symptom": "The front page does not load",
+                                    "consequence": "Users cannot see the latest news",
+                                    "businessImpact": "Users cannot see any content",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        },
+                        {
+                            "id": "uMJJLUE5Z",
+                            "taskId": "tSSRFP59E",
+                            "failures": [
+                                {
+                                    "id": "f9NPHV2TN",
+                                    "symptom": "Profile page doesn't load",
+                                    "consequence": "Users cannot access their profile",
+                                    "businessImpact": "Users cannot see or edit personal info",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "m8HJH7CHZ",
+                            "displayName": "Page Load Time",
+                            "description": "The time it takes to load the page as measured in the user's browser (this includes cache impact as well).",
+                            "isBoolean": false,
+                            "numericUnit": "",
+                            "failureIds": [
+                                "f8T5BMHFJ",
+                                "f9NPHV2TN"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
