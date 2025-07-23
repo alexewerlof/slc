@@ -273,7 +273,7 @@ export default {
             tools: toolbox,
             exportTabs,
             selExportTab: exportTabs[0],
-            editingInstance: undefined,
+            editingInstance: this.assessment,
         }
     },
     computed: {
@@ -352,7 +352,7 @@ export default {
                 'Are you sure you want to clear the assessment?',
             ].join(' ')
             if (confirm(message)) {
-                this.editingInstance = undefined
+                this.editingInstance = this.assessment
                 this.assessment.clear()
             }
         },

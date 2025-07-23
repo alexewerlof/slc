@@ -1,6 +1,6 @@
 import { Provider } from './provider.js'
 import { Consumer } from './consumer.js'
-import { isArr, isDef, isInstance, isObj } from '../lib/validation.js'
+import { isArr, isDef, isInstance, isObj, isStrLen } from '../lib/validation.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { Service } from './service.js'
 import { Task } from './task.js'
@@ -8,12 +8,17 @@ import { unicodeSymbol } from '../lib/icons.js'
 import { Lint } from './lint.js'
 import { assessment2prolog } from '../app/assessment/cmp/prolog.js'
 import { joinLines } from '../lib/markdown.js'
+import { Entity } from '../lib/entity.js'
+import { config } from '../config.js'
 
-export class Assessment {
+export class Assessment extends Entity {
+    displayName = config.displayName.default
+    description = config.description.default
     consumers = new SelectableArray(Consumer, this)
     providers = new SelectableArray(Provider, this)
 
     constructor(state) {
+        super('a')
         if (isObj(state)) {
             this.state = state
         }
@@ -21,6 +26,8 @@ export class Assessment {
 
     get state() {
         return {
+            displayName: this.displayName,
+            description: this.description,
             consumers: this.consumers.state,
             providers: this.providers.state,
         }
@@ -32,9 +39,25 @@ export class Assessment {
         }
 
         const {
+            displayName,
+            description,
             consumers,
             providers,
         } = newState
+
+        if (isDef(displayName)) {
+            if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
+                throw new TypeError(`Invalid displayName. ${displayName}`)
+            }
+            this.displayName = displayName
+        }
+
+        if (isDef(description)) {
+            if (!isStrLen(description, config.description.minLength, config.description.maxLength)) {
+                throw new TypeError(`Invalid description. ${description}`)
+            }
+            this.description = description
+        }
 
         if (isDef(consumers)) {
             this.consumers.state = consumers

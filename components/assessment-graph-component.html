@@ -1,5 +1,5 @@
 <div class="assessment-graph-component">
-    <svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height" @click.self="$emit('select', undefined)">
+    <svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height" @click.self="$emit('select', assessment)">
         <!-- Tasks & Consumers -->
         <g v-for="consumer of assessment.consumers" :key="consumer.id">
             <g v-for="task of consumer.tasks" :key="task.id">

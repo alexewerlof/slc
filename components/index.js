@@ -47,6 +47,7 @@ const componentSpecifications = [
     './objective/objective-component.jh&',
     './percentage-overview-component.jhc&',
     './plot-2d-component.jhc&',
+    './assessment-component.jh&',
     './provider-component.jh&',
     './service-component.jh&',
     './ui/show-hide-component.jhc&',

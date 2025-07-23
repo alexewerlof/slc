@@ -1,0 +1,34 @@
+<div class="assessment-component">
+    <id-component :entity="assessment"></id-component>
+    <lint-component :lint="assessment.lint"></lint-component>
+    <fieldset>
+        <legend>Basics</legend>
+        <div class="input-group">
+            <label for="assessment-display-name">
+                Name
+                <help-component>
+                    <p>
+                        Give your assessment a name to make it easier to recognize in the rest of this application suit.
+                    </p>
+                </help-component>
+            </label>
+            <input
+                id="assessment-display-name"
+                type="text"
+                placeholder="e.g., Personalization team, Platform org, etc."
+                v-model="assessment.displayName">
+        </div>
+        <div class="input-group">
+            <label for="assessment-description">
+                Description
+                <help-component>
+                    <p>
+                        The description is optional but can be useful to provide more context.
+                        It can be a short paragraph or a link to a document.
+                    </p>
+                </help-component>
+            </label>
+            <textarea id="assessment-description" v-model="assessment.description"></textarea>
+        </div>
+    </fieldset>
+</div>
