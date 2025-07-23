@@ -122,6 +122,10 @@ export class Failure extends Entity {
         return [this.usage.index, this.index]
     }
 
+    get metrics() {
+        return this.usage.service.metrics.filter((metric) => metric.isFailureLinked(this))
+    }
+
     get lint() {
         const lint = new Lint()
 
@@ -135,6 +139,10 @@ export class Failure extends Entity {
 
         if (this.businessImpact.length === 0) {
             lint.info(`Please add a business impact to failure`)
+        }
+
+        if (this.metrics.length === 0) {
+            lint.warn(`Currently no metric is measuring this failure. Please connect some metrics to this failure.`)
         }
 
         return lint

@@ -85,12 +85,18 @@ export class Usage extends Entity {
 
     get lint() {
         const lint = new Lint()
+
         if (this.failures.length === 0) {
             lint.warn(
                 'No **failures** are identified for this dependency which effectively makes it pointless for this assessment.',
                 'Please declare some failures.',
             )
         }
+
+        if (this.failures.some((failure) => failure.lint.count)) {
+            lint.info(`Some failures have issues.`)
+        }
+
         return lint
     }
 }
