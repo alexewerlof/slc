@@ -5,9 +5,13 @@
     <div class="mozaic__tile mozaic__tile--6c">
         <div class="frost">
             <div class="button-bar button-bar--center">
+                <button @click="showDialog('importDialog', true)">
+                    <icon-component name="upload"></icon-component>
+                    Import
+                </button>
                 <button @click="showDialog('stateDialog', true)">
                     <icon-component name="download"></icon-component>
-                    State
+                    Export
                 </button>
                 <button @click="clearAssessment()" class="button--danger">
                     <icon-component name="delete"></icon-component>
@@ -15,12 +19,12 @@
                 </button>
             </div>
         </div>
-        <assessment-graph-component :assessment @select="(entity) => editingInstance = entity" :selected-entity="editingInstance"></assessment-graph-component>
+        <assessment-graph-component
+            :assessment
+            @select="(entity) => editingInstance = entity"
+            :selected-entity="editingInstance"></assessment-graph-component>
         <dialog-component title="Summary" ref="summaryDialog">
             <summary-component :assessment></summary-component>
-        </dialog-component>
-        <dialog-component title="Upload" ref="uploadDialog">
-
         </dialog-component>
         <dialog-component title="Export" ref="stateDialog">
             <tabs-component v-model="selExportTab" :tab-names="exportTabs"></tabs-component>
@@ -37,14 +41,31 @@
                     <pre>{{ JSON.stringify(assessment.state, null, 2) }}</pre>
                 </code-block-component>
             </div>
-            <div v-if="selExportTab === 'Import'">
+        </dialog-component>
+        <dialog-component title="Import" ref="importDialog">
+            <tabs-component v-model="selImportTab" :tab-names="importTabs"></tabs-component>
+            <div v-if="selImportTab === 'Examples'">
+                <div v-for="exampleState of exampleStates">
+                    <h3 v-text="exampleState.displayName"></h3>
+                    <markdown-component :markdown="exampleState.description"></markdown-component>
+                    <div class="button-bar">
+                        <button class="button--cta"
+                            @click="loadState(exampleState)"
+                        >
+                            <icon-component name="upload"></icon-component>
+                            Load
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div v-if="selImportTab === 'JSON'">
                 <h3>Paste JSON state:</h3>
-                <textarea v-model="uploadedState"></textarea>
+                <textarea v-model="uploadedState" rows="20" cols="100"></textarea>
                 <div class="info block">
                     {{ uploadedStateMessage }}
                 </div>
                 <div class="button-bar">
-                    <button @click="assignUploadedState('uploadDialog')" class="button--cta">Load</button>
+                    <button @click="assignUploadedState()" class="button--cta">Load</button>
                 </div>
             </div>
         </dialog-component>

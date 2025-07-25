@@ -10,6 +10,15 @@ import { isInstance } from '../../../lib/validation.js'
 import { Toolbox } from '../../../components/llm/toolbox.js'
 import { nextStep } from './workflow.js'
 import { joinLines } from '../../../lib/markdown.js'
+import { loadJson } from '../../../lib/share.js'
+import { showToast } from '../../../lib/toast.js'
+
+const exampleFiles = [
+    'example.json',
+    'hn-example.json',
+]
+
+const exampleStates = await Promise.all(exampleFiles.map((fileName) => loadJson(fileName)))
 
 export default {
     props: {
@@ -259,11 +268,15 @@ export default {
 
         toolbox.add('getDateAndTime', 'Get the current date and time').fn(() => String(new Date()))
 
+        const importTabs = [
+            'Examples',
+            'JSON',
+        ]
+
         const exportTabs = [
             'JSON',
             'Markdown',
             'Prolog',
-            'Import',
         ]
 
         return {
@@ -271,6 +284,9 @@ export default {
             uploadedStateMessage: 'Not analyzed yet',
             thread,
             tools: toolbox,
+            exampleStates,
+            importTabs,
+            selImportTab: importTabs[0],
             exportTabs,
             selExportTab: exportTabs[0],
             editingInstance: this.assessment,
@@ -331,19 +347,24 @@ export default {
             metric.remove()
             this.editingInstance = service
         },
-        assignUploadedState(dialogRef) {
+        assignUploadedState() {
             try {
                 this.uploadedStateMessage = 'Analyzing...'
                 const state = JSON.parse(this.uploadedState)
                 this.uploadedStateMessage = 'State parsed as JSON'
-                const tmpAssessment = new Assessment(state)
-                this.uploadedStateMessage = `State tested successfully`
-                console.log(`Loaded assessment state ${tmpAssessment}`)
-                this.assessment.state = state
+                const _tmpAssessment = new Assessment(state)
+                this.uploadedStateMessage = `State smoke test: loaded successfully`
+                this.loadState(state)
                 this.uploadedStateMessage = `State loaded successfully`
-                this.$refs[dialogRef].close()
             } catch (error) {
                 this.uploadedStateMessage = `Failed to load assessment state: ${error}`
+            }
+        },
+        loadState(state) {
+            try {
+                this.assessment.state = state
+            } catch (error) {
+                showToast(`Failed to load assessment state: ${error}`)
             }
         },
         clearAssessment() {
