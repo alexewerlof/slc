@@ -268,27 +268,14 @@ export default {
 
         toolbox.add('getDateAndTime', 'Get the current date and time').fn(() => String(new Date()))
 
-        const importTabs = [
-            'Examples',
-            'JSON',
-        ]
-
-        const exportTabs = [
-            'JSON',
-            'Markdown',
-            'Prolog',
-        ]
-
         return {
             uploadedState: '',
             uploadedStateMessage: 'Not analyzed yet',
             thread,
             tools: toolbox,
             exampleStates,
-            importTabs,
-            selImportTab: importTabs[0],
-            exportTabs,
-            selExportTab: exportTabs[0],
+            selImportTab: undefined,
+            selExportTab: undefined,
             editingInstance: this.assessment,
         }
     },

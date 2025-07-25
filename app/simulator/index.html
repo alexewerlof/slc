@@ -136,14 +136,10 @@
                 </section>
             </div>
 
-            <tabs-component v-model="selectedTab" :tab-names="[
-                    'Generator',
-                    'Incident',
-                    'Percentile',
-                    'Service',
-                    'Analytics',
-                    'JSON Data',
-                ]"></tabs-component>
+            <tabs-component
+                v-model="selectedTab"
+                tabs="Generator, Incident, Percentile, Service, Analytics, JSON Data"
+            ></tabs-component>
 
             <div v-if="selectedTab === 'Generator'">
                 <div class="well b-mar-gap2">

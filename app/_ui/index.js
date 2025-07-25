@@ -30,7 +30,6 @@ const app = createApp({
             },
         ]
         const stepLabels = ['Washing', 'Chopping', 'Cooking', 'Eating']
-        const tabNames = ['Forms', 'Buttons', 'Typography', 'Layout', 'Icons']
         return {
             manifest,
             // Expose the config to the UI
@@ -40,8 +39,7 @@ const app = createApp({
             inlineSelectValue: inlineSelectOptions[0].value,
             currStep: 0,
             stepLabels,
-            selTabName: tabNames[0],
-            tabNames,
+            selTabName: undefined,
         }
     },
     methods: {

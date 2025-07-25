@@ -1,7 +1,7 @@
 <div class="indicator-finder-component">
     <div>
         <div class="h-pad-gap">
-            <tabs-component v-model="selectedGroupName" :tab-names="groupNames"></tabs-component>
+            <tabs-component v-model="selectedGroupName" :tabs="groupNames.join(',')"></tabs-component>
         </div>
         <div class="h-pad-gap">
             <div class="input-group" v-if="selectedGroupName">

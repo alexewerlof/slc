@@ -27,7 +27,7 @@
             <summary-component :assessment></summary-component>
         </dialog-component>
         <dialog-component title="Export" ref="stateDialog">
-            <tabs-component v-model="selExportTab" :tab-names="exportTabs"></tabs-component>
+            <tabs-component v-model="selExportTab" tabs="JSON, Markdown, Prolog"></tabs-component>
             <div v-if="selExportTab === 'Markdown'">
                 <markdown-component :markdown="assessment.toString()"></markdown-component>
             </div>
@@ -43,7 +43,7 @@
             </div>
         </dialog-component>
         <dialog-component title="Import" ref="importDialog">
-            <tabs-component v-model="selImportTab" :tab-names="importTabs"></tabs-component>
+            <tabs-component v-model="selImportTab" tabs="Examples, JSON"></tabs-component>
             <div v-if="selImportTab === 'Examples'">
                 <div v-for="exampleState of exampleStates">
                     <h3 v-text="exampleState.displayName"></h3>

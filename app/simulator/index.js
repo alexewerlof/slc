@@ -28,7 +28,7 @@ const app = createApp({
             dataCountPerDay: config.simulator.dataCountPerDay.default,
             min: config.simulator.metricRange.min.default,
             max: config.simulator.metricRange.max.default,
-            selectedTab: 'Generator',
+            selectedTab: undefined,
             metricName: config.metricName.default,
             metricUnit: config.metricUnit.default,
             metricData: [],
