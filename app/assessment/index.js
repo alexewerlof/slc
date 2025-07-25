@@ -4,14 +4,11 @@ import { Assessment } from '../../components/assessment.js'
 import { loadJson } from '../../lib/share.js'
 import { registerComponents } from '../../lib/component-loader.js'
 
-const [manifest, exampleJson] = await Promise.all([
-    loadJson('manifest.json'),
-    loadJson('example.json'),
-])
+const manifest = await loadJson('manifest.json')
 
 export const app = createApp({
     data() {
-        const assessment = new Assessment(exampleJson)
+        const assessment = new Assessment()
 
         return {
             manifest,

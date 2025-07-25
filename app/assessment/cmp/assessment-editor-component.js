@@ -14,7 +14,8 @@ import { loadJson } from '../../../lib/share.js'
 import { showToast } from '../../../lib/toast.js'
 
 const exampleFiles = [
-    'example.json',
+    'be-fe-example.json',
+    'gox-example.json',
     'hn-example.json',
 ]
 

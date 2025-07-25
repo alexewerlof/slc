@@ -1,0 +1,98 @@
+{
+    "displayName": "Backend/Frontend",
+    "description": "A simple backend/frontend service producer and consumer",
+    "consumers": [
+        {
+            "id": "c6X10P1TJ",
+            "displayName": "Frontend",
+            "description": "Consumes the backend API to render a UI for the end user",
+            "type": "System",
+            "tasks": [
+                {
+                    "id": "tZNUYA5AD",
+                    "displayName": "Product list",
+                    "description": "To let the users find relevant products"
+                },
+                {
+                    "id": "tGMCRLGN0",
+                    "displayName": "Purchase",
+                    "description": "Let the end user buy their selected products"
+                }
+            ]
+        }
+    ],
+    "providers": [
+        {
+            "id": "pETS8NS7T",
+            "displayName": "Backend",
+            "description": "Provides an API to the frontend",
+            "type": "System",
+            "services": [
+                {
+                    "id": "s895S3B2Y",
+                    "displayName": "Product API",
+                    "description": "",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "u103T33HH",
+                            "taskId": "tZNUYA5AD",
+                            "failures": [
+                                {
+                                    "id": "fZZD37LGP",
+                                    "symptom": "",
+                                    "consequence": "",
+                                    "businessImpact": "",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": []
+                },
+                {
+                    "id": "s29AA0VMJ",
+                    "displayName": "Product Search API",
+                    "description": "With filters, sort, and pagination",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uA5CESP1D",
+                            "taskId": "tZNUYA5AD",
+                            "failures": []
+                        }
+                    ],
+                    "metrics": []
+                },
+                {
+                    "id": "s9WZF0LM2",
+                    "displayName": "Authentication",
+                    "description": "",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "u5T6A95T1",
+                            "taskId": "tGMCRLGN0",
+                            "failures": []
+                        }
+                    ],
+                    "metrics": []
+                },
+                {
+                    "id": "sA4RYACUW",
+                    "displayName": "Payment",
+                    "description": "Shopping card and payment processor integration",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "u70TCM1DG",
+                            "taskId": "tGMCRLGN0",
+                            "failures": []
+                        }
+                    ],
+                    "metrics": []
+                }
+            ]
+        }
+    ]
+}
