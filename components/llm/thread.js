@@ -218,6 +218,7 @@ export class ToolResultBead extends RoledBead {
 export class FileBead extends RoledBead {
     _fileNames = undefined
     _loaded = false
+    content = ''
 
     constructor(...fileNames) {
         super({
@@ -251,6 +252,14 @@ export class FileBead extends RoledBead {
         )
     }
 
+    get content() {
+        if (!this._loaded) {
+            console.log('Loading files... 7')
+            throw new Error(`load() need to be called before accessing content`)
+        }
+        return content
+    }
+
     get message() {
         return {
             role: this.role,
@@ -279,7 +288,7 @@ export class Thread {
         const activeBeads = this.beads.filter((bead) => !bead.isGhost)
         const beadsWithAsyncLoad = activeBeads.filter((bead) => isFn(bead.load))
         if (beadsWithAsyncLoad.length > 0) {
-            await Promise.all(beadsWithAsyncLoad.map((bead) => bead.load))
+            await Promise.all(beadsWithAsyncLoad.map((bead) => bead.load()))
         }
         return activeBeads.map((bead) => bead.message)
     }
