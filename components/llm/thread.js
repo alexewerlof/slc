@@ -282,6 +282,7 @@ export class Thread {
             }
             this.beads.push(bead)
         }
+        return this
     }
 
     async toMessages() {
