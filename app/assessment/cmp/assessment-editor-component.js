@@ -5,13 +5,14 @@ import { Usage } from '../../../components/usage.js'
 import { Metric } from '../../../components/metric.js'
 import { Provider } from '../../../components/provider.js'
 import { Service } from '../../../components/service.js'
-import { ContentBead, FileBead, Thread } from '../../../components/llm/thread.js'
+import { ContentBead, FileBead, Thread, UserPromptBead } from '../../../components/llm/thread.js'
 import { isInstance } from '../../../lib/validation.js'
 import { Toolbox } from '../../../components/llm/toolbox.js'
 import { nextStep } from './workflow.js'
 import { joinLines } from '../../../lib/markdown.js'
 import { loadJson } from '../../../lib/share.js'
 import { showToast } from '../../../lib/toast.js'
+import { Agent } from '../../../components/llm/agent.js'
 
 const exampleFiles = [
     'be-fe-example.json',
@@ -243,7 +244,7 @@ export default {
             .prm('description:string', 'Some description about why this metric exists and where it is measured')
             // .prm('isBoolean:string', '')
             // .prm('numericUnit:string', '')
-            //.prm('failureIds:array', 'An list of failure ids that this metric helps measure')
+            .prm('failureIds:string[]', 'A list of failure ids that this metric helps measure')
             /*
             Need to support array property type
             "items": {
@@ -363,6 +364,35 @@ export default {
             if (confirm(message)) {
                 this.editingInstance = this.assessment
                 this.assessment.clear()
+            }
+        },
+        async addMetricUsingAI(event) {
+            try {
+                event.target.disabled = true
+                const service = this.editingInstance
+                if (!isInstance(service, Service)) {
+                    throw new TypeError(`Expected an instance of Service. Got ${service}`)
+                }
+                const thread = this.thread.clone().clear()
+                thread.add(
+                    new UserPromptBead(
+                        `Please use the available tools to create a new Metric for the Service ${service}`,
+                        `The metric should measure at least one of the following failures:`,
+                        ...service.failures,
+                        `Your metric should be different that the ones that already exist:`,
+                        ...service.metrics,
+                        `Make sure to connect the metric to the relevant failures using its 'failureIds' property.`,
+                        `Only link the failures that can be detected using your suggested metric, nothing else.`,
+                        `Don't ask my permission or confirmation. Just go ahead and use the tools to create the metric and I'll verify your work afterwards.`,
+                    ),
+                )
+                const agent = new Agent()
+                const assistantResponse = await agent.completeThread(thread, this.tools)
+                console.log(assistantResponse.content)
+            } catch (error) {
+                showToast(error)
+            } finally {
+                event.target.disabled = false
             }
         },
     },

@@ -122,6 +122,13 @@
                     Add Another Service
                 </button>
                 <button
+                    @click="addMetricUsingAI($event)"
+                    title="Add a new metric using AI"
+                >
+                    <icon-component name="ai"></icon-component>
+                    Add Metric using AI
+                </button>
+                <button
                     @click="editingInstance = editingInstance.metrics.pushNew()"
                     title="Add a new metric"
                 >
