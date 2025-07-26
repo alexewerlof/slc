@@ -39,6 +39,12 @@ test.describe('parseParamShorthand()', () => {
         assert.deepStrictEqual(parseParamShorthand(paramShorthand), expected)
     })
 
+    test.it('should handle array parameters', () => {
+        const paramShorthand = 'paramName: string[]'
+        const expected = { name: 'paramName', type: 'array', required: false, itemsType: 'string' }
+        assert.deepStrictEqual(parseParamShorthand(paramShorthand), expected)
+    })
+
     test.it('should throw an error if paramShorthand is not a string', () => {
         assert.throws(
             () => parseParamShorthand(123),

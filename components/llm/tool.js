@@ -75,12 +75,16 @@ export function parseParamShorthand(paramShorthand) {
 
     const typeAndRequired = parts[1].trim()
 
-    const typeAndRequiredParts = typeAndRequired.split('*', 2)
-    if (typeAndRequiredParts.length > 1 && typeAndRequiredParts[1].length) {
-        throw new SyntaxError(`Invalid paramShorthand type: ${paramShorthand}`)
+    const required = typeAndRequired.endsWith('*')
+    const type = required ? typeAndRequired.slice(0, -1).trim() : typeAndRequired.trim()
+    const isArray = type.endsWith('[]')
+    if (isArray) {
+        const itemsType = type.slice(0, -2).trim()
+        if (itemsType.length === 0) {
+            throw new SyntaxError(`Invalid paramShorthand array type: ${paramShorthand}`)
+        }
+        return { name, type: 'array', required, itemsType }
     }
-    const required = typeAndRequiredParts.length === 2
-    const type = typeAndRequiredParts[0].trim()
     if (type.length === 0) {
         throw SyntaxError(`Invalid paramShorthand type: ${paramShorthand}`)
     }
@@ -193,8 +197,8 @@ export class Tool {
     }
 
     prm(paramShorthand, description) {
-        const { name, type, required } = parseParamShorthand(paramShorthand)
-        this.properties.push({ name, type, description, required })
+        const parsedParam = parseParamShorthand(paramShorthand)
+        this.properties.push({ ...parsedParam, description })
         return this
     }
 
@@ -209,6 +213,12 @@ export class Tool {
             properties[p.name] = {
                 type: p.type,
                 description: p.description,
+            }
+
+            if (properties[p.name].type === 'array') {
+                properties[p.name].items = {
+                    type: properties[p.name].itemsType,
+                }
             }
         }
 
