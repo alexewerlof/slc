@@ -16,17 +16,17 @@
                 @keydown.enter.exact.prevent="submitPrompt()"
                 :disabled="isEditDisabled"></textarea>
             <button
+                v-if="!isEditDisabled"
                 @click="submitPrompt()"
                 class="button--cta"
                 type="button"
                 title="Send"
                 :disabled="isMessageEmpty"
-                v-if="!isEditDisabled"
             >
                 <icon-component name="send"></icon-component>
             </button>
             <button
-                v-if="this.abortController"
+                v-if="this.isEditDisabled"
                 @click="abortCompletion('User aborted completion')"
                 class="button--danger"
                 title="Stop generation"
