@@ -1,6 +1,6 @@
 .footer-component {
     border-top: var(--bthick) solid var(--divider-color);
-    padding: 4em 0;
+    padding: var(--gap6) var(--gap2);
     text-align: center;
     font-size: 0.9em;
     background-color: var(--background-darker);

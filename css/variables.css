@@ -25,6 +25,8 @@
     --gap2: calc(var(--gap) * 2);
     --gap3: calc(var(--gap) * 3);
     --gap4: calc(var(--gap) * 4);
+    --gap5: calc(var(--gap) * 5);
+    --gap6: calc(var(--gap) * 6);
     --bradius: 3px;
     --bradius2: calc(var(--bradius) * 2);
     --bradius3: calc(var(--bradius) * 3);
