@@ -40,10 +40,24 @@
                             "failures": [
                                 {
                                     "id": "fZZD37LGP",
-                                    "symptom": "",
-                                    "consequence": "",
-                                    "businessImpact": "",
-                                    "impactLevel": 50
+                                    "symptom": "Product list is too slow",
+                                    "consequence": "The user may give up",
+                                    "businessImpact": "Loss of potential sales",
+                                    "impactLevel": 14
+                                },
+                                {
+                                    "id": "fHTPU73FL",
+                                    "symptom": "Product list misses a product that the user was looking for",
+                                    "consequence": "User may not buy what they were looking for",
+                                    "businessImpact": "Loss of potential sale",
+                                    "impactLevel": 21
+                                },
+                                {
+                                    "id": "f1UTTTW1E",
+                                    "symptom": "Product list API returns an unexpected error",
+                                    "consequence": "The product page breaks",
+                                    "businessImpact": "User may lose confidence and the business loses the opportunity to sell",
+                                    "impactLevel": 59
                                 }
                             ]
                         }
