@@ -1,8 +1,8 @@
 <div class="chat-component">
     <chat-thread-component
         class="b-mar-gap2"
-        :thread="thread"
-        :is-busy="isEditDisabled"
+        :thread="agent.thread"
+        :is-busy="agent.isBusy"
         ref="chatThreadComponent">
     </chat-thread-component>
     <div class="input-group">
@@ -14,9 +14,9 @@
                 rows="3"
                 :placeholder="promptPlaceholder"
                 @keydown.enter.exact.prevent="submitPrompt()"
-                :disabled="isEditDisabled"></textarea>
+                :disabled="agent.isBusy"></textarea>
             <button
-                v-if="!isEditDisabled"
+                v-if="!agent.isBusy"
                 @click="submitPrompt()"
                 class="button--cta"
                 type="button"
@@ -26,7 +26,7 @@
                 <icon-component name="send"></icon-component>
             </button>
             <button
-                v-if="this.isEditDisabled"
+                v-if="this.agent.isBusy"
                 @click="abortCompletion('User aborted completion')"
                 class="button--danger"
                 title="Stop generation"

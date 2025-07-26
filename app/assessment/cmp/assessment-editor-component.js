@@ -270,6 +270,8 @@ export default {
 
         toolbox.add('getDateAndTime', 'Get the current date and time').fn(() => String(new Date()))
 
+        const agent = new Agent(thread, toolbox)
+
         return {
             uploadedState: '',
             uploadedStateMessage: 'Not analyzed yet',
@@ -279,6 +281,7 @@ export default {
             selImportTab: undefined,
             selExportTab: undefined,
             editingInstance: this.assessment,
+            agent,
         }
     },
     computed: {
@@ -373,21 +376,18 @@ export default {
                 if (!isInstance(service, Service)) {
                     throw new TypeError(`Expected an instance of Service. Got ${service}`)
                 }
-                const thread = this.thread.clone().clear()
-                thread.add(
-                    new UserPromptBead(
-                        `Please use the available tools to create a new Metric for the Service ${service}`,
-                        `The metric should measure at least one of the following failures:`,
-                        ...service.failures,
-                        `Your metric should be different that the ones that already exist:`,
-                        ...service.metrics,
-                        `Make sure to connect the metric to the relevant failures using its 'failureIds' property.`,
-                        `Only link the failures that can be detected using your suggested metric, nothing else.`,
-                        `Don't ask my permission or confirmation. Just go ahead and use the tools to create the metric and I'll verify your work afterwards.`,
-                    ),
+                const prompt = new UserPromptBead(
+                    `Please use the available tools to create a new Metric for the Service ${service}`,
+                    `The metric should measure at least one of the following failures:`,
+                    ...service.failures,
+                    `Your metric should be different that the ones that already exist:`,
+                    ...service.metrics,
+                    `Make sure to connect the metric to the relevant failures using its 'failureIds' property.`,
+                    `Only link the failures that can be detected using your suggested metric, nothing else.`,
+                    `Don't ask my permission or confirmation. Just go ahead and use the tools to create the metric and I'll verify your work afterwards.`,
                 )
-                const agent = new Agent()
-                const assistantResponse = await agent.completeThread(thread, this.tools)
+                this.agent.thread.add(prompt)
+                const assistantResponse = await this.agent.completeThread()
                 console.log(assistantResponse.content)
             } catch (error) {
                 showToast(error)

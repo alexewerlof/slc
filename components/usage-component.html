@@ -17,6 +17,12 @@
         </select>
         <div class="input-group">
             <div class="button-bar">
+                <button
+                    @click="addFailureUsingAI($event.target)"
+                >
+                    <icon-component name="ai"></icon-component>
+                    Add using AI
+                </button>
                 <button @click="usage.failures.pushNew()">
                     <icon-component name="add"></icon-component>
                     Add

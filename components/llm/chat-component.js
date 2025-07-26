@@ -1,18 +1,16 @@
 import { config } from '../../config.js'
 import { showToast } from '../../lib/toast.js'
-import { ContentBead, Thread, UserPromptBead } from './thread.js'
-import { Toolbox } from './toolbox.js'
+import { ContentBead, UserPromptBead } from './thread.js'
 import { Agent } from './agent.js'
 
 export default {
     data() {
         return {
-            message: this.initiaPrompt,
-            agent: new Agent(),
+            message: this.initialPrompt,
         }
     },
     props: {
-        initiaPrompt: {
+        initialPrompt: {
             type: String,
             default: '',
         },
@@ -20,21 +18,14 @@ export default {
             type: String,
             default: 'Your prompt...',
         },
-        thread: {
-            type: Thread,
+        agent: {
+            type: Agent,
             required: true,
-        },
-        tools: {
-            type: Toolbox,
-            required: false,
         },
     },
     computed: {
         config() {
             return config
-        },
-        isEditDisabled() {
-            return this.agent.isBusy
         },
         isMessageEmpty() {
             return this.message.trim() === ''
@@ -46,14 +37,14 @@ export default {
                 return
             }
             try {
-                this.thread.add(new UserPromptBead(this.message))
+                this.agent.thread.add(new UserPromptBead(this.message))
                 this.$nextTick(() => {
                     this.$refs.chatThreadComponent.scrollToBottom()
                 })
                 this.message = ''
-                await this.agent.completeThread(this.thread, this.tools)
+                await this.agent.completeThread()
             } catch (error) {
-                this.thread.add(
+                this.agent.thread.add(
                     new ContentBead({
                         role: 'system',
                         isDebug: true,

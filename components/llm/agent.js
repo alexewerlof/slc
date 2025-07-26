@@ -10,23 +10,29 @@ export class Agent {
 
     abortController = undefined
 
+    constructor(thread, toolbox) {
+        if (!isInstance(thread, Thread)) {
+            throw new TypeError(`Expected thread to be an instance of Thread. Got ${thread} (${typeof thread})`)
+        }
+        this.thread = thread
+
+        if (isDef(toolbox)) {
+            if (!isInstance(toolbox, Toolbox)) {
+                throw new TypeError(`Expected tools to be an instance of Toolbox. Got ${toolbox} (${typeof toolbox})`)
+            }
+            this.toolbox = toolbox
+        }
+    }
+
     get isBusy() {
         return this.abortController !== undefined
     }
 
-    async completeThread(thread, tools) {
-        if (!isInstance(thread, Thread)) {
-            throw new TypeError(`Expected thread to be an instance of Thread. Got ${thread} (${typeof thread})`)
-        }
-
-        if (isDef(tools) && !isInstance(tools, Toolbox)) {
-            throw new TypeError(`Expected tools to be an instance of Toolbox. Got ${tools} (${typeof tools})`)
-        }
-
+    async completeThread() {
         let consecutiveToolsCalls = 0
         let lastMessageWasToolsCall = true
         do {
-            const messages = await thread.toMessages()
+            const messages = await this.thread.toMessages()
 
             const start = Date.now()
 
@@ -37,7 +43,7 @@ export class Agent {
                     temperature: this.temperature,
                     */
                 signal: this.abortController.signal,
-                tools: tools?.descriptor,
+                tools: this.toolbox?.descriptor,
             })
             this.abortController = undefined
 
@@ -45,27 +51,27 @@ export class Agent {
             const { usage } = completion
             usage.duration = Date.now() - start
 
-            lastMessageWasToolsCall = tools && isToolsCallMessage(message)
+            lastMessageWasToolsCall = this.toolbox && isToolsCallMessage(message)
 
             if (!lastMessageWasToolsCall) {
                 const bead = new AssistantResponse(message.content)
                 bead.usage = usage
-                thread.add(bead)
+                this.thread.add(bead)
                 return bead
             }
 
             const bead = new ToolCallsBead(message.tool_calls)
             bead.usage = usage
-            thread.add(bead)
+            this.thread.add(bead)
             consecutiveToolsCalls++
 
             if (consecutiveToolsCalls >= Agent.MAX_CALLS) {
                 throw new Error(`Stopping due to too many tool calls (max=${Agent.MAX_CALLS})`)
             }
 
-            const toolResultMessages = await tools.exeToolCalls(message)
+            const toolResultMessages = await this.toolbox.exeToolCalls(message)
             for (const toolResultMessage of toolResultMessages) {
-                thread.add(new ToolResultBead(toolResultMessage))
+                this.thread.add(new ToolResultBead(toolResultMessage))
             }
         } while (lastMessageWasToolsCall)
     }

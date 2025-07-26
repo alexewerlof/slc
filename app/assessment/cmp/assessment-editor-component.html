@@ -1,6 +1,6 @@
 <div class="assessment-editor-component mozaic mozaic--gap2 pad-gap2">
     <div class="mozaic__tile mozaic__tile--3c surface">
-        <chat-component :thread :tools initia-prompt="Help me assess my architecture"></chat-component>
+        <chat-component :agent initial-prompt="Help me assess my architecture"></chat-component>
     </div>
     <div class="mozaic__tile mozaic__tile--6c">
         <div class="frost">
@@ -186,7 +186,7 @@
         </div>
         <div v-if="editingClassName === 'Usage'">
             <h2>Usage</h2>
-            <usage-component :usage="editingInstance"></usage-component>
+            <usage-component :usage="editingInstance" :agent></usage-component>
             <div class="button-bar">
                 <button
                     @click="removeUsage(editingInstance)"

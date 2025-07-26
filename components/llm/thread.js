@@ -98,6 +98,11 @@ export class ContentBead extends RoledBead {
         this.contentBits = contentBits
     }
 
+    add(...bits) {
+        this.contentBits.push(...bits)
+        return this
+    }
+
     get content() {
         return joinLines(
             1,
