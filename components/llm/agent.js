@@ -51,7 +51,7 @@ export class Agent {
                 const bead = new AssistantResponse(message.content)
                 bead.usage = usage
                 thread.add(bead)
-                return
+                return bead
             }
 
             const bead = new ToolCallsBead(message.tool_calls)
