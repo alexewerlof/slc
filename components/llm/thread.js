@@ -132,6 +132,27 @@ export class ContentBead extends RoledBead {
     }
 }
 
+export class ErrorBead extends RoledBead {
+    constructor(error) {
+        super({
+            role: 'tool',
+            isDebug: true,
+            isPersistent: false,
+            isGhost: true,
+        })
+        this.error = error
+    }
+
+    get markdown() {
+        return joinLines(
+            1,
+            '```json',
+            JSON.stringify(this.error, null, 2),
+            '```',
+        )
+    }
+}
+
 export class UserPromptBead extends ContentBead {
     constructor(...content) {
         super({ role: 'user' }, ...content)

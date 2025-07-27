@@ -122,11 +122,12 @@
                     Add Another Service
                 </button>
                 <button
-                    @click="addMetricUsingAI($event)"
+                    @click="addMetricUsingAI()"
                     title="Add a new metric using AI"
+                    :disabled="editingInstance.failures.length === 0 || agent.isBusy"
                 >
                     <icon-component name="ai"></icon-component>
-                    Add Metric using AI
+                    Add Metric Using AI
                 </button>
                 <button
                     @click="editingInstance = editingInstance.metrics.pushNew()"

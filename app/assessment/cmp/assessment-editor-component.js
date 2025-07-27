@@ -369,31 +369,38 @@ export default {
                 this.assessment.clear()
             }
         },
-        async addMetricUsingAI(event) {
-            try {
-                event.target.disabled = true
-                const service = this.editingInstance
-                if (!isInstance(service, Service)) {
-                    throw new TypeError(`Expected an instance of Service. Got ${service}`)
-                }
-                const prompt = new UserPromptBead(
-                    `Please use the available tools to create a new Metric for the Service ${service}`,
-                    `The metric should measure at least one of the following failures:`,
-                    ...service.failures,
-                    `Your metric should be different that the ones that already exist:`,
-                    ...service.metrics,
-                    `Make sure to connect the metric to the relevant failures using its 'failureIds' property.`,
-                    `Only link the failures that can be detected using your suggested metric, nothing else.`,
-                    `Don't ask my permission or confirmation. Just go ahead and use the tools to create the metric and I'll verify your work afterwards.`,
-                )
-                this.agent.thread.add(prompt)
-                const assistantResponse = await this.agent.completeThread()
-                console.log(assistantResponse.content)
-            } catch (error) {
-                showToast(error)
-            } finally {
-                event.target.disabled = false
+        async addMetricUsingAI() {
+            const service = this.editingInstance
+            if (!isInstance(service, Service)) {
+                throw new TypeError(`Expected an instance of Service. Got ${service}`)
             }
+            if (!service.failures.length) {
+                throw new Error(`Service ${service} has no failures to set metrics after them`)
+            }
+            const prompt = new UserPromptBead(
+                `Use the available tools to add a new Metric to this Service:`,
+                `**${service}**`,
+                '',
+                `The metric should measure at least one of the following failures:`,
+                ...service.failures.map((failure) => `- ${failure}`),
+                '',
+                `Make sure to connect the metric to the relevant failures using its 'failureIds' property.`,
+                `Only link the failures that can be detected using your suggested metric, nothing else.`,
+                '',
+            )
+            if (service.metrics.length) {
+                prompt.add(
+                    `Your new metric should not overlap with any of the existing metrics:`,
+                    ...service.metrics.map((metric) => `- ${metric}`),
+                    '',
+                )
+            }
+            prompt.add(
+                `Don't ask my permission or confirmation.`,
+                `Just go ahead and use the tools to create the metric and I'll verify your work afterwards.`,
+            )
+            this.agent.thread.add(prompt)
+            await this.agent.completeThread()
         },
     },
 }

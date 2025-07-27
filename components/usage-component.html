@@ -18,10 +18,11 @@
         <div class="input-group">
             <div class="button-bar">
                 <button
-                    @click="addFailureUsingAI($event.target)"
+                    @click="addFailureUsingAI()"
+                    :disabled="agent.isBusy"
                 >
                     <icon-component name="ai"></icon-component>
-                    Add using AI
+                    Add Failure Using AI
                 </button>
                 <button @click="usage.failures.pushNew()">
                     <icon-component name="add"></icon-component>
