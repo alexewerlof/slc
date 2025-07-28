@@ -125,7 +125,7 @@ export class LLMAPI {
                 try {
                     throw await response.text()
                 } catch (errorMessage) {
-                    throw new Error(`HTTP ${methodUpperCase} ${url} status: ${response.status}: ${errorMessage}`)
+                    throw new Error(`HTTP ${response.status} ${methodUpperCase} ${url}\n${errorMessage}`)
                 }
             }
             return response.json()
