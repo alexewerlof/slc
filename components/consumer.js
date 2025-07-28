@@ -1,7 +1,7 @@
 import { config } from '../config.js'
 import { Entity } from '../lib/entity.js'
 import { SelectableArray } from '../lib/selectable-array.js'
-import { isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
+import { isArr, isDef, isInArr, isInstance, isStrLen } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { Task } from './task.js'
 import { Lint } from './lint.js'
@@ -26,30 +26,33 @@ export class Consumer extends Entity {
     }
 
     get state() {
-        return {
-            id: this.id,
-            displayName: this.displayName,
-            description: this.description,
-            type: this.type,
-            tasks: this.tasks.state,
+        const ret = super.state
+
+        if (this.displayName) {
+            ret.displayName = this.displayName
         }
+        if (this.description) {
+            ret.description = this.description
+        }
+        if (this.type) {
+            ret.type = this.type
+        }
+        if (this.tasks.length) {
+            ret.tasks = this.tasks.state
+        }
+
+        return ret
     }
 
     set state(newState) {
-        if (!isObj(newState)) {
-            throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
-        }
+        super.state = newState
+
         const {
-            id,
             displayName,
             description,
             type,
             tasks,
         } = newState
-
-        if (isDef(id)) {
-            this.id = id
-        }
 
         if (isDef(displayName)) {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {

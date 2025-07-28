@@ -24,26 +24,25 @@ export class Task extends Entity {
     }
 
     get state() {
-        return {
-            id: this.id,
-            displayName: this.displayName,
-            description: this.description,
+        const ret = super.state
+
+        if (this.displayName) {
+            ret.displayName = this.displayName
         }
+        if (this.description) {
+            ret.description = this.description
+        }
+
+        return ret
     }
 
     set state(newState) {
-        if (!isObj(newState)) {
-            throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
-        }
+        super.state = newState
+
         const {
-            id,
             displayName,
             description,
         } = newState
-
-        if (isDef(id)) {
-            this.id = id
-        }
 
         if (isDef(displayName)) {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {

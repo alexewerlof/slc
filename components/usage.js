@@ -1,6 +1,6 @@
 import { Entity } from '../lib/entity.js'
 import { SelectableArray } from '../lib/selectable-array.js'
-import { isArr, isDef, isInstance, isObj, isStr } from '../lib/validation.js'
+import { isArr, isDef, isInstance, isStr } from '../lib/validation.js'
 import { Task } from './task.js'
 import { Failure } from './failure.js'
 import { Lint } from './lint.js'
@@ -20,23 +20,22 @@ export class Usage extends Entity {
     }
 
     get state() {
-        return {
-            id: this.id,
-            taskId: this.task.id,
-            failures: this.failures.map((failure) => failure.state),
+        const ret = super.state
+
+        if (this.task) {
+            ret.taskId = this.task.id
         }
+        if (this.failures.length) {
+            ret.failures = this.failures.state
+        }
+
+        return ret
     }
 
     set state(newState) {
-        if (!isObj(newState)) {
-            throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
-        }
+        super.state = newState
 
-        const { id, taskId, failures } = newState
-
-        if (isDef(id)) {
-            this.id = id
-        }
+        const { taskId, failures } = newState
 
         if (!isStr(taskId)) {
             throw new TypeError(`Invalid taskId: ${taskId} (${typeof taskId})`)

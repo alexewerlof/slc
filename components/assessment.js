@@ -25,18 +25,25 @@ export class Assessment extends Entity {
     }
 
     get state() {
-        return {
-            displayName: this.displayName,
-            description: this.description,
-            consumers: this.consumers.state,
-            providers: this.providers.state,
+        const ret = super.state
+
+        if (this.displayName) {
+            ret.displayName = this.displayName
         }
+        if (this.description) {
+            ret.description = this.description
+        }
+        if (this.consumers.length) {
+            ret.consumers = this.consumers.state
+        }
+        if (this.providers.length) {
+            ret.providers = this.providers.state
+        }
+        return ret
     }
 
     set state(newState) {
-        if (!isObj(newState)) {
-            throw new TypeError(`Invalid options: ${newState} (${typeof newState})`)
-        }
+        super.state = newState
 
         const {
             displayName,

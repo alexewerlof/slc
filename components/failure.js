@@ -1,4 +1,4 @@
-import { inRange, isDef, isInstance, isObj, isStr } from '../lib/validation.js'
+import { inRange, isDef, isInstance, isStr } from '../lib/validation.js'
 import { config } from '../config.js'
 import { unicodeSymbol } from '../lib/icons.js'
 import { Usage } from './usage.js'
@@ -29,31 +29,33 @@ export class Failure extends Entity {
     }
 
     get state() {
-        return {
-            id: this.id,
-            symptom: this.symptom,
-            consequence: this.consequence,
-            businessImpact: this.businessImpact,
-            impactLevel: this.impactLevel,
+        const ret = super.state
+
+        if (this.symptom) {
+            ret.symptom = this.symptom
         }
+        if (this.consequence) {
+            ret.consequence = this.consequence
+        }
+        if (this.businessImpact) {
+            ret.businessImpact = this.businessImpact
+        }
+        if (this.impactLevel) {
+            ret.impactLevel = this.impactLevel
+        }
+
+        return ret
     }
 
     set state(newState) {
-        if (!isObj(newState)) {
-            throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
-        }
+        super.state = newState
 
         const {
-            id,
             symptom,
             consequence,
             businessImpact,
             impactLevel,
         } = newState
-
-        if (isDef(id)) {
-            this.id = id
-        }
 
         if (isDef(symptom)) {
             if (!isStr(symptom)) {

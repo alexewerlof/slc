@@ -1,4 +1,4 @@
-import { isArr, isBool, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
+import { isArr, isBool, isDef, isInArr, isInstance, isStrLen } from '../lib/validation.js'
 import { Service } from './service.js'
 import { Failure } from './failure.js'
 import { unicodeSymbol } from '../lib/icons.js'
@@ -30,33 +30,37 @@ export class Metric extends Entity {
     }
 
     get state() {
-        return {
-            id: this.id,
-            displayName: this.displayName,
-            description: this.description,
-            isBoolean: this.isBoolean,
-            numericUnit: this.numericUnit,
-            failureIds: this.linkedFailures.map((failure) => failure.id),
+        const ret = super.state
+
+        if (this.displayName) {
+            ret.displayName = this.displayName
         }
+        if (this.description) {
+            ret.description = this.description
+        }
+        if (this.isBoolean) {
+            ret.isBoolean = this.isBoolean
+        }
+        if (this.numericUnit) {
+            ret.numericUnit = this.numericUnit
+        }
+        if (this.linkedFailures.length) {
+            ret.failureIds = this.linkedFailures.map((failure) => failure.id)
+        }
+
+        return ret
     }
 
     set state(newState) {
-        if (!isObj(newState)) {
-            throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
-        }
+        super.state = newState
 
         const {
-            id,
             displayName,
             description,
             isBoolean,
             numericUnit,
             failureIds,
         } = newState
-
-        if (isDef(id)) {
-            this.id = id
-        }
 
         if (isDef(displayName)) {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {

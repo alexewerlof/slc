@@ -5,7 +5,7 @@ import { Entity } from '../lib/entity.js'
 import { clamp, percent, toFixed } from '../lib/math.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { daysToSeconds, secondsToDays } from '../lib/time.js'
-import { inRange, isArr, isDef, isInstance, isObj } from '../lib/validation.js'
+import { inRange, isArr, isDef, isInstance } from '../lib/validation.js'
 import { Window } from '../lib/window.js'
 import { Alert } from './alert.js'
 import { Formula } from './ui/formula.js'
@@ -46,10 +46,11 @@ export class Objective extends Entity {
     }
 
     get state() {
-        const ret = {
-            target: this.target,
-            windowDays: this.windowDays,
-        }
+        const ret = super.state
+
+        ret.target = this.target
+        ret.windowDays = this.windowDays
+
         if (this.indicator.lowerBound) {
             ret.lowerThreshold = this.lowerThreshold
         }
@@ -59,13 +60,12 @@ export class Objective extends Entity {
         if (this.alerts.length) {
             ret.alerts = this.alerts.map((alert) => alert.state)
         }
+
         return ret
     }
 
     set state(newState) {
-        if (!isObj(newState)) {
-            throw new TypeError(`state should be an object. Got: ${newState} ${typeof newState}`)
-        }
+        super.state = newState
 
         const {
             target,

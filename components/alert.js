@@ -3,7 +3,7 @@ import { FailureWindow } from '../lib/failure-window.js'
 import { entity2symbolNorm, percL10n } from '../lib/fmt.js'
 import { Entity } from '../lib/entity.js'
 import { toFixed } from '../lib/math.js'
-import { inRange, isDef, isInstance, isObj } from '../lib/validation.js'
+import { inRange, isDef, isInstance } from '../lib/validation.js'
 import { Objective } from './objective.js'
 
 export class Alert extends Entity {
@@ -32,10 +32,10 @@ export class Alert extends Entity {
     }
 
     get state() {
-        const ret = {
-            burnRate: this.burnRate,
-            longWindowPerc: this.longWindowPerc,
-        }
+        const ret = super.state
+
+        ret.burnRate = this.burnRate
+        ret.longWindowPerc = this.longWindowPerc
 
         if (this.useShortWindow) {
             ret.shortWindowDivider = this.shortWindowDivider
@@ -45,9 +45,7 @@ export class Alert extends Entity {
     }
 
     set state(newState) {
-        if (!isObj(newState)) {
-            throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
-        }
+        super.state = newState
 
         const {
             burnRate,

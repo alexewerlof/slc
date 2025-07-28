@@ -1,5 +1,5 @@
 import { unicodeSymbol } from '../lib/icons.js'
-import { isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
+import { isDef, isInArr, isInstance, isStrLen } from '../lib/validation.js'
 import { Provider } from './provider.js'
 import { config } from '../config.js'
 import { SelectableArray } from '../lib/selectable-array.js'
@@ -31,32 +31,37 @@ export class Service extends Entity {
     }
 
     get state() {
-        return {
-            id: this.id,
-            displayName: this.displayName,
-            description: this.description,
-            type: this.type,
-            usages: this.usages.state,
-            metrics: this.metrics.state,
+        const ret = super.state
+
+        if (this.displayName) {
+            ret.displayName = this.displayName
         }
+        if (this.description) {
+            ret.description = this.description
+        }
+        if (this.type) {
+            ret.type = this.type
+        }
+        if (this.usages.length) {
+            ret.usages = this.usages.state
+        }
+        if (this.metrics.length) {
+            ret.metrics = this.metrics.state
+        }
+
+        return ret
     }
 
     set state(newState) {
-        if (!isObj(newState)) {
-            throw new TypeError(`state should be an object. Got: ${newState} (${typeof newState})`)
-        }
+        super.state = newState
+
         const {
-            id,
             displayName,
             description,
             type,
             usages,
             metrics,
         } = newState
-
-        if (isDef(id)) {
-            this.id = id
-        }
 
         if (isDef(displayName)) {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {

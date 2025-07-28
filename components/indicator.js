@@ -3,7 +3,7 @@ import { entity2symbolNorm } from '../lib/fmt.js'
 import { Entity } from '../lib/entity.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { humanTimeSlices } from '../lib/time.js'
-import { inRange, isArr, isDef, isInArr, isObj, isStrLen } from '../lib/validation.js'
+import { inRange, isArr, isDef, isInArr, isStrLen } from '../lib/validation.js'
 import { Formula } from './ui/formula.js'
 import { Objective } from './objective.js'
 
@@ -90,7 +90,8 @@ export class Indicator extends Entity {
     }
 
     get state() {
-        const ret = {}
+        const ret = super.state
+
         if (this.displayName) {
             ret.displayName = this.displayName
         }
@@ -128,9 +129,7 @@ export class Indicator extends Entity {
      * @param {IndicatorOptions} [newState] The options used to configure the indicator.
      */
     set state(newState) {
-        if (!isObj(newState)) {
-            throw new TypeError(`state should be an object. Got ${newState} (${typeof newState})`)
-        }
+        super.state = newState
 
         const {
             displayName,

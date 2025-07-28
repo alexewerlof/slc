@@ -1,5 +1,5 @@
 import { Service } from './service.js'
-import { isArr, isDef, isInArr, isInstance, isObj, isStrLen } from '../lib/validation.js'
+import { isArr, isDef, isInArr, isInstance, isStrLen } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { config } from '../config.js'
@@ -28,30 +28,33 @@ export class Provider extends Entity {
     }
 
     get state() {
-        return {
-            id: this.id,
-            displayName: this.displayName,
-            description: this.description,
-            type: this.type,
-            services: this.services.map((service) => service.state),
+        const ret = super.state
+
+        if (this.displayName) {
+            ret.displayName = this.displayName
         }
+        if (this.description) {
+            ret.description = this.description
+        }
+        if (this.type) {
+            ret.type = this.type
+        }
+        if (this.services.length) {
+            ret.services = this.services.map((service) => service.state)
+        }
+
+        return ret
     }
 
     set state(newState) {
-        if (!isObj(newState)) {
-            throw new TypeError(`Invalid options: ${newState} (${typeof newState})`)
-        }
+        super.state = newState
+
         const {
-            id,
             displayName,
             description,
             type,
             services,
         } = newState
-
-        if (isDef(id)) {
-            this.id = id
-        }
 
         if (isDef(displayName)) {
             if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
