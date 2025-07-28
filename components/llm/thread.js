@@ -136,7 +136,7 @@ export class ErrorBead extends RoledBead {
     constructor(error) {
         super({
             role: 'tool',
-            isDebug: true,
+            isDebug: false,
             isPersistent: false,
             isGhost: true,
         })
@@ -146,8 +146,10 @@ export class ErrorBead extends RoledBead {
     get markdown() {
         return joinLines(
             1,
-            '```json',
-            JSON.stringify(this.error, null, 2),
+            '## Error',
+            '',
+            '```txt',
+            this.error,
             '```',
         )
     }
