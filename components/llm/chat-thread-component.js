@@ -2,13 +2,6 @@ import { Thread } from './thread.js'
 import { llm } from './llm.js'
 
 export default {
-    data() {
-        return {
-            showDebugInfo: false,
-            llm,
-            _scrollInterval: null,
-        }
-    },
     props: {
         thread: {
             type: Thread,
@@ -19,9 +12,18 @@ export default {
             default: false,
         },
     },
+    data() {
+        return {
+            showDebugInfo: false,
+            llm,
+            wasBusy: this.isBusy,
+            _scrollInterval: null,
+        }
+    },
     mounted() {
         this._scrollInterval = setInterval(() => {
-            if (this.isBusy) {
+            if (this.isBusy || this.wasBusy) {
+                this.wasBusy = this.isBusy
                 this.scrollToBottom()
             }
         }, 500)

@@ -3,11 +3,6 @@ import { UserPromptBead } from './thread.js'
 import { Agent } from './agent.js'
 
 export default {
-    data() {
-        return {
-            message: this.initialPrompt,
-        }
-    },
     props: {
         initialPrompt: {
             type: String,
@@ -21,6 +16,11 @@ export default {
             type: Agent,
             required: true,
         },
+    },
+    data() {
+        return {
+            message: this.initialPrompt,
+        }
     },
     computed: {
         config() {
@@ -36,13 +36,9 @@ export default {
                 return
             }
             this.agent.thread.add(new UserPromptBead(this.message))
-            this.$nextTick(() => {
-                this.$refs.chatThreadComponent.scrollToBottom()
-            })
             this.message = ''
             await this.agent.completeThread()
             this.$nextTick(() => {
-                this.$refs.chatThreadComponent.scrollToBottom()
                 this.$refs.promptInput.focus()
             })
         },
