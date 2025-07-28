@@ -172,9 +172,14 @@ export class Service extends Entity {
                 'No failure is identified for any of the usages.',
                 'Please select a usage and declare some failures',
             )
+        } else if (this.failures.some((failure) => failure.metrics.length === 0)) {
+            lint.warn(
+                'Some Service Failures are not associated with any Metrics.',
+                'Please associate all failures with some metric that can detect them.',
+            )
         } else if (this.metrics.length === 0) {
             lint.warn(
-                'This service has no metrics associated with it',
+                'This service has no metrics detecting its failures.',
                 'Please add some metrics.',
             )
         }
