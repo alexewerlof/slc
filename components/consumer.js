@@ -1,21 +1,18 @@
-import { config } from '../config.js'
 import { Entity } from '../lib/entity.js'
 import { SelectableArray } from '../lib/selectable-array.js'
-import { isArr, isDef, isInArr, isInstance, isStrLen } from '../lib/validation.js'
+import { isArr, isDef, isInArr, isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { Task } from './task.js'
 import { Lint } from './lint.js'
 
 export class Consumer extends Entity {
     static possibleTypes = ['System', 'Component', 'Group']
-    displayName = config.displayName.default
-    description = config.description.default
     type = Consumer.possibleTypes[0]
     assessment = null
     tasks = new SelectableArray(Task, this)
 
     constructor(assessment, state) {
-        super('c')
+        super('c', true)
         if (!isInstance(assessment, Assessment)) {
             throw new Error(`Consumer.constructor: assessment must be an instance of Assessment. Got ${assessment}`)
         }
@@ -28,12 +25,6 @@ export class Consumer extends Entity {
     get state() {
         const ret = super.state
 
-        if (this.displayName) {
-            ret.displayName = this.displayName
-        }
-        if (this.description) {
-            ret.description = this.description
-        }
         if (this.type) {
             ret.type = this.type
         }
@@ -48,25 +39,9 @@ export class Consumer extends Entity {
         super.state = newState
 
         const {
-            displayName,
-            description,
             type,
             tasks,
         } = newState
-
-        if (isDef(displayName)) {
-            if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
-                throw new TypeError(`Invalid displayName. ${displayName}`)
-            }
-            this.displayName = displayName
-        }
-
-        if (isDef(description)) {
-            if (!isStrLen(description, config.description.minLength, config.description.maxLength)) {
-                throw new TypeError(`Invalid description. ${description}`)
-            }
-            this.description = description
-        }
 
         if (isDef(type)) {
             if (!isInArr(type, Consumer.possibleTypes)) {

@@ -1,27 +1,24 @@
 {
+    "id": "a6T5VT68G",
     "displayName": "Hackernews",
     "description": "An example based on how HN may work",
     "consumers": [
         {
             "id": "cFPM398A0",
             "displayName": "Frontend",
-            "description": "",
             "type": "System",
             "tasks": [
                 {
                     "id": "tU4CWW0P7",
-                    "displayName": "List news articles",
-                    "description": ""
+                    "displayName": "List news articles"
                 },
                 {
                     "id": "tSSRFP59E",
-                    "displayName": "See/Edit Personal info",
-                    "description": ""
+                    "displayName": "See/Edit Personal info"
                 },
                 {
                     "id": "tK20Y3ZB3",
-                    "displayName": "Comment on a post",
-                    "description": ""
+                    "displayName": "Comment on a post"
                 }
             ]
         }
@@ -30,7 +27,6 @@
         {
             "id": "p28PRYHP7",
             "displayName": "Hacker News Backend",
-            "description": "",
             "type": "System",
             "services": [
                 {
@@ -57,9 +53,6 @@
                         {
                             "id": "mLFJHZ1VU",
                             "displayName": "Latency",
-                            "description": "",
-                            "isBoolean": false,
-                            "numericUnit": "",
                             "failureIds": [
                                 "fP6XD1CK8"
                             ]
@@ -91,8 +84,6 @@
                             "id": "mGK1N4P9E",
                             "displayName": "Submission Latency",
                             "description": "The time it takes to submit a link.",
-                            "isBoolean": false,
-                            "numericUnit": "",
                             "failureIds": [
                                 "fKZD0MJ3T"
                             ]
@@ -124,8 +115,6 @@
                             "id": "m4SKUGYAH",
                             "displayName": "Login Latency",
                             "description": "The time it takes to log in.",
-                            "isBoolean": false,
-                            "numericUnit": "",
                             "failureIds": [
                                 "fRXX1W5XU"
                             ]
@@ -157,8 +146,6 @@
                             "id": "m0ZNCXQBL",
                             "displayName": "Comment Load Time",
                             "description": "The time it takes to load the comments.",
-                            "isBoolean": false,
-                            "numericUnit": "",
                             "failureIds": [
                                 "fC97WUD3T"
                             ]
@@ -211,8 +198,6 @@
                             "id": "m8HJH7CHZ",
                             "displayName": "Page Load Time",
                             "description": "The time it takes to load the page as measured in the user's browser (this includes cache impact as well).",
-                            "isBoolean": false,
-                            "numericUnit": "",
                             "failureIds": [
                                 "f8T5BMHFJ",
                                 "f9NPHV2TN"

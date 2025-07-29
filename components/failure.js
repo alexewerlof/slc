@@ -14,7 +14,7 @@ export class Failure extends Entity {
     impactLevel = config.impactLevel.default
 
     constructor(usage, state) {
-        super('f')
+        super('f', false)
         if (!isInstance(usage, Usage)) {
             throw new Error(`Expected an instance of Usage. Got: ${usage} (${typeof usage})`)
         }
@@ -22,10 +22,6 @@ export class Failure extends Entity {
         if (isDef(state)) {
             this.state = state
         }
-    }
-
-    get displayName() {
-        return this.symptom
     }
 
     get state() {

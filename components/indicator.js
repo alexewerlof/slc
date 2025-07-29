@@ -42,12 +42,6 @@ Metric data points impact its condition for good||bad:
  */
 
 export class Indicator extends Entity {
-    /** @type {string} The title of the SLI */
-    displayName = config.displayName.default
-
-    /** @type {string} The description of the SLI */
-    description = config.description.default
-
     /** @type {string} Definition of valid events for event-based SLIs */
     eventUnit = config.eventUnit.default
 
@@ -83,7 +77,7 @@ export class Indicator extends Entity {
      * @param {IndicatorOptions} [state] The options used to configure the indicator.
      */
     constructor(state) {
-        super('i')
+        super('i', true)
         if (isDef(state)) {
             this.state = state
         }
@@ -92,12 +86,6 @@ export class Indicator extends Entity {
     get state() {
         const ret = super.state
 
-        if (this.displayName) {
-            ret.displayName = this.displayName
-        }
-        if (this.description) {
-            ret.description = this.description
-        }
         if (this.metricName) {
             ret.metricName = this.metricName
         }
@@ -132,8 +120,6 @@ export class Indicator extends Entity {
         super.state = newState
 
         const {
-            displayName,
-            description,
             metricName,
             metricUnit,
             lowerBound,
@@ -143,20 +129,6 @@ export class Indicator extends Entity {
             expectedDailyEvents,
             objectives,
         } = newState
-
-        if (isDef(displayName)) {
-            if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
-                throw new Error(`Invalid displayName: ${displayName} (${typeof displayName})`)
-            }
-            this.displayName = displayName
-        }
-
-        if (isDef(description)) {
-            if (!isStrLen(description, config.description.minLength, config.description.maxLength)) {
-                throw new Error(`Invalid description: ${description} (${typeof description})`)
-            }
-            this.description = description
-        }
 
         if (isDef(metricName)) {
             if (!isStrLen(metricName, config.metricName.minLength, config.metricName.maxLength)) {

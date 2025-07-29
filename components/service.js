@@ -1,7 +1,6 @@
 import { unicodeSymbol } from '../lib/icons.js'
-import { isDef, isInArr, isInstance, isStrLen } from '../lib/validation.js'
+import { isDef, isInArr, isInstance } from '../lib/validation.js'
 import { Provider } from './provider.js'
-import { config } from '../config.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { Metric } from './metric.js'
 import { Usage } from './usage.js'
@@ -13,14 +12,12 @@ const scopeIcon = unicodeSymbol('scope')
 export class Service extends Entity {
     static possibleTypes = ['Automated', 'Manual', 'Hybrid']
     provider = null
-    displayName = config.displayName.default
-    description = config.description.default
     usages = new SelectableArray(Usage, this)
     metrics = new SelectableArray(Metric, this)
     _type = Service.possibleTypes[0]
 
     constructor(provider, state) {
-        super('s')
+        super('s', true)
         if (!isInstance(provider, Provider)) {
             throw new Error(`Service.constructor: provider must be an instance of Provider. Got ${provider}`)
         }
@@ -33,12 +30,6 @@ export class Service extends Entity {
     get state() {
         const ret = super.state
 
-        if (this.displayName) {
-            ret.displayName = this.displayName
-        }
-        if (this.description) {
-            ret.description = this.description
-        }
         if (this.type) {
             ret.type = this.type
         }
@@ -56,26 +47,10 @@ export class Service extends Entity {
         super.state = newState
 
         const {
-            displayName,
-            description,
             type,
             usages,
             metrics,
         } = newState
-
-        if (isDef(displayName)) {
-            if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
-                throw new TypeError(`Invalid displayName. ${displayName}`)
-            }
-            this.displayName = displayName
-        }
-
-        if (isDef(description)) {
-            if (!isStrLen(description, config.description.minLength, config.description.maxLength)) {
-                throw new TypeError(`Invalid description. ${description}`)
-            }
-            this.description = description
-        }
 
         if (isDef(type)) {
             if (!isInArr(type, Service.possibleTypes)) {

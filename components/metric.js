@@ -1,9 +1,8 @@
-import { isArr, isBool, isDef, isInArr, isInstance, isStrLen } from '../lib/validation.js'
+import { isArr, isBool, isDef, isInArr, isInstance } from '../lib/validation.js'
 import { Service } from './service.js'
 import { Failure } from './failure.js'
 import { unicodeSymbol } from '../lib/icons.js'
 import { Condition } from './condition.js'
-import { config } from '../config.js'
 import { Entity } from '../lib/entity.js'
 import { Lint } from './lint.js'
 
@@ -11,15 +10,13 @@ const scopeIcon = unicodeSymbol('scope')
 
 export class Metric extends Entity {
     service = null
-    displayName = ''
-    description = ''
     isBoolean = false
     numericUnit = ''
     condition = new Condition(this)
     linkedFailures = []
 
     constructor(service, state) {
-        super('m')
+        super('m', true)
         if (!isInstance(service, Service)) {
             throw new Error(`Expected an instance of Service. Got ${service}`)
         }
@@ -32,12 +29,6 @@ export class Metric extends Entity {
     get state() {
         const ret = super.state
 
-        if (this.displayName) {
-            ret.displayName = this.displayName
-        }
-        if (this.description) {
-            ret.description = this.description
-        }
         if (this.isBoolean) {
             ret.isBoolean = this.isBoolean
         }
@@ -55,25 +46,11 @@ export class Metric extends Entity {
         super.state = newState
 
         const {
-            displayName,
-            description,
             isBoolean,
             numericUnit,
             failureIds,
         } = newState
 
-        if (isDef(displayName)) {
-            if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
-                throw new TypeError(`Invalid displayName. ${displayName}`)
-            }
-            this.displayName = displayName
-        }
-        if (isDef(description)) {
-            if (!isStrLen(description, config.description.minLength, config.description.maxLength)) {
-                throw new TypeError(`Invalid description. ${description}`)
-            }
-            this.description = description
-        }
         if (isDef(isBoolean)) {
             if (!isBool(isBoolean)) {
                 throw new TypeError(`Invalid isBoolean. ${isBoolean}`)

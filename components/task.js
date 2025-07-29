@@ -1,7 +1,6 @@
 import { unicodeSymbol } from '../lib/icons.js'
-import { isDef, isInstance, isObj, isStrLen } from '../lib/validation.js'
+import { isInstance, isObj } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
-import { config } from '../config.js'
 import { Entity } from '../lib/entity.js'
 import { Lint } from './lint.js'
 
@@ -9,53 +8,15 @@ const scopeIcon = unicodeSymbol('scope')
 
 export class Task extends Entity {
     consumer = null
-    displayName = config.displayName.default
-    description = config.description.default
 
     constructor(consumer, state) {
-        super('t')
+        super('t', true)
         if (!isInstance(consumer, Consumer)) {
             throw new Error(`Task.constructor: consumer must be an instance of Consumer. Got ${consumer}`)
         }
         this.consumer = consumer
         if (isObj(state)) {
             this.state = state
-        }
-    }
-
-    get state() {
-        const ret = super.state
-
-        if (this.displayName) {
-            ret.displayName = this.displayName
-        }
-        if (this.description) {
-            ret.description = this.description
-        }
-
-        return ret
-    }
-
-    set state(newState) {
-        super.state = newState
-
-        const {
-            displayName,
-            description,
-        } = newState
-
-        if (isDef(displayName)) {
-            if (!isStrLen(displayName, config.displayName.minLength, config.displayName.maxLength)) {
-                throw new TypeError(`Invalid displayName. ${displayName}`)
-            }
-            this.displayName = displayName
-        }
-
-        if (isDef(description)) {
-            if (!isStrLen(description, config.description.minLength, config.description.maxLength)) {
-                throw new TypeError(`Invalid description. ${description}`)
-            }
-            this.description = description
         }
     }
 

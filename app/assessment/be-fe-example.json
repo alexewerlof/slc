@@ -1,4 +1,5 @@
 {
+    "id": "aU4XTFCW7",
     "displayName": "Backend/Frontend",
     "description": "A simple backend/frontend service producer and consumer",
     "consumers": [
@@ -31,7 +32,6 @@
                 {
                     "id": "s895S3B2Y",
                     "displayName": "Product API",
-                    "description": "",
                     "type": "Automated",
                     "usages": [
                         {
@@ -61,8 +61,7 @@
                                 }
                             ]
                         }
-                    ],
-                    "metrics": []
+                    ]
                 },
                 {
                     "id": "s29AA0VMJ",
@@ -72,25 +71,20 @@
                     "usages": [
                         {
                             "id": "uA5CESP1D",
-                            "taskId": "tZNUYA5AD",
-                            "failures": []
+                            "taskId": "tZNUYA5AD"
                         }
-                    ],
-                    "metrics": []
+                    ]
                 },
                 {
                     "id": "s9WZF0LM2",
                     "displayName": "Authentication",
-                    "description": "",
                     "type": "Automated",
                     "usages": [
                         {
                             "id": "u5T6A95T1",
-                            "taskId": "tGMCRLGN0",
-                            "failures": []
+                            "taskId": "tGMCRLGN0"
                         }
-                    ],
-                    "metrics": []
+                    ]
                 },
                 {
                     "id": "sA4RYACUW",
@@ -100,11 +94,9 @@
                     "usages": [
                         {
                             "id": "u70TCM1DG",
-                            "taskId": "tGMCRLGN0",
-                            "failures": []
+                            "taskId": "tGMCRLGN0"
                         }
-                    ],
-                    "metrics": []
+                    ]
                 }
             ]
         }
