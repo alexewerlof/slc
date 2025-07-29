@@ -1,40 +1,13 @@
 <div class="service-component">
-    <id-component :entity="service"></id-component>
-    <lint-component :lint="service.lint"></lint-component>
-    <h3>Provider</h3>
+    <h3>Provided By</h3>
     <markdown-component :markdown="service.provider.markdownDisplayName"></markdown-component>
-    <fieldset>
-        <legend>Basics</legend>
-        <div class="input-group">
-            <label for="service-name">
-                Name
-                <help-component>
-                    <p>
-                        Give your service provider a name to be able to recognize it.
-                        The description is optional but can be useful to provide more context.
-                    </p>            
-                </help-component>
-            </label>
-            <input
-                id="service-name"
-                type="text"
-                v-model="service.displayName">
-        </div>
-        <div class="input-group">
-            <label for="service-description">
-                Description
-                <help-component>
-                    <p>
-                        The description is optional but can be useful to provide more context.
-                        It can be a short paragraph or a link to a document.
-                    </p>
-                </help-component>
-            </label>
-            <textarea
-                id="service-description"
-                v-model="service.description"></textarea>
-        </div>
-    </fieldset>
+    <entity-component
+        :entity="service"
+        display-name-hint="Feature or capability"
+        display-name-placeholder="Payment API, data storage, cloud governance, etc."
+        description-hint="Add more context to the service"
+        description-placeholder="Mission critical, support service, etc."
+    ></entity-component>
     <div class="input-group">
         <label>
             Type

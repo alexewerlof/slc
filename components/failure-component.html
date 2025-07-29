@@ -1,6 +1,5 @@
 <div class="failure-component">
-    <id-component :entity="failure"></id-component>
-    <lint-component :lint="failure.lint"></lint-component>
+    <entity-component :entity="failure"></entity-component>
     <fieldset>
         <legend>Consumer Perspective</legend>
         <div class="input-group">
@@ -26,7 +25,7 @@
                 </help-component>
                 <div class="subtle-hint">From {{ failure.usage.task.consumer }} perspective</div>
             </label>
-            <input type="text" v-model="failure.symptom">
+            <textarea v-model="failure.symptom"></textarea>
         </div>
 
         <div class="input-group">
@@ -41,8 +40,11 @@
                         </ol>
                     </p>
                 </help-component>
+                <div class="subtle-hint">
+                    What is the impact of this failure on the consumer task (goals, objectives, motivations,etc.)?
+                </div>
             </label>
-            <input type="text" v-model="failure.consequence">
+            <textarea v-model="failure.consequence"></textarea>
         </div>
     </fieldset>
 
@@ -59,8 +61,11 @@
                         When thinking about the business impact, think about the money, time, and resources that are lost when this failure occurs.
                     </p>
                 </help-component>
+                <div class="subtle-hint">
+                    How does this failure impact the ability of the business to make or save money?
+                </div>
             </label>
-            <input type="text" v-model="failure.businessImpact">
+            <textarea v-model="failure.businessImpact"></textarea>
         </div>
         <div class="input-group">
             <label>

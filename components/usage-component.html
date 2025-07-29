@@ -1,10 +1,9 @@
 <div class="dependency-component">
-    <id-component :entity="usage"></id-component>
     <h3>Service</h3>
     <markdown-component :markdown="usage.service.markdownId"></markdown-component>
     <h3>Task</h3>
     <markdown-component :markdown="usage.task.markdownId"></markdown-component>
-    <lint-component :lint="usage.lint"></lint-component>
+    <entity-component :entity="usage"></entity-component>
     <fieldset class="b-mar-gap2">
         <legend>Failure ({{ usage.failures.length }})</legend>
         <select

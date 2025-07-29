@@ -1,49 +1,10 @@
 <div class="provider-component">
-    <id-component :entity="provider"></id-component>
-    <lint-component :lint="provider.lint"></lint-component>
-    <fieldset>
-        <legend>Basics</legend>
-        <div class="input-group">
-            <label for="provider-display-name">
-                Name
-                <help-component>
-                    <p>
-                        <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">
-                            Provider
-                        </ext-link>
-                        refers to the entity that provides the service (i.e., capabilities, features, solutions)
-                        to the consumers.
-                    </p>
-                    <p>
-                        Give your provider a name to be able to recognize it.
-                        The description is optional but can be useful to provide more context. 
-                    </p>
-                    <p>
-                        A provider may have many components but they are irrelevant to the consumers.
-                        As far as the consumer is concerned, the provider is responsible to provide a service that they
-                        consume to achieve a goal.
-                    </p>
-                </help-component>
-            </label>
-            <input
-                id="provider-display-name"
-                type="text"
-                placeholder="e.g., Payment API, User Storage, etc."
-                v-model="provider.displayName">
-        </div>
-        <div class="input-group">
-            <label for="provider-description">
-                Description
-                <help-component>
-                    <p>
-                        The description is optional but can be useful to provide more context.
-                        It can be a short paragraph or a link to a document.
-                    </p>
-                </help-component>
-            </label>
-            <textarea id="provider-description" v-model="provider.description"></textarea>
-        </div>
-    </fieldset>
+    <entity-component
+        :entity="provider"
+        display-name-hint="What provides the service?"
+        display-name-placeholder="Payment API, User Storage, etc."
+        description-hint="Who owns this provider?"
+    ></entity-component>
     <div class="input-group">
         <label for="provider-type-selector">
             Type

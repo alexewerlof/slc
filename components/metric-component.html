@@ -1,24 +1,13 @@
 <div class="metric-component">
-    <id-component :entity="metric"></id-component>
-    <lint-component :lint="metric.lint"></lint-component>
     <h3>Service</h3>
     <markdown-component :markdown="metric.service.markdownDisplayName"></markdown-component>
-    <fieldset>
-        <legend>Basics</legend>
-        <div class="input-group">
-            <label for="metric-input">Name</label>
-            <input type="text" id="metric-input" placeholder="Enter metric name" v-model="metric.displayName" />
-        </div>
-        <div class="input-group">
-            <label for="metric-description">Description</label>
-            <textarea
-                id="metric-description"
-                type="text"
-                placeholder="Enter metric description"
-                v-model="metric.description">
-            </textarea>
-        </div>
-    </fieldset>
+    <entity-component
+        :entity="metric"
+        display-name-hint="Metric Name"
+        display-name-placeholder="What is the metric measureing?"
+        description-hint="How is it measured and where?"
+        description-placeholder="Latency measured at the API gateway"
+    ></entity-component>
     <h3>
         Symptoms
         <help-component>

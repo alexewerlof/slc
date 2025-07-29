@@ -1,28 +1,11 @@
 <div class="provider-component">
-    <id-component :entity="consumer"></id-component>
-    <lint-component :lint="consumer.lint"></lint-component>
-    <fieldset>
-        <legend>Basics</legend>
-        <div class="input-group">
-            <label for="consumer-display-name">
-                Name
-                <help-component>
-                    You can name this consumer to be easier to recognize.
-                </help-component>
-            </label>
-            <input id="consumer-display-name" type="text" v-model="consumer.displayName">
-        </div>
-        <div class="input-group">
-            <label for="consumer-description">
-                Description
-                <help-component>
-                    Add some description about this consumer, their mission, and what defines success for them.
-                    In the task section you can add more info about why this consumer uses different services.
-                </help-component>
-            </label>
-            <textarea id="consumer-description" v-model="consumer.description"></textarea>
-        </div>
-    </fieldset>
+    <entity-component
+        :entity="consumer"
+        display-name-label="sli-displayName-input"
+        display-name-hint="What or who consumes the services"
+        display-name-placeholder="End user, front-end, 3rd party app, etc."
+        description-hint="More info that helps the assessment?"
+    ></entity-component>
     <div class="input-group">
         <label for="consumer-type">
             Type

@@ -1,33 +1,11 @@
 <div class="task-component">
-    <id-component :entity="task"></id-component>
-    <lint-component :lint="task.lint"></lint-component>
     <h3>Consumer</h3>
     <markdown-component :markdown="task.consumer.markdownDisplayName"></markdown-component>
-    <fieldset>
-        <legend>Basics</legend>
-        <label for="task-display-name">
-            Name
-            <help-component>
-                <p>
-                    Give a name to this task to indicate how {{ task.consumer.displayName }}
-                    uses services.
-                </p>
-            </help-component>
-        </label>
-        <input
-            type="text"
-            id="task-display-name"
-            v-model="task.displayName">
-
-        <label for="task-description">
-            Description
-        </label>
-        <textarea
-            id="task-description"
-            placeholder="e.g., Get user data from API"
-            v-model="task.description"></textarea> 
-    </fieldset>
-
+    <entity-component
+        :entity="task"
+        display-name-hint="Consumer goal or objective"
+        description-hint="What is the consumer trying to achieve with this task?"
+    ></entity-component>
     <h4>
         Consumes
         <help-component>
