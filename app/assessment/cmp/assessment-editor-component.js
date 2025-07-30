@@ -38,6 +38,8 @@ export default {
                 '```json',
                 () => JSON.stringify(this.assessment.state),
                 '```',
+                () =>
+                    this.editingInstance ? `Currently the entity ${this.editingInstance.id} is selected in the UI` : '',
                 'To help you guide the user through the assessment, a deterministic algorithm is used to analyze the current state of the assessment and here is what you need to do:',
                 () => nextStep(this.assessment),
                 'To help you understand the assessment, we have some heuristics that analyze the assessment and all its entities. If there is a a warning or error, please prioritize fixing them.',

@@ -1,3 +1,26 @@
+# Ideas
+
+## Assessment
+
+- The feedback button covers important controls in the UI
+- The absolute first step should be to get a generic sense of what the services do (e.g. the assessment description)
+- The initial Gemini Key setup isn't exactly obvious. We need a visual guide.
+- The consumer box (under service) should have "Add task" directly so that the user doesn't have to go back to the consumer every time.
+- Adding a new consumer or provider requires clicking an empty part of the diagram which is too hard and obscure.
+- The 
+- Add a hint that Ctrl+Enter creates a new line (under the chat edit box)
+- Show the type title next to each row or column (e.g. service provider), "I don't know what does the green or purple mean even"
+- Warning boxes are so big that the checkboxes get hidden!
+- The user has to do a lot of scroll up and down even though there's enough vertical space available
+- To introduce the app to the public user, you need some sort of explanation:
+  - Intro pop up
+  - Blog post
+  - YouTube video
+  - Live workshop
+- The tool should generate SLD
+- How about some sort of SLA?
+- Maybe temporarily save the state in local storage (and allow deleting if the page is reloaded)
+
 # High prio
 
 - [ ] Support undo/redo (Version history)
@@ -26,6 +49,8 @@
 
 # Shipped
 
+- [X] 2025-07-30: Add selected Entry to the context of the AI
+- [X] 2025-07-29: The Symptom, Consequence, and Impact should be <textarea>
 - [X] 2025-06-16: Enable app-wide LLM config to save chat configuration across executions
 - [X] 2025-06-17: Support unique ID for entities to be able to reference in function calls
 - [X] 2025-06-17: Enable function calls for the assessment app
