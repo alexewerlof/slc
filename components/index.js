@@ -27,7 +27,6 @@ const componentSpecifications = [
     './ui/text-block-component.jhc&',
     './failure-component.jh&',
     './usage-component.jh&',
-    './ui/feedback-blob-component.jhc&',
     './ui/footer-component.jhc&',
     './ui/formula-component.jh&',
     './ui/header-component.jhc&',
