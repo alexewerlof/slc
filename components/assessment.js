@@ -43,11 +43,14 @@ export class Assessment extends Entity {
         } = newState
 
         if (isDef(consumers)) {
+            if (!isArr(consumers)) {
+                throw new TypeError(`Invalid consumers array: ${consumers} (${typeof consumers})`)
+            }
             this.consumers.state = consumers
         }
         if (isDef(providers)) {
             if (!isArr(providers)) {
-                throw new TypeError(`Invalid providers: ${providers} (${typeof providers})`)
+                throw new TypeError(`Invalid providers array: ${providers} (${typeof providers})`)
             }
             this.providers.state = providers
         }
