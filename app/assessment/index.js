@@ -1,7 +1,7 @@
 import { createApp } from '../../vendor/vue.js'
 import { registerAllComponents } from '../../components/index.js'
 import { Assessment } from '../../components/assessment.js'
-import { loadJson } from '../../lib/share.js'
+import { currentUrlToState, loadJson } from '../../lib/share.js'
 import { registerComponents } from '../../lib/component-loader.js'
 
 const manifest = await loadJson('manifest.json')
@@ -9,6 +9,12 @@ const manifest = await loadJson('manifest.json')
 export const app = createApp({
     data() {
         const assessment = new Assessment()
+
+        try {
+            assessment.state = currentUrlToState()
+        } catch (e) {
+            console.warn('Using default because failed to load from URL:', e)
+        }
 
         return {
             manifest,

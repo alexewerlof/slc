@@ -10,7 +10,7 @@ import { isInstance } from '../../../lib/validation.js'
 import { Toolbox } from '../../../components/llm/toolbox.js'
 import { nextStep } from './workflow.js'
 import { joinLines } from '../../../lib/markdown.js'
-import { loadJson } from '../../../lib/share.js'
+import { loadJson, stateToCurrentUrl } from '../../../lib/share.js'
 import { showToast } from '../../../lib/toast.js'
 import { Agent } from '../../../components/llm/agent.js'
 
@@ -292,6 +292,7 @@ export default {
         },
     },
     methods: {
+        stateToCurrentUrl,
         showDialog(ref, modal) {
             this.$refs[ref].show(modal)
         },

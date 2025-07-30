@@ -27,7 +27,7 @@
             <summary-component :assessment></summary-component>
         </dialog-component>
         <dialog-component title="Export" ref="stateDialog">
-            <tabs-component v-model="selExportTab" tabs="JSON, Markdown, Prolog"></tabs-component>
+            <tabs-component v-model="selExportTab" tabs="JSON, Markdown, Prolog, URL"></tabs-component>
             <div v-if="selExportTab === 'Markdown'">
                 <markdown-component :markdown="assessment.toString()"></markdown-component>
             </div>
@@ -39,6 +39,11 @@
             <div v-if="selExportTab === 'JSON'">
                 <code-block-component title="JSON">
                     <pre>{{ JSON.stringify(assessment.state, null, 2) }}</pre>
+                </code-block-component>
+            </div>
+            <div v-if="selExportTab === 'URL'">
+                <code-block-component title="URL">
+                    {{ stateToCurrentUrl(assessment.state) }}
                 </code-block-component>
             </div>
         </dialog-component>
