@@ -53,7 +53,7 @@ const componentSpecifications = [
     './ui/show-hide-component.jhc&',
     './ui/steps-component.jhc&',
     './summary-component.jh&',
-    './lint-component.jh&',
+    './lint-component.jhc&',
     './entity-component.jh&',
     './ui/tabs-component.jhc&',
     './ui/tooltip-component.hc&',
