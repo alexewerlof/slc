@@ -277,8 +277,6 @@ export default {
         return {
             uploadedState: '',
             uploadedStateMessage: 'Not analyzed yet',
-            thread,
-            tools: toolbox,
             exampleStates,
             selImportTab: undefined,
             selExportTab: undefined,
