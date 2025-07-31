@@ -5,14 +5,14 @@ import { Usage } from '../../../components/usage.js'
 import { Metric } from '../../../components/metric.js'
 import { Provider } from '../../../components/provider.js'
 import { Service } from '../../../components/service.js'
-import { ContentBead, FileBead, Thread, UserPromptBead } from '../../../components/llm/thread.js'
+import { UserPromptBead } from '../../../components/llm/thread.js'
 import { isInstance } from '../../../lib/validation.js'
 import { Toolbox } from '../../../components/llm/toolbox.js'
-import { nextStep } from './workflow.js'
 import { joinLines } from '../../../lib/markdown.js'
 import { loadJson, stateToCurrentUrl } from '../../../lib/share.js'
 import { showToast } from '../../../lib/toast.js'
 import { Agent } from '../../../components/llm/agent.js'
+import { createThread } from './assessment-thread.js'
 
 const exampleFiles = [
     'be-fe-example.json',
@@ -30,36 +30,6 @@ export default {
         },
     },
     data() {
-        const thread = new Thread(
-            new FileBead('assessment-prompt.md' /*'../../prompts/glossary.md'*/),
-            new ContentBead(
-                { role: 'system' },
-                'This is the current and latest state of the assessment that is kept updated as you add, remove, or modify entities.',
-                '```json',
-                () => JSON.stringify(this.assessment.state),
-                '```',
-                () =>
-                    this.editingInstance ? `Currently the entity ${this.editingInstance.id} is selected in the UI` : '',
-                'To help you guide the user through the assessment, a deterministic algorithm is used to analyze the current state of the assessment and here is what you need to do:',
-                () => nextStep(this.assessment),
-                'To help you understand the assessment, we have some heuristics that analyze the assessment and all its entities. If there is a a warning or error, please prioritize fixing them.',
-                () => this.assessment.markdownLint(),
-                'These heuristics are a great tip for you to ask the right questions and help the user add any missing entities or fix any issues in the assessment.',
-                'You can also use the provided tools to add new entities or get information about existing ones.',
-                'Focus on fixing the most important problem first. Errors have higher priority than warnings.And issues with Providers are more important than services. Similarly, issues with Consumers are more important than Tasks. Usages are less important than both Services and Tasks. And Failures are less important than Usages. Issues with the Metrics are the least important and should be addressed last.',
-            ),
-            new ContentBead(
-                {
-                    role: 'assistant',
-                    isGhost: true,
-                    isDebug: false,
-                    isPersistent: true,
-                },
-                'I can help you identify different aspects of your service topology in order to identify the best metrics.',
-                'Tell me about your system.',
-            ),
-        )
-
         const toolbox = new Toolbox()
         toolbox.add('listEntities', 'Returns the id of entities with the specified class name.')
             .prm(
@@ -272,7 +242,7 @@ export default {
 
         toolbox.add('getDateAndTime', 'Get the current date and time').fn(() => String(new Date()))
 
-        const agent = new Agent(thread, toolbox)
+        const agent = new Agent(createThread(this), toolbox)
 
         return {
             uploadedState: '',
