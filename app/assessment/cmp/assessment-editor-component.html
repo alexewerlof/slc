@@ -106,6 +106,12 @@
                     Add Service
                 </button>
                 <button
+                    @click="editingInstance = assessment.providers.pushNew()"
+                >
+                    <icon-component name="add"></icon-component>
+                    Add Aother Provider
+                </button>
+                <button
                     @click="removeProvider(editingInstance)"
                     class="button--danger"
                     title="Remove this provider"
@@ -158,6 +164,12 @@
                 <button @click="editingInstance = editingInstance.tasks.pushNew()">
                     <icon-component name="add"></icon-component>
                     New Task
+                </button>
+                <button
+                    @click="editingInstance = assessment.consumers.pushNew()"
+                >
+                    <icon-component name="add"></icon-component>
+                    Add Aother Consumer
                 </button>
                 <button
                     @click="removeConsumer(editingInstance)"
