@@ -66,7 +66,8 @@ To support my work, you can subscribe to [my newsletter](https://blog.alexewerlo
 ## Thanks
 
 * [Thomas Didrel](https://www.linkedin.com/in/thomasdidrel/) for tips and advice on UX
-* [Volvo Cars](https://www.volvocars.com/) employees for the feedback on the early versions of the product.
+* [Prashanth Kumar](https://www.linkedin.com/in/prashanth-kumar-3ab702a/) for testing the early versions of the assessment app.
+* [Volvo Cars](https://www.volvocars.com/) employees for the feedback on the early versions of the calculator app.
 
 ---
 
