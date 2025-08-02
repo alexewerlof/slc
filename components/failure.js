@@ -87,7 +87,7 @@ export class Failure extends Entity {
     }
 
     onRemove() {
-        this.usage.service.metrics.forEach((metric) => {
+        this.service.metrics.forEach((metric) => {
             if (metric.isFailureLinked(this)) {
                 metric.unLinkFailure(this)
             }
@@ -96,9 +96,9 @@ export class Failure extends Entity {
 
     toString() {
         const ret = [
-            this.usage.task,
+            this.task,
             unicodeSymbol('failure'),
-            this.usage.service,
+            this.service,
         ]
         if (this.symptom) {
             ret.push(unicodeSymbol('symptom'), this.symptom)
@@ -120,8 +120,16 @@ export class Failure extends Entity {
         return [this.usage.index, this.index]
     }
 
+    get task() {
+        return this.usage.task
+    }
+
+    get service() {
+        return this.usage.service
+    }
+
     get metrics() {
-        return this.usage.service.metrics.filter((metric) => metric.isFailureLinked(this))
+        return this.service.metrics.filter((metric) => metric.isFailureLinked(this))
     }
 
     get lint() {
