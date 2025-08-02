@@ -100,11 +100,7 @@ export default {
         assignUploadedState() {
             try {
                 this.uploadedStateMessage = 'Analyzing...'
-                const state = JSON.parse(this.uploadedState)
-                this.uploadedStateMessage = 'State parsed as JSON'
-                const _tmpAssessment = new Assessment(state)
-                this.uploadedStateMessage = `State smoke test: loaded successfully`
-                this.loadState(state)
+                this.loadState(JSON.parse(this.uploadedState))
                 this.uploadedStateMessage = `State loaded successfully`
             } catch (error) {
                 this.uploadedStateMessage = `Failed to load assessment state: ${error}`
@@ -112,6 +108,7 @@ export default {
         },
         loadState(state) {
             try {
+                const _tmpAssessment = new Assessment(state)
                 this.assessment.state = state
             } catch (error) {
                 showToast(`Failed to load assessment state: ${error}`)
