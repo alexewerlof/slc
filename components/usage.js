@@ -96,6 +96,14 @@ export class Usage extends Entity {
             lint.info(`Some failures have issues.`)
         }
 
+        if (this.service.displayName.trim() === '') {
+            lint.info('Automatic failure detection is not possible because the service displayName is missing')
+        }
+
+        if (this.task.displayName.trim() === '') {
+            lint.info('Automatic failure detection is not possible because the task displayName is missing')
+        }
+
         return lint
     }
 }
