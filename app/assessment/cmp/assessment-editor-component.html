@@ -4,18 +4,86 @@
     </div>
     <div class="mozaic__tile mozaic__tile--6c">
         <div class="frost">
-            <div class="button-bar button-bar--center">
-                <button @click="showDialog('importDialog', true)">
+            <div class="button-bar button-bar--left">
+                <button
+                    @click="editingInstance = assessment.providers.pushNew()"
+                    title="Add Provider"
+                >
+                    <icon-component name="provider"></icon-component>
+                </button>
+                <button
+                    @click="editingInstance = assessment.consumers.pushNew()"
+                    title="Add Consumer"
+                >
+                    <icon-component name="consumer"></icon-component>
+                </button>
+                <button
+                    v-if="editingClassName ==='Provider'"
+                    @click="editingInstance = editingInstance.services.pushNew()"
+                    title="Add Service"
+                >
+                    <icon-component name="service"></icon-component>
+                </button>
+                <button
+                    v-if="editingClassName ==='Service'"
+                    @click="editingInstance = editingInstance.provider.services.pushNew()"
+                    title="Add Another Service"
+                >
+                    <icon-component name="service"></icon-component>
+                </button>
+                <button
+                    v-if="editingClassName ==='Service'"
+                    @click="editingInstance = editingInstance.metrics.pushNew()"
+                    title="Add Metric"
+                >
+                    <icon-component name="metric"></icon-component>
+                </button>
+                <button
+                    v-if="editingClassName ==='Metric'"
+                    @click="editingInstance = editingInstance.service.metrics.pushNew()"
+                    title="Add Another Metric"
+                >
+                    <icon-component name="metric"></icon-component>
+                </button>
+                <button
+                    v-if="editingClassName ==='Consumer'"
+                    @click="editingInstance = editingInstance.tasks.pushNew()"
+                    title="Add Task"
+                >
+                    <icon-component name="task"></icon-component>
+                </button>
+                <button
+                    v-if="editingClassName ==='Task'"
+                    @click="editingInstance = editingInstance.consumer.tasks.pushNew()"
+                    title="Add Another Task"
+                >
+                    <icon-component name="task"></icon-component>
+                </button>
+                <button
+                    v-if="editingClassName ==='Usage'"
+                    @click="editingInstance.failures.pushNew()"
+                    title="Add Failure"
+                >
+                    <icon-component name="failure"></icon-component>
+                </button>
+                <button
+                    @click="showDialog('importDialog', true)"
+                    title="Import"
+                >
                     <icon-component name="upload"></icon-component>
-                    Import
                 </button>
-                <button @click="showDialog('stateDialog', true)">
+                <button
+                    @click="showDialog('stateDialog', true)"
+                    title="Export"
+                >
                     <icon-component name="download"></icon-component>
-                    Export
                 </button>
-                <button @click="clearAssessment()" class="button--danger">
+                <button
+                    @click="clearAssessment()"
+                    class="button--danger"
+                    title="Clear"
+                >
                     <icon-component name="delete"></icon-component>
-                    Clear
                 </button>
             </div>
         </div>
@@ -163,7 +231,7 @@
             <div class="button-bar">
                 <button @click="editingInstance = editingInstance.tasks.pushNew()">
                     <icon-component name="add"></icon-component>
-                    New Task
+                    Add Task
                 </button>
                 <button
                     @click="editingInstance = assessment.consumers.pushNew()"
