@@ -1,5 +1,11 @@
-<div class="assessment-graph-component">
+<div class="assessment-graph-component v-pad-gap2">
     <svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height" @click.self="$emit('select', assessment)">
+        <rect
+            v-if="selectedEntity?.className === 'Assessment'"
+            class="assessment-graph-component__selection-indicator"
+            x="1" y="1"
+            :width="width - 2"
+            :height="height - 2"></rect>
         <!-- Tasks & Consumers -->
         <g v-for="consumer of assessment.consumers" :key="consumer.id">
             <g v-for="task of consumer.tasks" :key="task.id">

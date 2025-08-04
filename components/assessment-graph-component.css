@@ -9,6 +9,16 @@
     }
 }
 
+.assessment-graph-component__selection-indicator {
+    stroke-width: 2;
+    stroke: var(--secondary-color);
+    fill: none;
+    rx: var(--bradius);
+    ry: var(--bradius);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
 .assessment-graph-component__line {
     stroke-width: 2;
 }

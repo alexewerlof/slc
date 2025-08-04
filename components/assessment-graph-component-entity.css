@@ -19,12 +19,6 @@
     }
 }
 
-.assessment-graph-component-entity__selection-indicator {
-    stroke-width: 2;
-    stroke: var(--secondary-color);
-    fill: none;
-}
-
 .assessment-graph-component-entity__notification-indicator {
     fill: var(--brand-red);
 }
