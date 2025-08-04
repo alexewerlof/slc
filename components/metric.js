@@ -137,21 +137,21 @@ export class Metric extends Entity {
         const lint = new Lint()
 
         if (this.displayName.length === 0) {
-            lint.warn(`Please add the metric name`)
+            lint.error(`Please add the metric name`)
         }
 
-        if (this.linkedFailures.length === 0) {
+        if (this.service.usages.length === 0) {
+            lint.info(
+                'No consumer **uses** the service that this metric is measuring.',
+                'Please declare a usage before trying to set a metric.',
+            )
+        } else if (this.linkedFailures.length === 0) {
             lint.warn(
                 'This metric is not measuring any **failure** which makes it a poor choice for SLI.',
                 'Please connect this metric to some failures.',
             )
         }
-        if (this.service.usages.length === 0) {
-            lint.warn(
-                'No consumer **uses** the service that this metric is measuring.',
-                'Please declare a usage before trying to set a metric.',
-            )
-        }
+
         return lint
     }
 }
