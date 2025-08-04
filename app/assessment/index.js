@@ -1,11 +1,9 @@
 import { createApp } from '../../vendor/vue.js'
 import { registerAllComponents } from '../../components/index.js'
 import { Assessment } from '../../components/assessment.js'
-import { currentUrlToState, loadJson } from '../../lib/share.js'
+import { currentUrlToState } from '../../lib/share.js'
 import { registerComponents } from '../../lib/component-loader.js'
 import { Store } from '../../lib/store.js'
-
-const manifest = await loadJson('manifest.json')
 
 export const app = createApp({
     data() {
@@ -23,7 +21,6 @@ export const app = createApp({
         }
 
         return {
-            manifest,
             assessment,
             store,
         }

@@ -5,9 +5,6 @@ import { config } from '../../config.js'
 import { numL10n } from '../../lib/fmt.js'
 import { humanTime } from '../../lib/time.js'
 import { registerAllComponents } from '../../components/index.js'
-import { loadJson } from '../../lib/share.js'
-
-const manifest = await loadJson('manifest.json')
 
 export const app = createApp({
     data() {
@@ -39,7 +36,6 @@ export const app = createApp({
             },
         )
         return {
-            manifest,
             config,
             indicator,
             objective,
