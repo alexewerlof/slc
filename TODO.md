@@ -16,9 +16,10 @@
 - Show the type title next to each row or column (e.g. service provider), "I don't know what does the green or purple mean even"
 - Warning boxes are so big that the checkboxes get hidden!
 - The user has to do a lot of scroll up and down even though there's enough vertical space available
-- The tool chould generate SLD
+- The tool could generate SLD. That would make the effort to draw the graph worth it
 - How about some sort of SLA?
 - Maybe temporarily save the state in local storage (and allow deleting if the page is reloaded)
+- The REST API error toast is sometimes too big
 
 # High prio
 
