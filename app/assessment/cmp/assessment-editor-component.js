@@ -110,6 +110,7 @@ export default {
             try {
                 const _tmpAssessment = new Assessment(state)
                 this.assessment.state = state
+                this.editingInstance = this.assessment
             } catch (error) {
                 showToast(`Failed to load assessment state: ${error}`)
             }
