@@ -88,10 +88,6 @@ export class Consumer extends Entity {
         return this.addTask(new Task(this, title, description))
     }
 
-    removeTask(task) {
-        return this.tasks.remove(task)
-    }
-
     remove() {
         return this.assessment.consumers.remove(this)
     }
