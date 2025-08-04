@@ -1,14 +1,23 @@
-<div class="lint-component">
+<div class="lint-component" v-if="lint.count">
     <div class="lint-component__header" @click="toggle()">
-        <div class="lint-component__count lint-component__count--error">
+        <div
+            v-if="lint.errorMessages.length"
+            class="lint-component__count lint-component__count--error"
+        >
             <icon-component name="error"></icon-component>
             <span v-text="lint.errorMessages.length"></span>
         </div>
-        <div class="lint-component__count lint-component__count--warn">
+        <div
+            v-if="lint.warnMessages.length"
+            class="lint-component__count lint-component__count--warn"
+        >
             <icon-component name="warning"></icon-component>
             <span v-text="lint.warnMessages.length"></span>
         </div>
-        <div class="lint-component__count lint-component__count--info">
+        <div
+            v-if="lint.infoMessages.length"
+            class="lint-component__count lint-component__count--info"
+        >
             <icon-component name="info"></icon-component>
             <span v-text="lint.infoMessages.length"></span>
         </div>
