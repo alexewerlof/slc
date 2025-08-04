@@ -166,33 +166,11 @@
         <div v-if="editingInstance.className === 'Provider'">
             <h2>Provider</h2>
             <provider-component :provider="editingInstance"></provider-component>
-            <div class="button-bar">
-                <button
-                    @click="editingInstance = editingInstance.services.pushNew()"
-                    title="Add a new Service"
-                >
-                    <icon-component name="add"></icon-component>
-                    Add Service
-                </button>
-                <button
-                    @click="editingInstance = assessment.providers.pushNew()"
-                >
-                    <icon-component name="add"></icon-component>
-                    Add Aother Provider
-                </button>
-            </div>
         </div>
         <div v-if="editingInstance.className === 'Service'">
             <h2>Service</h2>
             <service-component :service="editingInstance"></service-component>
             <div class="button-bar">
-                <button
-                    @click="editingInstance = editingInstance.provider.services.pushNew()"
-                    title="Add another (sibling) service"
-                >
-                    <icon-component name="add"></icon-component>
-                    Add Another Service
-                </button>
                 <button
                     @click="addMetricUsingAI()"
                     title="Add a new metric using AI"
@@ -201,43 +179,15 @@
                     <icon-component name="ai"></icon-component>
                     Add Metric Using AI
                 </button>
-                <button
-                    @click="editingInstance = editingInstance.metrics.pushNew()"
-                    title="Add a new metric"
-                >
-                    <icon-component name="add"></icon-component>
-                    Add Metric
-                </button>
             </div>
         </div>
         <div v-if="editingInstance.className === 'Consumer'">
             <h2>Consumer</h2>
             <consumer-component :consumer="editingInstance"></consumer-component>
-            <div class="button-bar">
-                <button @click="editingInstance = editingInstance.tasks.pushNew()">
-                    <icon-component name="add"></icon-component>
-                    Add Task
-                </button>
-                <button
-                    @click="editingInstance = assessment.consumers.pushNew()"
-                >
-                    <icon-component name="add"></icon-component>
-                    Add Aother Consumer
-                </button>
-            </div>
         </div>
         <div v-if="editingInstance.className === 'Task'">
             <h2>Task</h2>
             <task-component :task="editingInstance"></task-component>
-            <div class="button-bar">
-                <button
-                    @click="editingInstance = editingInstance.consumer.tasks.pushNew()"
-                    title="Add another task"
-                >
-                    <icon-component name="add"></icon-component>
-                    Add another task
-                </button>
-            </div>
         </div>
         <div v-if="editingInstance.className === 'Usage'">
             <h2>Usage</h2>
