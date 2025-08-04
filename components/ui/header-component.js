@@ -1,10 +1,14 @@
 import { loadJson } from '../../lib/share.js'
+import { Store } from '../../lib/store.js'
 
 export default {
     data() {
+        const readmeIsHiddenByDefault = new Store('header/hide-readme')
+
         return {
-            isReadmeVisible: false,
+            isReadmeVisible: !readmeIsHiddenByDefault.state,
             manifest: undefined,
+            readmeIsHiddenByDefault,
         }
     },
     async mounted() {

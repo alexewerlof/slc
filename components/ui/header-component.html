@@ -21,9 +21,15 @@
             </div>
         </div>
     </header>
-    <div class="container">
-        <div class="info block mar-gap2" v-if="isReadmeVisible">
+    <div class="container" v-if="isReadmeVisible">
+        <div class="info block mar-gap2" >
             <markdown-loader-component file-name="README.md"></markdown-loader-component>
+        </div>
+        <div class="pad-gap2">
+            <label>
+                <input type="checkbox" v-model="readmeIsHiddenByDefault.state">
+                Hide this next time
+            </label>
         </div>
     </div>
 </div>
