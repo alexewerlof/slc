@@ -41,7 +41,7 @@
                     </p>
                 </help-component>
                 <div class="subtle-hint">
-                    What is the impact of this failure on the consumer task (goals, objectives, motivations,etc.)?
+                    On {{ failure.usage.task }}
                 </div>
             </label>
             <textarea v-model="failure.consequence"></textarea>
@@ -56,13 +56,14 @@
                 <help-component>
                     <p>
                         What is the business impacted of this failure?
+                        How does this failure impact the ability of the business to make or save money?
                     </p>
                     <p>
                         When thinking about the business impact, think about the money, time, and resources that are lost when this failure occurs.
                     </p>
                 </help-component>
                 <div class="subtle-hint">
-                    How does this failure impact the ability of the business to make or save money?
+                    On how {{ failure.usage.service }} contributes to bottom line
                 </div>
             </label>
             <textarea v-model="failure.businessImpact"></textarea>
