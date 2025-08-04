@@ -37,11 +37,6 @@ export default {
             agent,
         }
     },
-    computed: {
-        editingClassName() {
-            return this.editingInstance?.constructor.name || ''
-        },
-    },
     methods: {
         stateToCurrentUrl,
         showDialog(ref, modal) {

@@ -18,49 +18,49 @@
                     <icon-component name="consumer"></icon-component>
                 </button>
                 <button
-                    v-if="editingClassName ==='Provider'"
+                    v-if="editingInstance.className ==='Provider'"
                     @click="editingInstance = editingInstance.services.pushNew()"
                     title="Add Service"
                 >
                     <icon-component name="service"></icon-component>
                 </button>
                 <button
-                    v-if="editingClassName ==='Service'"
+                    v-if="editingInstance.className ==='Service'"
                     @click="editingInstance = editingInstance.provider.services.pushNew()"
                     title="Add Another Service"
                 >
                     <icon-component name="service"></icon-component>
                 </button>
                 <button
-                    v-if="editingClassName ==='Service'"
+                    v-if="editingInstance.className ==='Service'"
                     @click="editingInstance = editingInstance.metrics.pushNew()"
                     title="Add Metric"
                 >
                     <icon-component name="metric"></icon-component>
                 </button>
                 <button
-                    v-if="editingClassName ==='Metric'"
+                    v-if="editingInstance.className ==='Metric'"
                     @click="editingInstance = editingInstance.service.metrics.pushNew()"
                     title="Add Another Metric"
                 >
                     <icon-component name="metric"></icon-component>
                 </button>
                 <button
-                    v-if="editingClassName ==='Consumer'"
+                    v-if="editingInstance.className ==='Consumer'"
                     @click="editingInstance = editingInstance.tasks.pushNew()"
                     title="Add Task"
                 >
                     <icon-component name="task"></icon-component>
                 </button>
                 <button
-                    v-if="editingClassName ==='Task'"
+                    v-if="editingInstance.className ==='Task'"
                     @click="editingInstance = editingInstance.consumer.tasks.pushNew()"
                     title="Add Another Task"
                 >
                     <icon-component name="task"></icon-component>
                 </button>
                 <button
-                    v-if="editingClassName ==='Usage'"
+                    v-if="editingInstance.className ==='Usage'"
                     @click="editingInstance.failures.pushNew()"
                     title="Add Failure"
                 >
@@ -145,7 +145,7 @@
         </dialog-component>
     </div>
     <div class="mozaic__tile mozaic__tile--3c surface">
-        <div v-if="editingClassName === 'Assessment'">
+        <div v-if="editingInstance.className === 'Assessment'">
             <h2>Assessment</h2>
             <assessment-component :assessment="editingInstance"></assessment-component>
             <div class="button-bar">
@@ -163,7 +163,7 @@
                 </button>
             </div>
         </div>
-        <div v-if="editingClassName === 'Provider'">
+        <div v-if="editingInstance.className === 'Provider'">
             <h2>Provider</h2>
             <provider-component :provider="editingInstance"></provider-component>
             <div class="button-bar">
@@ -182,7 +182,7 @@
                 </button>
             </div>
         </div>
-        <div v-if="editingClassName === 'Service'">
+        <div v-if="editingInstance.className === 'Service'">
             <h2>Service</h2>
             <service-component :service="editingInstance"></service-component>
             <div class="button-bar">
@@ -210,7 +210,7 @@
                 </button>
             </div>
         </div>
-        <div v-if="editingClassName === 'Consumer'">
+        <div v-if="editingInstance.className === 'Consumer'">
             <h2>Consumer</h2>
             <consumer-component :consumer="editingInstance"></consumer-component>
             <div class="button-bar">
@@ -226,7 +226,7 @@
                 </button>
             </div>
         </div>
-        <div v-if="editingClassName === 'Task'">
+        <div v-if="editingInstance.className === 'Task'">
             <h2>Task</h2>
             <task-component :task="editingInstance"></task-component>
             <div class="button-bar">
@@ -239,11 +239,11 @@
                 </button>
             </div>
         </div>
-        <div v-if="editingClassName === 'Usage'">
+        <div v-if="editingInstance.className === 'Usage'">
             <h2>Usage</h2>
             <usage-component :usage="editingInstance" :agent></usage-component>
         </div>
-        <div v-if="editingClassName === 'Metric'">
+        <div v-if="editingInstance.className === 'Metric'">
             <h2>Metric</h2>
             <metric-component :metric="editingInstance"></metric-component>
         </div>
