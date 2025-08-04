@@ -50,7 +50,7 @@
     &.error {
         color: var(--brand-red);
         &::before {
-            content: 'error';
+            content: 'dangerous';
         }
     }
 }
