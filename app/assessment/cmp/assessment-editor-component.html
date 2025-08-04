@@ -79,9 +79,10 @@
                     <icon-component name="download"></icon-component>
                 </button>
                 <button
-                    @click="clearAssessment()"
+                    @click="removeEditingInstance()"
                     class="button--danger"
-                    title="Clear"
+                    :title="`Remove ${editingInstance.className}`"
+                    :disabled="!editingInstance"
                 >
                     <icon-component name="delete"></icon-component>
                 </button>
@@ -179,14 +180,6 @@
                     <icon-component name="add"></icon-component>
                     Add Aother Provider
                 </button>
-                <button
-                    @click="removeProvider(editingInstance)"
-                    class="button--danger"
-                    title="Remove this provider"
-                >
-                    <icon-component name="delete"></icon-component>
-                    Remove Provider
-                </button>
             </div>
         </div>
         <div v-if="editingClassName === 'Service'">
@@ -215,14 +208,6 @@
                     <icon-component name="add"></icon-component>
                     Add Metric
                 </button>
-                <button
-                    @click="removeService(editingInstance)"
-                    class="button--danger"
-                    title="Remove this service"
-                >
-                    <icon-component name="delete"></icon-component>
-                    Remove Service
-                </button>
             </div>
         </div>
         <div v-if="editingClassName === 'Consumer'">
@@ -239,14 +224,6 @@
                     <icon-component name="add"></icon-component>
                     Add Aother Consumer
                 </button>
-                <button
-                    @click="removeConsumer(editingInstance)"
-                    class="button--danger"
-                    title="Remove this consumer"
-                >
-                    <icon-component name="delete"></icon-component>
-                    Remove Consumer
-                </button>
             </div>
         </div>
         <div v-if="editingClassName === 'Task'">
@@ -260,43 +237,15 @@
                     <icon-component name="add"></icon-component>
                     Add another task
                 </button>
-                <button
-                    @click="removeTask(editingInstance)"
-                    class="button--danger"
-                    title="Remove this task"
-                >
-                    <icon-component name="delete"></icon-component>
-                    Remove Task
-                </button>
             </div>
         </div>
         <div v-if="editingClassName === 'Usage'">
             <h2>Usage</h2>
             <usage-component :usage="editingInstance" :agent></usage-component>
-            <div class="button-bar">
-                <button
-                    @click="removeUsage(editingInstance)"
-                    class="button--danger"
-                    title="Remove this usage"
-                >
-                    <icon-component name="delete"></icon-component>
-                    Remove Usage
-                </button>
-            </div>
         </div>
         <div v-if="editingClassName === 'Metric'">
             <h2>Metric</h2>
             <metric-component :metric="editingInstance"></metric-component>
-            <div class="button-bar">
-                <button
-                    @click="removeMetric(editingInstance)"
-                    class="button--danger"
-                    title="Remove this metric"
-                >
-                    <icon-component name="delete"></icon-component>
-                    Remove Metric
-                </button>
-            </div>
         </div>
     </div>
 </div>

@@ -1,9 +1,4 @@
 import { Assessment } from '../../../components/assessment.js'
-import { Consumer } from '../../../components/consumer.js'
-import { Task } from '../../../components/task.js'
-import { Usage } from '../../../components/usage.js'
-import { Metric } from '../../../components/metric.js'
-import { Provider } from '../../../components/provider.js'
 import { Service } from '../../../components/service.js'
 import { UserPromptBead } from '../../../components/llm/thread.js'
 import { isInstance } from '../../../lib/validation.js'
@@ -12,6 +7,7 @@ import { showToast } from '../../../lib/toast.js'
 import { Agent } from '../../../components/llm/agent.js'
 import { createThread } from './assessment-thread.js'
 import { createToolbox } from './assessment-toolbox.js'
+import { Entity } from '../../../lib/entity.js'
 
 const exampleFiles = [
     'be-fe-example.json',
@@ -51,51 +47,44 @@ export default {
         showDialog(ref, modal) {
             this.$refs[ref].show(modal)
         },
-        removeProvider(provider) {
-            if (!isInstance(provider, Provider)) {
-                throw new TypeError(`Expected an instance of Provider. Got ${provider}`)
+        removeEditingInstance(target = this.editingInstance) {
+            if (!(target instanceof Entity)) {
+                return false
             }
-            provider.remove()
-            this.editingInstance = undefined
-        },
-        removeConsumer(consumer) {
-            if (!isInstance(consumer, Consumer)) {
-                throw new TypeError(`Expected an instance of Consumer. Got ${consumer}`)
+            if (!confirm(`Are you sure you want to remove the selected ${target.className}?`)) {
+                return false
             }
-            consumer.remove()
-            this.editingInstance = undefined
-        },
-        removeTask(task) {
-            if (!isInstance(task, Task)) {
-                throw new TypeError(`Expected an instance of Task. Got ${task}`)
+            switch (target.className) {
+                case 'Assessment':
+                    this.editingInstance = this.assessment
+                    break
+                case 'Provider':
+                    this.editingInstance = this.assessment
+                    break
+                case 'Consumer':
+                    this.editingInstance = this.assessment
+                    break
+                case 'Service':
+                    this.editingInstance = target.provider
+                    break
+                case 'Task':
+                    this.editingInstance = target.consumer
+                    break
+                case 'Usage':
+                    this.editingInstance = target.service
+                    break
+                case 'Failure':
+                    this.editingInstance = target.usage
+                    break
+                case 'Metric':
+                    this.editingInstance = target.service
+                    break
+                default:
+                    console.log(`Unsupported removing entity className: ${target.className}`)
+                    return false
             }
-            const { consumer } = task
-            task.remove()
-            this.editingInstance = consumer
-        },
-        removeService(service) {
-            if (!isInstance(service, Service)) {
-                throw new TypeError(`Expected an instance of Service. Got ${service}`)
-            }
-            const { provider } = service
-            service.remove()
-            this.editingInstance = provider
-        },
-        removeUsage(usage) {
-            if (!isInstance(usage, Usage)) {
-                throw new TypeError(`Expected an instance of Usage. Got ${usage}`)
-            }
-            const { service } = usage
-            usage.remove()
-            this.editingInstance = service
-        },
-        removeMetric(metric) {
-            if (!isInstance(metric, Metric)) {
-                throw new TypeError(`Expected an instance of Metric. Got ${metric}`)
-            }
-            const { service } = metric
-            metric.remove()
-            this.editingInstance = service
+            target.remove()
+            return true
         },
         assignUploadedState() {
             try {

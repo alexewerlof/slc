@@ -15,7 +15,7 @@ export function createToolbox(assessmentEditorComponent) {
 
     toolbox.add(
         'removeEntity',
-        'Removes an entity given its id. Throws if it cannot find the entity or the user authorizes deleteion.',
+        'Removes an entity given its id. Throws if it cannot find the entity or the user authorizes deletion.',
     )
         .prm('id:string*', 'The id of the entity to delete')
         .fn(({ id }) => {
@@ -23,13 +23,22 @@ export function createToolbox(assessmentEditorComponent) {
             if (!entity) {
                 throw new RangeError(`Could not find an entity with id ${id}`)
             }
-            if (!confirm(`Are you sure you want to delete ${entity}`)) {
-                throw new Error(`The user did not authorize deletion`)
-            }
-            const entityClassName = entity.className
-            entity.remove()
-            return `${entityClassName} with id ${id} is removed successfully`
+            const deleted = assessmentEditorComponent.removeEditingInstance(entity)
+            return [
+                entityClassName,
+                'with id',
+                id,
+                'is',
+                deleted ? 'removed' : 'not removed',
+            ].join(' ')
         })
+
+    toolbox.add(
+        'clearAssessment',
+        'Clear the assessment of all Providers, Consumers, Services, Tasks, Usages, Failures, and Metrics.',
+    ).this(assessmentEditorComponent).fn(() => {
+        assessmentEditorComponent.removeEditingInstance(assessmentEditorComponent.assessment)
+    })
 
     toolbox.add(
         'getEntityState',
@@ -208,11 +217,6 @@ export function createToolbox(assessmentEditorComponent) {
             assessmentEditorComponent.editingInstance = newMetric
             return newMetric.id
         })
-
-    toolbox.add(
-        'clearAssessment',
-        'Clear the assessment of all Providers, Consumers, Services, Tasks, Usages, Failures, and Metrics.',
-    ).this(assessmentEditorComponent).fn(assessmentEditorComponent.clearAssessment)
 
     toolbox.add('getDateAndTime', 'Get the current date and time').fn(() => String(new Date()))
 

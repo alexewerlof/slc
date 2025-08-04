@@ -56,7 +56,7 @@ export class Assessment extends Entity {
         }
     }
 
-    clear() {
+    remove() {
         this.displayName = config.displayName.default
         this.description = config.description.default
         this.providers.removeAll()
