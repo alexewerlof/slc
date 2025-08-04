@@ -225,7 +225,7 @@ button {
         inset 0 0 var(--gap) var(--bthick) rgba(from var(--foreground-color) r g b / 0.5),
         0 0 0.5em 0 var(--background-darker);
     text-shadow: 0.05em 0.05em rgba(from var(--foreground-color) r g b / 0.3);
-    padding: var(--gap) var(--gap2);
+    padding: var(--gap);
     margin: 1px; /* To have place for showing focus outline */
     transition: filter var(--animation-speed), box-shadow var(--animation-speed);
 
