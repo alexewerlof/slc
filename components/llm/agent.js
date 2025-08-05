@@ -10,6 +10,8 @@ export class Agent {
     static MAX_CALLS = 10
 
     abortController = undefined
+    thread = undefined
+    toolbox = undefined
 
     constructor(thread, toolbox) {
         if (!isInstance(thread, Thread)) {
