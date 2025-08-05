@@ -137,7 +137,7 @@ section {
 }
 
 .t-mar-gap2 {
-    margin-bottom: var(--gap2);
+    margin-top: var(--gap2);
 }
 
 .b-mar-gap2 {
