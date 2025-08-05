@@ -10,6 +10,12 @@ export function createThread(assessmentEditorComponent) {
             '```json',
             () => JSON.stringify(assessmentEditorComponent.assessment.state),
             '```',
+            /*
+            'The relationship between different entities is expressed with this short Prolog code:',
+            '```prolog',
+            () => assessmentEditorComponent.assessment.toProlog(),
+            '```',
+            */
             () =>
                 assessmentEditorComponent.editingInstance
                     ? `Currently the entity ${assessmentEditorComponent.editingInstance.id} is selected in the UI`
