@@ -105,6 +105,13 @@ export class LLMAPI {
         headers.set('Accept-Charset', 'utf-8')
         headers.set('Connection', 'keep-alive')
         headers.set('Content-Type', 'application/json')
+        /**
+         * Anthropic needs this hack according to
+         * https://simonwillison.net/2024/Aug/23/anthropic-dangerous-direct-browser-access/
+         */
+        if (this.baseUrl.toLowerCase().includes('api.anthropic.com')) {
+            headers.set('anthropic-dangerous-direct-browser-access', 'true')
+        }
         // If the apiKeyWebsite is set, this means an API key is required for the engine
         if (isStr(this.apiKeyWebsite)) {
             if (!isStr(this.apiKey)) {
