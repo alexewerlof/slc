@@ -80,9 +80,22 @@
             />
         </div>
     </show-hide-component>
-    <markdown-component :markdown="testResult"></markdown-component>
+    <div class="t-mar-gap2"></div>
+    <code-block-component v-if="logLines.length">
+        <div v-for="line of logLines" v-text="line"></div>
+    </code-block-component>
     <div class="button-bar">
-        <button @click="test()">Test</button>
-        <button @click="save()" class="button--cta">Save</button>
+        <button @click="clearLog()" class="button--danger" v-if="logLines.length">
+            <icon-component name="delete"></icon-component>
+            Clear
+        </button>
+        <button @click="test()">
+            <icon-component name="search"></icon-component>
+            Test
+        </button>
+        <button @click="save()">
+            <icon-component name="favorite"></icon-component>
+            Save
+        </button>
     </div>
 </div>
