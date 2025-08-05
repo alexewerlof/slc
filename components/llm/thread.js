@@ -322,6 +322,10 @@ export class Thread {
         return activeBeads.map((bead) => bead.message)
     }
 
+    get lastBead() {
+        return this.beads[this.beads.length - 1]
+    }
+
     clear(everything = false) {
         if (everything) {
             this.beads.length = 0
