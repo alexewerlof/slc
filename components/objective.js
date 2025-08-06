@@ -264,4 +264,25 @@ export class Objective extends Entity {
     toString() {
         return `${percL10n(this.target)} over ${this.windowDays} days`
     }
+
+    updateLint(lint) {
+        if (this.target < 70) {
+            lint.info(
+                'This is an unusually low target.',
+                `Typically the SLO target is above ${percL10n(90)} with some rare exceptions.`,
+                'Please check the <a href="#error-budget-title">Error budget</a>',
+                'for implications on your chosen target.',
+            )
+        } else if (this.target > 99.9) {
+            lint.info(
+                'Just be mindful of the price tag for this high target.',
+                'Everyone wants the highest possible number but not everyone is willing to pay',
+                '[the price](https://blog.alexewerlof.com/p/10x9).',
+            )
+        }
+
+        if ((this.indicator.isRanged) && (this.upperThreshold <= this.lowerThreshold)) {
+            lint.error('The upper threshold must be greater than the lower threshold.')
+        }
+    }
 }

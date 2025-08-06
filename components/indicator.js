@@ -1,5 +1,5 @@
 import { config } from '../config.js'
-import { entity2symbolNorm } from '../lib/fmt.js'
+import { entity2symbolNorm, hasComparators } from '../lib/fmt.js'
 import { Entity } from '../lib/entity.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { humanTimeSlices } from '../lib/time.js'
@@ -262,5 +262,15 @@ export class Indicator extends Entity {
             return this.metricName
         }
         return 'Indicator without title or metric'
+    }
+
+    updateLint(lint) {
+        if (this.isBounded && hasComparators(this.metricName)) {
+            lint.warn(
+                'There seems to be a comparator in the definition of metric already',
+                'Having another bound makes the formula harder to read.',
+                'Please use only one way to set the boundaries.',
+            )
+        }
     }
 }

@@ -297,18 +297,6 @@
                     Minimum {{ indicator.metricName }} for good {{ indicator.eventUnitNorm }}
                 </div>
             </label>
-            <div class="warning block" v-if="indicator.lowerBound && hasComparators(indicator.metricName)">
-                <p>
-                    There seems to be a comparator in the definition of metric already:
-                    <label for="sli-metric-name">
-                        <code>{{ indicator.metricName }}</code>
-                    </label>.
-                </p>
-                <p>
-                    Having another bound makes the formula harder to read.
-                    Please use only one way to set the boundaries.
-                </p>
-            </div>
             <select
                 id="lower-bound-type"
                 v-model="indicator.lowerBound">
@@ -345,18 +333,6 @@
                     Maximum {{ indicator.metricName }} for good {{ indicator.eventUnitNorm }}
                 </div>
             </label>
-            <div class="warning block" v-if="indicator.upperBound && hasComparators(indicator.metricName)">
-                <p>
-                    There seems to be a comparator in the definition of metric already:
-                    <label for="sli-metric-name">
-                        <code>{{ indicator.metricName }}</code>
-                    </label>.
-                </p>
-                <p>
-                    Having another bound makes the formula harder to read.
-                    Please use only one way to set the boundaries.
-                </p>
-            </div>
             <select
                 id="upper-bound-type"
                 v-model="indicator.upperBound">

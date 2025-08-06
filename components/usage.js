@@ -3,7 +3,6 @@ import { SelectableArray } from '../lib/selectable-array.js'
 import { isArr, isDef, isInstance, isStr } from '../lib/validation.js'
 import { Task } from './task.js'
 import { Failure } from './failure.js'
-import { Lint } from './lint.js'
 import { Service } from './service.js'
 
 export class Usage extends Entity {
@@ -82,9 +81,7 @@ export class Usage extends Entity {
         this.service.usages.remove(this)
     }
 
-    get lint() {
-        const lint = new Lint()
-
+    updateLint(lint) {
         if (this.failures.length === 0) {
             lint.warn(
                 'No **failures** are identified for this dependency which effectively makes it pointless for this assessment.',
@@ -103,7 +100,5 @@ export class Usage extends Entity {
         if (this.task.displayName.trim() === '') {
             lint.info('Automatic failure detection is not possible because the task displayName is missing')
         }
-
-        return lint
     }
 }

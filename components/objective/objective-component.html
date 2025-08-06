@@ -1,22 +1,4 @@
-<div v-if="objective.target > 99.9" class="info block">
-    <p>
-        Note: Just be mindful of the price tag for this high service level <em>objective</em>!
-    </p>
 
-    <p>
-        Everyone wants the highest possible number but
-        <ext-link href="https://blog.alexewerlof.com/p/10x9">
-            not everyone is willing to pay the price.
-        </ext-link>
-    </p>
-</div>
-<div v-if="objective.target < 70" class="info block">
-    <p>
-        Note: this is an unusually low service level objective. Typically service level <em>objective</em> is above {{
-        percL10n(90) }} with some rare exceptions. Please check the <a href="#error-budget-title">Error budget</a> for
-        implications of your chosen SLO.
-    </p>
-</div>
 <entity-component :entity="objective"></entity-component>
 <fieldset>
     <legend>Target: {{ percL10n(objective.target) }}</legend>
@@ -275,14 +257,6 @@
             :max="config.upperThreshold.max"
             :step="config.upperThreshold.step"
         >
-    </div>
-    <div
-        class="error block"
-        v-if="(objective.indicator.isRanged) && (objective.upperThreshold <= objective.lowerThreshold)"
-    >
-        <p>
-            The upper threshold must be greater than the lower threshold.
-        </p>
     </div>
 </fieldset>
 

@@ -3,7 +3,6 @@ import { SelectableArray } from '../lib/selectable-array.js'
 import { isArr, isDef, isInArr, isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { Task } from './task.js'
-import { Lint } from './lint.js'
 
 export class Consumer extends Entity {
     static possibleTypes = ['System', 'Component', 'Group']
@@ -100,9 +99,7 @@ export class Consumer extends Entity {
         return this.assessment.consumers.indexOf(this)
     }
 
-    get lint() {
-        const lint = new Lint()
-
+    updateLint(lint) {
         if (this.displayName.length === 0) {
             lint.warn(`Please fill the display name.`)
         }
@@ -113,6 +110,5 @@ export class Consumer extends Entity {
                 'Please declare some tasks or remove the consumer.',
             )
         }
-        return lint
     }
 }

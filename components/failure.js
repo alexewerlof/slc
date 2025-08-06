@@ -3,7 +3,6 @@ import { config } from '../config.js'
 import { unicodeSymbol } from '../lib/icons.js'
 import { Usage } from './usage.js'
 import { Entity } from '../lib/entity.js'
-import { Lint } from './lint.js'
 
 // If a certain service fails, what activities will it impact and how?
 export class Failure extends Entity {
@@ -132,9 +131,7 @@ export class Failure extends Entity {
         return this.service.metrics.filter((metric) => metric.isFailureLinked(this))
     }
 
-    get lint() {
-        const lint = new Lint()
-
+    updateLint(lint) {
         if (this.symptom.length === 0) {
             lint.warn(`Please add a symptom to failure`)
         }
@@ -150,7 +147,5 @@ export class Failure extends Entity {
         if (this.metrics.length === 0) {
             lint.warn(`Currently no metric is measuring this failure. Please connect some metrics to this failure.`)
         }
-
-        return lint
     }
 }

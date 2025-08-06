@@ -2,7 +2,6 @@ import { unicodeSymbol } from '../lib/icons.js'
 import { isInstance, isObj } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
 import { Entity } from '../lib/entity.js'
-import { Lint } from './lint.js'
 
 const scopeIcon = unicodeSymbol('scope')
 
@@ -50,8 +49,7 @@ export class Task extends Entity {
         return this.consumer.tasks.remove(this)
     }
 
-    get lint() {
-        const lint = new Lint()
+    updateLint(lint) {
         const { assessment } = this.consumer
         if (this.displayName.length === 0) {
             lint.warn(`Please fill the display name.`)
@@ -73,6 +71,5 @@ export class Task extends Entity {
                 'Please either remove declare some service usage or remove this task.',
             )
         }
-        return lint
     }
 }

@@ -144,4 +144,52 @@ export class Alert extends Entity {
     toString() {
         return `${percL10n(this.longWindowPerc)} at ${this.burnRate}x`
     }
+
+    updateLint(lint) {
+        if (this.longFailureWindow.sec < 600) {
+            lint.warn(
+                'Warning: The alert is too "jumpy" and will trigger too often.',
+                'This may lead to alert fatigue or even worse: ignoring the alerts.',
+            )
+        }
+        if (this.alertTTRWindow.sec < 3600) {
+            lint.info(
+                'The time to resolve (TTR) is too short for a human to react.',
+                'It is strongly recommended to automate the incident resolution instead of relying on human response to alerts.',
+            )
+        }
+        if (this.longWindowPerc > 33) {
+            lint.warn(
+                `Remember that the alert will trigger after ${
+                    percL10n(this.longWindowPerc)
+                } of the error budget is consumed!`,
+                `That error budget is for ${this.objective.window.humanTime}.`,
+                `Based on your setting an alert burns ${percL10n(this.longWindowPerc)} just to trigger.`,
+                `Then it needs some time to resolve too.`,
+                `How many alerts like this can you have in ${this.objective.window.humanTime} before the entire error budget is consumed?`,
+            )
+        }
+        if (this.longFailureWindow.sec <= 60) {
+            lint.warn(
+                `Long alert Window is too short at this burn rate (${this.burnRate}x)`,
+                `which may lead to alert fatigue.`,
+            )
+        }
+        if (this.longFailureWindow.eventCount === 0) {
+            lint.error(
+                `Division by zero! Long alert Window is too short for enough valid ${this.objective.indicator.eventUnitNorm} to be counted.`,
+            )
+        }
+        if (this.shortFailureWindow.sec <= 60) {
+            lint.warn(
+                `Short alert Window is too short at this burn rate (${this.burnRate}x)`,
+                `which may lead to alert fatigue.`,
+            )
+        }
+        if (this.shortFailureWindow.eventCount === 0) {
+            lint.error(
+                `Short alert Window is too short for enough valid events to be counted.`,
+            )
+        }
+    }
 }

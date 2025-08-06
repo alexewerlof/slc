@@ -18,9 +18,10 @@ export class Lint {
     }
 
     clear() {
-        this.infoMessages = []
-        this.warnMessages = []
-        this.errorMessages = []
+        this.infoMessages.length = 0
+        this.warnMessages.length = 0
+        this.errorMessages.length = 0
+        return this
     }
 
     toMarkdown() {

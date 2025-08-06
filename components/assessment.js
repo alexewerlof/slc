@@ -5,7 +5,6 @@ import { SelectableArray } from '../lib/selectable-array.js'
 import { Service } from './service.js'
 import { Task } from './task.js'
 import { unicodeSymbol } from '../lib/icons.js'
-import { Lint } from './lint.js'
 import { assessment2prolog } from '../app/assessment/cmp/prolog.js'
 import { joinLines } from '../lib/markdown.js'
 import { Entity } from '../lib/entity.js'
@@ -292,17 +291,14 @@ export class Assessment extends Entity {
         return assessment2prolog(this)
     }
 
-    get lint() {
-        const lint = new Lint()
+    updateLint(lint) {
         if (this.providers.length === 0) {
-            lint.warn('There are no serivce **providers** or services. Please add some service providers.')
+            lint.warn('There are no service **providers** or services. Please add some service providers.')
         }
 
         if (this.consumers.length === 0) {
             lint.warn('There are no **consumers** or tasks. Please add some service consumers.')
         }
-
-        return lint
     }
 
     markdownLint() {

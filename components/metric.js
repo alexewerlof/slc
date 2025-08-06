@@ -4,7 +4,6 @@ import { Failure } from './failure.js'
 import { unicodeSymbol } from '../lib/icons.js'
 import { Condition } from './condition.js'
 import { Entity } from '../lib/entity.js'
-import { Lint } from './lint.js'
 
 const scopeIcon = unicodeSymbol('scope')
 
@@ -133,9 +132,7 @@ export class Metric extends Entity {
         return this.service.metrics.indexOf(this)
     }
 
-    get lint() {
-        const lint = new Lint()
-
+    updateLint(lint) {
         if (this.displayName.length === 0) {
             lint.error(`Please add the metric name`)
         }
@@ -151,7 +148,5 @@ export class Metric extends Entity {
                 'Please connect this metric to some failures.',
             )
         }
-
-        return lint
     }
 }
