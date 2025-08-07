@@ -10,23 +10,33 @@ export function createThread(assessmentEditorComponent) {
             '```json',
             () => JSON.stringify(assessmentEditorComponent.assessment.state),
             '```',
+            '',
             /*
             'The relationship between different entities is expressed with this short Prolog code:',
             '```prolog',
             () => assessmentEditorComponent.assessment.toProlog(),
             '```',
+            '',
             */
             () =>
                 assessmentEditorComponent.editingInstance
                     ? `Currently the entity ${assessmentEditorComponent.editingInstance.id} is selected in the UI`
                     : '',
-            'To help you guide the user through the assessment, a deterministic algorithm is used to analyze the current state of the assessment and here is what you need to do:',
+            'To help you guide the user through the assessment workflow,',
+            'a deterministic algorithm is used to analyze the current state of the assessment and here is what you need to do:',
             () => nextStep(assessmentEditorComponent.assessment),
+            '',
             'To help you understand the assessment, we have some heuristics that analyze the assessment and all its entities. If there is a a warning or error, please prioritize fixing them.',
             () => assessmentEditorComponent.assessment.markdownLint(),
-            'These heuristics are a great tip for you to ask the right questions and help the user add any missing entities or fix any issues in the assessment.',
+            '',
             'You can also use the provided tools to add new entities or get information about existing ones.',
-            'Focus on fixing the most important problem first. Errors have higher priority than warnings.And issues with Providers are more important than services. Similarly, issues with Consumers are more important than Tasks. Usages are less important than both Services and Tasks. And Failures are less important than Usages. Issues with the Metrics are the least important and should be addressed last.',
+            'Focus on fixing the most important problem first.',
+            'Errors have higher priority than warnings.',
+            'Issues with Providers are more important than services.',
+            'Issues with Consumers are more important than Tasks.',
+            'Usages are less important than both Services and Tasks.',
+            'And Failures are less important than Usages.',
+            'Issues with the Metrics are the least important and should be addressed last.',
         ),
         new ContentBead(
             {
