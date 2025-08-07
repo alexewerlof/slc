@@ -1,7 +1,7 @@
 <div class="entity-component">
-    <div class="subtle-hint" @click="copy('copyNodeRef')">
-        <code title="Identifier" v-text="entity.id" ref="copyNodeRef"></code>
-        <icon-component name="copy"></icon-component>
+    <div class="subtle-hint" @click="copy('copyNodeRef')" title="Click to copy the id">
+        <code v-text="entity.id" ref="copyNodeRef"></code>
+        <icon-component name="copy" class="cursor-pointer"></icon-component>
     </div>
     <lint-component :lint="entity.lint"></lint-component>
     <fieldset v-if="entity.hasDispDesc">
