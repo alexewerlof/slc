@@ -185,6 +185,10 @@ textarea {
     margin-top: var(--gap);
     margin-bottom: var(--gap);
     gap: calc(var(--gap) / 2);
+
+    & .button-bar__sep {
+        border-left: solid var(--bthick) var(--divider-color);
+    }
 }
 
 .button-bar--left {

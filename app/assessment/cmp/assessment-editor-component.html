@@ -66,6 +66,16 @@
                 >
                     <icon-component name="failure"></icon-component>
                 </button>
+                <span class="button-bar__sep"></span>
+                <button
+                    @click="removeEditingInstance()"
+                    class="button--danger"
+                    :title="`Remove ${editingInstance.className}`"
+                    :disabled="!editingInstance"
+                >
+                    <icon-component name="delete"></icon-component>
+                </button>
+                <span class="button-bar__sep"></span>
                 <button
                     @click="showDialog('importDialog', true)"
                     title="Import"
@@ -77,14 +87,6 @@
                     title="Export"
                 >
                     <icon-component name="download"></icon-component>
-                </button>
-                <button
-                    @click="removeEditingInstance()"
-                    class="button--danger"
-                    :title="`Remove ${editingInstance.className}`"
-                    :disabled="!editingInstance"
-                >
-                    <icon-component name="delete"></icon-component>
                 </button>
             </div>
         </div>
