@@ -10,6 +10,7 @@ import { Window } from '../lib/window.js'
 import { Alert } from './alert.js'
 import { Formula } from './ui/formula.js'
 import { Indicator } from './indicator.js'
+import { Lint } from './lint.js'
 
 export class Objective extends Entity {
     /** The SLO percentage. It is also read/written by the sloInt and sloFrac computed  properties */
@@ -265,7 +266,9 @@ export class Objective extends Entity {
         return `${percL10n(this.target)} over ${this.windowDays} days`
     }
 
-    updateLint(lint) {
+    get lint() {
+        const lint = new Lint()
+
         if (this.target < 70) {
             lint.info(
                 'This is an unusually low target.',
@@ -284,5 +287,7 @@ export class Objective extends Entity {
         if ((this.indicator.isRanged) && (this.upperThreshold <= this.lowerThreshold)) {
             lint.error('The upper threshold must be greater than the lower threshold.')
         }
+
+        return lint
     }
 }

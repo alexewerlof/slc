@@ -2,6 +2,7 @@ import { Entity } from '../lib/entity.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { isArr, isDef, isInArr, isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
+import { Lint } from './lint.js'
 import { Task } from './task.js'
 
 export class Consumer extends Entity {
@@ -99,7 +100,9 @@ export class Consumer extends Entity {
         return this.assessment.consumers.indexOf(this)
     }
 
-    updateLint(lint) {
+    get lint() {
+        const lint = new Lint()
+
         if (this.displayName.length === 0) {
             lint.warn(`Please fill the display name.`)
         }
@@ -110,5 +113,7 @@ export class Consumer extends Entity {
                 'Please declare some tasks or remove the consumer.',
             )
         }
+
+        return lint
     }
 }

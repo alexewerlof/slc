@@ -6,6 +6,7 @@ import { humanTimeSlices } from '../lib/time.js'
 import { inRange, isArr, isDef, isInArr, isStrLen } from '../lib/validation.js'
 import { Formula } from './ui/formula.js'
 import { Objective } from './objective.js'
+import { Lint } from './lint.js'
 
 /*
 SLI budgeting method:
@@ -264,7 +265,9 @@ export class Indicator extends Entity {
         return 'Indicator without title or metric'
     }
 
-    updateLint(lint) {
+    get lint() {
+        const lint = new Lint()
+
         if (this.isBounded && hasComparators(this.metricName)) {
             lint.warn(
                 'There seems to be a comparator in the definition of metric already',
@@ -272,5 +275,7 @@ export class Indicator extends Entity {
                 'Please use only one way to set the boundaries.',
             )
         }
+
+        return lint
     }
 }

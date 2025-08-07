@@ -9,6 +9,7 @@ import { assessment2prolog } from '../app/assessment/cmp/prolog.js'
 import { joinLines } from '../lib/markdown.js'
 import { Entity } from '../lib/entity.js'
 import { config } from '../config.js'
+import { Lint } from './lint.js'
 
 export class Assessment extends Entity {
     consumers = new SelectableArray(Consumer, this)
@@ -291,7 +292,9 @@ export class Assessment extends Entity {
         return assessment2prolog(this)
     }
 
-    updateLint(lint) {
+    get lint() {
+        const lint = new Lint()
+
         if (this.providers.length === 0) {
             lint.warn('There are no service **providers** or services. Please add some service providers.')
         }
@@ -299,6 +302,8 @@ export class Assessment extends Entity {
         if (this.consumers.length === 0) {
             lint.warn('There are no **consumers** or tasks. Please add some service consumers.')
         }
+
+        return lint
     }
 
     markdownLint() {

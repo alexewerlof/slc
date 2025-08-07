@@ -5,6 +5,7 @@ import { SelectableArray } from '../lib/selectable-array.js'
 import { Metric } from './metric.js'
 import { Usage } from './usage.js'
 import { Entity } from '../lib/entity.js'
+import { Lint } from './lint.js'
 
 const scopeIcon = unicodeSymbol('scope')
 
@@ -131,7 +132,9 @@ export class Service extends Entity {
         return this.provider.services.remove(this)
     }
 
-    updateLint(lint) {
+    get lint() {
+        const lint = new Lint()
+
         if (this.displayName.length === 0) {
             lint.warn(`Please fill the display name.`)
         }
@@ -157,5 +160,7 @@ export class Service extends Entity {
                 'Please add some metrics.',
             )
         }
+
+        return lint
     }
 }

@@ -2,6 +2,7 @@ import { unicodeSymbol } from '../lib/icons.js'
 import { isInstance, isObj } from '../lib/validation.js'
 import { Consumer } from './consumer.js'
 import { Entity } from '../lib/entity.js'
+import { Lint } from './lint.js'
 
 const scopeIcon = unicodeSymbol('scope')
 
@@ -49,11 +50,15 @@ export class Task extends Entity {
         return this.consumer.tasks.remove(this)
     }
 
-    updateLint(lint) {
+    get lint() {
+        const lint = new Lint()
+
         const { assessment } = this.consumer
+
         if (this.displayName.length === 0) {
             lint.warn(`Please fill the display name.`)
         }
+
         if (assessment.providers.length === 0) {
             lint.info(
                 'There are currently no service **providers** declared to consume.',
@@ -65,11 +70,14 @@ export class Task extends Entity {
                 'Please add some services to the providers so that the task can depend on them.',
             )
         }
+
         if (this.usages.length === 0) {
             lint.warn(
                 'This task does not use any services which effectively makes it pointless in this assessment.',
                 'Please either remove declare some service usage or remove this task.',
             )
         }
+
+        return lint
     }
 }

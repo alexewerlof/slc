@@ -3,6 +3,7 @@ import { isArr, isDef, isInArr, isInstance } from '../lib/validation.js'
 import { Assessment } from './assessment.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { Entity } from '../lib/entity.js'
+import { Lint } from './lint.js'
 
 export class Provider extends Entity {
     static possibleTypes = Object.freeze(['System', 'Component', 'Group'])
@@ -86,7 +87,9 @@ export class Provider extends Entity {
         return this.assessment.providers.remove(this)
     }
 
-    updateLint(lint) {
+    get lint() {
+        const lint = new Lint()
+
         if (this.displayName.length === 0) {
             lint.warn(`Please fill the display name.`)
         }
@@ -96,5 +99,7 @@ export class Provider extends Entity {
                 `This provider is useless for this assessment because it provides no **services**. Please declare some services or remove this provider.`,
             )
         }
+
+        return lint
     }
 }
