@@ -150,7 +150,7 @@
         <div v-if="editingInstance.className === 'Assessment'">
             <h2>Assessment</h2>
             <assessment-component :assessment="editingInstance"></assessment-component>
-            <div class="button-bar">
+            <div class="button-bar t-mar-gap2">
                 <button
                     @click="editingInstance = assessment.providers.pushNew()"
                 >
@@ -172,7 +172,7 @@
         <div v-if="editingInstance.className === 'Service'">
             <h2>Service</h2>
             <service-component :service="editingInstance"></service-component>
-            <div class="button-bar">
+            <div class="button-bar t-mar-gap2">
                 <button
                     @click="addMetricUsingAI()"
                     title="Add a new metric using AI"

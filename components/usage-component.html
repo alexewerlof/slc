@@ -9,6 +9,7 @@
         <select
             v-if="usage.failures.length"
             v-model="usage.failures.selected"
+            class="b-mar-gap2"
         >
             <option v-for="failure in usage.failures" :value="failure">
                 {{ failure.symptom || 'Unknown symptom'}}

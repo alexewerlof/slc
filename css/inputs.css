@@ -182,8 +182,6 @@ textarea {
     display: flex;
     justify-content: right;
     flex-wrap: wrap;
-    margin-top: var(--gap);
-    margin-bottom: var(--gap);
     gap: calc(var(--gap) / 2);
 
     & .button-bar__sep {

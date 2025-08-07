@@ -47,11 +47,15 @@
                         <legend>Indicator ({{ calculator.indicators.length }})</legend>
                         <div class="input-group" v-if="calculator.indicators.length">
                             <label for="indicator-selector">Select</label>
-                            <select v-model="calculator.indicators.selected" id="indicator-selector">
+                            <select
+                                v-model="calculator.indicators.selected"
+                                id="indicator-selector"
+                                class="b-mar-gap2"
+                            >
                                 <option
                                     v-for="indicator of calculator.indicators"
                                     :value="indicator"
-                                    :key="indicator"
+                                    :key="indicator.id"
                                 >
                                     {{ indicator }}
                                 </option>
@@ -112,11 +116,15 @@
                         </div>
                         <div class="input-group" v-if="calculator.indicators.selected?.objectives.length">
                             <label for="objective-selector">Select</label>
-                            <select v-model="calculator.indicators.selected.objectives.selected" id="objective-selector">
+                            <select
+                                v-model="calculator.indicators.selected.objectives.selected"
+                                id="objective-selector"
+                                class="b-mar-gap2"
+                            >
                                 <option
                                     v-for="objective of calculator.indicators.selected.objectives"
                                     :value="objective"
-                                    :key="objective"
+                                    :key="objective.id"
                                 >
                                     {{ objective }}
                                 </option>
@@ -196,11 +204,15 @@
                         </div>
                         <div class="input-group" v-if="calculator.indicators.selected?.objectives.selected?.alerts.length">
                             <label for="alert-selector">Select</label>
-                            <select v-model="calculator.indicators.selected.objectives.selected.alerts.selected" id="alert-selector">
+                            <select
+                                v-model="calculator.indicators.selected.objectives.selected.alerts.selected"
+                                id="alert-selector"
+                                class="b-mar-gap2"
+                            >
                                 <option
                                     v-for="alert of calculator.indicators.selected.objectives.selected.alerts" 
                                     :value="alert"
-                                    :key="alert"
+                                    :key="alert.id"
                                 >
                                     {{ alert }}
                                 </option>
