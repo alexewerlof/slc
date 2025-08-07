@@ -40,7 +40,6 @@ export const app = createApp({
     watch: {
         assessment: {
             handler() {
-                console.log('Assessment changed:', this.assessment.state)
                 this.store.state = this.assessment.state
             },
             deep: true,
