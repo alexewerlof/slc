@@ -2,6 +2,10 @@ import { Assessment } from '../../../components/assessment.js'
 import { Formula } from '../../../components/ui/formula.js'
 import { isInstance, isStr } from '../../../lib/validation.js'
 
+function quoted(str) {
+    return `"${str.replace(/"/g, '\\"')}"`
+}
+
 export function assessment2prolog(assessment) {
     if (!isInstance(assessment, Assessment)) {
         throw new TypeError(`Expected an instance of assessment. Got ${assessment} (${typeof assessment})}`)
@@ -34,22 +38,26 @@ export function assessment2prolog(assessment) {
     fact(
         '% assessment',
         'AssessmentID',
+        'DisplayName',
     )
 
     fact(
         'assessment',
         assessment.id,
+        quoted(assessment.displayName),
     )
 
     fact(
         '% consumer',
         'ConsumerID',
+        'DisplayName',
         'Type',
     )
     assessment.consumers.forEach((consumer) => {
         fact(
             'consumer',
             consumer.id,
+            quoted(consumer.displayName),
             consumer.type,
         )
     })
@@ -57,12 +65,14 @@ export function assessment2prolog(assessment) {
     fact(
         '% provider',
         'ProviderID',
+        'DisplayName',
         'Type',
     )
     assessment.providers.forEach((provider) => {
         fact(
             'provider',
             provider.id,
+            quoted(provider.displayName),
             provider.type,
         )
     })
@@ -83,11 +93,13 @@ export function assessment2prolog(assessment) {
     fact(
         '% task',
         'TaskID',
+        'DisplayName',
     )
     assessment.tasks.forEach((task) => {
         fact(
             'task',
             task.id,
+            quoted(task.displayName),
         )
     })
 
@@ -98,7 +110,7 @@ export function assessment2prolog(assessment) {
     )
     assessment.services.forEach((service) => {
         fact(
-            `provides`,
+            `providesService`,
             service.provider.id,
             service.id,
         )
@@ -107,12 +119,14 @@ export function assessment2prolog(assessment) {
     fact(
         '% service',
         'ServiceID',
+        'DisplayName',
         'Type',
     )
     assessment.services.forEach((service) => {
         fact(
             'service',
             service.id,
+            quoted(service.displayName),
             service.type,
         )
     })
@@ -164,12 +178,14 @@ export function assessment2prolog(assessment) {
     fact(
         '% failure',
         'FailureID',
+        'Symptom',
         'ImpactLevel',
     )
     assessment.failures.forEach((failure) => {
         fact(
             'failure',
             failure.id,
+            quoted(failure.symptom),
             failure.impactLevel,
         )
     })
@@ -177,11 +193,13 @@ export function assessment2prolog(assessment) {
     fact(
         '% metric',
         'MetricID',
+        'DisplayName',
     )
     assessment.metrics.forEach((metric) => {
         fact(
             'metric',
             metric.id,
+            quoted(metric.displayName),
         )
     })
 
