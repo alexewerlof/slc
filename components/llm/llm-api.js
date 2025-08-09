@@ -88,7 +88,7 @@ export class LLMAPI {
 
     async updateModelIds() {
         const response = await this.fetchJson('GET', 'models')
-        this.modelIds.state = response.data.map((model) => model.id)
+        this.modelIds.state = response.data.map((model) => model.id).sort()
     }
 
     async fetchJson(method, path, data, signal) {
