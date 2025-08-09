@@ -29,7 +29,7 @@
     <div class="b-mar-gap2">
         <llm-api-settings-component :llm-api="llm.engines.selected"></llm-api-settings-component>
     </div>
-    <show-hide-component title="Advanced" hidden="true">
+    <show-hide-component title="Advanced" hidden="true" class="b-mar-gap2">
         <div class="input-group">
             <label for="llm-temperature">
                 Temperature: {{ llm.temperature }}
@@ -80,8 +80,7 @@
             />
         </div>
     </show-hide-component>
-    <div class="t-mar-gap2"></div>
-    <code-block-component v-if="logLines.length">
+    <code-block-component v-if="logLines.length" class="b-mar-gap2">
         <div v-for="line of logLines" v-text="line"></div>
     </code-block-component>
     <div class="button-bar">
