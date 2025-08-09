@@ -72,7 +72,7 @@
                             This product is a suit of tools to understand, assess, measure, and commit to Service Levels (SLI, SLO, SLA).
                         </p>
                     </div>
-                    <a v-for="app in apps"
+                    <a v-for="app in visibleApps"
                         :key="app.manifest.name"
                         :href="app.url"
                         class="app-item mozaic__tile--half frost">

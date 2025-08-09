@@ -12,6 +12,11 @@ const app = createApp({
             apps,
         }
     },
+    computed: {
+        visibleApps() {
+            return this.apps.filter((app) => !app.manifest?.__metadata?.hidden)
+        },
+    },
     mounted() {
         const url = new URL(globalThis.location.href)
         // Previously the calculator was sitting at the root of the site.

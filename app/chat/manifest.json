@@ -13,5 +13,8 @@
             "sizes": "500x500",
             "type": "image/svg+xml"
         }
-    ]
+    ],
+    "__metadata": {
+        "hidden": true
+    }
 }
