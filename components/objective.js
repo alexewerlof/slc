@@ -273,8 +273,7 @@ export class Objective extends Entity {
             lint.info(
                 'This is an unusually low target.',
                 `Typically the SLO target is above ${percL10n(90)} with some rare exceptions.`,
-                'Please check the <a href="#error-budget-title">Error budget</a>',
-                'for implications on your chosen target.',
+                'Please check the Error budget for implications on your chosen target.',
             )
         } else if (this.target > 99.9) {
             lint.info(
