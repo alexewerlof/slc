@@ -409,9 +409,9 @@ export const config = fz({
                 baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai/',
                 website: 'https://gemini.google.com',
                 description:
-                    'from Google which arguably started this whole AI thingie by their Transformers architecture.',
+                    'From Google which arguably started this whole AI wave with their Transformers architecture.',
                 apiKeyWebsite: 'https://aistudio.google.com/apikey',
-                suggestedModel: 'models/gemini-2.0-flash-lite',
+                suggestedModel: 'models/gemini-2.5-flash-lite',
             },
             {
                 name: 'OpenAI',
