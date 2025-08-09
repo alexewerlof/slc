@@ -20,13 +20,14 @@ export default {
         log(...lines) {
             this.logLines.push(...lines)
         },
-        clearLog() {
-            if (confirm('Are you sure you want to clear the log?')) {
+        clearLog(skipConfirmation = false) {
+            if (skipConfirmation || confirm('Are you sure you want to clear the log?')) {
                 this.logLines.splice(0)
             }
         },
         async test() {
             try {
+                this.clearLog(true)
                 const testThread1 = new Thread()
                 const testKeyWord = 'wombat12'
                 this.log(`Test 1: Asking LLM to echo secret word...`)
