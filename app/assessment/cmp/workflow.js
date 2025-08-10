@@ -2,7 +2,8 @@ import { Assessment } from '../../../components/assessment.js'
 import { isInstance } from '../../../lib/validation.js'
 
 /**
- * Taks the assessment and gives a recommendation based on what needs to be done
+ * Goes through the assessment and gives a recommendation based on what needs to be done.
+ * This is essentially the core of the assessment workflow.
  * @param {Assessment} assessment
  */
 export function nextStep(assessment) {
