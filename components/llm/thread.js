@@ -2,7 +2,7 @@ import { joinLines } from '../../lib/markdown.js'
 import { loadText } from '../../lib/share.js'
 import { isArr, isBool, isFn, isInArr, isObj, isStr } from '../../lib/validation.js'
 
-class RoledBead {
+class RoleBead {
     _role = undefined
     /** Beads that set this to true, do not get converted to messages */
     isGhost = false
@@ -34,7 +34,7 @@ class RoledBead {
         },
     }
 
-    static POSSIBLE_ROLES = Object.keys(RoledBead.DEFAULT_ROLE_OPTIONS)
+    static POSSIBLE_ROLES = Object.keys(RoleBead.DEFAULT_ROLE_OPTIONS)
 
     constructor(options) {
         if (!isObj(options)) {
@@ -43,7 +43,7 @@ class RoledBead {
         const { role } = options
         this.role = role
         const { isGhost, isPersistent, isDebug } = {
-            ...RoledBead.DEFAULT_ROLE_OPTIONS[role],
+            ...RoleBead.DEFAULT_ROLE_OPTIONS[role],
             ...options,
         }
         if (isBool(isGhost)) {
@@ -62,7 +62,7 @@ class RoledBead {
     }
 
     set role(role) {
-        if (!isInArr(role, RoledBead.POSSIBLE_ROLES)) {
+        if (!isInArr(role, RoleBead.POSSIBLE_ROLES)) {
             throw new Error(`Invalid role: ${role}`)
         }
         this._role = role
@@ -92,7 +92,7 @@ class RoledBead {
     }
 }
 
-export class ContentBead extends RoledBead {
+export class ContentBead extends RoleBead {
     constructor(options, ...contentBits) {
         super(options)
         this.contentBits = contentBits
@@ -132,7 +132,7 @@ export class ContentBead extends RoledBead {
     }
 }
 
-export class ErrorBead extends RoledBead {
+export class ErrorBead extends RoleBead {
     constructor(error) {
         super({
             role: 'tool',
@@ -188,7 +188,7 @@ export class AssistantResponse extends ContentBead {
     }
 }
 
-export class ToolCallsBead extends RoledBead {
+export class ToolCallsBead extends RoleBead {
     _toolCalls = undefined
 
     constructor(toolCalls) {
@@ -222,7 +222,7 @@ export class ToolCallsBead extends RoledBead {
     }
 }
 
-export class ToolResultBead extends RoledBead {
+export class ToolResultBead extends RoleBead {
     constructor(toolInvokationResultMessage) {
         super({
             role: toolInvokationResultMessage.role,
@@ -243,7 +243,7 @@ export class ToolResultBead extends RoledBead {
     }
 }
 
-export class FileBead extends RoledBead {
+export class FileBead extends RoleBead {
     _fileNames = undefined
     _loaded = false
     content = ''
@@ -305,7 +305,7 @@ export class Thread {
 
     add(...beads) {
         for (const bead of beads) {
-            if (!(bead instanceof RoledBead)) {
+            if (!(bead instanceof RoleBead)) {
                 throw new TypeError(`Expected an instance of Bead. Got ${JSON.stringify(bead)}`)
             }
             this.beads.push(bead)
