@@ -48,7 +48,7 @@ export const app = createApp({
 })
 
 const componentSpecifications = [
-    './cmp/assessment-editor-component.jhc',
+    './cmp/assessment-editor-component.jh',
 ]
 
 await registerComponents(app, componentSpecifications, import.meta.resolve)
