@@ -17,6 +17,7 @@
                 >
                     <icon-component name="consumer"></icon-component>
                 </button>
+                <span class="button-bar__sep"></span>
                 <button
                     v-if="editingInstance.className ==='Provider'"
                     @click="editingInstance = editingInstance.services.pushNew()"
@@ -66,7 +67,6 @@
                 >
                     <icon-component name="failure"></icon-component>
                 </button>
-                <span class="button-bar__sep"></span>
                 <button
                     @click="removeEditingInstance()"
                     class="button--danger"
