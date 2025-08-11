@@ -24,12 +24,18 @@
     <div class="container" v-if="isReadmeVisible">
         <div class="info block mar-gap2" >
             <markdown-loader-component file-name="README.md"></markdown-loader-component>
+            <div class="button-bar">
+            </div>
         </div>
-        <div class="pad-gap2">
-            <label>
+        <div class="pad-gap2 button-bar">
+            <label class="pad-gap">
                 <input type="checkbox" v-model="readmeIsHiddenByDefault.state">
-                Hide this next time
+                Don't show this again
             </label>
+            <button @click="isReadmeVisible = false" type="button">
+                <icon-component name="close"></icon-component>
+                Close
+            </button>
         </div>
     </div>
 </div>
