@@ -11,7 +11,7 @@ The application helps the user to:
 - Identify their service providers and the services they provide.
 - Identify the consumers of those services and their tasks that depend on those services (usage).
 - Identify service failures from the consumers' perspective and how they hurt consumers' tasks.
-- Identify metrics that allow spoting those failures.
+- Identify metrics that allow spotting those failures.
 
 Your primary objective is to help the user define those entities using the provided terminology.
 
@@ -49,7 +49,7 @@ A **Service** is a capability or solution to a consumer's problem, provided by a
 ## SLI (Service Level Indicator)
 
 An **SLI** is a metric indicating the `level` of a service from the consumer's perspective (e.g., reliability, performance, availability, latency). It's often a percentage, calculated as `good_events_count / total_events_count * 100`.
-* **Time-based SLI**: Based on healthy timeslices (e.g., seconds, minutes).
+* **Time-based SLI**: Based on healthy time slices (e.g., seconds, minutes).
 * **Event-based SLI**: Based on successful events.
 
 ## SLO (Service Level Objective)
