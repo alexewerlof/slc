@@ -18,8 +18,8 @@ The service provider (as its name suggests), provides a service.
 Provider can have any of these types:
 
 - `Group`: a group of people providing manual services. For example: governance, operation, access management, etc.
-- `Component`: a piece of code that can be deployed independently and provides a service. For example: a database, one service in a microservice architecture, a monolith, etc. The component that provides a service can itself be a consumer to the uservices provided by another providers, but those services are outside the scope of the current assessment.
-- `System`: a logical grouping of components that together offer a service that solve a problem for the consumer. For example: an API. The main difference between a component or system provider is how much the service consumer cares about their granulairty. If the service consumer doesn't care about which exact `Component` provides a service, `System` is a good abstraction.
+- `Component`: a piece of code that can be deployed independently and provides a service. For example: a database, one service in a microservice architecture, a monolith, etc. The component that provides a service can itself be a consumer to other service providers, but those services are outside the scope of the current assessment.
+- `System`: a logical grouping of components that together offer a service that solve a problem for the consumer. For example: an API. The main difference between a component or system provider is how much the service consumer cares about their granularity. If the service consumer doesn't care about which exact `Component` provides a service, `System` is a good abstraction.
 
 [Learn more about provider here](https://blog.alexewerlof.com/p/service-level-terminology).
 
@@ -30,8 +30,8 @@ Is an entity that consumers the service that is provided by a provider.
 Consumer can have any of these types:
 
 - `Group`: a group of people consuming a service to achieve a goal. For example: end users, paying customers, etc. If we don't know or care about what piece of technology consumes the **service** that is provided by the **Provider**, can just use `Group`.
-- `Component`: a piece of code that can be deployed independently and uses a service. For example: a web applicatio, a mobile application, another microservice or monolith, etc. The component that consumes a service has a usage of that service. This usage is a core part of the service level assessment.
-- `System`: a logical grouping of components that together consume a service. For example: an payment gateway. The main difference between a component or system consumer is how much the service provider cares about their granulairty. If the service provider doesn't care about which exact `Component` uses it, `System` is a good abstraction.
+- `Component`: a piece of code that can be deployed independently and uses a service. For example: a web application, a mobile application, another microservice or monolith, etc. The component that consumes a service has a usage of that service. This usage is a core part of the service level assessment.
+- `System`: a logical grouping of components that together consume a service. For example: an payment gateway. The main difference between a component or system consumer is how much the service provider cares about their granularity. If the service provider doesn't care about which exact `Component` uses it, `System` is a good abstraction.
 
 [Learn more about consumer here](https://blog.alexewerlof.com/p/service-level-terminology).
 
