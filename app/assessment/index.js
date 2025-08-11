@@ -29,7 +29,7 @@ export const app = createApp({
         const url = new URL(globalThis.location.href)
         if (url.searchParams.has('urlVer')) {
             try {
-                assessment.state = currentUrlToState()
+                this.assessment.state = currentUrlToState()
             } catch (e) {
                 console.warn('Failed to load from URL:', e)
             }
