@@ -188,17 +188,19 @@ export class Alert extends Entity {
             )
         }
 
-        if (this.shortFailureWindow.sec <= 60) {
-            lint.warn(
-                `Short alert Window is too short at this burn rate (${this.burnRate}x)`,
-                `which may lead to alert fatigue.`,
-            )
-        }
+        if (this.useShortWindow) {
+            if (this.shortFailureWindow.sec <= 60) {
+                lint.warn(
+                    `Short alert Window is too short at this burn rate (${this.burnRate}x)`,
+                    `which may lead to alert fatigue.`,
+                )
+            }
 
-        if (this.shortFailureWindow.eventCount === 0) {
-            lint.error(
-                `Short alert Window is too short for enough valid events to be counted.`,
-            )
+            if (this.shortFailureWindow.eventCount === 0) {
+                lint.error(
+                    `Short alert Window is too short for enough valid events to be counted.`,
+                )
+            }
         }
 
         return lint
