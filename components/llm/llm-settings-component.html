@@ -84,15 +84,15 @@
         <div v-for="line of logLines" v-text="line"></div>
     </code-block-component>
     <div class="button-bar">
-        <button @click="clearLog()" class="button--danger" v-if="logLines.length">
+        <button @click="clearLog()" v-if="logLines.length">
             <icon-component name="delete"></icon-component>
-            Clear
+            Clear Logs
         </button>
         <button @click="test()">
             <icon-component name="search"></icon-component>
             Test
         </button>
-        <button @click="save()">
+        <button @click="save()" class="button--cta">
             <icon-component name="favorite"></icon-component>
             Save
         </button>
