@@ -44,7 +44,7 @@ export class Formula {
         if (!isInstance(formula, Formula)) {
             throw new Error('Expected a Formula instance')
         }
-        this.parts.push(...formula.components)
+        this.parts.push(...formula.parts)
         return this
     }
     toString() {
