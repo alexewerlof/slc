@@ -42,11 +42,11 @@ export default {
                     this.log('No response')
                     return
                 }
+                this.log('Got a response')
                 if (!testThread1.lastBead.role === 'assistant') {
                     this.log('Not an assistant response')
                     return
                 }
-                this.log('Got a response')
                 if (!testThread1.lastBead.content?.includes(testKeyWord)) {
                     this.log('No secret word')
                     return
@@ -61,30 +61,31 @@ export default {
                         'This is to ensure that you have access to the tools and know how to properly use them.',
                         'It is important that you call it only once.',
                         'No parameters are required.',
+                        'Call confirmToolUse now.',
                     ),
                 )
                 const toolbox = new Toolbox()
                 let isToolCalled = false
-                toolbox.add('confirmToolUse', 'Call this function to test tool use').fn(() => {
-                    if (isToolCalled) {
-                        return 'This should not happen because you have already called the tool.'
-                    } else {
-                        isToolCalled = true
-                        return 'Successfully called tool the first time.'
-                    }
+                toolbox.add('confirmToolUse', 'Call this function to confirm that you can use tools').fn(() => {
+                    this.log(
+                        isToolCalled
+                            ? 'This should not happen because you have already called the tool.'
+                            : 'Successfully called tool the first time.',
+                    )
+                    isToolCalled = true
                 })
                 agent.toolbox = toolbox
                 await agent.completeThread()
                 if (!testThread2.lastBead) {
-                    this.log('No response')
-                    return
-                }
-                if (!testThread2.lastBead.role === 'assistant') {
-                    this.log('Not an assistant response')
-                    return
+                    throw new Error('No response')
                 }
                 this.log('Got a response')
-                this.log(isToolCalled ? 'Tool called successfully' : 'Failed to call tool')
+                if (!testThread2.lastBead.role === 'assistant') {
+                    throw new Error('Not an assistant response')
+                }
+                if (!isToolCalled) {
+                    throw new Error('Failed to call the tool')
+                }
                 this.log('Your setting is good to go.')
             } catch (error) {
                 this.log(String(error))
