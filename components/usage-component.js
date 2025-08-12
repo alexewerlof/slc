@@ -28,8 +28,7 @@ export default {
         boundCaption,
         async addFailureUsingAI() {
             const prompt = new UserPromptBead(
-                `I want you to think about what may possibly fail:`,
-                `- Usage id: ${this.usage.id}`,
+                `What may possibly fail in usage ${this.usage}?:`,
                 `- Task: ${this.usage.task}`,
                 `- Service: ${this.usage.service}`,
                 `- Service Consumer: ${this.usage.task.consumer}`,
@@ -38,16 +37,16 @@ export default {
             )
             if (this.usage.failures.length) {
                 prompt.add(
-                    `Your new failure should not overlap with any of the existing failures:`,
+                    `The new failure should not overlap with any of the existing failures:`,
                     ...this.usage.failures.map((failure) => `- ${failure}`),
                     '',
                 )
             }
             prompt.add(
                 '',
-                `I want you to think about the symptoms, consequences, and business impact, then use the available tools to add the failure.`,
+                `Think about the symptoms, consequences, and business impact, then use the available tools to add the failure to this usage.`,
                 `Don't ask my permission or confirmation.`,
-                `Just go ahead and use the tools to create the metric and I'll verify your work afterwards.`,
+                `Just go ahead and use the tools to create the failure and I'll verify your work afterwards.`,
             )
             this.agent.thread.add(prompt)
             await this.agent.completeThread()
