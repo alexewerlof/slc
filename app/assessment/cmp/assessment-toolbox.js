@@ -55,7 +55,7 @@ export function createToolbox(assessmentEditorComponent) {
 
     toolbox.add(
         'updateEntity',
-        'Updates the attributes of a particular Provider, Consumer, Service, Task, Usage, Failure, or Metric.',
+        'Updates the attributes of a particular Assessment, Provider, Consumer, Service, Task, Usage, Failure, or Metric.',
     )
         .prm('id:string*', 'The id of the entity to update')
         .prm(
@@ -200,13 +200,6 @@ export function createToolbox(assessmentEditorComponent) {
         // .prm('isBoolean:string', '')
         // .prm('numericUnit:string', '')
         .prm('failureIds:string[]', 'A list of failure ids that this metric helps measure')
-        /*
-            Need to support array property type
-            "items": {
-                "type": "string",
-                "description": "A single failure id"
-            }
-            */
         .fn((options) => {
             const { serviceId, ...state } = options
             const service = assessmentEditorComponent.assessment.services.find(({ id }) => id === serviceId)
