@@ -51,11 +51,23 @@ export default {
             return this.calculator.indicators.pushNew(indicator.state)
         },
         addRecommendedAlerts() {
-            if (!this.selectedObjective) {
+            const objective = this.selectedObjective
+            if (!objective) {
                 throw new Error('No selected objective')
             }
+            function alertsAreSimilar(alert1, alert2) {
+                return (
+                    alert1.burnRate === alert2.burnRate &&
+                    alert1.longWindowPerc === alert2.longWindowPerc &&
+                    alert1.useShortWindow === alert2.useShortWindow &&
+                    alert1.shortWindowDivider === alert2.shortWindowDivider
+                )
+            }
+
             for (const preset of config.alert.presets) {
-                this.selectedObjective.alerts.pushNew(preset)
+                if (!objective.alerts.some((alert) => alertsAreSimilar(alert, preset))) {
+                    objective.alerts.pushNew(preset)
+                }
             }
         },
     },
