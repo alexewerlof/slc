@@ -150,20 +150,6 @@
         <div v-if="editingInstance.className === 'Assessment'">
             <h2>Assessment</h2>
             <assessment-component :assessment="editingInstance"></assessment-component>
-            <div class="button-bar t-mar-gap2">
-                <button
-                    @click="editingInstance = assessment.providers.pushNew()"
-                >
-                    <icon-component name="add"></icon-component>
-                    Add Provider
-                </button>
-                <button
-                    @click="editingInstance = assessment.consumers.pushNew()"
-                >
-                    <icon-component name="add"></icon-component>
-                    Add Consumer
-                </button>
-            </div>
         </div>
         <div v-if="editingInstance.className === 'Provider'">
             <h2>Provider</h2>
