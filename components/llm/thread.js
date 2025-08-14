@@ -171,7 +171,7 @@ export class AssistantResponse extends ContentBead {
         }, messageContent)
     }
 
-    get contentWithoughtThought() {
+    get contentWithoutThought() {
         const endOfThoughtMarker = 'think>'
         const lastIndexOfThink = this.content.lastIndexOf(endOfThoughtMarker)
         if (lastIndexOfThink !== -1) {
@@ -183,7 +183,7 @@ export class AssistantResponse extends ContentBead {
     get message() {
         return {
             role: this.role,
-            content: this.contentWithoughtThought,
+            content: this.contentWithoutThought,
         }
     }
 }
@@ -223,22 +223,22 @@ export class ToolCallsBead extends RoleBead {
 }
 
 export class ToolResultBead extends RoleBead {
-    constructor(toolInvokationResultMessage) {
+    constructor(toolInvocationResultMessage) {
         super({
-            role: toolInvokationResultMessage.role,
+            role: toolInvocationResultMessage.role,
             isDebug: true,
         })
-        this._toolInvokationResultMessage = toolInvokationResultMessage
+        this._toolInvocationResultMessage = toolInvocationResultMessage
     }
 
     get markdown() {
-        return '```json\n' + this._toolInvokationResultMessage.content + '\n```'
+        return '```json\n' + this._toolInvocationResultMessage.content + '\n```'
     }
 
     get message() {
         return {
             role: this.role,
-            ...this._toolInvokationResultMessage,
+            ...this._toolInvocationResultMessage,
         }
     }
 }
