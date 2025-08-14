@@ -1,0 +1,283 @@
+{
+    "id": "aUP462X1J",
+    "displayName": "News site",
+    "description": "A digital news distribution website built on top of a CMS (content management system that is outside the scope).",
+    "consumers": [
+        {
+            "id": "cU3FRLPDR",
+            "displayName": "Readers",
+            "description": "End users of the digital news distribution channels",
+            "type": "Group",
+            "tasks": [
+                {
+                    "id": "tV3X3Y7P8",
+                    "displayName": "Check the front-page to see if there are any new news articles",
+                    "description": "Check the front-page to see if there are any new news articles"
+                },
+                {
+                    "id": "t7KBJG9AD",
+                    "displayName": "Click on an article to read it",
+                    "description": "Click on an article to read it"
+                },
+                {
+                    "id": "tJ8TQ0EZJ",
+                    "displayName": "Search for news",
+                    "description": "Search for news"
+                }
+            ]
+        },
+        {
+            "id": "cHQDK286J",
+            "displayName": "Search Engines",
+            "description": "Indexes the site to make it available to search",
+            "type": "Group",
+            "tasks": [
+                {
+                    "id": "tR9F9NQ67",
+                    "displayName": "Index the site to make it available to search",
+                    "description": "Indexes the site to make it available to search"
+                }
+            ]
+        }
+    ],
+    "providers": [
+        {
+            "id": "pK281ZFGR",
+            "displayName": "iris",
+            "description": "Fetches content from the CMS and enriches it.",
+            "type": "Component",
+            "services": [
+                {
+                    "id": "sE04KDJ6Q",
+                    "displayName": "List news",
+                    "description": "Provides lists of articles with title, image and metadata.",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uKRQ0CDBQ",
+                            "taskId": "tV3X3Y7P8",
+                            "failures": [
+                                {
+                                    "id": "fXUG0EFXM",
+                                    "symptom": "News editors see that new articles are not appearing on the front page.",
+                                    "consequence": "Readers may lose trust in the site.",
+                                    "businessImpact": "Brand damage",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "m6762TP5L",
+                            "displayName": "Front Page Freshness",
+                            "description": "Checks the timestamp of the latest article on the front page to ensure it's recent.",
+                            "failureIds": [
+                                "fXUG0EFXM"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "sRMJ6WRR9",
+                    "displayName": "Articles",
+                    "description": "Provides the full content of an article.",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uPTDZ1YDB",
+                            "taskId": "t7KBJG9AD",
+                            "failures": [
+                                {
+                                    "id": "fTFPV7C20",
+                                    "symptom": "Article takes too long to load.",
+                                    "consequence": "Readers may abandon the article.",
+                                    "businessImpact": "Reduced page views",
+                                    "impactLevel": 50
+                                },
+                                {
+                                    "id": "fAA49TTWZ",
+                                    "symptom": "Article content is partial and some information is missing.",
+                                    "consequence": "Readers get incomplete information.",
+                                    "businessImpact": "Reduced reader satisfaction, potential for misinformation.",
+                                    "impactLevel": 50
+                                },
+                                {
+                                    "id": "fUBUXATPB",
+                                    "symptom": "Wrong article content is displayed.",
+                                    "consequence": "Readers get incorrect information.",
+                                    "businessImpact": "Damage to brand reputation, spread of misinformation.",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "mY1THGH50",
+                            "displayName": "Article Load Time",
+                            "description": "Measures the time it takes for an article to fully load.",
+                            "failureIds": [
+                                "fTFPV7C20"
+                            ]
+                        },
+                        {
+                            "id": "m939DJ2FA",
+                            "displayName": "Content Verification",
+                            "description": "Verifies that the article content includes all expected elements and checks if the article ID in the URL matches the ID of the content being displayed.",
+                            "failureIds": [
+                                "fAA49TTWZ",
+                                "fUBUXATPB"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "s61X3F3RD",
+                    "displayName": "Query",
+                    "description": "Allows searching and filtering of articles.",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "u8UN6A11P",
+                            "taskId": "tJ8TQ0EZJ",
+                            "failures": [
+                                {
+                                    "id": "fLM8A50BH",
+                                    "symptom": "The user cannot find the article even though the article exists",
+                                    "consequence": "The user cannot find the article.",
+                                    "businessImpact": "Reduced ad revenue",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "mNFQS1T41",
+                            "displayName": "Article Availability Check",
+                            "description": "Checks if articles that should be found by a search query are actually returned in the search results.",
+                            "failureIds": [
+                                "fLM8A50BH"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "pBF1J25B0",
+            "displayName": "hyperion",
+            "description": "Fetches enriched content from Iris to render it for the end users.",
+            "type": "Component",
+            "services": [
+                {
+                    "id": "s36098MPB",
+                    "displayName": "SSR",
+                    "description": "Converting the React.js rendering of articles to HTML/CSS/JS for SEO purposes.",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uKF6LS6TA",
+                            "taskId": "tR9F9NQ67",
+                            "failures": [
+                                {
+                                    "id": "f0DAP4UA9",
+                                    "symptom": "Search engines index outdated or incomplete content.",
+                                    "consequence": "Search results are inaccurate, and users may not find the correct information.",
+                                    "businessImpact": "Reduced organic traffic, damage to brand reputation.",
+                                    "impactLevel": 50
+                                },
+                                {
+                                    "id": "fUK66AN38",
+                                    "symptom": "Search engines are not able to crawl the site.",
+                                    "consequence": "Users may not find the most relevant content, leading to a poor user experience.",
+                                    "businessImpact": "Loss of potential ad revenue, damage to brand reputation.",
+                                    "impactLevel": 50
+                                },
+                                {
+                                    "id": "fA448BBVG",
+                                    "symptom": "The search engine indexes the wrong URLs.",
+                                    "consequence": "Users are directed to the wrong pages.",
+                                    "businessImpact": "Reduced organic traffic, damage to brand reputation.",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "mQ85AN9AJ",
+                            "displayName": "SEO Health Check",
+                            "description": "Checks the frequency of successful crawls by search engines, verifies the URLs indexed by search engines against a sitemap, and checks the freshness of the content indexed by search engines.",
+                            "failureIds": [
+                                "f0DAP4UA9",
+                                "fUK66AN38",
+                                "fA448BBVG"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "sUGUKGC90",
+                    "displayName": "Serving content to CDN",
+                    "description": "Serving the content to the CDN.",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uCY6YTR7J",
+                            "taskId": "tV3X3Y7P8",
+                            "failures": [
+                                {
+                                    "id": "fBWGS2EZ0",
+                                    "symptom": "The front page displays stale content.",
+                                    "consequence": "Readers see outdated content on the front page.",
+                                    "businessImpact": "Reduced reader engagement, potential for loss of ad revenue.",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        },
+                        {
+                            "id": "uMSYEHF3W",
+                            "taskId": "t7KBJG9AD",
+                            "failures": [
+                                {
+                                    "id": "f1TC6U38T",
+                                    "symptom": "The article page displays stale content.",
+                                    "consequence": "Readers see outdated content on the article page.",
+                                    "businessImpact": "Reduced reader engagement, potential for loss of ad revenue.",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        },
+                        {
+                            "id": "uK9M9WYQ1",
+                            "taskId": "tR9F9NQ67",
+                            "failures": [
+                                {
+                                    "id": "fGRX4921G",
+                                    "symptom": "The CDN is not serving all the content to the search engines.",
+                                    "consequence": "Search engines index incomplete content.",
+                                    "businessImpact": "Reduced organic traffic, damage to brand reputation.",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "mN2WJN35H",
+                            "displayName": "CDN Serving Success Rate",
+                            "description": "Checks the frequency of successful content delivery to the CDN.",
+                            "failureIds": [
+                                "fBWGS2EZ0",
+                                "f1TC6U38T",
+                                "fGRX4921G"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
