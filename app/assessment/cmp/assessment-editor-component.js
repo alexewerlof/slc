@@ -8,12 +8,7 @@ import { Agent } from '../../../components/llm/agent.js'
 import { createThread } from './assessment-thread.js'
 import { createToolbox } from './assessment-toolbox.js'
 import { Entity } from '../../../lib/entity.js'
-
-const exampleFiles = [
-    'be-fe-example.json',
-    'gox-example.json',
-    'hn-example.json',
-]
+import { exampleFiles } from '../example-file-names.js'
 
 const exampleStates = await Promise.all(exampleFiles.map((fileName) => loadJson(fileName)))
 

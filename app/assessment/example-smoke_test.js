@@ -3,12 +3,7 @@ import assert from 'node:assert/strict'
 import { Assessment } from '../../components/assessment.js'
 import { URL } from 'node:url'
 import { readFile } from 'node:fs/promises'
-
-const exampleFiles = [
-    './be-fe-example.json',
-    './gox-example.json',
-    './iris-hyperion-example.json',
-]
+import { exampleFiles } from './example-file-names.js'
 
 describe('Smoke test', () => {
     for (const exampleFile of exampleFiles) {
