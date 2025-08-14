@@ -5,11 +5,11 @@ import { URL } from 'node:url'
 import { readFile } from 'node:fs/promises'
 import { exampleFiles } from './example-file-names.js'
 
-describe('Smoke test', () => {
+describe('Assessment example smoke tests', async () => {
     for (const exampleFile of exampleFiles) {
-        test(`${exampleFile} should load as valid Assessment state`, async () => {
-            const fileUrl = new URL(exampleFile, import.meta.url)
-            const state = JSON.parse(await readFile(fileUrl, 'utf-8'))
+        const fileUrl = new URL(exampleFile, import.meta.url)
+        const state = JSON.parse(await readFile(fileUrl, 'utf-8'))
+        test(exampleFile, () => {
             const assessment = new Assessment(state)
             assert.ok(assessment instanceof Assessment, 'The loaded state should produce a valid Assessment instance.')
         })
