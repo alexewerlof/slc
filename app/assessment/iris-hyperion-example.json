@@ -11,18 +11,18 @@
             "tasks": [
                 {
                     "id": "tV3X3Y7P8",
-                    "displayName": "Check the front-page to see if there are any new news articles",
+                    "displayName": "Load front-page",
                     "description": "Check the front-page to see if there are any new news articles"
                 },
                 {
                     "id": "t7KBJG9AD",
-                    "displayName": "Click on an article to read it",
+                    "displayName": "Read article",
                     "description": "Click on an article to read it"
                 },
                 {
                     "id": "tJ8TQ0EZJ",
-                    "displayName": "Search for news",
-                    "description": "Search for news"
+                    "displayName": "Search article",
+                    "description": "Search for news articles based on title, content, dates, tags, etc."
                 }
             ]
         },
@@ -41,6 +41,120 @@
         }
     ],
     "providers": [
+        {
+            "id": "pBF1J25B0",
+            "displayName": "hyperion",
+            "description": "Fetches enriched content from Iris to render it for the end users.",
+            "type": "Component",
+            "services": [
+                {
+                    "id": "s36098MPB",
+                    "displayName": "SSR",
+                    "description": "Converting the React.js rendering of articles to HTML/CSS/JS for SEO purposes.",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uKF6LS6TA",
+                            "taskId": "tR9F9NQ67",
+                            "failures": [
+                                {
+                                    "id": "f0DAP4UA9",
+                                    "symptom": "Search engines index outdated or incomplete content.",
+                                    "consequence": "Search results are inaccurate, and users may not find the correct information.",
+                                    "businessImpact": "Reduced organic traffic, damage to brand reputation.",
+                                    "impactLevel": 50
+                                },
+                                {
+                                    "id": "fUK66AN38",
+                                    "symptom": "Search engines are not able to crawl the site.",
+                                    "consequence": "Users may not find the most relevant content, leading to a poor user experience.",
+                                    "businessImpact": "Loss of potential ad revenue, damage to brand reputation.",
+                                    "impactLevel": 50
+                                },
+                                {
+                                    "id": "fA448BBVG",
+                                    "symptom": "The search engine indexes the wrong URLs.",
+                                    "consequence": "Users are directed to the wrong pages.",
+                                    "businessImpact": "Reduced organic traffic, damage to brand reputation.",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "mQ85AN9AJ",
+                            "displayName": "SEO Health Check",
+                            "description": "Checks the frequency of successful crawls by search engines, verifies the URLs indexed by search engines against a sitemap, and checks the freshness of the content indexed by search engines.",
+                            "failureIds": [
+                                "f0DAP4UA9",
+                                "fUK66AN38",
+                                "fA448BBVG"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "sUGUKGC90",
+                    "displayName": "Serving content to CDN",
+                    "description": "Serving the content to the CDN.",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uCY6YTR7J",
+                            "taskId": "tV3X3Y7P8",
+                            "failures": [
+                                {
+                                    "id": "fBWGS2EZ0",
+                                    "symptom": "The front page displays stale content.",
+                                    "consequence": "Readers see outdated content on the front page.",
+                                    "businessImpact": "Reduced reader engagement, potential for loss of ad revenue.",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        },
+                        {
+                            "id": "uMSYEHF3W",
+                            "taskId": "t7KBJG9AD",
+                            "failures": [
+                                {
+                                    "id": "f1TC6U38T",
+                                    "symptom": "The article page displays stale content.",
+                                    "consequence": "Readers see outdated content on the article page.",
+                                    "businessImpact": "Reduced reader engagement, potential for loss of ad revenue.",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        },
+                        {
+                            "id": "uK9M9WYQ1",
+                            "taskId": "tR9F9NQ67",
+                            "failures": [
+                                {
+                                    "id": "fGRX4921G",
+                                    "symptom": "The CDN is not serving all the content to the search engines.",
+                                    "consequence": "Search engines index incomplete content.",
+                                    "businessImpact": "Reduced organic traffic, damage to brand reputation.",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "mN2WJN35H",
+                            "displayName": "CDN Serving Success Rate",
+                            "description": "Checks the frequency of successful content delivery to the CDN.",
+                            "failureIds": [
+                                "fBWGS2EZ0",
+                                "f1TC6U38T",
+                                "fGRX4921G"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
         {
             "id": "pK281ZFGR",
             "displayName": "iris",
@@ -159,120 +273,6 @@
                             "description": "Checks if articles that should be found by a search query are actually returned in the search results.",
                             "failureIds": [
                                 "fLM8A50BH"
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "id": "pBF1J25B0",
-            "displayName": "hyperion",
-            "description": "Fetches enriched content from Iris to render it for the end users.",
-            "type": "Component",
-            "services": [
-                {
-                    "id": "s36098MPB",
-                    "displayName": "SSR",
-                    "description": "Converting the React.js rendering of articles to HTML/CSS/JS for SEO purposes.",
-                    "type": "Automated",
-                    "usages": [
-                        {
-                            "id": "uKF6LS6TA",
-                            "taskId": "tR9F9NQ67",
-                            "failures": [
-                                {
-                                    "id": "f0DAP4UA9",
-                                    "symptom": "Search engines index outdated or incomplete content.",
-                                    "consequence": "Search results are inaccurate, and users may not find the correct information.",
-                                    "businessImpact": "Reduced organic traffic, damage to brand reputation.",
-                                    "impactLevel": 50
-                                },
-                                {
-                                    "id": "fUK66AN38",
-                                    "symptom": "Search engines are not able to crawl the site.",
-                                    "consequence": "Users may not find the most relevant content, leading to a poor user experience.",
-                                    "businessImpact": "Loss of potential ad revenue, damage to brand reputation.",
-                                    "impactLevel": 50
-                                },
-                                {
-                                    "id": "fA448BBVG",
-                                    "symptom": "The search engine indexes the wrong URLs.",
-                                    "consequence": "Users are directed to the wrong pages.",
-                                    "businessImpact": "Reduced organic traffic, damage to brand reputation.",
-                                    "impactLevel": 50
-                                }
-                            ]
-                        }
-                    ],
-                    "metrics": [
-                        {
-                            "id": "mQ85AN9AJ",
-                            "displayName": "SEO Health Check",
-                            "description": "Checks the frequency of successful crawls by search engines, verifies the URLs indexed by search engines against a sitemap, and checks the freshness of the content indexed by search engines.",
-                            "failureIds": [
-                                "f0DAP4UA9",
-                                "fUK66AN38",
-                                "fA448BBVG"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": "sUGUKGC90",
-                    "displayName": "Serving content to CDN",
-                    "description": "Serving the content to the CDN.",
-                    "type": "Automated",
-                    "usages": [
-                        {
-                            "id": "uCY6YTR7J",
-                            "taskId": "tV3X3Y7P8",
-                            "failures": [
-                                {
-                                    "id": "fBWGS2EZ0",
-                                    "symptom": "The front page displays stale content.",
-                                    "consequence": "Readers see outdated content on the front page.",
-                                    "businessImpact": "Reduced reader engagement, potential for loss of ad revenue.",
-                                    "impactLevel": 50
-                                }
-                            ]
-                        },
-                        {
-                            "id": "uMSYEHF3W",
-                            "taskId": "t7KBJG9AD",
-                            "failures": [
-                                {
-                                    "id": "f1TC6U38T",
-                                    "symptom": "The article page displays stale content.",
-                                    "consequence": "Readers see outdated content on the article page.",
-                                    "businessImpact": "Reduced reader engagement, potential for loss of ad revenue.",
-                                    "impactLevel": 50
-                                }
-                            ]
-                        },
-                        {
-                            "id": "uK9M9WYQ1",
-                            "taskId": "tR9F9NQ67",
-                            "failures": [
-                                {
-                                    "id": "fGRX4921G",
-                                    "symptom": "The CDN is not serving all the content to the search engines.",
-                                    "consequence": "Search engines index incomplete content.",
-                                    "businessImpact": "Reduced organic traffic, damage to brand reputation.",
-                                    "impactLevel": 50
-                                }
-                            ]
-                        }
-                    ],
-                    "metrics": [
-                        {
-                            "id": "mN2WJN35H",
-                            "displayName": "CDN Serving Success Rate",
-                            "description": "Checks the frequency of successful content delivery to the CDN.",
-                            "failureIds": [
-                                "fBWGS2EZ0",
-                                "f1TC6U38T",
-                                "fGRX4921G"
                             ]
                         }
                     ]
