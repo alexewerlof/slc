@@ -2,6 +2,7 @@ import { describe, test } from 'node:test'
 import assert from 'node:assert'
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
+import process from 'node:process'
 import * as cheerio from 'cheerio'
 
 const appDir = path.resolve(process.cwd(), 'app')
@@ -9,14 +10,14 @@ const appDir = path.resolve(process.cwd(), 'app')
 const URL_BASE = 'https://slc.alexewerlof.com/app/'
 
 describe('Manifest and HTML meta description consistency', async () => {
-    const dirents = await readdir(appDir, { withFileTypes: true })
+    const dirEntries = await readdir(appDir, { withFileTypes: true })
 
-    for (const dirent of dirents) {
-        if (!dirent.isDirectory()) {
+    for (const dirEntry of dirEntries) {
+        if (!dirEntry.isDirectory()) {
             continue
         }
 
-        const appName = dirent.name
+        const appName = dirEntry.name
         if (appName.startsWith('_')) {
             continue
         }
