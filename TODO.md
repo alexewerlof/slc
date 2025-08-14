@@ -30,7 +30,7 @@
 - [ ] Support calendar-bound windows
 - [ ] Generate SLA contract based on your SLI/SLO
 - [ ] Analyze SLA contract
-- [ ] Support loading/saving projects like Mermaincharts
+- [ ] Support loading/saving projects like MermaidCharts
 
 # Medium prio
 
