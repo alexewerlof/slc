@@ -4,6 +4,7 @@ import { Assessment } from '../../components/assessment.js'
 import { currentUrlToState } from '../../lib/share.js'
 import { registerComponents } from '../../lib/component-loader.js'
 import { Store } from '../../lib/store.js'
+import { showToast } from '../../lib/toast.js'
 
 export const app = createApp({
     data() {
@@ -15,6 +16,7 @@ export const app = createApp({
         if (url.searchParams.has('urlVer')) {
             try {
                 assessment.state = currentUrlToState()
+                showToast('Loaded from URL')
             } catch (e) {
                 console.warn('Using default because failed to load from URL:', e)
             }
