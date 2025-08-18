@@ -6,6 +6,19 @@
         <div class="frost">
             <div class="button-bar button-bar--left">
                 <button
+                    @click="showDialog('importDialog', true)"
+                    title="Import"
+                >
+                    <icon-component name="upload"></icon-component>
+                </button>
+                <button
+                    @click="showDialog('stateDialog', true)"
+                    title="Export"
+                >
+                    <icon-component name="download"></icon-component>
+                </button>
+                <span class="button-bar__sep"></span>
+                <button
                     @click="editingInstance = assessment.providers.pushNew()"
                     title="Add Provider"
                 >
@@ -74,19 +87,6 @@
                     :disabled="!editingInstance"
                 >
                     <icon-component name="delete"></icon-component>
-                </button>
-                <span class="button-bar__sep"></span>
-                <button
-                    @click="showDialog('importDialog', true)"
-                    title="Import"
-                >
-                    <icon-component name="upload"></icon-component>
-                </button>
-                <button
-                    @click="showDialog('stateDialog', true)"
-                    title="Export"
-                >
-                    <icon-component name="download"></icon-component>
                 </button>
             </div>
         </div>
