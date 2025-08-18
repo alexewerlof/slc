@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <script src="../../lib/window-onerror.js"></script>
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
         <script>
@@ -33,15 +34,6 @@
         <noscript>
             <p>This web application requires JavaScript to work.</p>
         </noscript>
-        <script>
-            window.onerror = function (err) {
-                const div = document.createElement('div')
-                div.innerHTML = err
-                document.body.appendChild(div)
-                console.error(err)
-                return true
-            }
-        </script>
 
         <div id="app" v-cloak>
             <announcement-component>
