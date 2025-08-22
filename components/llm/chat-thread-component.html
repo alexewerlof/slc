@@ -32,22 +32,15 @@
                 chat-thread-component__contents"
                 :markdown="bead.markdown">
             </markdown-component>
-            <code v-if="showDebugInfo && bead.usage">
-                <span class="const" title="delay">{{ bead.usage.duration }}</span>
-                <span class="exprs">ms</span>
-                <span class="punct">, </span>
-                <span class="const" title="Promps tokens" v-text="bead.usage.prompt_tokens"></span>
-                <span class="exprs">Tok</span>
-                <span class="punct">, </span>
-                <span class="const" title="Completion tokens" v-text="bead.usage.completion_tokens"></span>
-                <span class="exprs">Tok</span>
-                <span class="punct">, </span>
-                <span class="const" title="Throughput">
-                    {{ (1000 * bead.usage.completion_tokens / bead.usage.duration).toFixed(1) }}
-                </span>
-                <span class="exprs">Tok/s</span>
-            </code>
+            <token-stats-component
+                v-if="showDebugInfo && bead.tokenStats"
+                :token-stats="bead.tokenStats">
+            </token-stats-component>
+        </div>
+        <div v-if="showDebugInfo">
+            <h4>{{ thread.beads.length}} Beads</h4>
+            <token-stats-component :token-stats="thread.tokenStats"></token-stats-component>
         </div>
         <loading-animation-component v-if="isBusy"></loading-animation-component>
-        </div>
+    </div>
 </div>

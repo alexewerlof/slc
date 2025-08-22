@@ -1,6 +1,7 @@
 import { joinLines } from '../../lib/markdown.js'
 import { loadText } from '../../lib/share.js'
-import { isArr, isBool, isFn, isInArr, isObj, isStr } from '../../lib/validation.js'
+import { isArr, isBool, isDef, isFn, isInArr, isInstance, isObj, isStr } from '../../lib/validation.js'
+import { TokenStats } from './token-stats.js'
 
 class RoleBead {
     _role = undefined
@@ -10,6 +11,8 @@ class RoleBead {
     isPersistent = true
     /** Beads that set this to true, only show up when debugging info is shown */
     isDebug = false
+    /** May hold token usage and latency stats */
+    tokenStats = undefined
 
     static DEFAULT_ROLE_OPTIONS = {
         user: {
@@ -34,14 +37,20 @@ class RoleBead {
         },
     }
 
-    static POSSIBLE_ROLES = Object.keys(RoleBead.DEFAULT_ROLE_OPTIONS)
+    static POSSIBLE_ROLES = Object.freeze(Object.keys(RoleBead.DEFAULT_ROLE_OPTIONS))
 
     constructor(options) {
         if (!isObj(options)) {
             throw new TypeError(`options must be an object. Got ${options} (${typeof options})`)
         }
-        const { role } = options
+        const { role, tokenStats } = options
         this.role = role
+        if (isDef(tokenStats)) {
+            if (!isInstance(tokenStats, TokenStats)) {
+                throw new TypeError(`Expected an instance of TokenStats. Got ${tokenStats} (${typeof tokenStats})`)
+            }
+            this.tokenStats = tokenStats
+        }
         const { isGhost, isPersistent, isDebug } = {
             ...RoleBead.DEFAULT_ROLE_OPTIONS[role],
             ...options,
@@ -162,12 +171,13 @@ export class UserPromptBead extends ContentBead {
 }
 
 export class AssistantResponse extends ContentBead {
-    constructor(messageContent) {
+    constructor(messageContent, tokenStats) {
         super({
             role: 'assistant',
             isDebug: false,
             isPersistent: false,
             isGhost: false,
+            tokenStats,
         }, messageContent)
     }
 
@@ -223,10 +233,13 @@ export class ToolCallsBead extends RoleBead {
 }
 
 export class ToolResultBead extends RoleBead {
-    constructor(toolInvocationResultMessage) {
+    constructor(toolInvocationResultMessage, tokenStats) {
         super({
             role: toolInvocationResultMessage.role,
             isDebug: true,
+            isPersistent: false,
+            isGhost: false,
+            tokenStats,
         })
         this._toolInvocationResultMessage = toolInvocationResultMessage
     }
@@ -298,6 +311,7 @@ export class FileBead extends RoleBead {
 
 export class Thread {
     beads = []
+    tokenStats = new TokenStats()
 
     constructor(...beads) {
         this.add(...beads)
@@ -309,6 +323,9 @@ export class Thread {
                 throw new TypeError(`Expected an instance of Bead. Got ${JSON.stringify(bead)}`)
             }
             this.beads.push(bead)
+            if (isObj(bead.tokenStats)) {
+                this.tokenStats.increment(bead.tokenStats)
+            }
         }
         return this
     }

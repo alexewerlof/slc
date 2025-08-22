@@ -61,6 +61,7 @@ const componentSpecifications = [
     './llm/llm-api-settings-component.jh&',
     './llm/llm-settings-component.jh&',
     './llm/single-prompt-component.jh&',
+    './llm/token-stats-component.jh&',
 ]
 
 /**

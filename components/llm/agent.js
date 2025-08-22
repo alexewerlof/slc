@@ -4,6 +4,7 @@ import { llm } from './llm.js'
 import { Toolbox } from './toolbox.js'
 import { isDef, isInstance } from '../../lib/validation.js'
 import { showToast } from '../../lib/toast.js'
+import { TokenStats } from './token-stats.js'
 
 export class Agent {
     /** Max consecutive tools calls */
@@ -52,20 +53,18 @@ export class Agent {
                 this.abortController = undefined
 
                 const message = getFirstMessage(completion)
-                const { usage } = completion
-                usage.duration = Date.now() - start
+                const tokenStats = new TokenStats(completion.usage)
+                tokenStats.duration = Date.now() - start
 
                 lastMessageWasToolsCall = this.toolbox && isToolsCallMessage(message)
 
                 if (!lastMessageWasToolsCall) {
-                    const bead = new AssistantResponse(message.content)
-                    bead.usage = usage
+                    const bead = new AssistantResponse(message.content, tokenStats)
                     this.thread.add(bead)
                     return bead
                 }
 
-                const bead = new ToolCallsBead(message.tool_calls)
-                bead.usage = usage
+                const bead = new ToolCallsBead(message.tool_calls, tokenStats)
                 this.thread.add(bead)
                 consecutiveToolsCalls++
 
