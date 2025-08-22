@@ -25,8 +25,7 @@ export function createToolbox(assessmentEditorComponent) {
             }
             const deleted = assessmentEditorComponent.removeEditingInstance(entity)
             return [
-                entityClassName,
-                'with id',
+                'Entity with id',
                 id,
                 'is',
                 deleted ? 'removed' : 'not removed',
