@@ -80,10 +80,6 @@ export class Service extends Entity {
         this.usages.removeAll()
     }
 
-    get usages() {
-        return this.provider.assessment.usages.filter((d) => d.service === this)
-    }
-
     get tasks() {
         return this.usages.map((d) => d.task)
     }

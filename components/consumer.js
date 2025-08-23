@@ -7,7 +7,7 @@ import { Task } from './task.js'
 
 export class Consumer extends Entity {
     static possibleTypes = ['System', 'Component', 'Group']
-    type = Consumer.possibleTypes[0]
+    _type = Consumer.possibleTypes[0]
     assessment = null
     tasks = new SelectableArray(Task, this)
 
