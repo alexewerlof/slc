@@ -23,7 +23,8 @@
     fill: var(--brand-red);
 }
 
-.assessment-graph-component-entity--provider, .assessment-graph-component-entity--service {
+.assessment-graph-component-entity--provider,
+.assessment-graph-component-entity--service {
     & .assessment-graph-component-entity__bg {
         fill: var(--brand-green);
     }
@@ -32,7 +33,8 @@
     }
 }
 
-.assessment-graph-component-entity--consumer, .assessment-graph-component-entity--task {
+.assessment-graph-component-entity--consumer,
+.assessment-graph-component-entity--task {
     & .assessment-graph-component-entity__bg {
         fill: var(--brand-purple);
     }

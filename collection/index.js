@@ -14,9 +14,7 @@ const groupNames = [
 ]
 
 export async function importAllGroups() {
-    const groupModules = await Promise.all(groupNames.map(
-        (groupName) => import(`./${groupName.toLowerCase()}.js`),
-    ))
+    const groupModules = await Promise.all(groupNames.map((groupName) => import(`./${groupName.toLowerCase()}.js`)))
 
     const ret = Object.create(null)
     for (let i = 0; i < groupNames.length; i++) {

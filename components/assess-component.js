@@ -7,16 +7,7 @@ import { ContentBead, FileBead, Thread } from './llm/thread.js'
 
 export default {
     data() {
-        const steps = [
-            'Introduction',
-            'Providers',
-            'Consumers',
-            'Failures',
-            'Risks',
-            'Metrics',
-            'Summary',
-            'Export',
-        ]
+        const steps = ['Introduction', 'Providers', 'Consumers', 'Failures', 'Risks', 'Metrics', 'Summary', 'Export']
 
         return {
             currentStep: 0,

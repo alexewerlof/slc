@@ -13,7 +13,7 @@ function resetImpactLevelsInOrder(failures) {
         if (!isInstance(failure, Failure)) {
             throw new TypeError(`Expected an instance of Failure. Got ${failure} (${typeof failure})`)
         }
-        failure.impactLevel = min + ((lastIndex - i) * step)
+        failure.impactLevel = min + (lastIndex - i) * step
     }
 }
 

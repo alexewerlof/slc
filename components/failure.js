@@ -46,12 +46,7 @@ export class Failure extends Entity {
     set state(newState) {
         super.state = newState
 
-        const {
-            symptom,
-            consequence,
-            businessImpact,
-            impactLevel,
-        } = newState
+        const { symptom, consequence, businessImpact, impactLevel } = newState
 
         if (isDef(symptom)) {
             if (!isStr(symptom)) {
@@ -95,11 +90,7 @@ export class Failure extends Entity {
     }
 
     toString() {
-        const ret = [
-            this.task,
-            unicodeSymbol('failure'),
-            this.service,
-        ]
+        const ret = [this.task, unicodeSymbol('failure'), this.service]
         if (this.symptom) {
             ret.push(unicodeSymbol('symptom'), this.symptom)
         }

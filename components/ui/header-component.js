@@ -25,7 +25,7 @@ export default {
             if (!this.manifest) return {}
             return {
                 'background-color': this.manifest.background_color,
-                'color': this.manifest.theme_color,
+                color: this.manifest.theme_color,
             }
         },
     },

@@ -4,11 +4,7 @@ import { inRange } from '../lib/validation.js'
 import { Objective } from './objective.js'
 
 export class Thresholds {
-    constructor(
-        slo,
-        lower = config.lowerThreshold.default,
-        upper = config.upperThreshold.default,
-    ) {
+    constructor(slo, lower = config.lowerThreshold.default, upper = config.upperThreshold.default) {
         if (!(slo instanceof Objective)) {
             throw new TypeError(`Thresholds: slo must be an instance of Objective. Got ${slo}`)
         }

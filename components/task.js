@@ -21,9 +21,7 @@ export class Task extends Entity {
     }
 
     get usages() {
-        return this.consumer.assessment.usages.filter(
-            (usage) => usage.task === this,
-        )
+        return this.consumer.assessment.usages.filter((usage) => usage.task === this)
     }
 
     onRemove() {
@@ -36,10 +34,7 @@ export class Task extends Entity {
     }
 
     toString() {
-        return [
-            this.consumer.markdownDisplayName,
-            this.markdownDisplayName,
-        ].join(scopeIcon)
+        return [this.consumer.markdownDisplayName, this.markdownDisplayName].join(scopeIcon)
     }
 
     get index() {

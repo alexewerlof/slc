@@ -37,20 +37,14 @@ export default {
             return this.consumersAndTasksWidth + this.providersAndServicesWidth
         },
         providersAndServicesWidth() {
-            const width = this.assessment.providers.reduce(
-                (sum, provider) => sum + this.providerWidth(provider),
-                0,
-            )
+            const width = this.assessment.providers.reduce((sum, provider) => sum + this.providerWidth(provider), 0)
             return Math.max(width, this.scaleY(1))
         },
         providersAndServicesHeight() {
             return this.scaleY(2)
         },
         consumersAndTasksHeight() {
-            const height = this.assessment.consumers.reduce(
-                (sum, consumer) => sum + this.consumerHeight(consumer),
-                0,
-            )
+            const height = this.assessment.consumers.reduce((sum, consumer) => sum + this.consumerHeight(consumer), 0)
             return Math.max(height, this.scaleY(1))
         },
         metricsOffsetY() {

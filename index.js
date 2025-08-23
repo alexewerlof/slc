@@ -26,10 +26,12 @@ const app = createApp({
             const redirectUrl = new URL(calculatorApp.url)
             const { search } = url
             redirectUrl.search = search
-            globalThis.location.replace(addUTM(redirectUrl, {
-                source: 'web',
-                campaign: 'legacy-auto-redirect',
-            }))
+            globalThis.location.replace(
+                addUTM(redirectUrl, {
+                    source: 'web',
+                    campaign: 'legacy-auto-redirect',
+                }),
+            )
         }
     },
 })

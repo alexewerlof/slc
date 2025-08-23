@@ -53,9 +53,7 @@
                         {
                             "id": "mLFJHZ1VU",
                             "displayName": "Latency",
-                            "failureIds": [
-                                "fP6XD1CK8"
-                            ]
+                            "failureIds": ["fP6XD1CK8"]
                         }
                     ]
                 },
@@ -84,9 +82,7 @@
                             "id": "mGK1N4P9E",
                             "displayName": "Submission Latency",
                             "description": "The time it takes to submit a link.",
-                            "failureIds": [
-                                "fKZD0MJ3T"
-                            ]
+                            "failureIds": ["fKZD0MJ3T"]
                         }
                     ]
                 },
@@ -115,9 +111,7 @@
                             "id": "m4SKUGYAH",
                             "displayName": "Login Latency",
                             "description": "The time it takes to log in.",
-                            "failureIds": [
-                                "fRXX1W5XU"
-                            ]
+                            "failureIds": ["fRXX1W5XU"]
                         }
                     ]
                 },
@@ -146,9 +140,7 @@
                             "id": "m0ZNCXQBL",
                             "displayName": "Comment Load Time",
                             "description": "The time it takes to load the comments.",
-                            "failureIds": [
-                                "fC97WUD3T"
-                            ]
+                            "failureIds": ["fC97WUD3T"]
                         }
                     ]
                 }
@@ -198,10 +190,7 @@
                             "id": "m8HJH7CHZ",
                             "displayName": "Page Load Time",
                             "description": "The time it takes to load the page as measured in the user's browser (this includes cache impact as well).",
-                            "failureIds": [
-                                "f8T5BMHFJ",
-                                "f9NPHV2TN"
-                            ]
+                            "failureIds": ["f8T5BMHFJ", "f9NPHV2TN"]
                         }
                     ]
                 }

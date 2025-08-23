@@ -1,5 +1,6 @@
 @media screen and (min-width: 768px) {
-    html, body {
+    html,
+    body {
         font-size: 22px;
     }
 }
@@ -14,7 +15,8 @@ ul.benefit-list {
 
 /* Keyframes for the subtle floating animation for the app logo */
 @keyframes subtle-float {
-    0%, 100% {
+    0%,
+    100% {
         transform: translateY(0);
     }
     50% {
@@ -54,7 +56,8 @@ ul.benefit-list {
     padding-left: 0.3em;
 }
 
-.apps-container {}
+.apps-container {
+}
 
 .app-item {
     text-decoration: none;

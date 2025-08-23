@@ -125,12 +125,7 @@ export class ContentBead extends RoleBead {
         if (isStr(this.content)) {
             return this.content
         }
-        return joinLines(
-            1,
-            '```json',
-            JSON.stringify(this.content, null, 2),
-            '```',
-        )
+        return joinLines(1, '```json', JSON.stringify(this.content, null, 2), '```')
     }
 
     get message() {
@@ -153,14 +148,7 @@ export class ErrorBead extends RoleBead {
     }
 
     get markdown() {
-        return joinLines(
-            1,
-            '## Error',
-            '',
-            '```txt',
-            this.error,
-            '```',
-        )
+        return joinLines(1, '## Error', '', '```txt', this.error, '```')
     }
 }
 
@@ -172,13 +160,16 @@ export class UserPromptBead extends ContentBead {
 
 export class AssistantResponse extends ContentBead {
     constructor(messageContent, tokenStats) {
-        super({
-            role: 'assistant',
-            isDebug: false,
-            isPersistent: false,
-            isGhost: false,
-            tokenStats,
-        }, messageContent)
+        super(
+            {
+                role: 'assistant',
+                isDebug: false,
+                isPersistent: false,
+                isGhost: false,
+                tokenStats,
+            },
+            messageContent,
+        )
     }
 
     get contentWithoutThought() {
@@ -286,11 +277,7 @@ export class FileBead extends RoleBead {
         if (this._loaded) {
             return this.content
         }
-        return joinLines(
-            1,
-            'Files:',
-            ...this._fileNames.map((f) => `- ${f}`),
-        )
+        return joinLines(1, 'Files:', ...this._fileNames.map((f) => `- ${f}`))
     }
 
     get content() {

@@ -16,25 +16,23 @@ export const app = createApp({
         indicator.upperBound = ''
         const objective = new Objective(indicator)
         const customWindowDays = {
-            'Week': 7,
+            Week: 7,
             '2-weeks': 14,
             '4-weeks': 28,
-            'Month': 30,
+            Month: 30,
             '2-Months': 60,
-            'Quarter': 90,
+            Quarter: 90,
             'Half-year': 180,
-            'Year': 365,
+            Year: 365,
         }
-        const table = Object.entries(customWindowDays).map(
-            ([title, windowDays]) => {
-                const objective = new Objective(indicator)
-                objective.windowDays = windowDays
-                return {
-                    title,
-                    objective,
-                }
-            },
-        )
+        const table = Object.entries(customWindowDays).map(([title, windowDays]) => {
+            const objective = new Objective(indicator)
+            objective.windowDays = windowDays
+            return {
+                title,
+                objective,
+            }
+        })
         return {
             config,
             indicator,
@@ -44,7 +42,7 @@ export const app = createApp({
     },
     watch: {
         'objective.target'(target) {
-            this.table.forEach(({ objective }) => objective.target = target)
+            this.table.forEach(({ objective }) => (objective.target = target))
         },
     },
     methods: {

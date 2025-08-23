@@ -24,7 +24,16 @@ body {
     line-height: 1.5;
 }
 
-h1, h2, h3, h4, h5, h6, th, legend, caption, label {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+th,
+legend,
+caption,
+label {
     font-family: var(--title-font-family);
     font-weight: 400;
 }
@@ -53,11 +62,13 @@ h4 {
     font-size: 1.1em;
 }
 
-h5, h6 {
+h5,
+h6 {
     font-size: 1em;
 }
 
-ul, ol {
+ul,
+ol {
     padding-inline-start: var(--gap3);
 }
 
@@ -76,7 +87,8 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
     text-align: left;
     border-bottom: 1px solid var(--divider-color);
 }
@@ -127,7 +139,8 @@ td button {
     background-position: 100% 100%;
 }
 
-.surface, .well {
+.surface,
+.well {
     border: var(--bthick) solid var(--divider-color);
     padding: var(--gap2);
     border-radius: var(--bradius3);
@@ -140,19 +153,23 @@ td button {
             rgba(from var(--divider-color) r g b / 0.1)
         ),
         linear-gradient(
-        0deg,
-        rgba(from var(--divider-color) r g b / 0.1),
-        rgba(0, 0, 0, 0),
-        rgba(from var(--divider-color) r g b / 0.1)
-    );
+            0deg,
+            rgba(from var(--divider-color) r g b / 0.1),
+            rgba(0, 0, 0, 0),
+            rgba(from var(--divider-color) r g b / 0.1)
+        );
 }
 
 .surface {
-    box-shadow: inset 0 0 var(--gap) var(--bthick) var(--divider-color), 0 0 var(--gap2) var(--bthick) rgba(0, 0, 0);
+    box-shadow:
+        inset 0 0 var(--gap) var(--bthick) var(--divider-color),
+        0 0 var(--gap2) var(--bthick) rgba(0, 0, 0);
 }
 
 .well {
-    box-shadow: 0 0 var(--gap) var(--bthick) var(--divider-color), inset 0 0 var(--gap2) var(--bthick) rgba(0, 0, 0);
+    box-shadow:
+        0 0 var(--gap) var(--bthick) var(--divider-color),
+        inset 0 0 var(--gap2) var(--bthick) rgba(0, 0, 0);
 }
 
 .logo-bg {

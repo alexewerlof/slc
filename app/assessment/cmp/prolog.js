@@ -35,186 +35,72 @@ export function assessment2prolog(assessment) {
         formula.addBreak()
     }
 
-    fact(
-        '% assessment',
-        'AssessmentID',
-        'DisplayName',
-    )
+    fact('% assessment', 'AssessmentID', 'DisplayName')
 
-    fact(
-        'assessment',
-        assessment.id,
-        quoted(assessment.displayName),
-    )
+    fact('assessment', assessment.id, quoted(assessment.displayName))
 
-    fact(
-        '% consumer',
-        'ConsumerID',
-        'DisplayName',
-        'Type',
-    )
+    fact('% consumer', 'ConsumerID', 'DisplayName', 'Type')
     assessment.consumers.forEach((consumer) => {
-        fact(
-            'consumer',
-            consumer.id,
-            quoted(consumer.displayName),
-            consumer.type,
-        )
+        fact('consumer', consumer.id, quoted(consumer.displayName), consumer.type)
     })
 
-    fact(
-        '% provider',
-        'ProviderID',
-        'DisplayName',
-        'Type',
-    )
+    fact('% provider', 'ProviderID', 'DisplayName', 'Type')
     assessment.providers.forEach((provider) => {
-        fact(
-            'provider',
-            provider.id,
-            quoted(provider.displayName),
-            provider.type,
-        )
+        fact('provider', provider.id, quoted(provider.displayName), provider.type)
     })
 
-    fact(
-        '% hasTask',
-        'ConsumerID',
-        'TaskID',
-    )
+    fact('% hasTask', 'ConsumerID', 'TaskID')
     assessment.tasks.forEach((task) => {
-        fact(
-            'hasTask',
-            task.consumer.id,
-            task.id,
-        )
+        fact('hasTask', task.consumer.id, task.id)
     })
 
-    fact(
-        '% task',
-        'TaskID',
-        'DisplayName',
-    )
+    fact('% task', 'TaskID', 'DisplayName')
     assessment.tasks.forEach((task) => {
-        fact(
-            'task',
-            task.id,
-            quoted(task.displayName),
-        )
+        fact('task', task.id, quoted(task.displayName))
     })
 
-    fact(
-        '% providesService',
-        'ProviderID',
-        'ServiceID',
-    )
+    fact('% providesService', 'ProviderID', 'ServiceID')
     assessment.services.forEach((service) => {
-        fact(
-            `providesService`,
-            service.provider.id,
-            service.id,
-        )
+        fact(`providesService`, service.provider.id, service.id)
     })
 
-    fact(
-        '% service',
-        'ServiceID',
-        'DisplayName',
-        'Type',
-    )
+    fact('% service', 'ServiceID', 'DisplayName', 'Type')
     assessment.services.forEach((service) => {
-        fact(
-            'service',
-            service.id,
-            quoted(service.displayName),
-            service.type,
-        )
+        fact('service', service.id, quoted(service.displayName), service.type)
     })
 
-    fact(
-        '% hasMetric',
-        'ServiceID',
-        'MetricID',
-    )
+    fact('% hasMetric', 'ServiceID', 'MetricID')
     assessment.metrics.forEach((metric) => {
-        fact(
-            'hasMetric',
-            metric.service.id,
-            metric.id,
-        )
+        fact('hasMetric', metric.service.id, metric.id)
     })
 
-    fact(
-        '% uses',
-        'TaskID',
-        'ServiceID',
-        'UsageID',
-    )
+    fact('% uses', 'TaskID', 'ServiceID', 'UsageID')
     assessment.usages.forEach((usage) => {
-        fact(
-            'uses',
-            usage.task.id,
-            usage.service.id,
-            usage.id,
-        )
+        fact('uses', usage.task.id, usage.service.id, usage.id)
     })
 
-    fact(
-        '% canFail',
-        'UsageID',
-        'FailureID',
-    )
+    fact('% canFail', 'UsageID', 'FailureID')
 
     assessment.usages.forEach((usage) => {
         usage.failures.forEach((failure) => {
-            fact(
-                'canFail',
-                usage.id,
-                failure.id,
-            )
+            fact('canFail', usage.id, failure.id)
         })
     })
 
-    fact(
-        '% failure',
-        'FailureID',
-        'Symptom',
-        'ImpactLevel',
-    )
+    fact('% failure', 'FailureID', 'Symptom', 'ImpactLevel')
     assessment.failures.forEach((failure) => {
-        fact(
-            'failure',
-            failure.id,
-            quoted(failure.symptom),
-            failure.impactLevel,
-        )
+        fact('failure', failure.id, quoted(failure.symptom), failure.impactLevel)
     })
 
-    fact(
-        '% metric',
-        'MetricID',
-        'DisplayName',
-    )
+    fact('% metric', 'MetricID', 'DisplayName')
     assessment.metrics.forEach((metric) => {
-        fact(
-            'metric',
-            metric.id,
-            quoted(metric.displayName),
-        )
+        fact('metric', metric.id, quoted(metric.displayName))
     })
 
-    fact(
-        '% indicates',
-        'MetricID',
-        'FailureID',
-    )
+    fact('% indicates', 'MetricID', 'FailureID')
     assessment.metrics.forEach((metric) => {
         for (const failure of metric.linkedFailures) {
-            fact(
-                'indicates',
-                metric.id,
-                failure.id,
-            )
+            fact('indicates', metric.id, failure.id)
         }
     })
 

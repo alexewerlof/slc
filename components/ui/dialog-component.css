@@ -24,11 +24,7 @@ dialog.dialog-component {
     color: var(--primary-color);
     background-color: #ffffff09;
     border-bottom-style: solid;
-    border-image-source: linear-gradient(
-        to right,
-        var(--primary-color),
-        var(--secondary-color, var(--primary-color))
-    );
+    border-image-source: linear-gradient(to right, var(--primary-color), var(--secondary-color, var(--primary-color)));
     border-image-slice: 1;
     flex-shrink: 0;
 }

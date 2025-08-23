@@ -34,10 +34,10 @@ export default {
             return this.height - this.margin.bottom
         },
         longWindowX() {
-            return this.margin.left + (this.rangeX * this.alert.longWindowPerc / 100)
+            return this.margin.left + (this.rangeX * this.alert.longWindowPerc) / 100
         },
         shortWindowX() {
-            return this.longWindowX - (this.rangeX * this.alert.shortWindowPerc / 100)
+            return this.longWindowX - (this.rangeX * this.alert.shortWindowPerc) / 100
         },
         errorBudgetTextLines() {
             const { failureWindow } = this.alert.objective

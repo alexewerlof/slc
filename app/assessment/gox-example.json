@@ -78,25 +78,19 @@
                             "displayName": "response_code between 200-499",
                             "description": "error rate",
                             "isBoolean": true,
-                            "failureIds": [
-                                "fC2RWBHFW"
-                            ]
+                            "failureIds": ["fC2RWBHFW"]
                         },
                         {
                             "id": "mE5RR66H9",
                             "displayName": "latency < 10 seconds",
                             "description": "The response to climate API is relatively fast",
-                            "failureIds": [
-                                "fC2RWBHFW"
-                            ]
+                            "failureIds": ["fC2RWBHFW"]
                         },
                         {
                             "id": "mKBPCA68K",
                             "displayName": "GET climate successful",
                             "isBoolean": true,
-                            "failureIds": [
-                                "fKTCPMWMN"
-                            ]
+                            "failureIds": ["fKTCPMWMN"]
                         }
                     ]
                 },
@@ -139,19 +133,14 @@
                             "id": "m1MLBSGAJ",
                             "displayName": "Lock status API latency",
                             "description": "Status check should be reasonably fast (the actual threshold depends on UI and UX research)",
-                            "failureIds": [
-                                "f3JVE7WWG"
-                            ]
+                            "failureIds": ["f3JVE7WWG"]
                         },
                         {
                             "id": "m6SG0XGM8",
                             "displayName": "Lock command API response_code === 202",
                             "description": "Successfully registered the command",
                             "isBoolean": true,
-                            "failureIds": [
-                                "fCLZF5HJU",
-                                "fY6X7TK2Z"
-                            ]
+                            "failureIds": ["fCLZF5HJU", "fY6X7TK2Z"]
                         }
                     ]
                 }
@@ -214,27 +203,21 @@
                             "id": "mBBWHLE10",
                             "displayName": "response_code != 4xx",
                             "description": "some image is returned",
-                            "failureIds": [
-                                "fHD8F981Y"
-                            ]
+                            "failureIds": ["fHD8F981Y"]
                         },
                         {
                             "id": "mCY7C0DUE",
                             "displayName": "user does not report the image",
                             "description": "image matches the model (we use user report as a check asking them \"report problems\")",
                             "isBoolean": true,
-                            "failureIds": [
-                                "fA7QTKGRS"
-                            ]
+                            "failureIds": ["fA7QTKGRS"]
                         },
                         {
                             "id": "mQSANRZES",
                             "displayName": "mobile app log indicating missing image",
                             "description": "For all other reasons that an image may be missing in the app",
                             "isBoolean": true,
-                            "failureIds": [
-                                "fR1NNFF8X"
-                            ]
+                            "failureIds": ["fR1NNFF8X"]
                         }
                     ]
                 }
@@ -270,18 +253,14 @@
                         {
                             "id": "mMQ4J8RLC",
                             "displayName": "for a valid car model, the manual response code < 400",
-                            "failureIds": [
-                                "fDQYCKRHD"
-                            ]
+                            "failureIds": ["fDQYCKRHD"]
                         },
                         {
                             "id": "mZ0N90GTH",
                             "displayName": "download does not break for an already established session",
                             "description": "The manual files can be large. if the download is interrupted for any reasons, we may want to look into it.",
                             "isBoolean": true,
-                            "failureIds": [
-                                "fDQYCKRHD"
-                            ]
+                            "failureIds": ["fDQYCKRHD"]
                         }
                     ]
                 },
@@ -317,18 +296,14 @@
                             "id": "mED6Z8YBM",
                             "displayName": "API response code < 400",
                             "description": "For valid requests to contract retrieval",
-                            "failureIds": [
-                                "fQEPARRU7"
-                            ]
+                            "failureIds": ["fQEPARRU7"]
                         },
                         {
                             "id": "mY9Z0P517",
                             "displayName": "contract user match logged in user",
                             "description": "The user credentials on the contract should match the user credentials that is logged in (web/mobile)",
                             "isBoolean": true,
-                            "failureIds": [
-                                "f9TNBA9HB"
-                            ]
+                            "failureIds": ["f9TNBA9HB"]
                         }
                     ]
                 }
@@ -366,9 +341,7 @@
                             "displayName": "Sampled double-check with CMS on a given RUM page is a pass",
                             "description": "To ensure that we show the right specs, we randomly check 1% of page views using a JavaScript snippet that scrapes data from our website and sends it to a backend that's made for the purpose of cross-checking this data against what the data that should have been sent via CMS (note: this will also check the cache errors)",
                             "isBoolean": true,
-                            "failureIds": [
-                                "fB5XWGBLX"
-                            ]
+                            "failureIds": ["fB5XWGBLX"]
                         }
                     ]
                 }

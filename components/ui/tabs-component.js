@@ -15,7 +15,12 @@ export default {
     },
     computed: {
         tabNames() {
-            const tabSet = new Set(this.tabs.split(',').map((s) => s.trim()).filter((s) => s.length > 0))
+            const tabSet = new Set(
+                this.tabs
+                    .split(',')
+                    .map((s) => s.trim())
+                    .filter((s) => s.length > 0),
+            )
             return Array.from(tabSet)
         },
     },

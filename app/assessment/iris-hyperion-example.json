@@ -86,11 +86,7 @@
                             "id": "mQ85AN9AJ",
                             "displayName": "SEO Health Check",
                             "description": "Checks the frequency of successful crawls by search engines, verifies the URLs indexed by search engines against a sitemap, and checks the freshness of the content indexed by search engines.",
-                            "failureIds": [
-                                "f0DAP4UA9",
-                                "fUK66AN38",
-                                "fA448BBVG"
-                            ]
+                            "failureIds": ["f0DAP4UA9", "fUK66AN38", "fA448BBVG"]
                         }
                     ]
                 },
@@ -145,11 +141,7 @@
                             "id": "mN2WJN35H",
                             "displayName": "CDN Serving Success Rate",
                             "description": "Checks the frequency of successful content delivery to the CDN.",
-                            "failureIds": [
-                                "fBWGS2EZ0",
-                                "f1TC6U38T",
-                                "fGRX4921G"
-                            ]
+                            "failureIds": ["fBWGS2EZ0", "f1TC6U38T", "fGRX4921G"]
                         }
                     ]
                 }
@@ -186,9 +178,7 @@
                             "id": "m6762TP5L",
                             "displayName": "Front Page Freshness",
                             "description": "Checks the timestamp of the latest article on the front page to ensure it's recent.",
-                            "failureIds": [
-                                "fXUG0EFXM"
-                            ]
+                            "failureIds": ["fXUG0EFXM"]
                         }
                     ]
                 },
@@ -231,18 +221,13 @@
                             "id": "mY1THGH50",
                             "displayName": "Article Load Time",
                             "description": "Measures the time it takes for an article to fully load.",
-                            "failureIds": [
-                                "fTFPV7C20"
-                            ]
+                            "failureIds": ["fTFPV7C20"]
                         },
                         {
                             "id": "m939DJ2FA",
                             "displayName": "Content Verification",
                             "description": "Verifies that the article content includes all expected elements and checks if the article ID in the URL matches the ID of the content being displayed.",
-                            "failureIds": [
-                                "fAA49TTWZ",
-                                "fUBUXATPB"
-                            ]
+                            "failureIds": ["fAA49TTWZ", "fUBUXATPB"]
                         }
                     ]
                 },
@@ -271,9 +256,7 @@
                             "id": "mNFQS1T41",
                             "displayName": "Article Availability Check",
                             "description": "Checks if articles that should be found by a search query are actually returned in the search results.",
-                            "failureIds": [
-                                "fLM8A50BH"
-                            ]
+                            "failureIds": ["fLM8A50BH"]
                         }
                     ]
                 }

@@ -48,7 +48,9 @@ input[type='range']::-webkit-slider-thumb {
     width: 0.2em;
     height: 100%;
     background-color: var(--secondary-color);
-    transition: height var(--animation-speed) ease-in-out, margin-top var(--animation-speed) ease-in-out;
+    transition:
+        height var(--animation-speed) ease-in-out,
+        margin-top var(--animation-speed) ease-in-out;
 }
 
 input[type='range']:hover::-webkit-slider-thumb,
@@ -107,7 +109,8 @@ textarea {
         border-color: var(--brand-red);
     }
 
-    &:hover, table & {
+    &:hover,
+    table & {
         border-color: var(--secondary-color);
     }
 }
@@ -160,7 +163,8 @@ input[type='checkbox'] {
     }
 }
 
-input[type='radio'], input[type='radio']::before {
+input[type='radio'],
+input[type='radio']::before {
     border-radius: 50%;
     vertical-align: baseline;
 }
@@ -229,9 +233,12 @@ button {
     text-shadow: 0.05em 0.05em rgba(from var(--foreground-color) r g b / 0.3);
     padding: var(--gap);
     margin: 1px; /* To have place for showing focus outline */
-    transition: filter var(--animation-speed), box-shadow var(--animation-speed);
+    transition:
+        filter var(--animation-speed),
+        box-shadow var(--animation-speed);
 
-    &[disabled], &[disabled]:hover {
+    &[disabled],
+    &[disabled]:hover {
         background-color: var(--background-lighter);
         color: var(--ui-border);
         cursor: not-allowed;
@@ -288,7 +295,9 @@ button {
     box-shadow: 0 0 0.5em 0 var(--brand-red);
 }
 
-a, a:hover, a:active {
+a,
+a:hover,
+a:active {
     color: inherit;
 }
 

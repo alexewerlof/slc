@@ -40,22 +40,28 @@ export function makeCalculator(urlStr) {
         }
     }
     return new Calculator({
-        indicators: [{
-            displayName: 'Latency: Response Latency',
-            metricName: 'response_latency',
-            metricUnit: 'ms',
-            expectedDailyEvents: 10000,
-            upperBound: 'le',
-            timeslice: 60,
-            objectives: [{
-                target: 99,
-                windowDays: 30,
-                upperThreshold: 2000,
-                alerts: [{
-                    burnRate: 10,
-                    longWindowPerc: 8,
-                }],
-            }],
-        }],
+        indicators: [
+            {
+                displayName: 'Latency: Response Latency',
+                metricName: 'response_latency',
+                metricUnit: 'ms',
+                expectedDailyEvents: 10000,
+                upperBound: 'le',
+                timeslice: 60,
+                objectives: [
+                    {
+                        target: 99,
+                        windowDays: 30,
+                        upperThreshold: 2000,
+                        alerts: [
+                            {
+                                burnRate: 10,
+                                longWindowPerc: 8,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
     })
 }

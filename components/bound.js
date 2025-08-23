@@ -4,11 +4,7 @@ import { isInArr, isInstance } from '../lib/validation.js'
 import { Indicator } from './indicator.js'
 
 export class Bound {
-    constructor(
-        indicator,
-        lowerBound = config.lowerBound.default,
-        upperBound = config.upperBound.default,
-    ) {
+    constructor(indicator, lowerBound = config.lowerBound.default, upperBound = config.upperBound.default) {
         if (!isInstance(indicator, Indicator)) {
             throw new TypeError(`Bound: indicator must be an instance of Indicator. Got ${indicator}`)
         }
@@ -22,9 +18,9 @@ export class Bound {
     set lowerBound(val) {
         if (!isInArr(val, config.lowerBound.possibleValues)) {
             throw new RangeError(
-                `Indicator: lowerBound must be one of ${
-                    config.lowerBound.possibleValues.join(', ')
-                }. Got ${val} (${typeof val})`,
+                `Indicator: lowerBound must be one of ${config.lowerBound.possibleValues.join(
+                    ', ',
+                )}. Got ${val} (${typeof val})`,
             )
         }
         this._lowerBound = val
@@ -37,9 +33,9 @@ export class Bound {
     set upperBound(val) {
         if (!isInArr(val, config.upperBound.possibleValues)) {
             throw new RangeError(
-                `Indicator: upperBound must be one of ${
-                    config.upperBound.possibleValues.join(', ')
-                }. Got ${val} (${typeof val})`,
+                `Indicator: upperBound must be one of ${config.upperBound.possibleValues.join(
+                    ', ',
+                )}. Got ${val} (${typeof val})`,
             )
         }
         this._upperBound = val

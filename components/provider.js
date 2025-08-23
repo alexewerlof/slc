@@ -40,10 +40,7 @@ export class Provider extends Entity {
     set state(newState) {
         super.state = newState
 
-        const {
-            type,
-            services,
-        } = newState
+        const { type, services } = newState
 
         if (isDef(type)) {
             if (!isInArr(type, Provider.possibleTypes)) {

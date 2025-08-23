@@ -38,10 +38,7 @@ export class Consumer extends Entity {
     set state(newState) {
         super.state = newState
 
-        const {
-            type,
-            tasks,
-        } = newState
+        const { type, tasks } = newState
 
         if (isDef(type)) {
             if (!isInArr(type, Consumer.possibleTypes)) {

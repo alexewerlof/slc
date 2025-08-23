@@ -48,11 +48,7 @@ export class Alert extends Entity {
     set state(newState) {
         super.state = newState
 
-        const {
-            burnRate,
-            longWindowPerc,
-            shortWindowDivider,
-        } = newState
+        const { burnRate, longWindowPerc, shortWindowDivider } = newState
 
         if (isDef(burnRate)) {
             if (!inRange(burnRate, config.alert.burnRate.min, config.alert.burnRate.max)) {
@@ -165,9 +161,9 @@ export class Alert extends Entity {
 
         if (this.longWindowPerc > 33) {
             lint.warn(
-                `Remember that the alert will trigger after ${
-                    percL10n(this.longWindowPerc)
-                } of the error budget is consumed!`,
+                `Remember that the alert will trigger after ${percL10n(
+                    this.longWindowPerc,
+                )} of the error budget is consumed!`,
                 `That error budget is for ${this.objective.window.humanTime}.`,
                 `Based on your setting an alert burns ${percL10n(this.longWindowPerc)} just to trigger.`,
                 `Then it needs some time to resolve too.`,
@@ -197,9 +193,7 @@ export class Alert extends Entity {
             }
 
             if (this.shortFailureWindow.eventCount === 0) {
-                lint.error(
-                    `Short alert Window is too short for enough valid events to be counted.`,
-                )
+                lint.error(`Short alert Window is too short for enough valid events to be counted.`)
             }
         }
 

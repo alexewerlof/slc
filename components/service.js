@@ -46,11 +46,7 @@ export class Service extends Entity {
     set state(newState) {
         super.state = newState
 
-        const {
-            type,
-            usages,
-            metrics,
-        } = newState
+        const { type, usages, metrics } = newState
 
         if (isDef(type)) {
             if (!isInArr(type, Service.possibleTypes)) {
@@ -118,10 +114,7 @@ export class Service extends Entity {
     }
 
     toString() {
-        return [
-            this.provider.markdownId,
-            this.markdownId,
-        ].join(scopeIcon)
+        return [this.provider.markdownId, this.markdownId].join(scopeIcon)
     }
 
     get index() {
@@ -140,10 +133,7 @@ export class Service extends Entity {
         }
 
         if (this.usages.length === 0) {
-            lint.warn(
-                'No tasks depend on this service.',
-                'Please select some tasks or add new ones.',
-            )
+            lint.warn('No tasks depend on this service.', 'Please select some tasks or add new ones.')
         } else if (this.failures.length === 0) {
             lint.warn(
                 'No failure is identified for any of the usages.',
@@ -155,10 +145,7 @@ export class Service extends Entity {
                 'Please associate all failures with some metric that can detect them.',
             )
         } else if (this.metrics.length === 0) {
-            lint.warn(
-                'This service has no metrics detecting its failures.',
-                'Please add some metrics.',
-            )
+            lint.warn('This service has no metrics detecting its failures.', 'Please add some metrics.')
         }
 
         return lint

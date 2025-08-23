@@ -31,16 +31,7 @@ export class LLMAPI {
         if (!isObj(newState)) {
             throw new TypeError(`options must be an object. Got ${newState}`)
         }
-        const {
-            name,
-            baseUrl,
-            website,
-            description,
-            apiKeyWebsite,
-            suggestedModel,
-            model,
-            apiKey,
-        } = newState
+        const { name, baseUrl, website, description, apiKeyWebsite, suggestedModel, model, apiKey } = newState
         if (!isStr(name)) {
             throw new TypeError(`name must be a string. Got ${name}`)
         }
@@ -150,12 +141,17 @@ export class LLMAPI {
             throw new TypeError(`options must be an object. Got ${options}`)
         }
         const { maxTokens, temperature, tools, signal } = options
-        return await this.fetchJson('POST', 'chat/completions', {
-            messages,
-            model: this.modelIds.selected,
-            temperature,
-            max_tokens: maxTokens,
-            tools,
-        }, signal)
+        return await this.fetchJson(
+            'POST',
+            'chat/completions',
+            {
+                messages,
+                model: this.modelIds.selected,
+                temperature,
+                max_tokens: maxTokens,
+                tools,
+            },
+            signal,
+        )
     }
 }

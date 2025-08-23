@@ -45,11 +45,7 @@ export class Metric extends Entity {
     set state(newState) {
         super.state = newState
 
-        const {
-            isBoolean,
-            numericUnit,
-            failureIds,
-        } = newState
+        const { isBoolean, numericUnit, failureIds } = newState
 
         if (isDef(isBoolean)) {
             if (!isBool(isBoolean)) {

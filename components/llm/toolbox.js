@@ -24,10 +24,7 @@ import { Tool } from './tool.js'
  * @param {string} content - The result content from the tool execution.
  * @returns {ToolResultMessage} The constructed tool result message.
  */
-export function toolResultMessage(
-    id,
-    content,
-) {
+export function toolResultMessage(id, content) {
     return {
         role: 'tool',
         tool_call_id: id,
@@ -39,8 +36,7 @@ export class Toolbox {
     /** @type {Tool[]} */
     tools = []
 
-    constructor() {
-    }
+    constructor() {}
 
     /**
      * Creates a new Tool with the given function and description, adds it to the tools,
@@ -71,7 +67,10 @@ export class Toolbox {
      * @returns {Promise<ToolResultMessage>} A promise that resolves to a tool result message.
      */
     async exeToolCall(toolCall) {
-        const { id, function: { name: funcName, arguments: argsStr } } = toolCall
+        const {
+            id,
+            function: { name: funcName, arguments: argsStr },
+        } = toolCall
         console.log(`Agent wants to call ${funcName}(${argsStr})`)
         const tool = this.tools.find((tool) => tool.name === funcName)
         if (tool) {

@@ -99,11 +99,7 @@ describe('Manifest and HTML meta description consistency', async () => {
                 const metaContent = $(`meta[property="og:url"]`).attr('content')
 
                 assert.ok(metaContent, `No meta og:url`)
-                assert.strictEqual(
-                    metaContent,
-                    URL_BASE + appName + '/' + manifest.start_url,
-                    'HTML/Manifest mismatch',
-                )
+                assert.strictEqual(metaContent, URL_BASE + appName + '/' + manifest.start_url, 'HTML/Manifest mismatch')
             })
 
             test('link canonical', () => {

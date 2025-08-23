@@ -9,7 +9,8 @@
     overflow: auto;
 }
 
-.indicator-finder-component__search-result {}
+.indicator-finder-component__search-result {
+}
 
 .indicator-finder-component__search-result + .indicator-finder-component__search-result {
     margin-top: var(--gap2);

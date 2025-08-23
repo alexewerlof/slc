@@ -31,7 +31,7 @@ export default {
     },
     computed: {
         isTitleOnRight() {
-            return this.x < (this.width / 2)
+            return this.x < this.width / 2
         },
         textAnchor() {
             return this.isTitleOnRight ? 'start' : 'end'
@@ -41,7 +41,7 @@ export default {
         },
         titleY() {
             // 5 is an experimental value that looks good on the current graph size
-            return this.height - (this.height * this.offset / 5)
+            return this.height - (this.height * this.offset) / 5
         },
         arrowPoints() {
             return arrToPolygonPoints(

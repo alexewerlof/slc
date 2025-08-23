@@ -36,10 +36,7 @@ export class Objective extends Entity {
 
         this.indicator = indicator
 
-        this.window = new Window(
-            indicator,
-            daysToSeconds(config.windowDays.default),
-        )
+        this.window = new Window(indicator, daysToSeconds(config.windowDays.default))
 
         if (isDef(state)) {
             this.state = state
@@ -68,13 +65,7 @@ export class Objective extends Entity {
     set state(newState) {
         super.state = newState
 
-        const {
-            target,
-            windowDays,
-            lowerThreshold,
-            upperThreshold,
-            alerts,
-        } = newState
+        const { target, windowDays, lowerThreshold, upperThreshold, alerts } = newState
 
         if (isDef(target)) {
             if (!inRange(target, config.slo.min, config.slo.max)) {
@@ -105,9 +96,7 @@ export class Objective extends Entity {
                 throw new Error('Indicator is upperBound but upperThreshold is not defined')
             }
             if (!inRange(upperThreshold, config.upperThreshold.min, config.upperThreshold.max)) {
-                throw new Error(
-                    `Invalid upperThreshold: ${upperThreshold} (${typeof upperThreshold})`,
-                )
+                throw new Error(`Invalid upperThreshold: ${upperThreshold} (${typeof upperThreshold})`)
             }
             this.upperThreshold = upperThreshold
         }
@@ -216,7 +205,7 @@ export class Objective extends Entity {
         // Event based
         const newBadEventCount = clamp(this.badEventCount + amount, 1, this.validEventCount)
         const newGoodEventCount = this.validEventCount - newBadEventCount
-        const newSLO = toFixed(newGoodEventCount / this.validEventCount * 100)
+        const newSLO = toFixed((newGoodEventCount / this.validEventCount) * 100)
         this.target = clamp(newSLO, config.slo.min, config.slo.max)
     }
 
@@ -283,7 +272,7 @@ export class Objective extends Entity {
             )
         }
 
-        if ((this.indicator.isRanged) && (this.upperThreshold <= this.lowerThreshold)) {
+        if (this.indicator.isRanged && this.upperThreshold <= this.lowerThreshold) {
             lint.error('The upper threshold must be greater than the lower threshold.')
         }
 

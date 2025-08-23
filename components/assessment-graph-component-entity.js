@@ -49,10 +49,7 @@ export default {
             return this.r + 4
         },
         classes() {
-            const ret = [
-                'assessment-graph-component-entity',
-                `assessment-graph-component-entity--${this.type}`,
-            ]
+            const ret = ['assessment-graph-component-entity', `assessment-graph-component-entity--${this.type}`]
             if (this.isSelected) {
                 ret.push('assessment-graph-component-entity--selected')
             }

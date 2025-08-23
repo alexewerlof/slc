@@ -37,10 +37,7 @@ export class Assessment extends Entity {
     set state(newState) {
         super.state = newState
 
-        const {
-            consumers,
-            providers,
-        } = newState
+        const { consumers, providers } = newState
 
         if (isDef(consumers)) {
             if (!isArr(consumers)) {
@@ -71,10 +68,7 @@ export class Assessment extends Entity {
             throw new TypeError(`task must be an instance of Task. Got ${task}`)
         }
         return this.usages.find((usage) => {
-            return (
-                usage.service === service &&
-                usage.task === task
-            )
+            return usage.service === service && usage.task === task
         })
     }
 
@@ -95,9 +89,7 @@ export class Assessment extends Entity {
     }
 
     get failures() {
-        return this.usages
-            .flatMap((usage) => usage.failures)
-            .sort((f1, f2) => f2.impactLevel - f1.impactLevel)
+        return this.usages.flatMap((usage) => usage.failures).sort((f1, f2) => f2.impactLevel - f1.impactLevel)
     }
 
     get all() {
@@ -182,60 +174,46 @@ export class Assessment extends Entity {
             `- ${unicodeSymbol('service')} indicates **Service**. Each Service is offered by exactly 1 Provider.`,
             `- ${unicodeSymbol('consumer')} indicates **Consumer**. Each Consumer has 1+ Task(s) to achieve a goal.`,
             `- ${unicodeSymbol('task')} indicates **Task**. Each Task belongs to exactly 1 Consumer.`,
-            `- ${
-                unicodeSymbol('usage')
-            } indicates **Usage**. Each Usage ties a Task to a Service. Each Usage has 1+ Failure(s).`,
-            `- ${
-                unicodeSymbol('failure')
-            } indicates **Failure**. Each Failure belongs to exactly one Usage. Each Failure has a Symptom, a Consequence, and a Business Impact`,
+            `- ${unicodeSymbol(
+                'usage',
+            )} indicates **Usage**. Each Usage ties a Task to a Service. Each Usage has 1+ Failure(s).`,
+            `- ${unicodeSymbol(
+                'failure',
+            )} indicates **Failure**. Each Failure belongs to exactly one Usage. Each Failure has a Symptom, a Consequence, and a Business Impact`,
             `- ${unicodeSymbol('symptom')} indicates **Symptom**`,
             `- ${unicodeSymbol('consequence')} indicates **Consequence**`,
             `- ${unicodeSymbol('impact')} indicates **Business Impact**`,
-            `- ${unicodeSymbol('scope')} indicates a parent-child relationship like **Provider${
-                unicodeSymbol('scope')
-            }Service** or **Consumer${unicodeSymbol('scope')}Task**`,
+            `- ${unicodeSymbol('scope')} indicates a parent-child relationship like **Provider${unicodeSymbol(
+                'scope',
+            )}Service** or **Consumer${unicodeSymbol('scope')}Task**`,
         )
 
         lines.push(newParagraph)
 
-        lines.push(
-            `## Providers`,
-            emptyLine,
-        )
+        lines.push(`## Providers`, emptyLine)
 
         for (const provider of this.providers) {
-            lines.push(
-                `- ${unicodeSymbol('provider')} **${provider.displayName}**: ${provider.description}`,
-            )
+            lines.push(`- ${unicodeSymbol('provider')} **${provider.displayName}**: ${provider.description}`)
             for (const service of provider.services) {
-                lines.push(
-                    `  - ${unicodeSymbol('service')} **${service.displayName}**: ${service.description}`,
-                )
+                lines.push(`  - ${unicodeSymbol('service')} **${service.displayName}**: ${service.description}`)
                 for (const usage of this.usages) {
                     if (usage.service === service) {
                         lines.push(
-                            `    - ${
-                                unicodeSymbol('usage')
-                            } **${usage.task.consumer.displayName}**: ${usage.description}`,
+                            `    - ${unicodeSymbol(
+                                'usage',
+                            )} **${usage.task.consumer.displayName}**: ${usage.description}`,
                         )
                     }
                 }
             }
         }
 
-        lines.push(
-            `## Consumers`,
-            emptyLine,
-        )
+        lines.push(`## Consumers`, emptyLine)
 
         for (const consumer of this.consumers) {
-            lines.push(
-                `- ${unicodeSymbol('consumer')} **${consumer.displayName}**: ${consumer.description}`,
-            )
+            lines.push(`- ${unicodeSymbol('consumer')} **${consumer.displayName}**: ${consumer.description}`)
             for (const task of consumer.tasks) {
-                lines.push(
-                    `  - ${unicodeSymbol('task')} **${task.displayName}**: ${task.description}`,
-                )
+                lines.push(`  - ${unicodeSymbol('task')} **${task.displayName}**: ${task.description}`)
                 for (const usage of this.usages) {
                     if (usage.task === task) {
                         lines.push(
@@ -246,42 +224,25 @@ export class Assessment extends Entity {
             }
         }
 
-        lines.push(
-            `## Usages`,
-            emptyLine,
-        )
+        lines.push(`## Usages`, emptyLine)
 
         for (const usage of this.usages) {
-            lines.push(
-                `- ${usage}`,
-            )
+            lines.push(`- ${usage}`)
         }
 
-        lines.push(
-            `## Failures`,
-            emptyLine,
-        )
+        lines.push(`## Failures`, emptyLine)
 
         for (const failure of this.failures) {
-            lines.push(
-                `- ${failure}`,
-            )
+            lines.push(`- ${failure}`)
         }
 
-        lines.push(
-            `## Metrics`,
-            emptyLine,
-        )
+        lines.push(`## Metrics`, emptyLine)
 
         for (const metric of this.metrics) {
-            lines.push(
-                `- ${metric}`,
-            )
+            lines.push(`- ${metric}`)
 
             for (const linkedFailure of metric.linkedFailures) {
-                lines.push(
-                    `  - ${linkedFailure}`,
-                )
+                lines.push(`  - ${linkedFailure}`)
             }
         }
 

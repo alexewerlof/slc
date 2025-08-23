@@ -46,16 +46,8 @@ test.describe('parseParamShorthand()', () => {
     })
 
     test.it('should throw an error if paramShorthand is not a string', () => {
-        assert.throws(
-            () => parseParamShorthand(123),
-            TypeError,
-            'Expected paramShorthand to be a string. Got 123',
-        )
-        assert.throws(
-            () => parseParamShorthand(null),
-            TypeError,
-            'Expected paramShorthand to be a string. Got null',
-        )
+        assert.throws(() => parseParamShorthand(123), TypeError, 'Expected paramShorthand to be a string. Got 123')
+        assert.throws(() => parseParamShorthand(null), TypeError, 'Expected paramShorthand to be a string. Got null')
         assert.throws(
             () => parseParamShorthand(undefined),
             TypeError,
@@ -97,19 +89,11 @@ test.describe('parseParamShorthand()', () => {
 
     test.it('should throw for empty name', () => {
         const paramShorthand = ':string*'
-        assert.throws(
-            () => parseParamShorthand(paramShorthand),
-            SyntaxError,
-            'Handles empty name before colon',
-        )
+        assert.throws(() => parseParamShorthand(paramShorthand), SyntaxError, 'Handles empty name before colon')
     })
 
     test.it('should throw for empty type', () => {
         const paramShorthand = 'paramName:*'
-        assert.throws(
-            () => parseParamShorthand(paramShorthand),
-            SyntaxError,
-            'Handles empty type after colon',
-        )
+        assert.throws(() => parseParamShorthand(paramShorthand), SyntaxError, 'Handles empty type after colon')
     })
 })

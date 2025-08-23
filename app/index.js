@@ -26,7 +26,7 @@ async function appDescriptor(name) {
     return {
         name,
         url,
-        icon: (new URL(manifest.icons[0].src, manifestUrl)).toString(),
+        icon: new URL(manifest.icons[0].src, manifestUrl).toString(),
         manifest,
     }
 }

@@ -49,10 +49,7 @@ export const app = createApp({
     computed: {
         shareUrl() {
             try {
-                const url = new URL(
-                    globalThis.location.pathname,
-                    globalThis.location.origin,
-                )
+                const url = new URL(globalThis.location.pathname, globalThis.location.origin)
                 return stateToUrl(url, this.calculator.state).toString()
             } catch (e) {
                 console.error('Could not create shareurl', e)

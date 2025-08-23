@@ -9,9 +9,7 @@ import { percent } from '../../lib/math.js'
 import { numL10n, percL10n } from '../../lib/fmt.js'
 import { registerAllComponents } from '../../components/index.js'
 
-const percentageColor = d3.scaleLinear()
-    .domain([config.slider.min, config.slider.max])
-    .range(['#F86262', '#1BC554'])
+const percentageColor = d3.scaleLinear().domain([config.slider.min, config.slider.max]).range(['#F86262', '#1BC554'])
 
 const app = createApp({
     data() {
@@ -66,14 +64,10 @@ const app = createApp({
             return Math.round(this.windowDataCount * this.windowCount)
         },
         incidentDataCount() {
-            return Math.round(
-                percent(this.incidentLengthPerc, this.windowDataCount),
-            )
+            return Math.round(percent(this.incidentLengthPerc, this.windowDataCount))
         },
         sortedMetricData() {
-            return [...this.metricData].sort(
-                this.sortAscending ? d3.ascending : d3.descending,
-            )
+            return [...this.metricData].sort(this.sortAscending ? d3.ascending : d3.descending)
         },
         metricDataPoints() {
             return this.metricData.map((y, x) => [x, y])
@@ -93,10 +87,7 @@ const app = createApp({
             let sum = 0
             for (const bucket of this.buckets) {
                 sum += bucket.probability
-                ret.push([
-                    Math.round(percent(sum, this.dataCount)),
-                    bucket.max,
-                ])
+                ret.push([Math.round(percent(sum, this.dataCount)), bucket.max])
             }
             return ret
         },
@@ -213,11 +204,7 @@ const app = createApp({
             return stats
         },
         slsPoints() {
-            const slsValues = calculateSlsMetric(
-                this.metricData,
-                this.sliDefinition,
-                this.sloDefinition,
-            )
+            const slsValues = calculateSlsMetric(this.metricData, this.sliDefinition, this.sloDefinition)
             return slsValues.map((value, i) => [i, value])
         },
         slsRange() {
@@ -352,23 +339,11 @@ const app = createApp({
             }
         },
         generateData() {
-            this.metricData = generateData(
-                this.dataCount,
-                this.buckets,
-                this.onlyInt,
-            )
+            this.metricData = generateData(this.dataCount, this.buckets, this.onlyInt)
         },
         addIncident() {
-            const incidentBuckets = createIncidentBuckets(
-                this.min,
-                this.max,
-                this.sliDefinition,
-                this.sloDefinition,
-            )
-            const incidentDataCount = Math.min(
-                this.dataCount - this.incidentInsertionPoint,
-                this.incidentDataCount,
-            )
+            const incidentBuckets = createIncidentBuckets(this.min, this.max, this.sliDefinition, this.sloDefinition)
+            const incidentDataCount = Math.min(this.dataCount - this.incidentInsertionPoint, this.incidentDataCount)
             console.log(
                 'metricData.length',
                 this.metricData.length,
@@ -377,16 +352,8 @@ const app = createApp({
                 'incident data points at',
                 this.incidentInsertionPoint,
             )
-            const incidentData = generateData(
-                incidentDataCount,
-                incidentBuckets,
-                this.onlyInt,
-            )
-            this.metricData = overwriteData(
-                this.metricData,
-                incidentData,
-                this.incidentInsertionPoint,
-            )
+            const incidentData = generateData(incidentDataCount, incidentBuckets, this.onlyInt)
+            this.metricData = overwriteData(this.metricData, incidentData, this.incidentInsertionPoint)
         },
     },
     created() {
