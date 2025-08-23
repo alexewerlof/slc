@@ -8,29 +8,10 @@
             "webRoot": "${workspaceFolder}"
         },
         {
-            "type": "pwa-node",
-            "request": "launch",
-            "name": "Debug Deno Test",
-            "program": "${file}",
-            "runtimeExecutable": "deno",
-            "runtimeArgs": [
-                "test",
-                "--inspect-brk",
-                "--allow-all"
-            ],
-            "attachSimplePort": 9229,
-            "cwd": "${workspaceFolder}",
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen",
-            "skipFiles": ["<node_internals>/**"]
-        },
-        {
             "type": "pwa-msedge",
             "name": "Launch Microsoft Edge",
             "request": "launch",
-            "runtimeArgs": [
-                "--remote-debugging-port=9222"
-            ],
+            "runtimeArgs": ["--remote-debugging-port=9222"],
             "url": "http://127.0.0.1:5501/",
             "presentation": {
                 "hidden": true
@@ -40,10 +21,7 @@
             "type": "pwa-msedge",
             "name": "Launch Microsoft Edge in headless mode",
             "request": "launch",
-            "runtimeArgs": [
-                "--headless",
-                "--remote-debugging-port=9222"
-            ],
+            "runtimeArgs": ["--headless", "--remote-debugging-port=9222"],
             "url": "http://127.0.0.1:5501/",
             "presentation": {
                 "hidden": true
@@ -62,17 +40,11 @@
     "compounds": [
         {
             "name": "Launch Edge Headless and attach DevTools",
-            "configurations": [
-                "Launch Microsoft Edge in headless mode",
-                "Open Edge DevTools"
-            ]
+            "configurations": ["Launch Microsoft Edge in headless mode", "Open Edge DevTools"]
         },
         {
             "name": "Launch Edge and attach DevTools",
-            "configurations": [
-                "Launch Microsoft Edge",
-                "Open Edge DevTools"
-            ]
+            "configurations": ["Launch Microsoft Edge", "Open Edge DevTools"]
         }
     ]
 }

@@ -1,4 +1,4 @@
-This project uses JavaScript and Vue.js version 3. The tests run in Deno.js environment
+This project uses JavaScript and Vue.js version 3. The tests run in Node.js environment
 
 In JavaScript:
 

@@ -1,6 +1,8 @@
 {
-    "liveServer.settings.multiRootWorkspaceName": "sla-calculator",
+    "liveServer.settings.multiRootWorkspaceName": "slc",
     "liveServer.settings.port": 5501,
-    "editor.defaultFormatter": "denoland.vscode-deno",
-    "editor.detectIndentation": true
+    "editor.detectIndentation": true,
+    "javascript.format.semicolons": "remove",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

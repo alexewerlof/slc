@@ -2,9 +2,14 @@
     "name": "slc",
     "type": "module",
     "scripts": {
-        "test": "node --test"
+        "test": "node --test",
+        "lint": "eslint .",
+        "format": "prettier --write ."
     },
     "devDependencies": {
-        "cheerio": "^1.1.0"
+        "cheerio": "^1.1.0",
+        "eslint": "^9.34.0",
+        "eslint-config-prettier": "^10.1.8",
+        "prettier": "^3.6.2"
     }
 }

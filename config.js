@@ -1,25 +1,25 @@
 function fz(obj) {
     if (Array.isArray(obj)) {
-        return Object.freeze(obj.map(fz))
+        return Object.freeze(obj.map(fz));
     }
 
-    return Object.freeze(obj)
+    return Object.freeze(obj);
 }
 
 // The config is immutable at runtime and any effort to change it will have no effect
 export const config = fz({
-    appName: 'SLC',
+    appName: "SLC",
     // This version will be changed when the URL parameters change
     urlVer: 3,
     displayName: fz({
         minLength: 2,
         maxLength: 300,
-        default: '',
+        default: "",
     }),
     description: fz({
         minLength: 0,
         maxLength: 500,
-        default: '',
+        default: "",
     }),
     timeslice: fz({
         min: 1,
@@ -28,101 +28,102 @@ export const config = fz({
         default: 60,
         presets: fz([
             {
-                title: '1 second',
+                title: "1 second",
                 seconds: 1,
             },
             {
-                title: '1 minute',
+                title: "1 minute",
                 seconds: 60,
             },
             {
-                title: '3 minutes',
+                title: "3 minutes",
                 seconds: 180,
             },
             {
-                title: '5 minutes',
+                title: "5 minutes",
                 seconds: 300,
             },
             {
-                title: '10 minutes',
+                title: "10 minutes",
                 seconds: 600,
             },
             {
-                title: '15 minutes',
+                title: "15 minutes",
                 seconds: 900,
             },
             {
-                title: '30 minutes',
+                title: "30 minutes",
                 seconds: 1800,
             },
             {
-                title: '1 hour',
+                title: "1 hour",
                 seconds: 3600,
             },
         ]),
     }),
     eventUnit: fz({
-        default: 'events',
+        default: "events",
         minLength: 0,
         maxLength: 200,
         presets: fz([
             {
-                eventUnit: 'events',
-                useCase: 'No custom name for the events (default)',
+                eventUnit: "events",
+                useCase: "No custom name for the events (default)",
             },
             {
-                eventUnit: 'requests',
-                useCase: 'REST/GraphQL servers, serverless functions, ...',
+                eventUnit: "requests",
+                useCase: "REST/GraphQL servers, serverless functions, ...",
             },
             {
-                eventUnit: 'queries',
-                useCase: 'Databases, LLM models, log servers, ...',
+                eventUnit: "queries",
+                useCase: "Databases, LLM models, log servers, ...",
             },
             {
-                eventUnit: 'entries',
-                useCase: 'Storage systems, data processors, ...',
+                eventUnit: "entries",
+                useCase: "Storage systems, data processors, ...",
             },
             {
-                eventUnit: 'messages',
-                useCase: 'Queue systems, data pipelines, ...',
+                eventUnit: "messages",
+                useCase: "Queue systems, data pipelines, ...",
             },
             {
-                eventUnit: 'page_views',
-                useCase: 'Web Servers, Document Servers, ...',
+                eventUnit: "page_views",
+                useCase: "Web Servers, Document Servers, ...",
             },
             {
-                eventUnit: 'logins',
-                useCase: 'Authentication providers, session servers, ...',
+                eventUnit: "logins",
+                useCase: "Authentication providers, session servers, ...",
             },
             {
-                eventUnit: 'incidents',
-                useCase: 'Operational teams, ...',
+                eventUnit: "incidents",
+                useCase: "Operational teams, ...",
             },
             {
-                eventUnit: 'sessions',
-                useCase: 'UIs supporting user flows, mobile apps, web apps, ...',
+                eventUnit: "sessions",
+                useCase:
+                    "UIs supporting user flows, mobile apps, web apps, ...",
             },
             {
-                eventUnit: 'transactions',
-                useCase: 'Transaction services, data pipelines',
+                eventUnit: "transactions",
+                useCase: "Transaction services, data pipelines",
             },
         ]),
     }),
     metricName: fz({
-        default: '',
-        placeholder: 'e.g. response_latency, error_rate, items_processed',
+        default: "",
+        placeholder: "e.g. response_latency, error_rate, items_processed",
         minLength: 3,
         maxLength: 300,
     }),
     metricUnit: fz({
-        default: '',
-        placeholder: 'e.g. ms, errors, items, etc.',
+        default: "",
+        placeholder: "e.g. ms, errors, items, etc.",
         minLength: 0,
         maxLength: 100,
     }),
     lowerBound: fz({
-        possibleValues: fz(['', 'gt', 'ge']),
-        default: '',
+        possibleValues: fz(["", "gt", "ge"]),
+        default: "",
     }),
     lowerThreshold: fz({
         min: -1_000_000_000,
@@ -131,8 +132,8 @@ export const config = fz({
         default: 0,
     }),
     upperBound: fz({
-        possibleValues: fz(['', 'lt', 'le']),
-        default: '',
+        possibleValues: fz(["", "lt", "le"]),
+        default: "",
     }),
     upperThreshold: fz({
         min: -1_000_000_000,
@@ -146,39 +147,39 @@ export const config = fz({
         default: 99,
         presets: fz([
             {
-                title: 'One nine',
+                title: "One nine",
                 slo: 90,
             },
             {
-                title: 'One and a half nines',
+                title: "One and a half nines",
                 slo: 95,
             },
             {
-                title: 'Two nines',
+                title: "Two nines",
                 slo: 99,
             },
             {
-                title: 'Two and a half nines',
+                title: "Two and a half nines",
                 slo: 99.5,
             },
             {
-                title: 'Three nines',
+                title: "Three nines",
                 slo: 99.9,
             },
             {
-                title: 'Three and a half nines',
+                title: "Three and a half nines",
                 slo: 99.95,
             },
             {
-                title: 'Four nines',
+                title: "Four nines",
                 slo: 99.99,
             },
             {
-                title: 'Four and a half nines',
+                title: "Four and a half nines",
                 slo: 99.995,
             },
             {
-                title: 'Five nines',
+                title: "Five nines",
                 slo: 99.999,
             },
         ]),
@@ -190,29 +191,29 @@ export const config = fz({
         default: 30,
         presets: fz([
             {
-                title: '1 week',
+                title: "1 week",
                 days: 7,
-                useCase: 'Forgives any breach after a week',
+                useCase: "Forgives any breach after a week",
             },
             {
-                title: '2 weeks',
+                title: "2 weeks",
                 days: 14,
                 useCase: 'Maps well to a typical "sprint"',
             },
             {
-                title: '4 weeks',
+                title: "4 weeks",
                 days: 28,
-                useCase: 'Always start on the same day of the week',
+                useCase: "Always start on the same day of the week",
             },
             {
-                title: 'A month',
+                title: "A month",
                 days: 30,
-                useCase: 'Maps to typical subscription services',
+                useCase: "Maps to typical subscription services",
             },
             {
-                title: 'A quarter',
+                title: "A quarter",
                 days: 90,
-                useCase: 'Rather unforgiving to breaches in the past',
+                useCase: "Rather unforgiving to breaches in the past",
             },
         ]),
     }),
@@ -268,7 +269,23 @@ export const config = fz({
         step: 1,
         default: 50,
     }),
-    notablePercentiles: [0.1, 0.5, 1, 5, 10, 20, 25, 50, 75, 80, 90, 95, 99, 99.5, 99.9],
+    notablePercentiles: [
+        0.1,
+        0.5,
+        1,
+        5,
+        10,
+        20,
+        25,
+        50,
+        75,
+        80,
+        90,
+        95,
+        99,
+        99.5,
+        99.9,
+    ],
     simulator: {
         dataCountPerDay: {
             min: 1,
@@ -307,47 +324,66 @@ export const config = fz({
             ],
             presets: [
                 {
-                    name: 'Normal',
+                    name: "Normal",
                     values: [50],
                 },
                 {
-                    name: 'Long Tail',
+                    name: "Long Tail",
                     values: [100, 30, 10, 9, 3, 2, 1],
                 },
                 {
-                    name: 'Long Tail Extreme',
+                    name: "Long Tail Extreme",
                     values: [100, 3, 2, 1, 1, 0.5],
                 },
                 {
-                    name: 'Hill',
+                    name: "Hill",
                     values: [1, 2, 3, 9, 10, 30, 100],
                 },
                 {
-                    name: 'Hill Extreme',
+                    name: "Hill Extreme",
                     values: [0.5, 1, 1, 2, 3, 5, 100],
                 },
                 {
-                    name: 'Two Tails',
+                    name: "Two Tails",
                     values: [1, 2, 3, 7, 100, 7, 3, 2, 1],
                 },
                 {
-                    name: 'Two Tails Extreme',
+                    name: "Two Tails Extreme",
                     values: [0.5, 1, 1, 100, 1, 1, 0.5],
                 },
                 {
-                    name: 'Camel',
-                    values: [1, 2, 3, 7, 100, 7, 3, 2, 1, 1, 2, 3, 7, 100, 7, 3, 2, 1],
+                    name: "Camel",
+                    values: [
+                        1,
+                        2,
+                        3,
+                        7,
+                        100,
+                        7,
+                        3,
+                        2,
+                        1,
+                        1,
+                        2,
+                        3,
+                        7,
+                        100,
+                        7,
+                        3,
+                        2,
+                        1,
+                    ],
                 },
                 {
-                    name: 'Timeout',
+                    name: "Timeout",
                     values: [100, 0, 0, 0, 0, 0, 0, 0.3],
                 },
                 {
-                    name: 'Pits',
+                    name: "Pits",
                     values: [0.3, 0, 0, 0, 0, 0, 0, 100],
                 },
                 {
-                    name: 'Crazy Bounce',
+                    name: "Crazy Bounce",
                     values: [100, 2, 2, 2, 5, 2, 2, 2, 100],
                 },
             ],
@@ -369,17 +405,17 @@ export const config = fz({
         default: 10,
     },
     metricEffort: fz({
-        default: 'Easy',
+        default: "Easy",
         possibleValues: fz([
-            'Easy', // We already get that out of the box
-            'Medium', // Some observability needs to be set up
-            'Hard', // New code needs to be written
-            'Very Hard', // A rough approximation can be made with significant effort
-            'Impossible', // It's not possible to measure accurately
+            "Easy", // We already get that out of the box
+            "Medium", // Some observability needs to be set up
+            "Hard", // New code needs to be written
+            "Very Hard", // A rough approximation can be made with significant effort
+            "Impossible", // It's not possible to measure accurately
         ]),
     }),
     llm: fz({
-        selectedEngineStateKey: 'LLM-SELECTED-ENGINE-STATE',
+        selectedEngineStateKey: "LLM-SELECTED-ENGINE-STATE",
         engines: [
             /*
             {
@@ -391,43 +427,47 @@ export const config = fz({
             },
             */
             {
-                name: 'LM Studio',
-                baseUrl: 'http://localhost:1234/v1/',
-                website: 'https://lmstudio.ai/',
-                description: 'Runs on a local computer. You need to configure a local server to be able to use it.',
-                suggestedModel: 'phi-4',
-            },
-            {
-                name: 'Jan',
-                baseUrl: 'http://localhost:1337/v1/',
-                website: 'https://jan.ai/',
-                description: 'Similar to LM Studio but with a simpler user interface.',
-                suggestedModel: 'llama3.1-8b-instruct',
-            },
-            {
-                name: 'Gemini',
-                baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai/',
-                website: 'https://gemini.google.com',
+                name: "LM Studio",
+                baseUrl: "http://localhost:1234/v1/",
+                website: "https://lmstudio.ai/",
                 description:
-                    'From Google which arguably started this whole AI wave with their Transformers architecture.',
-                apiKeyWebsite: 'https://aistudio.google.com/apikey',
-                suggestedModel: 'models/gemini-2.5-flash-lite',
+                    "Runs on a local computer. You need to configure a local server to be able to use it.",
+                suggestedModel: "phi-4",
             },
             {
-                name: 'OpenAI',
-                baseUrl: 'https://api.openai.com/v1/',
-                website: 'https://chatgpt.com/',
-                description: 'The company behind ChatGPT and run by a lunatic.',
-                apiKeyWebsite: 'https://platform.openai.com/api-keys',
-                suggestedModel: 'o4-mini',
+                name: "Jan",
+                baseUrl: "http://localhost:1337/v1/",
+                website: "https://jan.ai/",
+                description:
+                    "Similar to LM Studio but with a simpler user interface.",
+                suggestedModel: "llama3.1-8b-instruct",
             },
             {
-                name: 'Claude',
-                baseUrl: 'https://api.anthropic.com/v1/',
-                website: 'https://claude.ai/',
-                description: 'Similar to OpenAI, run by some former OpenAI employees.',
-                apiKeyWebsite: 'https://console.anthropic.com/settings/keys',
-                suggestedModel: 'claude-3-5-haiku-20241022',
+                name: "Gemini",
+                baseUrl:
+                    "https://generativelanguage.googleapis.com/v1beta/openai/",
+                website: "https://gemini.google.com",
+                description:
+                    "From Google which arguably started this whole AI wave with their Transformers architecture.",
+                apiKeyWebsite: "https://aistudio.google.com/apikey",
+                suggestedModel: "models/gemini-2.5-flash-lite",
+            },
+            {
+                name: "OpenAI",
+                baseUrl: "https://api.openai.com/v1/",
+                website: "https://chatgpt.com/",
+                description: "The company behind ChatGPT and run by a lunatic.",
+                apiKeyWebsite: "https://platform.openai.com/api-keys",
+                suggestedModel: "o4-mini",
+            },
+            {
+                name: "Claude",
+                baseUrl: "https://api.anthropic.com/v1/",
+                website: "https://claude.ai/",
+                description:
+                    "Similar to OpenAI, run by some former OpenAI employees.",
+                apiKeyWebsite: "https://console.anthropic.com/settings/keys",
+                suggestedModel: "claude-3-5-haiku-20241022",
             },
         ],
         temperature: {
@@ -443,4 +483,4 @@ export const config = fz({
             step: 100,
         },
     }),
-})
+});
