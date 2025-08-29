@@ -247,10 +247,9 @@ export class ToolResultBead extends RoleBead {
     }
 }
 
-export class FileBead extends RoleBead {
+export class FileBead extends ContentBead {
     _fileNames = undefined
     _loaded = false
-    content = ''
 
     constructor(...fileNames) {
         super({
@@ -265,12 +264,11 @@ export class FileBead extends RoleBead {
     }
 
     async load() {
-        if (!this._loaded) {
-            const contents = await Promise.all(this._fileNames.map(loadText))
-            this.content = joinLines(1, ...contents)
-            this._loaded = true
+        if (this._loaded) {
+            return
         }
-        return this.content
+        this.add(...(await Promise.all(this._fileNames.map(loadText))))
+        this._loaded = true
     }
 
     get markdown() {
@@ -278,14 +276,6 @@ export class FileBead extends RoleBead {
             return this.content
         }
         return joinLines(1, 'Files:', ...this._fileNames.map((f) => `- ${f}`))
-    }
-
-    get content() {
-        if (!this._loaded) {
-            console.log('Loading files... 7')
-            throw new Error(`load() need to be called before accessing content`)
-        }
-        return content
     }
 
     get message() {
