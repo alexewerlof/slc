@@ -20,7 +20,7 @@
                 </p>
             </help-component>
         </label>
-        <select v-model="llm.engines.selected">
+        <select id="engine-selector" v-model="llm.engines.selected">
             <option v-for="engine of llm.engines" :value="engine">
                 {{ engine.name }}
             </option>
