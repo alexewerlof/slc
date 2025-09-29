@@ -29,7 +29,7 @@
     <div class="b-mar-gap2">
         <llm-api-settings-component :llm-api="llm.engines.selected"></llm-api-settings-component>
     </div>
-    <show-hide-component title="Advanced" hidden="true" class="b-mar-gap2">
+    <show-hide-component title="Advanced" :hidden="true" class="b-mar-gap2">
         <div class="input-group">
             <label for="llm-temperature">
                 Temperature: {{ llm.temperature }}

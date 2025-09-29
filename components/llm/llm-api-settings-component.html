@@ -14,7 +14,7 @@
         <label :for="apiKeyUniqueId">
             <icon-component name="key"></icon-component>
             API Key
-            <div class="subtle-hint" class="subtle-hint">
+            <div class="subtle-hint">
                 <ext-link :href="llmApi.apiKeyWebsite">Get API Key</ext-link>
             </div>
         </label>
@@ -24,7 +24,6 @@
             autocomplete="apiKeyUniqueId"
             required="required"
             :id="apiKeyUniqueId" />
-        </label>
     </div>
     <div class="input-group b-mar-gap2" v-if="llmApi.modelIds.length">
         <label for="llm-api-settings-component__model-id">
