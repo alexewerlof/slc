@@ -6,8 +6,8 @@ export default {
     props: {
         // The value should match one of the values in the array of options
         modelValue: null,
-        // Each element has `title: string`, `value`, and optionaly `disabled` properties
+        // Each element has `title: string`, `value`, and optionally `disabled` properties
         options: Array,
     },
-    emits: ['update:value'],
+    emits: ['update:modelValue'],
 }
