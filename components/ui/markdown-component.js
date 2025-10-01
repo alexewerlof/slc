@@ -1,7 +1,7 @@
-import { markdownIt } from '../../vendor/markdown-it.js'
+import { MarkdownIt } from '../../vendor/markdown-it.js'
 import linksTargetBlank from '../../lib/markdown.js'
 
-const md = markdownIt().use(linksTargetBlank)
+const md = MarkdownIt().use(linksTargetBlank)
 
 export default {
     props: {

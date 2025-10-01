@@ -17,7 +17,7 @@ const exportStatements = {
         contents: `export * from 'd3'`,
     },
     'markdown-it': {
-        contents: `export { default as markdownit } from 'markdown-it'`,
+        contents: `export { default as MarkdownIt } from 'markdown-it'`,
     },
     yaml: {
         contents: `export * from 'yaml'`,

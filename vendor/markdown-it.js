@@ -5401,5 +5401,5 @@ MarkdownIt.prototype.renderInline = function(src, env) {
 };
 var lib_default = MarkdownIt;
 export {
-  lib_default as markdownit
+  lib_default as MarkdownIt
 };
