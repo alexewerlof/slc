@@ -1,8 +1,9 @@
+import * as YAML from '../../../vendor/yaml.js'
 import { Assessment } from '../../../components/assessment.js'
 import { Service } from '../../../components/service.js'
 import { UserPromptBead } from '../../../components/llm/thread.js'
 import { isInstance } from '../../../lib/validation.js'
-import { loadJson, stateToCurrentUrl } from '../../../lib/share.js'
+import { loadJson, parseStateString, stateToCurrentUrl } from '../../../lib/share.js'
 import { showToast } from '../../../lib/toast.js'
 import { Agent } from '../../../components/llm/agent.js'
 import { createThread } from './assessment-thread.js'
@@ -76,13 +77,18 @@ export default {
             target.remove()
             return true
         },
-        assignUploadedState() {
+        async assignUploadedState() {
+            this.uploadedStateMessage = 'Parsing...'
             try {
-                this.uploadedStateMessage = 'Analyzing...'
-                this.loadState(JSON.parse(this.uploadedState))
-                this.uploadedStateMessage = `State loaded successfully`
-            } catch (error) {
-                this.uploadedStateMessage = `Failed to load assessment state: ${error}`
+                const parsedState = await parseStateString(this.uploadedState)
+                this.uploadedStateMessage = 'State parsed successfully. Smoke testing...'
+                const _tmpAssessment = new Assessment(parsedState)
+                this.uploadedStateMessage = 'State is valid'
+                this.assessment.state = parsedState
+                this.uploadedStateMessage = 'State loaded successfully'
+                this.editingInstance = this.assessment
+            } catch (err) {
+                this.uploadedStateMessage = `Invalid state: ${err}`
             }
         },
         loadState(state) {
@@ -103,6 +109,9 @@ export default {
                 this.editingInstance = this.assessment
                 this.assessment.clear()
             }
+        },
+        toYaml(obj) {
+            return YAML.stringify(obj)
         },
         async addMetricUsingAI() {
             const service = this.editingInstance
