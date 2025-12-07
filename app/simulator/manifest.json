@@ -1,0 +1,17 @@
+{
+    "name": "Metric Simulator",
+    "short_name": "Simulator",
+    "description": "A flexible simulator for generating metrics with various distributions and playing around with how service level status can be calculated",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#001426",
+    "theme_color": "#FFBC52",
+    "orientation": "landscape",
+    "icons": [
+        {
+            "src": "icon.svg",
+            "sizes": "500x500",
+            "type": "image/svg+xml"
+        }
+    ]
+}

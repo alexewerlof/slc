@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../lib/window-onerror.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
+    <script>
+        window.dataLayer = window.dataLayer || []
+        function gtag() {dataLayer.push(arguments)}
+        gtag('js', new Date())
+        gtag('config', 'G-J0S6RM2D7G')
+    </script>
+
+    <meta charset="UTF-8">
+        <meta name="theme-color" content="#FFBC52">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+        <meta name="description" content="Use an LLM to have a chat about service levels and various SRE topics.">
+        <meta property="og:title" content="Service Level Chat">
+        <meta property="og:description" content="Use an LLM to have a chat about service levels and various SRE topics.">
+        <meta property="og:image" content="https://slc.alexewerlof.com/img/overview.png">
+        <meta property="og:url" content="https://slc.alexewerlof.com/app/chat/index.html">
+        <meta property="og:type" content="website">
+        <link rel="canonical" href="https://slc.alexewerlof.com/app/chat/index.html">
+        <link rel="icon" type="image/svg" href="icon.svg">
+    <link rel="manifest" href="manifest.json">
+    <title>Service Level Chat</title>
+</head>
+<body>
+    <noscript>
+        <p>This web application requires JavaScript to work.</p>
+    </noscript>
+    <div id="app" v-cloak>
+        <header-component></header-component>
+
+        <div class="container">
+            <article>
+                <section class="surface">
+                    <chat-component :agent></chat-component>
+                </section>
+            </article>
+        </div>
+        <footer-component></footer-component>
+    </div>
+    <script type="module" src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+.text-block-component {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap);
+    border-style: solid;
+    border-width: var(--bthick);
+    border-left-width: var(--gap);
+    background-color: rgb(from currentColor r g b / 0.09);
+    border-color: currentColor;
+    box-sizing: border-box;
+    padding: var(--gap);
+    box-shadow: 0 0 var(--gap) black;
+    margin-top: var(--gap);
+    margin-bottom: var(--gap);
+
+    &.text-block-component__contents {
+        & p {
+            margin-block: 0.25em 0;
+        }
+    }
+
+    &.text-block-component--info {
+        color: var(--secondary-color);
+    }
+
+    &.text-block-component--warning {
+        color: var(--primary-color);
+    }
+
+    &.text-block-component--error {
+        color: var(--brand-red);
+    }
+}

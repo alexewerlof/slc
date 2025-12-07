@@ -1,0 +1,20 @@
+{
+    "name": "Learn Service Levels",
+    "short_name": "SLC",
+    "description": "A simple guide to Service Levels. Most of this content is used in various prompts across different applications.",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#001426",
+    "theme_color": "#FFBC52",
+    "orientation": "landscape",
+    "icons": [
+        {
+            "src": "icon.svg",
+            "sizes": "500x500",
+            "type": "image/svg+xml"
+        }
+    ],
+    "__metadata": {
+        "hidden": true
+    }
+}

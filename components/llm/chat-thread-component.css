@@ -1,0 +1,58 @@
+.chat-thread-component {
+    pre {
+        overflow: auto;
+    }
+}
+
+.chat-thread-component__thread {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap2);
+    max-height: 50vh;
+    padding: 0 var(--gap2) var(--bthick) var(--gap2);
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    margin: 0 calc(var(--gap2) * -1);
+}
+
+.chat-thread-component__role {
+    font-family: var(--title-font-family);
+    text-transform: uppercase;
+}
+
+.chat-thread-component__contents {
+    padding-top: 0;
+    padding-bottom: 0;
+    align-self: flex-start;
+}
+
+.chat-thread-component__bead--system {
+    & .chat-thread-component__role {
+        color: var(--brand-purple);
+    }
+
+    & .chat-thread-component__contents {
+        border-color: var(--brand-purple);
+    }
+}
+
+.chat-thread-component__bead--user {
+    align-self: flex-end;
+
+    & .chat-thread-component__role {
+        color: var(--secondary-color);
+        text-align: right;
+    }
+    & .chat-thread-component__contents {
+        border-color: var(--secondary-color);
+    }
+}
+
+.chat-thread-component__bead--assistant {
+    & .chat-thread-component__role {
+        color: var(--brand-green);
+    }
+    & .chat-thread-component__contents {
+        border-color: var(--brand-green);
+    }
+}

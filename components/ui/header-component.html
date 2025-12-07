@@ -1,0 +1,41 @@
+<div class="header-component">
+    <header class="header-component__header" :style="styleFromManifest">
+        <div class="header-component__contents container">
+            <div class="header-component__identity">
+                <a href="/" tooltip="Home page" class="header-component__home-link">
+                    <icon-component name="arrow_back"></icon-component>
+                </a>
+                <a 
+                    v-if="manifest"
+                    :href="manifest.start_url"
+                >
+                    <img :src="manifest.icons[0].src" alt="Logo" class="header-component__logo" />
+                    <h1 class="header-component__title" v-text="name" :title="manifest.id"></h1>
+                </a>
+                <slot></slot>
+            </div>
+            <div class="button-bar header-component__button-bar">
+                <button @click="isReadmeVisible = !isReadmeVisible" type="button" class="button--round">
+                    <icon-component name="info" class="cursor-pointer"></icon-component>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="container" v-if="isReadmeVisible">
+        <div class="info block mar-gap2" >
+            <markdown-loader-component file-name="README.md"></markdown-loader-component>
+            <div class="button-bar">
+            </div>
+        </div>
+        <div class="pad-gap2 button-bar">
+            <label class="pad-gap">
+                <input type="checkbox" v-model="readmeIsHiddenByDefault.state">
+                Don't show this again
+            </label>
+            <button @click="isReadmeVisible = false" type="button">
+                <icon-component name="close"></icon-component>
+                Close
+            </button>
+        </div>
+    </div>
+</div>

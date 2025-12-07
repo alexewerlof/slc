@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>404</title>
+</head>
+<body>
+    <div class="container pad-gap2">
+        <img src="/img/icon.svg" alt="Logo" width="100px">
+        <h1>404 - Not Found</h1>
+        <p>
+            The page you are looking for does not exist.
+            <a href="/">Go back to Home</a>
+        </p>
+        <div id="down-counter-placeholder"></div>
+    </div>
+    <script>
+        let counter = 5
+        const counterMessage = document.createElement('p')
+        function updateAutoRedirectMessage(counter) {
+            counterMessage.innerText = `Automatically redirecting in ${counter} sec...`
+        }
+        updateAutoRedirectMessage(counter)
+        document.getElementById('down-counter-placeholder').appendChild(counterMessage)
+        setInterval(() => {
+            updateAutoRedirectMessage(counter--)
+            if (counter === 0) {
+                window.location.href = '/'
+            }
+        }, 1000)
+    </script>
+</body>
+</html>

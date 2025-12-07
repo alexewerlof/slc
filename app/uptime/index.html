@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="../../lib/window-onerror.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
+    <script>
+        window.dataLayer = window.dataLayer || []
+        function gtag() {dataLayer.push(arguments)}
+        gtag('js', new Date())
+        gtag('config', 'G-J0S6RM2D7G')
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#FFBC52">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="index.css">
+    <meta name="description" content="A simple Uptime Calculator that does not hide the notion of timeslices (unlike uptime.is)">
+    <meta property="og:title" content="Uptime Calculator">
+    <meta property="og:description" content="A simple Uptime Calculator that does not hide the notion of timeslices (unlike uptime.is)">
+    <meta property="og:image" content="https://slc.alexewerlof.com/img/overview.png">
+    <meta property="og:url" content="https://slc.alexewerlof.com/app/uptime/index.html">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://slc.alexewerlof.com/app/uptime/index.html">
+    <link rel="icon" type="image/svg" href="icon.svg">
+    <link rel="manifest" href="manifest.json">
+    <title>Uptime Calculator</title>
+</head>
+
+<body>
+    <noscript>
+        <p>This web application requires JavaScript to work.</p>
+    </noscript>
+
+    <div id="app" v-cloak>
+        <header-component></header-component>
+
+        <div class="container logo-bg">
+            <div class="uptime-ui">
+                <div class="uptime-ui__left-pane surface">
+                    <!-- SLI timeslice -->
+                    <h2>SLI</h2>
+                    <fieldset>
+                        <legend>Timeslice</legend>
+                        <div class="input-group">
+                            <label for="sli-event-unit">
+                                Length: <time>{{ indicator.timeslice }}s</time>
+                                <help-component>
+                                    <p>
+                                        Time-based SLIs aggregate metric data over a timeslice
+                                        to mark it as success or failure.
+                                    </p>
+                                    <p>
+                                        This can also reduce the resolution of the data.
+                                        For example, probing an endpoint every 60 seconds to see if it is available,
+                                        assumes that the endpoint is available for the entire 60 seconds.
+                                    </p>
+                                    <p>
+                                        Another common example is to compare the average of data points with a desired
+                                        valud. Averages hide the spikes and valleys in the data.
+                                        It is better to use
+                                        <ext-link href="https://github.com/alexewerlof/percentile">percentiles</ext-link>
+                                        instead.
+                                    </p>
+                                    <p>
+                                        Another example is percentiles. When calculating the 99th percentile of the
+                                        latency every 5 minutes, the aggregation window is 5 x 60 = 300 seconds.
+                                    </p>
+                                    <table>
+                                        <caption>Typical timeslice lengths</caption>
+                                        <thead>
+                                            <tr>
+                                                <th>Timeslice</th>
+                                                <th>Seconds</th>
+                                                <th aria-label="try button"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="p in config.timeslice.presets">
+                                                <td>{{ p.title }}</td>
+                                                <td>{{ p.seconds }}</td>
+                                                <td><button type="button" class="button--small" @click="indicator.timeslice = p.seconds">Try!</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </help-component>
+                            </label>
+                            <div class="subtle-hint">{{ humanTime(indicator.timeslice) }}</div>
+                            <input
+                                id="sli-event-unit"
+                                type="range"
+                                :min="config.timeslice.min"
+                                :max="config.timeslice.max"
+                                :step="config.timeslice.step"
+                                placeholder="60"
+                                v-model.number="indicator.timeslice">
+                            <div class="button-bar button-bar--small">
+                                <button @click="indicator.timeslice = 1">Second</button>
+                                <button @click="indicator.timeslice = 60">Minute</button>
+                                <button @click="indicator.timeslice = 300">5 Minutes</button>
+                                <button @click="indicator.timeslice = 3600">Hour</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <h2>SLO</h2>
+                    <objective-component :objective="objective"></objective-component>
+                </div>
+                <div class="uptime-ui__right-pane well">
+                    <h2>Your Error Budget</h2>
+                    <error-budget-component :objective="objective"></error-budget-component>
+                    <h2>Common SLO windows</h2>
+                    <table class="common-slo-windows">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Period</th>
+                                <th rowspan="2">Days</th>
+                                <th colspan="3">
+                                    {{ indicator.eventUnitNorm }}
+                                </th>
+                                <th rowspan="2" class="common-slo-windows__downtime">Allowed Downtime</th>
+                            </tr>
+                            <tr>
+                                <th class="common-slo-windows__total">Total</th>
+                                <th class="common-slo-windows__good">Good</th>
+                                <th class="common-slo-windows__bad">Bad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="common-slo-windows__your-config">
+                                <td>Your config</td>
+                                <td>{{ numL10n(objective.windowDays) }}</td>
+                                <td class="common-slo-windows__total">{{ numL10n(objective.validEventCount) }}</td>
+                                <td class="common-slo-windows__good">{{ numL10n(objective.goodEventCount) }}</td>
+                                <td class="common-slo-windows__bad">{{ numL10n(objective.badEventCount) }}</td>
+                                <td class="common-slo-windows__downtime">{{ timesliceToHumanTime(objective.badEventCount) }}</td>
+                            </tr>
+                            <tr v-for="row of table">
+                                <td>{{ row.title }}</td>
+                                <td>{{ numL10n(row.objective.windowDays) }}</td>
+                                <td class="common-slo-windows__total">{{ numL10n(row.objective.validEventCount) }}</td>
+                                <td class="common-slo-windows__good">{{ numL10n(row.objective.goodEventCount) }}</td>
+                                <td class="common-slo-windows__bad">{{ numL10n(row.objective.badEventCount) }}</td>
+                                <td class="common-slo-windows__downtime">{{ timesliceToHumanTime(row.objective.badEventCount) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <footer-component></footer-component>
+    </div>
+
+    <script type="module" src="index.js" defer></script>
+</body>
+
+</html>

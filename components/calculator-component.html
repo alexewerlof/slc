@@ -1,0 +1,249 @@
+<div class="container calculator-component">
+    <article>
+        <!------------------------ SLI ------------------------>
+        <section>
+            <div class="surface">
+                <div class="b-mar-gap2">
+                    <h2 id="sli-title">
+                        SLI
+                        <help-component>
+                            <p>
+                                In simple words <ext-link href="https://blog.alexewerlof.com/p/sli">Service Level Indicators
+                                </ext-link> are the metrics that represent how the reliability is perceived by the consumers of
+                                the service. They are normalized to be a number between 0 and 100 using this formula:
+                            </p>
+                            <math>
+                                <mrow>
+                                    <mi>SLI</mi>
+                                    <mo>=</mo>
+                                    <mfrac>
+                                        <mrow>
+                                            <mi>Good</mi>
+                                        </mrow>
+                                        <mrow>
+                                            <mi>Valid</mi>
+                                        </mrow>
+                                    </mfrac>
+                                    <mrow>
+                                        <mo>&times;</mo>
+                                        <mn>100</mn>
+                                    </mrow>
+                                </mrow>
+                            </math>
+                            <p>
+                                You can read more about the definition of
+                                <ext-link href="https://blog.alexewerlof.com/p/sli-good">Good</ext-link>
+                                and
+                                <ext-link href="https://blog.alexewerlof.com/p/valid-vs-total">Valid</ext-link>
+                                .
+                            </p>
+                            <p>
+                                Common SLIs include latency, availability, yield, durability, correctness, etc.
+                            </p>
+                        </help-component>
+                    </h2>
+
+                    <fieldset>
+                        <legend>Indicator ({{ calculator.indicators.length }})</legend>
+                        <div class="input-group" v-if="calculator.indicators.length">
+                            <label for="indicator-selector">Select</label>
+                            <select
+                                v-model="calculator.indicators.selected"
+                                id="indicator-selector"
+                                class="b-mar-gap2"
+                            >
+                                <option
+                                    v-for="indicator of calculator.indicators"
+                                    :value="indicator"
+                                    :key="indicator.id"
+                                >
+                                    {{ indicator }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="button-bar">
+                            <button @click="calculator.indicators.pushNew()">
+                                <icon-component name="add"></icon-component>
+                                Add New
+                            </button>
+                            <button @click="$refs.indicatorTemplateDialog.show(true)">
+                                <icon-component name="extension"></icon-component>
+                                Add Template
+                            </button>
+                            <button
+                                :disabled="!calculator.indicators.selected"
+                                @click="calculator.indicators.removeSelected()"
+                                class="button--danger"
+                            >
+                                <icon-component name="delete"></icon-component>
+                                Remove
+                            </button>
+                        </div>
+                        <dialog-component title="Indicator Templates" ref="indicatorTemplateDialog">
+                            <indicator-finder-component @indicator-selected="addIndicatorFromSelector"></indicator-finder-component>
+                        </dialog-component>                    
+                    </fieldset>
+                </div>
+
+                <div class="well" v-if="calculator.indicators.selected">
+                    <indicator-component :indicator="calculator.indicators.selected"></indicator-component>
+                </div>
+            </div>
+        </section>
+
+        <!------------------------ SLO ------------------------>
+        <section>
+            <div class="surface">
+                <div class="b-mar-gap2">
+                    <h2 id="slo-title">
+                        SLO
+                        <help-component>
+                            <p>
+                                <ext-link href="https://blog.alexewerlof.com/p/slo">SLO</ext-link>
+                                (Service Level Objective) is a promise towards the consumers. They set expectations and shape
+                                the
+                                <ext-link href="https://blog.alexewerlof.com/p/nfr">NFR</ext-link>
+                                (non-functional requirements).
+                            </p>
+                        </help-component>
+                    </h2>
+
+                    <fieldset>
+                        <legend>Objective ({{ calculator.indicators.selected?.objectives.length || 0 }})</legend>
+                        <div class="block warning" v-if="!calculator.indicators.selected?.objectives.length">
+                            There are no objectives (SLOs) attached to the selected indicator (SLI).
+                        </div>
+                        <div class="input-group" v-if="calculator.indicators.selected?.objectives.length">
+                            <label for="objective-selector">Select</label>
+                            <select
+                                v-model="calculator.indicators.selected.objectives.selected"
+                                id="objective-selector"
+                                class="b-mar-gap2"
+                            >
+                                <option
+                                    v-for="objective of calculator.indicators.selected.objectives"
+                                    :value="objective"
+                                    :key="objective.id"
+                                >
+                                    {{ objective }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div 
+                            v-if="calculator.indicators.selected"
+                            class="button-bar">
+                            <button @click="calculator.indicators.selected.objectives.pushNew()">
+                                <icon-component name="add"></icon-component>
+                                Add New
+                            </button>
+                            <button
+                                :disabled="!calculator.indicators.selected.objectives.selected"
+                                @click="calculator.indicators.selected.objectives.removeSelected()"
+                                class="button--danger">
+                                <icon-component name="delete"></icon-component>
+                                Remove
+                            </button>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="well" v-if="calculator.indicators.selected?.objectives.selected">
+                    <objective-component :objective="calculator.indicators.selected.objectives.selected"></objective-component>
+                    <!------------------------ Error Budget ------------------------>
+                    <h2 id="error-budget-title">Error</h2>
+                    <error-budget-component :objective="calculator.indicators.selected.objectives.selected"></error-budget-component>
+                </div>
+            </div>
+        </section>
+
+        <!------------------------ Alert ------------------------>
+        <section>
+            <div class="surface">
+                <div class="b-mar-gap2">
+                    <h2 id="alert-title">
+                        Alerting
+                        <help-component>
+                            <p>
+                                What is the point of setting SLI/SLO if we are not going to take application when the SLO is
+                                violated?
+                            </p>
+                            <p>
+                                Alerting on error budgets enable us to be on top of the reliability of our system. When using
+                                service levels, the alert triggers on the rate of consuming the error budget.
+                            </p>
+                            <p>
+                                When setting an alert, the burn rate decides how quickly the alert reacts to errors.
+                            </p>
+                            <ul>
+                                <li>
+                                    Too fast and it will lead to false positives (alerting unnecessarily) and alert fatigue (too
+                                    many alerts).
+                                </li>
+                                <li>
+                                    Too slow and the error budget will be burned before you know it.
+                                </li>
+                            </ul>
+                            <p>
+                                Google SRE Workbook goes through
+                                <ext-link href="https://sre.google/workbook/alerting-on-slos/">
+                                    6 alerting strategies based on SLOs
+                                </ext-link>.
+                            </p>
+                        </help-component>
+                    </h2>
+
+                    <fieldset>
+                        <legend>Alert ({{ calculator.indicators.selected?.objectives.selected?.alerts?.length || 0 }})</legend>
+                        <div class="block warning" v-if="!calculator.indicators.selected?.objectives.selected">
+                            Please define an objective (SLO) to set alerts.
+                        </div>
+                        <div class="block warning" v-if="calculator.indicators.selected?.objectives.selected && !calculator.indicators.selected?.objectives.selected?.alerts.length">
+                            There are no alerts attached to the selected objective (SLO).
+                        </div>
+                        <div class="input-group" v-if="calculator.indicators.selected?.objectives.selected?.alerts.length">
+                            <label for="alert-selector">Select</label>
+                            <select
+                                v-model="calculator.indicators.selected.objectives.selected.alerts.selected"
+                                id="alert-selector"
+                                class="b-mar-gap2"
+                            >
+                                <option
+                                    v-for="alert of calculator.indicators.selected.objectives.selected.alerts" 
+                                    :value="alert"
+                                    :key="alert.id"
+                                >
+                                    {{ alert }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="button-bar" v-if="calculator.indicators.selected?.objectives.selected">
+                            <button @click="calculator.indicators.selected.objectives.selected.alerts.pushNew()">
+                                <icon-component name="add"></icon-component>
+                                Add New
+                            </button>
+                            <button @click="addRecommendedAlerts()">
+                                <icon-component name="add_all"></icon-component>
+                                Add Recommended
+                            </button>
+                            <button
+                                :disabled="!calculator.indicators.selected?.objectives.selected?.alerts.selected"
+                                @click="calculator.indicators.selected.objectives.selected.alerts.removeSelected()"
+                                class="button--danger"
+                            >
+                                <icon-component name="delete"></icon-component>
+                                Remove
+                            </button>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="well" v-if="calculator.indicators.selected?.objectives.selected?.alerts.selected">
+                    <alert-component :alert="calculator.indicators.selected.objectives.selected.alerts.selected"></alert-component>
+                </div>
+            </div>
+        </section>
+    </article>
+</div>

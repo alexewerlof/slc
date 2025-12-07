@@ -1,0 +1,56 @@
+.block {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap);
+    border-style: solid;
+    border-width: var(--bthick);
+    border-left-width: var(--gap);
+    background-color: rgb(from currentColor r g b / 0.09);
+    border-color: currentColor;
+    box-sizing: border-box;
+    padding: var(--gap);
+    box-shadow: 0 0 var(--gap) black;
+    margin-top: var(--gap);
+    margin-bottom: var(--gap);
+
+    &::before {
+        font-family: 'Material Symbols Outlined';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 1.5em;
+        line-height: 1.2; /* Helps with vertical alignment */
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: 'liga';
+        -webkit-font-smoothing: antialiased;
+    }
+
+    & p {
+        margin-block: 0.25em 0;
+    }
+
+    &.info {
+        color: var(--secondary-color);
+        &::before {
+            content: 'info';
+        }
+    }
+
+    &.warning {
+        color: var(--primary-color);
+        &::before {
+            content: 'warning';
+        }
+    }
+
+    &.error {
+        color: var(--brand-red);
+        &::before {
+            content: 'dangerous';
+        }
+    }
+}

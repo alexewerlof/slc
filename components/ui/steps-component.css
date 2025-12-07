@@ -1,0 +1,32 @@
+.steps-component {
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+
+    & button {
+        flex-grow: 1;
+    }
+}
+
+.steps-component__button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap);
+}
+
+.steps-component__number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--gap);
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    border: var(--bthick) solid currentColor;
+}
+
+.steps-component__label {
+    line-height: 1.2;
+}

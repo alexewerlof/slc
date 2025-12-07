@@ -2,21 +2,24 @@ function fz(obj) {
     if (Array.isArray(obj)) {
         return Object.freeze(obj.map(fz))
     }
-    
+
     return Object.freeze(obj)
 }
 
 // The config is immutable at runtime and any effort to change it will have no effect
 export const config = fz({
+    appName: 'SLC',
     // This version will be changed when the URL parameters change
-    urlVer: 2,
-    title: fz({
+    urlVer: 3,
+    displayName: fz({
+        minLength: 2,
+        maxLength: 300,
         default: '',
-        placeholder: 'My SLI',
     }),
     description: fz({
+        minLength: 0,
+        maxLength: 500,
         default: '',
-        placeholder: 'Description for my SLI',
     }),
     timeslice: fz({
         min: 1,
@@ -59,7 +62,9 @@ export const config = fz({
         ]),
     }),
     eventUnit: fz({
-        default: 'requests',
+        default: 'events',
+        minLength: 0,
+        maxLength: 200,
         presets: fz([
             {
                 eventUnit: 'events',
@@ -104,11 +109,16 @@ export const config = fz({
         ]),
     }),
     metricName: fz({
-        default: 'response_latency',
+        default: '',
+        placeholder: 'e.g. response_latency, error_rate, items_processed',
+        minLength: 3,
+        maxLength: 300,
     }),
     metricUnit: fz({
         default: '',
         placeholder: 'e.g. ms, errors, items, etc.',
+        minLength: 0,
+        maxLength: 100,
     }),
     lowerBound: fz({
         possibleValues: fz(['', 'gt', 'ge']),
@@ -122,7 +132,7 @@ export const config = fz({
     }),
     upperBound: fz({
         possibleValues: fz(['', 'lt', 'le']),
-        default: 'le',
+        default: '',
     }),
     upperThreshold: fz({
         min: -1_000_000_000,
@@ -169,7 +179,7 @@ export const config = fz({
             },
             {
                 title: 'Five nines',
-                slo: 99.999
+                slo: 99.999,
             },
         ]),
     }),
@@ -206,72 +216,51 @@ export const config = fz({
             },
         ]),
     }),
-    estimatedValidEvents: fz({
+    expectedDailyEvents: fz({
         min: 1,
         max: 1_000_000_000,
         step: 1,
-        default: 1_000_000,
+        default: 10_000,
     }),
-    badEventCost: fz({
-        min: 0,
-        max: 1000_000_000,
-        step: 0.01,
-        default: 0,
-    }),
-    badEventCurrency: fz({
-        default: 'USD',
+    alert: fz({
         presets: fz([
             {
-                currency: 'SEK',
-                description: 'Swedish Krona',
+                burnRate: 1,
+                longWindowPerc: 10,
+                shortWindowDivider: 12,
+                useShortWindow: true,
             },
             {
-                currency: 'EUR',
-                description: 'Euros',
+                burnRate: 6,
+                longWindowPerc: 5,
+                shortWindowDivider: 12,
+                useShortWindow: true,
             },
             {
-                currency: 'USD',
-                description: 'US Dollars',
+                burnRate: 14.4,
+                longWindowPerc: 2,
+                shortWindowDivider: 12,
+                useShortWindow: true,
             },
-            {
-                currency: 'GBP',
-                description: 'British Pounds',
-            },
-            {
-                currency: 'JPY',
-                description: 'Japanese Yen',
-            },
-            {
-                currency: 'CNY',
-                description: 'Chinese Yuan',
-            },
-            {
-                currency: '😟',
-                description: 'Sad customers',
-            },
-            {
-                currency: '🤬',
-                description: 'Curses in frustration',
-            }
         ]),
-    }),
-    burnRate: fz({
-        min: 1,
-        max: 100,
-        step: 0.1,
-        default: 6,
-    }),
-    longWindowPerc: fz({
-        min: 0.1,
-        max: 99,
-        step: 0.1,
-        default: 5,
-    }),
-    shortWindowDivider: fz({
-        min: 2,
-        max: 20,
-        step: 1,
-        default: 12,
+        burnRate: fz({
+            min: 1,
+            max: 100,
+            step: 0.1,
+            default: 7,
+        }),
+        longWindowPerc: fz({
+            min: 0.1,
+            max: 99,
+            step: 0.1,
+            default: 6,
+        }),
+        shortWindowDivider: fz({
+            min: 2,
+            max: 20,
+            step: 1,
+            default: 12,
+        }),
     }),
     impactLevel: fz({
         min: 1,
@@ -308,14 +297,7 @@ export const config = fz({
             },
         },
         percentages: {
-            default: [
-                95.3,
-                2.2,
-                0.9,
-                0.6,
-                0.5,
-                0.4,
-            ],
+            default: [95.3, 2.2, 0.9, 0.6, 0.5, 0.4],
             presets: [
                 {
                     name: 'Normal',
@@ -360,7 +342,7 @@ export const config = fz({
                 {
                     name: 'Crazy Bounce',
                     values: [100, 2, 2, 2, 5, 2, 2, 2, 100],
-                }
+                },
             ],
         },
     },
@@ -382,33 +364,76 @@ export const config = fz({
     metricEffort: fz({
         default: 'Easy',
         possibleValues: fz([
-            'Easy',      // We already get that out of the box
-            'Medium',    // Some observability needs to be set up
-            'Hard',      // New code needs to be written
+            'Easy', // We already get that out of the box
+            'Medium', // Some observability needs to be set up
+            'Hard', // New code needs to be written
             'Very Hard', // A rough approximation can be made with significant effort
-            'Impossible',// It's not possible to measure accurately
+            'Impossible', // It's not possible to measure accurately
         ]),
     }),
-    icons: fz({
-        // ▢◻▣▷◇◈○◌◯◎◉⬡＋－🔎︎
-        workshop: '⯐',
-        feedback: '🗩',
-        scope: '⸬',
-        edit: '✎',
-        owner: '✹',
-        provider: '▢',
-        service: '⬡',
-        consumer: '◇',
-        consumption: '→',
-        failure: '⇸',
-        risk: '⚠',
-        metric: '∡',
-        export: '↧',
-        import: '↥',
-        add: '＋',
-        remove: '－',
-        consequence: '⇒',
-        impact: '⇛',
-        because: '↳',
+    llm: fz({
+        selectedEngineStateKey: 'LLM-SELECTED-ENGINE-STATE',
+        engines: [
+            /*
+            {
+                name: 'WebLLM',
+                baseUrl: undefined,
+                website: 'https://webllm.mlc.ai/',
+                description:
+                    'The easiest option. It runs the LLM engine in this browser window and caches the model for later usage.',
+            },
+            */
+            {
+                name: 'LM Studio',
+                baseUrl: 'http://localhost:1234/v1/',
+                website: 'https://lmstudio.ai/',
+                description: 'Runs on a local computer. You need to configure a local server to be able to use it.',
+                suggestedModel: 'phi-4',
+            },
+            {
+                name: 'Jan',
+                baseUrl: 'http://localhost:1337/v1/',
+                website: 'https://jan.ai/',
+                description: 'Similar to LM Studio but with a simpler user interface.',
+                suggestedModel: 'llama3.1-8b-instruct',
+            },
+            {
+                name: 'Gemini',
+                baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai/',
+                website: 'https://gemini.google.com',
+                description:
+                    'From Google which arguably started this whole AI wave with their Transformers architecture.',
+                apiKeyWebsite: 'https://aistudio.google.com/apikey',
+                suggestedModel: 'models/gemini-2.5-flash-lite',
+            },
+            {
+                name: 'OpenAI',
+                baseUrl: 'https://api.openai.com/v1/',
+                website: 'https://chatgpt.com/',
+                description: 'The company behind ChatGPT and run by a lunatic.',
+                apiKeyWebsite: 'https://platform.openai.com/api-keys',
+                suggestedModel: 'o4-mini',
+            },
+            {
+                name: 'Claude',
+                baseUrl: 'https://api.anthropic.com/v1/',
+                website: 'https://claude.ai/',
+                description: 'Similar to OpenAI, run by some former OpenAI employees.',
+                apiKeyWebsite: 'https://console.anthropic.com/settings/keys',
+                suggestedModel: 'claude-3-5-haiku-20241022',
+            },
+        ],
+        temperature: {
+            default: 0.1,
+            min: 0,
+            max: 2,
+            step: 0.1,
+        },
+        maxTokens: {
+            default: 4096,
+            min: 100,
+            max: 10000,
+            step: 100,
+        },
     }),
 })

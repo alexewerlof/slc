@@ -1,0 +1,36 @@
+<div class="indicator-finder-component">
+    <div>
+        <div class="h-pad-gap">
+            <tabs-component v-model="selectedGroupName" :tabs="groupNames.join(',')"></tabs-component>
+        </div>
+        <div class="h-pad-gap">
+            <div class="input-group" v-if="selectedGroupName">
+                <label>Signal</label>
+                <div class="subtle-hint">What does the service consumer care about?</div>
+                <inline-select-component v-model="selectedCategory" :options="categoryOptions"></inline-select-component>
+            </div>
+        </div>
+    </div>
+    <div class="pad-gap subtle-hint">{{ indicatorsInCategory.length }} results</div>
+    <div class="indicator-finder-component__search-results well" v-if="indicatorsInCategory.length">
+        <div class="indicator-finder-component__search-result surface"
+            v-for="indicator in indicatorsInCategory">
+            <button class="button--cta" @click="$emit('indicator-selected', indicator)">
+                {{ indicator.displayName }}
+            </button>
+            <p>
+                {{ indicator.description }}
+                <br>
+                <span class="subtle-hint">Unit: {{ indicator.eventUnitNorm }}</span>
+            </p>
+            <code-block-component title="Service Level Status" hide-top-bar="">
+                <formula-component :formula="indicator.formula"></formula-component>
+            </code-block-component>
+        </div>
+        <p>
+            ⭐ 
+            <ext-link href="https://github.com/alexewerlof/slc/">Contribute a template!</ext-link>
+            🎉
+        </p>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<span
+    v-if="unicodeStr"
+    class="icon-component icon-component--unicode"
+    v-text="unicodeStr"></span>
+<span
+    v-else-if="googleIconStr"
+    class="icon-component icon-component--google material-symbols-outlined"
+    v-text="googleIconStr"></span>
+<span
+    v-else
+    class="icon-component icon-component--unknown"
+    title="Unknown icon">{{ name }}</span>

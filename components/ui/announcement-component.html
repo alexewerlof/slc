@@ -1,0 +1,6 @@
+<transition>
+    <div class="announcement-component" v-if="visible">
+        <slot></slot>
+        <button class="button--small" @click="visible = false" type="button">Dismiss</button>
+    </div>
+</transition>

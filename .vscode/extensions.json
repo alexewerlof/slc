@@ -1,6 +1,3 @@
 {
-    "recommendations": [
-        "ritwickdey.liveserver",
-        "denoland.vscode-deno"
-    ]
+    "recommendations": ["ritwickdey.liveserver", "rvest.vs-code-prettier-eslint", "esbenp.prettier-vscode"]
 }

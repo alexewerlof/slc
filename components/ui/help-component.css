@@ -1,0 +1,35 @@
+.help-component__button {
+    display: inline-block;
+    font-family: var(--body-font-family);
+    text-decoration: underline;
+    border: none;
+    background-color: transparent;
+    color: var(--secondary-color);
+    cursor: help;
+    box-shadow: none;
+    filter: none;
+    text-shadow: none;
+}
+
+.help-component__button:hover {
+    background-color: transparent;
+    box-shadow: none;
+    filter: none;
+}
+
+.help-component__contents {
+    padding: 1rem;
+    font-size: 1rem;
+    font-family: var(--body-font-family);
+    font-weight: normal;
+    background-color: var(--foreground-color);
+    color: var(--background-color);
+    border-radius: 0.3rem;
+    margin-top: var(--gap);
+    margin-bottom: var(--gap);
+}
+
+.help-component__contents p {
+    margin-block: 0;
+    padding: 0.5em 0;
+}

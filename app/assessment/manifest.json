@@ -1,0 +1,17 @@
+{
+    "name": "Service Assessment",
+    "short_name": "Assessment",
+    "description": "A visual tool to assess services, tasks, and risks to find meaningful metrics. It also uses AI to guide the you to discover different aspects of the service while dodging the common pitfalls.",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#001426",
+    "theme_color": "#FFBC52",
+    "orientation": "landscape",
+    "icons": [
+        {
+            "src": "icon.svg",
+            "sizes": "500x500",
+            "type": "image/svg+xml"
+        }
+    ]
+}

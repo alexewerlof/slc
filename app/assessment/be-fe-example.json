@@ -1,0 +1,104 @@
+{
+    "id": "aU4XTFCW7",
+    "displayName": "Backend/Frontend",
+    "description": "A simple backend/frontend service producer and consumer",
+    "consumers": [
+        {
+            "id": "c6X10P1TJ",
+            "displayName": "Frontend",
+            "description": "Consumes the backend API to render a UI for the end user",
+            "type": "System",
+            "tasks": [
+                {
+                    "id": "tZNUYA5AD",
+                    "displayName": "Product list",
+                    "description": "To let the users find relevant products"
+                },
+                {
+                    "id": "tGMCRLGN0",
+                    "displayName": "Purchase",
+                    "description": "Let the end user buy their selected products"
+                }
+            ]
+        }
+    ],
+    "providers": [
+        {
+            "id": "pETS8NS7T",
+            "displayName": "Backend",
+            "description": "Provides an API to the frontend",
+            "type": "System",
+            "services": [
+                {
+                    "id": "s895S3B2Y",
+                    "displayName": "Product API",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "u103T33HH",
+                            "taskId": "tZNUYA5AD",
+                            "failures": [
+                                {
+                                    "id": "fZZD37LGP",
+                                    "symptom": "Product list is too slow",
+                                    "consequence": "The user may give up",
+                                    "businessImpact": "Loss of potential sales",
+                                    "impactLevel": 14
+                                },
+                                {
+                                    "id": "fHTPU73FL",
+                                    "symptom": "Product list misses a product that the user was looking for",
+                                    "consequence": "User may not buy what they were looking for",
+                                    "businessImpact": "Loss of potential sale",
+                                    "impactLevel": 21
+                                },
+                                {
+                                    "id": "f1UTTTW1E",
+                                    "symptom": "Product list API returns an unexpected error",
+                                    "consequence": "The product page breaks",
+                                    "businessImpact": "User may lose confidence and the business loses the opportunity to sell",
+                                    "impactLevel": 59
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "s29AA0VMJ",
+                    "displayName": "Product Search API",
+                    "description": "With filters, sort, and pagination",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uA5CESP1D",
+                            "taskId": "tZNUYA5AD"
+                        }
+                    ]
+                },
+                {
+                    "id": "s9WZF0LM2",
+                    "displayName": "Authentication",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "u5T6A95T1",
+                            "taskId": "tGMCRLGN0"
+                        }
+                    ]
+                },
+                {
+                    "id": "sA4RYACUW",
+                    "displayName": "Payment",
+                    "description": "Shopping card and payment processor integration",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "u70TCM1DG",
+                            "taskId": "tGMCRLGN0"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

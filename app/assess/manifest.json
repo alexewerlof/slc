@@ -1,0 +1,20 @@
+{
+    "name": "Service Assess",
+    "short_name": "Assess",
+    "description": "The older version of Service Assessment tool. This version will be kept around for a while for me to get feedback.",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#001426",
+    "theme_color": "#FFBC52",
+    "orientation": "landscape",
+    "icons": [
+        {
+            "src": "icon.svg",
+            "sizes": "500x500",
+            "type": "image/svg+xml"
+        }
+    ],
+    "__metadata": {
+        "hidden": true
+    }
+}

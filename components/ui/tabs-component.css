@@ -1,0 +1,28 @@
+.tabs-component {
+    position: relative;
+    margin-bottom: var(--gap);
+
+    .button-bar {
+        margin: 0;
+        padding-bottom: 0;
+        padding-left: var(--gap);
+    }
+}
+
+.tabs-component__tab {
+    font-family: var(--title-font-family);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 0;
+}
+
+.tabs-component__bottom-border {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--bthick3);
+    background-color: var(--primary-color);
+    z-index: 2;
+    pointer-events: none;
+}

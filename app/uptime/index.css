@@ -1,0 +1,43 @@
+.common-slo-windows__downtime {
+    width: 25%;
+    color: var(--brand-red);
+    padding-left: var(--gap);
+}
+
+.common-slo-windows__total {
+    color: var(--primary-color);
+}
+
+.common-slo-windows__good {
+    color: var(--brand-green);
+}
+
+.common-slo-windows__bad {
+    color: var(--brand-red);
+}
+
+.common-slo-windows__your-config {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.uptime-ui {
+    display: flex;
+    flex-direction: row;
+    gap: var(--gap2);
+    padding: var(--gap2);
+}
+
+@media screen and (max-width: 768px) {
+    .uptime-ui {
+        flex-direction: column;
+    }
+}
+
+.uptime-ui__left-pane {
+    flex: 1;
+}
+
+.uptime-ui__right-pane {
+    flex: 2;
+}

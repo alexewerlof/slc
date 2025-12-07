@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../lib/window-onerror.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/svg" href="icon.svg">
+    <link rel="stylesheet" href="index.css">
+    <link rel="manifest" href="manifest.json">
+    <title>UI Demo</title>
+</head>
+<body>
+    <div id="app">
+        <announcement-component>
+            This page is just a demo of UI elements
+        </announcement-component>
+        <header-component>
+            | HEADER COMPONENT SLOT
+        </header-component>
+
+        <div class="container pad-gap2">
+            <div class="surface">
+                <hero-component file-name="subtle-prism.svg">
+                    <h1>Header 1</h1>
+                    <h2>
+                        Header 2
+                        <tooltip-component>
+                            This is a tooltip
+                        </tooltip-component>
+                    </h2>
+                    <p>Some text for the hero component that can go here and show properly</p>
+                </hero-component>
+                <h1>Selected Tab: {{ selTabName }}</h1>
+                <tabs-component v-model="selTabName" tabs="Forms, Buttons, Typography, Layout, Icons"></tabs-component>
+
+                <div v-if="selTabName === 'Forms'">
+
+                    <lint-component :lint="lint"></lint-component>
+                    <div class="button-bar frost">
+                        <compound-button-component title="Compound Button">
+                            <button>Hello</button>
+                            <button>World!</button>
+                        </compound-button-component>
+                        <button @click="$refs.normalDialog.show()">Show Normal Dialog</button>
+                        <button @click="$refs.modalDialog.show(true)">Show Modal Dialog</button>
+                    </div>
+                    
+                    <dialog-component ref="normalDialog">
+                        <p>This is just a simple dialog box.</p>
+                    </dialog-component>
+
+                    <dialog-component ref="modalDialog">
+                        <p>This is a modal dialog box. You can also close it with the <kbd>Esc</kbd> key</p>
+                    </dialog-component>
+                    
+                    <form>
+                        <fieldset>
+                            <legend>
+                                Form legend
+                                <tooltip-component>
+                                    Yes! It's an actual form!
+                                </tooltip-component>
+                            </legend>
+                            <div class="input-group">
+                                <label for="input1">Text Input</label>
+                                <input type="text" id="input1" name="input1">
+                            </div>
+                            <div class="input-group">
+                                <label for="input1v">Text Input With Value</label>
+                                <input type="text" id="input1v" name="input1v" value="Some value">
+                            </div>
+                            <div class="input-group">
+                                <label for="input1p">Text Input With Placeholder</label>
+                                <input type="text" id="input1p" name="input1p" placeholder="Some placeholder">
+                            </div>
+                            <div class="input-group">
+                                <label for="input1d">Disabled Text Input</label>
+                                <input type="text" id="input1d" name="input1d" disabled>
+                            </div>
+                            <div class="input-group">
+                                <label for="input1dv">Disabled Text Input With Value</label>
+                                <input type="text" id="input1dv" name="input1dv" disabled value="Some value">
+                            </div>
+                            <div class="input-group">
+                                <label for="input1dp">Disabled Text Input With Placeholder</label>
+                                <input type="text" id="input1dp" name="input1dp" disabled placeholder="Some placeholder">
+                            </div>
+                            <div class="input-group">
+                                <label for="input2">Number Input</label>
+                                <input type="number" id="input2" name="input2" value="123456">
+                            </div>
+                            <div class="input-group">
+                                <label for="url-input">URL Input</label>
+                                <input type="url" id="url-input" name="url-input" value="https://www.google.com">
+                            </div>
+                            <div class="input-group">
+                                <label for="input3">Search Input</label>
+                                <input type="search" id="input3" name="input3" value="Synthetic Availability">
+                            </div>
+                            <div class="input-group">
+                                <label for="input4">Select Input</label>
+                                <select id="input4" name="input4">
+                                    <option value="1">Option 1</option>
+                                    <option value="2">Option 2</option>
+                                    <option value="3">Option 3</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="input5">Text Area</label>
+                                <textarea id="input5" name="input5">Some longer text that may span across multiple rows.This is a text area after all.</textarea>
+                            </div>
+                            <fieldset>
+                                <legend>Inline controls</legend>
+                                <div class="input-group">
+                                    <label>
+                                        <input type="checkbox">
+                                        Checkbox
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" checked>
+                                        Checkbox
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" disabled>
+                                        Checkbox disabled
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" checked disabled>
+                                        Checkbox checked disabled
+                                    </label>
+                                </div>
+                                <div class="input-group">
+                                    <label>
+                                        <input type="radio" name="input7"> Radio 1
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="input7" checked> Radio 2
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="input7"> Radio 3
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="input71" disabled> Radio Disabled
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="input71" disabled checked> Radio Checked Disabled
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <div class="input-group">
+                                <label for="input8">Rnage Input</label>
+                                <input type="range" id="input8" name="input8">
+                            </div>
+                            <div class="input-group">
+                                <label for="input9">Number Input</label>
+                                <input type="number" id="input9" name="input9">
+                            </div>
+                            <div class="input-group">
+                                <label for="input10">
+                                    Search
+                                    <div class="subtle-hint">This is an input and button pair</div>
+                                </label>
+                                <div class="input-button-pair">
+                                    <input type="search" id="input10">
+                                    <button type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <fieldset class="b-mar-gap2">
+                        <legend>Custom Components</legend>
+                        <div class="input-group">
+                            <label for="inline-select">
+                                This is a inline-select {{ inlineSelectValue }} (type: {{ typeof inlineSelectValue}})
+                                <div class="subtle-hint">Similar to a radio group
+                                    <tooltip-component>
+                                        This is a tooltip
+                                    </tooltip-component>
+                                </div>
+                            </label>
+                            <inline-select-component v-model="inlineSelectValue" :options="inlineSelectOptions"></inline-select-component>
+                        </div>
+                    </fieldset>
+                    <show-hide-component title="Some advanced stuff">
+                        <div class="input-group">
+                            <label>
+                                <input type="checkbox">
+                                Checkbox
+                            </label>
+                        </div>
+                    </show-hide-component>
+                </div>
+
+                <div v-if="selTabName === 'Buttons'">
+                    <div class="well">
+                        <h2>Current Step: {{ currStep }}</h2>
+                        <steps-component v-model="currStep" :steps="stepLabels"></steps-component>
+                    </div>
+
+                    <h3>Small</h3>
+                    <div>
+                        <button @click="clicked('Small')" class="button--small">Button 1</button>
+                        <button @click="clicked('Small')" class="button--small">Button 2</button>
+                        <button @click="clicked('Small')" class="button--small">Button 3</button>
+                        <button @click="clicked('Small')" class="button--small" disabled>Disabled</button>
+                    </div>
+
+                    <h3>Regular</h3>
+                    <div>
+                        <button @click="clicked('Normal')">Button 1</button>
+                        <button @click="clicked('Normal')">Button 2</button>
+                        <button @click="clicked('Normal')">Button 3</button>
+                        <button @click="clicked('Normal')" disabled>Disabled</button>
+                    </div>
+                    
+                    <h3>Large</h3>
+                    <div>
+                        <button @click="clicked('Large')" class="button--large">Button 1</button>
+                        <button @click="clicked('Large')" class="button--large">Button 2</button>
+                        <button @click="clicked('Large')" class="button--large">Button 3</button>
+                        <button @click="clicked('Large')" class="button--large" disabled>Disabled</button>
+                    </div>
+
+                    <h3>Round</h3>
+                    <div>
+                        <span>Some text</span>
+                        <button @click="clicked('Round small')" class="button--small button--round">
+                            <icon-component name="close"></icon-component>
+                        </button>
+                        <button @click="clicked('Round')" class="button--round">
+                            <icon-component name="close"></icon-component>
+                        </button>
+                        <button @click="clicked('Round large')" class="button--large button--round">
+                            <icon-component name="close"></icon-component>
+                        </button>
+                    </div>
+                    
+                    <h2>Button Bar</h2>
+                    <div class="button-bar">
+                        <button>Button 1</button>
+                        <button>Button 2</button>
+                        <button>Button 3</button>
+                        <button disabled>Disabled</button>
+                    </div>
+                    <div class="t-mar-gap2"></div>
+                    <div class="button-bar">
+                        <button class="button--cta">Button 1 CTA</button>
+                        <button class="button--cta">Button 2 CTA</button>
+                        <button class="button--cta">Button 3 CTA</button>
+                        <button class="button--cta" disabled>Disabled CTA</button>
+                    </div>
+                    <div class="t-mar-gap2"></div>
+                    <div class="button-bar">
+                        <button class="button--danger">Button 1 Danger</button>
+                        <button class="button--danger">Button 2 Danger</button>
+                        <button class="button--danger">Button 3 Danger</button>
+                        <button class="button--danger" disabled>Disabled Danger</button>
+                    </div>
+                    <div class="t-mar-gap2"></div>
+                    <div class="button-bar">
+                        <button @click="clicked('Small')" class="button--small">Button 1</button>
+                        <button @click="clicked('Small')" class="button--small">Button 2</button>
+                        <button @click="clicked('Small')" class="button--small">Button 3</button>
+                        <button @click="clicked('Small')" class="button--small" disabled>Disabled</button>
+                    </div>
+                </div>
+
+                <div v-if="selTabName === 'Typography'">
+                    <div class="well">
+                        <markdown-component :markdown="`# Markdown Header
+This *is* **some** ~~test~~ for you!`"></markdown-component>
+                    </div>
+                    <p>
+                        This page primarily exists to check the look and feel of various UI aspects and visually inspect the CSS.
+                    </p>
+                    <h1>
+                        Heading 1
+                    </h1>
+                    <h2>Heading 2</h2>
+                    <h3>Heading 3</h3>
+                    <h4>Heading 4</h4>
+                    <h5>Heading 5</h5>
+                    <h6>Heading 6</h6>
+                    <p>
+                        This is a paragraph of text.
+                        <a href="#">This is a link</a>.
+                        <strong>This is bold text</strong>.
+                        <em>This is italic text</em>.
+                        <small>This is small text</small>.
+                        <mark>This is marked text</mark>.
+                        <del>This is deleted text</del>.
+                        <ins>This is inserted text</ins>.
+                        <sub>This is subscript text</sub>.
+                        <sup>This is superscript text</sup>.
+                        Yeah, that's about it.
+                    </p>
+                    <ul>
+                        <li>Unordered list item 1</li>
+                        <li>Unordered list item 2</li>
+                        <li>Unordered list item 3</li>
+                    </ul>
+                    <ol>
+                        <li>Ordered list item 1</li>
+                        <li>Ordered list item 2</li>
+                        <li>Ordered list item 3</li>
+                    </ol>
+                    <hr>
+                    <table>
+                        <caption>Table caption</caption>
+                        <thead>
+                            <tr>
+                                <th colspan="4">Master header</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>Header 1</th>
+                                <th>Header 2</th>
+                                <th>Header 3</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Row 1</th>
+                                <td>Row 1, Cell 1</td>
+                                <td>Row 1, Cell 2</td>
+                                <td>Row 1, Cell 3</td>
+                            </tr>
+                            <tr>
+                                <th>Row 2</th>
+                                <td>Row 2, Cell 1</td>
+                                <td>Row 2, Cell 2</td>
+                                <td>Row 2, Cell 3</td>
+                            </tr>
+                            <tr>
+                                <th>Row 3</th>
+                                <td>Row 3, Cell 1</td>
+                                <td>Row 3, Cell 2</td>
+                                <td>Row 3, Cell 3</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Footer</th>
+                                <td>Footer, Cell 1</td>
+                                <td>Footer, Cell 2</td>
+                                <td>Footer, Cell 3</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="block">block</div>
+                    <code-block-component title="Example code">
+                        This is a code block
+                        <label>Label</label>
+                        <code>
+                            <span class="funct">funct</span>
+                            <span class="punct">(</span>
+                            <span class="exprs">"SLI"</span>
+                            <span class="punct">,</span>
+                            <span class="const">98</span>
+                            <span class="punct">)</span>
+                        </code>
+                    </code-block-component>
+                    <div class="block info">block info</div>
+                    <div class="block warning">block warning</div>
+                    <div class="block error">block error</div>
+                    <text-block-component>
+                        This is a regular text block
+                    </text-block-component>
+                    <text-block-component type="info">
+                        This is an info text block
+                    </text-block-component>
+                    <text-block-component type="warning">
+                        This is a warning text block
+                    </text-block-component>
+                    <text-block-component type="error">
+                        This is an error text block
+                    </text-block-component>
+                </div>
+
+                <div v-if="selTabName === 'Layout'" class="mozaic mozaic--gap2">
+                    <div class="mozaic__tile mozaic__tile--whole"><h2>12</h2></div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    <div class="mozaic__tile mozaic__tile">mozaic__tile</div>
+                    
+                    <div class="mozaic__tile mozaic__tile--whole"><h2>6</h2></div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    
+                    <div class="mozaic__tile mozaic__tile--whole"><h2>Quarter</h2></div>
+                    <div class="mozaic__tile mozaic__tile--3c">mozaic__tile--3c</div>
+                    <div class="mozaic__tile mozaic__tile--3c">mozaic__tile--3c</div>
+                    <div class="mozaic__tile mozaic__tile--3c">mozaic__tile--3c</div>
+                    <div class="mozaic__tile mozaic__tile--3c">mozaic__tile--3c</div>
+                    
+                    <div class="mozaic__tile mozaic__tile--whole"><h2>Third</h2></div>
+                    <div class="mozaic__tile mozaic__tile--4c">mozaic__tile--4c</div>
+                    <div class="mozaic__tile mozaic__tile--4c">mozaic__tile--4c</div>
+                    <div class="mozaic__tile mozaic__tile--4c">mozaic__tile--4c</div>
+                    
+                    <div class="mozaic__tile mozaic__tile--whole"><h2>Half</h2></div>
+                    <div class="mozaic__tile mozaic__tile--6c">mozaic__tile--6c</div>
+                    <div class="mozaic__tile mozaic__tile--6c">mozaic__tile--6c</div>
+
+                    <div class="mozaic__tile mozaic__tile--whole"><h2>Complement</h2></div>
+                    <div class="mozaic__tile mozaic__tile--1c">mozaic__tile--1c</div>
+                    <div class="mozaic__tile mozaic__tile--11c">mozaic__tile--11c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--10c">mozaic__tile--10c</div>
+                    <div class="mozaic__tile mozaic__tile--3c">mozaic__tile--3c</div>
+                    <div class="mozaic__tile mozaic__tile--9c">mozaic__tile--9c</div>
+                    <div class="mozaic__tile mozaic__tile--4c">mozaic__tile--4c</div>
+                    <div class="mozaic__tile mozaic__tile--8c">mozaic__tile--8c</div>
+                    <div class="mozaic__tile mozaic__tile--5c">mozaic__tile--5c</div>
+                    <div class="mozaic__tile mozaic__tile--7c">mozaic__tile--7c</div>
+                    <div class="mozaic__tile mozaic__tile--6c">mozaic__tile--6c</div>
+                    <div class="mozaic__tile mozaic__tile--6c">mozaic__tile--6c</div>
+                    <div class="mozaic__tile mozaic__tile--7c">mozaic__tile--7c</div>
+                    <div class="mozaic__tile mozaic__tile--5c">mozaic__tile--5c</div>
+                    <div class="mozaic__tile mozaic__tile--8c">mozaic__tile--8c</div>
+                    <div class="mozaic__tile mozaic__tile--4c">mozaic__tile--4c</div>
+                    <div class="mozaic__tile mozaic__tile--9c">mozaic__tile--9c</div>
+                    <div class="mozaic__tile mozaic__tile--3c">mozaic__tile--3c</div>
+                    <div class="mozaic__tile mozaic__tile--10c">mozaic__tile--10c</div>
+                    <div class="mozaic__tile mozaic__tile--2c">mozaic__tile--2c</div>
+                    <div class="mozaic__tile mozaic__tile--11c">mozaic__tile--11c</div>
+                    <div class="mozaic__tile mozaic__tile--1c">mozaic__tile--1c</div>
+                </div>
+
+                <div v-if="selTabName === 'Icons'">
+                    <h3>Icons</h3>
+                    <div class="subtle-text">Get new ones <ext-link href="https://fonts.google.com/icons">here</ext-link>.</div>
+                    <ul>
+                        <li v-for="name in iconNames">
+                            <icon-component :name></icon-component>
+                            &nbsp;
+                            <code>{{ name }}</code>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer-component>
+            Footer extra text
+        </footer-component>
+    </div>
+    <script type="module" src="index.js"></script>
+</body>
+</html>

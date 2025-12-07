@@ -1,0 +1,23 @@
+{
+    "name": "slc",
+    "type": "module",
+    "scripts": {
+        "test": "node --test",
+        "lint": "eslint .",
+        "format": "prettier --write .",
+        "build": "node build.js"
+    },
+    "devDependencies": {
+        "cheerio": "^1.1.0",
+        "esbuild": "^0.25.10",
+        "eslint": "^9.34.0",
+        "eslint-config-prettier": "^10.1.8",
+        "prettier": "^3.6.2"
+    },
+    "dependencies": {
+        "d3": "^7.9.0",
+        "markdown-it": "^14.1.0",
+        "vue": "^3.5.22",
+        "yaml": "^2.8.1"
+    }
+}

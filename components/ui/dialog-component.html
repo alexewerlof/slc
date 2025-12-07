@@ -1,0 +1,19 @@
+<dialog class="dialog-component surface" ref="dialogComponent" @close="close()">
+    <div class="dialog-component__contents">
+        <div class="dialog-component__title-bar">
+            <div class="dialog-component__title">
+                {{ title }}
+            </div>
+            <button
+                @click="close"
+                type="button"
+                title="Close"
+                class="button--round">
+                <icon-component name="close"></icon-component>
+            </button>
+        </div>
+        <div class="dialog-component__slot">
+            <slot></slot>
+        </div>
+    </div>
+</dialog>

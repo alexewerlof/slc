@@ -1,0 +1,17 @@
+{
+    "name": "Service Level Calculator",
+    "short_name": "SLC",
+    "description": "An interactive and visual tool for understanding and experimenting with you SLI/SLO while tying them to alerts and accountability.",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#001426",
+    "theme_color": "#FFBC52",
+    "orientation": "landscape",
+    "icons": [
+        {
+            "src": "icon.svg",
+            "sizes": "500x500",
+            "type": "image/svg+xml"
+        }
+    ]
+}

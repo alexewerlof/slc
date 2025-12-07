@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Roboto&family=RobotoMono&display=swap');
+@import url('variables.css');
+@import url('vue-specific.css');
+@import url('block.css');
+@import url('inputs.css');
+@import url('code.css');
+@import url('toast.css');
+@import url('layout.css');
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+    font-family: var(--body-font-family);
+    margin: 0;
+    padding: 0;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: auto 50vh;
+    line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+th,
+legend,
+caption,
+label {
+    font-family: var(--title-font-family);
+    font-weight: 400;
+}
+
+h1[id] {
+    scroll-margin-top: 2em;
+}
+
+h1 {
+    font-size: 2em;
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-lighter) 70%, var(--primary-color) 100%);
+    color: transparent;
+    background-clip: text;
+}
+
+h2 {
+    font-size: 1.5em;
+    color: var(--primary-color);
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
+h4 {
+    font-size: 1.1em;
+}
+
+h5,
+h6 {
+    font-size: 1em;
+}
+
+ul,
+ol {
+    padding-inline-start: var(--gap3);
+}
+
+hr {
+    border: none;
+    border-top: var(--bthick) solid var(--divider-color);
+    margin-block: var(--gap);
+}
+
+time {
+    font-style: italic;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    text-align: left;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+th[colspan] {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+td button {
+    width: 100%;
+}
+
+.link-list {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.link-list li {
+    display: inline-block;
+    padding: 0 1em;
+}
+
+.link-list li + li {
+    border-left: 1px solid currentColor;
+}
+
+.frost {
+    border-radius: var(--bradius3);
+    box-shadow: 0 var(--gap) var(--gap2) rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(var(--bradius));
+    border: var(--bthick) solid rgba(from var(--foreground-color) r g b / 0.03);
+
+    padding: var(--gap2);
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(from var(--foreground-color) r g b / 0.08) 0%,
+        rgba(from var(--background-color) r g b / 0.08) 20%,
+        rgba(from var(--foreground-color) r g b / 0.08) 60%
+    );
+    background-size: 110% 110%;
+    background-position: 0 0;
+    transition: background-position var(--animation-speed2) ease;
+}
+
+.frost:hover {
+    background-position: 100% 100%;
+}
+
+.surface,
+.well {
+    border: var(--bthick) solid var(--divider-color);
+    padding: var(--gap2);
+    border-radius: var(--bradius3);
+    backdrop-filter: blur(var(--bradius));
+    background-image:
+        radial-gradient(
+            farthest-corner at 100% 100%,
+            rgba(from var(--divider-color) r g b / 0.1),
+            rgba(0, 0, 0, 0),
+            rgba(from var(--divider-color) r g b / 0.1)
+        ),
+        linear-gradient(
+            0deg,
+            rgba(from var(--divider-color) r g b / 0.1),
+            rgba(0, 0, 0, 0),
+            rgba(from var(--divider-color) r g b / 0.1)
+        );
+}
+
+.surface {
+    box-shadow:
+        inset 0 0 var(--gap) var(--bthick) var(--divider-color),
+        0 0 var(--gap2) var(--bthick) rgba(0, 0, 0);
+}
+
+.well {
+    box-shadow:
+        0 0 var(--gap) var(--bthick) var(--divider-color),
+        inset 0 0 var(--gap2) var(--bthick) rgba(0, 0, 0);
+}
+
+.logo-bg {
+    background-image: url('/img/bg.svg');
+    background-size: contain;
+}
+
+.scribble-bg {
+    background-image: url('/img/ssscribble-1.svg');
+    background-size: contain;
+}
+
+* {
+    scrollbar-color: var(--background-lighter) var(--background-darker);
+    scrollbar-width: thin;
+}
+
+mark {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

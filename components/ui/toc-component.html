@@ -1,0 +1,11 @@
+<div class="toc-component">
+    <nav>
+        <ol>
+            <li v-for="header in headers"
+                class="toc-component__item"
+                :class="`toc-component__item--${header.tagName}`">
+                <a :href="`#${header.id}`">{{ header.textContent }}</a>
+            </li>
+        </ol>
+    </nav>
+</div>

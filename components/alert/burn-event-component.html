@@ -1,0 +1,23 @@
+<g class="burn-event-component">
+    <line
+        :x1="x"
+        :x2="x"
+        :y1="y1"
+        :style="lineStyle"
+        :y2="y2" />
+    <text
+        :x="titleX"
+        :y="titleY"
+        :text-anchor="textAnchor"
+        :style="textStyle"
+        >
+        <tspan class="burn-event-component__title">{{ title }}</tspan>
+        <tspan v-for="textLine of textLines"
+            :x="titleX"
+            dy="1.3em">{{ textLine }}</tspan>
+    </text>
+    <polygon
+        class="burn-event-component__arrow"
+        :style="textStyle"
+        :points="arrowPoints" />
+</g>

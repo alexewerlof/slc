@@ -1,0 +1,17 @@
+<div class="compound-button-component">
+    <button
+        @click="toggle()"
+        class="compound-button-component__button"
+        type="button"
+    >
+        <icon-component v-if="iconName" :name="iconName"></icon-component>
+        {{ title }}
+        <icon-component name="drop_down"></icon-component>
+    </button>
+    <div
+        v-show="isOpen"
+        class="compound-button-component__choices button-bar button-bar--vertical frost"
+    >
+        <slot></slot>
+    </div>
+</div>

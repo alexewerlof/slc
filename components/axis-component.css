@@ -1,0 +1,22 @@
+.axis-component__line {
+    stroke: var(--primary-color);
+    stroke-width: 2px;
+}
+
+.axis-component__arrow {
+    fill: var(--primary-color);
+}
+
+.axis-component__title {
+    font-family: var(--title-font-family);
+    fill: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.axis-component__title--horizontal {
+    text-anchor: end;
+}
+
+.axis-component__title--vertical {
+    writing-mode: tb;
+}

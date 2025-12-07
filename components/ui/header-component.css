@@ -1,0 +1,62 @@
+.header-component {
+    margin-bottom: var(--gap);
+    border-bottom: 1px solid var(--divider-color);
+    box-shadow: 0 0 var(--gap2) 0 var(--divider-color);
+}
+
+.header-component__contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    padding: var(--gap2);
+    box-sizing: border-box;
+
+    @media screen and (min-width: 700px) {
+        & {
+            justify-content: center;
+            flex-direction: row;
+        }
+    }
+}
+
+.header-component__identity {
+    justify-self: start;
+    margin-right: auto;
+}
+
+.header-component__home-link {
+    display: inline-block;
+    margin-right: var(--gap);
+    font-size: 1.4em;
+}
+
+.header-component__title {
+    display: inline-block;
+    margin: 0;
+    margin-left: var(--gap);
+    font-weight: 400;
+    font-size: 1.8em;
+}
+
+.header-component__logo {
+    height: 2em;
+    position: relative;
+    top: 0.3em;
+}
+
+/* TODO: the top-nav is only used in calculator */
+.header-component__top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    margin: 0;
+    padding: 1em;
+    text-align: center;
+}
+
+/* TODO: the top-nav is only used in calculator */
+.header-component__top-nav li {
+    display: inline-block;
+    padding: 0 1em;
+}

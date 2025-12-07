@@ -1,0 +1,6 @@
+<div :class="`text-block-component text-block-component--${this.normalizedType}`">
+    <div class="text-block-component__icon">
+        <icon-component :name="normalizedType"></icon-component>
+    </div>
+    <div class="text-block-component__contents"><slot></slot></div>
+</div>

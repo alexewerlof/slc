@@ -1,0 +1,20 @@
+<div class="single-prompt-component">
+    <icon-component name="settings"></icon-component>
+    <button
+        v-if="awaitingLLM"
+        class="button--danger"
+        @click="abortCompletion('User aborted completion')"
+    >
+        <icon-component name="stop"></icon-component>
+        {{ caption }}
+    </button>
+    <button
+        v-if="!awaitingLLM"
+        @click="submitPrompt()"
+    >
+        <icon-component name="send"></icon-component>
+        {{ caption }}
+    </button>
+    <loading-animation-component v-if="awaitingLLM"></loading-animation-component>
+    <markdown-component :markdown="response"></markdown-component>
+</div>

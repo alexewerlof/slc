@@ -1,0 +1,53 @@
+<svg v-bind:viewBox="viewBox" xmlns="http://www.w3.org/2000/svg" class="alert-chart-component">
+    <!-- horizontal axis -->
+    <axis-component
+        :topY="topY"
+        :rightX="rightX"
+        :bottomY="bottomY"
+        :leftX="leftX"
+        x-label="Time"
+        y-label="Failures">
+    </axis-component>
+    <!-- burn line -->
+    <g>
+        <line
+            class="alert-chart-component__burn-line"
+            :x1="leftX"
+            :x2="rightX"
+            :y1="bottomY"
+            :y2="topY" />
+    </g>    
+    <burn-event-component
+        :width="width"
+        :height="height"
+        :x="rightX"
+        :y1="margin.top"
+        :y2="height - margin.bottom"
+        color="--brand-red"
+        offset="1"
+        title="Error Budget Exhausted"
+        :text-lines="errorBudgetTextLines">
+    </burn-event-component>
+    <burn-event-component
+        :width="width"
+        :height="height"
+        :x="longWindowX"
+        :y1="margin.top"
+        :y2="height - margin.bottom"
+        color="--brand-green"
+        offset="3"
+        title="Alert Triggers"
+        :text-lines="longWindowTextLines">
+    </burn-event-component>
+    <burn-event-component v-if="alert.useShortWindow"
+        :width="width"
+        :height="height"
+        :x="shortWindowX"
+        :y1="margin.top"
+        :y2="height - margin.bottom"
+        color="--brand-purple"
+        offset="2"
+        title="Short Window"
+        :text-lines="shortWindowTextLines">
+    </burn-event-component>
+</svg>

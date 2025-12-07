@@ -1,0 +1,113 @@
+<div class="assessment-graph-component v-pad-gap2">
+    <svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height" @click.self="$emit('select', assessment)">
+        <rect
+            v-if="selectedEntity?.className === 'Assessment'"
+            class="assessment-graph-component__selection-indicator"
+            x="1" y="1"
+            :width="width - 2"
+            :height="height - 2"></rect>
+        <!-- Tasks & Consumers -->
+        <g v-for="consumer of assessment.consumers" :key="consumer.id">
+            <g v-for="task of consumer.tasks" :key="task.id">
+                <path
+                    class="assessment-graph-component__line assessment-graph-component__line--relation"
+                    :d="d(consumerX(consumer), consumerY(consumer), taskX(task), taskY(task))"></path>
+                <path
+                    class="assessment-graph-component__line assessment-graph-component__line--task-usage"
+                    :d="d(taskX(task), taskY(task), width, taskY(task))"></path>
+                <assessment-graph-component-entity
+                    :is-selected="selectedEntity === task"
+                    :has-notification="task.lint.count"
+                    type="task"
+                    :cx="taskX(task)"
+                    :cy="taskY(task)"
+                    :tooltip="task.markdownDisplayName"
+                    @click="$emit('select', task)"
+                    @status="updateStatus"
+                    >
+                    {{ unicodeSymbol('task') }}
+                </assessment-graph-component-entity>
+            </g>
+            <assessment-graph-component-entity
+                :is-selected="selectedEntity === consumer"
+                :has-notification="consumer.lint.count"
+                type="consumer"
+                :cx="consumerX(consumer)"
+                :cy="consumerY(consumer)"
+                :tooltip="consumer.markdownDisplayName"
+                @click="$emit('select', consumer)"
+                @status="updateStatus"
+                >
+                {{ unicodeSymbol('consumer') }}
+            </assessment-graph-component-entity>
+        </g>
+        <!-- Services & Providers -->
+        <g v-for="provider of assessment.providers" :key="provider.id">
+            <g v-for="service of provider.services" :key="service.id">
+                <path
+                    class="assessment-graph-component__line assessment-graph-component__line--relation"
+                    :d="d(providerX(provider), providerY(provider), serviceX(service), serviceY(service))"></path>
+                <path
+                    class="assessment-graph-component__line assessment-graph-component__line--service-usage"
+                    :d="d(serviceX(service), serviceY(service), serviceX(service), height)"></path>
+                <assessment-graph-component-entity
+                    :is-selected="selectedEntity === service"
+                    :has-notification="service.lint.count"
+                    type="service"
+                    :cx="serviceX(service)"
+                    :cy="serviceY(service)"
+                    :tooltip="service.markdownDisplayName"
+                    @click="$emit('select', service)"
+                    @status="updateStatus"
+                    >
+                    {{ unicodeSymbol('service') }}
+                </assessment-graph-component-entity>
+                <!-- Usages -->
+                <assessment-graph-component-entity
+                    v-for="usage of service.usages"
+                    :key="usage.id"
+                    :is-selected="selectedEntity === usage"
+                    :has-notification="usage.lint.count"
+                    type="usage"
+                    :cx="usageX(usage)"
+                    :cy="usageY(usage)"
+                    :tooltip="usage.markdownDisplayName"
+                    @click="$emit('select', usage)"
+                    @status="updateStatus"
+                    >
+                    {{ usage.failures.length }}
+                </assessment-graph-component-entity>
+                <!-- Metrics -->
+                <assessment-graph-component-entity
+                    v-for="metric of service.metrics"
+                    :key="metric.id"
+                    :is-selected="selectedEntity === metric"
+                    :has-notification="metric.lint.count"
+                    type="metric"
+                    :cx="metricX(metric)"
+                    :cy="metricY(metric)"
+                    :tooltip="metric.markdownDisplayName"
+                    @click="$emit('select', metric)"
+                    @status="updateStatus"
+                    >
+                    {{ unicodeSymbol('metric') }}
+                </assessment-graph-component-entity>
+            </g>
+            <!-- Provider -->
+            <assessment-graph-component-entity
+                :is-selected="selectedEntity === provider"
+                :has-notification="provider.lint.count"
+                type="provider"
+                :tooltip="provider.markdownDisplayName"
+                :cx="providerX(provider)"
+                :cy="providerY(provider)"
+                @click="$emit('select', provider)"
+                @status="updateStatus"
+                >
+                {{ unicodeSymbol('provider') }}
+            </assessment-graph-component-entity>
+        </g>
+    </svg>
+    <div class="assessment-graph-component__status-bar"
+        :style="statusStyle">{{ statusText }}</div>
+</div>

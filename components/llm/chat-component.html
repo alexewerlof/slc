@@ -1,0 +1,39 @@
+<div class="chat-component">
+    <chat-thread-component
+        class="b-mar-gap2"
+        :thread="agent.thread"
+        :is-busy="agent.isBusy"
+    >
+    </chat-thread-component>
+    <div class="input-group">
+        <div class="input-button-pair">
+            <textarea
+                type="text"
+                v-model="message"
+                ref="promptInput"
+                rows="3"
+                :placeholder="promptPlaceholder"
+                @keydown.enter.exact.prevent="submitPrompt()"
+                :disabled="agent.isBusy"></textarea>
+            <button
+                v-if="!agent.isBusy"
+                @click="submitPrompt()"
+                class="button--cta"
+                type="button"
+                title="Send"
+                :disabled="isMessageEmpty"
+            >
+                <icon-component name="send"></icon-component>
+            </button>
+            <button
+                v-if="this.agent.isBusy"
+                @click="abortCompletion('User aborted completion')"
+                class="button--danger"
+                title="Stop generation"
+            >
+                <icon-component name="stop"></icon-component>
+            </button>
+        </div>
+    </div>
+
+</div>

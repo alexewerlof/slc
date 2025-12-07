@@ -1,0 +1,42 @@
+<div class="task-component">
+    <h3>Consumer</h3>
+    <markdown-component :markdown="task.consumer.markdownDisplayName"></markdown-component>
+    <entity-component
+        :entity="task"
+        display-name-hint="Consumer goal or objective"
+        description-hint="What is the consumer trying to achieve with this task?"
+    ></entity-component>
+    <h4>
+        Consumes
+        <help-component>
+            <p>
+                Select all the services that are required for {{ task.consumer }}
+                to {{ task.displayName }}.
+            </p>
+            <p>
+                If there are services that are missing, you can go back and add them.
+            </p>
+        </help-component>
+    </h4>
+    <fieldset
+        v-for="provider in task.consumer.assessment.providers"
+        :key="provider.id"
+    >
+        <legend :title="provider.description">{{ provider.markdownDisplayName }}</legend>
+        <div v-if="!provider.services.length">
+            No service defined!
+        </div>
+        <div
+            v-for="service of provider.services"
+            :key="service.id"
+        >
+            <label :title="service.description">
+                <input
+                    type="checkbox"
+                    :checked="service.isConsumedBy(task)"
+                    @change="service.setConsumedBy(task, $event.target.checked)">
+                {{ service.markdownDisplayName }}
+            </label>
+        </div>
+    </fieldset>
+</div>

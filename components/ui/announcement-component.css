@@ -1,0 +1,9 @@
+.announcement-component {
+    overflow: auto;
+    position: relative; /* for the button to show properly */
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    box-shadow: 0 0 var(--gap) var(--background-darker);
+    text-align: center;
+    padding: var(--gap);
+}

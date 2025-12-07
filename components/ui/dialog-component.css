@@ -1,0 +1,42 @@
+dialog.dialog-component {
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+    padding: 0;
+}
+
+.dialog-component__contents {
+    max-height: 80vh;
+    max-width: 80vw;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.dialog-component::backdrop {
+    backdrop-filter: blur(var(--bradius));
+}
+
+.dialog-component__title-bar {
+    display: flex;
+    padding: var(--gap);
+    padding-left: var(--gap2);
+    border-bottom-width: 1px;
+    color: var(--primary-color);
+    background-color: #ffffff09;
+    border-bottom-style: solid;
+    border-image-source: linear-gradient(to right, var(--primary-color), var(--secondary-color, var(--primary-color)));
+    border-image-slice: 1;
+    flex-shrink: 0;
+}
+
+.dialog-component__title {
+    flex-grow: 1;
+    font-family: var(--title-font-family);
+    font-size: 1.4em;
+}
+
+.dialog-component__slot {
+    flex-grow: 1;
+    overflow: auto;
+    margin: var(--gap2);
+}

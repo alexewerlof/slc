@@ -1,0 +1,65 @@
+.assessment-graph-component-entity {
+    & .assessment-graph-component-entity__bg {
+        stroke: var(--primary-color);
+        stroke-width: 2;
+        cursor: pointer;
+        filter: drop-shadow(2px 2px 3px black);
+    }
+
+    &:hover .assessment-graph-component-entity__bg {
+        stroke: var(--secondary-color);
+        filter: none;
+    }
+
+    & text {
+        pointer-events: none;
+        user-select: none;
+        text-anchor: middle;
+        dominant-baseline: middle;
+    }
+}
+
+.assessment-graph-component-entity__notification-indicator {
+    fill: var(--brand-red);
+}
+
+.assessment-graph-component-entity--provider,
+.assessment-graph-component-entity--service {
+    & .assessment-graph-component-entity__bg {
+        fill: var(--brand-green);
+    }
+    & text {
+        fill: var(--background-color);
+    }
+}
+
+.assessment-graph-component-entity--consumer,
+.assessment-graph-component-entity--task {
+    & .assessment-graph-component-entity__bg {
+        fill: var(--brand-purple);
+    }
+    & text {
+        fill: var(--background-color);
+    }
+}
+
+.assessment-graph-component-entity--usage {
+    & .assessment-graph-component-entity__bg {
+        fill: var(--background-color);
+        stroke: var(--brand-pink);
+    }
+
+    & text {
+        fill: var(--brand-pink);
+    }
+}
+
+.assessment-graph-component-entity--metric {
+    & .assessment-graph-component-entity__bg {
+        fill: var(--primary-color);
+        stroke: var(--brand-pink);
+    }
+    & text {
+        fill: var(--background-color);
+    }
+}

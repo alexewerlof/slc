@@ -1,0 +1,39 @@
+.tooltip-component {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+    user-select: none;
+}
+
+.tooltip-component__icon {
+    border: var(--bthick) solid currentColor;
+    background-color: rgb(from currentColor r g b / 0.2);
+    border-radius: 50%;
+    width: 1em;
+    height: 1em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tooltip-component__text {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity var(--animation-speed);
+    min-width: 20ex;
+    background-color: var(--background-lighter);
+    color: var(--foreground-color);
+    border-radius: var(--bradius);
+    border: var(--bthick) solid var(--divider-color);
+    padding: var(--gap);
+    z-index: 1;
+    font-size: 1rem;
+    box-shadow: 0 0 var(--gap) black;
+    margin-left: -0.5em;
+}
+
+.tooltip-component:hover .tooltip-component__text {
+    visibility: visible;
+    opacity: 1;
+}

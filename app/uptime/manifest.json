@@ -1,0 +1,17 @@
+{
+    "name": "Uptime Calculator",
+    "short_name": "Uptime",
+    "description": "A simple Uptime Calculator that does not hide the notion of timeslices (unlike uptime.is)",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#001426",
+    "theme_color": "#FFBC52",
+    "orientation": "landscape",
+    "icons": [
+        {
+            "src": "icon.svg",
+            "sizes": "500x500",
+            "type": "image/svg+xml"
+        }
+    ]
+}

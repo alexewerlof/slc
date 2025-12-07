@@ -1,0 +1,80 @@
+/* Colors for a very simple manually annotated code highlighter */
+
+code {
+    font-family: var(--code-font-family);
+}
+
+pre {
+    margin: 0;
+}
+
+code label {
+    -webkit-user-select: auto; /* Added to support Safari and Safari on iOS */
+    user-select: auto;
+}
+
+/* functions */
+code .funct {
+    color: var(--primary-color);
+}
+
+/* punctuations */
+code .punct {
+    color: var(--brand-red);
+}
+
+/* expressions */
+code .exprs {
+    color: var(--secondary-color);
+    word-break: break-word;
+}
+
+/* string */
+code .str {
+    color: var(--brand-green);
+    word-break: break-word;
+}
+
+/* comment */
+code .cmnt {
+    color: var(--brand-purple);
+}
+
+/* constants */
+code .const {
+    color: var(--brand-pink);
+}
+
+math {
+    font-family: inherit;
+    font-size: 1em;
+    display: inline-block;
+    width: 100%; /* or any specific width */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+mfrac {
+    font-size: 1.3em;
+}
+
+mn {
+    color: var(--brand-pink);
+}
+
+mo {
+    color: var(--brand-pink);
+}
+
+ms,
+mi {
+    color: var(--secondary-color);
+}
+
+ms {
+    font-style: italic;
+}
+
+mtd {
+    text-align: left;
+}

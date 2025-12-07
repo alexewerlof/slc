@@ -1,135 +1,80 @@
-@import url('https://fonts.googleapis.com/css2?family=Alata&family=Roboto&family=RobotoMono&display=swap');
-@import url('variables.css');
-@import url('vue-specific.css');
-@import url('block.css');
-@import url('inputs.css');
-@import url('code.css');
-@import url('toast.css');
-@import url('layout.css');
-@import url('annotated.css');
-
-html {
-    scroll-behavior: smooth;
+@media screen and (min-width: 768px) {
+    html,
+    body {
+        font-size: 22px;
+    }
 }
 
-body {
-    background-color: var(--background-color);
-    color: var(--foreground-color);
-    font-family: var(--body-font-family);
-    margin: 0;
-    padding: 0;
-    background-image: url('img/bg.svg');
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: auto 50vh;
+ul.benefit-list {
+    list-style: '✓';
 }
 
-.announcement {
+.benefit-list li {
+    padding: 0.3em;
+}
+
+/* Keyframes for the subtle floating animation for the app logo */
+@keyframes subtle-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(0.25em); /* Adjust the float height as desired */
+    }
+}
+
+.top-logo {
     text-align: center;
-    background-color: var(--secondary-color);
-    color: var(--background-color);
-    padding: 0.5em;
+
+    & img {
+        /* Apply the continuous floating animation */
+        max-width: 150px;
+        box-shadow: 0 0 6px 4px #00000047;
+        border-radius: var(--bradius5);
+
+        &:hover {
+            animation: subtle-float var(--animation-speed10) ease-in-out infinite;
+        }
+    }
 }
 
-h1, h2, h3, h4, h5, h6, th, legend, caption, label {
-    font-family: var(--title-font-family);
-    font-weight: 400;
+.hero__image-container {
+    padding: var(--gap);
+    .hero__overview-image {
+        display: block;
+        width: 100%;
+    }
 }
 
-h1[id] {
-    scroll-margin-top: 2em;
+.check-list {
+    list-style-type: '\2713';
+    padding-left: 0.5em;
 }
 
-h1 {
-    font-size: 2em;
-    color: var(--primary-color);
+.check-list li {
+    padding-left: 0.3em;
 }
 
-h2 {
-    font-size: 1.5em;
-    color: var(--primary-color);
+.apps-container {
 }
 
-h3 {
-    font-size: 1.2em;
+.app-item {
+    text-decoration: none;
+
+    .app-item__logo {
+        width: 3em;
+    }
+
+    &:hover {
+        filter: brightness(135%);
+    }
+
+    .app-item__title {
+        color: var(--primary-color);
+    }
 }
 
-h4 {
-    font-size: 1.1em;
-}
-
-hr {
-    border: none;
-    border-top: var(--bthick) solid var(--divider-color);
-}
-
-time {
-    font-style: italic;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    text-align: left;
-    border-bottom: 1px solid var(--divider-color);
-}
-
-th[colspan] {
-    text-align: center;
-    font-size: 1.2em;
-}
-
-td button {
-    width: 100%;
-}
-
-.link-list {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-.link-list li {
-    display: inline-block;
-    padding: 0 1em;
-}
-
-.link-list li + li {
-    border-left: 1px solid currentColor;
-}
-
-dialog {
-    padding: 1rem;
-    font-size: 1rem;
-    font-family: var(--body-font-family);
-    font-weight: normal;
-    background-color: var(--foreground-color);
-    color: var(--background-color);
-    border-radius: 0.5rem;
-    margin: 1rem;
-    box-shadow: 0 0 1em 0 black;
-}
-
-dialog p {
-    margin-block: 0;
-    padding: 0.5em 0;
-}
-
-#cookie-banner {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    max-width: 440px;
-}
-
-.surface {
-    border: var(--bthick) solid var(--divider-color);
-    padding: var(--gap2);
-    border-radius: var(--bradius3);
-    box-shadow: inset 0 0 var(--gap) var(--bthick) var(--divider-color),
-        0 0 var(--gap2) var(--bthick) rgba(0,0,0);
+.surface--cta {
+    border-color: var(--primary-color);
 }

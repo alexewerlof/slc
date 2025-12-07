@@ -1,0 +1,20 @@
+{
+    "name": "Service Level Indicator Templates",
+    "short_name": "SLI Templates",
+    "description": "A collection of the most common Service Level Indicators for different types of services.",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#001426",
+    "theme_color": "#FFBC52",
+    "orientation": "landscape",
+    "icons": [
+        {
+            "src": "icon.svg",
+            "sizes": "500x500",
+            "type": "image/svg+xml"
+        }
+    ],
+    "__metadata": {
+        "hidden": true
+    }
+}

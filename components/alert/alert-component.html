@@ -1,0 +1,285 @@
+<entity-component :entity="alert"></entity-component>
+<fieldset>
+    <!-- Error Budget Burn Rate -->
+    <legend>Burn rate</legend>
+    <div class="input-group">
+        <label for="burn-rate-input">
+            Rate: {{ alert.burnRate }}x
+            <help-component>
+                <p>
+                    Burn rate is the rate at which the error budget is consumed.
+                    It is the ratio of the error budget to the SLO window.
+                </p>
+                <p>
+                    A burn rate of <button @click="alert.burnRate = 1" class="button--small">1x</button> means that the error budget will be consumed during the
+                    SLO window (accepted).
+                </p>
+                <p>
+                    A burn rate of <button @click="alert.burnRate = 2" class="button--small">2x</button> means that the error budget will be consumed in half the
+                    SLO window. This is not acceptable because at this rate, the SLO will be
+                    violated before the end of the SLO window.
+                </p>
+                <p>
+                    You have selected a burn rate of {{ alert.burnRate }}x.
+                    This means the error budget ({{ alert.objective.failureWindow.eventCountL10n }} failed {{ alert.objective.failureWindow.eventUnitNorm }}) will be consumed in
+                    <time>{{ alert.errorBudgetBurn.humanTime }}</time>
+                    instead of being spread across {{ alert.objective.window.humanTime }}.
+                </p>
+            <p>
+                If the error budget continues to burn at this rate throughout the SLO window,
+                there will be {{ alert.sloWindowBudgetBurn }}.
+            </p>
+            <p>
+                Google SRE Workbook goes through 6 alerting strategies and
+                <ext-link href="https://sre.google/workbook/alerting-on-slos/">
+                    recommends
+                </ext-link>:
+            </p>
+            <table>
+                <thead>
+                    <th>Burn Rate</th>
+                    <th>Long-Window</th>
+                    <th>Short-Window</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr v-for="preset of config.alert.presets">
+                        <td>{{ preset.burnRate }}x</td>
+                        <td>{{ percL10n(preset.longWindowPerc) }} Consumed</td>
+                        <td>1/{{ preset.shortWindowDivider }} of {{ percL10n(preset.longWindowPerc) }}</td>
+                        <td><button type="button" class="button--small" @click="alert.state = preset">Try</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                Note: The above values for Long-Window and Short-Window are based on a 1-month SLO window.
+                You can see your actual values in the comments below Long-Window and Short-Window.
+            </p>
+        </help-component>
+        <div v-if="alert.burnRate === 1" class="subtle-hint">
+            Error budget is burning at the rate allowed by SLO
+        </div>
+        <div v-if="alert.burnRate > 1" class="subtle-hint">
+            Error budget is burning faster than allowed by SLO
+        </div>
+        </label>
+    <input
+        id="burn-rate-input"
+        type="range"
+        :min="config.alert.burnRate.min"
+        :max="config.alert.burnRate.max"
+        :step="config.alert.burnRate.step"
+        v-model.number="alert.burnRate">
+    </div>
+</fieldset>
+<!-- Burn Chart Component -->
+<burn-rate-component :alert="alert"></burn-rate-component>
+<!-- Long Window Alert -->
+<fieldset>
+    <legend>Alert Triggers</legend>
+    <!-- Alert after consuming -->
+    <div class="input-group">
+        <label for="alert-error-budget-perc">
+            Long-window burn: {{ percL10n(alert.longWindowPerc) }}
+            <help-component>
+                <p>
+                    We don't want to wait for the entire error budget to be consumed before
+                    alerting! It will be too late to take action.
+                </p>
+                <p>
+                    Therefore the alert should trigger before a significant portion of the
+                    error budget is consumed.
+                </p>
+                <p>
+                    Based on your setup, the alert will trigger after we have consumed
+                    {{ percL10n(alert.longWindowPerc) }} of the entire time allotted for the error budget
+                    (or SLO compliance window) which is
+                    <time>{{ alert.objective.window.humanTime }}</time>.
+                </p>
+                <math>
+                    <mrow>
+                        <mi>TTTrigger</mi>
+                        <mo>=</mo>
+                        <mn class="const">{{ percL10n(alert.longWindowPerc) }}</mn>
+                        <mo class="funct">&times;</mo>
+                        <mn class="const">{{ alert.objective.window.humanSec }}</mn>
+                        <mo class="punct">=</mo>
+                        <mn class="const">{{ alert.longFailureWindow.humanSec }}</mn>
+                    </mrow>
+                </math>
+                <p>
+                    Which is
+                    <time>{{ alert.longFailureWindow.humanTime }}</time>.
+                </p>
+                <p>
+                    Assuming that the entire error budget was available at the begining of the incident,
+                    the maximum time available to respond before the entire error budget is exhausted is:
+                </p>
+                <math>
+                    <mrow>
+                        <msub>
+                            <mi>TTRespond</mi>
+                            <ms>max</ms>
+                        </msub>
+                        <mo>=</mo>
+                        <mn>{{ alert.errorBudgetBurn.humanSec }}</mn>
+                        <mo>-</mo>
+                        <mn>{{ alert.longFailureWindow.humanSec }}</mn>
+                        <mo>=</mo>
+                        <mn>{{ alert.alertTTRWindow.humanSec }}</mn>
+                    </mrow>
+                </math>
+                <p>
+                    Which is 
+                    <time>{{ alert.alertTTRWindow.humanTime }}</time>.
+                </p>
+                <p>
+                    Remember that this is the best case scenario.
+                    In reality, you may have much less time if you don't want to consume the entire error budget for an incident.
+                    Also note that the burn rate can be higher than {{ alert.burnRate }}x.
+                </p>
+            </help-component>
+            <div class="subtle-hint">
+                After Burning {{ percL10n(alert.longWindowPerc) }} of error budget
+                at or above {{ alert.burnRate }}x
+            </div>
+        </label>
+        <input
+            id="alert-error-budget-perc"
+            type="range"
+            :min="config.alert.longWindowPerc.min"
+            :max="config.alert.longWindowPerc.max"
+            :step="config.alert.longWindowPerc.step"
+            v-model.number="alert.longWindowPerc"
+        >
+    </div>
+    <div class="input-group">
+        <label for="show-short-window-alert">
+            <input
+                id="show-short-window-alert"
+                type="checkbox"
+                v-model="alert.useShortWindow"
+            >
+            Use Short-Window Alert
+        </label>
+        <help-component>
+            <p>
+                The purpose of the short-window alert is to reduce false alerts.
+            </p>
+            <p>
+                It checks a shorter lookback window (hence the name) to make sure that
+                the burn rate is still high before triggering the alert.
+                This reduces false positives where an alert is triggered for a temporary high burn rate.
+            </p>
+            <p>
+                The Short-Window alert reduces false positives
+                at the expence of making the alerting setup more complex.
+            </p>
+        </help-component>
+    </div>
+    <div v-if="alert.useShortWindow" class="input-group">
+        <label for="alert-short-window-divider-input">
+            Ratio: 1/{{ alert.shortWindowDivider }}
+            <help-component>
+                <p>
+                    The Short-Window is usually 1/12th of the Long-Window (per
+                    <ext-link href="https://sre.google/workbook/alerting-on-slos/">
+                        Google SRE Workbook
+                    </ext-link>
+                    recommendation).
+                    But you can play with different dividers to see how they impact
+                    the detection time of the alert.
+                </p>
+                <p v-if="alert.shortWindowDivider !== config.alert.shortWindowDivider.default">
+                    <button type="button" @click="alert.shortWindowDivider = config.alert.shortWindowDivider.default">Reset to 1/{{ config.alert.shortWindowDivider.default }}</button>
+                </p>
+                <p>
+                    Long-Window alert triggers after consuming {{ alert.longWindowPerc }}%
+                    of the total error budget.
+                    Therefore, the Short-Window alert triggers after consuming:
+                </p>
+                <math>
+                    <mrow>
+                        <msub>
+                        <mi>Lookbcack</mi>
+                        <ms>Short</ms>
+                    </msub>
+                    <mo>=</mo>
+                    <mfrac>
+                        <msub>
+                            <mi>Lookback</mi>
+                            <ms>Long</ms>
+                        </msub>
+                        <mn>{{ alert.shortWindowDivider }}</mn>
+                    </mfrac>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mn>{{ percL10n(alert.longWindowPerc) }}</mn>
+                        <mn>{{ alert.shortWindowDivider }}</mn>
+                    </mfrac>
+                    <mo> = </mo>
+                    <mn>{{ percL10n(alert.shortWindowPerc) }}</mn>
+                </mrow>
+            </math>
+            <p>
+                Converted to time based on the current window ({{ alert.objective.window.humanTime }}):
+            </p>
+            <math>
+                <mrow>
+                    <msub>
+                        <mi>Lookbcack</mi>
+                        <ms>Short</ms>
+                    </msub>
+                    <mo>=</mo>
+                    <mn>{{ percL10n(alert.shortWindowPerc) }}</mn>
+                    <mo>&times;</mo>
+                    <mn>{{ alert.objective.window.humanSec }}</mn>
+                    <mo>=</mo>
+                    <mn>{{ alert.shortFailureWindow.humanSec }}</mn>
+                </mrow>
+            </math>
+            <p>
+                This means the alert will trigger only if we are <em>still</em>
+                burning the error budget at least at the
+                <label for="burn-rate-input">{{ alert.burnRate }}</label>x burn rate
+                in the past
+                <label for="alert-short-window-divider-input">
+                    <time>{{ alert.shortFailureWindow.humanTime }}</time>
+                </label>.
+            </p>        
+        </help-component>
+        <div class="subtle-hint">
+            Still burning above {{ alert.burnRate }}x in the last 1/{{alert.shortWindowDivider}}
+            of long window
+        </div>
+    </label>
+    <input
+        id="alert-short-window-divider-input"
+        type="range"
+        :min="config.alert.shortWindowDivider.min"
+        :max="config.alert.shortWindowDivider.max"
+        :step="config.alert.shortWindowDivider.step"
+        v-model.number="alert.shortWindowDivider"
+    >
+</fieldset>
+<!-- Burn Chart Component -->
+<alert-chart-component :alert="alert"></alert-chart-component>
+<!-- Long Window Alert Policy -->
+<h4>
+    Alert Policy
+    <help-component>
+        <p>
+            This is a pseudo-code for trigerring alerts based on the
+            SLI metric in relation to the desired SLO (
+                <label for="slo-int-input">
+                    <code class="const">{{ percL10n(alert.objective.target) }}</code>
+                </label>
+            ).
+            You need to translate it to your observability and/or alerting tool.
+        </p>
+    </help-component>
+</h4>
+
+<code-block-component title="Alert When:">
+    <formula-component :formula="alert.formula"></formula-component>
+</code-block-component>

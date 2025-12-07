@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="../../lib/window-onerror.js"></script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
+        <script>
+            window.dataLayer = window.dataLayer || []
+            function gtag() {dataLayer.push(arguments)}
+            gtag('js', new Date())
+            gtag('config', 'G-J0S6RM2D7G')
+        </script>
+
+        <meta charset="UTF-8">
+        <meta name="theme-color" content="#FFBC52">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/style.css">
+        <meta name="description" content="An interactive and visual tool for understanding and experimenting with you SLI/SLO while tying them to alerts and accountability.">
+        <meta property="og:title" content="Service Level Calculator">
+        <meta
+            property="og:description"
+            content="An interactive and visual tool for understanding and experimenting with you SLI/SLO while tying them to alerts and accountability."
+        >
+        <meta property="og:image" content="https://slc.alexewerlof.com/img/overview.png">
+        <meta property="og:url" content="https://slc.alexewerlof.com/app/calculator/index.html">
+        <meta property="og:type" content="website">
+        <link rel="canonical" href="https://slc.alexewerlof.com/app/calculator/index.html">
+        <link rel="icon" type="image/svg" href="icon.svg">
+        <link rel="manifest" href="manifest.json">
+        <title>Service Level Calculator</title>
+    </head>
+
+    <body>
+        <noscript>
+            <p>This web application requires JavaScript to work.</p>
+        </noscript>
+
+        <div id="app" v-cloak class="logo-bg">
+            <announcement-component>
+                <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
+            </announcement-component>
+            <header-component>
+                <ul class="header-component__top-nav only-mobile">
+                    <li><a href="#sli-title">SLI</a></li>
+                    <li><a href="#slo-title">SLO</a></li>
+                    <li><a href="#error-budget-title">Error Budget</a></li>
+                    <li><a href="#alert-title">Alerting</a></li>
+                    <li><a href="#share-title">Share</a></li>
+                </ul>
+            </header-component>
+
+            <calculator-component :calculator="calculator"></calculator-component>
+
+            <div class="mar-gap pad-gap">
+                <h1 id="share-title">
+                    Share
+                    <help-component>
+                        <p>This app completely runs in the browser and has no backend.</p>
+                        <p>
+                            So all you have to do is to copy the following link. Whenever that link is clicked, it opens
+                            the app in the exact state when you copied it.
+                        </p>
+                    </help-component>
+                </h1>
+                <div class="button-bar">
+                    <button @click="updateState">Update</button>
+                </div>
+                <code-block-component title="State">
+                    <pre>{{ state }}</pre>
+                </code-block-component>
+
+                <code-block-component title="State">
+                    {{ shareUrl }}
+                </code-block-component>
+            </div>
+
+            <cookie-popup-component></cookie-popup-component>
+
+            <footer-component></footer-component>
+        </div>
+
+        <script type="module" src="index.js" defer></script>
+    </body>
+</html>

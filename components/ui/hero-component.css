@@ -1,0 +1,12 @@
+.hero-component {
+    /*background-image: linear-gradient(to bottom, var(--background-color), var(--background-darker));*/
+    min-height: 20em;
+    background-size: cover;
+    box-sizing: border-box;
+    text-shadow: 0 0 var(--gap) var(--background-color);
+    padding: var(--gap3) var(--gap);
+}
+
+.hero-component__contents {
+    font-size: 1.5em;
+}

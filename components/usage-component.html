@@ -1,0 +1,44 @@
+<div class="dependency-component">
+    <h3>Service</h3>
+    <markdown-component :markdown="usage.service.markdownId"></markdown-component>
+    <h3>Task</h3>
+    <markdown-component :markdown="usage.task.markdownId"></markdown-component>
+    <entity-component :entity="usage"></entity-component>
+    <fieldset class="b-mar-gap2">
+        <legend>Failure ({{ usage.failures.length }})</legend>
+        <select
+            v-if="usage.failures.length"
+            v-model="usage.failures.selected"
+            class="b-mar-gap2"
+        >
+            <option v-for="failure in usage.failures" :value="failure">
+                {{ failure.symptom || 'Unknown symptom'}}
+            </option>
+        </select>
+        <div class="input-group">
+            <div class="button-bar">
+                <button
+                    @click="addFailureUsingAI()"
+                    :disabled="agent.isBusy"
+                >
+                    <icon-component name="ai"></icon-component>
+                    Add Failure Using AI
+                </button>
+                <button @click="usage.failures.pushNew()">
+                    <icon-component name="add"></icon-component>
+                    Add
+                </button>
+                <button
+                    class="button--danger"
+                    @click="usage.failures.removeSelected()"
+                    :disabled="!usage.failures.selected">
+                    <icon-component name="delete"></icon-component>
+                    Remove
+                </button>
+            </div>
+        </div>
+    </fieldset>
+    <div class="well" v-if="usage.failures.selected">
+        <failure-component :failure="usage.failures.selected"></failure-component>
+    </div>
+</div>

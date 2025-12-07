@@ -1,0 +1,46 @@
+<div class="chat-thread-component">
+    <div class="input-group">
+        <div class="button-bar button-bar--small button-bar--center">
+            <button @click="$refs.llmSettingsDialog.show(true)" title="Settings">
+                <icon-component name="settings"></icon-component>
+            </button>
+            <button @click="scrollToTop()" title="Scroll to top">
+                <icon-component name="arrow_upward"></icon-component>
+            </button>
+            <button @click="scrollToBottom()" title="Scroll to bottom">
+                <icon-component name="arrow_downward"></icon-component>
+            </button>
+            <button @click="showDebugInfo = !showDebugInfo" title="Toggle Debug Info">
+                <icon-component v-if="showDebugInfo" name="show"></icon-component>
+                <icon-component v-else name="hide"></icon-component>
+            </button>
+            <button @click="thread.clear()" title="Clear" class="button--danger">
+                <icon-component name="delete"></icon-component>
+            </button>
+        </div>
+        <dialog-component ref="llmSettingsDialog" title="LLM Settings">
+            <llm-settings-component></llm-settings-component>
+        </dialog-component>
+    </div>
+    <div class="chat-thread-component__thread" ref="threadContainerRef">
+        <div v-for="bead of thread.beads"
+            :class="`chat-thread-component__bead chat-thread-component__bead--${bead.role}`"
+            :hidden="!showDebugInfo && bead.isDebug">
+            <div class="chat-thread-component__role" v-text="bead.friendlyRole"></div>
+            <markdown-component
+                class="frost
+                chat-thread-component__contents"
+                :markdown="bead.markdown">
+            </markdown-component>
+            <token-stats-component
+                v-if="showDebugInfo && bead.tokenStats"
+                :token-stats="bead.tokenStats">
+            </token-stats-component>
+        </div>
+        <div v-if="showDebugInfo">
+            <h4>{{ thread.beads.length}} Beads</h4>
+            <token-stats-component :token-stats="thread.tokenStats"></token-stats-component>
+        </div>
+        <loading-animation-component v-if="isBusy"></loading-animation-component>
+    </div>
+</div>

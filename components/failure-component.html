@@ -1,0 +1,90 @@
+<div class="failure-component">
+    <entity-component :entity="failure"></entity-component>
+    <fieldset>
+        <legend>Consumer Perspective</legend>
+        <div class="input-group">
+            <label>
+                Symptom
+                <help-component>
+                    <p>
+                        How would the consumer know that something is broken?
+                        We need to distinguish between root cause and symptoms.
+                    </p>
+                    <ol>
+                        <li>The symptom is <em>what</em> the consumer sees.</li>
+                        <li>The root causes or contributing factors happen in service providers.</li>
+                    </ol>
+                    <p>
+                        In the context of Service Levels, we're only interested to the <em>symptoms</em>
+                        because that is how the consumer perceives the failure.
+                    </p>
+                    <p>
+                        Service Levels are set at the boundaries between the teams.
+                        What goes on inside the team is not the consumers' business.
+                    </p>
+                </help-component>
+                <div class="subtle-hint">From {{ failure.usage.task.consumer }} perspective</div>
+            </label>
+            <textarea v-model="failure.symptom"></textarea>
+        </div>
+
+        <div class="input-group">
+            <label>
+                Consequence
+                <help-component>
+                    <p>
+                        What are the consequence of the failure for the consumer?
+                        <ol>
+                            <li>The symptom is <em>what</em> tells the consumer that something is wrong</li>
+                            <li>The consequence is <em>how</em> that symptom affects the consumer to achieve their goal.</li>
+                        </ol>
+                    </p>
+                </help-component>
+                <div class="subtle-hint">
+                    On {{ failure.usage.task }}
+                </div>
+            </label>
+            <textarea v-model="failure.consequence"></textarea>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Business Perspective</legend>
+        <div class="input-group">
+            <label>
+                Impact
+                <help-component>
+                    <p>
+                        What is the business impacted of this failure?
+                        How does this failure impact the ability of the business to make or save money?
+                    </p>
+                    <p>
+                        When thinking about the business impact, think about the money, time, and resources that are lost when this failure occurs.
+                    </p>
+                </help-component>
+                <div class="subtle-hint">
+                    On how {{ failure.usage.service }} contributes to bottom line
+                </div>
+            </label>
+            <textarea v-model="failure.businessImpact"></textarea>
+        </div>
+        <div class="input-group">
+            <label>
+                Impact Level: {{ failure.impactLevel }}
+                <help-component>
+                    <p>
+                        How can you quantify the negative impact of this failure on the business?
+                    </p>
+                    <p>
+                        We use this setting to prioritize metrics (and in turn the SLI) based on the risks they monitor.
+                    </p>
+                </help-component>
+                <input type="range"
+                    :min="config.impactLevel.min"
+                    :max="config.impactLevel.max"
+                    :step="config.impactLevel.step"
+                    v-model.number="failure.impactLevel">
+            </label>
+        </div>
+    </fieldset>
+</div>

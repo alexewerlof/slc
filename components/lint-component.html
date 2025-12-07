@@ -1,0 +1,39 @@
+<div class="lint-component" v-if="lint.count">
+    <div class="lint-component__header" @click="toggle()">
+        <div
+            v-if="lint.errorMessages.length"
+            class="lint-component__count lint-component__count--error"
+        >
+            <icon-component name="error"></icon-component>
+            <span v-text="lint.errorMessages.length"></span>
+        </div>
+        <div
+            v-if="lint.warnMessages.length"
+            class="lint-component__count lint-component__count--warn"
+        >
+            <icon-component name="warning"></icon-component>
+            <span v-text="lint.warnMessages.length"></span>
+        </div>
+        <div
+            v-if="lint.infoMessages.length"
+            class="lint-component__count lint-component__count--info"
+        >
+            <icon-component name="info"></icon-component>
+            <span v-text="lint.infoMessages.length"></span>
+        </div>
+    </div>
+
+    <transition>
+        <div v-if="isOpen" class="lint-component__body">
+            <div v-for="message in lint.errorMessages" class="error block">
+                <markdown-component :markdown="message"></markdown-component>
+            </div>
+            <div v-for="message in lint.warnMessages" class="warning block">
+                <markdown-component :markdown="message"></markdown-component>
+            </div>
+            <div v-for="message in lint.infoMessages" class="info block">
+                <markdown-component :markdown="message"></markdown-component>
+            </div>
+        </div>
+    </transition>
+</div>

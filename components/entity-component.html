@@ -1,0 +1,48 @@
+<div class="entity-component">
+    <div class="subtle-hint" @click="copy('copyNodeRef')" title="Click to copy the id">
+        <code v-text="entity.id" ref="copyNodeRef"></code>
+        <icon-component name="copy" class="cursor-pointer"></icon-component>
+    </div>
+    <lint-component :lint="entity.lint"></lint-component>
+    <fieldset v-if="entity.hasDispDesc">
+        <legend>Basics</legend>
+        <div class="input-group">
+            <label
+                :for="displayNameLabelWithFallback">
+                Display Name
+                <div
+                    v-if="displayNameHint"
+                    v-text="displayNameHint"
+                    class="subtle-hint"
+                ></div>
+            </label>
+            <input
+                :id="displayNameLabelWithFallback"
+                type="text"
+                v-model="entity.displayName"
+                :minlength="config.displayName.minLength"
+                :maxlength="config.displayName.maxLength"
+                :placeholder="displayNamePlaceholder">
+        </div>
+
+        <div class="input-group">
+            <label :for="descriptionLabelWithFallback">
+                Description
+                <div
+                    v-if="descriptionHint"
+                    v-text="descriptionHint"
+                    class="subtle-hint"
+                ></div>
+            </label>
+            <textarea
+                :id="descriptionLabelWithFallback"
+                rows="3"
+                type="text"
+                v-model="entity.description"
+                :minlength="config.description.minLength"
+                :maxlength="config.description.maxLength"
+                :placeholder="descriptionPlaceholder"
+            ></textarea>
+        </div>
+    </fieldset>
+</div>

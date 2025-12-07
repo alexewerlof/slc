@@ -1,0 +1,18 @@
+.cookie-popup-component {
+    max-width: 440px;
+    padding: var(--gap);
+    font-size: 1rem;
+    font-family: var(--body-font-family);
+    font-weight: normal;
+    background-color: var(--foreground-color);
+    color: var(--background-color);
+    border-radius: var(--bradius3);
+    margin: 1rem;
+    box-shadow: 0 0 1em 0 black;
+    inset: auto auto var(--gap3) var(--gap3);
+}
+
+.cookie-popup-component p {
+    margin-block: 0;
+    padding: 0.5em 0;
+}

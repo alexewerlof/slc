@@ -1,0 +1,43 @@
+<svg v-bind:viewBox="viewBox" xmlns="http://www.w3.org/2000/svg" class="burn-rate-component">
+    <axis-component
+        :topY="topY"
+        :rightX="rightX"
+        :bottomY="bottomY"
+        :leftX="leftX"
+        x-label="Time"
+        y-label="Error Budget Consumption">
+    </axis-component>
+    <!-- burn line -->
+    <g>
+        <line
+            class="burn-rate-component__burn-line"
+            :x1="leftX"
+            :x2="burnedX"
+            :y1="bottomY"
+            :y2="topY" />
+    </g>
+    <!-- end of SLO window -->
+    <burn-event-component
+        :width="width"
+        :height="height"
+        :x="width - margin.right"
+        :y1="margin.top"
+        :y2="height - margin.bottom"
+        color="--secondary-color"
+        offset="2"
+        title="End of the compliance period"
+        :textLines="endOfCompliancePeriodTextLines">
+    </burn-event-component>
+    <!-- error budget burned -->
+    <burn-event-component
+        :width="width"
+        :height="height"
+        :x="burnedX"
+        :y1="margin.top"
+        :y2="height - margin.bottom"
+        color="--brand-red"
+        offset="3"
+        title="Error Budget Exhausted"
+        :textLines="errorBudgetExhaustedTextLines">
+    </burn-event-component>
+</svg>

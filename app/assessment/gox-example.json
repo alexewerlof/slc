@@ -1,0 +1,351 @@
+{
+    "id": "a2CGJGFBP",
+    "displayName": "Online Experience",
+    "description": "A website and mobile app to sell cars, book services, and control the car remotely",
+    "consumers": [
+        {
+            "id": "cBKLGG6JE",
+            "displayName": "Web site",
+            "description": "Can be used by the potential consumers to learn about the cars, configure it, and order it",
+            "type": "System",
+            "tasks": [
+                {
+                    "id": "tP2BFJBQN",
+                    "displayName": "Product Model Page",
+                    "description": "Shows information about one particular car"
+                },
+                {
+                    "id": "tSMJCGNDX",
+                    "displayName": "Check car leasing contract",
+                    "description": "To see if the user has to pay or return the car, or have any unused benefits"
+                }
+            ]
+        },
+        {
+            "id": "cVTVG3BFD",
+            "displayName": "Mobile client",
+            "description": "Is used by the car owners to control the car",
+            "type": "System",
+            "tasks": [
+                {
+                    "id": "tZPX76ZFE",
+                    "displayName": "Adjust temperature remotely"
+                },
+                {
+                    "id": "tQPNEE3ED",
+                    "displayName": "Lock/Unlock the car remotely"
+                }
+            ]
+        }
+    ],
+    "providers": [
+        {
+            "id": "pJQJKC5A6",
+            "displayName": "Digital Twin API",
+            "description": "Can be used to retrieve information about the car and control it remotely",
+            "type": "System",
+            "services": [
+                {
+                    "id": "sQ36V20PF",
+                    "displayName": "Climate API",
+                    "description": "Retrieves or sets car climate",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uLYATE3RJ",
+                            "taskId": "tZPX76ZFE",
+                            "failures": [
+                                {
+                                    "id": "fC2RWBHFW",
+                                    "symptom": "Can't set the temperature",
+                                    "consequence": "The user cannot set their desired temperature",
+                                    "businessImpact": "The frustrated owner may discourage others from buying our products",
+                                    "impactLevel": 50
+                                },
+                                {
+                                    "id": "fKTCPMWMN",
+                                    "symptom": "Can't read the temperature from the car",
+                                    "consequence": "The user cannot decide whether to use remote climate control or not",
+                                    "businessImpact": "Users may contact customer support",
+                                    "impactLevel": 10
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "m9ZQX1C0E",
+                            "displayName": "response_code between 200-499",
+                            "description": "error rate",
+                            "isBoolean": true,
+                            "failureIds": ["fC2RWBHFW"]
+                        },
+                        {
+                            "id": "mE5RR66H9",
+                            "displayName": "latency < 10 seconds",
+                            "description": "The response to climate API is relatively fast",
+                            "failureIds": ["fC2RWBHFW"]
+                        },
+                        {
+                            "id": "mKBPCA68K",
+                            "displayName": "GET climate successful",
+                            "isBoolean": true,
+                            "failureIds": ["fKTCPMWMN"]
+                        }
+                    ]
+                },
+                {
+                    "id": "sGGY5G3U5",
+                    "displayName": "Car Access API",
+                    "description": "Can be used to lock or unlock the car",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "u9RQ8W5SW",
+                            "taskId": "tQPNEE3ED",
+                            "failures": [
+                                {
+                                    "id": "f3JVE7WWG",
+                                    "symptom": "Cannot see the lock status",
+                                    "consequence": "The user may have to physically walk to the car to check it and that's not always possible",
+                                    "businessImpact": "Frustrated user may call customer support or discourage others from buying our product",
+                                    "impactLevel": 30
+                                },
+                                {
+                                    "id": "fCLZF5HJU",
+                                    "symptom": "Can't unlock the car",
+                                    "consequence": "The user may have to use a key",
+                                    "businessImpact": "Users may contact customer support",
+                                    "impactLevel": 10
+                                },
+                                {
+                                    "id": "fY6X7TK2Z",
+                                    "symptom": "Can't lock the car",
+                                    "consequence": "Thieves may get in the car before the user gets to lock it",
+                                    "businessImpact": "The user may take significant financial damage and take us to court",
+                                    "impactLevel": 100
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "m1MLBSGAJ",
+                            "displayName": "Lock status API latency",
+                            "description": "Status check should be reasonably fast (the actual threshold depends on UI and UX research)",
+                            "failureIds": ["f3JVE7WWG"]
+                        },
+                        {
+                            "id": "m6SG0XGM8",
+                            "displayName": "Lock command API response_code === 202",
+                            "description": "Successfully registered the command",
+                            "isBoolean": true,
+                            "failureIds": ["fCLZF5HJU", "fY6X7TK2Z"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "pA0LFWY6N",
+            "displayName": "Image Storage",
+            "description": "Retrieves or stores images for different car models in different colors",
+            "type": "System",
+            "services": [
+                {
+                    "id": "sYACY74QT",
+                    "displayName": "Get car image API",
+                    "description": "Returns the car image, useful for rendering the website and the app that's used to control the car",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uVDUJH6RX",
+                            "taskId": "tP2BFJBQN",
+                            "failures": [
+                                {
+                                    "id": "fA7QTKGRS",
+                                    "symptom": "Image is missing",
+                                    "consequence": "User will get confused and leave the site",
+                                    "businessImpact": "Loss of potential customer",
+                                    "impactLevel": 30
+                                }
+                            ]
+                        },
+                        {
+                            "id": "uV0EY9CVQ",
+                            "taskId": "tZPX76ZFE",
+                            "failures": [
+                                {
+                                    "id": "fHD8F981Y",
+                                    "symptom": "The car image cannot be shown in the app",
+                                    "consequence": "The user may get confused",
+                                    "businessImpact": "Users may contact customer support",
+                                    "impactLevel": 10
+                                }
+                            ]
+                        },
+                        {
+                            "id": "uGVJ7Q5EU",
+                            "taskId": "tQPNEE3ED",
+                            "failures": [
+                                {
+                                    "id": "fR1NNFF8X",
+                                    "symptom": "The car image cannot be shown in the app",
+                                    "consequence": "The user may get confused",
+                                    "businessImpact": "Users may contact customer support",
+                                    "impactLevel": 10
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "mBBWHLE10",
+                            "displayName": "response_code != 4xx",
+                            "description": "some image is returned",
+                            "failureIds": ["fHD8F981Y"]
+                        },
+                        {
+                            "id": "mCY7C0DUE",
+                            "displayName": "user does not report the image",
+                            "description": "image matches the model (we use user report as a check asking them \"report problems\")",
+                            "isBoolean": true,
+                            "failureIds": ["fA7QTKGRS"]
+                        },
+                        {
+                            "id": "mQSANRZES",
+                            "displayName": "mobile app log indicating missing image",
+                            "description": "For all other reasons that an image may be missing in the app",
+                            "isBoolean": true,
+                            "failureIds": ["fR1NNFF8X"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "pJ7GV6610",
+            "displayName": "Document Storage",
+            "description": "Stores different types of files like PDF, HTML, and images",
+            "type": "System",
+            "services": [
+                {
+                    "id": "sX9UHJ1PJ",
+                    "displayName": "Car manual API",
+                    "description": "Returns the car manual in different formats",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "u0EVHAR6R",
+                            "taskId": "tP2BFJBQN",
+                            "failures": [
+                                {
+                                    "id": "fDQYCKRHD",
+                                    "symptom": "The user may be unable to look up key information",
+                                    "consequence": "The user may be unsatisfied and either call support or not buy the car",
+                                    "businessImpact": "Prospect may call customer support or sales agents or not buy the car",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "mMQ4J8RLC",
+                            "displayName": "for a valid car model, the manual response code < 400",
+                            "failureIds": ["fDQYCKRHD"]
+                        },
+                        {
+                            "id": "mZ0N90GTH",
+                            "displayName": "download does not break for an already established session",
+                            "description": "The manual files can be large. if the download is interrupted for any reasons, we may want to look into it.",
+                            "isBoolean": true,
+                            "failureIds": ["fDQYCKRHD"]
+                        }
+                    ]
+                },
+                {
+                    "id": "sPMVMWCZE",
+                    "displayName": "Car contract API",
+                    "description": "Retrieves leasing contracts",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uAFPEUJCQ",
+                            "taskId": "tSMJCGNDX",
+                            "failures": [
+                                {
+                                    "id": "f9TNBA9HB",
+                                    "symptom": "Wrong Contract is shown",
+                                    "consequence": "The user may be charge the wrong amount",
+                                    "businessImpact": "Media scandal, unnecessary customer support costs, and hurting user loyalty",
+                                    "impactLevel": 50
+                                },
+                                {
+                                    "id": "fQEPARRU7",
+                                    "symptom": "The contract is too slow to load",
+                                    "consequence": "The user may give up and not get access to the information they wanted",
+                                    "businessImpact": "User Confusion may hurt our brand",
+                                    "impactLevel": 50
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "mED6Z8YBM",
+                            "displayName": "API response code < 400",
+                            "description": "For valid requests to contract retrieval",
+                            "failureIds": ["fQEPARRU7"]
+                        },
+                        {
+                            "id": "mY9Z0P517",
+                            "displayName": "contract user match logged in user",
+                            "description": "The user credentials on the contract should match the user credentials that is logged in (web/mobile)",
+                            "isBoolean": true,
+                            "failureIds": ["f9TNBA9HB"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "pMN0S2B13",
+            "displayName": "CMS",
+            "description": "Content management system",
+            "type": "System",
+            "services": [
+                {
+                    "id": "s2X4R1HKB",
+                    "displayName": "Car specs",
+                    "description": "Returns car specs and marketing content in different languages",
+                    "type": "Automated",
+                    "usages": [
+                        {
+                            "id": "uAXVYFYNZ",
+                            "taskId": "tP2BFJBQN",
+                            "failures": [
+                                {
+                                    "id": "fB5XWGBLX",
+                                    "symptom": "Wrong car specs are shown to the user",
+                                    "consequence": "The user may make incorrect purchase decision. They may take us to court if the website info is legally binding.",
+                                    "businessImpact": "Customer may take us to court if the website info is legally binding",
+                                    "impactLevel": 80
+                                }
+                            ]
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "id": "mUPWB4QX5",
+                            "displayName": "Sampled double-check with CMS on a given RUM page is a pass",
+                            "description": "To ensure that we show the right specs, we randomly check 1% of page views using a JavaScript snippet that scrapes data from our website and sends it to a backend that's made for the purpose of cross-checking this data against what the data that should have been sent via CMS (note: this will also check the cache errors)",
+                            "isBoolean": true,
+                            "failureIds": ["fB5XWGBLX"]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

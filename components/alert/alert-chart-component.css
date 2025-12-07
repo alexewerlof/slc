@@ -1,0 +1,5 @@
+.alert-chart-component__burn-line {
+    stroke: var(--brand-red);
+    stroke-width: 1px;
+    stroke-dasharray: 4px 2px;
+}

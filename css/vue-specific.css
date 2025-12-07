@@ -1,0 +1,15 @@
+/* ref:  https://vuejs.org/guide/built-ins/transition.html#the-transition-component */
+.v-enter-active,
+.v-leave-active {
+    transition: opacity var(--animation-speed) ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+
+/* ref: https://vuejs.org/api/built-in-directives.html#v-cloak */
+[v-cloak] {
+    display: none !important;
+}

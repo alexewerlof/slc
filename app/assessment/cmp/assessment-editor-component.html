@@ -1,0 +1,189 @@
+<div class="assessment-editor-component mozaic mozaic--gap2 pad-gap2">
+    <div class="mozaic__tile mozaic__tile--3c surface">
+        <chat-component :agent initial-prompt="Help me assess my architecture"></chat-component>
+    </div>
+    <div class="mozaic__tile mozaic__tile--6c">
+        <div class="frost">
+            <div class="button-bar button-bar--left">
+                <button
+                    @click="showDialog('importDialog', true)"
+                    title="Import"
+                >
+                    <icon-component name="import"></icon-component>
+                </button>
+                <button
+                    @click="showDialog('stateDialog', true)"
+                    title="Export"
+                >
+                    <icon-component name="export"></icon-component>
+                </button>
+                <span class="button-bar__sep"></span>
+                <button
+                    @click="editingInstance = assessment.providers.pushNew()"
+                    title="Add Provider"
+                >
+                    <icon-component name="provider"></icon-component>
+                </button>
+                <button
+                    @click="editingInstance = assessment.consumers.pushNew()"
+                    title="Add Consumer"
+                >
+                    <icon-component name="consumer"></icon-component>
+                </button>
+                <span class="button-bar__sep"></span>
+                <button
+                    v-if="editingInstance.className ==='Provider'"
+                    @click="editingInstance = editingInstance.services.pushNew()"
+                    title="Add Service"
+                >
+                    <icon-component name="service"></icon-component>
+                </button>
+                <button
+                    v-if="editingInstance.className ==='Service'"
+                    @click="editingInstance = editingInstance.provider.services.pushNew()"
+                    title="Add Another Service"
+                >
+                    <icon-component name="service"></icon-component>
+                </button>
+                <button
+                    v-if="editingInstance.className ==='Service'"
+                    @click="editingInstance = editingInstance.metrics.pushNew()"
+                    title="Add Metric"
+                >
+                    <icon-component name="metric"></icon-component>
+                </button>
+                <button
+                    v-if="editingInstance.className ==='Metric'"
+                    @click="editingInstance = editingInstance.service.metrics.pushNew()"
+                    title="Add Another Metric"
+                >
+                    <icon-component name="metric"></icon-component>
+                </button>
+                <button
+                    v-if="editingInstance.className ==='Consumer'"
+                    @click="editingInstance = editingInstance.tasks.pushNew()"
+                    title="Add Task"
+                >
+                    <icon-component name="task"></icon-component>
+                </button>
+                <button
+                    v-if="editingInstance.className ==='Task'"
+                    @click="editingInstance = editingInstance.consumer.tasks.pushNew()"
+                    title="Add Another Task"
+                >
+                    <icon-component name="task"></icon-component>
+                </button>
+                <button
+                    v-if="editingInstance.className ==='Usage'"
+                    @click="editingInstance.failures.pushNew()"
+                    title="Add Failure"
+                >
+                    <icon-component name="failure"></icon-component>
+                </button>
+                <button
+                    @click="removeEditingInstance()"
+                    class="button--danger"
+                    :title="`Remove ${editingInstance.className}`"
+                    :disabled="!editingInstance"
+                >
+                    <icon-component name="delete"></icon-component>
+                </button>
+            </div>
+        </div>
+        <assessment-graph-component
+            :assessment
+            @select="(entity) => editingInstance = entity"
+            :selected-entity="editingInstance"></assessment-graph-component>
+        <dialog-component title="Summary" ref="summaryDialog">
+            <summary-component :assessment></summary-component>
+        </dialog-component>
+        <dialog-component title="Export" ref="stateDialog">
+            <tabs-component v-model="selExportTab" tabs="JSON, Markdown, Prolog, URL"></tabs-component>
+            <div v-if="selExportTab === 'Markdown'">
+                <markdown-component :markdown="assessment.toString()"></markdown-component>
+            </div>
+            <div v-if="selExportTab === 'Prolog'">
+                <code-block-component title="Prolog">
+                    <formula-component :formula="assessment.toProlog()"></formula-component>
+                </code-block-component>
+            </div>
+            <div v-if="selExportTab === 'JSON'">
+                <code-block-component title="JSON">
+                    <pre>{{ JSON.stringify(assessment.state, null, 2) }}</pre>
+                </code-block-component>
+            </div>
+            <div v-if="selExportTab === 'URL'">
+                <code-block-component title="URL">
+                    {{ stateToCurrentUrl(assessment.state) }}
+                </code-block-component>
+            </div>
+        </dialog-component>
+        <dialog-component title="Import" ref="importDialog">
+            <tabs-component v-model="selImportTab" tabs="Examples, JSON"></tabs-component>
+            <div v-if="selImportTab === 'Examples'">
+                <div v-for="exampleState of exampleStates">
+                    <h3 v-text="exampleState.displayName"></h3>
+                    <markdown-component :markdown="exampleState.description"></markdown-component>
+                    <div class="button-bar">
+                        <button class="button--cta"
+                            @click="loadState(exampleState)"
+                        >
+                            <icon-component name="upload"></icon-component>
+                            Load
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div v-if="selImportTab === 'JSON'">
+                <h3>Paste JSON state:</h3>
+                <textarea v-model="uploadedState" rows="20" cols="100"></textarea>
+                <div class="info block">
+                    {{ uploadedStateMessage }}
+                </div>
+                <div class="button-bar">
+                    <button @click="assignUploadedState()" class="button--cta">Load</button>
+                </div>
+            </div>
+        </dialog-component>
+    </div>
+    <div class="mozaic__tile mozaic__tile--3c surface">
+        <div v-if="editingInstance.className === 'Assessment'">
+            <h2>Assessment</h2>
+            <assessment-component :assessment="editingInstance"></assessment-component>
+        </div>
+        <div v-if="editingInstance.className === 'Provider'">
+            <h2>Provider</h2>
+            <provider-component :provider="editingInstance"></provider-component>
+        </div>
+        <div v-if="editingInstance.className === 'Service'">
+            <h2>Service</h2>
+            <service-component :service="editingInstance"></service-component>
+            <div class="button-bar t-mar-gap2">
+                <button
+                    @click="addMetricUsingAI()"
+                    title="Add a new metric using AI"
+                    :disabled="editingInstance.failures.length === 0 || agent.isBusy"
+                >
+                    <icon-component name="ai"></icon-component>
+                    Add Metric Using AI
+                </button>
+            </div>
+        </div>
+        <div v-if="editingInstance.className === 'Consumer'">
+            <h2>Consumer</h2>
+            <consumer-component :consumer="editingInstance"></consumer-component>
+        </div>
+        <div v-if="editingInstance.className === 'Task'">
+            <h2>Task</h2>
+            <task-component :task="editingInstance"></task-component>
+        </div>
+        <div v-if="editingInstance.className === 'Usage'">
+            <h2>Usage</h2>
+            <usage-component :usage="editingInstance" :agent></usage-component>
+        </div>
+        <div v-if="editingInstance.className === 'Metric'">
+            <h2>Metric</h2>
+            <metric-component :metric="editingInstance"></metric-component>
+        </div>
+    </div>
+</div>

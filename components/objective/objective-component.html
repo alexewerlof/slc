@@ -1,0 +1,282 @@
+
+<entity-component :entity="objective"></entity-component>
+<fieldset>
+    <legend>Target: {{ percL10n(objective.target) }}</legend>
+    <div class="input-group">
+        <label for="slo-int-input">
+            Integer: {{ percL10n(objective.targetInt) }}
+            <help-component>
+                <p>
+                    Service Level Objective (SLO) is the target percentage of good {{ objective.indicator.eventUnitNorm
+                    }} out of total {{ objective.indicator.eventUnitNorm }} in {{ objective.window }}.
+                </p>
+                <p>
+                    Using the two sliders below you can fine tune the SLO to your needs. The first slider is for the
+                    integer part of the percentage ({{ percL10n(objective.targetInt) }}). The second slider is for the
+                    fractional part of the percentage ({{ percL10n(objective.targetFrac) }}).
+                </p>
+                <table>
+                    <caption>Typical SLO targets</caption>
+                    <thead>
+                        <tr>
+                            <th>Informal Name</th>
+                            <th>SLO Target</th>
+                            <th aria-label="try button"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="p in config.slo.presets">
+                            <td>{{ p.title }}</td>
+                            <td>{{percL10n(p.slo)}}</td>
+                            <td><button type="button" class="button--small" @click="objective.target = p.slo">Try!</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </help-component>
+        </label>
+        <input
+            id="slo-int-input"
+            type="range"
+            :min="config.slo.min"
+            max="99"
+            v-model.number="objective.targetInt"
+        >
+    </div>
+    <div class="input-group">
+        <label for="slo-frac-input">
+            Fraction: {{ percL10n(objective.targetFrac) }}
+            <help-component>
+                <p>
+                    This slider allows fine tuning the SLO. It is mostly for convenience when deciding a reasonable
+                    error budget while keeping an eye on it.
+                </p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>{{ objective.targetInt }}.XYZ</th>
+                            <th>Subtract</th>
+                            <th>Add</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>X</th>
+                            <td>
+                                <button type="button" class="button--small" @click="objective.changeTarget(-0.1)">
+                                    {{ percL10n(-0.1) }}
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="button--small" @click="objective.changeTarget(0.1)">
+                                    {{ percL10n(+0.1) }}
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Y</th>
+                            <td>
+                                <button type="button" class="button--small" @click="objective.changeTarget(-0.01)">
+                                    {{ percL10n(-0.01) }}
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="button--small" @click="objective.changeTarget(0.01)">
+                                    {{ percL10n(+0.01) }}
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Z</th>
+                            <td>
+                                <button type="button" class="button--small" @click="objective.changeTarget(-0.001)">
+                                    {{ percL10n(-0.001) }}
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="button--small" @click="objective.changeTarget(0.001)">
+                                    {{ percL10n(+0.001) }}
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>XYZ</th>
+                            <td colspan="2">
+                                <button type="button" class="button--small" @click="objective.targetFrac = 0">
+                                    reset
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </help-component>
+        </label>
+        <input
+            id="slo-frac-input"
+            type="range"
+            min="0"
+            max="0.999"
+            step="0.001"
+            v-model.number="objective.targetFrac"
+        >
+    </div>
+</fieldset>
+
+<!-- SLO Window -->
+<fieldset>
+    <legend>Window</legend>
+    <div class="input-group">
+        <label for="slo-window-unit-multiplier">
+            {{ objective.windowDays }} days
+            <help-component>
+                <p>
+                    The SLO window (also known as the
+                    <ext-link href="https://blog.alexewerlof.com/p/compliance-period">compliance period</ext-link>) is
+                    the time period for which the SLO is calculated.
+                </p>
+                <p>
+                    Essentially this adjusts the <em>forgiveness</em> of the SLO. For example if the window is 30 days,
+                    we are not concerned with any incidents and breaches of SLO that happened before that.
+                </p>
+                <p>
+                    Smaller windows also help prevent the error budget from accumulating too much. For example, if the
+                    SLO is 99% for a time-based Availability SLI (uptime), the error budget allows 432 minutes of
+                    downtime per month. This amount can be consumed in multiple down times during the month or one chunk
+                    of long downtime. But the same SLO allows only 100 minutes of downtime per week.
+                </p>
+                <p>
+                    It is usually 30 days or 4 weeks.
+                </p>
+                <p>
+                    You can play with different ranges to see how a given SLO translates to different good {{
+                    objective.indicator.eventUnitNorm }} and how it impacts the error budget.
+                </p>
+                <table>
+                    <caption>Typical compliance periods</caption>
+                    <thead>
+                        <tr>
+                            <th>Window</th>
+                            <th>Days</th>
+                            <th>Advantage</th>
+                            <th aria-label="try button"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="p of config.windowDays.presets">
+                            <td>{{ p.title }}</td>
+                            <td>{{ p.days }}</td>
+                            <td>{{ p.useCase }}</td>
+                            <td>
+                                <button type="button" class="button--small" @click="objective.windowDays=p.days">
+                                    Try!
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </help-component>
+            <div class="subtle-hint">{{ objective.window }}</div>
+        </label>
+
+        <input
+            type="range"
+            :min="config.windowDays.min"
+            :max="config.windowDays.max"
+            :step="config.windowDays.step"
+            v-model.number="objective.windowDays"
+            id="slo-window-unit-multiplier"
+        >
+    </div>
+</fieldset>
+<fieldset v-if="objective.indicator.isBounded">
+    <legend>Thredholds</legend>
+    <div class="input-group" v-if="objective.indicator.lowerBound">
+        <label for="lower-threshold-input">$LT
+            <span v-if="objective.indicator.metricUnit">
+                (<code>{{ objective.indicator.metricUnit }}</code>)
+            </span>
+            <help-component>
+                <p>
+                    The lower threshold (LT) defines the minimum possible values for the {{
+                    objective.indicator.metricName }}
+                    <span v-if="objective.indicator.metricUnit">
+                        (in <label for="sli-metric-unit"><code>{{ objective.indicator.metricUnit }}</code></label>)
+                    </span>
+                    to indicate good {{ objective.indicator.eventUnitNorm }}.
+                </p>
+                <p>
+                    LT is part of the SLO definition and for example allows for
+                    <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
+                        Multi-Tierd SLOs
+                    </ext-link>.
+                </p>
+            </help-component>
+            <div class="subtle-hint">
+                Minimum {{ objective.indicator.metricName }} for good {{ objective.indicator.eventUnitNorm }}
+            </div>
+        </label>
+        <input
+            type="number"
+            id="lower-threshold-input"
+            v-model.number="objective.lowerThreshold"
+            :min="config.lowerThreshold.min"
+            :max="objective.lowerThresholdMax"
+            :step="config.lowerThreshold.step"
+        >
+    </div>
+
+    <div class="input-group" v-if="objective.indicator.upperBound">
+        <label for="upper-threshold-input">$UT
+            <span v-if="objective.indicator.metricUnit">
+                (<code>{{ objective.indicator.metricUnit }}</code>)
+            </span>
+            <help-component>
+                <p>
+                    The upper threshold (UT) defines the maximum possible values for the {{
+                    objective.indicator.metricName }}
+                    <span v-if="objective.indicator.metricUnit">
+                        (in <label for="sli-metric-unit"><code>{{ objective.indicator.metricUnit }}</code></label>)
+                    </span>
+                    to indicate good {{ objective.indicator.eventUnitNorm }}.
+                </p>
+                <p>
+                    UT is part of the SLO definition and for example allows for
+                    <ext-link href="https://blog.alexewerlof.com/p/multi-tiered-slos">
+                        Multi-Tierd SLOs
+                    </ext-link>.
+                </p>
+            </help-component>
+            <div class="subtle-hint">
+                Maximum {{ objective.indicator.metricName }} for good {{ objective.indicator.eventUnitNorm }}
+            </div>
+        </label>
+        <input
+            type="number"
+            id="upper-threshold-input"
+            v-model.number="objective.upperThreshold"
+            :min="objective.upperThresholdMin"
+            :max="config.upperThreshold.max"
+            :step="config.upperThreshold.step"
+        >
+    </div>
+</fieldset>
+
+<h4>
+    Service Level Status Formula
+    <help-component>
+        <p>
+            <ext-link href="https://blog.alexewerlof.com/p/sls">
+                Service Level Status (SLS)
+            </ext-link>
+            is the percentage of good {{ objective.indicator.eventUnitNorm }} in a given time.
+        </p>
+        <p>
+            SLS is the status of the Service Level and directly relates to SLO. Whenever SLS is below SLO, we have
+            breached the SLO. In case of <ext-link href="https://blog.alexewerlof.com/p/sla">SLA</ext-link>, this may
+            have severe consequences.
+        </p>
+    </help-component>
+</h4>
+
+<code-block-component title="Service Level Objective">
+    <formula-component :formula="objective.formula"></formula-component>
+</code-block-component>

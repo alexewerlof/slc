@@ -1,0 +1,48 @@
+<div class="llm-api-settings-component">
+    <div class="input-group">
+        <label for="llm-api-settings-component__base-url">
+            Base URL
+            <div class="subtle-hint">Make sure the URL ends with <code>/</code></div>
+        </label>
+        <input
+            type="url"
+            v-model="llmApi.baseUrl"
+            required="required"
+            id="llm-api-settings-component__base-url" />
+    </div>
+    <div class="input-group" v-if="llmApi.apiKeyWebsite">
+        <label :for="apiKeyUniqueId">
+            <icon-component name="key"></icon-component>
+            API Key
+            <div class="subtle-hint">
+                <ext-link :href="llmApi.apiKeyWebsite">Get API Key</ext-link>
+            </div>
+        </label>
+        <input
+            type="text"
+            v-model="llmApi.apiKey"
+            autocomplete="apiKeyUniqueId"
+            required="required"
+            :id="apiKeyUniqueId" />
+    </div>
+    <div class="input-group b-mar-gap2" v-if="llmApi.modelIds.length">
+        <label for="llm-api-settings-component__model-id">
+            Model
+        </label>
+        <select
+            id="llm-api-settings-component__model-id"
+            v-model="llmApi.modelIds.selected"
+        >
+            <option
+                v-for="modelId of llmApi.modelIds"
+                :value="modelId"
+            >{{ modelId }}</option>
+        </select>
+    </div>
+    <div class="button-bar">
+        <button @click="llmApi.updateModelIds()">
+            <icon-component name="sync"></icon-component>
+            Update
+        </button>
+    </div>
+</div>

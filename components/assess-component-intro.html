@@ -1,0 +1,110 @@
+<div>
+    <hero-component fileName="subtle-prism.svg">
+        <h1>Service Level Workshop</h1>
+        <p>
+            Measure the right metric by methodically identifying services, consumers, failures, risks, and metrics.
+        </p>
+    </hero-component>
+    <h1>Intro</h1>
+    <p>
+        This app helps you to systemmatically assess your services together with the consumers
+        to identify proper Service Level Objectives.
+    </p>
+    <p>
+        The UI is roughly broken into the following steps:
+    </p>
+    <ul>
+        <li>
+            <button @click="currentStep = 1">{{ unicodeSymbol('provider') }} Providers</button>: Define the service providers
+        </li>
+        <li>
+            <button @click="currentStep = 2">{{ unicodeSymbol('consumer') }} Consumers</button>: Define the consumers of the services
+        </li>
+        <li>
+            <button @click="currentStep = 3">{{ unicodeSymbol('failure') }} Failures</button>: Define the failures that threaten the consumer tasks that uses the services
+        </li>
+        <li>
+            <button @click="currentStep = 4">{{ unicodeSymbol('risk') }} Risks</button>: Define the business impact of failures and sort them accordingly
+        </li>
+        <li>
+            <button @click="currentStep = 5">{{ unicodeSymbol('metric') }} Metrics</button>: What to measure to proactively be on top of the risks?
+        </li>
+        <li>
+            <button @click="currentStep = 6">Summary</button>: A summary of the assessment
+        </li>
+        <li>
+            <button @click="currentStep = 7">Export</button>: Export the assessment to share with others
+        </li>
+    </ul>      
+    <p>
+        You can go back and forth between the tabs as you work your way through the UI.
+    </p>
+    <h2>Why failures?</h2>
+    <p>
+        There are many ways to approach service levels
+        and there are even more pitfalls.
+    </p>
+    <p>
+        Our approach is based on the following principles:
+    </p>
+    <ul>
+        <li><em>No vanity metrics</em>: SLI describes reliability from the consumers' perspective. If an anomaly does not lead to a consumer facing failure and business risk, it is out of scope.</li>
+        <li><em>Full ownership</em>: SLOs should tie to real commitments. The best way to implement commitments is to set alerts on the service level objectives</li>
+        <li><em>Proper modeling</em>: have a clear meaning behind every word to build a common language.</li>
+    </ul>
+    <h2>Mental Model</h2>
+    <p>
+        The UI in this app is built using the following mental model:
+    </p>
+    <code-block-component>
+        <span class="punct">{{ unicodeSymbol('owner') }}</span>
+        <span class="exprs">Owner</span>
+        owns 1+
+        <span class="punct">{{ unicodeSymbol('provider') }}</span>
+        <span class="exprs">Provider</span>(s).
+        <br>
+
+        <span class="punct">{{ unicodeSymbol('provider') }}</span>
+        <span class="exprs">Provider</span>
+        offers 1+
+        <span class="punct">{{ unicodeSymbol('service') }}</span>
+        <span class="exprs">Service</span>(s).
+        <br>
+
+        <span class="punct">{{ unicodeSymbol('consumer') }}</span>
+        <span class="exprs">Consumer</span>
+        has 1+
+        <span class="punct">{{ unicodeSymbol('task') }}</span>
+        <span class="exprs">Task</span>(s) to achieve a goal.
+        <br>
+
+        <span class="punct">{{ unicodeSymbol('usage') }}</span>
+        <span class="exprs">Usage</span>
+        ties a
+        <span class="punct">{{ unicodeSymbol('task') }}</span>
+        <span class="exprs">Task</span>
+        to a
+        <span class="punct">{{ unicodeSymbol('service') }}</span>
+        <span class="exprs">Service</span>
+        <br>
+
+        <span class="punct">{{ unicodeSymbol('usage') }}</span>
+        <span class="exprs">Usage</span>
+        has 1+
+        <span class="punct">{{ unicodeSymbol('failure') }}</span>
+        <span class="exprs">Failure</span>(s).
+        <br>
+
+        <span class="punct">{{ unicodeSymbol('failure') }}</span>
+        <span class="exprs">Failure</span>
+        has a
+        <span class="punct">{{ unicodeSymbol('symptom') }}</span>
+        <span class="exprs">Symptom</span>,
+        a
+        <span class="punct">{{ unicodeSymbol('consequence') }}</span>
+        <span class="exprs">Consequence</span>,
+        and a 
+        <span class="punct">{{ unicodeSymbol('impact') }}</span>
+        <span class="exprs">Business Impact</span>
+    </code-block-component>
+</div>

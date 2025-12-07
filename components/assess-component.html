@@ -1,0 +1,278 @@
+<div class="assess-component">
+    <div class="container logo-bg">
+        <steps-component class="h-pad-gap2" v-model="currentStep" :steps="steps"></steps-component>
+
+        <div class="mozaic mozaic--gap2 pad-gap2">
+            <div class="mozaic__tile mozaic__tile--8c mozaic mozaic--gap2">
+
+                <div class="frost mozaic__tile--whole" v-if="inRange(currentStep, 1, 3) || currentStep === 5">
+                    <assessment-graph-component
+                        @select="goto"
+                        :assessment="assessment"></assessment-graph-component>
+                </div>
+
+                <div v-if="currentStep === 0" class="surface mozaic__tile mozaic__tile--whole">
+                    <assess-component-intro></assess-component-intro>
+                </div>
+
+                <div v-if="currentStep === 1" class="mozaic__tile mozaic__tile--half surface">
+                    <h2>
+                        Providers
+                        <help-component>
+                            <p>
+                                Before defining service levels, we first need to identify the entity providing that service.
+                            </p>
+                            <p>
+                                You don't need to list all of your service providers.
+                                As a rule of thumb start with the consumer-facing services
+                                and as you work your way through the UI, you can come back and
+                                add any missing service provider.
+                            </p>
+                        </help-component>
+                    </h2>
+                    <fieldset class="b-mar-gap2">
+                        <legend>Provider ({{ assessment.providers.length }})</legend>
+                        <div class="input-group" v-if="assessment.providers.length">
+                            <label for="provider-selector">Select</label>
+                            <select id="provider-selector" v-model="assessment.providers.selected">
+                                <option
+                                    v-for="provider of assessment.providers"
+                                    :value="provider"
+                                    :key="provider.id"
+                                >
+                                    {{ provider }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="button-bar">
+                            <button
+                                @click="assessment.providers.pushNew()"
+                            >
+                                Add
+                            </button>
+                            <button
+                                class="button--danger"
+                                @click="assessment.providers.removeSelected()"
+                                :disabled="!assessment.providers.selected"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </fieldset>
+                    <div class="well" v-if="assessment.providers.selected">
+                        <provider-component
+                            :provider="assessment.providers.selected"></provider-component>
+                    </div>
+                </div>
+                <div v-if="currentStep === 1" class="mozaic__tile mozaic__tile--half surface">
+                    <h2>
+                        Service
+                        <help-component>
+                            <p>
+                                A 
+                                <ext-link href="https://blog.alexewerlof.com/p/service">service</ext-link>
+                                is a collection of capabilities, features, or solutions that are provided to the consumer.
+                            </p>
+                            <p>
+                                The service is the thing that the consumer interacts with.
+                                It is the thing that the provider is responsible for.
+                            </p>
+                        </help-component>
+                    </h2>
+                    <fieldset class="b-mar-gap2" v-if="selectedProvider">
+                        <legend>Service ({{ selectedProvider.services.length }})</legend>
+                        <div class="input-group" v-if="selectedProvider.services.length">
+                            <label for="service-selector">Select</label>
+                            <select id="service-selector" v-model="selectedProvider.services.selected">
+                                <option
+                                    v-for="service of selectedProvider.services"
+                                    :value="service"
+                                    :key="service.id"
+                                >
+                                    {{ service.displayName }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="button-bar">
+                            <button
+                                @click="selectedProvider.services.pushNew()"
+                            >
+                                Add
+                            </button>
+                            <button
+                                class="button--danger"
+                                @click="selectedProvider.services.removeSelected()"
+                                :disabled="!selectedProvider.services.selected"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </fieldset>
+                    <div class="well" v-if="selectedService">
+                        <service-component
+                            :service="selectedService"></service-component>
+                    </div>
+                </div>
+
+                <div v-if="currentStep === 2" class="mozaic__tile mozaic__tile--half">
+                    <div class="surface">
+                        <h2>
+                            Consumers
+                            <help-component>
+                                <p>
+                                    <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">
+                                        Consumer
+                                    </ext-link>
+                                    refers to the entity that consumes services to achieve a goal.
+                                    <ul>
+                                        <li>For internal services, the consumer can be a group of people, a system, or a component.</li>
+                                        <li>For external services, the consumer can be a customer, a partner, or a third-party system.</li>
+                                    </ul>
+                                </p>
+                                <p>
+                                    Give this consumer a name and description to make it easier to identify
+                                    throuout the service level definition.
+                                </p>
+                            </help-component>
+                        </h2>
+                        <fieldset class="b-mar-gap2">
+                            <legend>Consumer ({{ assessment.consumers.length }})</legend>
+                            <div class="input-group" v-if="assessment.consumers.length">
+                                <label for="consumer-selector">Select</label>
+                                <select id="consumer-selector" v-model="assessment.consumers.selected">
+                                    <option
+                                        v-for="consumer of assessment.consumers"
+                                        :value="consumer"
+                                        :key="consumer.id"
+                                    >
+                                        {{ consumer }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="button-bar">
+                                <button
+                                    @click="assessment.consumers.pushNew()"
+                                >
+                                    Add
+                                </button>
+                                <button
+                                    class="button--danger"
+                                    @click="assessment.consumers.removeSelected()"
+                                    :disabled="!assessment.consumers.selected"
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        </fieldset>
+                        <div class="well" v-if="assessment.consumers.selected">
+                            <consumer-component
+                                :consumer="assessment.consumers.selected"></consumer-component>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="currentStep === 2" class="mozaic__tile mozaic__tile--half">
+                    <div class="surface">
+                        <h2>
+                            Tasks
+                            <help-component>
+                                <p>
+                                    <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">
+                                        Task
+                                    </ext-link>
+                                    refers to how a consumer uses services to achieve a goal.
+                                    Other names are <em>JTBD</em> (Job To Be Done) or <em>Use Case</em>.
+                                    A task is typically part of a user journey or customer journey.
+                                </p>
+                                <p>
+                                    For example, if the consumer is a website that uses an API service,
+                                    its task can be "Get user data from API".
+                                </p>
+                                <p>
+                                    A service may have many tasks by the same consumer or even by different consumers.
+                                </p>        
+                            </help-component>
+                        </h2>
+                        <fieldset class="b-mar-gap2" v-if="selectedConsumer">
+                            <legend>Task ({{ selectedConsumer.tasks.length }})</legend>
+                            <div class="input-group" v-if="selectedConsumer.tasks.length">
+                                <label for="task-selector">Select</label>
+                                <select id="task-selector" v-model="selectedConsumer.tasks.selected">
+                                    <option
+                                        v-for="task of selectedConsumer.tasks"
+                                        :value="task"
+                                        :key="task.id"
+                                    >
+                                        {{ task.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="button-bar">
+                                <button
+                                    @click="selectedConsumer.tasks.pushNew()"
+                                >
+                                    Add
+                                </button>
+                                <button
+                                    class="button--danger"
+                                    @click="selectedConsumer.tasks.removeSelected()"
+                                    :disabled="!selectedConsumer.tasks.selected"
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        </fieldset>
+                        <div class="well" v-if="selectedTask">
+                            <task-component :task="selectedTask"></task-component>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="currentStep === 3" class="mozaic__tile mozaic__tile--half">
+                    <div class="surface">
+                        <h2>Usage</h2>
+                        <div class="well" v-if="selectedUsage">
+                            <h3>Task</h3>
+                            <p>{{ selectedUsage.task }}</p>
+                            <h3>Service</h3>
+                            <p>{{ selectedUsage.service }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="currentStep === 3" class="mozaic__tile mozaic__tile--half">
+                    <div class="surface">
+                        <h2>Failures</h2>
+                        <div v-if="selectedUsage">
+                            <usage-component :usage="selectedUsage"></usage-component>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="currentStep === 4" class="mozaic__tile mozaic__tile--whole">
+                    <failure-sort-component :assessment="assessment"></failure-sort-component>
+                </div>
+
+                <div v-if="currentStep === 5" class="mozaic__tile mozaic__tile--half surface">
+                    <h3>Service</h3>
+                    <p>{{ selectedService }}</p>
+                </div>
+
+                <div v-if="currentStep === 5" class="mozaic__tile mozaic__tile--half surface">
+                    <service-metrics-component :service="selectedService"></service-metrics-component>
+               </div>
+
+                <div v-if="currentStep === 6" class="surface mozaic__tile mozaic__tile--whole">
+                    <summary-component :assessment="assessment"></summary-component>
+                </div>
+
+                <div v-if="currentStep === 7" class="surface mozaic__tile mozaic__tile--whole">
+                    <code-block-component>
+                        <pre>{{ JSON.stringify(assessment.state, null, 2) }}</pre>
+                    </code-block-component>
+                </div>
+            </div>
+            <div class="mozaic__tile mozaic__tile--4c surface">
+                <chat-component :thread="thread"></chat-component>
+            </div>
+        </div>
+    </div>
+</div>

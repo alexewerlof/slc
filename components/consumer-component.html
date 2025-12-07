@@ -1,0 +1,31 @@
+<div class="provider-component">
+    <entity-component
+        :entity="consumer"
+        display-name-label="sli-displayName-input"
+        display-name-hint="What or who consumes the services"
+        display-name-placeholder="End user, front-end, 3rd party app, etc."
+        description-hint="More info that helps the assessment?"
+    ></entity-component>
+    <div class="input-group">
+        <label for="consumer-type">
+            Type
+            <help-component>
+                <p>A service consumer can be any of these types:</p>
+                <ul>
+                    <li><strong>Group</strong>: a group of 1 or more <em>people</em></li>
+                    <li><strong>Component</strong>: something that actually runs and deploys independently (e.g., a database, microservice, etc.)</li>
+                    <li><strong>System</strong>: a logical grouping of components</li>
+                </ul>
+                <p>
+                    Read more <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">here</ext-link>.
+                </p>        
+            </help-component>
+        </label>
+        <select id="consumer-type" v-model="consumer.type">
+            <option
+                v-for="possibleType of consumer.constructor.possibleTypes">
+                {{ possibleType }}
+            </option>
+        </select>
+    </div>
+</div>

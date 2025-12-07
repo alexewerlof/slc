@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="../../lib/window-onerror.js"></script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0S6RM2D7G"></script>
+        <script>
+            window.dataLayer = window.dataLayer || []
+            function gtag() {dataLayer.push(arguments)}
+            gtag('js', new Date())
+            gtag('config', 'G-J0S6RM2D7G')
+        </script>
+
+        <meta charset="UTF-8">
+        <meta name="theme-color" content="#FFBC52">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/style.css">
+        <meta name="description" content="A simple guide to Service Levels. Most of this content is used in various prompts across different applications.">
+        <meta property="og:title" content="Learn Service Levels">
+        <meta
+            property="og:description"
+            content="A simple guide to Service Levels. Most of this content is used in various prompts across different applications."
+        >
+        <meta property="og:image" content="https://slc.alexewerlof.com/img/overview.png">
+        <meta property="og:url" content="https://slc.alexewerlof.com/app/learn/index.html">
+        <meta property="og:type" content="website">
+        <link rel="canonical" href="https://slc.alexewerlof.com/app/learn/index.html">
+        <link rel="icon" type="image/svg" href="icon.svg">
+        <link rel="manifest" href="manifest.json">
+        <title>Learn Service Levels</title>
+    </head>
+
+    <body>
+        <noscript>
+            <p>This web application requires JavaScript to work.</p>
+        </noscript>
+
+        <div id="app" v-cloak>
+            <announcement-component>
+                <ext-link href="https://blog.alexewerlof.com/p/slc">Read the announcement about this app</ext-link>.
+            </announcement-component>
+            <header-component></header-component>
+
+            <div class="container pad-gap2">
+                <toc-component for="toc-source"></toc-component>
+                <div id="toc-source">
+                    <markdown-component :markdown="glossary"></markdown-component>
+                    <markdown-component :markdown="sreBooks"></markdown-component>
+                </div>
+            </div>
+            
+            <cookie-popup-component></cookie-popup-component>
+            <footer-component></footer-component>
+        </div>
+
+        <script type="module" src="index.js" defer></script>
+    </body>
+</html>

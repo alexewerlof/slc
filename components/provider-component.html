@@ -1,0 +1,30 @@
+<div class="provider-component">
+    <entity-component
+        :entity="provider"
+        display-name-hint="What provides the service?"
+        display-name-placeholder="Payment API, User Storage, etc."
+        description-hint="Who owns this provider?"
+    ></entity-component>
+    <div class="input-group">
+        <label for="provider-type-selector">
+            Type
+            <help-component>
+                <p>A service provider can be any of these types:</p>
+                <ul>
+                    <li><strong>Group</strong>: a group of 1 or more people</li>
+                    <li><strong>Component</strong>: something that actually runs and deploys independently (e.g., a database, microservice, etc.)</li>
+                    <li><strong>System</strong>: a logical grouping of components</li>
+                </ul>
+                <p>
+                    Generally, the service levels are set at the boundaries of what the service owns.
+                    The consumer is abstracted away from the implementation details (e.g., the components).
+                    Read more <ext-link href="https://blog.alexewerlof.com/p/service-level-terminology">here</ext-link>.
+                </p>
+            </help-component>
+        </label>
+        <select id="provider-type-selector" v-model="provider.type">
+            <option
+                v-for="possibleType of provider.constructor.possibleTypes">{{ possibleType }}</option>
+        </select>
+    </div>
+</div>

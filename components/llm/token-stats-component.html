@@ -1,0 +1,32 @@
+<code>
+    <span title="Waiting duration">
+        <span class="const">{{ numL10n(tokenStats.durationSec) }}</span>
+        <span class="exprs">s</span>
+    </span>
+    
+    <span title="Prompt tokens">
+        <span class="punct">, </span>
+        <span class="const">{{ numL10n(tokenStats.prompt) }}</span>
+        <span class="exprs">T</span>
+    </span>
+    
+    <span title="Completion tokens">
+        <span class="punct">, </span>
+        <span class="const">{{ numL10n(tokenStats.completion) }}</span>
+        <span class="exprs">T</span>
+    </span>
+
+    <span title="Total tokens">
+        <span class="punct">, </span>
+        <span class="const">{{ numL10n(tokenStats.total) }}</span>
+        <span class="exprs">T</span>
+    </span>
+
+    <span title="Throughput Tokens per Second" v-if="tokenStats.duration > 0">
+        <span class="punct">, </span>
+        <span class="const">
+            {{ (1000 * tokenStats.completion / tokenStats.duration).toFixed(1) }}
+        </span>
+        <span class="exprs">Tps</span>
+    </span>
+</code>

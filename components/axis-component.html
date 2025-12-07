@@ -1,0 +1,38 @@
+<g class="axis-component">
+    <g class="axis-component__horizontal">
+        <!-- horizontal axis -->
+        <line
+            class="axis-component__line axis-component__line--horizontal"
+            :x1="leftX"
+            :x2="rightX"
+            :y1="bottomY"
+            :y2="bottomY" />
+        <text
+            class="axis-component__title axis-component__title--horizontal"
+            :x="rightX"
+            :y="bottomY + 18">
+            {{ xLabel }}
+        </text>
+        <polygon
+            class="axis-component__arrow axis-component__arrow--horizontal"
+            :points="hArrowPoints" />
+    </g>
+    <g class="axis-component__vertical">
+        <!-- vertical axis -->
+        <line
+            class="axis-component__line axis-component__line--vertical"
+            :x1="leftX"
+            :x2="leftX"
+            :y1="topY"
+            :y2="bottomY" />
+        <text
+            class="axis-component__title axis-component__title--vertical"
+            :x="leftX - 12"
+            :y="topY + 12">
+            {{ yLabel }}
+        </text>
+        <polygon
+            class="axis-component__arrow axis-component__arrow--vertical"
+            :points="vArrowPoints" />
+    </g>
+</g>
