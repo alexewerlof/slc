@@ -2,9 +2,31 @@
     <div v-if="!hideTopBar" class="code-block-component__top-bar">
         <div class="code-block-component__title">{{ title }}</div>
         <div class="code-block-component__buttons">
-            <button class="button--small" type="button" @click="copy">
+            <button
+                class="button--small"
+                type="button"
+                @click="copy"
+                title="Copy to clipboard"
+            >
                 <icon-component name="copy"></icon-component>
-                Copy
+            </button>
+            <button
+                v-if="fileName"
+                class="button--small"
+                type="button"
+                @click="download"
+                title="Download"
+            >
+                <icon-component name="download"></icon-component>
+            </button>
+            <button
+                v-if="fileName && saveAsSupported"
+                class="button--small"
+                type="button"
+                @click="saveAs"
+                title="Save as file"
+            >
+                <icon-component name="save"></icon-component>
             </button>
         </div>
     </div>
