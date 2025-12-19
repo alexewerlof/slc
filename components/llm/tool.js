@@ -181,18 +181,7 @@ export class Tool {
                     2,
                 )}`,
             )
-            switch (typeof result) {
-                case 'undefined':
-                    return 'done'
-                case 'string':
-                    return result
-                case 'number':
-                    return String(result)
-                case 'boolean':
-                    return String(result)
-                default:
-                    return JSON.stringify(result)
-            }
+            return JSON.stringify(result)
         } catch (error) {
             return `Error executing ${this.name}(${argsStr}): ${error}`
         }
