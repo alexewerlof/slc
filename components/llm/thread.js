@@ -1,5 +1,6 @@
 import { joinLines } from '../../lib/markdown.js'
 import { loadText } from '../../lib/share.js'
+import { normalizeMessageArray } from '../../lib/msg.js'
 import { isArr, isBool, isDef, isFn, isInArr, isInstance, isObj, isStr } from '../../lib/validation.js'
 import { TokenStats } from './token-stats.js'
 
@@ -313,7 +314,7 @@ export class Thread {
         if (beadsWithAsyncLoad.length > 0) {
             await Promise.all(beadsWithAsyncLoad.map((bead) => bead.load()))
         }
-        return activeBeads.map((bead) => bead.message)
+        return normalizeMessageArray(activeBeads.map((bead) => bead.message))
     }
 
     get lastBead() {
