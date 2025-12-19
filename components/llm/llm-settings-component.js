@@ -65,15 +65,21 @@ export default {
                     ),
                 )
                 const toolbox = new Toolbox()
-                let isToolCalled = false
-                toolbox.add('confirmToolUse', 'Call this function to confirm that you can use tools').fn(() => {
-                    this.log(
-                        isToolCalled
-                            ? 'This should not happen because you have already called the tool.'
-                            : 'Successfully called tool the first time.',
+                let callCounter = 0
+                toolbox
+                    .add(
+                        'confirmToolUse',
+                        'Call this function to confirm that you can use tools.',
+                        'It returns how many times you have called it',
                     )
-                    isToolCalled = true
-                })
+                    .fn(() => {
+                        callCounter++
+                        this.log(`Tool called! (${callCounter})`)
+                        if (callCounter > 1) {
+                            throw new Error('Too many calls')
+                        }
+                        return `You have successfully called the tool ${callCounter} time(s).`
+                    })
                 agent.toolbox = toolbox
                 await agent.completeThread()
                 if (!testThread2.lastBead) {
@@ -83,10 +89,15 @@ export default {
                 if (!testThread2.lastBead.role === 'assistant') {
                     throw new Error('Not an assistant response')
                 }
-                if (!isToolCalled) {
-                    throw new Error('Failed to call the tool')
+                switch (callCounter) {
+                    case 0:
+                        throw new Error('Failed to call the tool')
+                    case 1:
+                        this.log('Your setting is good to go.')
+                        break
+                    default:
+                        throw new Error(`Too many calls: ${callCounter}`)
                 }
-                this.log('Your setting is good to go.')
             } catch (error) {
                 this.log(String(error))
             }
