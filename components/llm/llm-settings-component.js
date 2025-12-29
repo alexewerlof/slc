@@ -70,7 +70,8 @@ export default {
                     .add(
                         'confirmToolUse',
                         'Call this function to confirm that you can use tools.',
-                        'It returns how many times you have called it',
+                        'You should call it only once.',
+                        'It returns the number of times you have called it.',
                     )
                     .fn(() => {
                         callCounter++
