@@ -88,8 +88,8 @@ export class LLMAPI {
             throw new RangeError(`Invalid HTTP Method: ${method}`)
         }
         const url = this._makeUrl(path)
-        if (methodUpperCase !== 'GET' && !isObj(data)) {
-            throw new TypeError(`data must be an object. Got ${data}`)
+        if (methodUpperCase === 'POST' && !isObj(data)) {
+            throw new TypeError(`POST data must be an object. Got ${data} (${typeof data})`)
         }
         const headers = new Headers()
         headers.set('Accept', 'application/json')
@@ -140,13 +140,13 @@ export class LLMAPI {
         if (!isObj(options)) {
             throw new TypeError(`options must be an object. Got ${options}`)
         }
-        const { maxTokens, temperature, tools, signal } = options
+        const { maxTokens, temperature, tools, signal, model } = options
         return await this.fetchJson(
             'POST',
             'chat/completions',
             {
                 messages,
-                model: this.modelIds.selected,
+                model,
                 temperature,
                 max_tokens: maxTokens,
                 tools,
