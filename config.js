@@ -384,17 +384,24 @@ export const config = fz({
             },
             */
             {
+                name: 'LLaMAC++',
+                baseUrl: 'http://localhost:8080/v1/',
+                website: 'https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md',
+                description: 'Runs on a local or remote computer providing an OpenAI-compatible API.',
+                suggestedModel: 'phi-4',
+            },
+            {
                 name: 'LM Studio',
                 baseUrl: 'http://localhost:1234/v1/',
                 website: 'https://lmstudio.ai/',
-                description: 'Runs on a local computer. You need to configure a local server to be able to use it.',
+                description: 'Runs on a local or remote computer providing an OpenAI-compatible API.',
                 suggestedModel: 'phi-4',
             },
             {
                 name: 'Jan',
                 baseUrl: 'http://localhost:1337/v1/',
                 website: 'https://jan.ai/',
-                description: 'Similar to LM Studio but with a simpler user interface.',
+                description: 'Runs on a local or remote computer providing an OpenAI-compatible API.',
                 suggestedModel: 'llama3.1-8b-instruct',
             },
             {
