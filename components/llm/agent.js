@@ -68,7 +68,7 @@ export class Agent {
                 this.thread.add(bead)
                 consecutiveToolsCalls++
 
-                if (consecutiveToolsCalls >= Agent.MAX_CALLS) {
+                if (consecutiveToolsCalls > Agent.MAX_CALLS) {
                     throw new Error(`Stopping due to too many tool calls (max=${Agent.MAX_CALLS})`)
                 }
 
