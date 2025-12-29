@@ -4,5 +4,9 @@
     "editor.detectIndentation": true,
     "javascript.format.semicolons": "remove",
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "geminicodeassist.customCommands": {
+        "add-comments": "Add comment to the selected function or update the comments to match the algorithm"
+    },
+    "geminicodeassist.rules": "- Always generate code that passes the settings in .prettierrc.json\n- Keep the component behavior (javascript), template (html), and style (CSS) separate\n- Use the latest Javascript, CSS, HTML and SVG syntax that is available in Chrome and Firefox and Safari"
 }
