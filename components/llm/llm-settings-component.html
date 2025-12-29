@@ -7,8 +7,10 @@
                     Due to cost of running AI, this open source app relies on you to provide your AI and models. There are many options:
                 </p>
                 <ul>
-                    <li v-for="engine of llm.engines">
-                        <ext-link :href="engine.website">{{ engine.name }}</ext-link>:
+                    <li v-for="engine of config.llm.engines">
+                        <strong>
+                            <ext-link :href="engine.website">{{ engine.name }}</ext-link>:
+                        </strong>
                         {{ engine.description }}
                         <span v-if="engine.apiKeyWebsite" class="subtle-hint">
                             <ext-link :href="engine.apiKeyWebsite">Get API Key</ext-link>
