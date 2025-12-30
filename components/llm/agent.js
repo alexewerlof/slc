@@ -1,6 +1,6 @@
 import { getFirstMessage, isToolsCallMessage } from './util.js'
 import { AssistantResponse, ErrorBead, Thread, ToolCallsBead, ToolResultBead } from './thread.js'
-import { llm } from './llm.js'
+import { LLM } from './llm.js'
 import { Toolbox } from './toolbox.js'
 import { isDef, isInstance } from '../../lib/validation.js'
 import { showToast } from '../../lib/toast.js'
@@ -14,7 +14,12 @@ export class Agent {
     thread = undefined
     toolbox = undefined
 
-    constructor(thread, toolbox) {
+    constructor(llm, thread, toolbox) {
+        if (!isInstance(llm, LLM)) {
+            throw new TypeError(`Expected llm to be an instance of LLM. Got ${llm} (${typeof llm})`)
+        }
+        this.llm = llm
+
         if (!isInstance(thread, Thread)) {
             throw new TypeError(`Expected thread to be an instance of Thread. Got ${thread} (${typeof thread})`)
         }
@@ -42,7 +47,7 @@ export class Agent {
                 const start = Date.now()
 
                 this.abortController = new AbortController()
-                const completion = await llm.getCompletion(messages, {
+                const completion = await this.llm.getCompletion(messages, {
                     /*
                     maxTokens: this.maxTokens,
                     temperature: this.temperature,

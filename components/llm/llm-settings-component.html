@@ -23,14 +23,59 @@
                 </p>
             </help-component>
         </label>
-        <select id="engine-selector" v-model="llm.engines.selected">
-            <option v-for="engine of llm.engines" :value="engine">
-                {{ engine.name }}
-            </option>
-        </select>
     </div>
     <div class="b-mar-gap2">
-        <llm-api-settings-component :llm-api="llm.engines.selected"></llm-api-settings-component>
+        <div class="input-group">
+            <label for="llm-api-settings-component__base-url">
+                Base URL
+                <div class="subtle-hint">Make sure the URL ends with <code>/</code></div>
+            </label>
+            <input
+                type="url"
+                v-model="llm.baseUrl"
+                required="required"
+                id="llm-api-settings-component__base-url" />
+        </div>
+        <div class="input-group">
+            <label :for="llm-api-key">
+                <icon-component name="key"></icon-component>
+                API Key
+                <div class="subtle-hint">
+                    You can write anything if not required
+                </div>
+            </label>
+            <input
+                type="text"
+                v-model="llm.apiKey"
+                autocomplete="llm-api-key"
+                required="required"
+                :id="llm-api-key" />
+        </div>
+        <div class="input-group b-mar-gap2">
+            <label for="llm-api-settings-component__model-id">
+                Model
+            </label>
+            <div class="subtle-hint">
+                Choose a model that supports function calls.
+            </div>
+            <select
+                id="llm-api-settings-component__model-id"
+                v-model="llm.modelId"
+                v-if="modelIds.length"
+            >
+                <option
+                    v-for="modelId of modelIds"
+                    :value="modelId"
+                >{{ modelId }}</option>
+            </select>
+            <div v-if="modelIds.length === 0" v-text="llm.modelId"></div>
+        </div>
+        <div class="button-bar">
+            <button @click="updateModelIds()">
+                <icon-component name="sync"></icon-component>
+                Update
+            </button>
+        </div>
     </div>
     <show-hide-component title="Advanced" :hidden="true" class="b-mar-gap2">
         <div class="input-group">
@@ -83,19 +128,13 @@
             />
         </div>
     </show-hide-component>
-    <code-block-component v-if="logLines.length" class="b-mar-gap2">
-        <div v-for="line of logLines" v-text="line"></div>
-    </code-block-component>
+    <div class="b-mar-gap2" v-text="verificationText" v-if="llm.isConfigured"></div>
     <div class="button-bar">
-        <button @click="clearLog()" v-if="logLines.length">
-            <icon-component name="delete"></icon-component>
-            Clear Logs
-        </button>
-        <button @click="test()">
+        <button @click="verify()" :disabled="!llm.isConfigured || llm.isBusy">
             <icon-component name="search"></icon-component>
-            Test
+            verify
         </button>
-        <button @click="save()" class="button--cta">
+        <button @click="save()" class="button--cta" :disabled="!isVerified">
             <icon-component name="favorite"></icon-component>
             Save
         </button>

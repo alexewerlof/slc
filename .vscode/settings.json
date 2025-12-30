@@ -3,7 +3,6 @@
     "liveServer.settings.port": 5501,
     "editor.detectIndentation": true,
     "javascript.format.semicolons": "remove",
-    "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "geminicodeassist.customCommands": {
         "add-comments": "Add comment to the selected function or update the comments to match the algorithm"

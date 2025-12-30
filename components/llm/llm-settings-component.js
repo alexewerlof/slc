@@ -1,14 +1,16 @@
 import { config } from '../../config.js'
-import { Agent } from './agent.js'
-import { llm } from './llm.js'
-import { Thread, UserPromptBead } from './thread.js'
-import { Toolbox } from './toolbox.js'
+import { LLM } from './llm.js'
+import { verifyWordEcho, verifyToolsCall } from './llm-verifications.js'
 
 export default {
     data() {
+        const llm = new LLM(true)
+
         return {
             llm,
-            logLines: [],
+            modelIds: [],
+            isVerified: false,
+            verificationText: '',
         }
     },
     computed: {
@@ -17,95 +19,30 @@ export default {
         },
     },
     methods: {
-        log(...lines) {
-            this.logLines.push(...lines)
-        },
-        clearLog() {
-            this.logLines.splice(0)
-        },
-        async test() {
+        async updateModelIds() {
             try {
-                this.clearLog()
-                const testThread1 = new Thread()
-                const testKeyWord = 'wombat12'
-                this.log(`Test 1: Asking LLM to echo secret word...`)
-                testThread1.add(
-                    new UserPromptBead(
-                        'This is a test and the results will be parsed programmatically.',
-                        `If you receive this message, simply respond with the string "${testKeyWord}".`,
-                        `Don't add any extra word or punctuation.`,
-                    ),
-                )
-                const agent = new Agent(testThread1)
-                await agent.completeThread()
-                if (!testThread1.lastBead) {
-                    this.log('No response')
-                    return
-                }
-                this.log('Got a response')
-                if (!testThread1.lastBead.role === 'assistant') {
-                    this.log('Not an assistant response')
-                    return
-                }
-                if (!testThread1.lastBead.content?.includes(testKeyWord)) {
-                    this.log('No secret word')
-                    return
-                }
-                this.log('Returned the correct secret word')
-                this.log('Test 2: Tool use...')
-                const testThread2 = new Thread()
-                agent.thread = testThread2
-                testThread2.add(
-                    new UserPromptBead(
-                        'I want you to call the tool called confirmToolUse.',
-                        'This is to ensure that you have access to the tools and know how to properly use them.',
-                        'It is important that you call it only once.',
-                        'No parameters are required.',
-                        'Call confirmToolUse now.',
-                    ),
-                )
-                const toolbox = new Toolbox()
-                let callCounter = 0
-                toolbox
-                    .add(
-                        'confirmToolUse',
-                        'Call this function to confirm that you can use tools.',
-                        'You should call it only once.',
-                        'It returns the number of times you have called it.',
-                    )
-                    .fn(() => {
-                        callCounter++
-                        this.log(`Tool called! (${callCounter})`)
-                        if (callCounter > 1) {
-                            throw new Error('Too many calls')
-                        }
-                        return `You have successfully called the tool ${callCounter} time(s).`
-                    })
-                agent.toolbox = toolbox
-                await agent.completeThread()
-                if (!testThread2.lastBead) {
-                    throw new Error('No response')
-                }
-                this.log('Got a response')
-                if (!testThread2.lastBead.role === 'assistant') {
-                    throw new Error('Not an assistant response')
-                }
-                switch (callCounter) {
-                    case 0:
-                        throw new Error('Failed to call the tool')
-                    case 1:
-                        this.log('Your setting is good to go.')
-                        break
-                    default:
-                        throw new Error(`Too many calls: ${callCounter}`)
-                }
+                this.modelIds = await this.llm.getModelIds()
             } catch (error) {
-                this.log(String(error))
+                console.error(String(error))
+            }
+        },
+        async verify() {
+            try {
+                this.verificationText = 'Echo test...'
+                await verifyWordEcho(this.llm)
+                this.verificationText = 'Tools test...'
+                await verifyToolsCall(this.llm)
+                this.verificationText = 'Success!'
+                this.isVerified = true
+            } catch (error) {
+                this.verificationText = String(error)
+                console.error(String(error))
+                this.isVerified = false
             }
         },
         save() {
             this.llm.save()
-            this.log('Saved in browser storage.')
+            console.debug('Saved in browser storage.')
         },
     },
 }

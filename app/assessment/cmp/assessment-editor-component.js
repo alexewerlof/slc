@@ -10,6 +10,7 @@ import { createThread } from './assessment-thread.js'
 import { createToolbox } from './assessment-toolbox.js'
 import { Entity } from '../../../lib/entity.js'
 import { exampleFiles } from '../example-file-names.js'
+import { LLM } from '../../../components/llm/llm.js'
 
 const exampleStates = await Promise.all(exampleFiles.map((fileName) => loadJson(fileName)))
 
@@ -21,7 +22,8 @@ export default {
         },
     },
     data() {
-        const agent = new Agent(createThread(this), createToolbox(this))
+        const llm = new LLM(true)
+        const agent = new Agent(llm, createThread(this), createToolbox(this))
 
         return {
             uploadedState: '',

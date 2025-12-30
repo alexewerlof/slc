@@ -1,5 +1,5 @@
 import { Thread } from './thread.js'
-import { llm } from './llm.js'
+import { LLM } from './llm.js'
 
 export default {
     props: {
@@ -15,7 +15,7 @@ export default {
     data() {
         return {
             showDebugInfo: false,
-            llm,
+            llm: new LLM(true),
             wasBusy: this.isBusy,
             _scrollInterval: null,
         }
