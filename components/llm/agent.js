@@ -10,31 +10,54 @@ export class Agent {
     /** Max consecutive tools calls */
     static MAX_CALLS = 5
 
-    abortController = undefined
-    thread = undefined
-    toolbox = undefined
+    _llm
+    _abortController
+    _thread
+    _toolbox = undefined
 
     constructor(llm, thread, toolbox) {
-        if (!isInstance(llm, LLM)) {
-            throw new TypeError(`Expected llm to be an instance of LLM. Got ${llm} (${typeof llm})`)
-        }
         this.llm = llm
-
-        if (!isInstance(thread, Thread)) {
-            throw new TypeError(`Expected thread to be an instance of Thread. Got ${thread} (${typeof thread})`)
-        }
         this.thread = thread
-
         if (isDef(toolbox)) {
-            if (!isInstance(toolbox, Toolbox)) {
-                throw new TypeError(`Expected tools to be an instance of Toolbox. Got ${toolbox} (${typeof toolbox})`)
-            }
             this.toolbox = toolbox
         }
     }
 
+    get llm() {
+        return this._llm
+    }
+
+    set llm(llm) {
+        if (!isInstance(llm, LLM)) {
+            throw new TypeError(`Expected llm to be an instance of LLM. Got ${llm} (${typeof llm})`)
+        }
+        this._llm = llm
+    }
+
+    get thread() {
+        return this._thread
+    }
+
+    set thread(thread) {
+        if (!isInstance(thread, Thread)) {
+            throw new TypeError(`Expected thread to be an instance of Thread. Got ${thread} (${typeof thread})`)
+        }
+        this._thread = thread
+    }
+
+    get toolbox() {
+        return this._toolbox
+    }
+
+    set toolbox(toolbox) {
+        if (!isInstance(toolbox, Toolbox)) {
+            throw new TypeError(`Expected tools to be an instance of Toolbox. Got ${toolbox} (${typeof toolbox})`)
+        }
+        this._toolbox = toolbox
+    }
+
     get isBusy() {
-        return this.abortController !== undefined
+        return this._abortController !== undefined
     }
 
     async completeThread() {
@@ -46,16 +69,16 @@ export class Agent {
 
                 const start = Date.now()
 
-                this.abortController = new AbortController()
+                this._abortController = new AbortController()
                 const completion = await this.llm.getCompletion(messages, {
                     /*
                     maxTokens: this.maxTokens,
                     temperature: this.temperature,
                     */
-                    signal: this.abortController.signal,
-                    tools: this.toolbox?.descriptor,
+                    signal: this._abortController.signal,
+                    tools: this._toolbox?.descriptor,
                 })
-                this.abortController = undefined
+                this._abortController = undefined
 
                 const message = getFirstMessage(completion)
                 const tokenStats = new TokenStats(completion.usage)
@@ -83,7 +106,7 @@ export class Agent {
                 }
             } while (lastMessageWasToolsCall)
         } catch (error) {
-            this.abortController = undefined
+            this._abortController = undefined
             this.thread.add(new ErrorBead(error))
             console.error(error)
             showToast(error)
@@ -91,9 +114,9 @@ export class Agent {
     }
 
     abortCompletion(reason) {
-        if (this.abortController) {
-            this.abortController.abort(reason)
-            this.abortController = undefined
+        if (this._abortController) {
+            this._abortController.abort(reason)
+            this._abortController = undefined
         }
     }
 }
