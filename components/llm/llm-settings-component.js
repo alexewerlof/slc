@@ -9,8 +9,7 @@ export default {
         return {
             llm,
             modelIds: [],
-            isVerified: false,
-            verificationText: '',
+            logs: [],
         }
     },
     computed: {
@@ -26,19 +25,12 @@ export default {
                 console.error(String(error))
             }
         },
+        addLog(str) {
+            this.logs.push(str)
+            console.debug(str)
+        },
         async verify() {
-            try {
-                this.verificationText = 'Echo test...'
-                await verifyWordEcho(this.llm)
-                this.verificationText = 'Tools test...'
-                await verifyToolsCall(this.llm)
-                this.verificationText = 'Success!'
-                this.isVerified = true
-            } catch (error) {
-                this.verificationText = String(error)
-                console.error(String(error))
-                this.isVerified = false
-            }
+            this.llm.verify(this.addLog.bind(this))
         },
         save() {
             this.llm.save()

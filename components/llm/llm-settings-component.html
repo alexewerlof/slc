@@ -128,13 +128,15 @@
             />
         </div>
     </show-hide-component>
-    <div class="b-mar-gap2" v-text="verificationText" v-if="llm.isConfigured"></div>
+    <code-block-component v-if="logs.length" class="b-mar-gap2" hide-top-bar>
+        <div v-for="log of logs" v-text="log"></div>
+    </code-block-component>
     <div class="button-bar">
-        <button @click="verify()" :disabled="!llm.isConfigured || llm.isBusy">
+        <button @click="verify()" :disabled="llm.isVerified">
             <icon-component name="search"></icon-component>
             verify
         </button>
-        <button @click="save()" class="button--cta" :disabled="!isVerified">
+        <button @click="save()" class="button--cta" :disabled="!llm.isVerified">
             <icon-component name="favorite"></icon-component>
             Save
         </button>

@@ -1,6 +1,7 @@
 import { config } from '../../config.js'
 import { Store } from '../../lib/store.js'
-import { inRange, isArr, isInArr, isObj, isStr, isStrLen, isUrlStr } from '../../lib/validation.js'
+import { inRange, isArr, isFn, isInArr, isObj, isStr, isStrLen, isUrlStr } from '../../lib/validation.js'
+import { verifyToolsCall, verifyWordEcho } from './llm-verifications.js'
 
 const llmStateStore = new Store(config.llm.selectedEngineStateKey)
 
@@ -11,12 +12,17 @@ export class LLM {
     temperature
     maxTokens
     isBusy = false
+    _verifiedState = undefined
 
     constructor(load = true) {
         this.reset()
         if (load) {
             this.load()
         }
+    }
+
+    isStateEqualTo(anotherState) {
+        return JSON.stringify(this.state) === JSON.stringify(anotherState)
     }
 
     get state() {
@@ -53,10 +59,6 @@ export class LLM {
         this.maxTokens = maxTokens
     }
 
-    get isConfigured() {
-        return isUrlStr(this.baseUrl) && isStrLen(this.modelId, 1)
-    }
-
     reset() {
         this.baseUrl = undefined
         this.apiKey = undefined
@@ -75,6 +77,9 @@ export class LLM {
     }
 
     save() {
+        if (!this.isConfigured) {
+            throw new Error('LLM is not configured')
+        }
         llmStateStore.state = this.state
     }
 
@@ -163,5 +168,27 @@ export class LLM {
             },
             signal,
         )
+    }
+
+    get isConfigured() {
+        return isUrlStr(this.baseUrl) && isStrLen(this.modelId, 1)
+    }
+
+    get isVerified() {
+        return this.isConfigured && this.isStateEqualTo(this._verifiedState)
+    }
+
+    async verify(logCallback) {
+        if (!isFn(logCallback)) {
+            throw new TypeError(`logCallback must be a function. Got ${logCallback} (${typeof logCallback})`)
+        }
+        try {
+            await verifyWordEcho(this, logCallback)
+            await verifyToolsCall(this, logCallback)
+            this._verifiedState = this.state
+        } catch (error) {
+            console.error(error)
+            logCallback(String(error))
+        }
     }
 }

@@ -2,10 +2,10 @@ import { Agent } from './agent.js'
 import { Thread, UserPromptBead } from './thread.js'
 import { Toolbox } from './toolbox.js'
 
-export async function verifyWordEcho(llm) {
+export async function verifyWordEcho(llm, logCallback) {
     const testThread = new Thread()
     const testKeyWord = 'wombat' + Math.round(Math.random() * 1000)
-    console.debug(`Verifying LLM to echo secret word...`)
+    logCallback(`Verifying LLM to echo secret word...`)
     testThread.add(
         new UserPromptBead(
             'This is a test and the results will be parsed programmatically.',
@@ -19,7 +19,7 @@ export async function verifyWordEcho(llm) {
     if (!lastBead) {
         throw new Error('No response')
     }
-    console.debug('Got a response')
+    logCallback('Got a response')
     const { role, content } = lastBead
     if (role !== 'assistant') {
         throw new Error('The response was not from assistant')
@@ -27,12 +27,12 @@ export async function verifyWordEcho(llm) {
     if (!content?.includes(testKeyWord)) {
         throw new Error('No secret word')
     }
-    console.debug('Returned the correct secret word')
+    logCallback('Returned the correct secret word')
     return true
 }
 
-export async function verifyToolsCall(llm) {
-    console.debug('Verifying tools calls...')
+export async function verifyToolsCall(llm, logCallback) {
+    logCallback('Verifying tools calls...')
     const testThread = new Thread()
     const agent = new Agent(llm, testThread)
     testThread.add(
@@ -55,7 +55,7 @@ export async function verifyToolsCall(llm) {
         )
         .fn(() => {
             callCounter++
-            console.debug(`Tool called! (${callCounter})`)
+            logCallback(`Tool called! (${callCounter})`)
             if (callCounter > 1) {
                 throw new Error('Too many calls')
             }
@@ -65,7 +65,7 @@ export async function verifyToolsCall(llm) {
     if (!testThread.lastBead) {
         throw new Error('No response')
     }
-    console.debug('Got a response')
+    logCallback('Got a response')
     if (!testThread.lastBead.role === 'assistant') {
         throw new Error('Not an assistant response')
     }
@@ -73,7 +73,7 @@ export async function verifyToolsCall(llm) {
         case 0:
             throw new Error('Failed to call the tool')
         case 1:
-            console.debug('Your setting is good to go.')
+            logCallback('Your setting is good to go.')
             return true
         default:
             throw new Error(`Too many calls: ${callCounter}`)
