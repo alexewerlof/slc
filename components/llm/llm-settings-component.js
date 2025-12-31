@@ -1,6 +1,5 @@
 import { config } from '../../config.js'
 import { LLM } from './llm.js'
-import { verifyWordEcho, verifyToolsCall } from './llm-verifications.js'
 
 export default {
     data() {
@@ -25,11 +24,15 @@ export default {
                 console.error(String(error))
             }
         },
+        clearLogs() {
+            this.logs = []
+        },
         addLog(str) {
             this.logs.push(str)
             console.debug(str)
         },
         async verify() {
+            this.clearLogs()
             this.llm.verify(this.addLog.bind(this))
         },
         save() {
