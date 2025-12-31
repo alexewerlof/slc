@@ -8,7 +8,7 @@ import { TokenStats } from './token-stats.js'
 
 export class Agent {
     /** Max consecutive tools calls */
-    static MAX_CALLS = 10
+    static MAX_CALLS = 5
 
     abortController = undefined
     thread = undefined
