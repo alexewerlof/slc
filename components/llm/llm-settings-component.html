@@ -132,7 +132,7 @@
         <div v-for="log of logs" v-text="log"></div>
     </code-block-component>
     <div class="button-bar">
-        <button @click="verify()" :disabled="llm.isVerified">
+        <button @click="verify()" :disabled="!llm.isConfigured || llm.isVerified || llm.isBusy">
             <icon-component name="search"></icon-component>
             verify
         </button>

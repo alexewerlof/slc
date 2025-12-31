@@ -6,10 +6,15 @@ export default {
         const llm = new LLM(true)
 
         return {
-            llm,
             modelIds: [],
             logs: [],
         }
+    },
+    props: {
+        llm: {
+            type: LLM,
+            required: true,
+        },
     },
     computed: {
         config() {

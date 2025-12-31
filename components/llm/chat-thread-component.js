@@ -3,6 +3,10 @@ import { LLM } from './llm.js'
 
 export default {
     props: {
+        llm: {
+            type: LLM,
+            required: true,
+        },
         thread: {
             type: Thread,
             required: true,
