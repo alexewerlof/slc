@@ -1,7 +1,6 @@
 import { config } from '../../config.js'
 import { Store } from '../../lib/store.js'
-import { inRange, isArr, isBool, isFn, isInArr, isObj, isStr, isStrLen, isUrlStr } from '../../lib/validation.js'
-import { verifyToolsCall, verifyWordEcho } from './llm-verifications.js'
+import { inRange, isArr, isInArr, isObj, isStr, isStrLen, isUrlStr } from '../../lib/validation.js'
 
 const llmStateStore = new Store(config.llm.selectedEngineStateKey)
 
@@ -13,7 +12,6 @@ export class LLM {
     temperature = config.llm.temperature.default
     maxTokens = config.llm.maxTokens.default
     isBusy = false
-    _verifiedState = undefined
 
     constructor(load = true) {
         if (load) {
@@ -181,23 +179,5 @@ export class LLM {
 
     get isConfigured() {
         return isUrlStr(this.baseUrl) && isStrLen(this.modelId, 1) && (!this.useApiKey || isStrLen(this.apiKey, 1))
-    }
-
-    get isVerified() {
-        return this.isConfigured && this.isStateEqualTo(this._verifiedState)
-    }
-
-    async verify(logCallback) {
-        if (!isFn(logCallback)) {
-            throw new TypeError(`logCallback must be a function. Got ${logCallback} (${typeof logCallback})`)
-        }
-        try {
-            await verifyWordEcho(this, logCallback)
-            await verifyToolsCall(this, logCallback)
-            this._verifiedState = this.state
-        } catch (error) {
-            console.error(error)
-            logCallback(String(error))
-        }
     }
 }

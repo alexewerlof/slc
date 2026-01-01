@@ -174,11 +174,11 @@
         <div v-for="log of logs" v-text="log"></div>
     </code-block-component>
     <div class="button-bar">
-        <button @click="verify()" :disabled="!llmClone.isConfigured || llmClone.isVerified || llmClone.isBusy">
+        <button @click="verify()" :disabled="!llmClone.isConfigured || isVerified || llmClone.isBusy">
             <icon-component name="search"></icon-component>
             verify
         </button>
-        <button @click="save()" class="button--cta" :disabled="!llmClone.isVerified">
+        <button @click="save()" class="button--cta" :disabled="!isVerified">
             <icon-component name="favorite"></icon-component>
             Save
         </button>

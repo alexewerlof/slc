@@ -1,6 +1,20 @@
+import { isArr } from '../../lib/validation.js'
 import { Agent } from './agent.js'
 import { Thread, UserPromptBead } from './thread.js'
 import { Toolbox } from './toolbox.js'
+
+export async function verifyModelEndpoint(llm, logCallback) {
+    logCallback('Verifying LLM endpoint...')
+    const models = await llm.getModels()
+    if (!isArr(models)) {
+        throw new Error('Did not get an array of models.')
+    }
+    if (models.length === 0) {
+        throw new Error('No models found')
+    }
+    logCallback(`Got ${models.length} models.`)
+    return true
+}
 
 export async function verifyWordEcho(llm, logCallback) {
     const testThread = new Thread()
@@ -73,7 +87,7 @@ export async function verifyToolsCall(llm, logCallback) {
         case 0:
             throw new Error('Failed to call the tool')
         case 1:
-            logCallback('Your setting is good to go.')
+            logCallback('The tool was called exactly once.')
             return true
         default:
             throw new Error(`Too many calls: ${callCounter}`)
