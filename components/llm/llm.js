@@ -1,21 +1,21 @@
 import { config } from '../../config.js'
 import { Store } from '../../lib/store.js'
-import { inRange, isArr, isFn, isInArr, isObj, isStr, isStrLen, isUrlStr } from '../../lib/validation.js'
+import { inRange, isArr, isBool, isFn, isInArr, isObj, isStr, isStrLen, isUrlStr } from '../../lib/validation.js'
 import { verifyToolsCall, verifyWordEcho } from './llm-verifications.js'
 
 const llmStateStore = new Store(config.llm.selectedEngineStateKey)
 
 export class LLM {
-    baseUrl
-    apiKey
-    modelId
-    temperature
-    maxTokens
+    baseUrl = undefined
+    apiKey = ''
+    useApiKey = false
+    modelId = undefined
+    temperature = config.llm.temperature.default
+    maxTokens = config.llm.maxTokens.default
     isBusy = false
     _verifiedState = undefined
 
     constructor(load = true) {
-        this.reset()
         if (load) {
             this.load()
         }
@@ -26,8 +26,8 @@ export class LLM {
     }
 
     get state() {
-        const { baseUrl, apiKey, modelId, temperature, maxTokens } = this
-        return { baseUrl, apiKey, modelId, temperature, maxTokens }
+        const { baseUrl, apiKey, useApiKey, modelId, temperature, maxTokens } = this
+        return { baseUrl, apiKey, useApiKey, modelId, temperature, maxTokens }
     }
 
     set state(newState) {
@@ -35,13 +35,16 @@ export class LLM {
             throw new TypeError(`options must be an object. Got ${newState}`)
         }
 
-        const { baseUrl, apiKey, modelId, temperature, maxTokens} = newState
+        const { baseUrl, apiKey, useApiKey, modelId, temperature, maxTokens} = newState
         if (!isUrlStr(baseUrl)) {
             throw new TypeError(`baseUrl must be a valid URL string. Got ${baseUrl}`)
         }
         if (!isStr(apiKey)) {
-            throw new TypeError(`apiKey must be a string. Got ${apiKey}`)
+            throw new TypeError(`Invalid API key. Got ${apiKey}`)
+        } else {
+            this.apiKey = apiKey
         }
+        this.useApiKey = Boolean(useApiKey)
         if (!isStr(modelId)) {
             throw new TypeError(`model must be a string. Got ${modelId}`)
         }
@@ -54,17 +57,10 @@ export class LLM {
         
         this.baseUrl = baseUrl
         this.apiKey = apiKey
+        this.useApiKey = useApiKey
         this.modelId = modelId
         this.temperature = temperature
         this.maxTokens = maxTokens
-    }
-
-    reset() {
-        this.baseUrl = undefined
-        this.apiKey = undefined
-        this.modelId = undefined
-        this.temperature = config.llm.temperature.default
-        this.maxTokens = config.llm.maxTokens.default
     }
 
     load() {
@@ -81,6 +77,16 @@ export class LLM {
             throw new Error('LLM is not configured')
         }
         llmStateStore.state = this.state
+    }
+
+    clone() {
+        const ret = new LLM(false)
+        try {
+            ret.state = this.state
+        } catch (error) {
+            console.debug('Cloning LLM with default values due to error getting the state:', error)
+        }
+        return ret
     }
 
     _makeUrl(path) {
@@ -121,7 +127,10 @@ export class LLM {
         if (this.baseUrl.toLowerCase().includes('api.anthropic.com')) {
             headers.set('anthropic-dangerous-direct-browser-access', 'true')
         }
-        if (isStr(this.apiKey) && this.apiKey.trim()) {
+        if (this.useApiKey) {
+            if (!isStr(this.apiKey) || this.apiKey.trim() === '') {
+                throw new Error('API Key is not set')
+            }
             console.debug('Using API Key')
             headers.set('Authorization', `Bearer ${this.apiKey}`)
         }
@@ -171,7 +180,7 @@ export class LLM {
     }
 
     get isConfigured() {
-        return isUrlStr(this.baseUrl) && isStrLen(this.modelId, 1)
+        return isUrlStr(this.baseUrl) && isStrLen(this.modelId, 1) && (!this.useApiKey || isStrLen(this.apiKey, 1))
     }
 
     get isVerified() {

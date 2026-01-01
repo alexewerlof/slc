@@ -19,7 +19,7 @@
             </button>
         </div>
         <dialog-component ref="llmSettingsDialog" title="LLM Settings">
-            <llm-settings-component :llm="llm"></llm-settings-component>
+            <llm-settings-component v-model="llm"></llm-settings-component>
         </dialog-component>
     </div>
     <div class="chat-thread-component__thread" ref="threadContainerRef">

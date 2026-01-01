@@ -6,23 +6,39 @@
                 <p>
                     Due to cost of running AI, this open source app relies on you to provide your AI and models. There are many options:
                 </p>
-                <ul>
-                    <li v-for="engine of config.llm.engines">
-                        <strong>
-                            <ext-link :href="engine.website">{{ engine.name }}</ext-link>:
-                        </strong>
-                        {{ engine.description }}
-                        <span v-if="engine.apiKeyWebsite" class="subtle-hint">
-                            <ext-link :href="engine.apiKeyWebsite">Get API Key</ext-link>
-                        </span>
-                    </li>
-                </ul>
-                <p>
-                    ⚠ The API Key is not stored remotely or shared with anyone but it will be in the requests that are made to the API endpoints.
-                    Make sure to use HTTPS endpoints so your chat and/or API key doesn't leak.
-                </p>
+                <table>
+                    <thead>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>API Key</th>
+                    </thead>
+                    <tbody>
+                        <tr v-for="engine of config.llm.engines">
+                            <th>
+                                <ext-link :href="engine.website">{{ engine.name }}</ext-link>
+                            </th>
+                            <td v-text="engine.description"></td>
+                            <td>
+                                <ext-link v-if="engine.apiKeyWebsite" :href="engine.apiKeyWebsite">Get</ext-link>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </help-component>
         </label>
+        <div class="subtle-hint">You can pre-fill the settings</div>
+        <div class="input-button-pair">
+            <select
+                id="engine-selector"
+                v-model="selectedEngine"
+            >
+                <option
+                    v-for="engine of config.llm.engines"
+                    :value="engine"
+                >{{ engine.name }}</option>
+            </select>
+            <button v-if="selectedEngine" @click="prefillSelectedEngine()">Prefill</button>
+        </div>
     </div>
     <div class="b-mar-gap2">
         <div class="input-group">
@@ -32,12 +48,17 @@
             </label>
             <input
                 type="url"
-                v-model="llm.baseUrl"
+                v-model="llmClone.baseUrl"
                 required="required"
                 id="llm-api-settings-component__base-url" />
+            <text-block-component type="error" v-if="!llmClone.baseUrl?.toLowerCase().endsWith('/')">
+                The URL needs to end with a slash. In the future the code will do it automatically but for now, please
+                <button class="small" @click="llmClone.baseUrl += '/'">Append Slash</button>.
+            </text-block-component>
         </div>
         <div class="input-group">
-            <label :for="llm-api-key">
+            <label>
+                <input type="checkbox" v-model="llmClone.useApiKey">
                 <icon-component name="key"></icon-component>
                 API Key
                 <div class="subtle-hint">
@@ -46,10 +67,16 @@
             </label>
             <input
                 type="text"
-                v-model="llm.apiKey"
+                v-if="llmClone.useApiKey"
+                v-model="llmClone.apiKey"
                 autocomplete="llm-api-key"
                 required="required"
                 :id="llm-api-key" />
+            <text-block-component type="warning" v-if="llmClone.useApiKey && llmClone.baseUrl?.toLowerCase().startsWith('http://')">
+                The API Key is not stored remotely or shared with anyone but it will be in the requests that are made to the API endpoints.
+                Make sure to use HTTPS endpoints so your chat and/or API key doesn't leak.
+            </text-block-component>
+
         </div>
         <div class="input-group b-mar-gap2">
             <label for="llm-api-settings-component__model-id">
@@ -58,29 +85,33 @@
             <div class="subtle-hint">
                 Choose a model that supports function calls.
             </div>
-            <select
-                id="llm-api-settings-component__model-id"
-                v-model="llm.modelId"
-                v-if="modelIds.length"
-            >
-                <option
-                    v-for="modelId of modelIds"
-                    :value="modelId"
-                >{{ modelId }}</option>
-            </select>
-            <div v-if="modelIds.length === 0" v-text="llm.modelId"></div>
+            <div class="input-button-pair">
+                <input v-if="modelIds.length === 0" v-model="llmClone.modelId" type="text" disabled="true">
+                <select
+                    id="llm-api-settings-component__model-id"
+                    v-model="llmClone.modelId"
+                    v-if="modelIds.length"
+                >
+                    <option
+                        v-for="modelId of modelIds"
+                        :value="modelId"
+                    >{{ modelId }}</option>
+                </select>
+                <button @click="updateModelIds()">
+                <icon-component name="sync"></icon-component>
+                    List Models
+                </button>
+            </div>
         </div>
         <div class="button-bar">
-            <button @click="updateModelIds()">
-                <icon-component name="sync"></icon-component>
-                List Models
-            </button>
+            
         </div>
+        <text-block-component type="error" v-if="fetchModelError" v-text="fetchModelError"></text-block-component>
     </div>
     <show-hide-component title="Advanced" :hidden="true" class="b-mar-gap2">
         <div class="input-group">
             <label for="llm-temperature">
-                Temperature: {{ llm.temperature }}
+                Temperature: {{ llmClone.temperature }}
                 <help-component>
                     <p>Temperature is a hyperparameter that governs the sampling process during text generation. It determines how "random" or "creative" the model's outputs will be:</p>
                     <ul>
@@ -99,12 +130,12 @@
                 :min="config.llm.temperature.min"
                 :max="config.llm.temperature.max"
                 :step="config.llm.temperature.step"
-                v-model.number="llm.temperature"
+                v-model.number="llmClone.temperature"
             />
         </div>
         <div class="input-group">
             <label for="llm-max-tokens">
-                Max Tokens: {{ llm.maxTokens }}
+                Max Tokens: {{ llmClone.maxTokens }}
                 <help-component>
                     <p>
                         You can set a maximum tokens to be generated by the AI in response to your queries.
@@ -124,7 +155,7 @@
                 :min="config.llm.maxTokens.min"
                 :max="config.llm.maxTokens.max"
                 :step="config.llm.maxTokens.step"
-                v-model.number="llm.maxTokens"
+                v-model.number="llmClone.maxTokens"
             />
         </div>
     </show-hide-component>
@@ -132,11 +163,11 @@
         <div v-for="log of logs" v-text="log"></div>
     </code-block-component>
     <div class="button-bar">
-        <button @click="verify()" :disabled="!llm.isConfigured || llm.isVerified || llm.isBusy">
+        <button @click="verify()" :disabled="!llmClone.isConfigured || llmClone.isVerified || llmClone.isBusy">
             <icon-component name="search"></icon-component>
             verify
         </button>
-        <button @click="save()" class="button--cta" :disabled="!llm.isVerified">
+        <button @click="save()" class="button--cta" :disabled="!llmClone.isVerified">
             <icon-component name="favorite"></icon-component>
             Save
         </button>

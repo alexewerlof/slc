@@ -1,17 +1,19 @@
 import { config } from '../../config.js'
+import { isStrLen, isUrlStr } from '../../lib/validation.js'
 import { LLM } from './llm.js'
 
 export default {
     data() {
-        const llm = new LLM(true)
-
         return {
+            llmClone: this.modelValue.clone(),
             modelIds: [],
             logs: [],
+            selectedEngine: null,
+            fetchModelError: '',
         }
     },
     props: {
-        llm: {
+        modelValue: {
             type: LLM,
             required: true,
         },
@@ -24,10 +26,20 @@ export default {
     methods: {
         async updateModelIds() {
             try {
-                this.modelIds = await this.llm.getModelIds()
+                this.modelIds = await this.llmClone.getModelIds()
+                this.fetchModelError = ''
             } catch (error) {
                 console.error(String(error))
+                this.fetchModelError = String(error)
             }
+        },
+        prefillSelectedEngine() {
+            const { baseUrl, apiKeyWebsite, suggestedModel } = this.selectedEngine
+            this.llmClone.baseUrl = baseUrl
+            console.log(this.llmClone.baseUrl)
+            this.llmClone.modelId = isStrLen(suggestedModel, 1) ? suggestedModel : this.modelIds[0]
+            this.llmClone.useApiKey = isUrlStr(apiKeyWebsite)
+            
         },
         clearLogs() {
             this.logs = []
@@ -38,10 +50,11 @@ export default {
         },
         async verify() {
             this.clearLogs()
-            this.llm.verify(this.addLog.bind(this))
+            this.llmClone.verify(this.addLog.bind(this))
         },
         save() {
-            this.llm.save()
+            this.llmClone.save()
+            this.$emit('update:modelValue', this.llmClone.clone())
             console.debug('Saved in browser storage.')
         },
     },
