@@ -81,6 +81,17 @@
         <div class="input-group b-mar-gap2">
             <label for="llm-api-settings-component__model-id">
                 Model
+                <help-component>
+                    <p>
+                        Please pick a model that:
+                        <ul>
+                            <li>Supports text-generation (we use no multi-modal capability as of now)</li>
+                            <li>Supports function calls</li>
+                            <li>Is instruction tuned</li>
+                            <li>Has at least 8k Token context window and able to call functions. (An upcoming RAG implementation replaces the current CAG and token consumption)</li>
+                        </ul>
+                    </p>
+                </help-component>
             </label>
             <div class="subtle-hint">
                 Choose a model that supports function calls.
