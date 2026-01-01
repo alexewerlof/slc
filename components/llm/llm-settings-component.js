@@ -53,8 +53,9 @@ export default {
             this.llmClone.verify(this.addLog.bind(this))
         },
         save() {
-            this.llmClone.save()
-            this.$emit('update:modelValue', this.llmClone.clone())
+            this.modelValue.state = this.llmClone.state
+            this.modelValue.save()
+            this.$emit('update:modelValue', this.modelValue)
             console.debug('Saved in browser storage.')
         },
     },
