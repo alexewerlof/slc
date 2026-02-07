@@ -9,7 +9,7 @@ export function isToolsCallMessage(x) {
     if (!isObj(x)) {
         return false
     }
-    return x.role === 'assistant' && isArr(x.tool_calls)
+    return x.role === 'assistant' && isArr(x.tool_calls) && x.tool_calls.length > 0
 }
 
 export function getFirstMessage(response) {
