@@ -16,6 +16,11 @@ Although this application has no compilation process, it needs some package from
 - The rest of the application just imports those modules from vendor/npm-package-name.
 - This has the added benefit that the application is self-contained and does not require any external CDN and since the dependencies are checked in to the repo, it is safer from supply chain attacks.
 
+# Run
+
+- This app is served using a simple HTTP server that is started using the VS Code extension `Live Server` (`ritwickdey.liveserver` which is supposed to be installed in the user's VS Code).
+- Since there's no build step, the app is served directly from the source code.
+
 # Formatting
 
 Formatting uses the following rules:
@@ -25,6 +30,17 @@ Formatting uses the following rules:
 - Use dangling comma when applicable
 - No line should be longer than 120 characters
 - Use JSDoc as much as possible
+
+# Styling
+
+- The application uses a bespoke styling library located in `css/` directory.
+- The branding variables (fonts, colors, border thickness, gap, etc.) are all defined in `css/variables.css`.
+- `css/inputs.css` is the central place for styling all input elements across the app.
+- Component-specific styles are in `components/component-name.css`.
+- Do **not** hard code values like `1px`, `white`, or `0.5em` in the component CSS files. Use CSS variables defined in `css/variables.css` for consistency (colors, spacing, etc.).
+- Avoid using absolute values (like `px`) directly in CSS. Always prefer using the defined CSS variables (e.g., `var(--gap)`, `var(--bthick)`).
+    - Use `var(--gap...)` for margins and paddings.
+    - Use `var(--bthick...)` for border widths.
 
 # Your suggestion
 
