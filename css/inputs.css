@@ -63,6 +63,7 @@ input[type='range']:focus::-webkit-slider-thumb {
 
 input[type='search'],
 input[type='text'],
+input[type='password'],
 input[type='number'],
 input[type='url'],
 select,
