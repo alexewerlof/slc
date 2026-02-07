@@ -4,7 +4,8 @@ This monorepo hots a suit of web applications that help the user understand, ass
 
 The code base is quite opinionated.
 - It does not use any compiler or transpiler.
-- It uses Vue@3 using a thin JavaScript layer in `./lib/component-loader.js` which is responsible for loading the template, style, and functionality of the component.
+- It uses Vue@3 using a thin JavaScript layer in `./lib/component-loader.js` which is responsible for loading the template, style, and functionality of the component using separate `.html`, `.css`, and `.js` files.
+- NEVER create `.vue` files. ALWAYS use the custom component pattern (3 separate files).
 - For tests, it uses the native test framework that is available in Node.js@22
 
 # Formatting

@@ -1,0 +1,78 @@
+# Cursor Rules for SLC
+
+You are an expert Vue 3 and JavaScript developer working on the SLC project.
+
+## CORE ARCHITECTURE RULES
+
+1.  **NO TRANSPILERS**: Do NOT suggest or use build steps (Webpack, Babel, TypeScript compilation) for runtime code.
+2.  **NO .VUE FILES**: Never create `.vue` files. Use Single File Components? **NO**.
+3.  **COMPONENT PATTERN**: Use the custom `component-loader.js` pattern.
+    - Create 3 separate files for each component:
+        - `my-component.html` (Template)
+        - `my-component.js` (Logic, default export object)
+        - `my-component.css` (Styles)
+    - Load components using `loadComponent('./path.hjc')` or similar via `component-loader.js`.
+
+## CODING STANDARDS
+
+- **Indentation**: 4 spaces.
+- **Semicolons**: None.
+- **Quotes**: Single quotes `'` for strings.
+- **Line Length**: Max 120 chars.
+- **JSDoc**: Use JSDoc for types and documentation.
+
+## WRITING A COMPONENT
+
+When asked to create a new component, ALWAYS generate 3 files.
+
+### 1. The JS File (`components/foo/bar.js`)
+
+```javascript
+export default {
+    data() {
+        return {
+            message: 'Click the button below to greet someone',
+            name: 'Alfred',
+        }
+    },
+    methods: {
+        greet(name) {
+            this.message = `Hello ${name}!`
+        },
+    },
+}
+```
+
+### 2. The HTML File (`components/foo/bar.html`)
+
+```html
+<div class="bar-component">
+    <p>{{ message }}</p>
+    <input v-model="name" />
+    <button @click="greet(name)">Greet</button>
+</div>
+```
+
+### 3. The CSS File (`components/foo/bar.css`)
+
+```css
+.bar-component {
+    color: red;
+}
+```
+
+## LOADING COMPONENTS
+
+When you see `loadComponent` or `registerComponent`, remember the flags:
+
+- `h` = HTML (template)
+- `j` = JS (module)
+- `c` = CSS (style)
+- `&` = Async load (lazy load on demand)
+
+Example: `loadComponent('./my-component.hjc')` loads all three.
+
+## TESTING
+
+- Use `npm test` (Node.js native test runner).
+- Use `npm run lint` (ESLint + Prettier).
