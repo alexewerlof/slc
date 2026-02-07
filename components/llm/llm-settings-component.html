@@ -62,16 +62,21 @@
                 <icon-component name="key"></icon-component>
                 API Key
                 <div class="subtle-hint">
-                    You can write anything if not required
+                    You can write anything if not required {{ apiKeyVisible }}
                 </div>
             </label>
-            <input
-                type="text"
-                v-if="llmClone.useApiKey"
-                v-model="llmClone.apiKey"
-                autocomplete="llm-api-key"
-                required="required"
-                :id="llm-api-key" />
+            <div class="input-button-pair" v-if="llmClone.useApiKey">
+                <input
+                    :type="apiKeyInputType"
+                    v-model="llmClone.apiKey"
+                    autocomplete="llm-api-key"
+                    required="required"
+                    id="llm-api-key" />
+                <button @click="apiKeyVisible = !apiKeyVisible">
+                    <icon-component name="show" v-if="apiKeyVisible"></icon-component>
+                    <icon-component name="hide" v-else></icon-component>
+                </button>
+            </div>
             <text-block-component type="warning" v-if="llmClone.useApiKey && llmClone.baseUrl?.toLowerCase().startsWith('http://')">
                 The API Key is not stored remotely or shared with anyone but it will be in the requests that are made to the API endpoints.
                 Make sure to use HTTPS endpoints so your chat and/or API key doesn't leak.
@@ -109,8 +114,8 @@
                     >{{ modelId }}</option>
                 </select>
                 <button @click="updateModelIds()">
-                <icon-component name="sync"></icon-component>
-                    List Models
+                <icon-component name="sync" :disabled="llmClone.isBusy"></icon-component>
+                    Get
                 </button>
             </div>
         </div>
@@ -176,7 +181,7 @@
     <div class="button-bar">
         <button @click="verify()" :disabled="!llmClone.isConfigured || isVerified || llmClone.isBusy">
             <icon-component name="search"></icon-component>
-            verify
+            Verify
         </button>
         <button @click="save()" class="button--cta" :disabled="!isVerified">
             <icon-component name="favorite"></icon-component>

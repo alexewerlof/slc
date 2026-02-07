@@ -12,6 +12,7 @@ export default {
             selectedEngine: null,
             fetchModelError: '',
             verifiedState: undefined,
+            apiKeyVisible: false,
         }
     },
     props: {
@@ -26,7 +27,10 @@ export default {
         },
         isVerified() {
             return this.llmClone.isStateEqualTo(this.verifiedState)
-        }
+        },
+        apiKeyInputType() {
+            return this.apiKeyVisible ? 'text' : 'password'
+        },
     },
     methods: {
         async updateModelIds() {
@@ -44,7 +48,6 @@ export default {
             console.log(this.llmClone.baseUrl)
             this.llmClone.modelId = isStrLen(suggestedModel, 1) ? suggestedModel : this.modelIds[0]
             this.llmClone.useApiKey = isUrlStr(apiKeyWebsite)
-            
         },
         clearLogs() {
             this.logs = []
@@ -54,14 +57,13 @@ export default {
             console.debug(str)
         },
         async verify() {
+            const logCallback = this.addLog.bind(this)
             try {
-                const logCallback = this.addLog.bind(this)
                 this.clearLogs()
                 await verifyModelEndpoint(this.llmClone, logCallback)
                 await verifyWordEcho(this.llmClone, logCallback)
                 await verifyToolsCall(this.llmClone, logCallback)
                 this.verifiedState = this.llmClone.state
-                logCallback(`Verified ${JSON.stringify(this.verifiedState)}`)
                 console.debug(this.verifiedState)
                 logCallback('☑️ You can save your settings now.')
             } catch (error) {
