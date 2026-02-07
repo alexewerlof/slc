@@ -38,6 +38,7 @@ Formatting uses the following rules:
 - `css/inputs.css` is the central place for styling all input elements across the app.
 - Component-specific styles are in `components/component-name.css`.
 - Do **not** hard code values like `1px`, `white`, or `0.5em` in the component CSS files. Use CSS variables defined in `css/variables.css` for consistency (colors, spacing, etc.).
+- Use the latest CSS features including CSS nested rules.
 - Avoid using absolute values (like `px`) directly in CSS. Always prefer using the defined CSS variables (e.g., `var(--gap)`, `var(--bthick)`).
     - Use `var(--gap...)` for margins and paddings.
     - Use `var(--bthick...)` for border widths.

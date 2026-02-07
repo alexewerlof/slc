@@ -17,6 +17,10 @@
     --title-font-family: 'Alata', sans-serif;
     --body-font-family: 'Roboto', sans-serif;
     --code-font-family: 'Roboto Mono', monospace;
+    --brand-interactive: #47a9ff;
+    --brand-error: #f86262;
+    --brand-warning: #ffbc52;
+    --brand-success: #1bc554;
     --brand-blue: #47a9ff;
     --brand-yellow: #ffbc52;
     --brand-green: #1bc554;

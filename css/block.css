@@ -26,6 +26,7 @@
         word-wrap: normal;
         direction: ltr;
         -webkit-font-feature-settings: 'liga';
+        font-feature-settings: 'liga';
         -webkit-font-smoothing: antialiased;
     }
 
@@ -41,14 +42,14 @@
     }
 
     &.warning {
-        color: var(--primary-color);
+        color: var(--brand-warning);
         &::before {
             content: 'warning';
         }
     }
 
     &.error {
-        color: var(--brand-red);
+        color: var(--brand-error);
         &::before {
             content: 'dangerous';
         }

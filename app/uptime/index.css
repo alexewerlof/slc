@@ -1,6 +1,6 @@
 .common-slo-windows__downtime {
     width: 25%;
-    color: var(--brand-red);
+    color: var(--brand-error);
     padding-left: var(--gap);
 }
 
@@ -9,11 +9,11 @@
 }
 
 .common-slo-windows__good {
-    color: var(--brand-green);
+    color: var(--brand-success);
 }
 
 .common-slo-windows__bad {
-    color: var(--brand-red);
+    color: var(--brand-error);
 }
 
 .common-slo-windows__your-config {

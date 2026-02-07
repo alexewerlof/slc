@@ -39,7 +39,7 @@ input[type='range']::-webkit-slider-runnable-track {
 
 input[type='range']:hover::-webkit-slider-runnable-track,
 input[type='range']:focus::-webkit-slider-runnable-track {
-    border-color: var(--secondary-color);
+    border-color: var(--brand-interactive);
 }
 
 input[type='range']::-webkit-slider-thumb {
@@ -47,7 +47,7 @@ input[type='range']::-webkit-slider-thumb {
     appearance: none;
     width: 0.2em;
     height: 100%;
-    background-color: var(--secondary-color);
+    background-color: var(--brand-interactive);
     transition:
         height var(--animation-speed) ease-in-out,
         margin-top var(--animation-speed) ease-in-out;
@@ -58,7 +58,7 @@ input[type='range']:focus::-webkit-slider-thumb {
     margin-top: -0.5em;
     height: 200%;
     filter: brightness(135%);
-    box-shadow: 0 0 0.5em 0 var(--secondary-color);
+    box-shadow: 0 0 0.5em 0 var(--brand-interactive);
 }
 
 select[size] {
@@ -78,10 +78,10 @@ select[size] {
         &:checked,
         &:focus,
         &:active {
-            background-color: var(--brand-blue) !important;
-            background-image: linear-gradient(0deg, var(--brand-blue) 0%, var(--brand-blue) 100%);
+            background-color: var(--brand-interactive) !important;
+            background-image: linear-gradient(0deg, var(--brand-interactive) 0%, var(--brand-interactive) 100%);
             color: var(--background-color) !important;
-            box-shadow: 0 0 10em 10em var(--brand-blue) inset;
+            box-shadow: 0 0 10em 10em var(--brand-interactive) inset;
         }
     }
 }
@@ -125,19 +125,24 @@ textarea {
     }
 
     &:focus {
-        border-color: var(--secondary-color);
+        border-color: var(--brand-interactive);
     }
 
     &:focus-visible {
         outline: none;
     }
-    &:invalid {
-        border-color: var(--brand-red);
-    }
-
     &:hover,
     table & {
-        border-color: var(--secondary-color);
+        border-color: var(--brand-interactive);
+    }
+
+    &:invalid {
+        border-color: var(--brand-error);
+
+        &:hover,
+        &:focus {
+            border-color: var(--brand-error);
+        }
     }
 }
 
@@ -150,7 +155,7 @@ input[type='checkbox'] {
     display: inline-block;
     width: 1em;
     height: 1em;
-    border: var(--bthick) solid var(--secondary-color);
+    border: var(--bthick) solid var(--brand-interactive);
     background-color: var(--background-darker);
     box-sizing: border-box;
     cursor: pointer;
@@ -170,7 +175,7 @@ input[type='checkbox'] {
         left: 1px;
         right: 1px;
         bottom: 1px;
-        background-color: var(--secondary-color);
+        background-color: var(--brand-interactive);
         opacity: 0;
         transition: opacity var(--animation-speed) ease-in-out;
     }
@@ -248,7 +253,7 @@ textarea {
 }
 
 button {
-    background-color: var(--secondary-color);
+    background-color: var(--brand-interactive);
     color: var(--background-color);
     border: none;
     border-radius: var(--bradius2);
@@ -274,7 +279,7 @@ button {
 
     &:hover {
         filter: brightness(135%);
-        box-shadow: 0 0 0.5em 0 var(--secondary-color);
+        box-shadow: 0 0 0.5em 0 var(--brand-interactive);
         z-index: 1;
     }
 }
@@ -314,11 +319,11 @@ button {
 }
 
 .button--danger {
-    background-color: var(--brand-red);
+    background-color: var(--brand-error);
 }
 
 .button--danger:hover {
-    box-shadow: 0 0 0.5em 0 var(--brand-red);
+    box-shadow: 0 0 0.5em 0 var(--brand-error);
 }
 
 a,

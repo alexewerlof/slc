@@ -25,11 +25,11 @@
 }
 
 .lint-component__count--error {
-    color: var(--brand-red);
+    color: var(--brand-error);
 }
 
 .lint-component__count--warn {
-    color: var(--brand-yellow);
+    color: var(--brand-warning);
 }
 
 .lint-component__count--info {

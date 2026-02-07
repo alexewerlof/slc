@@ -3,19 +3,19 @@
 }
 
 .percentage-overview-component__error-caption {
-    color: var(--brand-red);
-    border-left: 1px solid var(--brand-red);
+    color: var(--brand-error);
+    border-left: 1px solid var(--brand-error);
     padding: 0.2em;
 }
 
 .percentage-overview-component__fill--bad {
-    background-color: var(--brand-red);
+    background-color: var(--brand-error);
 }
 
 .percentage-overview-component__fill--good {
-    background-color: var(--brand-green);
+    background-color: var(--brand-success);
     color: var(--background-color);
-    border-left: 1px solid var(--brand-red);
+    border-left: 1px solid var(--brand-error);
     padding: 0.2em;
 }
 
