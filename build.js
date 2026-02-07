@@ -22,6 +22,9 @@ const exportStatements = {
     yaml: {
         contents: `export * from 'yaml'`,
     },
+    pako: {
+        contents: `export * from 'pako'`,
+    },
 }
 
 const configs = Object.entries(exportStatements).map(([name, config]) => ({

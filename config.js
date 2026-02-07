@@ -10,7 +10,7 @@ function fz(obj) {
 export const config = fz({
     appName: 'SLC',
     // This version will be changed when the URL parameters change
-    urlVer: 3,
+    urlVer: 4,
     displayName: fz({
         minLength: 2,
         maxLength: 300,

@@ -8,6 +8,14 @@ The code base is quite opinionated.
 - NEVER create `.vue` files. ALWAYS use the custom component pattern (3 separate files).
 - For tests, it uses the native test framework that is available in Node.js@22
 
+# Build
+
+Although this application has no compilation process, it needs some package from NPM.
+- We use standard NPM `package.json` to define the dependencies.
+- `build.js` is a script that uses `esbuild` to export those dependencies as ESM to the `vendor` directory
+- The rest of the application just imports those modules from vendor/npm-package-name.
+- This has the added benefit that the application is self-contained and does not require any external CDN and since the dependencies are checked in to the repo, it is safer from supply chain attacks.
+
 # Formatting
 
 Formatting uses the following rules:
