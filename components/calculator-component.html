@@ -51,6 +51,7 @@
                                 v-model="calculator.indicators.selected"
                                 id="indicator-selector"
                                 class="b-mar-gap2"
+                                :size="calculator.indicators.length"
                             >
                                 <option
                                     v-for="indicator of calculator.indicators"
@@ -120,6 +121,7 @@
                                 v-model="calculator.indicators.selected.objectives.selected"
                                 id="objective-selector"
                                 class="b-mar-gap2"
+                                :size="calculator.indicators.selected.objectives.length"
                             >
                                 <option
                                     v-for="objective of calculator.indicators.selected.objectives"
@@ -208,6 +210,7 @@
                                 v-model="calculator.indicators.selected.objectives.selected.alerts.selected"
                                 id="alert-selector"
                                 class="b-mar-gap2"
+                                :size="calculator.indicators.selected.objectives.selected.alerts.length"
                             >
                                 <option
                                     v-for="alert of calculator.indicators.selected.objectives.selected.alerts" 
