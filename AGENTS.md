@@ -19,6 +19,8 @@ Although this application has no compilation process, it needs some package from
 # Run
 
 - This app is served using a simple HTTP server that is started using the VS Code extension `Live Server` (`ritwickdey.liveserver` which is supposed to be installed in the user's VS Code).
+- By default, `Live Server` starts the server on port 5500 but if that port is already in use, it will try the next available port (e.g. 5501, 5502, etc.).
+- Do **not** use `python -m http.server` or any other HTTP server. Only use `Live Server`.
 - Since there's no build step, the app is served directly from the source code.
 
 # Formatting
