@@ -20,7 +20,7 @@ export function createThread(assessmentEditorComponent) {
             */
             () =>
                 assessmentEditorComponent.editingInstance
-                    ? `Currently the entity ${assessmentEditorComponent.editingInstance.id} is selected in the UI`
+                    ? `Currently the entity ${assessmentEditorComponent.editingInstance.id} is selected in the UI.`
                     : '',
             'To help you guide the user through the assessment workflow,',
             'a deterministic algorithm is used to analyze the current state of the assessment and here is what you need to do:',

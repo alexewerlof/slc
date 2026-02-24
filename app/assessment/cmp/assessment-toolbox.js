@@ -107,7 +107,7 @@ export function createToolbox(assessmentEditorComponent) {
 
     toolbox
         .add('addNewService', 'Add a new service to the designated provider and return its id.')
-        .prm('providerId:string*', 'The id of the provider to add the service to')
+        .prm('providerId:string*', 'The id of the existing provider to add the service to.')
         .prm('displayName:string*', 'The display name of the new service')
         .prm('description:string', 'A description of the new service')
         .prm(
@@ -127,7 +127,7 @@ export function createToolbox(assessmentEditorComponent) {
 
     toolbox
         .add('addNewTask', 'Add a new task to the designated consumer and return its id.')
-        .prm('consumerId:string*', 'The id of the consumer to add the task to')
+        .prm('consumerId:string*', 'The id of the existing consumer to add the task to')
         .prm('displayName:string*', 'The display name of the new task')
         .prm('description:string', 'A description of the new task')
         .fn((options) => {
@@ -143,8 +143,8 @@ export function createToolbox(assessmentEditorComponent) {
 
     toolbox
         .add('addNewUsage', 'Create a new usage between an existing task and service, then return the id of the usage.')
-        .prm('serviceId:string*', 'The id of the service to add the usage to')
-        .prm('taskId:string*', 'The id of the task to add the usage to')
+        .prm('serviceId:string*', 'The id of the existing service to add the usage to')
+        .prm('taskId:string*', 'The id of the existing task to add the usage to')
         .fn((options) => {
             const { serviceId, taskId } = options
             const service = assessmentEditorComponent.assessment.services.find(({ id }) => id === serviceId)
@@ -161,7 +161,7 @@ export function createToolbox(assessmentEditorComponent) {
             'addNewFailure',
             'Add a new failure to an existing usage, and then return the id of the newly created failure.',
         )
-        .prm('usageId: string*', 'The id of the usage to add the failure to')
+        .prm('usageId: string*', 'The id of the existing usage to add the failure to')
         .prm('symptom: string*', 'The consumer-facing symptom. This is how the failure negatively impacts the Task.')
         .prm('consequence: string', 'The consequence of the failure on the consumer')
         .prm('businessImpact: string', 'The impact of the failure on the ability of the business to make or save money')
@@ -182,7 +182,7 @@ export function createToolbox(assessmentEditorComponent) {
             'addNewMetric',
             'Add a new Metric to an existing service, and then return the id of the newly created metric.',
         )
-        .prm('serviceId:string*', 'The id of the service to add the metric to')
+        .prm('serviceId:string*', 'The id of the existing service to add the metric to')
         .prm('displayName:string*', 'The name of the metric')
         .prm('description:string', 'Some description about why this metric exists and where it is measured')
         // .prm('isBoolean:string', '')
