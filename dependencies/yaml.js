@@ -5,13 +5,13 @@ var __export = (target, all) => {
 };
 
 // node_modules/yaml/browser/dist/nodes/identity.js
-var ALIAS = Symbol.for("yaml.alias");
-var DOC = Symbol.for("yaml.document");
-var MAP = Symbol.for("yaml.map");
-var PAIR = Symbol.for("yaml.pair");
-var SCALAR = Symbol.for("yaml.scalar");
-var SEQ = Symbol.for("yaml.seq");
-var NODE_TYPE = Symbol.for("yaml.node.type");
+var ALIAS = /* @__PURE__ */ Symbol.for("yaml.alias");
+var DOC = /* @__PURE__ */ Symbol.for("yaml.document");
+var MAP = /* @__PURE__ */ Symbol.for("yaml.map");
+var PAIR = /* @__PURE__ */ Symbol.for("yaml.pair");
+var SCALAR = /* @__PURE__ */ Symbol.for("yaml.scalar");
+var SEQ = /* @__PURE__ */ Symbol.for("yaml.seq");
+var NODE_TYPE = /* @__PURE__ */ Symbol.for("yaml.node.type");
 var isAlias = (node) => !!node && typeof node === "object" && node[NODE_TYPE] === ALIAS;
 var isDocument = (node) => !!node && typeof node === "object" && node[NODE_TYPE] === DOC;
 var isMap = (node) => !!node && typeof node === "object" && node[NODE_TYPE] === MAP;
@@ -41,9 +41,9 @@ function isNode(node) {
 var hasAnchor = (node) => (isScalar(node) || isCollection(node)) && !!node.anchor;
 
 // node_modules/yaml/browser/dist/visit.js
-var BREAK = Symbol("break visit");
-var SKIP = Symbol("skip children");
-var REMOVE = Symbol("remove node");
+var BREAK = /* @__PURE__ */ Symbol("break visit");
+var SKIP = /* @__PURE__ */ Symbol("skip children");
+var REMOVE = /* @__PURE__ */ Symbol("remove node");
 function visit(node, visitor) {
   const visitor_ = initVisitor(visitor);
   if (isDocument(node)) {
@@ -4861,9 +4861,9 @@ function stringifyItem({ start, key, sep, value }) {
 }
 
 // node_modules/yaml/browser/dist/parse/cst-visit.js
-var BREAK2 = Symbol("break visit");
-var SKIP2 = Symbol("skip children");
-var REMOVE2 = Symbol("remove item");
+var BREAK2 = /* @__PURE__ */ Symbol("break visit");
+var SKIP2 = /* @__PURE__ */ Symbol("skip children");
+var REMOVE2 = /* @__PURE__ */ Symbol("remove item");
 function visit2(cst, visitor) {
   if ("type" in cst && cst.type === "document")
     cst = { start: cst.start, value: cst.value };

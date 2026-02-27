@@ -1,4 +1,4 @@
-import { createApp } from '../../vendor/vue.js'
+import { createApp } from '../../dependencies/vue.js'
 import { registerAllComponents } from '../../components/index.js'
 import { Assessment } from '../../components/assessment.js'
 import { loadJson } from '../../lib/share.js'

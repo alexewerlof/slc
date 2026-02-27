@@ -96,7 +96,7 @@ export default {
         async exportToYaml() {
             // const obj = JSON.parse(JSON.stringify(this.assessment))
             // this.exportedCode = dump(obj)
-            const { dump } = await import('../vendor/js-yaml.js')
+            const { dump } = await import('../dependencies/yaml.js')
             this.exportedCode = dump(this.assessment.state)
         },
 

@@ -1,4 +1,4 @@
-import { createApp } from '../../vendor/vue.js'
+import { createApp } from '../../dependencies/vue.js'
 import { config } from '../../config.js'
 import { showToast } from '../../lib/toast.js'
 import { registerAllComponents } from '../../components/index.js'

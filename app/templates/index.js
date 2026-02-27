@@ -1,4 +1,4 @@
-import { createApp } from '../../vendor/vue.js'
+import { createApp } from '../../dependencies/vue.js'
 import { registerAllComponents } from '../../components/index.js'
 import { Calculator } from '../../components/calculator.js'
 import { stateToUrl } from '../../lib/share.js'

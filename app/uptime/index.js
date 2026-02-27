@@ -1,4 +1,4 @@
-import { createApp } from '../../vendor/vue.js'
+import { createApp } from '../../dependencies/vue.js'
 import { Indicator } from '../../components/indicator.js'
 import { Objective } from '../../components/objective.js'
 import { config } from '../../config.js'

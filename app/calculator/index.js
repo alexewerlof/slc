@@ -1,4 +1,4 @@
-import { createApp } from '../../vendor/vue.js'
+import { createApp } from '../../dependencies/vue.js'
 import { config } from '../../config.js'
 import { percentToRatio } from '../../lib/math.js'
 import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '../../lib/fmt.js'

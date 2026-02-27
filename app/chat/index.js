@@ -1,4 +1,4 @@
-import { createApp } from '../../vendor/vue.js'
+import { createApp } from '../../dependencies/vue.js'
 import { registerAllComponents } from '../../components/index.js'
 import { FileBead, Thread } from '../../components/llm/thread.js'
 import { Agent } from '../../components/llm/agent.js'

@@ -1,4 +1,4 @@
-import * as YAML from '../../../vendor/yaml.js'
+import * as YAML from '../../../dependencies/yaml.js'
 import { Assessment } from '../../../components/assessment.js'
 import { Service } from '../../../components/service.js'
 import { UserPromptBead } from '../../../components/llm/thread.js'
