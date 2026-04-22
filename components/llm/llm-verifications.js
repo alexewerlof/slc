@@ -3,6 +3,12 @@ import { Agent } from './agent.js'
 import { Thread, UserPromptBead } from './thread.js'
 import { Toolbox } from './toolbox.js'
 
+/**
+ * Verifies that the LLM endpoint is reachable and returns at least one model.
+ * @param {import('./llm.js').LLM} llm
+ * @param {(message: string) => void} logCallback Called with progress messages.
+ * @returns {Promise<true>}
+ */
 export async function verifyModelEndpoint(llm, logCallback) {
     logCallback('Verifying LLM endpoint...')
     const models = await llm.getModels()
@@ -16,6 +22,12 @@ export async function verifyModelEndpoint(llm, logCallback) {
     return true
 }
 
+/**
+ * Verifies that the LLM can receive a prompt and echo back a specific secret word.
+ * @param {import('./llm.js').LLM} llm
+ * @param {(message: string) => void} logCallback Called with progress messages.
+ * @returns {Promise<true>}
+ */
 export async function verifyWordEcho(llm, logCallback) {
     const testThread = new Thread()
     const testKeyWord = 'wombat' + Math.round(Math.random() * 1000)
@@ -45,6 +57,12 @@ export async function verifyWordEcho(llm, logCallback) {
     return true
 }
 
+/**
+ * Verifies that the LLM can invoke a tool exactly once when instructed to do so.
+ * @param {import('./llm.js').LLM} llm
+ * @param {(message: string) => void} logCallback Called with progress messages.
+ * @returns {Promise<true>}
+ */
 export async function verifyToolsCall(llm, logCallback) {
     logCallback('Verifying tools calls...')
     const testThread = new Thread()

@@ -15,6 +15,10 @@ export class Assessment extends Entity {
     consumers = new SelectableArray(Consumer, this)
     providers = new SelectableArray(Provider, this)
 
+    /**
+     * Creates a new Assessment instance.
+     * @param {Object} [state] Optional serialised state to restore.
+     */
     constructor(state) {
         super('a', true)
         if (isObj(state)) {
@@ -22,6 +26,10 @@ export class Assessment extends Entity {
         }
     }
 
+    /**
+     * Returns the serialisable state of this Assessment.
+     * @returns {Object}
+     */
     get state() {
         const ret = super.state
 
@@ -34,6 +42,10 @@ export class Assessment extends Entity {
         return ret
     }
 
+    /**
+     * Restores the Assessment from a serialised state object.
+     * @param {Object} newState
+     */
     set state(newState) {
         super.state = newState
 
@@ -53,6 +65,9 @@ export class Assessment extends Entity {
         }
     }
 
+    /**
+     * Resets the Assessment to its default (empty) state.
+     */
     remove() {
         this.displayName = config.displayName.default
         this.description = config.description.default
@@ -60,6 +75,12 @@ export class Assessment extends Entity {
         this.consumers.removeAll()
     }
 
+    /**
+     * Returns the Usage that connects the given service and task, or undefined.
+     * @param {Service} service
+     * @param {Task} task
+     * @returns {import('./usage.js').Usage|undefined}
+     */
     findUsage(service, task) {
         if (!isInstance(service, Service)) {
             throw new TypeError(`service must be an instance of Service. Got ${service}`)
@@ -72,26 +93,50 @@ export class Assessment extends Entity {
         })
     }
 
+    /**
+     * All services across all providers.
+     * @returns {import('./service.js').Service[]}
+     */
     get services() {
         return this.providers.flatMap((provider) => provider.services)
     }
 
+    /**
+     * All tasks across all consumers.
+     * @returns {import('./task.js').Task[]}
+     */
     get tasks() {
         return this.consumers.flatMap((consumer) => consumer.tasks)
     }
 
+    /**
+     * All metrics across all services.
+     * @returns {import('./metric.js').Metric[]}
+     */
     get metrics() {
         return this.services.flatMap((service) => service.metrics)
     }
 
+    /**
+     * All usages across all services.
+     * @returns {import('./usage.js').Usage[]}
+     */
     get usages() {
         return this.services.flatMap((service) => service.usages)
     }
 
+    /**
+     * All failures sorted by descending impact level.
+     * @returns {import('./failure.js').Failure[]}
+     */
     get failures() {
         return this.usages.flatMap((usage) => usage.failures).sort((f1, f2) => f2.impactLevel - f1.impactLevel)
     }
 
+    /**
+     * Every entity in the assessment in traversal order.
+     * @returns {import('../lib/entity.js').Entity[]}
+     */
     get all() {
         const ret = []
         for (const consumer of this.consumers) {
@@ -119,10 +164,20 @@ export class Assessment extends Entity {
         return ret
     }
 
+    /**
+     * Finds an entity by its unique id.
+     * @param {string} id
+     * @returns {import('../lib/entity.js').Entity|undefined}
+     */
     getEntityById(id) {
         return this.all.find((entity) => entity.id === id)
     }
 
+    /**
+     * Returns entities filtered by class name, or all entities when className is undefined.
+     * @param {string} [className]
+     * @returns {import('../lib/entity.js').Entity[]}
+     */
     getEntitiesByClassName(className) {
         switch (className) {
             case 'Provider':
@@ -146,6 +201,11 @@ export class Assessment extends Entity {
         }
     }
 
+    /**
+     * Returns all failures belonging to the given service.
+     * @param {Service} service
+     * @returns {import('./failure.js').Failure[]}
+     */
     findFailures(service) {
         if (!isInstance(service, Service)) {
             throw new TypeError(`service must be an instance of Service. Got ${service}`)
@@ -153,6 +213,10 @@ export class Assessment extends Entity {
         return this.failures.filter((failure) => failure.usage.service === service)
     }
 
+    /**
+     * Returns a markdown-formatted summary of the assessment.
+     * @returns {string}
+     */
     toString() {
         const lines = []
         const emptyLine = '\n'
@@ -249,10 +313,18 @@ export class Assessment extends Entity {
         return joinLines(1, ...lines)
     }
 
+    /**
+     * Converts the assessment to a Prolog representation.
+     * @returns {string}
+     */
     toProlog() {
         return assessment2prolog(this)
     }
 
+    /**
+     * Returns lint results for the assessment.
+     * @returns {Lint}
+     */
     get lint() {
         const lint = new Lint()
 
@@ -267,6 +339,10 @@ export class Assessment extends Entity {
         return lint
     }
 
+    /**
+     * Returns an array of markdown strings containing lint messages for the assessment and all entities.
+     * @returns {string[]}
+     */
     markdownLint() {
         const ret = []
 

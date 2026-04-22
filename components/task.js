@@ -9,6 +9,11 @@ const scopeIcon = unicodeSymbol('scope')
 export class Task extends Entity {
     consumer = null
 
+    /**
+     * Creates a new Task instance.
+     * @param {import('./consumer.js').Consumer} consumer The consumer this task belongs to.
+     * @param {Object} [state] Optional serialised state to restore.
+     */
     constructor(consumer, state) {
         super('t', true)
         if (!isInstance(consumer, Consumer)) {
@@ -20,10 +25,17 @@ export class Task extends Entity {
         }
     }
 
+    /**
+     * All usages in the assessment that reference this task.
+     * @returns {import('./usage.js').Usage[]}
+     */
     get usages() {
         return this.consumer.assessment.usages.filter((usage) => usage.task === this)
     }
 
+    /**
+     * Called before this task is removed. Cleans up associated usages.
+     */
     onRemove() {
         const { usages } = this.consumer.assessment
         for (let i = usages.length - 1; i >= 0; i--) {
@@ -33,18 +45,33 @@ export class Task extends Entity {
         }
     }
 
+    /**
+     * @returns {string}
+     */
     toString() {
         return [this.consumer.markdownDisplayName, this.markdownDisplayName].join(scopeIcon)
     }
 
+    /**
+     * Index of this task within the consumer's tasks array.
+     * @returns {number}
+     */
     get index() {
         return this.consumer.tasks.indexOf(this)
     }
 
+    /**
+     * Removes this task from the consumer.
+     * @returns {boolean}
+     */
     remove() {
         return this.consumer.tasks.remove(this)
     }
 
+    /**
+     * Returns lint results for this task.
+     * @returns {import('./lint.js').Lint}
+     */
     get lint() {
         const lint = new Lint()
 

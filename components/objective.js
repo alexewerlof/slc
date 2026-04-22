@@ -28,6 +28,11 @@ export class Objective extends Entity {
     /** The indicator this SLO is attached to */
     indicator = null
 
+    /**
+     * Creates a new Objective (SLO) instance.
+     * @param {Indicator} indicator The indicator this SLO measures.
+     * @param {Object} [state] Optional serialised state to restore.
+     */
     constructor(indicator, state) {
         super('o', false)
         if (!isInstance(indicator, Indicator)) {
@@ -43,6 +48,10 @@ export class Objective extends Entity {
         }
     }
 
+    /**
+     * Returns the serialisable state of this Objective.
+     * @returns {Object}
+     */
     get state() {
         const ret = super.state
 
@@ -62,6 +71,10 @@ export class Objective extends Entity {
         return ret
     }
 
+    /**
+     * Restores the Objective from a serialised state object.
+     * @param {Object} newState
+     */
     set state(newState) {
         super.state = newState
 
@@ -109,10 +122,18 @@ export class Objective extends Entity {
         }
     }
 
+    /**
+     * The lower threshold value for the SLI metric.
+     * @returns {number}
+     */
     get lowerThreshold() {
         return this._lowerThreshold
     }
 
+    /**
+     * Sets the lower threshold, clamping to the valid range.
+     * @param {number} value
+     */
     set lowerThreshold(value) {
         const { min, max } = config.lowerThreshold
         this._lowerThreshold = inRange(value, min, Math.min(max, this.upperThreshold))
@@ -120,10 +141,18 @@ export class Objective extends Entity {
             : config.lowerThreshold.default
     }
 
+    /**
+     * The upper threshold value for the SLI metric.
+     * @returns {number}
+     */
     get upperThreshold() {
         return this._upperThreshold
     }
 
+    /**
+     * Sets the upper threshold, clamping to the valid range.
+     * @param {number} value
+     */
     set upperThreshold(value) {
         const { min, max } = config.upperThreshold
         this._upperThreshold = inRange(value, Math.max(min, this.lowerThreshold), max)
@@ -131,38 +160,70 @@ export class Objective extends Entity {
             : config.upperThreshold.default
     }
 
+    /**
+     * The maximum allowed value for the lower threshold.
+     * @returns {number}
+     */
     get lowerThresholdMax() {
         return this.indicator.upperBound ? this.upperThreshold : config.lowerThreshold.max
     }
 
+    /**
+     * The minimum allowed value for the upper threshold.
+     * @returns {number}
+     */
     get upperThresholdMin() {
         return this.indicator.lowerBound ? this.lowerThreshold : config.upperThreshold.min
     }
 
+    /**
+     * The integer part of the SLO target percentage.
+     * @returns {number}
+     */
     get targetInt() {
         return Math.floor(this.target)
     }
 
+    /**
+     * Sets the integer part of the SLO target, keeping the fractional part.
+     * @param {string|number} newIntStr
+     */
     set targetInt(newIntStr) {
         const newInt = Number(newIntStr)
         const currTargetFrac = this.target % 1
         this.target = toFixed(newInt + currTargetFrac)
     }
 
+    /**
+     * The fractional part of the SLO target percentage.
+     * @returns {number}
+     */
     get targetFrac() {
         return toFixed(this.target % 1)
     }
 
+    /**
+     * Sets the fractional part of the SLO target, keeping the integer part.
+     * @param {string|number} newFracStr
+     */
     set targetFrac(newFracStr) {
         const newFrac = Number(newFracStr)
         const currTargetInt = Math.floor(this.target)
         this.target = toFixed(currTargetInt + newFrac)
     }
 
+    /**
+     * The error budget as a percentage (100 - target).
+     * @returns {number}
+     */
     get errorBudget() {
         return toFixed(100 - this.target)
     }
 
+    /**
+     * The length of the SLO window in days.
+     * @returns {number}
+     */
     get windowDays() {
         return secondsToDays(this.window.sec)
     }
@@ -172,19 +233,34 @@ export class Objective extends Entity {
         this.window.sec = daysToSeconds(days)
     }
 
+    /**
+     * The expected total number of valid events in the SLO window.
+     * @returns {number}
+     */
     get expectedTotalEvents() {
         return Math.round(this.indicator.expectedDailyEvents * this.windowDays) || config.expectedTotalEvents.min
     }
 
+    /**
+     * Sets the expected total events by back-computing the daily event rate.
+     * @param {number} value
+     */
     set expectedTotalEvents(value) {
         this.indicator.expectedDailyEvents = Math.round(value / this.windowDays)
     }
 
-    /** Allows fine tuning the target by adding or removing a small amount */
+    /**
+     * Adjusts the SLO target by a small delta, clamping to the configured range.
+     * @param {number} amount The delta to add (positive) or subtract (negative).
+     */
     changeTarget(amount) {
         this.target = clamp(toFixed(this.target + amount), config.slo.min, config.slo.max)
     }
 
+    /**
+     * The number of valid events (timeslices or total events) in the SLO window.
+     * @returns {number}
+     */
     get validEventCount() {
         if (this.indicator.isTimeBased) {
             return this.window.countTimeslices
@@ -193,14 +269,26 @@ export class Objective extends Entity {
         }
     }
 
+    /**
+     * The number of good events required to meet the SLO target.
+     * @returns {number}
+     */
     get goodEventCount() {
         return Math.floor(percent(this.target, this.validEventCount))
     }
 
+    /**
+     * The maximum number of bad events allowed within the SLO window.
+     * @returns {number}
+     */
     get badEventCount() {
         return this.validEventCount - this.goodEventCount
     }
 
+    /**
+     * Adjusts the SLO target by changing the bad event count by the given delta.
+     * @param {number} amount The number of bad events to add (positive) or remove (negative).
+     */
     changeErrorBudget(amount) {
         // Event based
         const newBadEventCount = clamp(this.badEventCount + amount, 1, this.validEventCount)
@@ -209,11 +297,19 @@ export class Objective extends Entity {
         this.target = clamp(newSLO, config.slo.min, config.slo.max)
     }
 
+    /**
+     * A FailureWindow representing the full error budget for this SLO.
+     * @returns {import('../lib/failure-window.js').FailureWindow}
+     */
     get failureWindow() {
         const { sec } = this.window
         return new FailureWindow(this.indicator, sec, this.badEventCount)
     }
 
+    /**
+     * Builds the SLO formula representation including thresholds and window.
+     * @returns {Formula}
+     */
     get formula() {
         const ret = new Formula()
 
@@ -251,10 +347,18 @@ export class Objective extends Entity {
         return ret
     }
 
+    /**
+     * Returns a human-readable string representation of this SLO.
+     * @returns {string}
+     */
     toString() {
         return `${percL10n(this.target)} over ${this.windowDays} days`
     }
 
+    /**
+     * Returns lint results for this SLO.
+     * @returns {Lint}
+     */
     get lint() {
         const lint = new Lint()
 

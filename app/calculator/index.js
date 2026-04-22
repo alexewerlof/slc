@@ -42,11 +42,18 @@ export const app = createApp({
         numL10n,
         percentToRatio,
         percL10n,
+        /**
+         * Snapshots the current calculator state into the Vue `state` property.
+         */
         updateState() {
             this.state = this.calculator.state
         },
     },
     computed: {
+        /**
+         * Builds a shareable URL encoding the current calculator state.
+         * @returns {string|null} the URL string, or null if serialisation fails
+         */
         shareUrl() {
             try {
                 const url = new URL(globalThis.location.pathname, globalThis.location.origin)

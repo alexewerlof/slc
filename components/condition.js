@@ -17,7 +17,14 @@ const possibleTypes = [
     'range-GE-$LT-LE-$UT',
 ]
 
+/**
+ * Represents the condition that defines what constitutes a good metric reading for an SLI.
+ */
 export class Condition {
+    /**
+     * Creates a new Condition instance.
+     * @param {import('./metric.js').Metric} metric The metric this condition belongs to.
+     */
     constructor(metric) {
         if (!isInstance(metric, Metric)) {
             throw new TypeError(`Condition: metric must be an instance of Metric. Got ${metric}`)
@@ -30,6 +37,10 @@ export class Condition {
         this.upperThreshold = 1000
     }
 
+    /**
+     * Returns a plain object describing the condition suitable for evaluation.
+     * @returns {Object}
+     */
     get conditionObject() {
         switch (this.type) {
             case 'boolean-true':
@@ -49,18 +60,34 @@ export class Condition {
         }
     }
 
+    /**
+     * Whether the single threshold input should be shown in the UI.
+     * @returns {boolean}
+     */
     get showThreshold() {
         return this.isParameterized && this.type.includes('$T')
     }
 
+    /**
+     * Whether the lower threshold input should be shown in the UI.
+     * @returns {boolean}
+     */
     get showLowerThreshold() {
         return this.isParameterized && this.type.includes('$LT')
     }
 
+    /**
+     * Whether the upper threshold input should be shown in the UI.
+     * @returns {boolean}
+     */
     get showUpperThreshold() {
         return this.isParameterized && this.type.includes('$UT')
     }
 
+    /**
+     * Returns the serialisable condition value based on current metric and condition type.
+     * @returns {Object}
+     */
     save() {
         const ret = {}
 

@@ -15,6 +15,11 @@ export class Metric extends Entity {
     condition = new Condition(this)
     linkedFailures = []
 
+    /**
+     * Creates a new Metric instance.
+     * @param {import('./service.js').Service} service The service this metric belongs to.
+     * @param {Object} [state] Optional serialised state to restore.
+     */
     constructor(service, state) {
         super('m', true)
         if (!isInstance(service, Service)) {
@@ -26,6 +31,10 @@ export class Metric extends Entity {
         }
     }
 
+    /**
+     * Returns the serialisable state of this Metric.
+     * @returns {Object}
+     */
     get state() {
         const ret = super.state
 
@@ -42,6 +51,10 @@ export class Metric extends Entity {
         return ret
     }
 
+    /**
+     * Restores the Metric from a serialised state object.
+     * @param {Object} newState
+     */
     set state(newState) {
         super.state = newState
 
@@ -70,18 +83,35 @@ export class Metric extends Entity {
         }
     }
 
+    /**
+     * The unit label: the numeric unit when numeric, or "True/False" when boolean.
+     * @returns {string}
+     */
     get unit() {
         return this.isNumeric ? this.numericUnit : 'True/False'
     }
 
+    /**
+     * Whether this metric uses numeric (non-boolean) values.
+     * @returns {boolean}
+     */
     get isNumeric() {
         return !this.isBoolean
     }
 
+    /**
+     * Toggles between numeric and boolean metric mode.
+     * @param {boolean} value
+     */
     set isNumeric(value) {
         this.isBoolean = !value
     }
 
+    /**
+     * Returns whether the given failure is linked to this metric.
+     * @param {import('./failure.js').Failure} failure
+     * @returns {boolean}
+     */
     isFailureLinked(failure) {
         if (!isInstance(failure, Failure)) {
             throw new Error(`Expected an instance of Failure. Got ${failure}`)
@@ -89,6 +119,10 @@ export class Metric extends Entity {
         return isInArr(failure, this.linkedFailures)
     }
 
+    /**
+     * Links a failure to this metric (no-op if already linked).
+     * @param {import('./failure.js').Failure} failure
+     */
     linkFailure(failure) {
         if (!isInstance(failure, Failure)) {
             throw new Error(`Expected an instance of Failure. Got ${failure}`)
@@ -98,6 +132,10 @@ export class Metric extends Entity {
         }
     }
 
+    /**
+     * Unlinks a failure from this metric.
+     * @param {import('./failure.js').Failure} failure
+     */
     unLinkFailure(failure) {
         if (!isInstance(failure, Failure)) {
             throw new Error(`Expected an instance of Failure. Got ${failure}`)
@@ -109,6 +147,11 @@ export class Metric extends Entity {
         this.linkedFailures.splice(index, 1)
     }
 
+    /**
+     * Links or unlinks a failure based on the boolean value.
+     * @param {import('./failure.js').Failure} failure
+     * @param {boolean} value True to link, false to unlink.
+     */
     setFailure(failure, value) {
         if (value) {
             return this.linkFailure(failure)
@@ -117,18 +160,33 @@ export class Metric extends Entity {
         }
     }
 
+    /**
+     * Removes this metric from the service.
+     * @returns {boolean}
+     */
     remove() {
         return this.service.metrics.remove(this)
     }
 
+    /**
+     * @returns {string}
+     */
     toString() {
         return [this.service.markdownId, this.markdownId].join(scopeIcon)
     }
 
+    /**
+     * Index of this metric within the service's metrics array.
+     * @returns {number}
+     */
     get index() {
         return this.service.metrics.indexOf(this)
     }
 
+    /**
+     * Returns lint results for this metric.
+     * @returns {import('./lint.js').Lint}
+     */
     get lint() {
         const lint = new Lint()
 

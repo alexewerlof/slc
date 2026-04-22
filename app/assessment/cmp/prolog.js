@@ -2,10 +2,20 @@ import { Assessment } from '../../../components/assessment.js'
 import { Formula } from '../../../components/ui/formula.js'
 import { isInstance, isStr } from '../../../lib/validation.js'
 
+/**
+ * Wraps a string in double quotes, escaping any internal double-quote characters.
+ * @param {string} str
+ * @returns {string}
+ */
 function quoted(str) {
     return `"${str.replace(/"/g, '\\"')}"`
 }
 
+/**
+ * Converts an Assessment into a Prolog-style fact representation.
+ * @param {Assessment} assessment
+ * @returns {import('../../../components/ui/formula.js').Formula}
+ */
 export function assessment2prolog(assessment) {
     if (!isInstance(assessment, Assessment)) {
         throw new TypeError(`Expected an instance of assessment. Got ${assessment} (${typeof assessment})}`)

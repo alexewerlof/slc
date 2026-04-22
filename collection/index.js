@@ -13,6 +13,10 @@ const groupNames = [
     'Search',
 ]
 
+/**
+ * Dynamically imports all indicator group modules and returns them keyed by group name.
+ * @returns {Promise<Record<string, import('../components/indicator.js').Indicator[]>>}
+ */
 export async function importAllGroups() {
     const groupModules = await Promise.all(groupNames.map((groupName) => import(`./${groupName.toLowerCase()}.js`)))
 

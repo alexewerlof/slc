@@ -84,6 +84,10 @@ export class Indicator extends Entity {
         }
     }
 
+    /**
+     * Returns the serialisable state of this Indicator.
+     * @returns {IndicatorOptions}
+     */
     get state() {
         const ret = super.state
 
@@ -189,6 +193,10 @@ export class Indicator extends Entity {
         }
     }
 
+    /**
+     * Extracts the category prefix from the displayName (the part before the first colon).
+     * @returns {string|undefined}
+     */
     get category() {
         if (this.displayName && this.displayName.includes(':')) {
             return this.displayName.split(':')[0].trim()
@@ -196,16 +204,27 @@ export class Indicator extends Entity {
         return undefined
     }
 
+    /**
+     * Expected number of valid events per day.
+     * @returns {number}
+     */
     get expectedDailyEvents() {
         return this._expectedDailyEvents
     }
 
+    /**
+     * Sets the expected number of valid events per day, clamping to the configured range.
+     * @param {number} value
+     */
     set expectedDailyEvents(value) {
         const { min, max } = config.expectedDailyEvents
         this._expectedDailyEvents = inRange(value, min, max) ? value : config.expectedDailyEvents.default
     }
 
-    /** Return the right unit regardless if it's a time-based or event-based indicator */
+    /**
+     * Returns the right unit regardless of whether this is a time-based or event-based indicator.
+     * @returns {string}
+     */
     get eventUnitNorm() {
         return this.isTimeBased ? humanTimeSlices(this.timeslice) : this.eventUnit || 'events'
     }
@@ -220,6 +239,10 @@ export class Indicator extends Entity {
         return Boolean(this.lowerBound) && Boolean(this.upperBound)
     }
 
+    /**
+     * Builds the SLI formula representation for this indicator.
+     * @returns {Formula}
+     */
     get formula() {
         const ret = new Formula()
 
@@ -255,6 +278,10 @@ export class Indicator extends Entity {
         return ret
     }
 
+    /**
+     * Returns a human-readable string representation of this indicator.
+     * @returns {string}
+     */
     toString() {
         if (this.displayName.trim()) {
             return this.displayName
@@ -265,6 +292,10 @@ export class Indicator extends Entity {
         return 'Indicator without title or metric'
     }
 
+    /**
+     * Returns lint results for this indicator.
+     * @returns {Lint}
+     */
     get lint() {
         const lint = new Lint()
 

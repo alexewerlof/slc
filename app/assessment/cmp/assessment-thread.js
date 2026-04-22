@@ -1,6 +1,12 @@
 import { ContentBead, FileBead, Thread } from '../../../components/llm/thread.js'
 import { nextStep } from './workflow.js'
 
+/**
+ * Creates the LLM thread for the assessment editor, pre-loaded with the system prompt
+ * and a dynamic context bead that reflects the current assessment state.
+ * @param {Object} assessmentEditorComponent the Vue component instance for the assessment editor
+ * @returns {import('../../../components/llm/thread.js').Thread}
+ */
 export function createThread(assessmentEditorComponent) {
     return new Thread(
         new FileBead('assessment-prompt.md' /*'../../prompts/glossary.md'*/),

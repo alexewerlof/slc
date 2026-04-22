@@ -42,6 +42,10 @@ const app = createApp({
         }
     },
     methods: {
+        /**
+         * Shows a toast message with the given name.
+         * @param {string} name
+         */
         clicked(name) {
             showToast(`Clicked ${name}`)
         },

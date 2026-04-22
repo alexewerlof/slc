@@ -11,6 +11,11 @@ export class Consumer extends Entity {
     assessment = null
     tasks = new SelectableArray(Task, this)
 
+    /**
+     * Creates a new Consumer instance.
+     * @param {import('./assessment.js').Assessment} assessment The assessment this consumer belongs to.
+     * @param {Object} [state] Optional serialised state to restore.
+     */
     constructor(assessment, state) {
         super('c', true)
         if (!isInstance(assessment, Assessment)) {
@@ -22,6 +27,10 @@ export class Consumer extends Entity {
         }
     }
 
+    /**
+     * Returns the serialisable state of this Consumer.
+     * @returns {Object}
+     */
     get state() {
         const ret = super.state
 
@@ -35,6 +44,10 @@ export class Consumer extends Entity {
         return ret
     }
 
+    /**
+     * Restores the Consumer from a serialised state object.
+     * @param {Object} newState
+     */
     set state(newState) {
         super.state = newState
 
@@ -55,6 +68,10 @@ export class Consumer extends Entity {
         }
     }
 
+    /**
+     * Sets the consumer type.
+     * @param {string} val One of {@link Consumer.possibleTypes}.
+     */
     set type(val) {
         if (!isInArr(val, Consumer.possibleTypes)) {
             throw new Error(`Consumer.type must be one of ${Consumer.possibleTypes}. Got ${val}`)
@@ -62,16 +79,28 @@ export class Consumer extends Entity {
         this._type = val
     }
 
+    /**
+     * The consumer type.
+     * @returns {string}
+     */
     get type() {
         return this._type
     }
 
+    /**
+     * Called before this consumer is removed. Cleans up all child tasks.
+     */
     onRemove() {
         for (const task of this.tasks) {
             task.onRemove()
         }
     }
 
+    /**
+     * Adds an existing Task instance to this consumer.
+     * @param {import('./task.js').Task} task
+     * @returns {import('./task.js').Task}
+     */
     addTask(task) {
         if (!isInstance(task, Task)) {
             throw new Error(`Task must be an instance of Task. Got ${task}`)
@@ -81,22 +110,43 @@ export class Consumer extends Entity {
         return task
     }
 
+    /**
+     * Creates a new Task and adds it to this consumer.
+     * @param {string} title
+     * @param {string} description
+     * @returns {import('./task.js').Task}
+     */
     addNewTask(title, description) {
         return this.addTask(new Task(this, title, description))
     }
 
+    /**
+     * Removes this consumer from the assessment.
+     * @returns {boolean}
+     */
     remove() {
         return this.assessment.consumers.remove(this)
     }
 
+    /**
+     * @returns {string}
+     */
     toString() {
         return this.markdownId
     }
 
+    /**
+     * Index of this consumer within the assessment's consumers array.
+     * @returns {number}
+     */
     get index() {
         return this.assessment.consumers.indexOf(this)
     }
 
+    /**
+     * Returns lint results for this consumer.
+     * @returns {import('./lint.js').Lint}
+     */
     get lint() {
         const lint = new Lint()
 

@@ -12,6 +12,11 @@ export function isToolsCallMessage(x) {
     return x.role === 'assistant' && isArr(x.tool_calls) && x.tool_calls.length > 0
 }
 
+/**
+ * Extracts the first message object from an OpenAI-compatible completion response.
+ * @param {Object} response The raw API completion response.
+ * @returns {{role: string, content: string|null, tool_calls?: Object[]}}
+ */
 export function getFirstMessage(response) {
     if (!isObj(response)) {
         throw new TypeError(`Expected response to be an object. Got ${response} (${typeof response})`)
@@ -41,6 +46,11 @@ export function getFirstMessage(response) {
     return message
 }
 
+/**
+ * Extracts the text content string from the first choice of a completion response.
+ * @param {Object} response The raw API completion response.
+ * @returns {string}
+ */
 export function getFirstCompletion(response) {
     const { content } = getFirstMessage(response)
 

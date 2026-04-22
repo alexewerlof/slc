@@ -37,9 +37,20 @@ export default {
     },
     methods: {
         stateToCurrentUrl,
+        /**
+         * Opens the named dialog ref.
+         * @param {string} ref the Vue template ref name of the dialog element
+         * @param {boolean} [modal]
+         */
         showDialog(ref, modal) {
             this.$refs[ref].show(modal)
         },
+        /**
+         * Prompts the user for confirmation and removes the given entity from the assessment.
+         * Falls back to the current `editingInstance` when no target is passed.
+         * @param {import('../../../lib/entity.js').Entity} [target] the entity to remove
+         * @returns {boolean} true when the entity was successfully removed
+         */
         removeEditingInstance(target = this.editingInstance) {
             if (!(target instanceof Entity)) {
                 return false
@@ -79,6 +90,11 @@ export default {
             target.remove()
             return true
         },
+        /**
+         * Parses the uploaded state string, validates it against a temporary Assessment,
+         * and applies it to the active assessment.
+         * @returns {Promise<void>}
+         */
         async assignUploadedState() {
             this.uploadedStateMessage = 'Parsing...'
             try {
@@ -93,6 +109,11 @@ export default {
                 this.uploadedStateMessage = `Invalid state: ${err}`
             }
         },
+        /**
+         * Validates the given state object against a temporary Assessment and, if valid,
+         * applies it to the active assessment.
+         * @param {Object} state
+         */
         loadState(state) {
             try {
                 const _tmpAssessment = new Assessment(state)
@@ -102,6 +123,9 @@ export default {
                 showToast(`Failed to load assessment state: ${error}`)
             }
         },
+        /**
+         * Prompts the user for confirmation, then clears all entities from the assessment.
+         */
         clearAssessment() {
             const message = [
                 'This will remove all Providers, Consumers, Services, Tasks, Usages, Failures, and Metrics.',
@@ -112,9 +136,18 @@ export default {
                 this.assessment.clear()
             }
         },
+        /**
+         * Serialises an object to a YAML string.
+         * @param {Object} obj
+         * @returns {string}
+         */
         toYaml(obj) {
             return YAML.stringify(obj)
         },
+        /**
+         * Uses the AI agent to suggest and add a new Metric to the currently selected Service.
+         * @returns {Promise<void>}
+         */
         async addMetricUsingAI() {
             const service = this.editingInstance
             if (!isInstance(service, Service)) {

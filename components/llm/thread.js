@@ -4,6 +4,9 @@ import { normalizeMessageArray } from '../../lib/msg.js'
 import { isArr, isBool, isDef, isFn, isInArr, isInstance, isObj, isStr } from '../../lib/validation.js'
 import { TokenStats } from './token-stats.js'
 
+/**
+ * Base class for all thread beads. Holds the role, visibility flags, and optional token stats.
+ */
 class RoleBead {
     _role = undefined
     /** Beads that set this to true, do not get converted to messages */
@@ -40,6 +43,10 @@ class RoleBead {
 
     static POSSIBLE_ROLES = Object.freeze(Object.keys(RoleBead.DEFAULT_ROLE_OPTIONS))
 
+    /**
+     * Creates a new RoleBead.
+     * @param {{role: string, tokenStats?: TokenStats, isGhost?: boolean, isPersistent?: boolean, isDebug?: boolean}} options
+     */
     constructor(options) {
         if (!isObj(options)) {
             throw new TypeError(`options must be an object. Got ${options} (${typeof options})`)
@@ -67,10 +74,18 @@ class RoleBead {
         }
     }
 
+    /**
+     * The role of this bead.
+     * @returns {string}
+     */
     get role() {
         return this._role
     }
 
+    /**
+     * Sets the role, validating against known possible roles.
+     * @param {string} role
+     */
     set role(role) {
         if (!isInArr(role, RoleBead.POSSIBLE_ROLES)) {
             throw new Error(`Invalid role: ${role}`)
@@ -78,6 +93,10 @@ class RoleBead {
         this._role = role
     }
 
+    /**
+     * A user-friendly label for the role (e.g. 'AI' instead of 'assistant').
+     * @returns {string}
+     */
     get friendlyRole() {
         switch (this.role) {
             case 'user':
@@ -93,26 +112,50 @@ class RoleBead {
         }
     }
 
+    /**
+     * Returns this bead's content as a markdown string.
+     * @returns {string}
+     */
     get markdown() {
         throw new Error('Child has not implemented markdown getter')
     }
 
+    /**
+     * Returns this bead as an LLM message object.
+     * @returns {{role: string, content?: string, tool_calls?: Object[]}}
+     */
     get message() {
         throw new Error('Child has not implemented message getter')
     }
 }
 
+/**
+ * A bead that holds text content — the base for user prompts, assistant responses, and system messages.
+ */
 export class ContentBead extends RoleBead {
+    /**
+     * @param {{role: string, tokenStats?: TokenStats, isGhost?: boolean, isPersistent?: boolean, isDebug?: boolean}} options
+     * @param {...(string|function(): string)} contentBits
+     */
     constructor(options, ...contentBits) {
         super(options)
         this.contentBits = contentBits
     }
 
+    /**
+     * Appends additional content bits to this bead.
+     * @param {...(string|function(): string)} bits
+     * @returns {ContentBead} this instance for chaining.
+     */
     add(...bits) {
         this.contentBits.push(...bits)
         return this
     }
 
+    /**
+     * Joins all content bits into a single string.
+     * @returns {string}
+     */
     get content() {
         return joinLines(
             1,
@@ -137,7 +180,13 @@ export class ContentBead extends RoleBead {
     }
 }
 
+/**
+ * A bead that wraps a thrown error for display in the thread UI.
+ */
 export class ErrorBead extends RoleBead {
+    /**
+     * @param {Error|string} error
+     */
     constructor(error) {
         super({
             role: 'tool',
@@ -153,13 +202,26 @@ export class ErrorBead extends RoleBead {
     }
 }
 
+/**
+ * A bead representing a prompt submitted by the user.
+ */
 export class UserPromptBead extends ContentBead {
+    /**
+     * @param {...string} content
+     */
     constructor(...content) {
         super({ role: 'user' }, ...content)
     }
 }
 
+/**
+ * A bead representing a plain-text response from the assistant.
+ */
 export class AssistantResponse extends ContentBead {
+    /**
+     * @param {string} messageContent The raw text content from the model.
+     * @param {TokenStats} tokenStats Usage and latency stats for this completion.
+     */
     constructor(messageContent, tokenStats) {
         super(
             {
@@ -173,6 +235,10 @@ export class AssistantResponse extends ContentBead {
         )
     }
 
+    /**
+     * Returns the content with any chain-of-thought `<think>` block stripped.
+     * @returns {string}
+     */
     get contentWithoutThought() {
         const endOfThoughtMarker = 'think>'
         const lastIndexOfThink = this.content.lastIndexOf(endOfThoughtMarker)
@@ -190,9 +256,16 @@ export class AssistantResponse extends ContentBead {
     }
 }
 
+/**
+ * A bead representing a tool-call request from the assistant.
+ */
 export class ToolCallsBead extends RoleBead {
     _toolCalls = undefined
 
+    /**
+     * @param {Object[]} toolCalls The tool_calls array from the API response.
+     * @param {TokenStats} [tokenStats]
+     */
     constructor(toolCalls) {
         super({
             role: 'assistant',
@@ -224,7 +297,14 @@ export class ToolCallsBead extends RoleBead {
     }
 }
 
+/**
+ * A bead holding the result returned by a tool invocation.
+ */
 export class ToolResultBead extends RoleBead {
+    /**
+     * @param {{role: string, content: string, tool_call_id: string}} toolInvocationResultMessage
+     * @param {TokenStats} [tokenStats]
+     */
     constructor(toolInvocationResultMessage, tokenStats) {
         super({
             role: toolInvocationResultMessage.role,
@@ -248,10 +328,16 @@ export class ToolResultBead extends RoleBead {
     }
 }
 
+/**
+ * A system bead that lazily loads one or more text files and injects their contents as a system message.
+ */
 export class FileBead extends ContentBead {
     _fileNames = undefined
     _loaded = false
 
+    /**
+     * @param {...string} fileNames Paths to load via {@link loadText}.
+     */
     constructor(...fileNames) {
         super({
             role: 'system',
@@ -264,6 +350,10 @@ export class FileBead extends ContentBead {
         this._fileNames = fileNames
     }
 
+    /**
+     * Loads the file contents if not already loaded.
+     * @returns {Promise<void>}
+     */
     async load() {
         if (this._loaded) {
             return
@@ -287,14 +377,28 @@ export class FileBead extends ContentBead {
     }
 }
 
+/**
+ * An ordered collection of beads that represents a conversation.
+ */
 export class Thread {
+    /** @type {RoleBead[]} */
     beads = []
+    /** @type {TokenStats} Accumulated token usage across all beads. */
     tokenStats = new TokenStats()
 
+    /**
+     * Creates a Thread, optionally pre-populated with beads.
+     * @param {...RoleBead} beads
+     */
     constructor(...beads) {
         this.add(...beads)
     }
 
+    /**
+     * Appends one or more beads to the thread, accumulating their token stats.
+     * @param {...RoleBead} beads
+     * @returns {Thread} this instance for chaining.
+     */
     add(...beads) {
         for (const bead of beads) {
             if (!(bead instanceof RoleBead)) {
@@ -308,6 +412,10 @@ export class Thread {
         return this
     }
 
+    /**
+     * Resolves all async beads and returns the normalised message array for the LLM.
+     * @returns {Promise<import('../../lib/msg.js').Message[]>}
+     */
     async toMessages() {
         const activeBeads = this.beads.filter((bead) => !bead.isGhost)
         const beadsWithAsyncLoad = activeBeads.filter((bead) => isFn(bead.load))
@@ -317,10 +425,19 @@ export class Thread {
         return normalizeMessageArray(activeBeads.map((bead) => bead.message))
     }
 
+    /**
+     * The most recently added bead, or undefined if the thread is empty.
+     * @returns {RoleBead|undefined}
+     */
     get lastBead() {
         return this.beads[this.beads.length - 1]
     }
 
+    /**
+     * Removes beads from the thread. By default only removes non-persistent beads.
+     * @param {boolean} [everything=false] When true, removes all beads including persistent ones.
+     * @returns {Thread} this instance for chaining.
+     */
     clear(everything = false) {
         if (everything) {
             this.beads.length = 0
@@ -330,6 +447,10 @@ export class Thread {
         return this
     }
 
+    /**
+     * Returns a shallow copy of this thread containing the same bead references.
+     * @returns {Thread}
+     */
     clone() {
         return new Thread(...this.beads)
     }

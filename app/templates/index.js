@@ -6,6 +6,10 @@ import { addUTM } from '../../lib/utm.js'
 
 export const app = createApp({
     methods: {
+        /**
+         * Opens the calculator app in a new tab pre-populated with the selected indicator.
+         * @param {import('../../components/indicator.js').Indicator} indicator
+         */
         handleIndicatorSelected(indicator) {
             const calculator = new Calculator({
                 indicators: [indicator],

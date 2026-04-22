@@ -10,6 +10,11 @@ export class Usage extends Entity {
     task
     failures = new SelectableArray(Failure, this)
 
+    /**
+     * Creates a new Usage instance linking a service to a task.
+     * @param {import('./service.js').Service} service The service being used.
+     * @param {Object} state Serialised state containing the taskId.
+     */
     constructor(service, state) {
         super('u', false)
         if (!isInstance(service, Service)) {
@@ -19,6 +24,10 @@ export class Usage extends Entity {
         this.state = state
     }
 
+    /**
+     * Returns the serialisable state of this Usage.
+     * @returns {Object}
+     */
     get state() {
         const ret = super.state
 
@@ -32,6 +41,10 @@ export class Usage extends Entity {
         return ret
     }
 
+    /**
+     * Restores the Usage from a serialised state object.
+     * @param {Object} newState
+     */
     set state(newState) {
         super.state = newState
 
@@ -53,35 +66,64 @@ export class Usage extends Entity {
         }
     }
 
+    /**
+     * Called before this usage is removed. Cleans up all child failures.
+     */
     onRemove() {
         this.failures.forEach((failure) => failure.onRemove())
         this.failures.removeAll()
     }
 
+    /**
+     * @returns {string}
+     */
     toString() {
         return [this.task.markdownId, this.service.markdownId].join(this.icon)
     }
 
+    /**
+     * A display name combining the service and task names.
+     * @returns {string}
+     */
     get markdownDisplayName() {
         return [this.service.markdownDisplayName, this.task.markdownDisplayName].join(' ')
     }
 
+    /**
+     * The provider of the service used in this usage.
+     * @returns {import('./provider.js').Provider}
+     */
     get provider() {
         return this.service.provider
     }
 
+    /**
+     * The assessment this usage belongs to.
+     * @returns {import('./assessment.js').Assessment}
+     */
     get assessment() {
         return this.provider.assessment
     }
 
+    /**
+     * Index of this usage within the service's usages array.
+     * @returns {number}
+     */
     get index() {
         return this.service.usages.indexOf(this)
     }
 
+    /**
+     * Removes this usage from the service.
+     */
     remove() {
         this.service.usages.remove(this)
     }
 
+    /**
+     * Returns lint results for this usage.
+     * @returns {import('./lint.js').Lint}
+     */
     get lint() {
         const lint = new Lint()
 

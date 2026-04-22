@@ -13,6 +13,11 @@ export class Provider extends Entity {
 
     services = new SelectableArray(Service, this)
 
+    /**
+     * Creates a new Provider instance.
+     * @param {import('./assessment.js').Assessment} assessment The assessment this provider belongs to.
+     * @param {Object} [state] Optional serialised state to restore.
+     */
     constructor(assessment, state) {
         super('p', true)
         if (!isInstance(assessment, Assessment)) {
@@ -24,6 +29,10 @@ export class Provider extends Entity {
         }
     }
 
+    /**
+     * Returns the serialisable state of this Provider.
+     * @returns {Object}
+     */
     get state() {
         const ret = super.state
 
@@ -37,6 +46,10 @@ export class Provider extends Entity {
         return ret
     }
 
+    /**
+     * Restores the Provider from a serialised state object.
+     * @param {Object} newState
+     */
     set state(newState) {
         super.state = newState
 
@@ -57,6 +70,10 @@ export class Provider extends Entity {
         }
     }
 
+    /**
+     * Sets the provider type.
+     * @param {string} val One of {@link Provider.possibleTypes}.
+     */
     set type(val) {
         if (!isInArr(val, Provider.possibleTypes)) {
             throw new Error(`Provider.type must be one of ${Provider.possibleTypes}. Got ${val}`)
@@ -64,26 +81,48 @@ export class Provider extends Entity {
         this._type = val
     }
 
+    /**
+     * The provider type.
+     * @returns {string}
+     */
     get type() {
         return this._type
     }
 
+    /**
+     * Called before this provider is removed. Cleans up all child services.
+     */
     onRemove() {
         this.services.removeAll()
     }
 
+    /**
+     * @returns {string}
+     */
     toString() {
         return this.markdownId
     }
 
+    /**
+     * Index of this provider within the assessment's providers array.
+     * @returns {number}
+     */
     get index() {
         return this.assessment.providers.indexOf(this)
     }
 
+    /**
+     * Removes this provider from the assessment.
+     * @returns {boolean}
+     */
     remove() {
         return this.assessment.providers.remove(this)
     }
 
+    /**
+     * Returns lint results for this provider.
+     * @returns {import('./lint.js').Lint}
+     */
     get lint() {
         const lint = new Lint()
 

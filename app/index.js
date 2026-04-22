@@ -1,6 +1,10 @@
 import { isInArr, isObj } from '../lib/validation.js'
 import { loadJson } from '../lib/share.js'
 
+/**
+ * @typedef {{ name: string, url: URL, icon: string, manifest: Object }} AppDescriptor
+ */
+
 export const appNames = Object.freeze([
     'uptime',
     'assessment',
@@ -12,6 +16,11 @@ export const appNames = Object.freeze([
     'assess',
 ])
 
+/**
+ * Loads the manifest for the given app and returns a descriptor object.
+ * @param {string} name one of the known app names in {@link appNames}
+ * @returns {Promise<AppDescriptor>}
+ */
 async function appDescriptor(name) {
     if (!isInArr(name, appNames)) {
         throw new Error(`Invalid app name: ${name}`)
@@ -31,7 +40,11 @@ async function appDescriptor(name) {
     }
 }
 
-// Attempting to load all manifests also serves as a quick smoke test
+/**
+ * Loads descriptors for all known apps in parallel.
+ * Also serves as a smoke test to confirm all manifests are reachable.
+ * @returns {Promise<AppDescriptor[]>}
+ */
 export async function appDescriptors() {
     return await Promise.all(appNames.map(appDescriptor))
 }

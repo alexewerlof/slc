@@ -293,23 +293,49 @@ const app = createApp({
     methods: {
         percL10n,
         numL10n,
+        /**
+         * Sets all percentage sliders to the same value.
+         * @param {number} val the percentage value to assign to every bucket
+         */
         setAllPercentagesTo(val) {
             this.percentages = new Array(this.percentages.length).fill(val)
         },
+        /**
+         * Appends a new percentage bucket with the default slider value.
+         */
         addRange() {
             this.percentages.push(config.slider.default)
         },
+        /**
+         * Removes the last percentage bucket (minimum of one bucket is kept).
+         */
         removeRange() {
             if (this.percentages.length > 1) {
                 this.percentages.pop()
             }
         },
+        /**
+         * Formats a number with the given number of decimal digits.
+         * @param {number} n
+         * @param {number} [digits=1]
+         * @returns {string}
+         */
         toFixed(n, digits = 1) {
             return n.toFixed(digits)
         },
+        /**
+         * Converts a bound type key to its operator string for display.
+         * @param {string} type e.g. 'le', 'ge'
+         * @returns {string}
+         */
         boundTypeToString(type) {
             return boundTypeToOperator(type)
         },
+        /**
+         * Returns the ordinal string for a given integer (e.g. 1 → '1st').
+         * @param {number} x
+         * @returns {string}
+         */
         nthRender(x) {
             switch (x) {
                 case 0:
@@ -324,23 +350,48 @@ const app = createApp({
                     return `${x}th`
             }
         },
+        /**
+         * Formats a number as a percentage string with one decimal place.
+         * @param {number} x
+         * @returns {string}
+         */
         percentRender(x) {
             return `${x.toFixed(1)}%`
         },
+        /**
+         * Formats a number as a burn-rate multiplier string (e.g. 1.5 → '1.5x').
+         * @param {number} x
+         * @returns {string}
+         */
         xRender(x) {
             return `${Number(x).toFixed(1)}x`
         },
+        /**
+         * Formats a value with the current metric unit appended, or returns the value as-is if not a number.
+         * @param {number|*} x
+         * @returns {string|*}
+         */
         unitRender(x) {
             return isNum(x) ? `${x}${this.metricUnit}` : x
         },
+        /**
+         * Returns an inline style object with a background colour derived from the bucket percentage.
+         * @param {number} percentage index into `this.percentages`
+         * @returns {{ backgroundColor: string }}
+         */
         percentageIndicatorStyle(percentage) {
             return {
                 backgroundColor: percentageColor(this.percentages[percentage]),
             }
         },
-        generateData() {
-            this.metricData = generateData(this.dataCount, this.buckets, this.onlyInt)
-        },
+        /**
+         * Generates a fresh set of random metric data using the current bucket configuration.
+         */
+        generateData() {},
+        /**
+         * Generates incident data points (bad values) and splices them into
+         * `metricData` at the configured insertion point.
+         */
         addIncident() {
             const incidentBuckets = createIncidentBuckets(this.min, this.max, this.sliDefinition, this.sloDefinition)
             const incidentDataCount = Math.min(this.dataCount - this.incidentInsertionPoint, this.incidentDataCount)

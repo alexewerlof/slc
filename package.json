@@ -2,17 +2,23 @@
     "name": "slc",
     "type": "module",
     "scripts": {
+        "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig-test.json",
         "test": "node --test",
         "lint": "eslint .",
         "format": "prettier --write .",
         "build": "node build.js"
     },
     "devDependencies": {
+        "@types/d3": "^7.4.3",
+        "@types/markdown-it": "^14.1.2",
+        "@types/node": "^25.6.0",
+        "@types/pako": "^2.0.4",
         "cheerio": "^1.1.0",
         "esbuild": "^0.25.10",
         "eslint": "^9.34.0",
         "eslint-config-prettier": "^10.1.8",
-        "prettier": "^3.6.2"
+        "prettier": "^3.6.2",
+        "typescript": "^6.0.3"
     },
     "dependencies": {
         "d3": "^7.9.0",

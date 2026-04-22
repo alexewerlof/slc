@@ -5,6 +5,7 @@ import { isInstance } from '../../../lib/validation.js'
  * Goes through the assessment and gives a recommendation based on what needs to be done.
  * This is essentially the core of the assessment workflow.
  * @param {Assessment} assessment
+ * @returns {string} a human-readable instruction for the next step, or 'All done!'
  */
 export function nextStep(assessment) {
     if (!isInstance(assessment, Assessment)) {

@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ES2024",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "lib": ["ES2024", "DOM"],
+        "types": [],
+        "noImplicitAny": false,
+        "allowJs": true,
+        "checkJs": true,
+        "noResolve": true,
+        "noEmit": true,
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "verbatimModuleSyntax": true
+    },
+    "include": ["app/**/*.js", "collection/**/*.js", "components/**/*.js", "lib/**/*.js", "*.js"],
+    "exclude": ["node_modules", "vendor", "**/vendor/**", "**/*.test.js"]
+}

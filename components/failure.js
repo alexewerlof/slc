@@ -5,7 +5,9 @@ import { Usage } from './usage.js'
 import { Entity } from '../lib/entity.js'
 import { Lint } from './lint.js'
 
-// If a certain service fails, what activities will it impact and how?
+/**
+ * Represents a failure scenario: if a certain service fails, what activities will it impact and how?
+ */
 export class Failure extends Entity {
     usage = null
     symptom = ''
@@ -13,6 +15,11 @@ export class Failure extends Entity {
     businessImpact = ''
     impactLevel = config.impactLevel.default
 
+    /**
+     * Creates a new Failure instance.
+     * @param {import('./usage.js').Usage} usage The usage this failure belongs to.
+     * @param {Object} [state] Optional serialised state to restore.
+     */
     constructor(usage, state) {
         super('f', false)
         if (!isInstance(usage, Usage)) {
@@ -24,6 +31,10 @@ export class Failure extends Entity {
         }
     }
 
+    /**
+     * Returns the serialisable state of this Failure.
+     * @returns {Object}
+     */
     get state() {
         const ret = super.state
 
@@ -43,6 +54,10 @@ export class Failure extends Entity {
         return ret
     }
 
+    /**
+     * Restores the Failure from a serialised state object.
+     * @param {Object} newState
+     */
     set state(newState) {
         super.state = newState
 
@@ -81,6 +96,9 @@ export class Failure extends Entity {
         }
     }
 
+    /**
+     * Called before this failure is removed. Unlinks it from all metrics that reference it.
+     */
     onRemove() {
         this.service.metrics.forEach((metric) => {
             if (metric.isFailureLinked(this)) {
@@ -89,6 +107,9 @@ export class Failure extends Entity {
         })
     }
 
+    /**
+     * @returns {string}
+     */
     toString() {
         const ret = [this.task, unicodeSymbol('failure'), this.service]
         if (this.symptom) {
@@ -103,26 +124,50 @@ export class Failure extends Entity {
         return ret.join(' ')
     }
 
+    /**
+     * Index of this failure within the usage's failures array.
+     * @returns {number}
+     */
     get index() {
         return this.usage.failures.indexOf(this)
     }
 
+    /**
+     * A tuple of [usageIndex, failureIndex] that uniquely identifies this failure.
+     * @returns {[number, number]}
+     */
     get ref() {
         return [this.usage.index, this.index]
     }
 
+    /**
+     * The task associated with this failure (via usage).
+     * @returns {import('./task.js').Task}
+     */
     get task() {
         return this.usage.task
     }
 
+    /**
+     * The service associated with this failure (via usage).
+     * @returns {import('./service.js').Service}
+     */
     get service() {
         return this.usage.service
     }
 
+    /**
+     * All metrics linked to this failure.
+     * @returns {import('./metric.js').Metric[]}
+     */
     get metrics() {
         return this.service.metrics.filter((metric) => metric.isFailureLinked(this))
     }
 
+    /**
+     * Returns lint results for this failure.
+     * @returns {import('./lint.js').Lint}
+     */
     get lint() {
         const lint = new Lint()
 

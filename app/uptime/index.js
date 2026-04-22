@@ -48,6 +48,11 @@ export const app = createApp({
     methods: {
         numL10n,
         humanTime,
+        /**
+         * Converts a timeslice count to a short human-readable duration string.
+         * @param {number} count number of timeslices
+         * @returns {string}
+         */
         timesliceToHumanTime(count) {
             return humanTime(this.indicator.timeslice * count, true)
         },

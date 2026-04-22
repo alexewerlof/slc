@@ -3,10 +3,17 @@ import { isDef, isObj } from '../lib/validation.js'
 import { urlToState } from '../lib/share.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 
+/**
+ * Manages a list of Indicators for the standalone SLO calculator.
+ */
 export class Calculator {
     /** @type {Indicator[]} List of indicators managed by this calculator */
     indicators = new SelectableArray(Indicator)
 
+    /**
+     * Creates a new Calculator instance.
+     * @param {Object} [state] Optional serialised state to restore.
+     */
     constructor(state) {
         if (!state) {
             return
@@ -15,10 +22,18 @@ export class Calculator {
         this.state = state
     }
 
+    /**
+     * Returns the serialisable state of this Calculator.
+     * @returns {{indicators: Object[]}}
+     */
     get state() {
         return { indicators: this.indicators.map((indicator) => indicator.state) }
     }
 
+    /**
+     * Restores the Calculator from a serialised state object.
+     * @param {Object} newState
+     */
     set state(newState) {
         if (!isObj(newState)) {
             throw new TypeError(`Invalid options: ${newState} (${typeof newState})`)
@@ -30,6 +45,11 @@ export class Calculator {
     }
 }
 
+/**
+ * Creates a Calculator from a URL string, falling back to a default example when the URL has no valid state.
+ * @param {string} urlStr The full URL string to parse.
+ * @returns {Calculator}
+ */
 export function makeCalculator(urlStr) {
     const url = new URL(urlStr)
     if (url.searchParams.has('urlVer') || url.searchParams.has('target')) {

@@ -19,6 +19,11 @@ export class Alert extends Entity {
     /** The objective this alert is attached to */
     objective = null
 
+    /**
+     * Creates a new Alert instance.
+     * @param {import('./objective.js').Objective} objective The SLO this alert is attached to.
+     * @param {Object} [state] Optional serialised state to restore.
+     */
     constructor(objective, state) {
         super('a', false)
         if (!isInstance(objective, Objective)) {
@@ -32,6 +37,10 @@ export class Alert extends Entity {
         }
     }
 
+    /**
+     * Returns the serialisable state of this Alert.
+     * @returns {Object}
+     */
     get state() {
         const ret = super.state
 
@@ -45,6 +54,10 @@ export class Alert extends Entity {
         return ret
     }
 
+    /**
+     * Restores the Alert from a serialised state object.
+     * @param {Object} newState
+     */
     set state(newState) {
         super.state = newState
 
@@ -77,6 +90,10 @@ export class Alert extends Entity {
         }
     }
 
+    /**
+     * The short alert window as a percentage of the SLO window.
+     * @returns {number}
+     */
     get shortWindowPerc() {
         return toFixed(this.longWindowPerc / this.shortWindowDivider)
     }
@@ -94,18 +111,34 @@ export class Alert extends Entity {
         return this.objective.failureWindow.shrinkSec(100 / this.burnRate)
     }
 
+    /**
+     * The failure window for the long alert window.
+     * @returns {import('../lib/failure-window.js').FailureWindow}
+     */
     get longFailureWindow() {
         return this.errorBudgetBurn.shrink(this.longWindowPerc)
     }
 
+    /**
+     * The failure window for the short alert window.
+     * @returns {import('../lib/failure-window.js').FailureWindow}
+     */
     get shortFailureWindow() {
         return this.errorBudgetBurn.shrink(this.shortWindowPerc)
     }
 
+    /**
+     * The time-to-resolve window: the remaining error budget after the long window triggers.
+     * @returns {import('../lib/failure-window.js').FailureWindow}
+     */
     get alertTTRWindow() {
         return this.errorBudgetBurn.shrink(100 - this.longWindowPerc)
     }
 
+    /**
+     * Builds the alert formula representation.
+     * @returns {import('./ui/formula.js').Formula}
+     */
     get formula() {
         const ret = this.objective.formula.clone()
         ret.pop()
@@ -138,10 +171,17 @@ export class Alert extends Entity {
         return ret
     }
 
+    /**
+     * @returns {string}
+     */
     toString() {
         return `${percL10n(this.longWindowPerc)} at ${this.burnRate}x`
     }
 
+    /**
+     * Returns lint results for this alert.
+     * @returns {import('./lint.js').Lint}
+     */
     get lint() {
         const lint = new Lint()
 

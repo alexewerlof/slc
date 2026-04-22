@@ -16,6 +16,11 @@ export class Service extends Entity {
     metrics = new SelectableArray(Metric, this)
     _type = Service.possibleTypes[0]
 
+    /**
+     * Creates a new Service instance.
+     * @param {import('./provider.js').Provider} provider The provider that offers this service.
+     * @param {Object} [state] Optional serialised state to restore.
+     */
     constructor(provider, state) {
         super('s', true)
         if (!isInstance(provider, Provider)) {
@@ -27,6 +32,10 @@ export class Service extends Entity {
         }
     }
 
+    /**
+     * Returns the serialisable state of this Service.
+     * @returns {Object}
+     */
     get state() {
         const ret = super.state
 
@@ -43,6 +52,10 @@ export class Service extends Entity {
         return ret
     }
 
+    /**
+     * Restores the Service from a serialised state object.
+     * @param {Object} newState
+     */
     set state(newState) {
         super.state = newState
 
@@ -64,6 +77,10 @@ export class Service extends Entity {
         }
     }
 
+    /**
+     * Sets the service type.
+     * @param {string} val One of {@link Service.possibleTypes}.
+     */
     set type(val) {
         if (!isInArr(val, Service.possibleTypes)) {
             throw new Error(`Service.type must be one of ${Service.possibleTypes}. Got ${val}`)
@@ -71,27 +88,52 @@ export class Service extends Entity {
         this._type = val
     }
 
+    /**
+     * The service type.
+     * @returns {string}
+     */
     get type() {
         return this._type
     }
 
+    /**
+     * Called before this service is removed. Cleans up all child metrics and usages.
+     */
     onRemove() {
         this.metrics.removeAll()
         this.usages.removeAll()
     }
 
+    /**
+     * All tasks that use this service (via usages).
+     * @returns {import('./task.js').Task[]}
+     */
     get tasks() {
         return this.usages.map((d) => d.task)
     }
 
+    /**
+     * All failures across all usages of this service.
+     * @returns {import('./failure.js').Failure[]}
+     */
     get failures() {
         return this.usages.flatMap((d) => d.failures)
     }
 
+    /**
+     * Returns whether this service is consumed by the given task.
+     * @param {import('./task.js').Task} task
+     * @returns {boolean}
+     */
     isConsumedBy(task) {
         return this.usages.some((d) => d.task === task)
     }
 
+    /**
+     * Adds or removes a usage linking this service to the given task.
+     * @param {import('./task.js').Task} task
+     * @param {boolean} value True to link, false to unlink.
+     */
     setConsumedBy(task, value) {
         if (value) {
             if (!this.isConsumedBy(task)) {
@@ -109,18 +151,33 @@ export class Service extends Entity {
         }
     }
 
+    /**
+     * @returns {string}
+     */
     toString() {
         return [this.provider.markdownId, this.markdownId].join(scopeIcon)
     }
 
+    /**
+     * Index of this service within the provider's services array.
+     * @returns {number}
+     */
     get index() {
         return this.provider.services.indexOf(this)
     }
 
+    /**
+     * Removes this service from the provider.
+     * @returns {boolean}
+     */
     remove() {
         return this.provider.services.remove(this)
     }
 
+    /**
+     * Returns lint results for this service.
+     * @returns {import('./lint.js').Lint}
+     */
     get lint() {
         const lint = new Lint()
 

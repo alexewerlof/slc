@@ -3,6 +3,12 @@ import { isInstance } from '../../../lib/validation.js'
 import { Toolbox } from '../../../components/llm/toolbox.js'
 import { joinLines } from '../../../lib/markdown.js'
 
+/**
+ * Builds and returns the LLM toolbox for the assessment editor.
+ * Each tool wraps a mutation or query on the assessment editor component.
+ * @param {Object} assessmentEditorComponent the Vue component instance for the assessment editor
+ * @returns {import('../../../components/llm/toolbox.js').Toolbox}
+ */
 export function createToolbox(assessmentEditorComponent) {
     const toolbox = new Toolbox()
     toolbox
