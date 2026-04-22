@@ -1,8 +1,5 @@
 This project uses JavaScript and Vue.js version 3. The tests run in Node.js environment
 
-In JavaScript:
+# Code style
 
-- Don't use semicolon
-- Use single quote strings
-- Always use `{...}` blocks even when the statement is short enough to fit in one line
-- Use valid JSDoc documentation for exported entities: class, function, and properties
+- The style should always comply to [Prettier config in this repo](./.prettierrc).
