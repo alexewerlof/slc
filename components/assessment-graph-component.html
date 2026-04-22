@@ -1,5 +1,5 @@
 <div class="assessment-graph-component v-pad-gap2">
-    <svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height" @click.self="$emit('select', assessment)">
+    <svg class="assessment-graph-component__svg frost" :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height" @click.self="$emit('select', assessment)">
         <rect
             v-if="selectedEntity?.className === 'Assessment'"
             class="assessment-graph-component__selection-indicator"

@@ -12085,7 +12085,7 @@ function initInterpolator(domain, interpolator) {
 }
 
 // node_modules/d3-scale/src/ordinal.js
-var implicit = Symbol("implicit");
+var implicit = /* @__PURE__ */ Symbol("implicit");
 function ordinal() {
   var index3 = new InternMap(), domain = [], range4 = [], unknown = implicit;
   function scale2(d) {

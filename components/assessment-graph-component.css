@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
 
-    svg {
+    .assessment-graph-component__svg {
         max-width: 100%;
     }
 }

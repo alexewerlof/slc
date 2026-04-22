@@ -10,10 +10,11 @@ The code base is quite opinionated.
 
 # Build
 
-Although this application has no compilation process, it needs some package from NPM.
+Although this application has no compilation process, it needs some packages from NPM.
 - We use standard NPM `package.json` to define the dependencies.
-- `build.js` is a script that uses `esbuild` to export those dependencies as ESM to the `vendor` directory
-- The rest of the application just imports those modules from vendor/npm-package-name.
+- We use [`vendeps`](https://www.npmjs.com/package/vendeps) to bundle each dependency into a single ESM file in the `dependencies/` directory. Per-dependency config (custom entry points, named exports, esbuild `define` flags) lives under the `"vendeps"` key in `package.json`.
+- Run `npm run build` or `npx vendeps` to regenerate the bundles. They are also regenerated automatically on `npm install` via the `postinstall` script.
+- The rest of the application imports those modules from `dependencies/package-name.js`.
 - This has the added benefit that the application is self-contained and does not require any external CDN and since the dependencies are checked in to the repo, it is safer from supply chain attacks.
 
 # Run

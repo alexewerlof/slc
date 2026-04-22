@@ -1,4 +1,4 @@
-import { MarkdownIt } from '../../vendor/markdown-it.js'
+import { MarkdownIt } from '../../dependencies/markdown-it.js'
 import linksTargetBlank from '../../lib/markdown.js'
 
 const md = MarkdownIt().use(linksTargetBlank)

@@ -1,4 +1,4 @@
-import { createApp } from './vendor/vue.js'
+import { createApp } from './dependencies/vue.js'
 import { addUTM } from './lib/utm.js'
 import { registerAllComponents } from './components/index.js'
 import { appDescriptors } from './app/index.js'
