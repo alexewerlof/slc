@@ -10,6 +10,9 @@
 
 import { Tool } from './tool.js'
 
+/** @typedef {import('./tool.js').ToolDescription} ToolDescription */
+/** @typedef {import('./tool.js').ToolsCallMessage} ToolsCallMessage */
+
 /**
  * Describes a message containing the result of a tool call.
  * @typedef {object} ToolResultMessage
@@ -39,12 +42,10 @@ export class Toolbox {
     constructor() {}
 
     /**
-     * Creates a new Tool with the given function and description, adds it to the tools,
-     * and returns the new Tool instance for further configuration (e.g., adding parameter descriptions).
-     * @param {Function} func - The actual JavaScript function this tool will execute.
-     * @param {string} description - A description of what the tool (function) does.
-     * @param {boolean} [additionalProperties=false] - Whether the function parameters object can accept properties not explicitly described.
-     * @param {boolean} [strict=false] - A flag often used by LLMs for schema validation strictness.
+        * Creates a new Tool with the given name and description, adds it to the tools,
+        * and returns the new Tool instance for further configuration.
+        * @param {string} name - The tool name.
+        * @param {...string} description - Sentences describing what the tool does.
      * @returns {Tool} The newly created Tool instance, allowing for chaining of parameter descriptions.
      */
     add(name, ...description) {

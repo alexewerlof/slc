@@ -13,7 +13,7 @@ export class Usage extends Entity {
     /**
      * Creates a new Usage instance linking a service to a task.
      * @param {import('./service.js').Service} service The service being used.
-     * @param {Object} state Serialised state containing the taskId.
+     * @param {Object} state serialized state containing the taskId.
      */
     constructor(service, state) {
         super('u', false)
@@ -42,7 +42,7 @@ export class Usage extends Entity {
     }
 
     /**
-     * Restores the Usage from a serialised state object.
+     * Restores the Usage from a serialized state object.
      * @param {Object} newState
      */
     set state(newState) {

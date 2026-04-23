@@ -8,13 +8,14 @@ import { Task } from './task.js'
 export class Consumer extends Entity {
     static possibleTypes = ['System', 'Component', 'Group']
     _type = Consumer.possibleTypes[0]
+    /** @type {import('./assessment.js').Assessment | null} */
     assessment = null
     tasks = new SelectableArray(Task, this)
 
     /**
      * Creates a new Consumer instance.
      * @param {import('./assessment.js').Assessment} assessment The assessment this consumer belongs to.
-     * @param {Object} [state] Optional serialised state to restore.
+     * @param {Object} [state] Optional serialized state to restore.
      */
     constructor(assessment, state) {
         super('c', true)
@@ -45,7 +46,7 @@ export class Consumer extends Entity {
     }
 
     /**
-     * Restores the Consumer from a serialised state object.
+     * Restores the Consumer from a serialized state object.
      * @param {Object} newState
      */
     set state(newState) {
@@ -122,7 +123,7 @@ export class Consumer extends Entity {
 
     /**
      * Removes this consumer from the assessment.
-     * @returns {boolean}
+     * @returns {import('../lib/selectable-array.js').SelectableArray}
      */
     remove() {
         return this.assessment.consumers.remove(this)

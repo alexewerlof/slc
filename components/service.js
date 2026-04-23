@@ -11,6 +11,7 @@ const scopeIcon = unicodeSymbol('scope')
 
 export class Service extends Entity {
     static possibleTypes = ['Automated', 'Manual', 'Hybrid']
+    /** @type {import('./provider.js').Provider | null} */
     provider = null
     usages = new SelectableArray(Usage, this)
     metrics = new SelectableArray(Metric, this)
@@ -19,7 +20,7 @@ export class Service extends Entity {
     /**
      * Creates a new Service instance.
      * @param {import('./provider.js').Provider} provider The provider that offers this service.
-     * @param {Object} [state] Optional serialised state to restore.
+     * @param {Object} [state] Optional serialized state to restore.
      */
     constructor(provider, state) {
         super('s', true)
@@ -53,7 +54,7 @@ export class Service extends Entity {
     }
 
     /**
-     * Restores the Service from a serialised state object.
+     * Restores the Service from a serialized state object.
      * @param {Object} newState
      */
     set state(newState) {
@@ -168,7 +169,7 @@ export class Service extends Entity {
 
     /**
      * Removes this service from the provider.
-     * @returns {boolean}
+     * @returns {import('../lib/selectable-array.js').SelectableArray}
      */
     remove() {
         return this.provider.services.remove(this)

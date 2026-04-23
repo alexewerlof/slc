@@ -65,7 +65,7 @@ const componentSpecifications = [
 
 /**
  * Register all components in the Vue application to load asynchronously on-demand.
- * @param {VueApplication} app a reference to the Vue application instance
+ * @param {import('../dependencies/vue.js').App<Element>} app a reference to the Vue application instance
  */
 export async function registerAllComponents(app) {
     await registerComponents(app, componentSpecifications, import.meta.resolve)

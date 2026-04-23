@@ -12,7 +12,7 @@ export class Calculator {
 
     /**
      * Creates a new Calculator instance.
-     * @param {Object} [state] Optional serialised state to restore.
+     * @param {Object} [state] Optional serialized state to restore.
      */
     constructor(state) {
         if (!state) {
@@ -31,7 +31,7 @@ export class Calculator {
     }
 
     /**
-     * Restores the Calculator from a serialised state object.
+     * Restores the Calculator from a serialized state object.
      * @param {Object} newState
      */
     set state(newState) {

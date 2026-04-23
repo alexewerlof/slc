@@ -8,6 +8,7 @@ import { Lint } from './lint.js'
 export class Provider extends Entity {
     static possibleTypes = Object.freeze(['System', 'Component', 'Group'])
 
+    /** @type {import('./assessment.js').Assessment | null} */
     assessment = null
     _type = Provider.possibleTypes[0]
 
@@ -16,7 +17,7 @@ export class Provider extends Entity {
     /**
      * Creates a new Provider instance.
      * @param {import('./assessment.js').Assessment} assessment The assessment this provider belongs to.
-     * @param {Object} [state] Optional serialised state to restore.
+     * @param {Object} [state] Optional serialized state to restore.
      */
     constructor(assessment, state) {
         super('p', true)
@@ -47,7 +48,7 @@ export class Provider extends Entity {
     }
 
     /**
-     * Restores the Provider from a serialised state object.
+     * Restores the Provider from a serialized state object.
      * @param {Object} newState
      */
     set state(newState) {
@@ -113,7 +114,7 @@ export class Provider extends Entity {
 
     /**
      * Removes this provider from the assessment.
-     * @returns {boolean}
+     * @returns {import('../lib/selectable-array.js').SelectableArray}
      */
     remove() {
         return this.assessment.providers.remove(this)

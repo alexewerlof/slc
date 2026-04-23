@@ -9,6 +9,7 @@ import { Lint } from './lint.js'
  * Represents a failure scenario: if a certain service fails, what activities will it impact and how?
  */
 export class Failure extends Entity {
+    /** @type {import('./usage.js').Usage | null} */
     usage = null
     symptom = ''
     consequence = ''
@@ -18,7 +19,7 @@ export class Failure extends Entity {
     /**
      * Creates a new Failure instance.
      * @param {import('./usage.js').Usage} usage The usage this failure belongs to.
-     * @param {Object} [state] Optional serialised state to restore.
+     * @param {Object} [state] Optional serialized state to restore.
      */
     constructor(usage, state) {
         super('f', false)
@@ -55,7 +56,7 @@ export class Failure extends Entity {
     }
 
     /**
-     * Restores the Failure from a serialised state object.
+     * Restores the Failure from a serialized state object.
      * @param {Object} newState
      */
     set state(newState) {

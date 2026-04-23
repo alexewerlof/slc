@@ -9,6 +9,7 @@ import { Lint } from './lint.js'
 const scopeIcon = unicodeSymbol('scope')
 
 export class Metric extends Entity {
+    /** @type {import('./service.js').Service | null} */
     service = null
     isBoolean = false
     numericUnit = ''
@@ -18,7 +19,7 @@ export class Metric extends Entity {
     /**
      * Creates a new Metric instance.
      * @param {import('./service.js').Service} service The service this metric belongs to.
-     * @param {Object} [state] Optional serialised state to restore.
+     * @param {Object} [state] Optional serialized state to restore.
      */
     constructor(service, state) {
         super('m', true)
@@ -52,7 +53,7 @@ export class Metric extends Entity {
     }
 
     /**
-     * Restores the Metric from a serialised state object.
+     * Restores the Metric from a serialized state object.
      * @param {Object} newState
      */
     set state(newState) {
@@ -162,7 +163,7 @@ export class Metric extends Entity {
 
     /**
      * Removes this metric from the service.
-     * @returns {boolean}
+     * @returns {import('../lib/selectable-array.js').SelectableArray}
      */
     remove() {
         return this.service.metrics.remove(this)

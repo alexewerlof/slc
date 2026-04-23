@@ -8,6 +8,7 @@ import { TokenStats } from './token-stats.js'
  * Base class for all thread beads. Holds the role, visibility flags, and optional token stats.
  */
 class RoleBead {
+    /** @type {string | undefined} */
     _role = undefined
     /** Beads that set this to true, do not get converted to messages */
     isGhost = false
@@ -15,7 +16,7 @@ class RoleBead {
     isPersistent = true
     /** Beads that set this to true, only show up when debugging info is shown */
     isDebug = false
-    /** May hold token usage and latency stats */
+    /** @type {TokenStats | undefined} May hold token usage and latency stats */
     tokenStats = undefined
 
     static DEFAULT_ROLE_OPTIONS = {
@@ -260,11 +261,11 @@ export class AssistantResponse extends ContentBead {
  * A bead representing a tool-call request from the assistant.
  */
 export class ToolCallsBead extends RoleBead {
+    /** @type {Object[] | undefined} */
     _toolCalls = undefined
 
     /**
      * @param {Object[]} toolCalls The tool_calls array from the API response.
-     * @param {TokenStats} [tokenStats]
      */
     constructor(toolCalls) {
         super({
@@ -332,6 +333,7 @@ export class ToolResultBead extends RoleBead {
  * A system bead that lazily loads one or more text files and injects their contents as a system message.
  */
 export class FileBead extends ContentBead {
+    /** @type {string[] | undefined} */
     _fileNames = undefined
     _loaded = false
 

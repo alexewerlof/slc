@@ -9,9 +9,11 @@ const llmStateStore = new Store(config.llm.selectedEngineStateKey)
  * Persists its configuration to localStorage via {@link Store}.
  */
 export class LLM {
+    /** @type {string | undefined} */
     baseUrl = undefined
     apiKey = ''
     useApiKey = false
+    /** @type {string | undefined} */
     modelId = undefined
     temperature = config.llm.temperature.default
     maxTokens = config.llm.maxTokens.default
@@ -38,7 +40,7 @@ export class LLM {
 
     /**
      * Returns the serialisable configuration state of this LLM.
-     * @returns {{baseUrl: string, apiKey: string, useApiKey: boolean, modelId: string, temperature: number, maxTokens: number}}
+     * @returns {{baseUrl: string | undefined, apiKey: string, useApiKey: boolean, modelId: string | undefined, temperature: number, maxTokens: number}}
      */
     get state() {
         const { baseUrl, apiKey, useApiKey, modelId, temperature, maxTokens } = this
@@ -47,7 +49,7 @@ export class LLM {
 
     /**
      * Applies a configuration state object, validating each field.
-     * @param {{baseUrl: string, apiKey: string, useApiKey: boolean, modelId: string, temperature: number, maxTokens: number}} newState
+     * @param {{baseUrl: string | undefined, apiKey: string, useApiKey: boolean, modelId: string | undefined, temperature: number, maxTokens: number}} newState
      */
     set state(newState) {
         if (!isObj(newState)) {

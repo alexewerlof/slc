@@ -19,12 +19,6 @@ import { isFn, isStr } from '../../lib/validation.js'
  */
 
 /**
- * Describes the properties of a tool's parameters.
- * It's an object where each key is a parameter name.
- * @typedef {Object<string, {type: string, description: string}>} ToolProperties
- */
-
-/**
  * Describes the parameter structure for a tool.
  * @typedef {object} ToolParameters
  * @property {'object'} type - The type of the parameters object, always 'object'.
@@ -56,13 +50,21 @@ import { isFn, isStr } from '../../lib/validation.js'
  * @property {string} type - The data type of the parameter (e.g., 'string', 'number', 'boolean').
  * @property {string} description - A description of the parameter.
  * @property {boolean} required - Whether this parameter is required.
+ * @property {string} [itemsType] - Array element type for array parameters.
  */
 
-export function parseParamShorthand(paramShorthand) {
-    if (!isStr(paramShorthand)) {
-        throw new TypeError(`Expected paramShorthand to be a string. Got ${paramShorthand}`)
-    }
+/**
+ * @typedef {object} ToolPropertyDescriptor
+ * @property {string} type
+ * @property {string} description
+ * @property {{type: string}} [items]
+ */
 
+/**
+ * Describes the properties of a tool's parameters.
+ * @typedef {Object<string, ToolPropertyDescriptor>} ToolProperties
+ */
+export function parseParamShorthand(paramShorthand) {
     const parts = paramShorthand.split(':')
     if (parts.length !== 2) {
         throw new SyntaxError(`Invalid paramShorthand format: ${paramShorthand}`)
@@ -104,11 +106,9 @@ export class Tool {
 
     /**
      * The actual JavaScript function to be executed.
-     * This property is read-only after initialization.
-     * @readonly
-     * @type {Function}
+        * @type {Function | undefined}
      */
-    func
+    func = undefined
 
     /**
      * A description of what the tool does.
@@ -208,7 +208,7 @@ export class Tool {
 
             if (properties[p.name].type === 'array') {
                 properties[p.name].items = {
-                    type: properties[p.name].itemsType,
+                    type: p.itemsType || 'string',
                 }
             }
         }

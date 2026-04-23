@@ -25,13 +25,13 @@ export class Objective extends Entity {
     /** {@type {Alert[]}} List of alerts attached to this SLO */
     alerts = new SelectableArray(Alert, this)
 
-    /** The indicator this SLO is attached to */
+    /** @type {Indicator | null} The indicator this SLO is attached to */
     indicator = null
 
     /**
      * Creates a new Objective (SLO) instance.
      * @param {Indicator} indicator The indicator this SLO measures.
-     * @param {Object} [state] Optional serialised state to restore.
+     * @param {Object} [state] Optional serialized state to restore.
      */
     constructor(indicator, state) {
         super('o', false)
@@ -72,7 +72,7 @@ export class Objective extends Entity {
     }
 
     /**
-     * Restores the Objective from a serialised state object.
+     * Restores the Objective from a serialized state object.
      * @param {Object} newState
      */
     set state(newState) {

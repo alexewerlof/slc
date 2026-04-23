@@ -17,7 +17,7 @@ export class Assessment extends Entity {
 
     /**
      * Creates a new Assessment instance.
-     * @param {Object} [state] Optional serialised state to restore.
+     * @param {Object} [state] Optional serialized state to restore.
      */
     constructor(state) {
         super('a', true)
@@ -43,7 +43,7 @@ export class Assessment extends Entity {
     }
 
     /**
-     * Restores the Assessment from a serialised state object.
+     * Restores the Assessment from a serialized state object.
      * @param {Object} newState
      */
     set state(newState) {

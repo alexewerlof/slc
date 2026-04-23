@@ -7,12 +7,13 @@ import { Lint } from './lint.js'
 const scopeIcon = unicodeSymbol('scope')
 
 export class Task extends Entity {
+    /** @type {import('./consumer.js').Consumer | null} */
     consumer = null
 
     /**
      * Creates a new Task instance.
      * @param {import('./consumer.js').Consumer} consumer The consumer this task belongs to.
-     * @param {Object} [state] Optional serialised state to restore.
+     * @param {Object} [state] Optional serialized state to restore.
      */
     constructor(consumer, state) {
         super('t', true)
@@ -62,7 +63,7 @@ export class Task extends Entity {
 
     /**
      * Removes this task from the consumer.
-     * @returns {boolean}
+     * @returns {import('../lib/selectable-array.js').SelectableArray}
      */
     remove() {
         return this.consumer.tasks.remove(this)

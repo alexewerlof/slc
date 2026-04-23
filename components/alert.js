@@ -16,13 +16,13 @@ export class Alert extends Entity {
     shortWindowDivider = config.alert.shortWindowDivider.default
     /** Show the short window alert */
     useShortWindow = false
-    /** The objective this alert is attached to */
+    /** @type {import('./objective.js').Objective | null} The objective this alert is attached to */
     objective = null
 
     /**
      * Creates a new Alert instance.
      * @param {import('./objective.js').Objective} objective The SLO this alert is attached to.
-     * @param {Object} [state] Optional serialised state to restore.
+     * @param {Object} [state] Optional serialized state to restore.
      */
     constructor(objective, state) {
         super('a', false)
@@ -55,7 +55,7 @@ export class Alert extends Entity {
     }
 
     /**
-     * Restores the Alert from a serialised state object.
+     * Restores the Alert from a serialized state object.
      * @param {Object} newState
      */
     set state(newState) {
