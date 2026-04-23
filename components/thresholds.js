@@ -1,6 +1,6 @@
 import { config } from '../config.js'
 import { clamp } from '../lib/math.js'
-import { inRange } from '../lib/validation.js'
+import { inRange } from '../dependencies/jty.js'
 import { Objective } from './objective.js'
 
 /**

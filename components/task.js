@@ -1,5 +1,5 @@
 import { unicodeSymbol } from '../lib/icons.js'
-import { isInstance, isObj } from '../lib/validation.js'
+import { isInstance, isObj } from '../dependencies/jty.js'
 import { Consumer } from './consumer.js'
 import { Entity } from '../lib/entity.js'
 import { Lint } from './lint.js'

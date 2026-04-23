@@ -1,4 +1,4 @@
-import { isInArr, isObj } from '../lib/validation.js'
+import { inArr, isObj } from '../dependencies/jty.js'
 import { loadJson } from '../lib/share.js'
 
 /**
@@ -22,7 +22,7 @@ export const appNames = Object.freeze([
  * @returns {Promise<AppDescriptor>}
  */
 async function appDescriptor(name) {
-    if (!isInArr(name, appNames)) {
+    if (!inArr(name, appNames)) {
         throw new Error(`Invalid app name: ${name}`)
     }
 

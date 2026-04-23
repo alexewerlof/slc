@@ -1,6 +1,6 @@
 import { Entity } from '../lib/entity.js'
 import { SelectableArray } from '../lib/selectable-array.js'
-import { isArr, isDef, isInstance, isStr } from '../lib/validation.js'
+import { isArr, isDef, isInstance, isStr } from '../dependencies/jty.js'
 import { Task } from './task.js'
 import { Failure } from './failure.js'
 import { Service } from './service.js'

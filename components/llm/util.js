@@ -1,4 +1,4 @@
-import { isArr, isObj, isStr } from '../../lib/validation.js'
+import { isArr, isObj, isStr } from '../../dependencies/jty.js'
 
 /**
  * Type guard to check if an unknown object is a ToolsCallMessage.

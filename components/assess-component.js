@@ -2,7 +2,7 @@ import { config } from '../config.js'
 import { readTextFile } from '../lib/share.js'
 import { Assessment } from './assessment.js'
 import { unicodeSymbol } from '../lib/icons.js'
-import { inRange } from '../lib/validation.js'
+import { inRange } from '../dependencies/jty.js'
 import { ContentBead, FileBead, Thread } from './llm/thread.js'
 
 export default {

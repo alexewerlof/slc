@@ -1,4 +1,4 @@
-import { isInstance } from '../../lib/validation.js'
+import { isInstance } from '../../dependencies/jty.js'
 import { Objective } from '../objective.js'
 import { config } from '../../config.js'
 import { numL10n, percL10n } from '../../lib/fmt.js'

@@ -1,6 +1,6 @@
 import { Provider } from './provider.js'
 import { Consumer } from './consumer.js'
-import { isArr, isDef, isInstance, isObj } from '../lib/validation.js'
+import { isArr, isDef, isInstance, isObj } from '../dependencies/jty.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { Service } from './service.js'
 import { Task } from './task.js'

@@ -1,5 +1,5 @@
 import { Indicator } from './indicator.js'
-import { isDef, isObj } from '../lib/validation.js'
+import { isDef, isObj } from '../dependencies/jty.js'
 import { urlToState } from '../lib/share.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 

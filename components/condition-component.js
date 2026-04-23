@@ -1,4 +1,4 @@
-import { isInstance } from '../lib/validation.js'
+import { isInstance } from '../dependencies/jty.js'
 import { config } from '../config.js'
 import { boundCaption, numL10n, percL10n } from '../lib/fmt.js'
 import { unicodeSymbol } from '../lib/icons.js'

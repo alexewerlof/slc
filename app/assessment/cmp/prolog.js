@@ -1,6 +1,6 @@
 import { Assessment } from '../../../components/assessment.js'
 import { Formula } from '../../../components/ui/formula.js'
-import { isInstance, isStr } from '../../../lib/validation.js'
+import { isInstance, isStr } from '../../../dependencies/jty.js'
 
 /**
  * Wraps a string in double quotes, escaping any internal double-quote characters.
@@ -23,6 +23,14 @@ export function assessment2prolog(assessment) {
 
     const formula = new Formula()
 
+    /**
+     * Helper function to add a fact to the formula.
+     * @param {string} predicate The name of the predicate (e.g. 'consumer', 'providesService', etc.)
+     * @param {...string|number|boolean} ids The identifiers or values associated with this fact.
+     *     Strings that start with a double quote (") are treated as string literals and included in quotes in the output.
+     *     Other strings are treated as identifiers and included without quotes.
+     *     Non-string values (numbers, booleans) are included as constants.
+     */
     function fact(predicate, ...ids) {
         if (predicate.startsWith('% ')) {
             formula.addCmnt(`${predicate}/${ids.length} (${ids.join(', ')}).`)

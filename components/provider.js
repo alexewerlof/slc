@@ -1,5 +1,5 @@
 import { Service } from './service.js'
-import { isArr, isDef, isInArr, isInstance } from '../lib/validation.js'
+import { isArr, isDef, inArr, isInstance } from '../dependencies/jty.js'
 import { Assessment } from './assessment.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { Entity } from '../lib/entity.js'
@@ -57,7 +57,7 @@ export class Provider extends Entity {
         const { type, services } = newState
 
         if (isDef(type)) {
-            if (!isInArr(type, Provider.possibleTypes)) {
+            if (!inArr(type, Provider.possibleTypes)) {
                 throw new TypeError(`Invalid type. ${type}`)
             }
             this.type = type
@@ -76,7 +76,7 @@ export class Provider extends Entity {
      * @param {string} val One of {@link Provider.possibleTypes}.
      */
     set type(val) {
-        if (!isInArr(val, Provider.possibleTypes)) {
+        if (!inArr(val, Provider.possibleTypes)) {
             throw new Error(`Provider.type must be one of ${Provider.possibleTypes}. Got ${val}`)
         }
         this._type = val

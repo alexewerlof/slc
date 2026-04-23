@@ -1,6 +1,6 @@
 import { Entity } from '../lib/entity.js'
 import { SelectableArray } from '../lib/selectable-array.js'
-import { isArr, isDef, isInArr, isInstance } from '../lib/validation.js'
+import { isArr, isDef, inArr, isInstance } from '../dependencies/jty.js'
 import { Assessment } from './assessment.js'
 import { Lint } from './lint.js'
 import { Task } from './task.js'
@@ -55,7 +55,7 @@ export class Consumer extends Entity {
         const { type, tasks } = newState
 
         if (isDef(type)) {
-            if (!isInArr(type, Consumer.possibleTypes)) {
+            if (!inArr(type, Consumer.possibleTypes)) {
                 throw new Error(`Invalid type. ${type}`)
             }
             this.type = type
@@ -74,7 +74,7 @@ export class Consumer extends Entity {
      * @param {string} val One of {@link Consumer.possibleTypes}.
      */
     set type(val) {
-        if (!isInArr(val, Consumer.possibleTypes)) {
+        if (!inArr(val, Consumer.possibleTypes)) {
             throw new Error(`Consumer.type must be one of ${Consumer.possibleTypes}. Got ${val}`)
         }
         this._type = val

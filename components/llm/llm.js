@@ -1,6 +1,7 @@
 import { config } from '../../config.js'
 import { Store } from '../../lib/store.js'
-import { inRange, isArr, isInArr, isObj, isStr, isStrLen, isUrlStr } from '../../lib/validation.js'
+import { inRange, isArr, inArr, isObj, isStr, isStrLen } from '../../dependencies/jty.js'
+import { isUrlStr } from '../../lib/validation.js'
 
 const llmStateStore = new Store(config.llm.selectedEngineStateKey)
 
@@ -162,7 +163,7 @@ export class LLM {
      */
     async _fetchJson(method, path, data, signal) {
         const methodUpperCase = method.toUpperCase()
-        if (!isInArr(methodUpperCase, ['GET', 'POST'])) {
+        if (!inArr(methodUpperCase, ['GET', 'POST'])) {
             throw new RangeError(`Unsupported HTTP Method: ${method}`)
         }
 

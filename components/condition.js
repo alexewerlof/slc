@@ -1,4 +1,4 @@
-import { isInstance } from '../lib/validation.js'
+import { isInstance } from '../dependencies/jty.js'
 import { Metric } from './metric.js'
 
 // TODO: add to config

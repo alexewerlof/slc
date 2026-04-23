@@ -1,6 +1,6 @@
 import { downloadFile, saveAs } from '../../lib/share.js'
 import { showToast } from '../../lib/toast.js'
-import { isFn } from '../../lib/validation.js'
+import { isFn } from '../../dependencies/jty.js'
 
 export default {
     props: {

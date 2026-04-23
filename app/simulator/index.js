@@ -4,7 +4,7 @@ import { analyzeData, createIncidentBuckets, overwriteData, percentileIndex } fr
 import { config } from '../../config.js'
 import * as d3 from '../../dependencies/d3.js'
 import { boundTypeToOperator, calculateSlsMetric, createIsGood } from '../../lib/sl.js'
-import { isNum } from '../../lib/validation.js'
+import { isNum } from '../../dependencies/jty.js'
 import { percent } from '../../lib/math.js'
 import { numL10n, percL10n } from '../../lib/fmt.js'
 import { registerAllComponents } from '../../components/index.js'

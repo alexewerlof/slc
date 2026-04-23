@@ -1,4 +1,4 @@
-import { isDef, isInstance, isNum, isObj } from '../../lib/validation.js'
+import { isDef, isInstance, isNum, isObj } from '../../dependencies/jty.js'
 
 export class TokenStats {
     duration = 0

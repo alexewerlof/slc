@@ -3,7 +3,7 @@ import { FailureWindow } from '../lib/failure-window.js'
 import { entity2symbolNorm, percL10n } from '../lib/fmt.js'
 import { Entity } from '../lib/entity.js'
 import { toFixed } from '../lib/math.js'
-import { inRange, isDef, isInstance } from '../lib/validation.js'
+import { inRange, isDef, isInstance } from '../dependencies/jty.js'
 import { Objective } from './objective.js'
 import { Lint } from './lint.js'
 

@@ -1,4 +1,4 @@
-import { isStr } from '../../lib/validation.js'
+import { isStr } from '../../dependencies/jty.js'
 
 const validTypes = ['info', 'warning', 'error']
 

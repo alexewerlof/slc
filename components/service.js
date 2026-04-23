@@ -1,5 +1,5 @@
 import { unicodeSymbol } from '../lib/icons.js'
-import { isDef, isInArr, isInstance } from '../lib/validation.js'
+import { isDef, inArr, isInstance } from '../dependencies/jty.js'
 import { Provider } from './provider.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { Metric } from './metric.js'
@@ -63,7 +63,7 @@ export class Service extends Entity {
         const { type, usages, metrics } = newState
 
         if (isDef(type)) {
-            if (!isInArr(type, Service.possibleTypes)) {
+            if (!inArr(type, Service.possibleTypes)) {
                 throw new TypeError(`Invalid type. ${type}`)
             }
             this.type = type
@@ -83,7 +83,7 @@ export class Service extends Entity {
      * @param {string} val One of {@link Service.possibleTypes}.
      */
     set type(val) {
-        if (!isInArr(val, Service.possibleTypes)) {
+        if (!inArr(val, Service.possibleTypes)) {
             throw new Error(`Service.type must be one of ${Service.possibleTypes}. Got ${val}`)
         }
         this._type = val

@@ -3,7 +3,7 @@ import { entity2symbolNorm, hasComparators } from '../lib/fmt.js'
 import { Entity } from '../lib/entity.js'
 import { SelectableArray } from '../lib/selectable-array.js'
 import { humanTimeSlices } from '../lib/time.js'
-import { inRange, isArr, isDef, isInArr, isStrLen } from '../lib/validation.js'
+import { inRange, isArr, isDef, inArr, isStrLen } from '../dependencies/jty.js'
 import { Formula } from './ui/formula.js'
 import { Objective } from './objective.js'
 import { Lint } from './lint.js'
@@ -150,14 +150,14 @@ export class Indicator extends Entity {
         }
 
         if (isDef(lowerBound)) {
-            if (!isInArr(lowerBound, config.lowerBound.possibleValues)) {
+            if (!inArr(lowerBound, config.lowerBound.possibleValues)) {
                 throw new RangeError(`Invalid lowerBound: ${lowerBound} (${typeof lowerBound})`)
             }
             this.lowerBound = lowerBound
         }
 
         if (isDef(upperBound)) {
-            if (!isInArr(upperBound, config.upperBound.possibleValues)) {
+            if (!inArr(upperBound, config.upperBound.possibleValues)) {
                 throw new RangeError(`Invalid upperBound: ${upperBound} (${typeof upperBound})`)
             }
             this.upperBound = upperBound

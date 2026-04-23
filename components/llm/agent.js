@@ -2,7 +2,7 @@ import { getFirstMessage, isToolsCallMessage } from './util.js'
 import { AssistantResponse, ErrorBead, Thread, ToolCallsBead, ToolResultBead } from './thread.js'
 import { LLM } from './llm.js'
 import { Toolbox } from './toolbox.js'
-import { isDef, isInstance } from '../../lib/validation.js'
+import { isDef, isInstance } from '../../dependencies/jty.js'
 import { showToast } from '../../lib/toast.js'
 import { TokenStats } from './token-stats.js'
 

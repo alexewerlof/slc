@@ -1,4 +1,4 @@
-import { isArrIdx, isInstance } from '../lib/validation.js'
+import { isArrIdx, isInstance } from '../dependencies/jty.js'
 import { Assessment } from './assessment.js'
 import { config } from '../config.js'
 import { Failure } from './failure.js'
@@ -27,10 +27,10 @@ export default {
             if (srcIndex === dstIndex) {
                 return
             }
-            if (!isArrIdx(this.assessment.failures, srcIndex)) {
+            if (!isArrIdx(srcIndex, this.assessment.failures)) {
                 throw new RangeError(`Invalid or out of range srcIndex: ${srcIndex}`)
             }
-            if (!isArrIdx(this.assessment.failures, dstIndex)) {
+            if (!isArrIdx(dstIndex, this.assessment.failures)) {
                 throw new RangeError(`Invalid or out of range dstIndex: ${dstIndex}`)
             }
             const failures = [...this.assessment.failures]

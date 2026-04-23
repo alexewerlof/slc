@@ -1,5 +1,5 @@
 import { joinLines } from '../../lib/markdown.js'
-import { isInstance } from '../../lib/validation.js'
+import { isInstance } from '../../dependencies/jty.js'
 
 export class Formula {
     parts

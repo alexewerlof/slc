@@ -1,4 +1,4 @@
-import { isArr, isBool, isDef, isInArr, isInstance } from '../lib/validation.js'
+import { isArr, isBool, isDef, inArr, isInstance } from '../dependencies/jty.js'
 import { Service } from './service.js'
 import { Failure } from './failure.js'
 import { unicodeSymbol } from '../lib/icons.js'
@@ -117,7 +117,7 @@ export class Metric extends Entity {
         if (!isInstance(failure, Failure)) {
             throw new Error(`Expected an instance of Failure. Got ${failure}`)
         }
-        return isInArr(failure, this.linkedFailures)
+        return inArr(failure, this.linkedFailures)
     }
 
     /**

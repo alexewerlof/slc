@@ -1,5 +1,6 @@
 import { config } from '../../config.js'
-import { isStrLen, isUrlStr } from '../../lib/validation.js'
+import { isStrLen } from '../../dependencies/jty.js'
+import { isUrlStr } from '../../lib/validation.js'
 import { LLM } from './llm.js'
 import { verifyModelEndpoint, verifyToolsCall, verifyWordEcho } from './llm-verifications.js'
 

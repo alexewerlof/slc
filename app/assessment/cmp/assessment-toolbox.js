@@ -1,5 +1,5 @@
 import { Usage } from '../../../components/usage.js'
-import { isInstance } from '../../../lib/validation.js'
+import { isInstance } from '../../../dependencies/jty.js'
 import { Toolbox } from '../../../components/llm/toolbox.js'
 import { joinLines } from '../../../lib/markdown.js'
 

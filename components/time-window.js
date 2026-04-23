@@ -1,6 +1,6 @@
 import { numL10n } from '../lib/fmt.js'
 import { countTimeslices, daysToSeconds, humanSec, humanTime } from '../lib/time.js'
-import { isInstance, isNum } from '../lib/validation.js'
+import { isInstance, isNum } from '../dependencies/jty.js'
 import { Objective } from './objective.js'
 
 /**

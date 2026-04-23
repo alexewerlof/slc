@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
 import { Indicator } from '../components/indicator.js'
-import { isInstance } from '../lib/validation.js'
+import { isInstance } from '../dependencies/jty.js'
 import { importAllGroups } from './index.js'
 
 describe(importAllGroups.name, () => {

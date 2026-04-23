@@ -3,7 +3,7 @@ import { boundCaption, entity2symbol, hasComparators, numL10n, percL10n } from '
 import { unicodeSymbol } from '../lib/icons.js'
 import { Calculator } from './calculator.js'
 import { percentToRatio } from '../lib/math.js'
-import { isInstance } from '../lib/validation.js'
+import { isInstance } from '../dependencies/jty.js'
 import { Indicator } from './indicator.js'
 
 export default {

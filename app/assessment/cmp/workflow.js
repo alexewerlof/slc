@@ -1,5 +1,5 @@
 import { Assessment } from '../../../components/assessment.js'
-import { isInstance } from '../../../lib/validation.js'
+import { isInstance } from '../../../dependencies/jty.js'
 
 /**
  * Goes through the assessment and gives a recommendation based on what needs to be done.

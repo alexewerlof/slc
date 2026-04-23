@@ -1,3 +1,5 @@
+import { isFn, isStr } from '../../dependencies/jty.js'
+
 /**
  * Describes a request from an LLM to call a specific tool function.
  * @typedef {object} ToolCall
@@ -7,8 +9,6 @@
  * @property {string} function.name - The name of the function.
  * @property {string} function.arguments - A JSON string representing the arguments for the function.
  */
-
-import { isFn, isStr } from '../../lib/validation.js'
 
 /**
  * Describes a message from an assistant that includes tool call requests.
@@ -106,7 +106,7 @@ export class Tool {
 
     /**
      * The actual JavaScript function to be executed.
-        * @type {Function | undefined}
+     * @type {Function | undefined}
      */
     func = undefined
 

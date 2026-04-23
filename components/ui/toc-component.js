@@ -1,5 +1,5 @@
 import { ensureUniqueId, findHeaders } from '../../lib/node-id.js'
-import { isSameArr } from '../../lib/validation.js'
+import { isEqualArr } from '../../dependencies/jty.js'
 
 export default {
     props: {
@@ -26,7 +26,7 @@ export default {
                 return
             }
             const newHeaders = findHeaders(contentElement)
-            if (!isSameArr(newHeaders, this.headers)) {
+            if (!isEqualArr(newHeaders, this.headers)) {
                 this.headers = newHeaders
                 ensureUniqueId(this.headers)
             }

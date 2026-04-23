@@ -1,4 +1,4 @@
-import { isInstance } from '../../lib/validation.js'
+import { isInstance } from '../../dependencies/jty.js'
 import { config } from '../../config.js'
 import { boundCaption, hasComparators, numL10n, percL10n } from '../../lib/fmt.js'
 import { Indicator } from '../indicator.js'

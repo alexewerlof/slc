@@ -1,4 +1,4 @@
-import { isArr } from '../../lib/validation.js'
+import { isArr } from '../../dependencies/jty.js'
 import { Agent } from './agent.js'
 import { Thread, UserPromptBead } from './thread.js'
 import { Toolbox } from './toolbox.js'

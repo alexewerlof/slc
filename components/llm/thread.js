@@ -1,7 +1,7 @@
 import { joinLines } from '../../lib/markdown.js'
 import { loadText } from '../../lib/share.js'
 import { normalizeMessageArray } from '../../lib/msg.js'
-import { isArr, isBool, isDef, isFn, isInArr, isInstance, isObj, isStr } from '../../lib/validation.js'
+import { isArr, isBool, isDef, isFn, inArr, isInstance, isObj, isStr } from '../../dependencies/jty.js'
 import { TokenStats } from './token-stats.js'
 
 /**
@@ -88,7 +88,7 @@ class RoleBead {
      * @param {string} role
      */
     set role(role) {
-        if (!isInArr(role, RoleBead.POSSIBLE_ROLES)) {
+        if (!inArr(role, RoleBead.POSSIBLE_ROLES)) {
             throw new Error(`Invalid role: ${role}`)
         }
         this._role = role

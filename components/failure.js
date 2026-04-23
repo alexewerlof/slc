@@ -1,4 +1,4 @@
-import { inRange, isDef, isInstance, isStr } from '../lib/validation.js'
+import { inRange, isDef, isInstance, isStr } from '../dependencies/jty.js'
 import { config } from '../config.js'
 import { unicodeSymbol } from '../lib/icons.js'
 import { Usage } from './usage.js'
